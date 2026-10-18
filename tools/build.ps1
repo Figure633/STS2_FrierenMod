@@ -2,9 +2,16 @@ param(
     [string]$GodotPath = "",
     [switch]$Pack,
     [switch]$EngineTests,
-    [string]$GodotMonoPath = ""
+    [string]$GodotMonoPath = "",
+    [switch]$SkipTests
 )
 $ErrorActionPreference = "Stop"
+if ($SkipTests -and $EngineTests) {
+    throw "-SkipTests 和 -EngineTests 不能同时使用。"
+}
+if ($EngineTests -and -not $Pack) {
+    throw "执行引擎测试必须同时指定 -Pack，以确保测试使用最新的 PCK。"
+}
 $projectRoot = Split-Path -Parent $PSScriptRoot
 function Invoke-Checked([string]$program, [string[]]$arguments) {
     & $program @arguments
@@ -20,10 +27,37 @@ $baseManifest = Get-Content -Raw -LiteralPath "$baseLibDir/BaseLib.json" | Conve
 if ($releaseInfo.version -ne "v0.107.1" -or $baseManifest.version -ne "v3.4.7") {
     throw "此实验版验证基线为 StS2 v0.107.1 + BaseLib v3.4.7，请先处理版本升级兼容性。"
 }
-Invoke-Checked "dotnet" @("build", "$projectRoot/FrierenMod.csproj", "-c", "Release", "--nologo")
-Invoke-Checked "dotnet" @("run", "--project", "$projectRoot/Tests/Pure/PureTests.csproj", "-c", "Release")
-Invoke-Checked "dotnet" @("run", "--project", "$projectRoot/Tests/Integration/IntegrationTests.csproj", "-c", "Release")
-Invoke-Checked "python" @("$projectRoot/tools/validate_content.py")
+
+Invoke-Checked "dotnet" @(
+    "build",
+    "$projectRoot/FrierenMod.csproj",
+    "-c",
+    "Release",
+    "--nologo"
+)
+
+if (-not $SkipTests) {
+    Write-Host "Running tests..." -ForegroundColor Cyan
+
+    Invoke-Checked "dotnet" @(
+        "run", "--project",
+        "$projectRoot/Tests/Pure/PureTests.csproj",
+        "-c", "Release"
+    )
+
+    Invoke-Checked "dotnet" @(
+        "run", "--project",
+        "$projectRoot/Tests/Integration/IntegrationTests.csproj",
+        "-c", "Release"
+    )
+
+    Invoke-Checked "python" @(
+        "$projectRoot/tools/validate_content.py"
+    )
+}
+else {
+    Write-Host "Skipping tests and content validation." -ForegroundColor Yellow
+}
 if ($Pack) {
     if (!(Test-Path -LiteralPath $GodotPath)) { throw "请用 -GodotPath 提供 Godot 4.5.1 便携版可执行文件。" }
     $godotVersion = & $GodotPath --version
