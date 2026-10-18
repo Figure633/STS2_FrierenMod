@@ -1,42 +1,41 @@
-# Godot 4+ specific ignores
+# Godot generated cache
 .godot/
-/android/
+.mono/
+
+# .NET build outputs
 bin/
 obj/
-artifacts/
-local.props
 **/bin/
 **/obj/
-docs/*.translation
-docs/*.csv.import
-__pycache__/
-Tests/Engine/release_info.json
 
-# IDE and editor local files
-.vs/
-.idea/
-*.user
-*.suo
+# Release artifacts
+artifacts/
 
-# Local environment and secrets
-.env
-.env.*
+# Local machine configuration
+local.props
 *.local.props
 
-# Logs and temporary files
+# IDE local configuration
+.vs/
+.idea/
+.vscode/settings.json
+
+# Temporary files
 *.log
 *.tmp
 *.bak
 *.orig
-
-# Python cache
+__pycache__/
 *.pyc
-.pytest_cache/
 
-# Godot / C# local cache
-.mono/
-
-# OS-generated files
+# OS files
 Thumbs.db
-.DS_Store
 desktop.ini
+.DS_Store
+
+# Generated test data
+Tests/Engine/release_info.json
+
+# Generated docs
+docs/*.translation
+docs/*.csv.import
