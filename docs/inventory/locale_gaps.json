@@ -1,0 +1,229 @@
+{
+  "ENG": {
+    "cards": {
+      "missing_vs_zhs": [
+        "FrierenMod:Defend_Defend",
+        "FrierenMod:FloatingSpell",
+        "FrierenMod:Strike_Stark"
+      ],
+      "extra_vs_zhs": []
+    },
+    "characters": {
+      "missing_vs_zhs": [
+        "FrierenMod:Stark"
+      ],
+      "extra_vs_zhs": []
+    },
+    "events": {
+      "missing_vs_zhs": [],
+      "extra_vs_zhs": []
+    },
+    "monsters": {
+      "missing_vs_zhs": [],
+      "extra_vs_zhs": []
+    },
+    "potions": {
+      "missing_vs_zhs": [],
+      "extra_vs_zhs": []
+    },
+    "powers": {
+      "missing_vs_zhs": [],
+      "extra_vs_zhs": []
+    },
+    "relics": {
+      "missing_vs_zhs": [
+        "FrierenMod:OLDHairAccessory"
+      ],
+      "extra_vs_zhs": []
+    },
+    "UIs": {
+      "missing_vs_zhs": [],
+      "extra_vs_zhs": []
+    }
+  },
+  "JPN": {
+    "cards": {
+      "missing_vs_zhs": [],
+      "extra_vs_zhs": []
+    },
+    "characters": {
+      "missing_vs_zhs": [],
+      "extra_vs_zhs": []
+    },
+    "events": {
+      "missing_vs_zhs": [],
+      "extra_vs_zhs": []
+    },
+    "monsters": {
+      "missing_vs_zhs": [],
+      "extra_vs_zhs": []
+    },
+    "potions": {
+      "missing_vs_zhs": [],
+      "extra_vs_zhs": []
+    },
+    "powers": {
+      "missing_vs_zhs": [],
+      "extra_vs_zhs": []
+    },
+    "relics": {
+      "missing_vs_zhs": [],
+      "extra_vs_zhs": []
+    },
+    "UIs": {
+      "missing_vs_zhs": [],
+      "extra_vs_zhs": []
+    }
+  },
+  "KOR": {
+    "cards": {
+      "missing_vs_zhs": [],
+      "extra_vs_zhs": []
+    },
+    "characters": {
+      "missing_vs_zhs": [],
+      "extra_vs_zhs": []
+    },
+    "events": {
+      "missing_vs_zhs": [],
+      "extra_vs_zhs": []
+    },
+    "monsters": {
+      "missing_vs_zhs": [],
+      "extra_vs_zhs": []
+    },
+    "potions": {
+      "missing_vs_zhs": [],
+      "extra_vs_zhs": []
+    },
+    "powers": {
+      "missing_vs_zhs": [],
+      "extra_vs_zhs": []
+    },
+    "relics": {
+      "missing_vs_zhs": [],
+      "extra_vs_zhs": []
+    },
+    "UIs": {
+      "missing_vs_zhs": [],
+      "extra_vs_zhs": []
+    }
+  },
+  "RUS": {
+    "cards": {
+      "missing_vs_zhs": [
+        "FrierenMod:Defend_Defend",
+        "FrierenMod:FloatingSpell",
+        "FrierenMod:Strike_Stark"
+      ],
+      "extra_vs_zhs": []
+    },
+    "characters": {
+      "missing_vs_zhs": [
+        "FrierenMod:Stark"
+      ],
+      "extra_vs_zhs": []
+    },
+    "events": {
+      "missing_vs_zhs": [],
+      "extra_vs_zhs": []
+    },
+    "monsters": {
+      "missing_vs_zhs": [],
+      "extra_vs_zhs": []
+    },
+    "potions": {
+      "missing_vs_zhs": [],
+      "extra_vs_zhs": []
+    },
+    "powers": {
+      "missing_vs_zhs": [],
+      "extra_vs_zhs": []
+    },
+    "relics": {
+      "missing_vs_zhs": [
+        "FrierenMod:OLDHairAccessory"
+      ],
+      "extra_vs_zhs": []
+    },
+    "UIs": {
+      "missing_vs_zhs": [],
+      "extra_vs_zhs": []
+    }
+  },
+  "ZHS": {
+    "cards": {
+      "missing_vs_zhs": [],
+      "extra_vs_zhs": []
+    },
+    "characters": {
+      "missing_vs_zhs": [],
+      "extra_vs_zhs": []
+    },
+    "events": {
+      "missing_vs_zhs": [],
+      "extra_vs_zhs": []
+    },
+    "monsters": {
+      "missing_vs_zhs": [],
+      "extra_vs_zhs": []
+    },
+    "potions": {
+      "missing_vs_zhs": [],
+      "extra_vs_zhs": []
+    },
+    "powers": {
+      "missing_vs_zhs": [],
+      "extra_vs_zhs": []
+    },
+    "relics": {
+      "missing_vs_zhs": [],
+      "extra_vs_zhs": []
+    },
+    "UIs": {
+      "missing_vs_zhs": [],
+      "extra_vs_zhs": []
+    }
+  },
+  "ZHT": {
+    "cards": {
+      "missing_vs_zhs": [
+        "FrierenMod:Defend_Defend",
+        "FrierenMod:Strike_Stark"
+      ],
+      "extra_vs_zhs": []
+    },
+    "characters": {
+      "missing_vs_zhs": [
+        "FrierenMod:Stark"
+      ],
+      "extra_vs_zhs": []
+    },
+    "events": {
+      "missing_vs_zhs": [],
+      "extra_vs_zhs": []
+    },
+    "monsters": {
+      "missing_vs_zhs": [],
+      "extra_vs_zhs": []
+    },
+    "potions": {
+      "missing_vs_zhs": [],
+      "extra_vs_zhs": []
+    },
+    "powers": {
+      "missing_vs_zhs": [],
+      "extra_vs_zhs": []
+    },
+    "relics": {
+      "missing_vs_zhs": [],
+      "extra_vs_zhs": [
+        "FrierenMod:ExchangeRelic"
+      ]
+    },
+    "UIs": {
+      "missing_vs_zhs": [],
+      "extra_vs_zhs": []
+    }
+  }
+}

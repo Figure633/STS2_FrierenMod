@@ -1,0 +1,156 @@
+{
+  "audit_date": "2026-10-17",
+  "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+  "source_manifest_version": "2.3.0",
+  "java_file_count": 562,
+  "content_file_count": 354,
+  "categories": {
+    "cards": 244,
+    "relics": 21,
+    "potions": 4,
+    "powers": 74,
+    "characters": 3,
+    "events": 6,
+    "monsters": 2
+  },
+  "card_groups": {
+    ".": 1,
+    "magicItems": 1,
+    "magicItems/factors": 28,
+    "magicItems/props": 9,
+    "optionCards": 7,
+    "optionCards/SerieGrimoire/layer1": 4,
+    "optionCards/SerieGrimoire/layer2": 8,
+    "optionCards/SerieGrimoire/layer3": 6,
+    "optionCards/SerieGrimoire/layer4": 8,
+    "orange": 2,
+    "purple": 64,
+    "tempCards": 23,
+    "testCards": 2,
+    "white": 74,
+    "whitePurple": 7
+  },
+  "registration_states": {
+    "抽象基类": 7,
+    "自动扫描目录候选": 250,
+    "显式忽略": 6,
+    "不在直接扫描目录/需追踪引用": 2,
+    "无活动类声明/注释存档": 5,
+    "显式注册": 7,
+    "由效果引用/需追踪可达性": 70,
+    "已注册且默认启用": 2,
+    "默认关闭": 1,
+    "专用流程/需追踪引用": 2,
+    "注册入口已调用/生成条件需复核": 2
+  },
+  "resource_file_count": 961,
+  "resource_extensions": {
+    ".mp3": 24,
+    ".ogg": 10,
+    ".png": 867,
+    ".atlas": 2,
+    ".json": 58
+  },
+  "local_asset_file_count": 1673,
+  "local_asset_bytes": 1898945885,
+  "local_asset_extensions": {
+    ".png": 994,
+    ".jpg": 2,
+    ".docx": 9,
+    ".lnk": 4,
+    "": 2,
+    ".xml": 1,
+    ".md": 1,
+    ".java": 562,
+    ".mp3": 24,
+    ".ogg": 10,
+    ".atlas": 2,
+    ".json": 58,
+    ".txt": 1,
+    ".xlsx": 1,
+    ".psd": 2
+  },
+  "localization_counts": {
+    "ENG": {
+      "cards": 239,
+      "characters": 2,
+      "events": 6,
+      "keywords": 29,
+      "monsters": 2,
+      "potions": 3,
+      "powers": 60,
+      "relics": 19,
+      "UIs": 54
+    },
+    "JPN": {
+      "cards": 242,
+      "characters": 3,
+      "events": 6,
+      "keywords": 29,
+      "monsters": 2,
+      "potions": 3,
+      "powers": 60,
+      "relics": 20,
+      "UIs": 54
+    },
+    "KOR": {
+      "cards": 242,
+      "characters": 3,
+      "events": 6,
+      "keywords": 29,
+      "monsters": 2,
+      "potions": 3,
+      "powers": 60,
+      "relics": 20,
+      "UIs": 54
+    },
+    "RUS": {
+      "cards": 239,
+      "characters": 2,
+      "events": 6,
+      "keywords": 29,
+      "monsters": 2,
+      "potions": 3,
+      "powers": 60,
+      "relics": 19,
+      "UIs": 54
+    },
+    "ZHS": {
+      "cards": 242,
+      "characters": 3,
+      "events": 6,
+      "keywords": 29,
+      "monsters": 2,
+      "potions": 3,
+      "powers": 60,
+      "relics": 20,
+      "UIs": 54
+    },
+    "ZHT": {
+      "cards": 240,
+      "characters": 2,
+      "events": 6,
+      "keywords": 29,
+      "monsters": 2,
+      "potions": 3,
+      "powers": 60,
+      "relics": 21,
+      "UIs": 54
+    }
+  },
+  "localization_parse_errors": [],
+  "local_source_comparison": {
+    "same_java": 562,
+    "different_java": [],
+    "missing_java": []
+  },
+  "package_filter_basis": "BaseMod master AutoAdd.PackageFilter.accept uses startsWith; exact historical runtime jar not verified",
+  "limitations": [
+    "文件数不是游戏可获取内容数",
+    "自动扫描不证明运行时注册成功",
+    "ID仅匹配常见表达式，未匹配者需人工核对",
+    "本地素材仅枚举路径与大小，未打开文档或审查图片",
+    "未下载远程大型美术音频文件",
+    "词条未验证翻译质量或语义一致性"
+  ]
+}
