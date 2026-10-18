@@ -39,3 +39,5 @@ Tests/Engine/release_info.json
 # Generated docs
 docs/*.translation
 docs/*.csv.import
+
+*.csproj.old*
