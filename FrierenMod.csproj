@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>true</ImplicitUsings>
+    <LangVersion>12.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <Version>0.5.2</Version>
+    <NoWarn>$(NoWarn);MSB3270</NoWarn>
+  </PropertyGroup>
+  <Import Project="GameReferences.props" />
+
+  <ItemGroup>
+    <Compile Include="Scripts/**/*.cs" />
+    <Compile Include="Core/**/*.cs" />
+  </ItemGroup>
+
+  <!-- 构建只写工作目录；部署由用户显式执行。当前没有自定义 Godot C# 节点，无需源生成器。 -->
+  <Target Name="StageMod" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
+    <MakeDir Directories="$(MSBuildProjectDirectory)/artifacts/FrierenMod" />
+    <Copy SourceFiles="$(TargetPath);FrierenMod.json;LICENSE.STS1;README.md" DestinationFolder="$(MSBuildProjectDirectory)/artifacts/FrierenMod" />
+  </Target>
+</Project>

@@ -1,0 +1,13 @@
+{
+  "FRIERENMOD-FRIEREN.title": "Frieren",
+  "FRIERENMOD-FRIEREN.titleObject": "Frieren",
+  "FRIERENMOD-FRIEREN.description": "An elven mage on a long journey.\nGather Mana, Chant spells, and collect magic factors and tools along the way.",
+  "FRIERENMOD-FRIEREN.pronounObject": "her",
+  "FRIERENMOD-FRIEREN.pronounSubject": "she",
+  "FRIERENMOD-FRIEREN.pronounPossessive": "hers",
+  "FRIERENMOD-FRIEREN.possessiveAdjective": "her",
+  "FRIERENMOD-FRIEREN.cardsModifierTitle": "Frieren Cards",
+  "FRIERENMOD-FRIEREN.cardsModifierDescription": "Add Frieren cards.",
+  "FRIERENMOD-FRIEREN.eventDeathPrevention": "The journey is not over yet.",
+  "FRIERENMOD-FRIEREN.unlockText": "Begin a new journey."
+}

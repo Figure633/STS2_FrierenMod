@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType><TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings><Nullable>enable</Nullable>
+    <NoWarn>$(NoWarn);MSB3270</NoWarn>
+  </PropertyGroup>
+  <Import Project="../../GameReferences.props" />
+  <ItemGroup>
+    <Compile Remove="CombatTests.cs" />
+    <ProjectReference Include="../../FrierenMod.csproj" />
+    <Reference Update="sts2;GodotSharp;0Harmony;BaseLib" Private="true" />
+  </ItemGroup>
+  <Target Name="CopyTestDependencies" AfterTargets="Build">
+    <ItemGroup><GameDependency Include="$(Sts2DataDir)/SmartFormat*.dll;$(Sts2DataDir)/Sentry.dll;$(Sts2DataDir)/Steamworks.NET.dll;$(Sts2DataDir)/JetBrains.Annotations.dll" /></ItemGroup>
+    <Copy SourceFiles="@(GameDependency)" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" />
+  </Target>
+</Project>

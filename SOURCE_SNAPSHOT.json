@@ -1,0 +1,34 @@
+{
+  "format": 1,
+  "mod_version": "0.5.2",
+  "created_utc": "2026-10-18T02:40:36.571274+00:00",
+  "kind": "complete source working-tree snapshot; no git history; not an upstream commit",
+  "source_file_count": 387,
+  "sts2_upstream": {
+    "url": "https://github.com/FrierenModForSlayTheSpire/FrierenMod_STS2",
+    "commit": "985668e9ced12e0be563c1ea00edd674f6e6c05d"
+  },
+  "sts1_reference": {
+    "url": "https://github.com/FrierenModForSlayTheSpire/FrierenMod_STS1",
+    "commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc"
+  },
+  "dependencies": {
+    "game": "v0.107.1",
+    "BaseLib": "v3.4.7",
+    "dotnet_sdk": "9.0.306",
+    "Godot": "4.5.1"
+  },
+  "pending": [
+    "starting tool + random prop grant",
+    "starting factor guidance",
+    "first-play tutorial"
+  ],
+  "excluded": [
+    "git history",
+    "build/import caches",
+    "game and BaseLib binaries",
+    "personal settings and saves",
+    "raw machine logs"
+  ],
+  "integrity": "SHA256SUMS.txt covers every other file, including SOURCE_SNAPSHOT.json"
+}

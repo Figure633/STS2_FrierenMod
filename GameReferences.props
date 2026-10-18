@@ -1,0 +1,18 @@
+<Project>
+  <Import Project="$(MSBuildThisFileDirectory)local.props" Condition="Exists('$(MSBuildThisFileDirectory)local.props')" />
+  <PropertyGroup>
+    <Sts2Dir Condition="'$(Sts2Dir)' == ''">C:/Program Files (x86)/Steam/steamapps/common/Slay the Spire 2</Sts2Dir>
+    <Sts2DataDir>$(Sts2Dir)/data_sts2_windows_x86_64</Sts2DataDir>
+    <BaseLibDir Condition="'$(BaseLibDir)' == ''">C:/Program Files (x86)/Steam/steamapps/workshop/content/2868840/3737335127/BaseLib</BaseLibDir>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="sts2" HintPath="$(Sts2DataDir)/sts2.dll" Private="false" />
+    <Reference Include="GodotSharp" HintPath="$(Sts2DataDir)/GodotSharp.dll" Private="false" />
+    <Reference Include="0Harmony" HintPath="$(Sts2DataDir)/0Harmony.dll" Private="false" />
+    <Reference Include="BaseLib" HintPath="$(BaseLibDir)/BaseLib.dll" Private="false" />
+  </ItemGroup>
+  <Target Name="CheckGameReferences" BeforeTargets="ResolveReferences">
+    <Error Condition="!Exists('$(Sts2DataDir)/sts2.dll')" Text="未找到 sts2.dll，请在 local.props 设置 Sts2Dir。" />
+    <Error Condition="!Exists('$(BaseLibDir)/BaseLib.dll')" Text="未找到 BaseLib.dll，请在 local.props 设置 BaseLibDir。" />
+  </Target>
+</Project>

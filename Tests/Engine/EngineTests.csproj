@@ -1,0 +1,18 @@
+<Project Sdk="Godot.NET.Sdk/4.5.1">
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <EnableDynamicLoading>true</EnableDynamicLoading>
+    <ImplicitUsings>enable</ImplicitUsings><Nullable>enable</Nullable>
+    <NoWarn>$(NoWarn);MSB3270</NoWarn>
+  </PropertyGroup>
+  <Import Project="../../GameReferences.props" />
+  <ItemGroup>
+    <ProjectReference Include="../../FrierenMod.csproj" />
+    <Compile Include="../Integration/CombatTests.cs" Link="CombatTests.cs" />
+    <Reference Update="sts2;0Harmony;BaseLib" Private="true" />
+  </ItemGroup>
+  <Target Name="CopyTestDependencies" AfterTargets="Build">
+    <ItemGroup><GameDependency Include="$(Sts2DataDir)/SmartFormat*.dll;$(Sts2DataDir)/Sentry.dll;$(Sts2DataDir)/Steamworks.NET.dll;$(Sts2DataDir)/JetBrains.Annotations.dll" /></ItemGroup>
+    <Copy SourceFiles="@(GameDependency)" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" />
+  </Target>
+</Project>

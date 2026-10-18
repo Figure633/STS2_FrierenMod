@@ -1,0 +1,20 @@
+{
+  "THE_ARCHITECT.talk.FRIERENMOD-FRIEREN.0-0.ancient": "你想从这座塔里得到什么？",
+  "THE_ARCHITECT.talk.FRIERENMOD-FRIEREN.0-0.next": "回应",
+  "THE_ARCHITECT.talk.FRIERENMOD-FRIEREN.0-1.char": "没见过的魔法。还有离开这里的方法。",
+  "THE_ARCHITECT.talk.FRIERENMOD-FRIEREN.0-1.next": "继续",
+  "THE_ARCHITECT.talk.FRIERENMOD-FRIEREN.0-2.ancient": "那你还得再找找。",
+  "THE_ARCHITECT.talk.FRIERENMOD-FRIEREN.0-endattack": "Both",
+  "THE_ARCHITECT.talk.FRIERENMOD-FRIEREN.1-0r.ancient": "又是你。还没学会放弃吗？",
+  "THE_ARCHITECT.talk.FRIERENMOD-FRIEREN.1-0r.next": "回应",
+  "THE_ARCHITECT.talk.FRIERENMOD-FRIEREN.1-1r.char": "上次的魔法，我还没弄明白。",
+  "THE_ARCHITECT.talk.FRIERENMOD-FRIEREN.1-1r.next": "继续",
+  "THE_ARCHITECT.talk.FRIERENMOD-FRIEREN.1-2r.ancient": "我没有义务教你。",
+  "THE_ARCHITECT.talk.FRIERENMOD-FRIEREN.1-endattack": "Both",
+  "THE_ARCHITECT.talk.FRIERENMOD-FRIEREN.2-0r.char": "原来如此。你的魔法，我稍微看懂了一点。",
+  "THE_ARCHITECT.talk.FRIERENMOD-FRIEREN.2-0r.next": "继续",
+  "THE_ARCHITECT.talk.FRIERENMOD-FRIEREN.2-1r.ancient": "看懂了又如何？",
+  "THE_ARCHITECT.talk.FRIERENMOD-FRIEREN.2-1r.next": "回应",
+  "THE_ARCHITECT.talk.FRIERENMOD-FRIEREN.2-2r.char": "至少，下一次不会白来。",
+  "THE_ARCHITECT.talk.FRIERENMOD-FRIEREN.2-endattack": "Both"
+}

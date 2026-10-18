@@ -1,0 +1,20 @@
+{
+  "THE_ARCHITECT.talk.FRIERENMOD-FRIEREN.0-0.ancient": "What do you seek in this tower?",
+  "THE_ARCHITECT.talk.FRIERENMOD-FRIEREN.0-0.next": "Respond",
+  "THE_ARCHITECT.talk.FRIERENMOD-FRIEREN.0-1.char": "Magic I haven't seen before. And a way out.",
+  "THE_ARCHITECT.talk.FRIERENMOD-FRIEREN.0-1.next": "Continue",
+  "THE_ARCHITECT.talk.FRIERENMOD-FRIEREN.0-2.ancient": "Then keep looking.",
+  "THE_ARCHITECT.talk.FRIERENMOD-FRIEREN.0-endattack": "Both",
+  "THE_ARCHITECT.talk.FRIERENMOD-FRIEREN.1-0r.ancient": "You again. Have you not learned to give up?",
+  "THE_ARCHITECT.talk.FRIERENMOD-FRIEREN.1-0r.next": "Respond",
+  "THE_ARCHITECT.talk.FRIERENMOD-FRIEREN.1-1r.char": "I still haven't figured out the magic you used last time.",
+  "THE_ARCHITECT.talk.FRIERENMOD-FRIEREN.1-1r.next": "Continue",
+  "THE_ARCHITECT.talk.FRIERENMOD-FRIEREN.1-2r.ancient": "I am under no obligation to teach you.",
+  "THE_ARCHITECT.talk.FRIERENMOD-FRIEREN.1-endattack": "Both",
+  "THE_ARCHITECT.talk.FRIERENMOD-FRIEREN.2-0r.char": "I see. I'm beginning to understand your magic.",
+  "THE_ARCHITECT.talk.FRIERENMOD-FRIEREN.2-0r.next": "Continue",
+  "THE_ARCHITECT.talk.FRIERENMOD-FRIEREN.2-1r.ancient": "And what will that change?",
+  "THE_ARCHITECT.talk.FRIERENMOD-FRIEREN.2-1r.next": "Respond",
+  "THE_ARCHITECT.talk.FRIERENMOD-FRIEREN.2-2r.char": "At least I'll know more when I come back.",
+  "THE_ARCHITECT.talk.FRIERENMOD-FRIEREN.2-endattack": "Both"
+}

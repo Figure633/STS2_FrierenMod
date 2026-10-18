@@ -1,0 +1,1106 @@
+[
+  {
+    "file": "FrierenMod/images/cards/ContinualChant.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/ContinualChant_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "15b2006ca7ad642412ef97d484d97f1c7c9ec4357ede788a8cbffb195fa83ebf",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/FlowerFieldSpell.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/FlowerFieldSpell_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "5cba76c6a717d2d0166c6d4fa85b1bfa7a85cc81ed1669c50905353590874b33",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/BlueMoonWeed.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/BlueMoonWeed_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "69829bac5f69de119c7a92896047823a0d37b6522cceb6854d4c23a2a0f1c7f9",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/ManaBarricade.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/ManaBarricade_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "924c8b1231c5b3fb75523861fa9362ea432a855b1ca9a76fde7cc46f0a10282a",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/LureTheEnemyInDeep.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/LureTheEnemyInDeep_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "59829136f69ec5a9701b5f2d2eb96d16073ca8cf74f1a8fa05481d3a43191779",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/PerfectDefensiveMagic.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/PerfectDefensiveMagic_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "ebc8faad881a9f9693e6ff1e62380d7320cf702cc89dd36006fcef5a45d49658",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/TrueColours.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/TrueColours_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "0cfa604ea94f4e486ccea45501a1ac2f31c7e3b90ef2e4a3fa8af0cba7a96ca3",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/FullAhead.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/FullAhead_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "5fe009687e14f6f78496d6429893599aa77d001f613bf408a8b6bade4cdad559",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/Simmering.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/Simmering_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "bf87be2d37eb3e3b98bf400b0aaa24ecc49638ade035deb06dac66ec3de88c27",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/HalfTheSky.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/HalfTheSky_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "da73a62a55930111a873b1aeac999566528829cd28fc4c206b2f83e587a6b8e1",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/Confrontation.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/Confrontation_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "2468fa02731cd4760ae80b5a27f4d5ecd4688cc49d5fff17e77c2f7c4fbe4d2c",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/Imagination.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/Imagination_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "8c77b4a24d1319708e7f2a0d6f0d8940c8d2ff3a2d73d9d677b85396fd778df4",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/PreparedPosture.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/PreparedPosture_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "99dfdb68b08205224380caeb40926171bd640203e9ead638dfba8b7d739f932e",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/FolkGrimoire.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/FolkGrimoire_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "8ec7989de1c516742c6f8e2795b613944cc3cb8b55d09aebc7104a99a70dbafa",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/HellFireSummoning.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/HellFireSummoning_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "6821e5a3747710b6119eb01a0c0263f0e7057d1722128ab7394b31fabcb4e084",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/PreciseChant.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/PreciseChant_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "aad703fad009e6a58fa1cb89d7c1f21a54a4206a6177a573f057d0e06d7c20fb",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/FinalChant.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/FinalChant_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "88c29df509c5f2f6b1f40c0e69dc96764bf5c85b858597c65d1afb3a7fadacc5",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/ManaExpansion.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/ManaExpansion_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "f637e351461be0a42359deb6617df25f5e6ebc0e043cfb74277395243b99b33d",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/DrawChantChoice.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/AdvancedDefensiveMagic_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "bdee0d9bd512e19cd10afff7c104ca46f97c59668d5930d6b62baf3b9cfb66ad",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/HandChantChoice.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/BuildUpBody_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "99dc6fbd3a587d84df64860feb517c0b0540cd53c5f31555f27cad09380cddc7",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/DiscardChantChoice.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/HighSpeedMovement_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "0a320aea730e5de2f91fafcf2995e6cbddd272ce074369405e6a61eaba05031b",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/AdvancedDefensiveMagic.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/AdvancedDefensiveMagic_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "bdee0d9bd512e19cd10afff7c104ca46f97c59668d5930d6b62baf3b9cfb66ad",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/BarrierMagic.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/BarrierMagic_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "a5cb1648a78007230dd0d13c4f80dfd73f73a3547b1bc15f59619cdcdfbbaa2d",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/BePrepared.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/BePrepared_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "a30109251df536c736003d381b8115c61f8b294bc280d8d26fb1c9c779fd559d",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/BigFire.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/BigFire_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "6a151208ea08c7f7738ac88de169f8884ef144ce90b9832c37a63e731737e375",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/BloodSpell.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/BloodSpell_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "d56603fe520950d3682c408d792a883dcd2f6296e75dd77615334e378863c815",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/BluePrint.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/BluePrint_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "b8b92bce45126f42dda0ce6e3858bf47ed4ceefefef5c86a56871ee604757b3d",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/BuildUpBody.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/BuildUpBody_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "99dc6fbd3a587d84df64860feb517c0b0540cd53c5f31555f27cad09380cddc7",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/Factor001.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/Factor001_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "6f27b05d899f8d7b4fe81a226ae6c5391c4febd5ea8f79857bbfcb491a8fd2b1",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/Factor010.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/Factor010_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "a629917bf8f0f76f52796b0402560696e839d05f7821b0dfa38f839fadee3660",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/Factor100.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/Factor100_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "f6babfb1de78f993b680833818373a5f97a2906e67f1c84c6859d34136a34976",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/GreatMageComposure.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/GreatMageComposure_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "2db451fcf7d9325be920d6bf9b4332ea55c98e374e78af9dbb1818303c1b6ff2",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/GrossedOutLook.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/GrossedOutLook_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "ba8c73cf5609e05f06e145b85c935e184a30171f0f70dbe57424813ad76cc7a1",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/HighSpeedMovement.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/HighSpeedMovement_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "0a320aea730e5de2f91fafcf2995e6cbddd272ce074369405e6a61eaba05031b",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/Hypnosis.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/Hypnosis_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "ff82726c54f5078bd308f1e574c982ac6fc2cbe62468c73863572a9323d3229f",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/IceArrows.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/IceArrows_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "8d50af3794c5ba46f7764d22eac5d09ab4a1336ddfcbdea1c41e76c5804c0c80",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/ImpeccableIntangible.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/ImpeccableIntangible_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "625e15781973dd7f892d9c1d3647e652dd69d464f8b737679c5ec7c86207dff8",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/MeleeMage.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/MeleeMage_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "dae7d6d0173089c6a9d96f03d5ace07db3d0e4f8965418e431212a2ea0380e0f",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/MetallicizFlower.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/MetallicizFlower_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "5105c4a056a7e0a09cbac859185dc31fac77f8fb426c77883ec8fba1bb3a2dc4",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/NatureBeauty.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/NatureBeauty_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "651656ad78766748bf62cafd68bf18e9d13fc0e504ca624fd660ab2655b35b5d",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/PassOnTheTorch.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/PassOnTheTorch_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "f636ded4a7dac7878318e5a484a26b3cff3952b086f5d2d1cac556e2c92c7501",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/PeacefulDays.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/PeacefulDays_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "c07be6cdbf47dd4b9402cc215fb6fb34a06a6bee159600e1d9741ffb1c52c487",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/PinchAndScrape.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/PinchAndScrape_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "cbc38f0ac9a35c542f2b31d5dc58fc2036e9bff7127418b91d30fa8e21320cc2",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/Sleeeep.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/Sleeeep_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "69c5d7022f69264fd0e9e1070eaca52fe04144f667fac8dbbf448106f04480a7",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/SpellBoost.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/SpellBoost_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "8ae9add2a327a889844f64aa4e01ead9a5750d614d70b1a7594bf9fbf74dac0b",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/Strategizing.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/Strategizing_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "cdbe2899b0e1e5a42d59ca625649dc026cfcea3063ae9e241d29b770961c098b",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/TheLivingLegend.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/TheLivingLegend_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "5351aa960d68df2e6f862a20d8fe33b895a0181dec593a1773890211a45a44f6",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/Transcendence.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/Transcendence_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "d10546ab7d637b094b6b75afc34cb9995faa0bd6a9c621375c9704ecbeebbf90",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/TransferToAlchemist.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/TransferToAlchemist_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "a6eb87dabfef2735a475663203d328b4542ed162eaddb880cd912f57ea4bd31f",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/Famehameha.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/Famehameha_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "79d56ecf5919aa4cdbaf3346d79a9a3b521599c76fc4c1ea6de4f86b04857626",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/FairyTaleEnd.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/FairyTaleEnd_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "88281a449dab3bba0c42914b87531fab319ff0c346c83543781acbc82cb14a99",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/HotTeaSpell.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/HotTeaSpell_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "39b024a2d771a9ad77c72a3bc37f2b1bbca1492a2fee587603eb150ee7ee2377",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/MoldSpell.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/MoldSpell_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "d589ab1f563afbcda9fd50431a70afb4be6d1e5987407a324b22f4782e300404",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/OilSpell.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/OilSpell_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "0beb5357bb91f8ded7b0881af5c46c1c9e2d19c93751e75d0cffeaa209c50cd2",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/PaperPlaneSpell.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/FinalChant_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "88c29df509c5f2f6b1f40c0e69dc96764bf5c85b858597c65d1afb3a7fadacc5",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/RustCleanMagic.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/RustCleanMagic_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "4dda6fd313727e8ca5ef2fb40e2f0bf694742645641cf30e982b50b736eb1c23",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/LightningMagic.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/LightningMagic_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "8881556ec3152a1b5eb22629f667971a58f3e2e9a891e4cb33d344416421784c",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/LittleFire.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/LittleFire_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "129c2f2d632cefac4ee8e5085c7d2a65df8006f5a855190c2ffa6d792d03fd80",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/CrystalBall.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/CrystalBall_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "a562b26de92b8dd0e780aebaca6d38ffe4f1d118a4b16f007c652f769b0a399c",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/MysteryBox.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/MysteryBox_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "6074895e93c69125965b30eb2a9b0ec2db84353d47b2c73344b33bf518274650",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/MysticBox.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/MysticBox_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "5e9ecfbdd765ff45bf10d9a862cae299a7001b8818e0ab9116a7f0aadeedf093",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/SeinNote.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/SeinNote_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "609c67cbce6a41f2faa899d5abc68ca093390737dbb211e6b616a1295e4c9591",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/ShadowDragonHorn.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/ShadowDragonHorn_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "ff5fce9594529db46e7798499400973c7c4fe342597594a8c2d0a3a2f592fc40",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/TransmutationCircle.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/TransmutationCircle_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "bfe8e0c8a1bdb12b1d627a50f965a24c8965545a45dd7433dbdba9cce1aa0971",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/UnbelievableTool.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/UnbelievableTool_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "200b4cefba118c55a932980d18ac1837c69ee4d9b3793dcb13d5c8a791278961",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/UnbelievableToolBox.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/UnbelievableToolBox_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "8d97aac59c0e0564c52584d8d2032b7cdc95b5045d0001de1872625006ab254a",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/Mana.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/Mana_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "5a5c5e9c6a0de374ea2956719099d4dc985158443ee5e83e8a5f95d16f192a52",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/StrikeFrieren.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/Strike_Frieren_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "2481b362c047d63b8a3ad55a3346a60ab0d5482e51ae2ddfbbdd74c4f0af6cfc",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/DefendFrieren.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/Defend_Frieren_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "85d947a227070a84d0426011c11a281bb9be4dddaab6d64f026b19475c8641d7",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/Flow.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/Flow_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "9a49d3d39fb7668bc04c4324228b3a6c7184f5750997162133b21fc306c43e3d",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/RapidChant.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/RapidChant_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "098ef774a9b94a799ddef37250af6ddb412f35df7b49a066d13e79a03b8d786c",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/DefensiveMagic.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/DefensiveMagic_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "70eb118d3eb0ebfde07343a67a03114b8c0b58cd5a702f0868af98748f0ee9c8",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/SecondDefensiveMagic.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/DefensiveMagic_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "70eb118d3eb0ebfde07343a67a03114b8c0b58cd5a702f0868af98748f0ee9c8",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/powers/ConcentrationPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/ConcentrationPower_84.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "a5a3ab97e8bfb36801a0636d79ec333fb0d64415325978e1d1fd04fc3d89273a",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/powers/WeakenedChantPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/WeakenedChantPower_84.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "2f20e96411f580630cffdca1527a9e05892aebef20a2e518486422972b86697d",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/powers/ChantWithoutManaPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/ChantWithoutManaPower_84.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "c3c1a962fb52457ceeee340b30742d617043444bc18bdb5e12cf029cbbc55382",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/powers/ChantWithoutManaTimesPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/ChantWithoutManaTimesPower_84.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "8f7a39cd93ec858d017b75aaddd11fe889c15e768f4a4cda2ad56fc28dc5cfc4",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/powers/BanManaGainPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/BanManaGainPower_84.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "1c3c30bcdce4b0f067b8a147cb247c6609a324c96749ce78a79a3aeae1ce6ca8",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/powers/ManaInsteadOfEnergyPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/ManaInsteadOfEnergyPower_84.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "bccd639c82301aa06ea050f867bc1e3a4f768c1970dc9d849acdeb552033a43c",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/powers/SealPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/SealPower_84.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "c55e97f3296bc7eafb05ee28c9d49b6527489ffcf66ee5452ca64e41bca5dd67",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/powers/SynchroWithoutManaPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/SynchroWithoutManaPower_84.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "811767c0a8d430293a14958e5eb397216423d860f4e974514f6ac40fbb11029a",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/powers/StrikeUpPower.png",
+    "source": "src/main/resources/FrierenModResources/img/relics/HolyEmblem.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "8db6c4db31c02fd2fb319007f9ccad0f46e318eb7f2639bef5bd2175eb814ea9",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/powers/MetallicizePower.png",
+    "source": "src/main/resources/FrierenModResources/img/relics/HolyEmblem.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "8db6c4db31c02fd2fb319007f9ccad0f46e318eb7f2639bef5bd2175eb814ea9",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/powers/PhantasmalPower.png",
+    "source": "src/main/resources/FrierenModResources/img/relics/HolyEmblem.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "8db6c4db31c02fd2fb319007f9ccad0f46e318eb7f2639bef5bd2175eb814ea9",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/powers/RestoreStrengthPower.png",
+    "source": "src/main/resources/FrierenModResources/img/relics/HolyEmblem.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "8db6c4db31c02fd2fb319007f9ccad0f46e318eb7f2639bef5bd2175eb814ea9",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/powers/MantraPower.png",
+    "source": "src/main/resources/FrierenModResources/img/relics/HolyEmblem.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "8db6c4db31c02fd2fb319007f9ccad0f46e318eb7f2639bef5bd2175eb814ea9",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/powers/DivinityPower.png",
+    "source": "src/main/resources/FrierenModResources/img/relics/HolyEmblem.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "8db6c4db31c02fd2fb319007f9ccad0f46e318eb7f2639bef5bd2175eb814ea9",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/powers/PuzzlePower.png",
+    "source": "src/main/resources/FrierenModResources/img/relics/HolyEmblem.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "8db6c4db31c02fd2fb319007f9ccad0f46e318eb7f2639bef5bd2175eb814ea9",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/powers/FullAheadPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/FullAheadPower_84.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "4cf93f13f951c591d0ab5981b8b25661a50a15a273abef5bf2ae24eb4bbbd198",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/powers/ThunderPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/ThunderPower_84.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "0b333fd6ea3c7957a8d20f0a7ff3bf37007b264d7ea81117f07d49c70f3f5e43",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/powers/SimmeringPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/SimmeringPower_84.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "547e4f2e18f301d83cd9c01710dc66439f910a18362fb322352ffc9cf820ba20",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/powers/PaperPlanePower.png",
+    "source": "src/main/resources/FrierenModResources/img/relics/HolyEmblem.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "8db6c4db31c02fd2fb319007f9ccad0f46e318eb7f2639bef5bd2175eb814ea9",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/relics/HolyEmblem.png",
+    "source": "src/main/resources/FrierenModResources/img/relics/HolyEmblem.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "8db6c4db31c02fd2fb319007f9ccad0f46e318eb7f2639bef5bd2175eb814ea9",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/relics/HolyEmblemOutline.png",
+    "source": "src/main/resources/FrierenModResources/img/relics/HolyEmblem.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "8db6c4db31c02fd2fb319007f9ccad0f46e318eb7f2639bef5bd2175eb814ea9",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/character/atlas.png",
+    "source": "src/main/resources/FrierenModResources/img/char/Frieren/character_ArmatureFrieren.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "0aaa6f0526f615f1d5aeb21865d50395e40b7dc050632d89849593e472e1c212",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/character/select.png",
+    "source": "src/main/resources/FrierenModResources/img/char/Frieren/Character_Portrait.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "31685fee186c151c30de8ee3c20e3aef966eba52ad3f10ba7c39b0042db1f0f6",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/character/icon.png",
+    "source": "src/main/resources/FrierenModResources/img/char/Frieren/Character_Button.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "24baf868a24281c4b4c28ccd139de1e58c7600020e37a936e307336bbe91a82d",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/character/corpse.png",
+    "source": "src/main/resources/FrierenModResources/img/char/Frieren/corpse_character.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "c0e73640531a2f9af660e1b4c66cd65255b9be2dca1990d75f866e21b54961e2",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/character/rest.png",
+    "source": "src/main/resources/FrierenModResources/img/char/Frieren/shoulder.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "05f23d415ae8ec6093c15d924e2c1b0a66ab2e879ed23d26d90917348eae48fb",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/character/rest_sleep.png",
+    "source": "src/main/resources/FrierenModResources/img/char/Frieren/shoulder2.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "159f0982b50b59a031dab5eee99778ff0a36d7308c9b894068804f178cd57aed",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/character/victory1.png",
+    "source": "src/main/resources/FrierenModResources/img/char/Frieren/Victory1.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "5e3ff52b1e0ceade3fbff2621b432c738420a8ef8ac95e10d88c2a2700fe9b5b",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/character/victory2.png",
+    "source": "src/main/resources/FrierenModResources/img/char/Frieren/Victory2.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "7a7dbb44763b4388795220bcecee18d862361c635c48b063985920db79121a25",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/character/victory3.png",
+    "source": "src/main/resources/FrierenModResources/img/char/Frieren/Victory3.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "3bc6d9d606b078b6a19f9b616395b36e8738acac16ea032b0ba07573c0e5f8be",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/ui/MPLayer0.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/manaPanel/MPLayer0.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "961a4711f62dcfb41315847c744e57fc09c2418d8c0bc650d630677e701925b4",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/ui/MPLayerDark0.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/manaPanel/MPLayerDark0.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "2f7afc7734faad9085c3937832b261d87bc31bb7da18fc821981839ca081a6fb",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/ui/MPWrap.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/manaPanel/MPWrap.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "b4786344b22678072cf79e44eff792e498e35caa3135751d7244a010cecefa79",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/ui/MPWrapGolden.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/manaPanel/MPWrapGolden.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "a3edc850a9b1d53d72c057c950a9f806288a89f128eeb8e0a2f469b30ce83358",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/ui/GainMPVFX.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/manaPanel/GainMPVFX.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "4ddfe33bb470709c500c1d2a311595eefb2fb97fbef3396c6a747b235f7d8bba",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/ui/magic_deck.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/icons/magic_deck.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "4e04434538fb1af1beaad696a946701a83ce9c8e087b37c3b4658c0144d6fb5a",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/ui/magic_item_reward.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/icons/magic_item_reward.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "ac3de08cf3887647a9a1f8dfb26e919b57372d3cc74ea2310da8c8fb64c9d61a",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/ui/buy_prop.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/campfire/buyProp.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "fbd4f1449e8c365dcc6c629628d2d8263333a5550e1b5f6dbd503703b356e5ca",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/energy/layer1.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/orb/Frieren/layer1.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "fe9b3c6d909d8ea48d4c091fcea067b29a07743b86d10733c08bc0080a272c62",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/energy/layer2.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/orb/Frieren/layer2.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "385ceb095e31d686928804f88e30f71d95ff8091856bb5b7c79693c3354340d1",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/energy/layer3.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/orb/Frieren/layer3.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "317bc6a94aaa909aa7fdc6ec8fb45b04bd2f1932f2155b2d3be32eb51a3a35b6",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/energy/layer4.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/orb/Frieren/layer4.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "f67ed3ae3cbabc55fa347f72676c4681b5d4c6a3cbcab4b4ba83b8638449d0a0",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/energy/layer1d.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/orb/Frieren/layer1d.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "0fd66b15a0b459bbfdf6e213ae28d699105fd37cbb39cddae7724a9fe70f64e5",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/energy/layer2d.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/orb/Frieren/layer2d.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "2bb2f7d7754adbdce73604db2d26a229dcfd3659c273e51e28478303a3354e05",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/energy/layer3d.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/orb/Frieren/layer3d.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "7f6264279582f39fcf724cf47e9e6f92f7e327503d7e038c2b3341440482c522",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/energy/vfx.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/orb/Frieren/vfx.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "a11932c79b59a4e9bdcbb7220c8783d95c9c8b7d71dcc30f48b91bae76fc1cfe",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/audio/STS_Level1_NewMix_v1.mp3",
+    "source": "src/main/resources/FrierenModResources/audio/sound/STS_Level1_NewMix_v1.mp3",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "cf233811cf2face2164d98575fc0d6d9bdf165856dc425e93f71c76dafe227d3",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/audio/STS_Level1-2_v2.mp3",
+    "source": "src/main/resources/FrierenModResources/audio/sound/STS_Level1-2_v2.mp3",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "25d300c8ae1450244b64b134696aa02286ddad24639a90a996b936aa62674248",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/audio/STS_Level2_NewMix_v1.mp3",
+    "source": "src/main/resources/FrierenModResources/audio/sound/STS_Level2_NewMix_v1.mp3",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "bfbe4210dfcdf322f53330b239bd26fa9babcb6c4e864d960c0573c04971ad2e",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/audio/STS_Level2-2_v2.mp3",
+    "source": "src/main/resources/FrierenModResources/audio/sound/STS_Level2-2_v2.mp3",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "bfbe4210dfcdf322f53330b239bd26fa9babcb6c4e864d960c0573c04971ad2e",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/audio/STS_Level3_v2.mp3",
+    "source": "src/main/resources/FrierenModResources/audio/sound/STS_Level3_v2.mp3",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "388a97c68ddffe7bd52679035e254fdc7b15cc86b5d0860794bc70e8dbc481f4",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/audio/STS_Level3-2_v2.mp3",
+    "source": "src/main/resources/FrierenModResources/audio/sound/STS_Level3-2_v2.mp3",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "388a97c68ddffe7bd52679035e254fdc7b15cc86b5d0860794bc70e8dbc481f4",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/audio/STS_Merchant_NewMix_v1.ogg",
+    "source": "src/main/resources/FrierenModResources/audio/sound/STS_Merchant_NewMix_v1.ogg",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "2906632a31ff4cd2ad890a0e3b8632221ab236639aa4a88f90daa04177d3efda",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/audio/STS_Shrine_NewMix_v1.ogg",
+    "source": "src/main/resources/FrierenModResources/audio/sound/STS_Shrine_NewMix_v1.ogg",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "84e88f830486342740e96448bc12fff9cf37cccab51ceb93c64c13fcd7d48c78",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/audio/STS_EliteBoss_NewMix_v1.ogg",
+    "source": "src/main/resources/FrierenModResources/audio/sound/STS_EliteBoss_NewMix_v1.ogg",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "a5aaab5f079dc0f2b45c894ea69b80d155e2615f32c568aa38dde5eeb4edbbf4",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/audio/STS_Boss1_NewMix_v1.mp3",
+    "source": "src/main/resources/FrierenModResources/audio/sound/STS_Boss1_NewMix_v1.mp3",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "bfbe4210dfcdf322f53330b239bd26fa9babcb6c4e864d960c0573c04971ad2e",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/audio/STS_Boss2_NewMix_v1.mp3",
+    "source": "src/main/resources/FrierenModResources/audio/sound/STS_Boss2_NewMix_v1.mp3",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "a05bb2cb75765e9e5e021417ddc83bc8700ba534d73d10280b0f3ddb9a6b4b2b",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/audio/STS_Boss3_NewMix_v1.ogg",
+    "source": "src/main/resources/FrierenModResources/audio/sound/STS_Boss3_NewMix_v1.ogg",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "9e4d24fa2a1ded1ae3157f30dcf7c4e9e83b5eef032ef4625e7f9858c37ddbf1",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/audio/I_am_frieren.mp3",
+    "source": "src/main/resources/FrierenModResources/audio/sound/I_am_frieren.mp3",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "7517d5ea46f72c8f1fc40728bcf5409873caf818e845116ff8e137b328a6c23a",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/audio/normal_attack.mp3",
+    "source": "src/main/resources/FrierenModResources/audio/sound/normal_attack.mp3",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "6c4263e07911f87d5985cc926b63adf8a79981e316088c38d8ce497a70058a8f",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/audio/Frieren_DeathStinger.mp3",
+    "source": "src/main/resources/FrierenModResources/audio/sound/Frieren_DeathStinger.mp3",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "4bbf2ec365146997cca29d68bde0cbe7a8efb0c6471e7e628c87024d791b8818",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/audio/win.mp3",
+    "source": "src/main/resources/FrierenModResources/audio/sound/win.mp3",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "78bc6f1dbc8db41d7d30b716256940dbaac3206a1730a072d8e35aa490742f5d",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/scenes/frieren_combat.tscn",
+    "source": [
+      "src/main/resources/FrierenModResources/img/char/Frieren/character_ArmatureFrieren.json",
+      "src/main/resources/FrierenModResources/img/char/Frieren/character_ArmatureFrieren.atlas"
+    ],
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "source_sha256": [
+      "a80de00372b216259b3287112b7b1b6ed8d7a64074aa9424c883dc08e4d5aa3b",
+      "baa9665454b479df094b3c1258ed7714d4a234b77f794211801514f8c5f84554"
+    ],
+    "sha256": "d0370e87f84df5a8d7ba5e249c2594df36a17351513d0fa27096a510010f161f",
+    "modified": true,
+    "conversion": "Spine 3.8 Idle -> 24 fps Godot Polygon2D; original speed 1.2; synthetic action reactions",
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "LICENSE.STS1",
+    "source": "LICENSE",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "d7f885a925cf43c6204edb571810a31157504ff315a70faab30fbc3b3df57a21",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  }
+]

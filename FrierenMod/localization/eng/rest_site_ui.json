@@ -1,0 +1,5 @@
+{
+  "OPTION_FRIEREN_MAGIC_SHOP.name": "Magic Shop",
+  "OPTION_FRIEREN_MAGIC_SHOP.description": "Choose two tools for your Magic Book. Uses one camp action.",
+  "OPTION_FRIEREN_MAGIC_SHOP.descriptionDisabled": "Finish initial factor selection. Tool interactions currently support solo runs only."
+}

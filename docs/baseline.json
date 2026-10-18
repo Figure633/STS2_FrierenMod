@@ -1,0 +1,53 @@
+{
+  "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+  "target_upstream_commit": "985668e9ced12e0be563c1ea00edd674f6e6c05d",
+  "baselib_reference_commit": "c070755d11ec062f6c97c4dda1a205d975ed066a",
+  "template_reference_commit": "2c900a04dd2073872f677f4fb78ee2ad1e871009",
+  "source_mod_info": {
+    "modid": "FrierenMod",
+    "name": "FrierenMod 葬送的芙莉莲",
+    "author_list": [
+      "Arkalin",
+      "Figure"
+    ],
+    "description": "It is Updating! 持续更新中",
+    "version": "2.3.0",
+    "sts_version": "12-18-2020",
+    "mts_version": "3.23.2",
+    "dependencies": [
+      "basemod",
+      "stslib"
+    ]
+  },
+  "jar_mod_info": {
+    "modid": "FrierenMod",
+    "name": "FrierenMod 葬送的芙莉莲",
+    "author_list": [
+      "Arkalin",
+      "Figure"
+    ],
+    "description": "It is Updating! 持续更新中",
+    "version": "2.3.1",
+    "sts_version": "12-18-2020",
+    "mts_version": "3.23.2",
+    "dependencies": [
+      "basemod",
+      "stslib"
+    ]
+  },
+  "jar_sha256": "3df4d4f41175d9e4402f0af6514d69562693402ed4d56eefcf2e84c4b54c2b6f",
+  "source_only_classes": [
+    "FrierenMod/cardMods/RockGolemSpellMod",
+    "FrierenMod/cards/testCards/Exchange",
+    "FrierenMod/cards/testCards/ExchangeBack",
+    "FrierenMod/cards/white/MageStyleChoke",
+    "FrierenMod/cards/white/RockGolemSpell",
+    "FrierenMod/gameHelpers/CharacterExchanger",
+    "FrierenMod/powers/MageStyleChokePower"
+  ],
+  "jar_only_classes": [],
+  "resources_different": [],
+  "source_only_resources": [],
+  "jar_only_resources": [],
+  "scope": "metadata/class names/resource bytes only; method bodies and numerical rules not compared"
+}

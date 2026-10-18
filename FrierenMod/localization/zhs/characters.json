@@ -1,0 +1,13 @@
+{
+  "FRIERENMOD-FRIEREN.title": "芙莉莲",
+  "FRIERENMOD-FRIEREN.titleObject": "芙莉莲",
+  "FRIERENMOD-FRIEREN.description": "漫长旅途中的精灵魔法使。\n积蓄魔力，咏唱魔法，收集旅途中的魔法因子与魔具。",
+  "FRIERENMOD-FRIEREN.pronounObject": "她",
+  "FRIERENMOD-FRIEREN.pronounSubject": "她",
+  "FRIERENMOD-FRIEREN.pronounPossessive": "她的",
+  "FRIERENMOD-FRIEREN.possessiveAdjective": "她的",
+  "FRIERENMOD-FRIEREN.cardsModifierTitle": "芙莉莲卡牌",
+  "FRIERENMOD-FRIEREN.cardsModifierDescription": "加入芙莉莲的卡牌。",
+  "FRIERENMOD-FRIEREN.eventDeathPrevention": "旅途还没有结束。",
+  "FRIERENMOD-FRIEREN.unlockText": "踏上新的旅途。"
+}

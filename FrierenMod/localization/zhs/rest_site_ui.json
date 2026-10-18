@@ -1,0 +1,5 @@
+{
+  "OPTION_FRIEREN_MAGIC_SHOP.name": "逛魔具店",
+  "OPTION_FRIEREN_MAGIC_SHOP.description": "选择两件魔具加入魔法牌组，然后在魔法书中使用。占用一次营地行动。",
+  "OPTION_FRIEREN_MAGIC_SHOP.descriptionDisabled": "需要完成初始因子选择；魔具交互暂只支持单人。"
+}

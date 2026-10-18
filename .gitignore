@@ -1,0 +1,42 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+bin/
+obj/
+artifacts/
+local.props
+**/bin/
+**/obj/
+docs/*.translation
+docs/*.csv.import
+__pycache__/
+Tests/Engine/release_info.json
+
+# IDE and editor local files
+.vs/
+.idea/
+*.user
+*.suo
+
+# Local environment and secrets
+.env
+.env.*
+*.local.props
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+*.orig
+
+# Python cache
+*.pyc
+.pytest_cache/
+
+# Godot / C# local cache
+.mono/
+
+# OS-generated files
+Thumbs.db
+.DS_Store
+desktop.ini
