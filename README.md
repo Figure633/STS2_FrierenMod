@@ -75,4 +75,4 @@
 - 催眠按一代实现使用实际魔力费用决定层数；生血魔法保留负费用偏移。想象力按修改后的实际普通费用代付，X 费牌使用能量。
 - 本次仅供本地测试，不发布 Workshop。一代素材来源及 SHA-256 记录在 `docs/assets.json`；两张新素材由内置 image_gen 生成，路径、提示词与哈希见 `docs/generated_assets.json`。接口未暴露模型版本，不能确认是 IMAGE 2.5。原图仍保留。
 
-规则集中在 `Core/`，游戏命令集中在 `Scripts/Mechanics/`，因子统一使用目录和效果分发，卡牌复用原生命令；没有引入一代的 ActionQueue 或全局当前卡牌。
+代码按角色模块组织，普通卡牌每张独立文件并按稀有度分类；详见 [代码结构与菲伦接入约定](docs/CODE_STRUCTURE.md)。规则集中在 `Core/Frieren/`，游戏命令集中在 `Scripts/Frieren/Mechanics/`，因子统一使用目录和效果分发，卡牌复用原生命令；没有引入一代的 ActionQueue 或全局当前卡牌。

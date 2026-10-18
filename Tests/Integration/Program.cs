@@ -85,4 +85,22 @@ Test("真实模型 ID 与中英本地化一致", () => {
         }
     }
 });
+Test("重构保持全部已注册模型身份", () => {
+    // 在重构前从真实 ModelDb 记录，覆盖卡牌、能力、角色、遗物及内容池。
+    var expected = JsonSerializer.Deserialize<Dictionary<string, string>>(
+        File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "model-identities.json")))!;
+    var actual = typeof(Mana).Assembly.GetTypes()
+        .Where(t => !t.IsAbstract && typeof(AbstractModel).IsAssignableFrom(t))
+        .ToDictionary(t => t.FullName!, t => ModelDb.GetId(t).ToString());
+    Equal(expected.Count, actual.Count);
+    foreach (var (name, id) in expected) Equal(id, actual[name]);
+});
+Test("公共卡牌基类不绑定角色卡池", () => {
+    var shared = typeof(FrierenMod.Scripts.Shared.Cards.ModCard);
+    Equal(true, shared.IsAbstract);
+    Equal(false, shared.GetCustomAttributes(typeof(BaseLib.Utils.PoolAttribute), true).Any());
+    Equal(true, typeof(FrierenCard).GetCustomAttributes(typeof(BaseLib.Utils.PoolAttribute), true).Any());
+    Equal("res://FrierenMod/images/cards/StrikeFrieren.png", ModelDb.Card<StrikeFrieren>().PortraitPath);
+    Equal("res://FrierenMod/images/cards/DefensiveMagic.png", ModelDb.Card<SecondDefensiveMagic>().PortraitPath);
+});
 Console.WriteLine($"{passed} integration tests passed.");

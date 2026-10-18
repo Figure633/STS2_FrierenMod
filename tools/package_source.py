@@ -12,7 +12,7 @@ ROOT_FILES = {
     ".editorconfig", ".gitattributes", ".gitignore", "FrierenMod.csproj",
     "FrierenMod.json", "FrierenMod.sln", "GameReferences.props", "global.json",
     "icon.svg", "icon.svg.import", "LICENSE.STS1", "local.props.example",
-    "project.godot", "README.md", "先读我-作者接手.md",
+    "project.godot", "README.md", "先读我-作者接手.md", "AGENTS.md",
 }
 SOURCE_DIRS = ("Core", "Scripts", "FrierenMod", "Tests", "docs", "tools")
 EXCLUDED_DIRS = {".git", ".godot", ".cache", "bin", "obj", "artifacts", "__pycache__", "backups"}
@@ -31,6 +31,8 @@ def source_files():
             if not path.is_file():
                 continue
             if path.suffix.lower() in EXCLUDED_SUFFIXES:
+                continue
+            if path.name.endswith(".cs.uid"):
                 continue
             if path.name in {"local.props", "release_info.json"} or path.name.startswith(".env"):
                 continue

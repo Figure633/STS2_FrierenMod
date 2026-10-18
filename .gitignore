@@ -2,6 +2,10 @@
 .godot/
 .mono/
 
+# C# models are compiled into the DLL, not referenced as scene scripts.
+# Follow Downfall: keep Godot's local sidecars but do not version C# UIDs.
+*.cs.uid
+
 # .NET build outputs
 bin/
 obj/

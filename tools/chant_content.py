@@ -167,7 +167,7 @@ def preview(name, attrs, index):
     return f"Chant X: {cost}.\n{effect}"
 
 def main():
-    catalog = (ROOT / "Core/SpellCatalog.cs").read_text(encoding="utf8")
+    catalog = (ROOT / "Core/Frieren/SpellCatalog.cs").read_text(encoding="utf8")
     factors = {}
     for name, args in re.findall(r'F\("(\w+)"([^)]*)\)', catalog):
         attrs = dict((k, int(v)) for k, v in re.findall(r'(cost|offset|reward|rewardOffset):\s*(-?\d+)', args))

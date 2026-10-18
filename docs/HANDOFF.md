@@ -12,21 +12,23 @@
 
 ## 代码地图
 
+目录已于 2026-10-18 按角色模块整理，新增内容请先读 [代码结构](CODE_STRUCTURE.md)。现有类型命名空间和模型身份保留。
+
 | 层次 | 文件/目录 | 职责 |
 |---|---|---|
-| 入口与角色 | Scripts/Entry.cs、Scripts/Characters/Frieren.cs | 模型/补丁注册，角色数据、起始牌组与展示 |
-| 纯规则 | Core/ChantRules.cs、SpellCatalog.cs | 咏唱费用、强度、因子目录及规则 |
-| 魔法书状态 | Core/MagicDeckState.cs | 因子、槽位、魔具、开局草稿、奖励补偿计数与序列化 |
-| 魔具规则 | Core/MagicPropRules.cs | 八种魔具的目标约束和效果，非法操作保持状态不变 |
-| 游戏结算 | Scripts/Mechanics/ChantCmd.cs、FactorEffects.cs、Mana*.cs | 调用二代原生命令，支付魔力、结算因子及回调 |
-| 开局与奖励 | Scripts/Mechanics/MagicDeckCmd.cs、Scripts/Rewards/FactorReward.cs | 三槽各一次三选一、独立因子奖励 |
-| 存档 | Scripts/Mechanics/MagicDeckStore.cs | 玩家 SavedSpireField，兼容旧圣徽字段；移除圣徽仍保留数据 |
-| 魔具命令 | Scripts/Mechanics/MagicPropCmd.cs | 单人操作阶段限制、防重复提交、奖励 RNG、治疗/能量命令 |
-| 卡牌与能力 | Scripts/Cards/、Scripts/Powers/ | 原生卡模型、预览、悬停、咏唱触发；LegendaryCards.cs 包含童话伤害预览 |
-| 常驻 UI | Scripts/UI/MagicBookUi.cs | 紧凑三槽魔力计数、悬停说明、魔法书入口及遮罩 |
-| 魔法书界面 | Scripts/UI/MagicBookScreen.cs | 原生 NCard 与网格，右键启用魔具、左键选目标、选满生效 |
-| 营地 | Scripts/RestSite/BuyMagicPropsOption.cs | 原生营地行动，八选二魔具；取消不耗行动 |
-| 展示 | Scripts/Presentation/、FrierenMod/scenes/ | 音乐切换、动作音效、死亡配乐、Godot 角色场景 |
+| 入口与角色 | Scripts/Entry.cs、Scripts/Frieren/Character/Frieren.cs | 模型/补丁注册，角色数据、起始牌组与展示 |
+| 纯规则 | Core/Frieren/ChantRules.cs、SpellCatalog.cs | 咏唱费用、强度、因子目录及规则 |
+| 魔法书状态 | Core/Frieren/MagicDeckState.cs | 因子、槽位、魔具、开局草稿、奖励补偿计数与序列化 |
+| 魔具规则 | Core/Frieren/MagicPropRules.cs | 八种魔具的目标约束和效果，非法操作保持状态不变 |
+| 游戏结算 | Scripts/Frieren/Mechanics/ChantCmd.cs、FactorEffects.cs、Mana*.cs | 调用二代原生命令，支付魔力、结算因子及回调 |
+| 开局与奖励 | Scripts/Frieren/Mechanics/MagicDeckCmd.cs、Scripts/Frieren/Rewards/FactorReward.cs | 三槽各一次三选一、独立因子奖励 |
+| 存档 | Scripts/Frieren/Mechanics/MagicDeckStore.cs | 玩家 SavedSpireField，兼容旧圣徽字段；移除圣徽仍保留数据 |
+| 魔具命令 | Scripts/Frieren/Mechanics/MagicPropCmd.cs | 单人操作阶段限制、防重复提交、奖励 RNG、治疗/能量命令 |
+| 卡牌与能力 | Scripts/Frieren/Cards/、Scripts/Frieren/Powers/ | 原生卡模型、预览、悬停、咏唱触发；Cards/Rare/FairyTaleEnd.cs 包含童话伤害预览 |
+| 常驻 UI | Scripts/Frieren/UI/MagicBookUi.cs | 紧凑三槽魔力计数、悬停说明、魔法书入口及遮罩 |
+| 魔法书界面 | Scripts/Frieren/UI/MagicBookScreen.cs | 原生 NCard 与网格，右键启用魔具、左键选目标、选满生效 |
+| 营地 | Scripts/Frieren/RestSite/BuyMagicPropsOption.cs | 原生营地行动，八选二魔具；取消不耗行动 |
+| 展示 | Scripts/Frieren/Presentation/、FrierenMod/scenes/ | 音乐切换、动作音效、死亡配乐、Godot 角色场景 |
 | 文本和资源 | FrierenMod/localization/{zhs,eng}/、images/、audio/ | 双语卡面、悬停、建筑师对话及资源 |
 | 验证 | Tests/Pure/、Integration/、Engine/ | 纯规则、实际程序集接口、真实引擎和 UI/结算流程 |
 

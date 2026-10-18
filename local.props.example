@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <!-- 复制为 local.props，然后按本机安装位置修改；local.props 不提交。 -->
+    <Sts2Dir>C:/Program Files (x86)/Steam/steamapps/common/Slay the Spire 2</Sts2Dir>
+    <BaseLibDir>C:/Program Files (x86)/Steam/steamapps/workshop/content/2868840/3737335127/BaseLib</BaseLibDir>
+    <GodotPath>D:/Tools/Godot/Godot_v4.5.1-stable_win64_console.exe</GodotPath>
+    <GodotMonoPath>D:/Tools/GodotMono/Godot_v4.5.1-stable_mono_win64_console.exe</GodotMonoPath>
+  </PropertyGroup>
+</Project>

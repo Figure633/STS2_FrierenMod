@@ -11,7 +11,7 @@ from convert_frieren_visuals import bake
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = Path(os.environ.get("FRIEREN_STS1_SOURCE", ROOT.parents[1] / "references/FrierenMod_STS1"))
 RES = SOURCE / "src/main/resources/FrierenModResources"
-CARD_ART = {name: name for path in (ROOT / "Scripts/Cards").glob("*.cs")
+CARD_ART = {name: name for path in sorted((ROOT / "Scripts/Frieren/Cards").rglob("*.cs"))
             for name in re.findall(r"public sealed class (\w+)", path.read_text(encoding="utf8"))}
 CARD_ART.update({"StrikeFrieren": "Strike_Frieren", "DefendFrieren": "Defend_Frieren",
                  "SecondDefensiveMagic": "DefensiveMagic", "DrawChantChoice": "AdvancedDefensiveMagic",
@@ -35,7 +35,7 @@ def main():
             print(f"Placeholder artwork: {target} -> FinalChant")
             image = RES / "img/cards/FinalChant_p.png"
         copy(image, ROOT / f"FrierenMod/images/cards/{target}.png")
-    for path in (ROOT / "Scripts/Powers").glob("*.cs"):
+    for path in sorted((ROOT / "Scripts/Frieren/Powers").rglob("*.cs")):
         for name in re.findall(r"public sealed class (\w+)", path.read_text(encoding="utf8")):
             source = RES / f"img/powers/{name}_84.png"
             if not source.exists():

@@ -30,7 +30,9 @@
 - 后续必须加入菲伦（Fern）作为独立可选角色；本次架构重构需支持芙莉莲、菲伦及共享内容，不能把公共卡牌基类、状态或资源绑定到芙莉莲卡池。
 - 用户认可观者移植与 Huoreimu 作为架构参考。多角色补充参考 `https://github.com/lamali292/Downfall`：角色独立模块与公共层分离。具体架构取舍见 `docs/ARCHITECTURE_REFERENCES.md`。
 
-- `Core/` 为纯规则；`Scripts/Mechanics/` 对接原生命令；`Scripts/UI/` 为界面；`FrierenMod/` 为运行资源。
+- 当前采用 Downfall 式角色模块边界，保留单一工程。代码导航见 `docs/CODE_STRUCTURE.md`；新增卡牌和能力各自独立文件，普通卡牌按实际稀有度分类。
+- `Core/Frieren/` 为芙莉莲纯规则；`Scripts/Frieren/` 为角色实现；`Scripts/Shared/` 仅放真实共用基础功能；`FrierenMod/` 为运行资源。菲伦实现时增加对应 Fern 模块，不提前创建空框架。
+- 现有命名空间、模型 ID 与资源路径有兼容意义，不能随文件移动机械改名。公共基类不得带角色专属 Pool 属性。
 - 二代采用 C#、Godot、BaseLib；沿用原生命令与异步流程，不复制一代全局状态或 ActionQueue。
 - 构建入口为 `tools/build.ps1`，构建安装入口为 `tools/build-and-install.ps1`。先读脚本参数和本地配置再调用。
 - 根据变更执行相应检查；文本/资源修改需要重新打包 PCK。编译、自动测试通过不能表述为已经完成游戏实测。
