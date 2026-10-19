@@ -1102,5 +1102,565 @@
     "sha256": "d7f885a925cf43c6204edb571810a31157504ff315a70faab30fbc3b3df57a21",
     "modified": false,
     "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/BabySleeping.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/BabySleeping_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "68e882c77210e61bd21f6da5c526e36c0585dff3f2a3d4408580383adfe65541",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/BackFlow.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/BackFlow_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "19666d243c44dc05211fe1fbd0557e84becc3f0f8b12ce4e8d8d8afa3db7e020",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/Disperse.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/Disperse_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "730f6f6dbc3ea3181c0d72416b9c46c66beb458eaeb3f3686c0083d75619b755",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/GrandCross.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/GrandCross_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "9f9e1b6d7bc41178a60661649cd50631d75867ffc5675349e9e5efca7fe92999",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/LockTarget.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/LockTarget_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "7a534e0c7f921933fad57b7daf185d47cdc8dea58081f0e4afd93fcf45981c90",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/MultipleOffensiveMagic.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/MultipleOffensiveMagic_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "78880391c44a0d64a051806a7b7d334b871b04ac97e9a87201864ff6b9d222cf",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/Recycle.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/Recycle_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "ffb097e51ca7c79b86d28bd12b38a018a0a02198841eec3684f7ea3821872efa",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/SeeThroughPhantom.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/SeeThroughPhantom_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "06238ef2d79b48053588c5828f73cf4ff11aca2f9b365e492df3cf7b0155dc60",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/ShavedIceSpell.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/ShavedIceSpell_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "6e2bd44d701adf0174e8f414c5a9686d831be69e7061b00b46f1d32f4c97328d",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/SwampSpell.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/SwampSpell_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "8e463c762b8e466f3fd7326a6ac52db67e874971380d25bc361d71494eac495d",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/TongueTwisterSpell.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/TongueTwisterSpell_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "69376113967b48c294dc62293b4082e98b90003e821176fb086836bfca541d0b",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/AccessoriesSpell.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/AccessoriesSpell_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "c39d213fa15204b34b5579ec987216a25001a2e7636c64da2c00a49d3f05ea66",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/ApexMagic.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/ApexMagic_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "6edbdcca3af80adcb0de04321eec04cad90a7654acee13f4da388b6b55926f3d",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/ElementsBombing.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/ElementsBombing_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "40bd61477595bb461557ec7cabec5d7049753e2f364de5918507641314e821b8",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/FlyingMagic.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/FlyingMagic_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "c726265c80723892fde8a06670679c17393e3e375b3c236e043aa20359cb3da1",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/OpenTheWaygate.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/OpenTheWaygate_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "ef480e47842f6040ac3f9a4a6e4d27e555e8a0794be511e21a29ca125cadc05b",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/Recall.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/Recall_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "5e11785cb8b188adada73871a9fa5a235a06ca75cba864a4ae72015c9ec96b49",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/RingletForm.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/RingletForm_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "c845c1df9da58939b96f23caafa455375eb0aa6b15f1d61e7377fc540f4c67fb",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/SerieGrimoire.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/SerieGrimoire_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "c877d79824deef98ba061d96937f3d19527dca4deeb6d2811c3f4255e8d6ac93",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/TimeConcept.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/TimeConcept_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "6c46d00ba3f2718960875d81cafdb4281648046766b46fd03990c541dc47e476",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/CustomLegendarySpell.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/CustomLegendarySpell_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "a463b134bb25ae49b7f8e0f72be52fb6e5bcad79017772bd562f4958b522cdf4",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/Dark.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/Dark_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "7d1b1b4afe99c0e9a977fac1fa400128f0ef3a1da3258c25bc1f1eaa6b443351",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/Fire.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/Fire_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "bf60698e5ad673e1fa0c58c68c123202fed5d9ef8611b3d99cbbe13dc930f086",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/GreenApple.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/GreenApple_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "f309bcd64392cf7acf53fd75d08b17b93a66a83fb8f8ce848fbe4395bb56ec0f",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/Ice.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/Ice_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "0bf723a4d5e72a36736bf1982df7b355ad7a6ecfbf9a9533a8b90f68972a0908",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/Laziness.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/Laziness_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "c3b2b323a8cadd618166848322d6cfac6caf233e4a514d8c06c3a9a37b69a68a",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/Light.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/Light_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "b5d6438e8d9c82acee69271440fbf2ff19186fe717e8bd58fdecae8c29dbe314",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/ManaConcealment.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/ManaConcealment_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "954f68aea211215dfa1d136fb392b3acf143f4f0bf2ff9699979fb5161fd7c1b",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/Thunder.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/Thunder_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "8c7a77f21c1e6f4edcaef293dd6816496f167b493f14672291d02c90833a2cdd",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/AirSlash.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/AirSlash_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "5b30b179066a4c1eda03a3167efa478e9fb38fbdfa5f9a3420a94441847471d7",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/Apprehend.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/Apprehend_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "33ae5a52343ae2e9ea1cb233d0bcb95d63f9566c03db9f8a5ee786ef9e02aa6f",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/BreaksBarriersSpell.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/BreaksBarriersSpell_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "c803225cc0502a89a4c5e2f9ff45c1476c67b92c7e90058885ec249f07bf34e4",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/ButtSlam.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/ButtSlam_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "b7295b1e00c066e1f512126c3d638de4eebea271db296073d0fe880eced740fd",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/ClearMind.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/ClearMind_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "d729cc345047239e23dbfbdee8e0bf82aa0a22dea9770ad83805c9184ae41961",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/ContinuousShooting.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/ContinuousShooting_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "d546062c67b794167c95166fb7a9947dd94060687fd11cfa942c897fa437b44f",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/FireSpell.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/FireSpell_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "eaadddb94f1cb6a8e140def39d207ae5c182a2ab9feea16a341136cf8937fc3a",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/FiveMinutesMore.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/FiveMinutesMore_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "e8bd5f4732d7b5849496c94b172e1ea15e64a7af43173319c0de5604ba642552",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/Free.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/Free_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "291e65bef898a37cf957333e38146848e43f8c93f81f5145cae17263665ac94a",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/FrierenSuitcase.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/FrierenSuitcase_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "f871d0a4fced35812078b0948cdf7023ada7b237d0b2ed4c428c70dfadb2776e",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/GrapeSpell.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/GrapeSpell_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "d34b1184226f95ae847ca802cb8aa6faf65ab26da76f3d7f02ae5189d03d092e",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/HighDensityMana.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/HighDensityMana_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "b6d7f429950254400d5202fa038053eb81b3e0135c9811c0cb7fb9dd6aad74b3",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/Kiss.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/Kiss_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "974487a3e714cde563e7707c05440f7ef918e9594204c60a05a6d8975ab9c49b",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/MageStyleFinisher.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/MageStyleFinisher_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "d30a363d3292ff7302271d1c810b5d813a7f86d232433a68f15e471ac3e260ad",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/ManaCollapse.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/ManaCollapse_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "53e59fb3cb2364a9392164df89beb7b91a804da456af8822fa94ed3aa46f4294",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/ManaDetection.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/ManaDetection_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "2af9846b0d3a6292f356bcca57d1231225ee93d2123bce7af8929dd2b4032a19",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/ManaParcel.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/ManaParcel_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "b080bfeded79ff7b4d65bce594ae17439b81ca8cac92de4fb1992bef4681e59c",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/OrdinaryOffensiveMagic.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/OrdinaryOffensiveMagic_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "eda8e3585f07c4b31f996ab7a6ec05270c2d75ed568eee2847cc54b4afc5cfc4",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/Outpouring.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/Outpouring_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "2348dd6181e0431df0714c8d1eb4fecb0cf179f7d2e2287513cc674f10e63534",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/PajamasForm.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/PajamasForm_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "e2e5e4fcbf2c9523ee1b18aa7e99c11bc02ff240e28da08551aa19f3b5d7a39a",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/PancakeSpell.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/PancakeSpell_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "fbf8d04b12ba2285ade93f47a4c0861d343e203226665ded2979ffb82543ceb3",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/Perpetual.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/Perpetual_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "05d92fb401f452573526096eda754a13fac42f5f0c987718d5a04d584828adb8",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/RedAppleSpell.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/RedAppleSpell_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "9a49ae7bb8fe21afce6c50fcbd0fea04b07082539507aa11c65809be1fc3847e",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/RestraintMagic.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/RestraintMagic_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "9eb7b2b614cd04255f2fcf6a66665003b1737b44cb3bd13202f2e5027af6154e",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/RitesPreparation.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/RitesPreparation_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "e2ba65ea882508f4d36d0a96ebff12f3236ab02b744465b451270f59370f22b1",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/SayThinkingSpell.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/SayThinkingSpell_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "8669b4747f5cd5b09bd3770d8c9d0cf9500cd0b904f1477af4b35d82f8e37657",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/Trick.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/Trick_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "42aa8504fa1a3ed4b7f63cf3ad5fad0502bd7b41ee17c74eb93d7cdf90b5eef4",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/powers/AccelerateFlowPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/AccelerateFlowPower_84.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "9d5a1452c26f24a13f41e9ca9e84d1f03aa6cb1e8cd2349744c6c2486d1b2f15",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/powers/FlyingMagicPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/FlyingMagicPower_84.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "1aec9d7f3ae0d4e21d1155190ef0e0fe5f389437b48bf4e95d4d9190457c1e46",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/powers/FrierenSuitcasePower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/FrierenSuitcasePower_84.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "a9e31d93e31353a3fe5243c8cd2226b033f2b3766d5ee7a4ffea41c9581edb92",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/powers/GainRelicPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/GainRelicPower_84.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "98a7679831decdcef4973c8f0adedc7cbe2093ecfb47d6d7dfac026067148ea2",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/powers/ManaReturnPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/ManaReturnPower_84.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "609430c6b55fbc0def6e7aa2a5c614a6291382d0dc4188e06f09bce1b468fd86",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/powers/OpenTheWaygatePower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/OpenTheWaygatePower_84.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "9aaf5b6c655da8fbe70db2ac84bdbcf7f1c6f346bf63834a6af48d6e6fe1a2bd",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/powers/OutpouringPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/OutpouringPower_84.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "ba8cade484789154e756c078e1586f3a44640395e702d8c58a896e5a1c2d84c6",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/powers/PajamasFormPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/PajamasFormPower_84.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "e5b87c8276998d6306210f6bf582016c2fba38c6701718b2dbd885b0c17beb33",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/powers/PerpetualPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/PerpetualPower_84.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "82379ff33933d46595e8db64e29aea7fbaee6c154d5265d36fc34e77f2e4b938",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/powers/RingletFormPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/RingletFormPower_84.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "c1cc0fd83810db4c8b4c59054d322ac5fe4fd1596cf263eca58fe1cbf9b92444",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/powers/RitesPreparationPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/RitesPreparationPower_84.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "4229bea4b354a3bc38bc7727a76bcc1a94d5f66fbeb1500070ab945ac976b0f4",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/powers/SwitchStrengthAndDexterityPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/SwitchStrengthAndDexterityPower_84.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "e4cfb21ed43512b85b332881ec7ea1bfd69140b0c1fd83987d699371da8cb59c",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/powers/TimeTravelPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/TimeTravelPower_84.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "6842715420c10fb57584693eefaf382e7b25466da045e2d1c8acd045b89893b3",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/powers/TrickPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/TrickPower_84.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "c3872aa1f87fe25db4dc9e55ddd68e2fb623d1dde8fbfda176ac69a50d9994b8",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
   }
 ]

@@ -15,6 +15,8 @@ namespace FrierenMod.Scripts.Mechanics;
 
 public static class ChantCmd
 {
+    public static bool IsChant(CardModel card) => card is IChantCard || card is CustomLegendarySpell spell && spell.Effects.Any(e => e.Kind == "Chant");
+
     public static IReadOnlyList<ChantOption> Options(Player player, int? intensity)
     {
         if (player.Creature.CombatState == null) return [];

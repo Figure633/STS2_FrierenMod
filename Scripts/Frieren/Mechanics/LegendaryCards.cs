@@ -24,5 +24,5 @@ public static class LegendaryCards
         return player.Creature.CombatState!.CreateCard(ModelDb.GetById<CardModel>(ModelDb.GetId(type)), player);
     }
     public static int ChantsThisTurn(Player player) => CombatManager.Instance.History.CardPlaysStarted
-        .Count(x => x.Actor == player.Creature && x.HappenedThisTurn(player.Creature.CombatState) && x.CardPlay.Card is IChantCard);
+        .Count(x => x.Actor == player.Creature && x.HappenedThisTurn(player.Creature.CombatState) && ChantCmd.IsChant(x.CardPlay.Card));
 }

@@ -1,0 +1,569 @@
+[
+  {
+    "source": "white/AccessoriesSpell.java",
+    "model": "AccessoriesSpell",
+    "active": true,
+    "status": "本次补齐",
+    "file": "Scripts/Frieren/Cards/Rare/AccessoriesSpell.cs"
+  },
+  {
+    "source": "white/AirSlash.java",
+    "model": "AirSlash",
+    "active": true,
+    "status": "本次补齐",
+    "file": "Scripts/Frieren/Cards/Uncommon/AirSlash.cs"
+  },
+  {
+    "source": "white/ApexMagic.java",
+    "model": "ApexMagic",
+    "active": true,
+    "status": "本次补齐",
+    "file": "Scripts/Frieren/Cards/Rare/ApexMagic.cs"
+  },
+  {
+    "source": "white/Apprehend.java",
+    "model": "Apprehend",
+    "active": true,
+    "status": "本次补齐",
+    "file": "Scripts/Frieren/Cards/Uncommon/Apprehend.cs"
+  },
+  {
+    "source": "white/BackFlow.java",
+    "model": "BackFlow",
+    "active": true,
+    "status": "本次补齐",
+    "file": "Scripts/Frieren/Cards/Common/BackFlow.cs"
+  },
+  {
+    "source": "white/BreaksBarriersSpell.java",
+    "model": "BreaksBarriersSpell",
+    "active": true,
+    "status": "本次补齐",
+    "file": "Scripts/Frieren/Cards/Uncommon/BreaksBarriersSpell.cs"
+  },
+  {
+    "source": "white/ButtSlam.java",
+    "model": "ButtSlam",
+    "active": true,
+    "status": "本次补齐",
+    "file": "Scripts/Frieren/Cards/Uncommon/ButtSlam.cs"
+  },
+  {
+    "source": "white/Confrontation.java",
+    "model": "Confrontation",
+    "active": true,
+    "status": "已有实现",
+    "file": "Scripts/Frieren/Cards/Common/Confrontation.cs"
+  },
+  {
+    "source": "white/ContinualChant.java",
+    "model": "ContinualChant",
+    "active": true,
+    "status": "已有实现",
+    "file": "Scripts/Frieren/Cards/Uncommon/ContinualChant.cs"
+  },
+  {
+    "source": "white/ContinuousShooting.java",
+    "model": "ContinuousShooting",
+    "active": true,
+    "status": "本次补齐",
+    "file": "Scripts/Frieren/Cards/Uncommon/ContinuousShooting.cs"
+  },
+  {
+    "source": "white/Defend_Frieren.java",
+    "model": "DefendFrieren",
+    "active": true,
+    "status": "已有实现",
+    "file": "Scripts/Frieren/Cards/Basic/DefendFrieren.cs"
+  },
+  {
+    "source": "white/DefensiveMagic.java",
+    "model": "DefensiveMagic",
+    "active": true,
+    "status": "已有实现",
+    "file": "Scripts/Frieren/Cards/Common/DefensiveMagic.cs"
+  },
+  {
+    "source": "white/ElementsBombing.java",
+    "model": "ElementsBombing",
+    "active": true,
+    "status": "本次补齐",
+    "file": "Scripts/Frieren/Cards/Rare/ElementsBombing.cs"
+  },
+  {
+    "source": "white/FairyTaleEnd.java",
+    "model": "FairyTaleEnd",
+    "active": true,
+    "status": "已有实现",
+    "file": "Scripts/Frieren/Cards/Rare/FairyTaleEnd.cs"
+  },
+  {
+    "source": "white/Famehameha.java",
+    "model": "Famehameha",
+    "active": true,
+    "status": "已有实现",
+    "file": "Scripts/Frieren/Cards/Uncommon/Famehameha.cs"
+  },
+  {
+    "source": "white/FinalChant.java",
+    "model": "FinalChant",
+    "active": true,
+    "status": "已有实现",
+    "file": "Scripts/Frieren/Cards/Uncommon/FinalChant.cs"
+  },
+  {
+    "source": "white/FireSpell.java",
+    "model": "FireSpell",
+    "active": true,
+    "status": "本次补齐",
+    "file": "Scripts/Frieren/Cards/Uncommon/FireSpell.cs"
+  },
+  {
+    "source": "white/FiveMinutesMore.java",
+    "model": "FiveMinutesMore",
+    "active": true,
+    "status": "本次补齐",
+    "file": "Scripts/Frieren/Cards/Uncommon/FiveMinutesMore.cs"
+  },
+  {
+    "source": "white/Flow.java",
+    "model": "Flow",
+    "active": true,
+    "status": "已有实现",
+    "file": "Scripts/Frieren/Cards/Common/Flow.cs"
+  },
+  {
+    "source": "white/FlowerFieldSpell.java",
+    "model": "FlowerFieldSpell",
+    "active": true,
+    "status": "已有实现",
+    "file": "Scripts/Frieren/Cards/Common/FlowerFieldSpell.cs"
+  },
+  {
+    "source": "white/FolkGrimoire.java",
+    "model": "FolkGrimoire",
+    "active": true,
+    "status": "已有实现",
+    "file": "Scripts/Frieren/Cards/Uncommon/FolkGrimoire.cs"
+  },
+  {
+    "source": "white/Free.java",
+    "model": "Free",
+    "active": true,
+    "status": "本次补齐",
+    "file": "Scripts/Frieren/Cards/Uncommon/Free.cs"
+  },
+  {
+    "source": "white/FrierenSuitcase.java",
+    "model": "FrierenSuitcase",
+    "active": true,
+    "status": "本次补齐",
+    "file": "Scripts/Frieren/Cards/Uncommon/FrierenSuitcase.cs"
+  },
+  {
+    "source": "white/FrushDown.java",
+    "model": "FrushDown",
+    "active": false,
+    "status": "一代停用",
+    "file": null
+  },
+  {
+    "source": "white/FullAhead.java",
+    "model": "FullAhead",
+    "active": true,
+    "status": "已有实现",
+    "file": "Scripts/Frieren/Cards/Uncommon/FullAhead.cs"
+  },
+  {
+    "source": "white/GrandCross.java",
+    "model": "GrandCross",
+    "active": true,
+    "status": "本次补齐",
+    "file": "Scripts/Frieren/Cards/Common/GrandCross.cs"
+  },
+  {
+    "source": "white/HalfTheSky.java",
+    "model": "HalfTheSky",
+    "active": true,
+    "status": "已有实现",
+    "file": "Scripts/Frieren/Cards/Common/HalfTheSky.cs"
+  },
+  {
+    "source": "white/HellFireSummoning.java",
+    "model": "HellFireSummoning",
+    "active": true,
+    "status": "已有实现",
+    "file": "Scripts/Frieren/Cards/Rare/HellFireSummoning.cs"
+  },
+  {
+    "source": "white/HighDensityMana.java",
+    "model": "HighDensityMana",
+    "active": true,
+    "status": "本次补齐",
+    "file": "Scripts/Frieren/Cards/Uncommon/HighDensityMana.cs"
+  },
+  {
+    "source": "white/HotTeaSpell.java",
+    "model": "HotTeaSpell",
+    "active": true,
+    "status": "已有实现",
+    "file": "Scripts/Frieren/Cards/Uncommon/HotTeaSpell.cs"
+  },
+  {
+    "source": "white/Imagination.java",
+    "model": "Imagination",
+    "active": true,
+    "status": "已有实现",
+    "file": "Scripts/Frieren/Cards/Rare/Imagination.cs"
+  },
+  {
+    "source": "white/Kiss.java",
+    "model": "Kiss",
+    "active": true,
+    "status": "本次补齐",
+    "file": "Scripts/Frieren/Cards/Uncommon/Kiss.cs"
+  },
+  {
+    "source": "white/LightningMagic.java",
+    "model": "LightningMagic",
+    "active": true,
+    "status": "已有实现",
+    "file": "Scripts/Frieren/Cards/Rare/LightningMagic.cs"
+  },
+  {
+    "source": "white/LittleFire.java",
+    "model": "LittleFire",
+    "active": true,
+    "status": "已有实现",
+    "file": "Scripts/Frieren/Cards/Common/LittleFire.cs"
+  },
+  {
+    "source": "white/LockTarget.java",
+    "model": "LockTarget",
+    "active": true,
+    "status": "本次补齐",
+    "file": "Scripts/Frieren/Cards/Common/LockTarget.cs"
+  },
+  {
+    "source": "white/LureTheEnemyInDeep.java",
+    "model": "LureTheEnemyInDeep",
+    "active": true,
+    "status": "已有实现",
+    "file": "Scripts/Frieren/Cards/Uncommon/LureTheEnemyInDeep.cs"
+  },
+  {
+    "source": "white/MageStyleChoke.java",
+    "model": "MageStyleChoke",
+    "active": false,
+    "status": "一代停用",
+    "file": null
+  },
+  {
+    "source": "white/MageStyleFinisher.java",
+    "model": "MageStyleFinisher",
+    "active": true,
+    "status": "本次补齐",
+    "file": "Scripts/Frieren/Cards/Uncommon/MageStyleFinisher.cs"
+  },
+  {
+    "source": "white/ManaBarricade.java",
+    "model": "ManaBarricade",
+    "active": true,
+    "status": "已有实现",
+    "file": "Scripts/Frieren/Cards/Common/ManaBarricade.cs"
+  },
+  {
+    "source": "white/ManaCollapse.java",
+    "model": "ManaCollapse",
+    "active": true,
+    "status": "本次补齐",
+    "file": "Scripts/Frieren/Cards/Uncommon/ManaCollapse.cs"
+  },
+  {
+    "source": "white/ManaExpansion.java",
+    "model": "ManaExpansion",
+    "active": true,
+    "status": "已有实现",
+    "file": "Scripts/Frieren/Cards/Rare/ManaExpansion.cs"
+  },
+  {
+    "source": "white/ManaParcel.java",
+    "model": "ManaParcel",
+    "active": true,
+    "status": "本次补齐",
+    "file": "Scripts/Frieren/Cards/Uncommon/ManaParcel.cs"
+  },
+  {
+    "source": "white/MoldSpell.java",
+    "model": "MoldSpell",
+    "active": true,
+    "status": "已有实现",
+    "file": "Scripts/Frieren/Cards/Uncommon/MoldSpell.cs"
+  },
+  {
+    "source": "white/MultipleOffensiveMagic.java",
+    "model": "MultipleOffensiveMagic",
+    "active": true,
+    "status": "本次补齐",
+    "file": "Scripts/Frieren/Cards/Common/MultipleOffensiveMagic.cs"
+  },
+  {
+    "source": "white/OilSpell.java",
+    "model": "OilSpell",
+    "active": true,
+    "status": "已有实现",
+    "file": "Scripts/Frieren/Cards/Common/OilSpell.cs"
+  },
+  {
+    "source": "white/OpenTheWaygate.java",
+    "model": "OpenTheWaygate",
+    "active": true,
+    "status": "本次补齐",
+    "file": "Scripts/Frieren/Cards/Rare/OpenTheWaygate.cs"
+  },
+  {
+    "source": "white/OrdinaryOffensiveMagic.java",
+    "model": "OrdinaryOffensiveMagic",
+    "active": true,
+    "status": "本次补齐",
+    "file": "Scripts/Frieren/Cards/Uncommon/OrdinaryOffensiveMagic.cs"
+  },
+  {
+    "source": "white/Outpouring.java",
+    "model": "Outpouring",
+    "active": true,
+    "status": "本次补齐",
+    "file": "Scripts/Frieren/Cards/Uncommon/Outpouring.cs"
+  },
+  {
+    "source": "white/PajamasForm.java",
+    "model": "PajamasForm",
+    "active": true,
+    "status": "本次补齐",
+    "file": "Scripts/Frieren/Cards/Uncommon/PajamasForm.cs"
+  },
+  {
+    "source": "white/PancakeSpell.java",
+    "model": "PancakeSpell",
+    "active": true,
+    "status": "本次补齐",
+    "file": "Scripts/Frieren/Cards/Uncommon/PancakeSpell.cs"
+  },
+  {
+    "source": "white/PaperPlaneSpell.java",
+    "model": "PaperPlaneSpell",
+    "active": false,
+    "status": "一代停用",
+    "file": "Scripts/Frieren/Cards/Token/PaperPlaneSpell.cs"
+  },
+  {
+    "source": "white/PerfectDefensiveMagic.java",
+    "model": "PerfectDefensiveMagic",
+    "active": true,
+    "status": "已有实现",
+    "file": "Scripts/Frieren/Cards/Rare/PerfectDefensiveMagic.cs"
+  },
+  {
+    "source": "white/Perpetual.java",
+    "model": "Perpetual",
+    "active": true,
+    "status": "本次补齐",
+    "file": "Scripts/Frieren/Cards/Uncommon/Perpetual.cs"
+  },
+  {
+    "source": "white/PreciseChant.java",
+    "model": "PreciseChant",
+    "active": true,
+    "status": "已有实现",
+    "file": "Scripts/Frieren/Cards/Uncommon/PreciseChant.cs"
+  },
+  {
+    "source": "white/PreparedPosture.java",
+    "model": "PreparedPosture",
+    "active": true,
+    "status": "已有实现",
+    "file": "Scripts/Frieren/Cards/Common/PreparedPosture.cs"
+  },
+  {
+    "source": "white/RapidChant.java",
+    "model": "RapidChant",
+    "active": true,
+    "status": "已有实现",
+    "file": "Scripts/Frieren/Cards/Common/RapidChant.cs"
+  },
+  {
+    "source": "white/Recall.java",
+    "model": "Recall",
+    "active": true,
+    "status": "本次补齐",
+    "file": "Scripts/Frieren/Cards/Rare/Recall.cs"
+  },
+  {
+    "source": "white/Recycle.java",
+    "model": "Recycle",
+    "active": true,
+    "status": "本次补齐",
+    "file": "Scripts/Frieren/Cards/Common/Recycle.cs"
+  },
+  {
+    "source": "white/RedAppleSpell.java",
+    "model": "RedAppleSpell",
+    "active": true,
+    "status": "本次补齐",
+    "file": "Scripts/Frieren/Cards/Uncommon/RedAppleSpell.cs"
+  },
+  {
+    "source": "white/RestraintMagic.java",
+    "model": "RestraintMagic",
+    "active": true,
+    "status": "本次补齐",
+    "file": "Scripts/Frieren/Cards/Uncommon/RestraintMagic.cs"
+  },
+  {
+    "source": "white/RingletForm.java",
+    "model": "RingletForm",
+    "active": true,
+    "status": "本次补齐",
+    "file": "Scripts/Frieren/Cards/Rare/RingletForm.cs"
+  },
+  {
+    "source": "white/RitesPreparation.java",
+    "model": "RitesPreparation",
+    "active": true,
+    "status": "本次补齐",
+    "file": "Scripts/Frieren/Cards/Uncommon/RitesPreparation.cs"
+  },
+  {
+    "source": "white/RockGolemSpell.java",
+    "model": "RockGolemSpell",
+    "active": false,
+    "status": "一代停用",
+    "file": null
+  },
+  {
+    "source": "white/RustCleanMagic.java",
+    "model": "RustCleanMagic",
+    "active": true,
+    "status": "已有实现",
+    "file": "Scripts/Frieren/Cards/Uncommon/RustCleanMagic.cs"
+  },
+  {
+    "source": "white/SayThinkingSpell.java",
+    "model": "SayThinkingSpell",
+    "active": true,
+    "status": "本次补齐",
+    "file": "Scripts/Frieren/Cards/Uncommon/SayThinkingSpell.cs"
+  },
+  {
+    "source": "white/SeeThroughPhantom.java",
+    "model": "SeeThroughPhantom",
+    "active": true,
+    "status": "本次补齐",
+    "file": "Scripts/Frieren/Cards/Common/SeeThroughPhantom.cs"
+  },
+  {
+    "source": "white/SerieGrimoire.java",
+    "model": "SerieGrimoire",
+    "active": true,
+    "status": "本次补齐",
+    "file": "Scripts/Frieren/Cards/Rare/SerieGrimoire.cs"
+  },
+  {
+    "source": "white/Simmering.java",
+    "model": "Simmering",
+    "active": true,
+    "status": "已有实现",
+    "file": "Scripts/Frieren/Cards/Uncommon/Simmering.cs"
+  },
+  {
+    "source": "white/Strike_Frieren.java",
+    "model": "StrikeFrieren",
+    "active": true,
+    "status": "已有实现",
+    "file": "Scripts/Frieren/Cards/Basic/StrikeFrieren.cs"
+  },
+  {
+    "source": "white/SwampSpell.java",
+    "model": "SwampSpell",
+    "active": true,
+    "status": "本次补齐",
+    "file": "Scripts/Frieren/Cards/Common/SwampSpell.cs"
+  },
+  {
+    "source": "white/TimeConcept.java",
+    "model": "TimeConcept",
+    "active": true,
+    "status": "本次补齐",
+    "file": "Scripts/Frieren/Cards/Rare/TimeConcept.cs"
+  },
+  {
+    "source": "white/TongueTwisterSpell.java",
+    "model": "TongueTwisterSpell",
+    "active": true,
+    "status": "本次补齐",
+    "file": "Scripts/Frieren/Cards/Common/TongueTwisterSpell.cs"
+  },
+  {
+    "source": "white/Trick.java",
+    "model": "Trick",
+    "active": true,
+    "status": "本次补齐",
+    "file": "Scripts/Frieren/Cards/Uncommon/Trick.cs"
+  },
+  {
+    "source": "white/TrueColours.java",
+    "model": "TrueColours",
+    "active": true,
+    "status": "已有实现",
+    "file": "Scripts/Frieren/Cards/Rare/TrueColours.cs"
+  },
+  {
+    "source": "whitePurple/BabySleeping.java",
+    "model": "BabySleeping",
+    "active": true,
+    "status": "本次补齐",
+    "file": "Scripts/Frieren/Cards/Common/BabySleeping.cs"
+  },
+  {
+    "source": "whitePurple/ClearMind.java",
+    "model": "ClearMind",
+    "active": true,
+    "status": "本次补齐",
+    "file": "Scripts/Frieren/Cards/Uncommon/ClearMind.cs"
+  },
+  {
+    "source": "whitePurple/Disperse.java",
+    "model": "Disperse",
+    "active": true,
+    "status": "本次补齐",
+    "file": "Scripts/Frieren/Cards/Common/Disperse.cs"
+  },
+  {
+    "source": "whitePurple/FlyingMagic.java",
+    "model": "FlyingMagic",
+    "active": true,
+    "status": "本次补齐",
+    "file": "Scripts/Frieren/Cards/Rare/FlyingMagic.cs"
+  },
+  {
+    "source": "whitePurple/GrapeSpell.java",
+    "model": "GrapeSpell",
+    "active": true,
+    "status": "本次补齐",
+    "file": "Scripts/Frieren/Cards/Uncommon/GrapeSpell.cs"
+  },
+  {
+    "source": "whitePurple/ManaDetection.java",
+    "model": "ManaDetection",
+    "active": true,
+    "status": "本次补齐",
+    "file": "Scripts/Frieren/Cards/Uncommon/ManaDetection.cs"
+  },
+  {
+    "source": "whitePurple/ShavedIceSpell.java",
+    "model": "ShavedIceSpell",
+    "active": true,
+    "status": "本次补齐",
+    "file": "Scripts/Frieren/Cards/Common/ShavedIceSpell.cs"
+  }
+]

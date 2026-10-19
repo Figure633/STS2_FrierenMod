@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using FrierenMod.Scripts.Powers;
+using MegaCrit.Sts2.Core.Models;
 
 namespace FrierenMod.Scripts.Mechanics;
 
@@ -19,13 +20,14 @@ public static class ManaCmd
         _ => throw new ArgumentOutOfRangeException(nameof(slot))
     };
 
-    public static IEnumerable<Mana> InPile(Player owner, PileType pile) =>
-        CardPile.Get(pile, owner)?.Cards.OfType<Mana>() ?? [];
+    public static bool IsMana(CardModel card) => card is IManaCard;
+    public static IEnumerable<CardModel> InPile(Player owner, PileType pile) =>
+        CardPile.Get(pile, owner)?.Cards.Where(IsMana) ?? [];
 
-    public static async Task Generate(Player owner, PileType pile, int count)
+    public static async Task Generate(Player owner, PileType pile, int count, bool ignoreBan = false)
     {
         ArgumentOutOfRangeException.ThrowIfNegative(count);
-        if (owner.Creature.CombatState == null || owner.Creature.GetPower<BanManaGainPower>() != null) return;
+        if (owner.Creature.CombatState == null || (!ignoreBan && owner.Creature.GetPower<BanManaGainPower>() != null)) return;
         for (int i = 0; i < count; i++)
         {
             var mana = owner.Creature.CombatState.CreateCard<Mana>(owner);

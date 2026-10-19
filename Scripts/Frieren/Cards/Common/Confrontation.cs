@@ -18,7 +18,7 @@ public sealed class Confrontation() : FrierenCard(1, CardType.Skill, CardRarity.
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play) => await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, play);
     public override Task BeforeCardPlayed(CardPlay play)
     {
-        if (play.Card.Owner == Owner && play.Card is IChantCard && Pile?.Type == PileType.Hand) DynamicVars.Block.BaseValue += 3;
+        if (play.Card.Owner == Owner && ChantCmd.IsChant(play.Card) && Pile?.Type == PileType.Hand) DynamicVars.Block.BaseValue += 3;
         return Task.CompletedTask;
     }
     protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(3);

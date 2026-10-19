@@ -1,5 +1,6 @@
 using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Localization;
 
 namespace FrierenMod.Scripts.Shared.Cards;
 
@@ -12,4 +13,5 @@ public abstract class ModCard(int cost, CardType type, CardRarity rarity, Target
     public override string PortraitPath => $"{CardArtDirectory}/{ArtName}.png";
     public override string CustomPortraitPath => PortraitPath;
     public override string BetaPortraitPath => PortraitPath;
+    protected override void AddExtraArgsToDescription(LocString description) => description.Add("Upgraded", IsUpgraded);
 }

@@ -19,7 +19,7 @@ public sealed class FolkGrimoire() : FrierenCard(2, CardType.Skill, CardRarity.U
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         var chants = ModelDb.CardPool<FrierenMod.Scripts.Characters.FrierenCardPool>().AllCards
-            .Where(c => c is IChantCard && c.Rarity != CardRarity.Token).OrderBy(c => c.Id.Entry).ToArray();
+            .Where(c => ChantCmd.IsChant(c) && c.Rarity != CardRarity.Token).OrderBy(c => c.Id.Entry).ToArray();
         var chant = CombatState!.CreateCard(chants[Owner.RunState.Rng.CombatCardGeneration.NextInt(chants.Length)], Owner);
         foreach (var card in new[] { chant, LegendaryCards.CreateRandom(Owner) })
         {

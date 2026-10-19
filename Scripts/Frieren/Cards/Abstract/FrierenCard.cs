@@ -17,7 +17,7 @@ public abstract class FrierenCard(int cost, CardType type, CardRarity rarity, Ta
         get {
             // 重复的规则解释放到原生悬停提示，卡面保留本牌效果。
             HoverTip Tip(string key) => new(new LocString("frieren", $"TIP.{key}.title"), new LocString("frieren", $"TIP.{key}.description"));
-            if (this is IChantCard or FactorCard) yield return Tip("CHANT");
+            if (FrierenMod.Scripts.Mechanics.ChantCmd.IsChant(this) || this is FactorCard) yield return Tip("CHANT");
             if (this is ILegendaryCard) yield return Tip("LEGENDARY");
             if (this is Transcendence) yield return Tip("DIVINITY");
             if (this is Imagination) yield return Tip("MANA_PAYMENT");

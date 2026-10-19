@@ -76,6 +76,10 @@ public partial class Runner : Node
             new Harmony("frieren.tests.hover_host").Patch(
                 AccessTools.Method(typeof(MegaCrit.Sts2.Core.Nodes.Cards.Holders.NCardHolder), "CreateHoverTips"),
                 prefix: new HarmonyMethod(typeof(Runner), nameof(SkipGlobalHoverWindow)));
+            if (OS.GetCmdlineUserArgs().Contains("--missing-only")) {
+                GD.Print("MISSING_TESTS_OK: " + await MissingCardTests.Run());
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--magicbook-only")) {
                 GD.Print("MAGICBOOK_TESTS_OK: " + await MagicShopTests.Run(this));
                 await Finish(); return;
@@ -153,6 +157,7 @@ public partial class Runner : Node
             count += await RestSiteTests.Run();
             count += await MagicShopTests.Run(this);
             count += await EndingFlowTests.Run(this);
+            count += await MissingCardTests.Run();
             GD.Print($"ENGINE_TESTS_OK: {count}");
             await Finish();
         }

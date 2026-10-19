@@ -26,7 +26,7 @@ public sealed class PaperPlanePower : FrierenPower
     {
         if (play.Card.Owner != Owner.Player) return Task.CompletedTask;
         if (play.Card.Type == CardType.Attack) _attacks = Math.Max(0, _attacks - 1);
-        if (play.Card is Mana)
+        if (play.Card is IManaCard)
         {
             if (++_consecutive == 4) { _attacks += Amount; _consecutive = 0; }
         }

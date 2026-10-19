@@ -19,7 +19,7 @@ public sealed class ConcentrationPower : FrierenPower
 {
     public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay play)
     {
-        if (play.Card.Owner == Owner.Player && play.Card is not Mana && play.Card is not ISpeedCard)
+        if (play.Card.Owner == Owner.Player && play.Card is not IManaCard && play.Card is not ISpeedCard)
             await PowerCmd.Decrement(this);
     }
 }

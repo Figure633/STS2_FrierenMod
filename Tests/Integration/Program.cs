@@ -86,7 +86,7 @@ Test("真实模型 ID 与中英本地化一致", () => {
     }
 });
 Test("重构保持全部已注册模型身份", () => {
-    // 在重构前从真实 ModelDb 记录，覆盖卡牌、能力、角色、遗物及内容池。
+    // 保留重构前模型身份，并显式记录本次新增模型；覆盖卡牌、能力、角色、遗物及内容池。
     var expected = JsonSerializer.Deserialize<Dictionary<string, string>>(
         File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "model-identities.json")))!;
     var actual = typeof(Mana).Assembly.GetTypes()
@@ -94,6 +94,22 @@ Test("重构保持全部已注册模型身份", () => {
         .ToDictionary(t => t.FullName!, t => ModelDb.GetId(t).ToString());
     Equal(expected.Count, actual.Count);
     foreach (var (name, id) in expected) Equal(id, actual[name]);
+});
+Test("一代77张有效芙莉莲卡牌均有可获得模型", () => {
+    var root = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../../../"));
+    using var audit = JsonDocument.Parse(File.ReadAllText(Path.Combine(root, "docs/inventory/frieren_card_parity.json")));
+    int count = 0;
+    foreach (var entry in audit.RootElement.EnumerateArray())
+    {
+        if (!entry.GetProperty("active").GetBoolean()) continue;
+        var name = entry.GetProperty("model").GetString();
+        var type = typeof(Mana).Assembly.GetType("FrierenMod.Scripts.Cards." + name, throwOnError: true)!;
+        var card = ModelDb.GetById<CardModel>(ModelDb.GetId(type));
+        Equal(false, card.Rarity == CardRarity.Token);
+        count++;
+    }
+    Equal(77, count);
+    Equal(CardRarity.Token, ModelDb.Card<PaperPlaneSpell>().Rarity);
 });
 Test("公共卡牌基类不绑定角色卡池", () => {
     var shared = typeof(FrierenMod.Scripts.Shared.Cards.ModCard);

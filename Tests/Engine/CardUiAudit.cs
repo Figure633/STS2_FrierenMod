@@ -37,6 +37,17 @@ public static class CardUiAudit
                 models.Add(FactorCard.Create(player, factor.Id, ManaSlot.Draw));
                 models.Add(FactorCard.Create(player, factor.Id, ManaSlot.Hand, new ChantOption(ManaSlot.Hand, factor.Id, 2, 3, 4)));
             }
+            // 自定义牌的实际组合也要审计，不能只检查空白原型。
+            foreach (var effects in new LegendaryEffect[][] {
+                [new("RandomCard", 2), new("DamageTriple", 7), new("UpgradeAll", 1)],
+                [new("ManaDiscard", 8), new("DamageAll", 16), new("RemoveDebuffs", 1)],
+                [new("Chant", 4), new("Block", 12), new("Intangible", 1)] })
+            {
+                var crafted = (CustomLegendarySpell)ModelDb.Card<CustomLegendarySpell>().ToMutable();
+                crafted.Owner = player;
+                crafted.Configure(3, effects);
+                models.Add(crafted);
+            }
             int page = 0;
             foreach (var batch in models.Chunk(12))
             {

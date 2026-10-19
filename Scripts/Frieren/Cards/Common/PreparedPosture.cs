@@ -18,7 +18,7 @@ public sealed class PreparedPosture() : FrierenCard(1, CardType.Attack, CardRari
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(play.Target!).Execute(context);
-        var chant = Owner.PlayerCombatState!.DrawPile.Cards.FirstOrDefault(c => c is IChantCard);
+        var chant = Owner.PlayerCombatState!.DrawPile.Cards.FirstOrDefault(c => ChantCmd.IsChant(c));
         if (chant == null) return;
         await CardPileCmd.Add(chant, PileType.Draw, CardPilePosition.Top);
         await CardPileCmd.Draw(context, Owner);
