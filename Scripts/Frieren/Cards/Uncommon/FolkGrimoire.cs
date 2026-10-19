@@ -14,7 +14,7 @@ namespace FrierenMod.Scripts.Cards;
 
 public sealed class FolkGrimoire() : FrierenCard(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
 {
-    protected override void AddExtraArgsToDescription(LocString description) => description.Add("Discount", IsUpgraded ? 2 : 1);
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Discount", 1)];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
@@ -23,8 +23,9 @@ public sealed class FolkGrimoire() : FrierenCard(2, CardType.Skill, CardRarity.U
         var chant = CombatState!.CreateCard(chants[Owner.RunState.Rng.CombatCardGeneration.NextInt(chants.Length)], Owner);
         foreach (var card in new[] { chant, LegendaryCards.CreateRandom(Owner) })
         {
-            card.EnergyCost.AddThisTurn(IsUpgraded ? -2 : -1);
+            card.EnergyCost.AddThisTurn(-DynamicVars["Discount"].IntValue);
             await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, Owner);
         }
     }
+    protected override void OnUpgrade() => DynamicVars["Discount"].UpgradeValueBy(1);
 }

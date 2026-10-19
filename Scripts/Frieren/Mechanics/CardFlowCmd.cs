@@ -41,7 +41,10 @@ public static class CardFlowCmd
         count = Math.Min(count, cards.Length);
         if (count == 0) return [];
         if (count == cards.Length) return cards;
+        var prefs = new CardSelectorPrefs(new LocString("frieren", "CARD_SELECT"), count);
+        if (pile == PileType.Hand)
+            return await CardSelectCmd.FromHand(context, source.Owner, prefs, c => c != source, source);
         return await CardSelectCmd.FromSimpleGrid(context, cards, source.Owner,
-            new CardSelectorPrefs(new LocString("frieren", "CARD_SELECT"), count));
+            prefs);
     }
 }

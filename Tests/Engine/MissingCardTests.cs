@@ -3,12 +3,14 @@ using FrierenMod.Scripts.Cards;
 using FrierenMod.Scripts.Characters;
 using FrierenMod.Scripts.Mechanics;
 using FrierenMod.Scripts.Powers;
+using HarmonyLib;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.Multiplayer;
@@ -19,6 +21,9 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 public static class MissingCardTests
 {
+    private static int _handSelectionCalls;
+    private static void RecordHandSelection() => _handSelectionCalls++;
+
     public static async Task<int> Run()
     {
         int passed = 0;
@@ -65,6 +70,79 @@ public static class MissingCardTests
         }
         int Mana(PileType pile) => ManaCmd.InPile(player, pile).Count();
         int Pow<T>() where T : PowerModel => player.Creature.GetPowerAmount<T>();
+
+        foreach (string language in new[] { "zhs", "eng" })
+        {
+            LocManager.Instance.SetLanguage(language);
+            foreach (var (card, variable, before, after) in new (CardModel, string, int, int)[] {
+                (New<ContinualChant>(), "Intensity", 3, 4),
+                (New<LureTheEnemyInDeep>(), "Intensity", 2, 1),
+                (New<RitesPreparation>(), "Amount", 3, 4),
+                (New<FolkGrimoire>(), "Discount", 1, 2),
+                (New<ShavedIceSpell>(), "Amount", 3, 5),
+                (New<PancakeSpell>(), "Amount", 2, 1),
+                (New<BlueMoonWeed>(), "Cards", 2, 3),
+                (New<MoldSpell>(), "Hits", 5, 6) })
+            {
+                Check(card.DynamicVars[variable].IntValue == before, "升级前数值 " + card.Id);
+                card.UpgradeInternal();
+                Check(card.DynamicVars[variable].IntValue == after, "升级后数值 " + card.Id);
+                string preview = card.GetDescriptionForUpgradePreview();
+                Check(preview.Contains($"[green]{after}[/green]"), $"{language} 升级预览未变绿 {card.Id}: {preview}");
+                card.FinalizeUpgradeInternal();
+                Check(!card.GetDescriptionForPile(PileType.None).Contains($"[green]{after}[/green]"), "普通查看残留升级绿字 " + card.Id);
+            }
+        }
+        Pass("咏唱强度、生成数量、抽牌、次数与折扣在中英升级预览中正确变绿");
+
+        var handMethod = AccessTools.Method(typeof(CardSelectCmd), nameof(CardSelectCmd.FromHand));
+        var handProbe = new Harmony("frieren.tests.hand_selection");
+        handProbe.Patch(handMethod, prefix: new HarmonyMethod(typeof(MissingCardTests), nameof(RecordHandSelection)));
+        _handSelectionCalls = 0;
+        try
+        {
+            await Reset();
+            var keep = New<StrikeFrieren>(); var exhaustA = New<DefendFrieren>(); var exhaustB = New<Mana>();
+            foreach (var c in new CardModel[] { exhaustA, keep, exhaustB }) await CardPileCmd.Add(c, PileType.Hand);
+            selector.PrepareToSelect(new[] { 0, 2 });
+            await Play(New<GrapeSpell>());
+            Check(_handSelectionCalls == 1 && keep.Pile?.Type == PileType.Hand &&
+                exhaustA.Pile?.Type == PileType.Exhaust && exhaustB.Pile?.Type == PileType.Exhaust && Mana(PileType.Hand) == 2,
+                "GrapeSpell 必须从原生手牌选择并仅消耗所选两张");
+
+            await Reset(); await ManaCmd.Generate(player, PileType.Discard, 1);
+            var retain = New<StrikeFrieren>(); var other = New<DefendFrieren>();
+            await CardPileCmd.Add(retain, PileType.Hand); await CardPileCmd.Add(other, PileType.Hand);
+            selector.PrepareToSelect(new[] { 0 });
+            await Play(New<BabySleeping>());
+            Check(_handSelectionCalls == 2 && retain.ShouldRetainThisTurn && !other.ShouldRetainThisTurn,
+                "BabySleeping 必须在原生手牌选择一张保留");
+
+            await Reset();
+            retain = New<StrikeFrieren>(); other = New<DefendFrieren>();
+            await CardPileCmd.Add(retain, PileType.Hand); await CardPileCmd.Add(other, PileType.Hand);
+            var retainSpell = New<CustomLegendarySpell>(); retainSpell.Configure(2, [new("Retain", 1)]);
+            selector.PrepareToSelect(new[] { 1 });
+            await Play(retainSpell);
+            Check(_handSelectionCalls == 3 && other.ShouldRetainThisTurn && !retain.ShouldRetainThisTurn,
+                "自定义 Retain 必须在原生手牌选择");
+
+            // 无牌和只有一张时无需弹出选择；不足数量时仍选全部，且不选来源卡自身。
+            await Reset(); var grape = New<GrapeSpell>(); await CardPileCmd.Add(grape, PileType.Hand);
+            Check(!(await CardFlowCmd.Choose(context, grape, PileType.Hand, 2)).Any(), "空手牌选择必须排除来源卡");
+            var single = New<StrikeFrieren>(); await CardPileCmd.Add(single, PileType.Hand);
+            Check((await CardFlowCmd.Choose(context, grape, PileType.Hand, 2)).Single() == single && _handSelectionCalls == 3,
+                "不足数量时直接选全部且不弹窗");
+
+            await Reset(); var recall = New<Recall>();
+            await CardPileCmd.Add(New<StrikeFrieren>(), PileType.Exhaust);
+            await CardPileCmd.Add(New<DefendFrieren>(), PileType.Exhaust);
+            selector.PrepareToSelect(new[] { 0 }); await Play(recall);
+            Check(_handSelectionCalls == 3 && player.PlayerCombatState!.Hand.Cards.Any(c => c is StrikeFrieren),
+                "消耗牌堆检索必须保留网格选择");
+        }
+        finally { handProbe.Unpatch(handMethod, HarmonyPatchType.Prefix, handProbe.Id); }
+        Pass("GrapeSpell、BabySleeping、自定义保留走原生手牌，空牌和牌堆检索边界正确");
 
         await Reset();
         var dense = New<HighDensityMana>(true); await CardPileCmd.Add(dense, PileType.Draw);
@@ -252,6 +330,51 @@ public static class MissingCardTests
         await Play(xCard, enemy);
         Check(enemy.CurrentHp == 9981 && Mana(PileType.Hand) == 2, "多重攻击X费升级");
         Pass("多重攻击使用原生X值计算伤害次数及魔力");
+
+        await Reset();
+        var multi = New<MultipleOffensiveMagic>(); await CardPileCmd.Add(multi, PileType.Hand);
+        player.PlayerCombatState!.Energy = 3;
+        await PowerCmd.Apply<VigorPower>(context, player.Creature, 5, player.Creature, null);
+        await PowerCmd.Apply<StrengthPower>(context, player.Creature, 2, player.Creature, null);
+        void MultiPreview(int damage, int hits, int mana)
+        {
+            multi.UpdateDynamicVarPreview(CardPreviewMode.Normal, null, multi.DynamicVars);
+            Check((int)multi.DynamicVars.Damage.PreviewValue == damage &&
+                multi.DynamicVars["Hits"].PreviewValue == hits && multi.DynamicVars["Mana"].PreviewValue == mana,
+                "MultipleOffensiveMagic 预览数值");
+            foreach (string language in new[] { "eng", "zhs" })
+            {
+                LocManager.Instance.SetLanguage(language);
+                string text = multi.GetDescriptionForPile(PileType.Hand);
+                Check(!text.Contains("X") && text.Contains($"[green]{damage}[/green]"), "多重魔法未显示强化后的实际伤害：" + text);
+            }
+        }
+        MultiPreview(14, 3, 3); MultiPreview(14, 3, 3);
+        Check(multi.DynamicVars.Damage.BaseValue == 4 && multi.EnergyCost.CapturedXValue == 0,
+            "预览不能污染基础伤害或捕获 X");
+        multi.EnergyCost.CapturedXValue = 3;
+        await Play(multi);
+        Check(enemy.CurrentHp == 9957 && Pow<VigorPower>() == 0 && Mana(PileType.Hand) == 3,
+            "活力应作用于同次多重攻击的所有命中并在攻击后消耗");
+        Pass("多重魔法预览计入活力和力量，与三次实际命中一致且无预览副作用");
+
+        await Reset(); multi = New<MultipleOffensiveMagic>(true);
+        await CardPileCmd.Add(multi, PileType.Hand); player.PlayerCombatState!.Energy = 0;
+        multi.UpdateDynamicVarPreview(CardPreviewMode.Normal, null, multi.DynamicVars);
+        Check(multi.DynamicVars.Damage.PreviewValue == 4 && multi.DynamicVars["Hits"].PreviewValue == 1,
+            "升级多重魔法零能量也有额外一次攻击");
+        var chemical = await RelicCmd.Obtain<MegaCrit.Sts2.Core.Models.Relics.ChemicalX>(player);
+        try
+        {
+            player.PlayerCombatState.Energy = 2;
+            multi.UpdateDynamicVarPreview(CardPreviewMode.Normal, null, multi.DynamicVars);
+            Check(multi.DynamicVars.Damage.PreviewValue == 8 && multi.DynamicVars["Hits"].PreviewValue == 5 &&
+                multi.DynamicVars["Mana"].PreviewValue == 4, "化学物X预览必须同步增加伤害、次数和魔力");
+            multi.EnergyCost.CapturedXValue = 2; await Play(multi);
+            Check(enemy.CurrentHp == 9959 && Mana(PileType.Hand) == 4, "化学物X结算必须与预览一致");
+        }
+        finally { await RelicCmd.Remove(chemical); }
+        Pass("多重魔法零能量升级和化学物X的预览与结算一致");
 
         await Reset(); var denseInDraw = New<HighDensityMana>(); await CardPileCmd.Add(denseInDraw, PileType.Draw);
         // 用雷电同调避免抽牌，让连续同调检索路径独立受测。

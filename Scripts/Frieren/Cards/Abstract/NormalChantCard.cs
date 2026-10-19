@@ -15,11 +15,7 @@ namespace FrierenMod.Scripts.Cards;
 public abstract class NormalChantCard(int cost, CardRarity rarity, int chant)
     : FrierenCard(cost, CardType.Skill, rarity, TargetType.Self), IChantCard
 {
-    protected virtual int Intensity => chant;
-    protected override void AddExtraArgsToDescription(LocString description)
-    {
-        description.Add("Intensity", Intensity);
-        description.Add("Upgraded", IsUpgraded);
-    }
+    protected int Intensity => DynamicVars["Intensity"].IntValue;
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Intensity", chant)];
     protected override bool IsPlayable => Owner != null && ChantCmd.Options(Owner, Intensity).Count > 0;
 }

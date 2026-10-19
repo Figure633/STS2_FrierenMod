@@ -14,7 +14,6 @@ namespace FrierenMod.Scripts.Cards;
 
 public sealed class ContinualChant() : NormalChantCard(0, CardRarity.Uncommon, 3), ILegendaryCard
 {
-    protected override int Intensity => IsUpgraded ? 4 : 3;
     protected override bool IsPlayable => Owner != null && LegendaryCards.ChantsThisTurn(Owner) > 0 &&
         (Owner.Creature.GetPower<BanManaGainPower>() == null || base.IsPlayable);
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
@@ -22,4 +21,5 @@ public sealed class ContinualChant() : NormalChantCard(0, CardRarity.Uncommon, 3
         await ManaCmd.Generate(Owner, PileType.Draw, Intensity);
         await ChantCmd.Choose(context, play, Intensity);
     }
+    protected override void OnUpgrade() => DynamicVars["Intensity"].UpgradeValueBy(1);
 }

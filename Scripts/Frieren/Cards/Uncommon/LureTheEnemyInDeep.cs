@@ -15,7 +15,6 @@ namespace FrierenMod.Scripts.Cards;
 public sealed class LureTheEnemyInDeep() : NormalChantCard(2, CardRarity.Uncommon, 2)
 {
     private bool _returnToHand;
-    protected override int Intensity => IsUpgraded ? 1 : 2;
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         _returnToHand = (await ChantCmd.Choose(context, play, Intensity))?.Slot == ManaSlot.Hand;
@@ -29,5 +28,9 @@ public sealed class LureTheEnemyInDeep() : NormalChantCard(2, CardRarity.Uncommo
             await CardPileCmd.Add(this, PileType.Hand);
         }
     }
-    protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
+    protected override void OnUpgrade()
+    {
+        EnergyCost.UpgradeBy(-1);
+        DynamicVars["Intensity"].UpgradeValueBy(-1);
+    }
 }
