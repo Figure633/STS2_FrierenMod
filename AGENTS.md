@@ -35,6 +35,7 @@
 - `Core/Frieren/` 为芙莉莲纯规则；`Scripts/Frieren/` 为角色实现；`Scripts/Shared/` 仅放真实共用基础功能；`FrierenMod/` 为运行资源。菲伦实现时增加对应 Fern 模块，不提前创建空框架。
 - 现有命名空间、模型 ID 与资源路径有兼容意义，不能随文件移动机械改名。公共基类不得带角色专属 Pool 属性。
 - 二代采用 C#、Godot、BaseLib；沿用原生命令与异步流程，不复制一代全局状态或 ActionQueue。
+- 本地二代反编译源码与四个模组参考已放在 `../reference/`；入口和核查结论见 `docs/LOCAL_REFERENCES.md`，精确来源见 `../reference/sources.json`。实现前优先查原版相近效果及当前 BaseLib 接口，参考目录不参与本模组编译和提交。
 - 构建入口为 `tools/build.ps1`，构建安装入口为 `tools/build-and-install.ps1`。先读脚本参数和本地配置再调用。
 - 根据变更执行相应检查；文本/资源修改需要重新打包 PCK。编译、自动测试通过不能表述为已经完成游戏实测。
 - 不随意运行会覆盖清单或文本的审计/生成脚本，尤其 `tools/audit_baseline.py`；遵循 `docs/HANDOFF.md` 中的说明。
