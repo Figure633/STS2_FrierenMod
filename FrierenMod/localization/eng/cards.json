@@ -219,7 +219,7 @@
   "FRIERENMOD-MANA_PARCEL.title": "Mana Parcel",
   "FRIERENMOD-MANA_PARCEL.description": "When drawn, Exhaust this card and add {Amount:diff()} Mana to your hand.",
   "FRIERENMOD-MULTIPLE_OFFENSIVE_MAGIC.title": "Multiple Offensive Magic",
-  "FRIERENMOD-MULTIPLE_OFFENSIVE_MAGIC.description": "{InCombat:cond:Attack a random enemy {Hits:diff()} times, dealing {Damage:diff()} damage each time. Add {Mana} Mana to your hand.|Attack a random enemy X times, dealing X plus 4 damage each time. {Upgraded:cond:Attack once more. |}Add X Mana to your hand.}",
+  "FRIERENMOD-MULTIPLE_OFFENSIVE_MAGIC.description": "Deal X+4 damage to a random enemy {Upgraded:cond:X+1|X} times. Add X Mana to your hand.{InCombat:cond:\n({Damage:diff()} damage {Hits:diff()} times)|}",
   "FRIERENMOD-OPEN_THE_WAYGATE.title": "Open The Waygate",
   "FRIERENMOD-OPEN_THE_WAYGATE.description": "After {Amount:diff()} consecutive Synchros, take an extra turn after this turn, then lose this power.",
   "FRIERENMOD-ORDINARY_OFFENSIVE_MAGIC.title": "Ordinary Offensive Magic",

@@ -22,6 +22,9 @@ for table in ["cards", "characters", "relics", "frieren", "powers", "settings_ui
     assert all(eng.values()) and all(zhs.values()), f"empty localization: {table}"
     for language, texts in [("eng", eng), ("zhs", zhs)]:
         for key, text in texts.items():
+            if table == "cards" and key == "FRIERENMOD-MULTIPLE_OFFENSIVE_MAGIC.description":
+                # 作者指定 X 费正文保留 X+4 和升级后的 X+1，其他程序公式仍禁止。
+                text = re.sub(r"X\+(?:4|1)(?!\d)", "X", text)
             assert not re.search(r"\b(?:max|min|Math\.\w+)\s*\(|\b\d+X\b|\bX[+-]\d", text), f"formula exposed in {language}/{table}/{key}"
     print(f"PASS {table}: {len(eng)} bilingual keys")
 for item in load(ROOT / "docs/assets.json"):

@@ -3,6 +3,7 @@ using FrierenMod.Scripts.Cards;
 using FrierenMod.Scripts.Characters;
 using FrierenMod.Scripts.Mechanics;
 using FrierenMod.Scripts.Powers;
+using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
@@ -24,7 +25,7 @@ public static class MissingCardTests
     private static int _handSelectionCalls;
     private static void RecordHandSelection() => _handSelectionCalls++;
 
-    public static async Task<int> Run()
+    public static async Task<int> Run(Node? root = null)
     {
         int passed = 0;
         void Check(bool ok, string name) { if (!ok) throw new Exception("补牌测试：" + name); }
@@ -346,7 +347,7 @@ public static class MissingCardTests
             {
                 LocManager.Instance.SetLanguage(language);
                 string text = multi.GetDescriptionForPile(PileType.Hand);
-                Check(!text.Contains("X") && text.Contains($"[green]{damage}[/green]"), "多重魔法未显示强化后的实际伤害：" + text);
+                Check(text.Contains("X+4") && text.Contains($"[green]{damage}[/green]"), "多重魔法必须保留X规则并在括号中显示强化伤害：" + text);
             }
         }
         MultiPreview(14, 3, 3); MultiPreview(14, 3, 3);
@@ -357,6 +358,48 @@ public static class MissingCardTests
         Check(enemy.CurrentHp == 9957 && Pow<VigorPower>() == 0 && Mana(PileType.Hand) == 3,
             "活力应作用于同次多重攻击的所有命中并在攻击后消耗");
         Pass("多重魔法预览计入活力和力量，与三次实际命中一致且无预览副作用");
+
+        await Reset(); multi = New<MultipleOffensiveMagic>();
+        await CardPileCmd.Add(multi, PileType.Hand); player.PlayerCombatState!.Energy = 2;
+        void CheckXText(int damage, string? color, bool upgraded = false)
+        {
+            multi.UpdateDynamicVarPreview(CardPreviewMode.Normal, null, multi.DynamicVars);
+            int hits = upgraded ? 3 : 2;
+            string number = color == null ? damage.ToString() : $"[{color}]{damage}[/{color}]";
+            foreach (string language in new[] { "zhs", "eng" })
+            {
+                LocManager.Instance.SetLanguage(language);
+                string text = multi.GetDescriptionForPile(PileType.Hand);
+                string rule = language == "zhs"
+                    ? $"随机造成X+4点伤害{(upgraded ? "X+1" : "X")}次，将X张[gold]魔力[/gold]放入手牌。"
+                    : $"Deal X+4 damage to a random enemy {(upgraded ? "X+1" : "X")} times. Add X Mana to your hand.";
+                string resolved = language == "zhs" ? $"（造成{number}点伤害{hits}次）" : $"({number} damage {hits} times)";
+                Check(text == rule + "\n" + resolved, "X费正文和括号预览格式不符：" + text);
+            }
+        }
+        CheckXText(6, null);
+        await SaveXSnapshot(root, multi, "normal");
+        var previewStrength = await PowerCmd.Apply<StrengthPower>(context, player.Creature, 2, player.Creature, null);
+        CheckXText(8, "green");
+        await SaveXSnapshot(root, multi, "strength");
+        await PowerCmd.Remove(previewStrength!);
+        var previewWeak = await PowerCmd.Apply<WeakPower>(context, player.Creature, 1, enemy, null);
+        CheckXText(4, "red");
+        await SaveXSnapshot(root, multi, "weak");
+        await PowerCmd.Remove(previewWeak!);
+        multi.UpgradeInternal(); multi.FinalizeUpgradeInternal();
+        CheckXText(6, null, upgraded: true);
+        await SaveXSnapshot(root, multi, "upgraded");
+        var deckPreview = ModelDb.Card<MultipleOffensiveMagic>().ToMutable();
+        deckPreview.Owner = player; deckPreview.UpgradeInternal();
+        foreach (string language in new[] { "zhs", "eng" })
+        {
+            LocManager.Instance.SetLanguage(language);
+            string text = deckPreview.GetDescriptionForPile(PileType.Deck);
+            Check(text.Contains("X+4") && text.Contains("X+1") && !text.Contains('\n') && !text.Contains('（'),
+                "非战斗牌库只显示X规则");
+        }
+        Pass("X费正文保留一般规则，2能量括号预览按普通、力量、虚弱与升级显示白绿红数字");
 
         await Reset(); multi = New<MultipleOffensiveMagic>(true);
         await CardPileCmd.Add(multi, PileType.Hand); player.PlayerCombatState!.Energy = 0;
@@ -422,5 +465,26 @@ public static class MissingCardTests
         Check(enemy.IsDead, "顶点魔法四四四消灭敌人");
         Pass("顶点魔法三牌堆恰好四张魔力时消灭敌人");
         return passed;
+    }
+
+    private static async Task SaveXSnapshot(Node? root, CardModel model, string state)
+    {
+        if (root == null || !OS.GetCmdlineUserArgs().Contains("--x-snapshot")) return;
+        LocManager.Instance.SetLanguage("zhs");
+        var canvas = new Control(); root.AddChild(canvas);
+        canvas.AddChild(new ColorRect { Size = new Vector2(480, 680), Color = new Color("17202c"), MouseFilter = Control.MouseFilterEnum.Ignore });
+        var card = GD.Load<PackedScene>("res://scenes/cards/card.tscn").Instantiate<MegaCrit.Sts2.Core.Nodes.Cards.NCard>();
+        AccessTools.Property(typeof(MegaCrit.Sts2.Core.Nodes.Cards.NCard), "Model").SetValue(card, model);
+        canvas.AddChild(card); card.Position = new Vector2(240, 340);
+        card.UpdateVisuals(PileType.Hand, CardPreviewMode.Normal);
+        card.Scale = Vector2.One * 1.4f;
+        for (int i = 0; i < 3; i++) await root.ToSignal(root.GetTree(), SceneTree.SignalName.ProcessFrame);
+        var description = card.GetNode<RichTextLabel>("%DescriptionLabel");
+        if (description.GetContentHeight() > description.Size.Y + 2)
+            throw new Exception("X费卡面文字溢出：" + state);
+        root.GetViewport().GetTexture().GetImage().GetRegion(new Rect2I(0, 0, 480, 680))
+            .SavePng(ProjectSettings.GlobalizePath($"res://../../artifacts/x-cost-2energy-{state}.png"));
+        canvas.QueueFree();
+        await root.ToSignal(root.GetTree(), SceneTree.SignalName.ProcessFrame);
     }
 }

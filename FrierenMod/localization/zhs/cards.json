@@ -219,7 +219,7 @@
   "FRIERENMOD-MANA_PARCEL.title": "魔力包裹",
   "FRIERENMOD-MANA_PARCEL.description": "抽到本牌时，消耗自身，在手牌生成{Amount:diff()}张魔力。",
   "FRIERENMOD-MULTIPLE_OFFENSIVE_MAGIC.title": "多重攻击魔法",
-  "FRIERENMOD-MULTIPLE_OFFENSIVE_MAGIC.description": "{InCombat:cond:随机攻击敌人{Hits:diff()}次，每次造成{Damage:diff()}点伤害。在手牌生成{Mana}张魔力。|随机攻击敌人X次，每次造成X加4点伤害。{Upgraded:cond:额外攻击一次。|}在手牌生成X张魔力。}",
+  "FRIERENMOD-MULTIPLE_OFFENSIVE_MAGIC.description": "随机造成X+4点伤害{Upgraded:cond:X+1|X}次，将X张[gold]魔力[/gold]放入手牌。{InCombat:cond:\n（造成{Damage:diff()}点伤害{Hits:diff()}次）|}",
   "FRIERENMOD-OPEN_THE_WAYGATE.title": "打开时空之门",
   "FRIERENMOD-OPEN_THE_WAYGATE.description": "连续同调{Amount:diff()}次后，在本回合结束后获得一个额外回合，然后失去此能力。",
   "FRIERENMOD-ORDINARY_OFFENSIVE_MAGIC.title": "普通攻击魔法",
