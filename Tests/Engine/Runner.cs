@@ -103,6 +103,10 @@ public partial class Runner : Node
                 GD.Print("SYNCHRO_DISPLAY_OK: " + await SynchroDisplayTests.Run(this));
                 await Finish(); return;
             }
+            if (OS.GetCmdlineUserArgs().Contains("--chant-selection-only")) {
+                GD.Print("CHANT_SELECTION_OK: " + await ChantSelectionTests.Run(this));
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--reviewed-only")) {
                 GD.Print("REVIEWED_TESTS_OK: " + await ReviewedCardTests.Run(this));
                 await Finish(); return;

@@ -9,7 +9,7 @@ using MegaCrit.Sts2.Core.Localization;
 namespace FrierenMod.Scripts.Cards;
 
 // 普通魔力与高密度魔力共用同调结算。
-public sealed class Mana() : FrierenCard(0, CardType.Status, CardRarity.Token, TargetType.Self, false), IManaCard
+public sealed class Mana() : FrierenCard(0, CardType.Status, CardRarity.Token, TargetType.Self), IManaCard
 {
     protected override string ArtName => SynchroPresentation.ArtName(this);
     protected override void AddExtraArgsToDescription(LocString description)

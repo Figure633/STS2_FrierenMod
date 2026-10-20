@@ -22,12 +22,14 @@ public abstract class FactorCard() : FrierenCard(-1, CardType.Skill, CardRarity.
     public IEnumerable<LocString> GetTypeModifiers() => [new("frieren", "FACTOR_TYPE")];
     public ManaSlot? Slot { get; private set; }
     public ChantOption? Option { get; private set; }
+    public bool CanSelectForChant { get; private set; } = true;
     public int? InventoryInstanceId { get; set; }
     public override int MaxUpgradeLevel => 0;
     protected override bool IsPlayable => false;
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("ManaCost", 0), new DynamicVar("Reward", 0)];
 
-    public static FactorCard Create(Player player, string id, ManaSlot? slot = null, ChantOption? option = null)
+    public static FactorCard Create(Player player, string id, ManaSlot? slot = null, ChantOption? option = null,
+        bool canSelectForChant = true)
     {
         _ = SpellCatalog.Get(id);
         var type = typeof(FactorCard).Assembly.GetType(typeof(FactorCard).Namespace + "." + id, throwOnError: true)!;
@@ -35,6 +37,7 @@ public abstract class FactorCard() : FrierenCard(-1, CardType.Skill, CardRarity.
         card.Owner = player;
         card.Slot = slot;
         card.Option = option;
+        card.CanSelectForChant = canSelectForChant;
         if (option.HasValue)
         {
             card.DynamicVars["ManaCost"].BaseValue = option.Value.Cost;

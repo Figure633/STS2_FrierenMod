@@ -12,6 +12,8 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
+using MegaCrit.Sts2.Core.HoverTips;
+using FrierenMod.Scripts.Presentation;
 
 namespace FrierenMod.Scripts.Powers;
 
@@ -21,4 +23,5 @@ public abstract class FrierenPower : CustomPowerModel
     public override PowerStackType StackType => PowerStackType.Counter;
     public override string CustomPackedIconPath => $"res://FrierenMod/images/powers/{GetType().Name}.png";
     public override string CustomBigIconPath => CustomPackedIconPath;
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => FrierenHoverTips.ForText(Description.GetRawText());
 }

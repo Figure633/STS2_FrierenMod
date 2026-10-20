@@ -30,9 +30,16 @@ public static class ChantRules
         int intensity, int concentration = 0, int weakened = 0, bool free = false)
     {
         ArgumentOutOfRangeException.ThrowIfNegative(mana);
+        var preview = Preview(slot, spell, intensity, concentration, weakened, free);
+        return intensity > 0 && mana >= preview.Cost ? preview : null;
+    }
+
+    // 预览仍显示不可支付的费用与效果；可用性单独判断，不隐藏对应槽位。
+    public static ChantOption Preview(ManaSlot slot, SpellDefinition spell, int intensity,
+        int concentration = 0, int weakened = 0, bool free = false)
+    {
         if (!Enum.IsDefined(slot)) throw new ArgumentOutOfRangeException(nameof(slot));
         int cost = Cost(intensity, spell, concentration, weakened, free);
-        if (intensity <= 0 || mana < cost) return null;
         return new(slot, spell.Id, intensity, cost, checked(intensity * spell.RewardMultiplier + spell.RewardOffset));
     }
 

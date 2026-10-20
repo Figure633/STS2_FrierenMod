@@ -38,7 +38,7 @@ public static class PuzzlePresentationTests
                         string mark = language == "zhs"
                             ? option.Slot == clue.Slot ? "！" : "？"
                             : option.Slot == clue.Slot ? "@" : "?";
-                        string cost = language == "zhs" ? $"消耗 {option.Cost} 张魔力" : $"Consume {option.Cost} Mana";
+                        string cost = language == "zhs" ? $"消耗{option.Cost}张魔力" : $"Consume {option.Cost} Mana";
                         if (text.Split('\n').Last().Trim() != mark || !text.Contains(cost) || text.Contains(fragment))
                             throw new Exception($"谜题咏唱未保留费用与槽位符号：{language}/{card.FactorId}/{option.Slot}: {text}");
                     }

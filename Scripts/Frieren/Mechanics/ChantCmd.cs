@@ -18,20 +18,23 @@ public static class ChantCmd
     public static bool IsChant(CardModel card) => card is IChantCard || card is CustomLegendarySpell spell && spell.Effects.Any(e => e.Kind == "Chant");
 
     public static IReadOnlyList<ChantOption> Options(Player player, int? intensity)
+        => Choices(player, intensity).Where(choice => choice.CanSelect).Select(choice => choice.Option).ToArray();
+
+    public static IReadOnlyList<(ChantOption Option, bool CanSelect)> Choices(Player player, int? intensity)
     {
         if (player.Creature.CombatState == null) return [];
         var deck = MagicDeckStore.Read(player);
-        var result = new List<ChantOption>();
+        var result = new List<(ChantOption Option, bool CanSelect)>();
         foreach (var slot in Enum.GetValues<ManaSlot>())
         {
             var spell = deck.ResolveSlot(slot);
             if (spell == null) continue;
             int mana = ManaCmd.InPile(player, ManaCmd.Pile(slot)).Count();
-            var option = ChantRules.Option(slot, mana, spell, intensity ?? ChantRules.PreciseIntensity(mana, spell),
+            var option = ChantRules.Preview(slot, spell, intensity ?? ChantRules.PreciseIntensity(mana, spell),
                 player.Creature.GetPower<ConcentrationPower>()?.Amount ?? 0,
                 player.Creature.GetPower<WeakenedChantPower>()?.Amount ?? 0,
                 player.Creature.GetPower<ChantWithoutManaPower>() != null || player.Creature.GetPower<ChantWithoutManaTimesPower>() != null);
-            if (option.HasValue) result.Add(option.Value);
+            result.Add((option, option.Intensity > 0 && mana >= option.Cost));
         }
         return result;
     }
@@ -40,17 +43,18 @@ public static class ChantCmd
     {
         var player = play.Card.Owner;
         await MagicDeckCmd.ChooseStartingFactors(context, player);
-        var options = Options(player, intensity);
-        if (options.Count == 0) { Log.Info("Frieren: 没有可用咏唱槽位；检查装载与各牌堆魔力。"); return null; }
+        var options = Choices(player, intensity);
+        if (!options.Any(option => option.CanSelect)) { Log.Info("Frieren: 没有可用咏唱槽位；检查装载与各牌堆魔力。"); return null; }
         var free = player.Creature.GetPower<ChantWithoutManaPower>() == null ? player.Creature.GetPower<ChantWithoutManaTimesPower>() : null;
-        var cards = options.Select(option => CreateChoice(player, option)).ToArray();
+        var cards = options.Select(choice => FactorCard.Create(player, choice.Option.SpellId,
+            choice.Option.Slot, choice.Option, choice.CanSelect)).ToArray();
         // 原生选择命令同步选项索引；不使用全局当前玩家或当前卡牌。
         var selected = await CardSelectCmd.FromChooseACardScreen(context, cards, player);
         int index = Array.IndexOf(cards, selected);
-        if (index < 0) return null;
-        await Resolve(context, play, options[index]);
+        if (index < 0 || !options[index].CanSelect) return null;
+        await Resolve(context, play, options[index].Option);
         if (free != null) await PowerCmd.Decrement(free);
-        return options[index];
+        return options[index].Option;
     }
 
     public static async Task Final(PlayerChoiceContext context, CardPlay play)
@@ -62,11 +66,6 @@ public static class ChantCmd
         var options = Options(play.Card.Owner, null);
         foreach (var option in options) await Resolve(context, play, option);
         if (free != null && options.Count > 0) await PowerCmd.Decrement(free);
-    }
-
-    private static CardModel CreateChoice(Player player, ChantOption option)
-    {
-        return FactorCard.Create(player, option.SpellId, option.Slot, option);
     }
 
     public static async Task Resolve(PlayerChoiceContext context, CardPlay play, ChantOption option)

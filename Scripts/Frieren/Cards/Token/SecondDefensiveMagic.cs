@@ -8,7 +8,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace FrierenMod.Scripts.Cards;
 
-public sealed class SecondDefensiveMagic() : FrierenCard(0, CardType.Skill, CardRarity.Token, TargetType.Self, false), IChantCard
+public sealed class SecondDefensiveMagic() : FrierenCard(0, CardType.Skill, CardRarity.Token, TargetType.Self), IChantCard
 {
     protected override bool IsPlayable => Owner != null && ChantCmd.Options(Owner, 1).Count > 0;
     protected override string ArtName => nameof(DefensiveMagic);
