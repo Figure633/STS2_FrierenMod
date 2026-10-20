@@ -31,8 +31,17 @@ public static class CardFlowCmd
     {
         var card = player.Creature.CombatState!.CreateCard<T>(player);
         if (upgraded) card.UpgradeInternal();
-        await CardPileCmd.AddGeneratedCardToCombat(card, pile, player,
+        await AddGenerated(card, pile, player);
+    }
+
+    public static async Task AddGenerated(CardModel card, PileType pile, Player creator)
+    {
+        var result = await CardPileCmd.AddGeneratedCardToCombat(card, pile, creator,
             pile == PileType.Draw ? CardPilePosition.Random : CardPilePosition.Bottom);
+        // 与原生 CaptureSpirit / Severance 相同：抽弃牌堆的新牌还需显式展示并飞入。
+        // 手牌的加入（含满手牌时转入弃牌堆）由原生命令自行播放，不能再放一次。
+        if (pile is PileType.Draw or PileType.Discard && result.success)
+            CardCmd.PreviewCardPileAdd(result);
     }
 
     public static async Task<IEnumerable<CardModel>> Choose(PlayerChoiceContext context, CardModel source, PileType pile, int count)

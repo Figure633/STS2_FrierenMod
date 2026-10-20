@@ -31,8 +31,7 @@ public static class ManaCmd
         for (int i = 0; i < count; i++)
         {
             var mana = owner.Creature.CombatState.CreateCard<Mana>(owner);
-            await CardPileCmd.AddGeneratedCardToCombat(mana, pile, owner,
-                pile == PileType.Draw ? CardPilePosition.Random : CardPilePosition.Bottom);
+            await CardFlowCmd.AddGenerated(mana, pile, owner);
         }
     }
 

@@ -107,6 +107,10 @@ public partial class Runner : Node
                 GD.Print("CHANT_SELECTION_OK: " + await ChantSelectionTests.Run(this));
                 await Finish(); return;
             }
+            if (OS.GetCmdlineUserArgs().Contains("--generated-cards-only")) {
+                GD.Print("GENERATED_CARDS_OK: " + await GeneratedCardTests.Run());
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--reviewed-only")) {
                 GD.Print("REVIEWED_TESTS_OK: " + await ReviewedCardTests.Run(this));
                 await Finish(); return;

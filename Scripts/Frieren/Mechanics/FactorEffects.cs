@@ -59,13 +59,11 @@ public static class FactorEffects
             case "Transcendence": await Buff<MantraPower>(reward); break;
             case "BigFire":
                 for (int i = 0; i < reward; i++)
-                    await CardPileCmd.AddGeneratedCardToCombat(self.CombatState.CreateCard<LittleFire>(player), ManaCmd.Pile(option.Slot), player,
-                        option.Slot == ManaSlot.Draw ? CardPilePosition.Random : CardPilePosition.Bottom);
+                    await CardFlowCmd.AddGenerated(self.CombatState.CreateCard<LittleFire>(player), ManaCmd.Pile(option.Slot), player);
                 break;
             case "TheLivingLegend":
                 for (int i = 0; i < reward; i++)
-                    await CardPileCmd.AddGeneratedCardToCombat(LegendaryCards.CreateRandom(player), ManaCmd.Pile(option.Slot), player,
-                        option.Slot == ManaSlot.Draw ? CardPilePosition.Random : CardPilePosition.Bottom);
+                    await CardFlowCmd.AddGenerated(LegendaryCards.CreateRandom(player), ManaCmd.Pile(option.Slot), player);
                 break;
             case "Factor100": case "Factor010": case "Factor001":
                 int stage = option.SpellId == "Factor100" ? 1 : option.SpellId == "Factor010" ? 2 : 3;

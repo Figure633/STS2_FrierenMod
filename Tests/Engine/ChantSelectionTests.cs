@@ -5,6 +5,7 @@ using FrierenMod.Scripts.Characters;
 using FrierenMod.Scripts.Mechanics;
 using FrierenMod.Scripts.Presentation;
 using FrierenMod.Scripts.Powers;
+using FrierenMod.Scripts.UI;
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Combat;
@@ -13,6 +14,7 @@ using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.ControllerInput;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Entities.UI;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Helpers;
@@ -139,7 +141,7 @@ public static class ChantSelectionTests
                 Check(holder.GetNode<Label>("ChantSlotHeader").Position.Y + 50 < -211 && holder.GetNode<Label>("ChantSlotHeader").Modulate.A == 1,
                     "槽位标题位于卡面上方且不随禁用因子淡化：" + f.Slot);
             }
-            Check(holders[1].CardNode!.Modulate.A == 0.3f && holders[0].CardNode!.Modulate.A == 1 && holders[2].CardNode!.Modulate.A == 1,
+            Check(holders[1].CardNode!.Modulate.A == 0.6f && holders[0].CardNode!.Modulate.A == 1 && holders[2].CardNode!.Modulate.A == 1,
                 "只有魔力不足的因子呈半透明：" + lang);
             await Snapshot("chant-choice-" + lang);
         }
@@ -153,6 +155,33 @@ public static class ChantSelectionTests
             "可用因子通过原生选择完成任务，保持索引同步所用模型");
         selection.Free();
         foreach (var holder in holders) holder.QueueFree(); await Tick();
+
+        var probe = Holder(FactorCard.Create(player, choices[1].Option.SpellId, ManaSlot.Hand, choices[1].Option, false), new(960, 600));
+        ChantSelectionPresentation.Decorate(probe); ChantSelectionPresentation.Decorate(probe);
+        Check(probe.GetChildren().Count(n => n.Name == "ChantSlotHeader") == 1 && probe.CardNode!.Modulate.A == 0.6f,
+            "重复刷新只保留一个槽位标题，禁用因子仍有六成不透明度");
+        probe.ReassignToCard(Card<RapidChant>(), PileType.None, null, ModelVisibility.Visible);
+        Check(!probe.HasNode("ChantSlotHeader") && !probe.HasMeta("FrierenChantChoice") && probe.CardNode!.Modulate.A == 1,
+            "未归还对象池而直接换成百科普通卡时同样清理槽位与淡化状态");
+        probe.ReassignToCard(FactorCard.Create(player, choices[1].Option.SpellId, ManaSlot.Hand, choices[1].Option, false),
+            PileType.None, null, ModelVisibility.Visible);
+        ChantSelectionPresentation.Decorate(probe);
+        probe.QueueFreeSafely(); await Tick();
+        Check(!probe.HasNode("ChantSlotHeader") && !probe.HasMeta("FrierenChantChoice"), "真实归还对象池时清除槽位标题和选择状态");
+        var reused = Holder(Card<RapidChant>(), new(960, 600));
+        Check(ReferenceEquals(reused, probe) && !reused.HasNode("ChantSlotHeader") && reused.CardNode!.Modulate.A == 1,
+            "百科普通卡复用同一控件时没有槽位文字或透明度残留");
+        await Snapshot("chant-reused-normal-card");
+        reused.QueueFreeSafely(); await Tick();
+        var book = new MagicBookScreen(ui, player, () => null);
+        for (int i = 0; i < 2; i++) {
+            book.Open(); await Tick();
+            Check(book.View.FindChildren("ChantSlotHeader", "", true, false).Count == 0,
+                "咏唱后第" + (i + 1) + "次打开魔法牌组没有额外标题重影");
+            if (i == 0) await Snapshot("chant-book-no-ghosting");
+            book.Close(); await Tick();
+        }
+        book.View.QueueFree(); await Tick();
 
         var textHolder = Holder(Card<FullAhead>(), new(720, 560));
         foreach (string lang in new[] { "zhs", "eng" }) {
