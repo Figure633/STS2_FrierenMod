@@ -119,6 +119,10 @@ public partial class Runner : Node
                 GD.Print("CARD_IDS_OK: " + await CardIdTests.Run());
                 await Finish(); return;
             }
+            if (OS.GetCmdlineUserArgs().Contains("--library-only")) {
+                GD.Print("LIBRARY_OK: " + await LibraryTests.Run(this));
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--reviewed-only")) {
                 GD.Print("REVIEWED_TESTS_OK: " + await ReviewedCardTests.Run(this));
                 await Finish(); return;

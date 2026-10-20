@@ -83,13 +83,17 @@ public static class ChantSelectionTests
         Check(tokens.Length >= 12 && tokens.All(c => c.ShouldShowInCardLibrary && !FrierenLibraryFilter.IsCharacterCard(c)),
             "所有启用的衍生牌包含魔力、苍月草和额外防御，均可见且排除芙莉莲分类");
         var filter = new NCardPoolFilter();
-        var filters = new Dictionary<NCardPoolFilter, Func<CardModel, bool>> { [filter] = c => player.Character.CardPool.AllCardIds.Contains(c.Id) };
-        AccessTools.Method(typeof(FrierenLibraryFilter), "Apply").Invoke(null, [filters, new Dictionary<CharacterModel, NCardPoolFilter> { [player.Character] = filter }]);
+        var misc = new NCardPoolFilter();
+        var filters = new Dictionary<NCardPoolFilter, Func<CardModel, bool>> {
+            [filter] = c => player.Character.CardPool.AllCardIds.Contains(c.Id),
+            [misc] = c => (uint)(c.Rarity - CardRarity.Event) <= 4u
+        };
+        AccessTools.Method(typeof(FrierenLibraryFilter), "Apply").Invoke(null, [filters, new Dictionary<CharacterModel, NCardPoolFilter> { [player.Character] = filter }, misc]);
         Check(tokens.All(c => !filters[filter](c) && (uint)(c.Rarity - CardRarity.Event) <= 4u) && filters[filter](Card<HighDensityMana>()) && filters[filter](Card<RapidChant>()),
             "实际百科过滤器排除衍生牌，原生杂项收录；高密度魔力和普通角色卡保留");
         Check(!ModelDb.Card<PaperPlaneSpell>().ShouldShowInCardLibrary && !ModelDb.Card<TimeConcept>().ShouldShowInCardLibrary &&
-            ModelDb.CardPool<FrierenCardPool>().AllCards.OfType<FactorCard>().All(c => !c.ShouldShowInCardLibrary), "兼容旧档的废弃牌与选择专用因子继续隐藏");
-        filter.Free();
+            ModelDb.CardPool<FrierenCardPool>().AllCards.OfType<FactorCard>().All(c => c.ShouldShowInCardLibrary && !filters[filter](c) && filters[misc](c)), "兼容旧档的废弃牌继续隐藏，因子进入杂项分类");
+        filter.Free(); misc.Free();
 
         // 使用真实原生卡牌、悬停场景与宿主；只跳过独立测试不需要的游戏启动。
         var harmony = new Harmony("frieren.tests.chant_selection");

@@ -9,7 +9,7 @@ using MegaCrit.Sts2.Core.Models;
 namespace FrierenMod.Scripts.Cards;
 
 // 因子仅作为选择与预览模型，不进入普通卡牌奖励池和战斗牌堆。
-public abstract class FactorCard() : FrierenCard(-1, CardType.Skill, CardRarity.Token, TargetType.Self, false), ICustomTypeTextCard
+public abstract class FactorCard() : FrierenCard(-1, CardType.Skill, CardRarity.Token, TargetType.Self), ICustomTypeTextCard
 {
     public string FactorId => GetType().Name;
     public override CardRarity Rarity => SpellCatalog.Get(FactorId).Rarity switch {
