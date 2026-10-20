@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dm262eo7ne7q0"
-path="res://.godot/imported/MetallicizFlower.png-0e6a35979e02fee33de1e8f78458f99b.ctex"
+uid="uid://cicyllftgvwn0"
+path="res://.godot/imported/ViolentExorcism.png-cec4ebcd884694e5e95884c74bb9bec1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://FrierenMod/images/cards/MetallicizFlower.png"
-dest_files=["res://.godot/imported/MetallicizFlower.png-0e6a35979e02fee33de1e8f78458f99b.ctex"]
+source_file="res://FrierenMod/images/cards/ViolentExorcism.png"
+dest_files=["res://.godot/imported/ViolentExorcism.png-cec4ebcd884694e5e95884c74bb9bec1.ctex"]
 
 [params]
 

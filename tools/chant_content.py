@@ -9,9 +9,15 @@ ROOT = Path(__file__).resolve().parents[1]
 SOURCE = Path(os.environ.get("FRIEREN_STS1_SOURCE", ROOT.parents[1] / "references/FrierenMod_STS1")) / "src/main/resources/FrierenModResources"
 
 # 一代英文长标题在二代单行标题栏会缩至 10–15 号，保留名称含义并缩短展示。
+LEGACY_SOURCE_NAMES = {
+    "ViolentExorcism": "Free", "Envy": "HalfTheSky", "MetalPetalSpell": "MetallicizFlower",
+    "SpeakFromHeartSpell": "SayThinkingSpell", "ReadyStance": "PreparedPosture",
+    "SustainedBarrage": "ContinuousShooting",
+}
+
 SHORT_ENGLISH_TITLES = {
     "FlowerFieldSpell": "Flower Field Spell", "HighSpeedMovement": "High-Speed Movement",
-    "LightningMagic": "Destructive Lightning", "MetallicizFlower": "Metallicize Flower",
+    "LightningMagic": "Destructive Lightning", "MetalPetalSpell": "Metal Petal Spell",
     "NatureBeauty": "Nature's Beauty", "OilSpell": "Oil-Cleaning Spell",
     "PaperPlaneSpell": "Paper Plane Spell", "SecondDefensiveMagic": "Defensive Follow-up",
 }
@@ -32,7 +38,7 @@ EFFECTS = {
     "TransferToAlchemist": ("给予所有敌人 {Reward} 层中毒。", "Apply {Reward} Poison to ALL enemies."),
     "ImpeccableIntangible": ("获得 {Reward} 层无实体。", "Gain {Reward} Intangible."),
     "MeleeMage": ("本场战斗中，名称含“打击”的牌伤害增加 {Reward}。", "Strikes deal {Reward} additional damage this combat."),
-    "MetallicizFlower": ("获得 {Reward} 层金属化：回合结束时获得等量格挡。", "Gain {Reward} Metallicize: gain that much Block at the end of your turn."),
+    "MetalPetalSpell": ("获得 {Reward} 层金属化：回合结束时获得等量格挡。", "Gain {Reward} Metallicize: gain that much Block at the end of your turn."),
     "NatureBeauty": ("下回合获得 {Reward} 点能量。", "Gain {Reward} Energy next turn."),
     "PassOnTheTorch": ("将 {Reward} 张魔力加入下一个槽位的牌堆。", "Add {Reward} Mana to the next slot's pile."),
     "PeacefulDays": ("抽 {Reward} 张牌。", "Draw {Reward} cards."),
@@ -63,10 +69,10 @@ CARDS = {
     "TrueColours": ("咏唱 4。抽 3 张牌，将 3 张魔力加入手牌。获得 3 能量，并向抽牌堆和弃牌堆各加入 3 张魔力。", "Chant 4. Draw 3 cards and add 3 Mana to your Hand. Gain 3 Energy and add 3 Mana to both your Draw and Discard Piles."),
     "FullAhead": ("每回合首次发动因子时，获得 1 力量和 1 敏捷。", "The first time you activate a factor each turn, gain 1 Strength and 1 Dexterity."),
     "Simmering": ("每次发动因子时，从抽牌堆抽取 1 张传奇魔法。", "Whenever you activate a factor, draw 1 Legendary Spell from your Draw Pile."),
-    "HalfTheSky": ("造成 {Damage:diff()} 点伤害。发动因子时，将本牌从弃牌堆移回手牌。", "Deal {Damage:diff()} damage. Whenever you activate a factor, return this card from your Discard Pile to your Hand."),
+    "Envy": ("造成 {Damage:diff()} 点伤害。发动因子时，将本牌从弃牌堆移回手牌。", "Deal {Damage:diff()} damage. Whenever you activate a factor, return this card from your Discard Pile to your Hand."),
     "Confrontation": ("获得 {Block:diff()} 点格挡。本牌在手牌时，每打出一张咏唱牌，使本牌本场战斗的基础格挡增加 3。", "Gain {Block:diff()} Block. Each Chant card played while this is in your Hand increases its base Block by 3 this combat."),
     "Imagination": ("本回合，咏唱不消耗魔力，无法生成魔力。\n普通卡牌改用魔力支付费用。", "This turn, Chants are free and you cannot generate Mana.\nPay normal card costs with Mana."),
-    "PreparedPosture": ("造成 {Damage:diff()} 点伤害。从抽牌堆抽取 1 张咏唱牌。", "Deal {Damage:diff()} damage. Draw 1 Chant card from your Draw Pile."),
+    "ReadyStance": ("造成 {Damage:diff()} 点伤害。从抽牌堆抽取 1 张咏唱牌。", "Deal {Damage:diff()} damage. Draw 1 Chant card from your Draw Pile."),
     "FolkGrimoire": ("将随机咏唱牌与随机传奇魔法各 1 张加入手牌。本回合它们的费用减少 {Discount:diff()}。", "Add a random Chant card and a random Legendary Spell to your Hand. They cost {Discount:diff()} less this turn."),
     "HellFireSummoning": ("[gold]封印[/gold]。\n造成 {Damage:diff()} 点伤害，次数为本回合打出咏唱牌数量的两倍。\n每次打出后，本回合费用增加 1。", "[gold]Sealed[/gold].\nDeal {Damage:diff()} damage twice per Chant card played this turn.\nCosts 1 more this turn after each play."),
     "Famehameha": ("传奇魔法（本回合咏唱后可用）。造成 {Damage:diff()} 点伤害。每次发动因子，使本牌本回合费用减少 1。", "Legendary Spell. Requires a Chant this turn. Deal {Damage:diff()} damage. Each factor activation reduces this card's cost by 1 this turn."),
@@ -179,10 +185,10 @@ def main():
         cards = json.loads((directory / "cards.json").read_text(encoding="utf8"))
         texts = {k: v[index] for k, v in UI.items()}
         for name, values in CARDS.items():
-            cards[key(name) + ".title"] = originals.get("FrierenMod:" + name, {}).get("NAME", name)
+            cards[key(name) + ".title"] = originals.get("FrierenMod:" + LEGACY_SOURCE_NAMES.get(name, name), {}).get("NAME", name)
             cards[key(name) + ".description"] = values[index].replace("传奇魔法（本回合咏唱后可用）。", "[gold]传奇魔法[/gold]。\n").replace("Legendary Spell (requires a Chant this turn). ", "[gold]Legendary Spell[/gold].\n").replace("Legendary Spell. Requires a Chant this turn. ", "[gold]Legendary Spell[/gold].\n")
         for name, attrs in factors.items():
-            cards[key(name) + ".title"] = originals["FrierenMod:" + name]["NAME"]
+            cards[key(name) + ".title"] = originals["FrierenMod:" + LEGACY_SOURCE_NAMES.get(name, name)]["NAME"]
             cards[key(name) + ".description"] = "{Context}\n{Effect}"
             effect = EFFECTS[name][index]
             texts["EFFECT." + name] = "{PuzzleMark}" if name in PUZZLE_CLUES else effect
@@ -211,6 +217,7 @@ def main():
     inventory = ROOT / "docs/content_inventory.csv"
     entries = list(csv.DictReader(inventory.read_text(encoding="utf-8-sig").splitlines()))
     implemented = set(factors) | set(CARDS) | set(POWERS) | {"HolyEmblem", "RapidChant", "DefensiveMagic", "PreciseChant", "FinalChant", "ManaExpansion", "Mana", "Flow"}
+    implemented = {LEGACY_SOURCE_NAMES.get(name, name) for name in implemented}
     for entry in entries:
         if entry["class"] in implemented:
             entry["status"] = "chant_port_tested" if entry["class"] != "PaperPlaneSpell" else "source_disabled_test_model"

@@ -14,7 +14,7 @@ public static class SpellCatalog
     {
         F("AdvancedDefensiveMagic"), F("BePrepared", rewardOffset: 3), F("BuildUpBody"),
         F("GrossedOutLook", rewardOffset: 2), F("IceArrows", reward: 4),
-        F("MeleeMage", rewardOffset: 1), F("MetallicizFlower"), F("Sleeeep"),
+        F("MeleeMage", rewardOffset: 1), F("MetalPetalSpell"), F("Sleeeep"),
         F("TransferToAlchemist", reward: 2), F("Factor100", offset: 1, puzzle: true),
         F("BarrierMagic", FactorRarity.Uncommon, offset: 1),
         F("BigFire", FactorRarity.Uncommon, cost: 2),

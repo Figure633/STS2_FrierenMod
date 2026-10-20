@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d4b1g8vdiltdh"
-path="res://.godot/imported/Free.png-32a650179d971f22c69f0c4dea2c3e5c.ctex"
+uid="uid://b0qnixig0fl08"
+path="res://.godot/imported/MetalPetalSpell.png-fcbb6f8528d6b64a031e4644438ed2e8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://FrierenMod/images/cards/Free.png"
-dest_files=["res://.godot/imported/Free.png-32a650179d971f22c69f0c4dea2c3e5c.ctex"]
+source_file="res://FrierenMod/images/cards/MetalPetalSpell.png"
+dest_files=["res://.godot/imported/MetalPetalSpell.png-fcbb6f8528d6b64a031e4644438ed2e8.ctex"]
 
 [params]
 

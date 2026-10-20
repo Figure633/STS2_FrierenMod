@@ -109,6 +109,12 @@ public sealed class MagicDeckState
         if (save.Version is not (1 or 2 or 3)) throw new JsonException($"不支持的 Magic Deck 版本：{save.Version}");
         if (save.Items == null || save.Items.Any(x => x == null || x.InstanceId < 1 || x.Slot < -1 || x.Slot > 2))
             throw new JsonException("Magic Deck 存档包含无效条目。");
+        // 0.5.14 统一因子名称；保留实例、装载槽位与初始选择进度。
+        save = save with {
+            Items = save.Items.Select(item => item.SpellId == "MetallicizFlower"
+                ? item with { SpellId = "MetalPetalSpell" } : item).ToArray(),
+            Draft = save.Draft?.Select(id => id == "MetallicizFlower" ? "MetalPetalSpell" : id).ToArray()
+        };
         if (save.Items.Select(x => x.InstanceId).Distinct().Count() != save.Items.Length ||
             save.Items.Where(x => x.Slot >= 0).GroupBy(x => x.Slot).Any(x => x.Count() > 1))
             throw new JsonException("Magic Deck 存档包含重复实例或槽位。");

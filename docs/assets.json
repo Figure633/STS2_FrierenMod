@@ -72,7 +72,7 @@
     "redistribution_review": "pending; local prototype only"
   },
   {
-    "file": "FrierenMod/images/cards/HalfTheSky.png",
+    "file": "FrierenMod/images/cards/Envy.png",
     "source": "src/main/resources/FrierenModResources/img/cards/HalfTheSky_p.png",
     "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
     "sha256": "da73a62a55930111a873b1aeac999566528829cd28fc4c206b2f83e587a6b8e1",
@@ -96,7 +96,7 @@
     "redistribution_review": "pending; local prototype only"
   },
   {
-    "file": "FrierenMod/images/cards/PreparedPosture.png",
+    "file": "FrierenMod/images/cards/ReadyStance.png",
     "source": "src/main/resources/FrierenModResources/img/cards/PreparedPosture_p.png",
     "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
     "sha256": "99dfdb68b08205224380caeb40926171bd640203e9ead638dfba8b7d739f932e",
@@ -304,7 +304,7 @@
     "redistribution_review": "pending; local prototype only"
   },
   {
-    "file": "FrierenMod/images/cards/MetallicizFlower.png",
+    "file": "FrierenMod/images/cards/MetalPetalSpell.png",
     "source": "src/main/resources/FrierenModResources/img/cards/MetallicizFlower_p.png",
     "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
     "sha256": "5105c4a056a7e0a09cbac859185dc31fac77f8fb426c77883ec8fba1bb3a2dc4",
@@ -1376,7 +1376,7 @@
     "redistribution_review": "pending; local prototype only"
   },
   {
-    "file": "FrierenMod/images/cards/ContinuousShooting.png",
+    "file": "FrierenMod/images/cards/SustainedBarrage.png",
     "source": "src/main/resources/FrierenModResources/img/cards/ContinuousShooting_p.png",
     "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
     "sha256": "d546062c67b794167c95166fb7a9947dd94060687fd11cfa942c897fa437b44f",
@@ -1400,7 +1400,7 @@
     "redistribution_review": "pending; local prototype only"
   },
   {
-    "file": "FrierenMod/images/cards/Free.png",
+    "file": "FrierenMod/images/cards/ViolentExorcism.png",
     "source": "src/main/resources/FrierenModResources/img/cards/Free_p.png",
     "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
     "sha256": "291e65bef898a37cf957333e38146848e43f8c93f81f5145cae17263665ac94a",
@@ -1536,7 +1536,7 @@
     "redistribution_review": "pending; local prototype only"
   },
   {
-    "file": "FrierenMod/images/cards/SayThinkingSpell.png",
+    "file": "FrierenMod/images/cards/SpeakFromHeartSpell.png",
     "source": "src/main/resources/FrierenModResources/img/cards/SayThinkingSpell_p.png",
     "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
     "sha256": "8669b4747f5cd5b09bd3770d8c9d0cf9500cd0b904f1477af4b35d82f8e37657",

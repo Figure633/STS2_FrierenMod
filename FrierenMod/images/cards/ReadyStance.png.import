@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ytyffmnsfvdk"
-path="res://.godot/imported/HalfTheSky.png-baf6fb545ae875b5ce4753a6210f502a.ctex"
+uid="uid://wixl06gc0mrx"
+path="res://.godot/imported/ReadyStance.png-11dcda68c234ecf01d1ef9ab3308a5aa.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://FrierenMod/images/cards/HalfTheSky.png"
-dest_files=["res://.godot/imported/HalfTheSky.png-baf6fb545ae875b5ce4753a6210f502a.ctex"]
+source_file="res://FrierenMod/images/cards/ReadyStance.png"
+dest_files=["res://.godot/imported/ReadyStance.png-11dcda68c234ecf01d1ef9ab3308a5aa.ctex"]
 
 [params]
 

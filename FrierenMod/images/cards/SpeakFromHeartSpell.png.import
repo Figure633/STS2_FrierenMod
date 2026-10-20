@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bwgbeionjdur5"
-path="res://.godot/imported/SayThinkingSpell.png-d98531063767766e419f8ed8ef080a7e.ctex"
+uid="uid://b0dgtfytgcfcu"
+path="res://.godot/imported/SpeakFromHeartSpell.png-4f8b6921584f6b5809d2a935118b84b9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://FrierenMod/images/cards/SayThinkingSpell.png"
-dest_files=["res://.godot/imported/SayThinkingSpell.png-d98531063767766e419f8ed8ef080a7e.ctex"]
+source_file="res://FrierenMod/images/cards/SpeakFromHeartSpell.png"
+dest_files=["res://.godot/imported/SpeakFromHeartSpell.png-4f8b6921584f6b5809d2a935118b84b9.ctex"]
 
 [params]
 

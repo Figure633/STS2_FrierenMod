@@ -190,7 +190,7 @@ public static class MissingCardTests
         Pass("臀击固定次数与每次生成魔力");
 
         await Reset(); await CardPileCmd.Add(New<StrikeFrieren>(), PileType.Hand); await CardPileCmd.Add(New<DefendFrieren>(), PileType.Hand);
-        await ManaCmd.Generate(player, PileType.Hand, 1); await Play(New<Free>(), enemy);
+        await ManaCmd.Generate(player, PileType.Hand, 1); await Play(New<ViolentExorcism>(), enemy);
         Check(enemy.CurrentHp == 9995 && player.Creature.Block == 4 && Mana(PileType.Hand) == 1, "自由排除魔力");
         Pass("自由仅丢非魔力并逐张结算");
 
@@ -198,7 +198,7 @@ public static class MissingCardTests
         Check(enemy.CurrentHp == 9983, "锁定无魔力平局触发两次");
         Pass("锁定目标的相等边界");
 
-        await Reset(); var shooting = New<ContinuousShooting>(); await Play(shooting, enemy);
+        await Reset(); var shooting = New<SustainedBarrage>(); await Play(shooting, enemy);
         Check(enemy.CurrentHp == 9990 && !shooting.Keywords.Contains(CardKeyword.Exhaust), "无魔力不消耗");
         await ManaCmd.Generate(player, PileType.Draw, 1); await Play(shooting, enemy);
         Check(shooting.Pile?.Type == PileType.Exhaust, "有魔力消耗进入消耗牌堆");
@@ -323,7 +323,7 @@ public static class MissingCardTests
 
         await Reset(); var exhausted = New<StrikeFrieren>(); await CardPileCmd.Add(exhausted, PileType.Draw);
         await ManaCmd.Generate(player, PileType.Hand, 1);
-        await Play(New<SayThinkingSpell>());
+        await Play(New<SpeakFromHeartSpell>());
         Check(enemy.CurrentHp == 9993 && Mana(PileType.Exhaust) == 1, "说出心声自动打牌");
         Pass("说出心声消耗魔力并免费打出牌堆顶牌");
 

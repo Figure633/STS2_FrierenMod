@@ -14,7 +14,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace FrierenMod.Scripts.Cards;
 
-public sealed class SayThinkingSpell() : FrierenCard(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+public sealed class SpeakFromHeartSpell() : FrierenCard(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
 {
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {

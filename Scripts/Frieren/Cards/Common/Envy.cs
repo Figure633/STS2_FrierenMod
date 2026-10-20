@@ -12,7 +12,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace FrierenMod.Scripts.Cards;
 
-public sealed class HalfTheSky() : FrierenCard(0, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy), IChantListener
+public sealed class Envy() : FrierenCard(0, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy), IChantListener
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(4, ValueProp.Move)];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play) =>

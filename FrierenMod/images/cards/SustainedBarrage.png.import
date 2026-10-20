@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d0g6xc254w10x"
-path="res://.godot/imported/ContinuousShooting.png-c8f4a9a3c5f1972a589e723ebfe788b6.ctex"
+uid="uid://b3po0vphskiw0"
+path="res://.godot/imported/SustainedBarrage.png-2280fe24bdc83ecd995e7deb92bd638b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://FrierenMod/images/cards/ContinuousShooting.png"
-dest_files=["res://.godot/imported/ContinuousShooting.png-c8f4a9a3c5f1972a589e723ebfe788b6.ctex"]
+source_file="res://FrierenMod/images/cards/SustainedBarrage.png"
+dest_files=["res://.godot/imported/SustainedBarrage.png-2280fe24bdc83ecd995e7deb92bd638b.ctex"]
 
 [params]
 

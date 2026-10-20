@@ -34,7 +34,7 @@ public static class FactorEffects
             case "IceArrows": await CreatureCmd.Damage(context, enemies, reward, ValueProp.Unblockable | ValueProp.Unpowered, self, play.Card); break;
             case "TransferToAlchemist": await Debuff<PoisonPower>(reward); break;
             case "MeleeMage": await Buff<StrikeUpPower>(reward); break;
-            case "MetallicizFlower": await Buff<MetallicizePower>(reward); break;
+            case "MetalPetalSpell": await Buff<MetallicizePower>(reward); break;
             case "Sleeeep": await Buff<DrawCardsNextTurnPower>(reward); break;
             case "GrossedOutLook":
                 foreach (var enemy in enemies)

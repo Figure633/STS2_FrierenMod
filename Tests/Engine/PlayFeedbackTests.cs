@@ -110,7 +110,7 @@ public static class PlayFeedbackTests
         string Plain(string text) => Regex.Replace(Regex.Replace(text, @"\[[^\]]*\]", ""), @"\s+", "");
         var index = File.ReadLines(ProjectSettings.GlobalizePath("res://../../docs/inventory/card_names.jsonl"))
             .Select(line => JsonDocument.Parse(line).RootElement.Clone()).ToDictionary(row => row.GetProperty("model").GetString()!);
-        foreach (var type in new[] { typeof(ElementsBombing), typeof(HalfTheSky), typeof(SayThinkingSpell), typeof(ShavedIceSpell) }) {
+        foreach (var type in new[] { typeof(ElementsBombing), typeof(Envy), typeof(SpeakFromHeartSpell), typeof(ShavedIceSpell) }) {
             var row = index[type.Name]; string source = row.GetProperty("descriptionChinese").GetString()!;
             string[] versions = source.Replace("普通：\n", "").Split("\n\n升级：\n");
             for (int i = 0; i < 2; i++) {

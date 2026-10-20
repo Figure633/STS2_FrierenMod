@@ -64,10 +64,10 @@
   },
   {
     "source": "white/ContinuousShooting.java",
-    "model": "ContinuousShooting",
+    "model": "SustainedBarrage",
     "active": true,
     "status": "本次补齐",
-    "file": "Scripts/Frieren/Cards/Uncommon/ContinuousShooting.cs"
+    "file": "Scripts/Frieren/Cards/Uncommon/SustainedBarrage.cs"
   },
   {
     "source": "white/Defend_Frieren.java",
@@ -148,10 +148,10 @@
   },
   {
     "source": "white/Free.java",
-    "model": "Free",
+    "model": "ViolentExorcism",
     "active": true,
     "status": "本次补齐",
-    "file": "Scripts/Frieren/Cards/Uncommon/Free.cs"
+    "file": "Scripts/Frieren/Cards/Uncommon/ViolentExorcism.cs"
   },
   {
     "source": "white/FrierenSuitcase.java",
@@ -183,10 +183,10 @@
   },
   {
     "source": "white/HalfTheSky.java",
-    "model": "HalfTheSky",
+    "model": "Envy",
     "active": true,
     "status": "已有实现",
-    "file": "Scripts/Frieren/Cards/Common/HalfTheSky.cs"
+    "file": "Scripts/Frieren/Cards/Common/Envy.cs"
   },
   {
     "source": "white/HellFireSummoning.java",
@@ -379,10 +379,10 @@
   },
   {
     "source": "white/PreparedPosture.java",
-    "model": "PreparedPosture",
+    "model": "ReadyStance",
     "active": true,
     "status": "已有实现",
-    "file": "Scripts/Frieren/Cards/Common/PreparedPosture.cs"
+    "file": "Scripts/Frieren/Cards/Common/ReadyStance.cs"
   },
   {
     "source": "white/RapidChant.java",
@@ -449,10 +449,10 @@
   },
   {
     "source": "white/SayThinkingSpell.java",
-    "model": "SayThinkingSpell",
+    "model": "SpeakFromHeartSpell",
     "active": true,
     "status": "本次补齐",
-    "file": "Scripts/Frieren/Cards/Uncommon/SayThinkingSpell.cs"
+    "file": "Scripts/Frieren/Cards/Uncommon/SpeakFromHeartSpell.cs"
   },
   {
     "source": "white/SeeThroughPhantom.java",

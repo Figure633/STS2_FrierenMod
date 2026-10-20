@@ -14,18 +14,19 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace FrierenMod.Scripts.Cards;
 
-public sealed class Free() : FrierenCard(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
+public sealed class SustainedBarrage() : FrierenCard(1, CardType.Attack, CardRarity.Uncommon, TargetType.AllEnemies)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(2, ValueProp.Move), new BlockVar(2, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(3, ValueProp.Move)];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
-        var cards = Owner.PlayerCombatState!.Hand.Cards.Where(c => c != this && !ManaCmd.IsMana(c)).ToArray();
-        await CardCmd.Discard(context, cards);
-        foreach (var discarded in cards)
-        {
-            await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, play);
-            await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(play.Target!).Execute(context);
-        }
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).TargetingAllOpponents(CombatState!).WithHitCount(3).Execute(context);
+    }
+    public override bool TryModifyKeywordsInCombat(CardModel card, ISet<CardKeyword> keywords)
+    {
+        if (card != this) return false;
+        if (ManaCmd.InPile(Owner, PileType.Draw).Any()) keywords.Add(CardKeyword.Exhaust);
+        else keywords.Remove(CardKeyword.Exhaust);
+        return true;
     }
     protected override void OnUpgrade() { DynamicVars.Damage.UpgradeValueBy(1); }
 }

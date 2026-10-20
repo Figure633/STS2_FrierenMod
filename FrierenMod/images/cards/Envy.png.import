@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://4simgjw7dqh2"
-path="res://.godot/imported/PreparedPosture.png-0fa3b975c6281dcb58e4c1f41e549410.ctex"
+uid="uid://cbu8xbf4qbuku"
+path="res://.godot/imported/Envy.png-8cbc84503a1f43f43a773302d7198d66.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://FrierenMod/images/cards/PreparedPosture.png"
-dest_files=["res://.godot/imported/PreparedPosture.png-0fa3b975c6281dcb58e4c1f41e549410.ctex"]
+source_file="res://FrierenMod/images/cards/Envy.png"
+dest_files=["res://.godot/imported/Envy.png-8cbc84503a1f43f43a773302d7198d66.ctex"]
 
 [params]
 
