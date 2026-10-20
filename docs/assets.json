@@ -1710,5 +1710,13 @@
     "source_kind": "local_author_assets",
     "sha256": "c097c3a8e7cfad2f6bd5e2096953f12177b346130fd6308150354e61e832c10a",
     "modified": false
+  },
+  {
+    "file": "FrierenMod/images/card_frames/magic.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/cardStyles/Public/1024/bg_magic.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "33eda76cdce06f30547e507e9bfe64709804b2bb192c57f746fe563b78db573e",
+    "modified": false
   }
 ]

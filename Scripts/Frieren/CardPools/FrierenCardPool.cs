@@ -16,5 +16,5 @@ public sealed class FrierenCardPool : CustomCardPoolModel
     public override string EnergyColorName => "ironclad";
     // 保留因子模型注册及存档 ID；普通奖励、商店和生成入口只取得可玩卡牌。
     protected override IEnumerable<CardModel> FilterThroughEpochs(UnlockState unlockState, IEnumerable<CardModel> cards) =>
-        base.FilterThroughEpochs(unlockState, cards).Where(card => card is not FactorCard);
+        base.FilterThroughEpochs(unlockState, cards).Where(card => card is not FactorCard and not TimeConcept);
 }

@@ -193,6 +193,10 @@ public sealed class MagicBookScreen
                 var handlers = _handlers[id];
                 holder.Pressed -= handlers.Press;
                 holder.AltPressed -= handlers.Alt;
+                if (holder.CardNode?.CardHighlight is { } highlight && GodotObject.IsInstanceValid(highlight)) {
+                    highlight.AnimHideInstantly();
+                    highlight.Modulate = NCardHighlight.playableColor;
+                }
                 holder.GetParent()?.RemoveChild(holder);
                 holder.QueueFreeSafely();
             }
@@ -313,8 +317,13 @@ public sealed class MagicBookScreen
         foreach (var (id, holder) in _cards) {
             bool selected = _armed == id || _selected.Contains(id);
             holder.Modulate = prop != null && !selected && !eligible.Contains(id) ? new Color("777777") : Colors.White;
-            if (selected) { holder.CardNode!.CardHighlight.Modulate = new Color("9cf1ac"); holder.CardNode.CardHighlight.AnimShow(); }
-            else holder.CardNode!.CardHighlight.AnimHideInstantly();
+            var highlight = holder.CardNode!.CardHighlight;
+            if (selected) { highlight.Modulate = new Color("9cf1ac"); highlight.AnimShow(); }
+            else {
+                highlight.AnimHideInstantly();
+                // 原生外光 width=0 仍可能留下细边；未选中时完全隐藏此层。
+                highlight.Modulate = Colors.Transparent;
+            }
         }
     }
 

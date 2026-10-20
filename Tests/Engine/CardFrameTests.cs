@@ -5,6 +5,7 @@ using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Multiplayer;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models;
@@ -28,9 +29,15 @@ public static class CardFrameTests
         }
         var ui=new Control { Size=new(1920,1080) }; root.AddChild(ui);
         ui.AddChild(new ColorRect { Size=ui.Size,Color=new("17202c"),MouseFilter=Control.MouseFilterEnum.Ignore });
-        var samples=new[] {
+        var originalStyles=new[] {
             (typeof(StrikeFrieren),"frieren_attack"),(typeof(DefendFrieren),"frieren_skill"),(typeof(RitesPreparation),"frieren_power"),
             (typeof(ManaDetection),"shared_attack"),(typeof(GrapeSpell),"shared_skill"),(typeof(FlyingMagic),"shared_power")
+        };
+        foreach(var (type,style) in originalStyles)
+            Check(Card(type).Frame.ResourcePath.EndsWith(style+".tres"),type.Name+"保持已验收的通用卡背");
+        var samples=new[] {
+            (typeof(BuildUpBody),"magic"),(typeof(HighSpeedMovement),"magic"),(typeof(GreatMageComposure),"magic"),
+            (typeof(TransmutationCircle),"magic"),(typeof(Mana),"magic"),(typeof(HighDensityMana),"magic")
         };
         var nodes=new List<NCard>();
         for(int i=0;i<samples.Length;i++) {
@@ -46,13 +53,25 @@ public static class CardFrameTests
             node.Position=new(420+(i%3)*540,280+(i/3)*510); node.Scale=Vector2.One*.9f;
             ui.AddChild(node); node.UpdateVisuals(PileType.None,CardPreviewMode.Normal); nodes.Add(node);
         }
-        foreach(var type in new[]{typeof(BuildUpBody),typeof(MysteryBox),typeof(Mana),typeof(HighDensityMana)}) {
-            var card=Card(type); Check(((CustomCardModel)card).CustomFrame==null &&
-                !card.Frame.ResourcePath.Contains("FrierenMod"),type.Name+"保留现有原生卡框");
-        }
+        foreach(var definition in FrierenMod.Core.SpellCatalog.All)
+            if(!FactorCard.Create(player,definition.Id).Frame.ResourcePath.EndsWith("magic.tres"))
+                throw new Exception("遗漏紫色因子卡背："+definition.Id);
+        foreach(var definition in FrierenMod.Core.MagicPropRules.All)
+            if(!MagicPropCard.Create(player,definition.Id).Frame.ResourcePath.EndsWith("magic.tres"))
+                throw new Exception("遗漏紫色魔具卡背："+definition.Id);
+        Check(true,"全部28种因子与8种魔具使用一代紫色卡背");
         foreach(var type in new[]{typeof(BabySleeping),typeof(ShavedIceSpell),typeof(ManaDetection),typeof(GrapeSpell),typeof(FlyingMagic),typeof(Disperse),typeof(ClearMind)})
             if(!Card(type).Frame.ResourcePath.Contains("shared_")) throw new Exception("双色卡遗漏："+type.Name);
         Check(true,"七张一代双色卡全部保留公共卡背");
+        var time=Card(typeof(TimeConcept));
+        Check(!time.ShouldShowInCardLibrary && !time.CanBeGeneratedInCombat && !time.CanBeGeneratedByModifiers &&
+            !player.Character.CardPool.GetUnlockedCards(player.UnlockState,CardMultiplayerConstraint.SingleplayerOnly).Any(c=>c is TimeConcept),
+            "TimeConcept不再进入卡牌库、奖励、商店或生成入口");
+        Check(!(bool)AccessTools.Property(typeof(CardModel),"IsPlayable").GetValue(time)!,"旧TimeConcept不能再发动");
+        Check(player.Character.CardPool.AllCards.Any(c=>c.Id==time.Id) && ModelDb.GetById<CardModel>(time.Id) is TimeConcept,
+            "TimeConcept保留原模型ID与卡池归属以兼容旧存档");
+        Check(CardModel.FromSerializable(time.ToSerializable()) is TimeConcept restored && restored.Id==time.Id,
+            "旧TimeConcept卡牌存档仍可读取");
         for(int i=0;i<5;i++) await root.ToSignal(root.GetTree(),SceneTree.SignalName.ProcessFrame);
         if(OS.GetCmdlineUserArgs().Contains("--ui-snapshot"))
             root.GetViewport().GetTexture().GetImage().SavePng(ProjectSettings.GlobalizePath("res://../../artifacts/card-frames.png"));

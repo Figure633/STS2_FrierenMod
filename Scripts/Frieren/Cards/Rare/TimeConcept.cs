@@ -14,8 +14,12 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace FrierenMod.Scripts.Cards;
 
-public sealed class TimeConcept() : FrierenCard(2, CardType.Skill, CardRarity.Rare, TargetType.Self)
+// 作者要求等待改版：保留模型和旧存档 ID，不再提供新卡或允许发动旧卡。
+public sealed class TimeConcept() : FrierenCard(2, CardType.Skill, CardRarity.Rare, TargetType.Self, false)
 {
+    public override bool CanBeGeneratedInCombat => false;
+    public override bool CanBeGeneratedByModifiers => false;
+    protected override bool IsPlayable => false;
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         var snapshot = PlayerTimeSnapshot.Capture(Owner, this);
