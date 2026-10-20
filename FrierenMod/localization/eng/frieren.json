@@ -5,6 +5,8 @@
   "COST_ONE": "Mana cost at Chant 1",
   "MANA_HINT": "A teal number means Chant 1 is available.\nSee the Magic Book for factor details.",
   "SLOT_UNAVAILABLE": "This slot cannot Chant.",
+  "PLAY.NO_MANA": "Not enough Mana to activate a Magic Factor.",
+  "PLAY.NO_CHANT": "You haven't played a Chant card this turn.",
   "SLOT_SHORT.Draw": "Draw",
   "SLOT_SHORT.Hand": "Hand",
   "SLOT_SHORT.Discard": "Disc.",

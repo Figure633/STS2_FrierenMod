@@ -5,6 +5,8 @@
   "COST_ONE": "咏唱 1 需魔力",
   "MANA_HINT": "青色数字表示可发动咏唱 1。\n因子详情可在魔法书中查看。",
   "SLOT_UNAVAILABLE": "当前槽位无法发动咏唱。",
+  "PLAY.NO_MANA": "没有足够魔力激活魔法因子",
+  "PLAY.NO_CHANT": "本回合没有打出过咏唱牌",
   "SLOT_SHORT.Draw": "抽",
   "SLOT_SHORT.Hand": "手",
   "SLOT_SHORT.Discard": "弃",
