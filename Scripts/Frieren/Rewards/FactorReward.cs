@@ -17,7 +17,7 @@ public sealed class FactorReward(Player player) : CustomReward(player)
     public int Seed { get; init; }
     public string[] Choices { get; private set; } = [];
     protected override RewardType RewardType => FrierenFactor;
-    protected override string IconPath => "res://FrierenMod/images/relics/HolyEmblem.png";
+    protected override string IconPath => "res://FrierenMod/images/ui/magic_deck.png";
     public override LocString Description => new("frieren", "FACTOR_REWARD");
     public override bool IsPopulated => Choices.Length == 3;
     public override CreateRewardFromSave<CustomReward> DeserializeMethod => Restore;

@@ -33,9 +33,10 @@ public static class MagicBookUi
         Attach(__instance.GlobalUi, player);
     }
 
-    public static void Attach(Control root, Player player)
+    public static void Attach(Control root, Player player, Func<IOverlayScreen?>? currentOverlay = null)
     {
-        var toggle = new Button { Name = "FrierenMagicBookButton", Text = Text("BOOK_BUTTON"), Flat = true, ZIndex = 4 };
+        currentOverlay ??= () => NOverlayStack.Instance?.Peek();
+        var toggle = new Button { Name = "FrierenMagicBookButton", Text = Text("BOOK_BUTTON"), Flat = true, ZIndex = 101, ZAsRelative = false };
         toggle.Icon = GD.Load<Texture2D>("res://FrierenMod/images/ui/magic_deck.png");
         toggle.AddThemeConstantOverride("icon_max_width", 42);
         toggle.AddThemeFontOverride("font", GD.Load<Font>("res://themes/kreon_bold_shared.tres"));
@@ -43,14 +44,19 @@ public static class MagicBookUi
         toggle.AddThemeColorOverride("font_color", new Color("fff1d5"));
         root.AddChild(toggle);
         toggle.SetAnchorsPreset(Control.LayoutPreset.TopRight);
-        toggle.OffsetLeft = -240;
-        toggle.OffsetTop = 140;
-        toggle.OffsetRight = -40;
-        toggle.OffsetBottom = 184;
+        toggle.OffsetLeft = -480;
+        toggle.OffsetTop = 10;
+        toggle.OffsetRight = -300;
+        toggle.OffsetBottom = 66;
 
-        var hud = new Control { Name = "FrierenManaCounter", Position = new Vector2(20, 285),
-            Size = new Vector2(108, 264), MouseFilter = Control.MouseFilterEnum.Ignore };
+        var hud = new Control { Name = "FrierenManaCounter",
+            Size = new Vector2(108, 264), MouseFilter = Control.MouseFilterEnum.Pass };
         root.AddChild(hud);
+        hud.SetAnchorsPreset(Control.LayoutPreset.CenterLeft);
+        hud.OffsetLeft = 20;
+        hud.OffsetRight = 128;
+        hud.OffsetTop = -132;
+        hud.OffsetBottom = 132;
         var slots = Enum.GetValues<ManaSlot>();
         var manaNumbers = new Label[slots.Length];
         var hoverAreas = new Control[slots.Length];
@@ -86,15 +92,25 @@ public static class MagicBookUi
             hover.AddChild(caption);
         }
 
-        var backdrop = new ColorRect { Name = "FrierenBookBackdrop", Visible = false, ZIndex = 5,
+        var backdrop = new ColorRect { Name = "FrierenBookBackdrop", Visible = false, ZIndex = 99, ZAsRelative = false,
             Color = new Color(0.035f, 0.028f, 0.023f, 0.94f), MouseFilter = Control.MouseFilterEnum.Stop };
         root.AddChild(backdrop);
         backdrop.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
-        var screen = new MagicBookScreen(root, player);
+        var preview = new ManaFactorPreview(root, hud, player);
+        foreach (var area in hoverAreas) {
+            area.MouseEntered += preview.Show;
+            area.MouseExited += () => {
+                if (!hud.GetGlobalRect().HasPoint(hud.GetGlobalMousePosition())) preview.Hide();
+            };
+        }
+        hud.MouseEntered += preview.Show;
+        hud.MouseExited += preview.Hide;
+        var screen = new MagicBookScreen(root, player, currentOverlay);
         var book = screen.View;
         book.VisibilityChanged += () => {
             backdrop.Visible = book.Visible;
-            hud.Visible = CombatManager.Instance.IsInProgress && !book.Visible && (NOverlayStack.Instance?.ScreenCount ?? 0) == 0;
+            hud.Visible = CombatManager.Instance.IsInProgress && !book.Visible && currentOverlay() == null;
+            if (!hud.Visible) preview.Hide();
         };
         backdrop.GuiInput += input => {
             if (input is InputEventMouseButton { Pressed: true, ButtonIndex: MouseButton.Left }) {
@@ -102,33 +118,30 @@ public static class MagicBookUi
             }
         };
         toggle.Pressed += () => { if (book.Visible) screen.Close(); else screen.Open(); };
-        var names = SpellCatalog.All.ToDictionary(x => x.Id, x => FactorCard.Create(player, x.Id).Title);
         var timer = new Godot.Timer { Name = "FrierenManaRefresh", WaitTime = 0.1, Autostart = true };
         timer.Timeout += () =>
         {
-            bool overlay = (NOverlayStack.Instance?.ScreenCount ?? 0) > 0;
-            toggle.Disabled = overlay;
-            if (overlay) screen.Close();
+            bool overlay = currentOverlay() != null;
             hud.Visible = CombatManager.Instance.IsInProgress && !overlay && !book.Visible;
+            if (!hud.Visible) preview.Hide();
             var deck = MagicDeckStore.Read(player);
             foreach (var slot in Enum.GetValues<ManaSlot>())
             {
-                var factor = deck.InSlot(slot);
                 int mana = ManaCmd.InPile(player, ManaCmd.Pile(slot)).Count();
-                string name = factor == null ? Text("EMPTY") : names[factor.Id];
                 var spell = deck.ResolveSlot(slot);
                 int cost = spell == null ? 0 : ChantRules.Cost(1, spell,
                     player.Creature.GetPower<ConcentrationPower>()?.Amount ?? 0,
                     player.Creature.GetPower<WeakenedChantPower>()?.Amount ?? 0,
                     player.Creature.GetPower<ChantWithoutManaPower>() != null || player.Creature.GetPower<ChantWithoutManaTimesPower>() != null);
-                hoverAreas[(int)slot].TooltipText = $"{Text($"SLOT.{slot}")} · {Text("MANA")}: {mana}\n{name}\n" +
-                    (spell == null ? Text("SLOT_UNAVAILABLE") : $"{Text("COST_ONE")}: {cost}") + "\n" + Text("MANA_HINT");
                 manaNumbers[(int)slot].Text = mana.ToString();
                 manaNumbers[(int)slot].Modulate = spell != null && mana >= cost ? new Color("b9f4e2") : Colors.White;
             }
             manaFill.Modulate = Enum.GetValues<ManaSlot>().Any(s => ManaCmd.InPile(player, ManaCmd.Pile(s)).Any()) ? Colors.White : new Color("777777");
             screen.Refresh();
+            preview.Refresh();
         };
         root.AddChild(timer);
+        // Control 命中按树顺序处理；入口必须在全屏查看遮罩之后，才能再次点击关闭。
+        root.MoveChild(toggle, root.GetChildCount() - 1);
     }
 }

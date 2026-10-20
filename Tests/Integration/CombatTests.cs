@@ -107,7 +107,7 @@ static class CombatTests
             ["BePrepared"] = (typeof(VigorPower), 4, false), ["BarrierMagic"] = (typeof(BlurPower), 1, false),
             ["TransferToAlchemist"] = (typeof(PoisonPower), 2, true), ["MeleeMage"] = (typeof(StrikeUpPower), 2, false),
             ["MetallicizFlower"] = (typeof(MetallicizePower), 1, false), ["Sleeeep"] = (typeof(DrawCardsNextTurnPower), 1, false),
-            ["Hypnosis"] = (typeof(WeakPower), 2, true), ["NatureBeauty"] = (typeof(EnergyNextTurnPower), 1, false),
+            ["Hypnosis"] = (typeof(WeakPower), 1, true), ["NatureBeauty"] = (typeof(EnergyNextTurnPower), 1, false),
             ["PinchAndScrape"] = (typeof(SynchroWithoutManaPower), 2, false), ["SpellBoost"] = (typeof(PhantasmalPower), 1, false),
             ["GreatMageComposure"] = (typeof(ChantWithoutManaTimesPower), 1, false), ["ImpeccableIntangible"] = (typeof(IntangiblePower), 1, false),
             ["Transcendence"] = (typeof(MantraPower), 1, false), ["GrossedOutLook"] = (typeof(StrengthPower), -3, true)

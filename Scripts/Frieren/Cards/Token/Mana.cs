@@ -10,7 +10,12 @@ namespace FrierenMod.Scripts.Cards;
 public sealed class Mana() : FrierenCard(0, CardType.Status, CardRarity.Token, TargetType.Self, false), IManaCard
 {
     public override int MaxUpgradeLevel => 0;
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+    // 同调本身包含消耗，卡面不再重复列出“消耗”；仍走原生出牌去向与节俭钩子。
+    protected override PileType GetResultPileTypeForCardPlay()
+    {
+        var pile = base.GetResultPileTypeForCardPlay();
+        return pile == PileType.Discard ? PileType.Exhaust : pile;
+    }
     protected override IEnumerable<DynamicVar> CanonicalVars => [new CardsVar(1)];
     protected override Task OnPlay(PlayerChoiceContext context, CardPlay play) => SynchroCmd.Play(context, this);
 }

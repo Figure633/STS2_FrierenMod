@@ -14,11 +14,15 @@ namespace FrierenMod.Scripts.Cards;
 
 public sealed class FairyTaleEnd() : LegendaryCard(1, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new FairyTaleDamageVar()];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new FairyTaleDamageVar(), new DynamicVar("BaseDamage", 6)];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play) =>
         await DamageCmd.Attack(((FairyTaleDamageVar)DynamicVars.Damage).Calculate(this)).FromCard(this).Targeting(play.Target!).Execute(context);
-    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(2);
+    protected override void OnUpgrade()
+    {
+        DynamicVars.Damage.UpgradeValueBy(2);
+        DynamicVars["BaseDamage"].UpgradeValueBy(2);
+    }
 
     // 预览与出牌共用牌组倍率；基础值不在预览时改写，避免反复查看造成重复翻倍。
     private sealed class FairyTaleDamageVar() : DamageVar(6, ValueProp.Move)

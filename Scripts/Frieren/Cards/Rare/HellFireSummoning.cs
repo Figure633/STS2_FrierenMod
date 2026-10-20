@@ -14,7 +14,13 @@ namespace FrierenMod.Scripts.Cards;
 
 public sealed class HellFireSummoning() : FrierenCard(0, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(8, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+        [new DamageVar(8, ValueProp.Move), new DynamicVar("BaseDamage", 8), new DynamicVar("Hits", 0)];
+    protected override void AddExtraArgsToDescription(LocString description)
+    {
+        base.AddExtraArgsToDescription(description);
+        description.Add("Hits", IsMutable && Owner?.PlayerCombatState != null ? LegendaryCards.ChantsThisTurn(Owner) * 2 : 0);
+    }
     public override async Task BeforeCombatStart()
     {
         if (Pile?.Type != PileType.Draw) return;
@@ -30,5 +36,9 @@ public sealed class HellFireSummoning() : FrierenCard(0, CardType.Attack, CardRa
         if (hits > 0) await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(play.Target!).WithHitCount(hits).Execute(context);
         EnergyCost.AddThisTurn(1);
     }
-    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(2);
+    protected override void OnUpgrade()
+    {
+        DynamicVars.Damage.UpgradeValueBy(2);
+        DynamicVars["BaseDamage"].UpgradeValueBy(2);
+    }
 }

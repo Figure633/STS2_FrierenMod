@@ -26,7 +26,7 @@ public static class FactorEffects
                 for (int i = 0; i < 2; i++) await CreatureCmd.GainBlock(self, reward, ValueProp.Move, play);
                 break;
             case "BarrierMagic":
-                await CreatureCmd.GainBlock(self, reward, ValueProp.Unpowered, play);
+                await CreatureCmd.GainBlock(self, reward, ValueProp.Move, play);
                 await Buff<BlurPower>(reward); break;
             case "BuildUpBody": await Buff<StrengthPower>(reward); break;
             case "HighSpeedMovement": await Buff<DexterityPower>(reward); break;
@@ -46,8 +46,7 @@ public static class FactorEffects
                 }
                 break;
             case "Hypnosis":
-                // 一代使用实际消耗 magicNumber，而非效果 secondMagicNumber。
-                await Debuff<WeakPower>(option.Cost); await Debuff<VulnerablePower>(option.Cost); break;
+                await Debuff<WeakPower>(reward); await Debuff<VulnerablePower>(reward); break;
             case "NatureBeauty": await Buff<EnergyNextTurnPower>(reward); break;
             case "BloodSpell": await CreatureCmd.Damage(context, self, reward, ValueProp.Unblockable | ValueProp.Unpowered, self, play.Card); break;
             case "PassOnTheTorch": await ManaCmd.Generate(player, ManaCmd.Pile((ManaSlot)(((int)option.Slot + 1) % 3)), reward); break;

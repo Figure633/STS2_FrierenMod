@@ -66,7 +66,7 @@
   "FRIERENMOD-OPEN_THE_WAYGATE_POWER.title": "Open the Waygate",
   "FRIERENMOD-OPEN_THE_WAYGATE_POWER.description": "After {Amount} consecutive Synchros, take an extra turn and lose this power.",
   "FRIERENMOD-FRIEREN_SUITCASE_POWER.title": "Frieren’s Suitcase",
-  "FRIERENMOD-FRIEREN_SUITCASE_POWER.description": "Your hand limit is at least 13. After playing a card, if your hand is full, gain {Amount} Block.",
+  "FRIERENMOD-FRIEREN_SUITCASE_POWER.description": "Your hand limit is 13. After playing a card, if your hand is full, gain {Amount} Block.",
   "FRIERENMOD-GAIN_RELIC_POWER.title": "Accessories Spell",
   "FRIERENMOD-GAIN_RELIC_POWER.description": "Gain {Amount} additional random Relic rewards after winning this combat.",
   "FRIERENMOD-TIME_TRAVEL_POWER.title": "Time Travel",

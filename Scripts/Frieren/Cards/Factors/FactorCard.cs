@@ -1,4 +1,5 @@
 using FrierenMod.Core;
+using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Localization;
@@ -8,9 +9,17 @@ using MegaCrit.Sts2.Core.Models;
 namespace FrierenMod.Scripts.Cards;
 
 // 因子仅作为选择与预览模型，不进入普通卡牌奖励池和战斗牌堆。
-public abstract class FactorCard() : FrierenCard(0, CardType.Skill, CardRarity.Token, TargetType.Self, false)
+public abstract class FactorCard() : FrierenCard(-1, CardType.Skill, CardRarity.Token, TargetType.Self, false), ICustomTypeTextCard
 {
     public string FactorId => GetType().Name;
+    public override CardRarity Rarity => SpellCatalog.Get(FactorId).Rarity switch {
+        FactorRarity.Uncommon => CardRarity.Uncommon,
+        FactorRarity.Rare => CardRarity.Rare,
+        _ => CardRarity.Common
+    };
+    public override bool CanBeGeneratedInCombat => false;
+    public override bool CanBeGeneratedByModifiers => false;
+    public IEnumerable<LocString> GetTypeModifiers() => [new("frieren", "FACTOR_TYPE")];
     public ManaSlot? Slot { get; private set; }
     public ChantOption? Option { get; private set; }
     public int? InventoryInstanceId { get; set; }

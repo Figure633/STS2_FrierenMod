@@ -13,6 +13,7 @@ using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using MegaCrit.Sts2.Core.Nodes.Cards;
 using MegaCrit.Sts2.Core.Nodes.Cards.Holders;
 using MegaCrit.Sts2.Core.TestSupport;
+using MegaCrit.Sts2.Core.Nodes.Screens.Overlays;
 
 namespace FrierenMod.Scripts.UI;
 
@@ -22,6 +23,8 @@ public sealed class MagicBookScreen
     public Control View { get; }
     private readonly Player _player;
     private readonly Control _canvas;
+    private readonly Func<IOverlayScreen?> _currentOverlay;
+    private IOverlayScreen? _coveredOverlay;
     private readonly Control _equipped;
     private readonly GridContainer _inventory;
     private readonly Label _status;
@@ -47,10 +50,11 @@ public sealed class MagicBookScreen
         return label;
     }
 
-    public MagicBookScreen(Control root, Player player)
+    public MagicBookScreen(Control root, Player player, Func<IOverlayScreen?>? currentOverlay = null)
     {
         _player = player;
-        View = new Control { Name = "FrierenMagicBook", Visible = false, ZIndex = 6, MouseFilter = Control.MouseFilterEnum.Stop };
+        _currentOverlay = currentOverlay ?? (() => NOverlayStack.Instance?.Peek());
+        View = new Control { Name = "FrierenMagicBook", Visible = false, ZIndex = 100, ZAsRelative = false, MouseFilter = Control.MouseFilterEnum.Stop };
         root.AddChild(View);
         View.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
         _canvas = new Control { Name = "BookCanvas", Size = new Vector2(1920, 1080), MouseFilter = Control.MouseFilterEnum.Ignore };
@@ -93,20 +97,38 @@ public sealed class MagicBookScreen
             else if (!visible && _inputCaptured) { back.Disable(); NHotkeyManager.Instance?.RemoveBlockingScreen(View); }
             _inputCaptured = visible;
         };
-        View.TreeExiting += () => { NHotkeyManager.Instance?.RemoveBlockingScreen(View); ReleaseCards(); };
+        View.TreeExiting += () => { RestoreOverlay(); NHotkeyManager.Instance?.RemoveBlockingScreen(View); ReleaseCards(); };
         // 隐藏的快捷键按钮只处理 Esc，不再增加一套可见按钮皮肤。
         var escape = new Button { Name = "CancelShortcut", Flat = true, Size = Vector2.One, Modulate = Colors.Transparent,
             MouseFilter = Control.MouseFilterEnum.Ignore, FocusMode = Control.FocusModeEnum.None,
             Shortcut = new Shortcut { Events = new Godot.Collections.Array { new InputEventKey { Keycode = Key.Escape } } } };
         _canvas.AddChild(escape);
         escape.Pressed += Back;
-        View.VisibilityChanged += () => { if (!View.Visible) Cancel(); };
+        View.VisibilityChanged += () => { if (!View.Visible) { Cancel(); RestoreOverlay(); } };
         View.TreeExiting += () => root.Resized -= Resize;
     }
 
-    public void Open() { Cancel(); Populate(); View.Show(); }
+    public void Open()
+    {
+        if (View.Visible) return;
+        Cancel(); Populate();
+        _coveredOverlay = _currentOverlay();
+        // 只暂时隐藏原生选牌屏，不移除它，也不完成或取消它的选择任务。
+        _coveredOverlay?.AfterOverlayHidden();
+        if (_coveredOverlay != null) _status.Text = Text("BOOK_VIEW_ONLY");
+        View.Show();
+    }
     public void Close() { Cancel(); View.Hide(); }
     private void Back() { if (_armed.HasValue) Cancel(); else Close(); }
+
+    private void RestoreOverlay()
+    {
+        var previous = _coveredOverlay;
+        _coveredOverlay = null;
+        if (previous == null || previous != _currentOverlay()) return;
+        if (previous is GodotObject node && !GodotObject.IsInstanceValid(node)) return;
+        previous.AfterOverlayShown();
+    }
 
     private void Cancel()
     {
@@ -119,17 +141,25 @@ public sealed class MagicBookScreen
     public void Refresh()
     {
         if (!View.Visible) return;
+        if (_coveredOverlay != _currentOverlay()) { Close(); return; }
         var deck = MagicDeckStore.Read(_player);
         if (_displayed != deck.ToJson()) { Cancel(); Populate(); }
         if (_armed.HasValue && !_applying && !MagicPropCmd.CanUse(_player, _armed.Value)) Cancel();
     }
 
-    private static NGridCardHolder CreateHolder(CardModel model)
+    internal static NCard CreateCard(CardModel model)
     {
-        if (!TestMode.IsOn) return NGridCardHolder.Create(NCard.Create(model)!)!;
+        if (!TestMode.IsOn) return NCard.Create(model)!;
         // 测试模式禁用原生工厂；仍实例化完全相同的场景，并保留内存存档隔离。
         var card = NodePool.Get<NCard>();
         AccessTools.Property(typeof(NCard), nameof(NCard.Model)).SetValue(card, model);
+        return card;
+    }
+
+    private static NGridCardHolder CreateHolder(CardModel model)
+    {
+        var card = CreateCard(model);
+        if (!TestMode.IsOn) return NGridCardHolder.Create(card)!;
         var holder = NodePool.Get<NGridCardHolder>();
         holder.Call(NCardHolder.MethodName.SetCard, card);
         holder.Call(NGridCardHolder.MethodName.UpdateCardModel);
@@ -198,6 +228,7 @@ public sealed class MagicBookScreen
     private void Arm(int id)
     {
         if (_applying) return;
+        if (_currentOverlay() != null) { _status.Text = Text("BOOK_VIEW_ONLY"); return; }
         if (_armed == id) { Cancel(); return; }
         if (!MagicPropCmd.CanUse(_player, id)) { _status.Text = Text("PROP_UNAVAILABLE"); return; }
         _armed = id; _selected.Clear();

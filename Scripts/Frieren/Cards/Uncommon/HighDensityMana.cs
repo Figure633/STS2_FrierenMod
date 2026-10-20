@@ -17,7 +17,11 @@ namespace FrierenMod.Scripts.Cards;
 public sealed class HighDensityMana() : FrierenCard(0, CardType.Status, CardRarity.Uncommon, TargetType.Self), IManaCard
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Amount", 1)];
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+    protected override PileType GetResultPileTypeForCardPlay()
+    {
+        var pile = base.GetResultPileTypeForCardPlay();
+        return pile == PileType.Discard ? PileType.Exhaust : pile;
+    }
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         await SynchroCmd.Play(context, this);

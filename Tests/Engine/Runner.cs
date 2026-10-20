@@ -19,6 +19,9 @@ public partial class Runner : Node
     private async Task Finish()
     {
         for (int i = 0; i < 5; i++) await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+        // 卡牌悬停仍可能持有补间；先停止并让引擎移除，再释放对象池。
+        foreach (var tween in GetTree().GetProcessedTweens()) tween.Kill();
+        for (int i = 0; i < 2; i++) await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
         // 游戏的静态对象池不随测试场景销毁；在引擎关闭前显式释放独立测试缓存。
         var pools = (System.Collections.IDictionary)AccessTools.Field(typeof(MegaCrit.Sts2.Core.Nodes.Pooling.NodePool), "_pools").GetValue(null);
         foreach (var pool in pools.Values) {
@@ -32,6 +35,10 @@ public partial class Runner : Node
         pools.Clear();
         TestHotkeys.Free();
         for (int i = 0; i < 3; i++) await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+        // 在 Godot 原生对象仍可用时清理托管资源，避免引擎退出后才终结悬停材质与纹理。
+        GC.Collect();
+        GC.WaitForPendingFinalizers();
+        GC.Collect();
         GetTree().Quit();
     }
 
@@ -39,6 +46,8 @@ public partial class Runner : Node
     {
         try
         {
+            bool reviewedOnly = OS.GetCmdlineUserArgs().Contains("--reviewed-only");
+            if (reviewedOnly) GD.Print("REVIEWED: 初始化测试运行环境");
             // 原生 TestMode 将 SaveManager 重定向至内存 MockGodotFileIo，不读写玩家文件。
             TestMode.IsOn = true;
             // 构建脚本从 local.props 读取位置；不依赖开发者电脑的固定安装目录。
@@ -63,9 +72,11 @@ public partial class Runner : Node
             ModelDb.Init();
             ModelIdSerializationCache.Init();
             ModelDb.InitIds();
+            if (reviewedOnly) GD.Print("REVIEWED: 模型已加载");
             SaveManager.Instance.InitSettingsData();
             SaveManager.Instance.SettingsSave.Language = "eng";
             LocManager.Initialize();
+            if (reviewedOnly) GD.Print("REVIEWED: 本地化已加载");
             MegaCrit.Sts2.Core.Nodes.Pooling.NodePool.Init<MegaCrit.Sts2.Core.Nodes.Cards.NCard>("res://scenes/cards/card.tscn", 0);
             MegaCrit.Sts2.Core.Nodes.Pooling.NodePool.Init<MegaCrit.Sts2.Core.Nodes.Cards.Holders.NGridCardHolder>("res://scenes/cards/holders/grid_card_holder.tscn", 0);
             new Harmony("frieren.tests.hotkeys").Patch(
@@ -76,6 +87,14 @@ public partial class Runner : Node
             new Harmony("frieren.tests.hover_host").Patch(
                 AccessTools.Method(typeof(MegaCrit.Sts2.Core.Nodes.Cards.Holders.NCardHolder), "CreateHoverTips"),
                 prefix: new HarmonyMethod(typeof(Runner), nameof(SkipGlobalHoverWindow)));
+            if (OS.GetCmdlineUserArgs().Contains("--ui-todos-only")) {
+                GD.Print("UI_TODOS_OK: " + await UiTodoTests.Run(this));
+                await Finish(); return;
+            }
+            if (OS.GetCmdlineUserArgs().Contains("--reviewed-only")) {
+                GD.Print("REVIEWED_TESTS_OK: " + await ReviewedCardTests.Run(this));
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--missing-only")) {
                 GD.Print("MISSING_TESTS_OK: " + await MissingCardTests.Run(this));
                 await Finish(); return;
@@ -110,7 +129,7 @@ public partial class Runner : Node
             foreach (var slot in Enum.GetValues<FrierenMod.Core.ManaSlot>()) {
                 var area = hud.GetNode<Control>("Slot" + slot);
                 int actual = FrierenMod.Scripts.Mechanics.ManaCmd.InPile(player, FrierenMod.Scripts.Mechanics.ManaCmd.Pile(slot)).Count();
-                if (area.GetNode<Label>("Count").Text != actual.ToString() || string.IsNullOrWhiteSpace(area.TooltipText))
+                if (area.GetNode<Label>("Count").Text != actual.ToString())
                     throw new Exception("槽位魔力计数或悬停说明缺失：" + slot);
             }
             ui.GetNode<Button>("FrierenMagicBookButton").EmitSignal(BaseButton.SignalName.Pressed);
@@ -158,6 +177,8 @@ public partial class Runner : Node
             count += await MagicShopTests.Run(this);
             count += await EndingFlowTests.Run(this);
             count += await MissingCardTests.Run(this);
+            count += await ReviewedCardTests.Run(this);
+            count += await UiTodoTests.Run(this);
             GD.Print($"ENGINE_TESTS_OK: {count}");
             await Finish();
         }

@@ -20,8 +20,10 @@ public sealed class PancakeSpell() : FrierenCard(0, CardType.Skill, CardRarity.U
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         if (ManaCmd.InPile(Owner, PileType.Hand).Count() < (int)DynamicVars["Amount"].BaseValue) return;
+        var selected = (await CardFlowCmd.Choose(context, this, PileType.Draw, 1)).ToArray();
+        if (selected.Length == 0) return;
         await CardFlowCmd.MoveMana(Owner, PileType.Hand, PileType.Draw, (int)DynamicVars["Amount"].BaseValue);
-        foreach (var card in await CardFlowCmd.Choose(context, this, PileType.Draw, 1))
+        foreach (var card in selected)
             await CardPileCmd.Add(card, PileType.Hand);
     }
     protected override void OnUpgrade() { DynamicVars["Amount"].UpgradeValueBy(-1); }

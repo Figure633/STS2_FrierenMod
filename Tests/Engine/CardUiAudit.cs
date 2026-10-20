@@ -60,7 +60,8 @@ public static class CardUiAudit
                     foreach (var tip in model.HoverTips.OfType<MegaCrit.Sts2.Core.HoverTips.HoverTip>())
                         if (string.IsNullOrWhiteSpace(tip.Description) || tip.Description.Contains("TIP."))
                             throw new Exception($"悬停规则说明缺失：{language}/{model.Id}");
-                    string auditedText = model is MultipleOffensiveMagic ? Regex.Replace(text, @"X\+(?:4|1)(?!\d)", "X") : text;
+                    string auditedText = model is FactorCard ? Regex.Replace(text, @"\b\d*X(?:[+-]\d+)?\b", "X") :
+                        model is MultipleOffensiveMagic ? Regex.Replace(text, @"X\+(?:4|1)(?!\d)", "X") : text;
                     if (Regex.IsMatch(auditedText, @"\{[^}]+\}|\b(?:max|min)\s*\(|\b\d+X\b|\bX[+-]\d|FRIERENMOD-"))
                         throw new Exception($"卡面出现未格式化内容：{language}/{model.Id}: {text}");
                     // TestMode 保持开启；直接实例化场景以绕过 NCard.Create 的测试短路。

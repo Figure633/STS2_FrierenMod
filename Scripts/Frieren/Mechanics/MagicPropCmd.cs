@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Nodes.Screens.Overlays;
 using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.Runs;
 
@@ -21,6 +22,7 @@ public static class MagicPropCmd
     {
         var combat = CombatManager.Instance;
         return player.Character is Frieren && player.RunState.Players.Count == 1 &&
+            (NOverlayStack.Instance?.ScreenCount ?? 0) == 0 &&
             MagicDeckStore.Read(player).SetupCompleted && !player.Creature.IsDead &&
             !combat.IsStarting && !combat.IsEnding && (!combat.IsInProgress ||
                 (!combat.PlayerActionsDisabled && !combat.IsEnemyTurnStarted &&
