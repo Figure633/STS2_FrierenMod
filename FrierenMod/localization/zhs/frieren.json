@@ -146,5 +146,9 @@
   "TIP.BACKFIRE.description": "每次打出后，本牌在本回合的费用增加 1。",
   "BOOK_VIEW_ONLY": "选牌期间可查看因子与魔具。关闭后继续选牌。",
   "FACTOR_TYPE": "魔法因子",
-  "PROP_TYPE": "魔具"
+  "PROP_TYPE": "魔具",
+  "TIP.MAGIC_DECK.title": "魔法牌组",
+  "TIP.MAGIC_DECK.description": "查看你拥有的[gold]魔法因子[/gold]和[gold]魔具[/gold]。",
+  "SORT_RARITY": "稀有度",
+  "SORT_TYPE": "类型"
 }

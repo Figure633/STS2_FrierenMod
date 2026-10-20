@@ -146,5 +146,9 @@
   "TIP.BACKFIRE.description": "After this card is played, it costs 1 more Energy this turn.",
   "BOOK_VIEW_ONLY": "View your factors and tools while choosing cards. Close this screen to continue your selection.",
   "FACTOR_TYPE": "Magic Factor",
-  "PROP_TYPE": "Magic Tool"
+  "PROP_TYPE": "Magic Tool",
+  "TIP.MAGIC_DECK.title": "Magic Deck",
+  "TIP.MAGIC_DECK.description": "View all your [gold]Magic Factors[/gold] and [gold]Magic Tools[/gold].",
+  "SORT_RARITY": "Rarity",
+  "SORT_TYPE": "Type"
 }

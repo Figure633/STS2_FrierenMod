@@ -1,5 +1,8 @@
 using Godot;
 using MegaCrit.Sts2.Core.Localization;
+using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Nodes;
+using MegaCrit.Sts2.Core.Nodes.HoverTips;
 using MegaCrit.Sts2.Core.Nodes.TopBar;
 
 namespace FrierenMod.Scripts.UI;
@@ -10,7 +13,21 @@ public partial class MagicFactorButton : NTopBarButton
 
     public override void _Ready() => InitTopBarButton();
     protected override bool IsOpen() => _bookOpen;
-    public void SetBookOpen(bool open) { _bookOpen = open; UpdateScreenOpen(); }
+    public void SetBookOpen(bool open) { _bookOpen = open; UpdateScreenOpen(); NHoverTipSet.Remove(this); }
+
+    private static HoverTip CreateHoverTip() => new(new LocString("frieren", "TIP.MAGIC_DECK.title"),
+        new LocString("frieren", "TIP.MAGIC_DECK.description"));
+
+    protected override void OnFocus()
+    {
+        base.OnFocus();
+        if (NGame.Instance == null) return;
+        NHoverTipSet.Remove(this);
+        var tip = NHoverTipSet.CreateAndShow(this, CreateHoverTip());
+        tip?.SetGlobalPosition(GlobalPosition + new Vector2(Size.X - tip.Size.X, Size.Y + 20));
+    }
+
+    protected override void OnUnfocus() { base.OnUnfocus(); NHoverTipSet.Remove(this); }
 
     public static MagicFactorButton Create(Control root)
     {
@@ -22,8 +39,7 @@ public partial class MagicFactorButton : NTopBarButton
         foreach (var child in visual.FindChildren("*", "", true, false)) child.Owner = null;
         var button = new MagicFactorButton {
             Name = "FrierenMagicBookButton", CustomMinimumSize = new(80, 80),
-            FocusMode = Control.FocusModeEnum.All,
-            TooltipText = new LocString("frieren", "BOOK_BUTTON").GetFormattedText()
+            FocusMode = Control.FocusModeEnum.All
         };
         button.AddChild(visual);
         var icon = visual.GetNode<TextureRect>("Icon");

@@ -28,6 +28,10 @@ public sealed class MagicBookScreen
     private readonly Control _equipped;
     private readonly GridContainer _inventory;
     private readonly Label _status;
+    private readonly NCardViewSortButton _raritySorter;
+    private readonly NCardViewSortButton _typeSorter;
+    private readonly Dictionary<int, (int Rarity, int Type)> _inventorySortKeys = [];
+    private bool _sortByType;
     private readonly Dictionary<int, NGridCardHolder> _cards = [];
     private readonly List<int> _selected = [];
     private readonly Dictionary<int, (NCardHolder.PressedEventHandler Press, NCardHolder.AltPressedEventHandler Alt)> _handlers = [];
@@ -66,7 +70,6 @@ public sealed class MagicBookScreen
         }
         root.Resized += Resize;
         Resize();
-        _canvas.AddChild(Caption(Text("BOOK"), 38, new(300, 45), new(1320, 55)));
         _equipped = new Control { Name = "EquippedFactors", MouseFilter = Control.MouseFilterEnum.Ignore };
         _canvas.AddChild(_equipped);
         for (int i = 0; i < 3; i++)
@@ -74,7 +77,22 @@ public sealed class MagicBookScreen
         var divider = new ColorRect { Position = new(260, 510), Size = new(1400, 2),
             Color = new Color("ab91686b"), MouseFilter = Control.MouseFilterEnum.Ignore };
         _canvas.AddChild(divider);
-        _canvas.AddChild(Caption(Text("BOOK_INVENTORY"), 24, new(400, 520), new(1120, 36)));
+        _canvas.AddChild(Caption(Text("BOOK_INVENTORY"), 24, new(280, 520), new(480, 42)));
+        NCardViewSortButton Sorter(string name, string key, float x, bool byType) {
+            var sorter = GD.Load<PackedScene>("res://scenes/screens/deck_view_screen/deck_view_sort_button.tscn")
+                .Instantiate<NCardViewSortButton>();
+            sorter.Name = name;
+            _canvas.AddChild(sorter);
+            sorter.Position = new(x, 520); sorter.Size = new(240, 42);
+            sorter.SetLabel(Text(key));
+            sorter.Released += _ => {
+                if (_sortByType != byType) { _sortByType = byType; sorter.IsDescending = false; }
+                SortInventory();
+            };
+            return sorter;
+        }
+        _raritySorter = Sorter("RaritySorter", "SORT_RARITY", 900, false);
+        _typeSorter = Sorter("TypeSorter", "SORT_TYPE", 1160, true);
         var scroll = new ScrollContainer { Name = "InventoryScroll", Position = new(255, 565), Size = new(1410, 385),
             HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled, VerticalScrollMode = ScrollContainer.ScrollMode.Auto };
         _canvas.AddChild(scroll);
@@ -186,6 +204,7 @@ public sealed class MagicBookScreen
     private void Populate()
     {
         ReleaseCards();
+        _inventorySortKeys.Clear();
         foreach (var node in _equipped.GetChildren().Concat(_inventory.GetChildren())) { node.GetParent().RemoveChild(node); node.QueueFree(); }
         _cards.Clear();
         var deck = MagicDeckStore.Read(_player);
@@ -194,7 +213,14 @@ public sealed class MagicBookScreen
             if (slot >= 0) {
                 cell.Position = new(465 + slot * 360, 160);
                 _equipped.AddChild(cell);
-            } else _inventory.AddChild(cell);
+            } else {
+                _inventory.AddChild(cell);
+                // 一代 BY_RARITY：普通、罕见、魔具、稀有；BY_TYPE 将魔具和未装载因子分组。
+                int rarity = prop ? 4 : SpellCatalog.Get(((FactorCard)model).FactorId).Rarity switch {
+                    FactorRarity.Common => 2, FactorRarity.Uncommon => 3, _ => 5
+                };
+                _inventorySortKeys.Add(id, (rarity, prop ? -1 : 3));
+            }
             // 原生卡牌悬停会从 0.8 放大到 1；父层统一缩放，预留边界避免裁切。
             var scaleRoot = new Control { Scale = Vector2.One * 0.9f, Position = new(135, slot >= 0 ? 172 : 192),
                 MouseFilter = Control.MouseFilterEnum.Ignore };
@@ -222,7 +248,24 @@ public sealed class MagicBookScreen
             _inventory.AddChild(empty);
         }
         _displayed = deck.ToJson();
+        SortInventory();
         RefreshSelection();
+    }
+
+    private void SortInventory()
+    {
+        bool descending = (_sortByType ? _typeSorter : _raritySorter).IsDescending;
+        var ordered = _inventorySortKeys.OrderBy(pair => {
+            int key = _sortByType ? pair.Value.Type : pair.Value.Rarity;
+            return descending ? -key : key;
+        }).ThenBy(pair => pair.Key);
+        int index = 0;
+        foreach (var pair in ordered) _inventory.MoveChild(_inventory.GetNode("Item_" + pair.Key), index++);
+        foreach (var (sorter, active) in new[] { (_raritySorter, !_sortByType), (_typeSorter, _sortByType) }) {
+            var color = new Color(active ? "f5d66f" : "d2cec3");
+            sorter.GetNode<Label>("%Label").AddThemeColorOverride("font_color", color);
+            sorter.GetNode<TextureRect>("%Image").Modulate = color;
+        }
     }
 
     private void Arm(int id)

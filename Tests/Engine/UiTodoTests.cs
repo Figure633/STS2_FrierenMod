@@ -11,11 +11,13 @@ using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Multiplayer;
 using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Multiplayer;
 using MegaCrit.Sts2.Core.Nodes.Cards;
 using MegaCrit.Sts2.Core.Nodes.Cards.Holders;
+using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using MegaCrit.Sts2.Core.Nodes.GodotExtensions;
 using MegaCrit.Sts2.Core.Nodes.TopBar;
 using MegaCrit.Sts2.Core.Nodes.Screens.ScreenContext;
@@ -62,6 +64,10 @@ public static class UiTodoTests
         foreach (var (slot, id) in new[] { (ManaSlot.Draw,"BuildUpBody"), (ManaSlot.Hand,"BarrierMagic"), (ManaSlot.Discard,"GreatMageComposure") })
             deck.Equip(deck.Add(id).InstanceId, slot);
         var prop = deck.AddProp("MysteryBox"); MagicDeckStore.Write(player, deck);
+        var uncommon = deck.Add("HighSpeedMovement");
+        var rare = deck.Add("PeacefulDays");
+        var tool = deck.AddProp("UnbelievableTool");
+        MagicDeckStore.Write(player, deck);
         await ManaCmd.Generate(player, PileType.Draw, 7);
         await ManaCmd.Generate(player, PileType.Hand, 2);
         await ManaCmd.Generate(player, PileType.Discard, 1);
@@ -96,6 +102,14 @@ public static class UiTodoTests
         foreach (var (language,title) in new[] {("zhs","魔法因子"),("eng","Magic Factors")}) {
             LocManager.Instance.SetLanguage(language);
             Check(new LocString("frieren","BOOK_BUTTON").GetFormattedText() == title, language + "入口名称");
+        }
+        foreach (var (language,title,description) in new[] {
+            ("zhs","魔法牌组","查看你拥有的[gold]魔法因子[/gold]和[gold]魔具[/gold]。"),
+            ("eng","Magic Deck","View all your [gold]Magic Factors[/gold] and [gold]Magic Tools[/gold].") }) {
+            LocManager.Instance.SetLanguage(language);
+            var tip=(HoverTip)AccessTools.Method(typeof(MagicFactorButton),"CreateHoverTip").Invoke(null,null)!;
+            Check(tip.Title==title && tip.Description==description && string.IsNullOrEmpty(button.TooltipText),
+                language+"魔法牌组采用一代说明与关键词高亮，不叠加普通提示");
         }
         LocManager.Instance.SetLanguage("zhs");
         var reward = new FactorReward(player);
@@ -156,6 +170,40 @@ public static class UiTodoTests
         button._GuiInput(new InputEventMouseButton {ButtonIndex=MouseButton.Left,Pressed=false});
         Check(book.Visible && !preview.Visible && !hud.Visible, "打开因子界面隐藏计数器与悬停预览");
         button.EmitSignal(Control.SignalName.MouseExited);
+        Check(!book.FindChildren("*","Label",true,false).OfType<Label>().Any(label=>label.Text==new LocString("frieren","BOOK").GetFormattedText()),
+            "删除被顶部栏遮挡的魔法因子与魔具标题");
+        var inventory=(GridContainer)book.FindChild("Inventory",true,false);
+        var raritySorter=(NCardViewSortButton)book.FindChild("RaritySorter",true,false);
+        var typeSorter=(NCardViewSortButton)book.FindChild("TypeSorter",true,false);
+        int[] InventoryIds() => inventory.GetChildren().OfType<Control>().Select(cell=>int.Parse(cell.Name.ToString()[5..])).ToArray();
+        int[] common=deck.Items.Where(i=>i.Slot<0 && SpellCatalog.Get(i.SpellId).Rarity==FactorRarity.Common).Select(i=>i.InstanceId).Order().ToArray();
+        int[] props=deck.Props.Select(i=>i.InstanceId).Order().ToArray();
+        string beforeSort=MagicDeckStore.Read(player).ToJson();
+        var equippedCells=book.FindChild("EquippedFactors",true,false).GetChildren().ToArray();
+        Check(InventoryIds().SequenceEqual(common.Concat([uncommon.InstanceId]).Concat(props).Concat([rare.InstanceId])),
+            "默认稀有度排序按一代将魔具放在罕见与稀有因子之间");
+        raritySorter.ForceClick();
+        Check(InventoryIds().SequenceEqual(new[]{rare.InstanceId}.Concat(props).Concat([uncommon.InstanceId]).Concat(common)),
+            "稀有度反向排序，同类条目仍保持获得顺序");
+        typeSorter.ForceClick();
+        Check(InventoryIds().SequenceEqual(props.Concat(common).Concat([uncommon.InstanceId,rare.InstanceId])),
+            "类型排序先魔具后未装载因子");
+        typeSorter.ForceClick();
+        Check(InventoryIds().SequenceEqual(common.Concat([uncommon.InstanceId,rare.InstanceId]).Concat(props)),
+            "类型反向排序先未装载因子后魔具");
+        AccessTools.Property(typeof(CombatManager),nameof(CombatManager.IsStarting)).SetValue(CombatManager.Instance,false);
+        AccessTools.Property(typeof(CombatManager),nameof(CombatManager.PlayerActionsDisabled)).SetValue(CombatManager.Instance,false);
+        var toolHolder=(NGridCardHolder)book.FindChild("Prop_"+tool.InstanceId,true,false);
+        toolHolder.EmitSignal(NCardHolder.SignalName.AltPressed,toolHolder);
+        var selectedHolder=(NGridCardHolder)book.FindChild("Factor_"+deck.Items.First(i=>i.Slot>=0).InstanceId,true,false);
+        selectedHolder.EmitSignal(NCardHolder.SignalName.Pressed,selectedHolder);
+        string selectionStatus=((Label)book.FindChild("BookStatus",true,false)).Text;
+        raritySorter.ForceClick();
+        Check(selectionStatus.Contains("1/2") && ((Label)book.FindChild("BookStatus",true,false)).Text==selectionStatus &&
+            book.FindChild(selectedHolder.Name,true,false)==selectedHolder &&
+            book.FindChild("EquippedFactors",true,false).GetChildren().SequenceEqual(equippedCells) &&
+            MagicDeckStore.Read(player).ToJson()==beforeSort,
+            "排序保持已装载槽位、魔具待选择目标与库存原样");
         book.Hide();
         var selectionView = new Control(); ui.AddChild(selectionView);
         var selection = new SelectionScreen(selectionView); active=selection;
@@ -201,6 +249,19 @@ public static class UiTodoTests
             button.EmitSignal(NClickableControl.SignalName.Released,button);
             for(int i=0;i<4;i++) await root.ToSignal(root.GetTree(),SceneTree.SignalName.ProcessFrame);
             root.GetViewport().GetTexture().GetImage().SavePng(ProjectSettings.GlobalizePath("res://../../artifacts/factor-screen.png"));
+            book.Hide();
+            // 测试场景没有 NGame 全局宿主，使用同一个原生提示场景核对文字与布局。
+            var tip=(HoverTip)AccessTools.Method(typeof(MagicFactorButton),"CreateHoverTip").Invoke(null,null)!;
+            var tipView=GD.Load<PackedScene>("res://scenes/ui/hover_tip.tscn").Instantiate<Control>();
+            ui.AddChild(tipView);
+            tipView.GetNode<Label>("%Title").Text=tip.Title;
+            tipView.GetNode<RichTextLabel>("%Description").Text=tip.Description;
+            tipView.Position=new(button.GetGlobalRect().End.X-360,button.GetGlobalRect().End.Y+20);
+            tipView.Size=new(360,tipView.Size.Y);
+            tipView.ResetSize();
+            for(int i=0;i<4;i++) await root.ToSignal(root.GetTree(),SceneTree.SignalName.ProcessFrame);
+            root.GetViewport().GetTexture().GetImage().SavePng(ProjectSettings.GlobalizePath("res://../../artifacts/factor-tooltip.png"));
+            tipView.QueueFree();
         }
         ui.QueueFree();
         for(int i=0;i<4;i++) await root.ToSignal(root.GetTree(),SceneTree.SignalName.ProcessFrame);
