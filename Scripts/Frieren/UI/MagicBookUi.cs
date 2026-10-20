@@ -10,6 +10,8 @@ using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Nodes;
+using MegaCrit.Sts2.Core.Nodes.CommonUi;
+using MegaCrit.Sts2.Core.Nodes.Screens.ScreenContext;
 using MegaCrit.Sts2.Core.Nodes.Screens.Overlays;
 using MegaCrit.Sts2.Core.Runs;
 
@@ -33,21 +35,13 @@ public static class MagicBookUi
         Attach(__instance.GlobalUi, player);
     }
 
-    public static void Attach(Control root, Player player, Func<IOverlayScreen?>? currentOverlay = null)
+    public static void Attach(Control root, Player player, Func<IOverlayScreen?>? currentOverlay = null,
+        Func<bool>? inputBlocked = null)
     {
         currentOverlay ??= () => NOverlayStack.Instance?.Peek();
-        var toggle = new Button { Name = "FrierenMagicBookButton", Text = Text("BOOK_BUTTON"), Flat = true, ZIndex = 101, ZAsRelative = false };
-        toggle.Icon = GD.Load<Texture2D>("res://FrierenMod/images/ui/magic_deck.png");
-        toggle.AddThemeConstantOverride("icon_max_width", 42);
-        toggle.AddThemeFontOverride("font", GD.Load<Font>("res://themes/kreon_bold_shared.tres"));
-        toggle.AddThemeFontSizeOverride("font_size", 23);
-        toggle.AddThemeColorOverride("font_color", new Color("fff1d5"));
-        root.AddChild(toggle);
-        toggle.SetAnchorsPreset(Control.LayoutPreset.TopRight);
-        toggle.OffsetLeft = -480;
-        toggle.OffsetTop = 10;
-        toggle.OffsetRight = -300;
-        toggle.OffsetBottom = 66;
+        inputBlocked ??= () => root is NGlobalUi global &&
+            (global.CapstoneContainer.InUse || NModalContainer.Instance?.OpenModal != null);
+        var toggle = MagicFactorButton.Create(root);
 
         var hud = new Control { Name = "FrierenManaCounter",
             Size = new Vector2(108, 264), MouseFilter = Control.MouseFilterEnum.Pass };
@@ -108,6 +102,7 @@ public static class MagicBookUi
         var screen = new MagicBookScreen(root, player, currentOverlay);
         var book = screen.View;
         book.VisibilityChanged += () => {
+            toggle.SetBookOpen(book.Visible);
             backdrop.Visible = book.Visible;
             hud.Visible = CombatManager.Instance.IsInProgress && !book.Visible && currentOverlay() == null;
             if (!hud.Visible) preview.Hide();
@@ -117,10 +112,27 @@ public static class MagicBookUi
                 screen.Close(); backdrop.AcceptEvent();
             }
         };
-        toggle.Pressed += () => { if (book.Visible) screen.Close(); else screen.Open(); };
+        toggle.Released += _ => {
+            if (inputBlocked()) return;
+            if (book.Visible) screen.Close(); else screen.Open();
+        };
+        void RefreshInput()
+        {
+            bool blocked = inputBlocked();
+            toggle.SetEnabled(!blocked);
+            foreach (var view in new[] { hud, book, backdrop }) {
+                view.MouseBehaviorRecursive = blocked ? Control.MouseBehaviorRecursiveEnum.Disabled : Control.MouseBehaviorRecursiveEnum.Inherited;
+                view.FocusBehaviorRecursive = blocked ? Control.FocusBehaviorRecursiveEnum.Disabled : Control.FocusBehaviorRecursiveEnum.Inherited;
+                view.ProcessMode = blocked ? Node.ProcessModeEnum.Disabled : Node.ProcessModeEnum.Inherit;
+            }
+            if (blocked) preview.Hide();
+        }
+        ActiveScreenContext.Instance.Updated += RefreshInput;
+        root.TreeExiting += () => ActiveScreenContext.Instance.Updated -= RefreshInput;
         var timer = new Godot.Timer { Name = "FrierenManaRefresh", WaitTime = 0.1, Autostart = true };
         timer.Timeout += () =>
         {
+            RefreshInput();
             bool overlay = currentOverlay() != null;
             hud.Visible = CombatManager.Instance.IsInProgress && !overlay && !book.Visible;
             if (!hud.Visible) preview.Hide();
@@ -141,7 +153,13 @@ public static class MagicBookUi
             preview.Refresh();
         };
         root.AddChild(timer);
-        // Control 命中按树顺序处理；入口必须在全屏查看遮罩之后，才能再次点击关闭。
-        root.MoveChild(toggle, root.GetChildCount() - 1);
+        if (root is NGlobalUi globalUi) {
+            // 因子查看位于选牌层之上、原生菜单遮罩之下，暂停时自然变暗且不会挡住菜单。
+            foreach (var view in new[] { hud, root.GetNode<Control>("FrierenFactorPreview"), backdrop, book }) {
+                view.ZIndex = 0; view.ZAsRelative = true;
+                root.MoveChild(view, globalUi.CapstoneContainer.GetIndex());
+            }
+        }
+        RefreshInput();
     }
 }

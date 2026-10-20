@@ -1,6 +1,6 @@
 extends SceneTree
 
-# 只打包模组资源和 Godot 导入产物，排除游戏 DLL、源码、测试和本机配置。
+# 只打包模组资源、Godot 节点脚本和导入产物，排除游戏 DLL、其他源码、测试和本机配置。
 func _initialize():
 	var packer = PCKPacker.new()
 	var error = packer.pck_start("res://artifacts/FrierenMod/FrierenMod.pck", 32)
@@ -10,6 +10,8 @@ func _initialize():
 		return
 	var files: Array[String] = []
 	collect("res://FrierenMod", files)
+	# C# 节点由 DLL 实现；注册后的脚本路径仍需存在于 PCK 中。
+	files.append("res://Scripts/Frieren/UI/MagicFactorButton.cs")
 	var imported: Dictionary = {}
 	for path in files:
 		if path.ends_with(".import"):

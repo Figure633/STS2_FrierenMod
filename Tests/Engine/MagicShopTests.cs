@@ -120,7 +120,7 @@ public static class MagicShopTests
         prop = Prepare("MysteryBox");
         var ui = new Control { Size = new Vector2(1920, 1080) }; root.AddChild(ui);
         MagicBookUi.Attach(ui, player);
-        ui.GetNode<Button>("FrierenMagicBookButton").EmitSignal(BaseButton.SignalName.Pressed);
+        ((FrierenMod.Scripts.UI.MagicFactorButton)ui.FindChild("FrierenMagicBookButton", true, false)).EmitSignal(MegaCrit.Sts2.Core.Nodes.GodotExtensions.NClickableControl.SignalName.Released, ui.FindChild("FrierenMagicBookButton", true, false));
         var book = ui.GetNode<Control>("FrierenMagicBook");
         var use = (NGridCardHolder)book.FindChild("Prop_" + prop, true, false);
         use.EmitSignal(NCardHolder.SignalName.AltPressed, use);
@@ -168,7 +168,7 @@ public static class MagicShopTests
         Click("Prop_" + prop, true);
         Click("Factor_" + Read().Items[0].InstanceId);
         book.Hide();
-        ui.GetNode<Button>("FrierenMagicBookButton").EmitSignal(BaseButton.SignalName.Pressed);
+        ((FrierenMod.Scripts.UI.MagicFactorButton)ui.FindChild("FrierenMagicBookButton", true, false)).EmitSignal(MegaCrit.Sts2.Core.Nodes.GodotExtensions.NClickableControl.SignalName.Released, ui.FindChild("FrierenMagicBookButton", true, false));
         Click("Factor_" + Read().Items.Last().InstanceId);
         Check(Read().ToJson() == before, "关闭再打开魔法书不残留待使用魔具或选中目标");
         if (OS.GetCmdlineUserArgs().Contains("--ui-snapshot")) {

@@ -132,15 +132,15 @@ public partial class Runner : Node
                 if (area.GetNode<Label>("Count").Text != actual.ToString())
                     throw new Exception("槽位魔力计数或悬停说明缺失：" + slot);
             }
-            ui.GetNode<Button>("FrierenMagicBookButton").EmitSignal(BaseButton.SignalName.Pressed);
+            ((FrierenMod.Scripts.UI.MagicFactorButton)ui.FindChild("FrierenMagicBookButton", true, false)).EmitSignal(MegaCrit.Sts2.Core.Nodes.GodotExtensions.NClickableControl.SignalName.Released, ui.FindChild("FrierenMagicBookButton", true, false));
             var book = ui.GetNode<Control>("FrierenMagicBook");
             if (!book.Visible) throw new Exception("魔法书按钮未打开面板。");
             if (hud.Visible || !ui.GetNode<Control>("FrierenBookBackdrop").Visible ||
                 ui.GetNode<Control>("FrierenBookBackdrop").MouseFilter != Control.MouseFilterEnum.Stop)
                 throw new Exception("魔法书打开后未隐藏计数器或未阻止点击穿透。");
             if (!new Rect2(Vector2.Zero, ui.Size).Encloses(book.GetRect()) ||
-                !new Rect2(Vector2.Zero, ui.Size).Encloses(ui.GetNode<Control>("FrierenMagicBookButton").GetRect()))
-                throw new Exception("魔法书或按钮超出界面边界：" + book.GetRect() + ", " + ui.GetNode<Control>("FrierenMagicBookButton").GetRect());
+                !new Rect2(Vector2.Zero, ui.Size).Encloses(((Control)ui.FindChild("FrierenMagicBookButton", true, false)).GetGlobalRect()))
+                throw new Exception("魔法书或按钮超出界面边界：" + book.GetRect() + ", " + ((Control)ui.FindChild("FrierenMagicBookButton", true, false)).GetGlobalRect());
             if (book.FindChildren("*", "OptionButton", true, false).Count != 0)
                 throw new Exception("临时免费换槽入口未移除。");
             foreach (var size in new[] { new Vector2(1280, 720), new Vector2(2560, 1440), new Vector2(1920, 1080) }) {
@@ -167,7 +167,7 @@ public partial class Runner : Node
                 new InputEventMouseButton { ButtonIndex = MouseButton.Left, Pressed = true });
             if (book.Visible || ui.GetNode<Control>("FrierenBookBackdrop").Visible)
                 throw new Exception("点击魔法书外部未关闭面板和遮罩。");
-            ui.GetNode<Button>("FrierenMagicBookButton").EmitSignal(BaseButton.SignalName.Pressed);
+            ((FrierenMod.Scripts.UI.MagicFactorButton)ui.FindChild("FrierenMagicBookButton", true, false)).EmitSignal(MegaCrit.Sts2.Core.Nodes.GodotExtensions.NClickableControl.SignalName.Released, ui.FindChild("FrierenMagicBookButton", true, false));
             GetViewport().PushInput(new InputEventKey { Keycode = Key.Escape, Pressed = true });
             await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
             if (book.Visible) throw new Exception("Esc 未关闭魔法书。");

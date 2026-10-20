@@ -16,6 +16,9 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Multiplayer;
 using MegaCrit.Sts2.Core.Nodes.Cards;
 using MegaCrit.Sts2.Core.Nodes.Cards.Holders;
+using MegaCrit.Sts2.Core.Nodes.GodotExtensions;
+using MegaCrit.Sts2.Core.Nodes.TopBar;
+using MegaCrit.Sts2.Core.Nodes.Screens.ScreenContext;
 using MegaCrit.Sts2.Core.Nodes.Screens.Overlays;
 using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.Unlocks;
@@ -66,10 +69,26 @@ public static class UiTodoTests
         var ui = new Control { Name = "UiTodoCanvas", Size = new(1920,1080) };
         root.AddChild(ui);
         ui.AddChild(new ColorRect { Size = ui.Size, Color = new Color("17202c"), MouseFilter = Control.MouseFilterEnum.Ignore });
+        var row = new HBoxContainer { Name = "RightAlignedStuff", Alignment = BoxContainer.AlignmentMode.End,
+            GrowHorizontal = Control.GrowDirection.Begin, MouseFilter = Control.MouseFilterEnum.Ignore };
+        ui.AddChild(row);
+        row.SetAnchorsPreset(Control.LayoutPreset.TopRight);
+        row.OffsetLeft=-492; row.OffsetRight=-16; row.OffsetBottom=80;
+        var clock = new Label { Name="TimerContainer", Text="00:13:42", CustomMinimumSize=new(160,80),
+            VerticalAlignment=VerticalAlignment.Center, HorizontalAlignment=HorizontalAlignment.Right };
+        row.AddChild(clock);
+        var map = GD.Load<PackedScene>("res://scenes/ui/top_bar/top_bar_map_button.tscn").Instantiate<NTopBarMapButton>();
+        map.Name="Map"; row.AddChild(map);
+        var deckMargin = new MarginContainer { Name="DeckContainer", CustomMinimumSize=new(80,80) };
+        row.AddChild(deckMargin);
+        var deckButton = GD.Load<PackedScene>("res://scenes/ui/top_bar/top_bar_deck_button.tscn").Instantiate<NTopBarDeckButton>();
+        deckMargin.AddChild(deckButton); deckButton.Initialize(player);
+        row.AddChild(GD.Load<PackedScene>("res://scenes/ui/top_bar/top_bar_settings_button.tscn").Instantiate<NTopBarPauseButton>());
         IOverlayScreen? active = null;
-        MagicBookUi.Attach(ui, player, () => active);
+        bool blocked = false;
+        MagicBookUi.Attach(ui, player, () => active, () => blocked);
         var timer = ui.GetNode<Godot.Timer>("FrierenManaRefresh");
-        var button = ui.GetNode<Button>("FrierenMagicBookButton");
+        var button = (MagicFactorButton)ui.FindChild("FrierenMagicBookButton",true,false);
         var hud = ui.GetNode<Control>("FrierenManaCounter");
         var preview = ui.GetNode<Control>("FrierenFactorPreview");
         var book = ui.GetNode<Control>("FrierenMagicBook");
@@ -79,10 +98,10 @@ public static class UiTodoTests
             Check(new LocString("frieren","BOOK_BUTTON").GetFormattedText() == title, language + "入口名称");
         }
         LocManager.Instance.SetLanguage("zhs");
-        button.Text = new LocString("frieren","BOOK_BUTTON").GetFormattedText();
         var reward = new FactorReward(player);
         string rewardIcon = (string)AccessTools.Property(typeof(MegaCrit.Sts2.Core.Rewards.Reward), "IconPath").GetValue(reward)!;
-        Check(button.Icon.ResourcePath == rewardIcon, "奖励与右上角入口使用同一图标");
+        Check(button.GetNode<TextureRect>("Control/Icon").Texture.ResourcePath == rewardIcon &&
+            button.FindChildren("*","Label",true,false).Count == 0, "顶部入口为纯图标，奖励使用同一图标");
         foreach (var factor in SpellCatalog.All) {
             var card = FactorCard.Create(player,factor.Id);
             var expected = factor.Rarity switch { FactorRarity.Rare => CardRarity.Rare, FactorRarity.Uncommon => CardRarity.Uncommon, _ => CardRarity.Common };
@@ -92,6 +111,18 @@ public static class UiTodoTests
         Check(player.Character.CardPool.AllCards.OfType<FactorCard>().Count() == 28 &&
             !player.Character.CardPool.GetUnlockedCards(player.UnlockState,CardMultiplayerConstraint.SingleplayerOnly).OfType<FactorCard>().Any(),
             "28种因子稀有度正确，保留模型注册且排除普通奖励与生成");
+        foreach (string language in new[] {"zhs","eng"}) {
+            LocManager.Instance.SetLanguage(language);
+            foreach (var factor in SpellCatalog.All) {
+                string text=FactorCard.Create(player,factor.Id).GetDescriptionForPile(PileType.None);
+                string effect=new LocString("frieren","FACTOR."+factor.Id).GetFormattedText();
+                if (text!=effect) throw new Exception("奖励因子包含多余说明或空行："+language+"/"+factor.Id+"："+text);
+            }
+            var equipped=FactorCard.Create(player,"BuildUpBody",ManaSlot.Draw).GetDescriptionForPile(PileType.None);
+            var chanting=FactorCard.Create(player,"BuildUpBody",ManaSlot.Draw,new ChantOption(ManaSlot.Draw,"BuildUpBody",2,2,2)).GetDescriptionForPile(PileType.None);
+            Check(equipped.Contains('\n') && chanting.Contains('\n'), language+"奖励仅显示效果，装载与咏唱保留槽位和支付提示");
+        }
+        LocManager.Instance.SetLanguage("zhs");
         Check(hud.GetNode<Control>("SlotDraw").GetNode<Label>("Count").Text == "7" &&
             hud.GetNode<Control>("SlotHand").GetNode<Label>("Count").Text == "2", "三槽魔力计数：显示=" +
                 hud.GetNode<Control>("SlotDraw").GetNode<Label>("Count").Text + "/" + hud.GetNode<Control>("SlotHand").GetNode<Label>("Count").Text +
@@ -115,29 +146,48 @@ public static class UiTodoTests
             var bounds=new Rect2(Vector2.Zero,size);
             var popupBounds=new Rect2(preview.Position,preview.Size*preview.Scale);
             Check(Math.Abs(hud.GetRect().GetCenter().Y-size.Y/2)<1 && bounds.Encloses(hud.GetRect()) && bounds.Encloses(popupBounds) &&
-                bounds.Encloses(button.GetRect()) && button.Position.Y<80, "多分辨率居中与界面边界 "+size);
+                bounds.Encloses(button.GetGlobalRect()) && button.GlobalPosition.Y<80 &&
+                clock.GetGlobalRect().End.X<=button.GlobalPosition.X && button.GetGlobalRect().End.X<=map.GlobalPosition.X,
+                "多分辨率计数器居中，时间、因子、地图顺序正确且不重叠 "+size);
         }
         ui.Size=new(1920,1080);
-        button.EmitSignal(BaseButton.SignalName.Pressed);
+        button.EmitSignal(Control.SignalName.MouseEntered);
+        button._GuiInput(new InputEventMouseButton {ButtonIndex=MouseButton.Left,Pressed=true});
+        button._GuiInput(new InputEventMouseButton {ButtonIndex=MouseButton.Left,Pressed=false});
         Check(book.Visible && !preview.Visible && !hud.Visible, "打开因子界面隐藏计数器与悬停预览");
+        button.EmitSignal(Control.SignalName.MouseExited);
         book.Hide();
         var selectionView = new Control(); ui.AddChild(selectionView);
         var selection = new SelectionScreen(selectionView); active=selection;
         string before=MagicDeckStore.Read(player).ToJson();
         timer.EmitSignal(Godot.Timer.SignalName.Timeout);
-        button.EmitSignal(BaseButton.SignalName.Pressed);
+        button.EmitSignal(NClickableControl.SignalName.Released,button);
         timer.EmitSignal(Godot.Timer.SignalName.Timeout);
-        Check(!button.Disabled && book.Visible && selection.Hidden==1 && !selectionView.Visible,
+        Check(button.IsEnabled && book.Visible && selection.Hidden==1 && !selectionView.Visible,
             "选牌期间可打开因子界面，计时器不会强制关闭");
         var holder=(NGridCardHolder)book.FindChild("Prop_"+prop.InstanceId,true,false);
         holder.EmitSignal(NCardHolder.SignalName.AltPressed,holder);
         Check(MagicDeckStore.Read(player).ToJson()==before && ((Label)book.FindChild("BookStatus",true,false)).Text.Contains("选牌期间"),
             "选牌期间只读查看，不消耗魔具或更改因子");
+        blocked=true;
+        ActiveScreenContext.Instance.Update();
+        Check(!button.IsEnabled && button.Modulate==MegaCrit.Sts2.Core.Helpers.StsColors.disabledTopBarButton &&
+            book.ProcessMode==Node.ProcessModeEnum.Disabled && book.MouseBehaviorRecursive==Control.MouseBehaviorRecursiveEnum.Disabled,
+            "原生菜单覆盖时立即禁用入口与因子界面，使用原生禁用颜色");
+        button.ForceClick();
+        root.GetViewport().PushInput(new InputEventKey { Keycode=Key.Escape,Pressed=true });
+        await root.ToSignal(root.GetTree(),SceneTree.SignalName.ProcessFrame);
+        Check(book.Visible && selection.Shown==0 && !selection.Selection.Task.IsCompleted,
+            "菜单期间点击和Esc不穿透到原选牌或因子界面");
+        blocked=false;
+        ActiveScreenContext.Instance.Update();
+        Check(button.IsEnabled && button.Modulate==Colors.White && book.ProcessMode==Node.ProcessModeEnum.Inherit,
+            "关闭原生菜单恢复因子界面操作");
         root.GetViewport().PushInput(new InputEventKey { Keycode=Key.Escape,Pressed=true });
         await root.ToSignal(root.GetTree(),SceneTree.SignalName.ProcessFrame);
         Check(!book.Visible && selectionView.Visible && selection.Shown==1 && selection.Closed==0 &&
             !selection.Selection.Task.IsCompleted && selection.SelectedIndex==1,"关闭后恢复原选牌和选中状态，不取消选择任务");
-        button.EmitSignal(BaseButton.SignalName.Pressed);
+        button.EmitSignal(NClickableControl.SignalName.Released,button);
         active=null;
         timer.EmitSignal(Godot.Timer.SignalName.Timeout);
         Check(!book.Visible && selection.Shown==1,"原选牌结束或切换后不复活旧界面");
@@ -148,7 +198,7 @@ public static class UiTodoTests
             hud.EmitSignal(Control.SignalName.MouseEntered);
             for(int i=0;i<4;i++) await root.ToSignal(root.GetTree(),SceneTree.SignalName.ProcessFrame);
             root.GetViewport().GetTexture().GetImage().SavePng(ProjectSettings.GlobalizePath("res://../../artifacts/factor-hover.png"));
-            button.EmitSignal(BaseButton.SignalName.Pressed);
+            button.EmitSignal(NClickableControl.SignalName.Released,button);
             for(int i=0;i<4;i++) await root.ToSignal(root.GetTree(),SceneTree.SignalName.ProcessFrame);
             root.GetViewport().GetTexture().GetImage().SavePng(ProjectSettings.GlobalizePath("res://../../artifacts/factor-screen.png"));
         }

@@ -45,12 +45,16 @@ public abstract class FactorCard() : FrierenCard(-1, CardType.Skill, CardRarity.
 
     protected override void AddExtraArgsToDescription(LocString description)
     {
-        string key = Option.HasValue ? "CHANT" : Slot.HasValue ? "INITIAL" : "COLLECT";
-        var context = new LocString("frieren", InventoryInstanceId.HasValue ? "INVENTORY_CONTEXT" : key);
-        context.Add("Slot", new LocString("frieren", Slot.HasValue ? $"SLOT.{Slot}" : "UNEQUIPPED").GetFormattedText());
-        context.Add("Id", InventoryInstanceId ?? 0);
-        context.Add("Cost", Option?.Cost ?? 0);
-        description.Add("Context", context.GetFormattedText());
+        string contextText = "";
+        if (Option.HasValue || Slot.HasValue || InventoryInstanceId.HasValue) {
+            string key = InventoryInstanceId.HasValue ? "INVENTORY_CONTEXT" : Option.HasValue ? "CHANT" : "INITIAL";
+            var context = new LocString("frieren", key);
+            context.Add("Slot", new LocString("frieren", Slot.HasValue ? $"SLOT.{Slot}" : "UNEQUIPPED").GetFormattedText());
+            context.Add("Id", InventoryInstanceId ?? 0);
+            context.Add("Cost", Option?.Cost ?? 0);
+            contextText = context.GetFormattedText() + "\n";
+        }
+        description.Add("Context", contextText);
         var effect = new LocString("frieren", (Option.HasValue ? "EFFECT." : "FACTOR.") + FactorId);
         effect.Add("Reward", Option?.Reward ?? 0);
         effect.Add("Cost", Option?.Cost ?? 0);

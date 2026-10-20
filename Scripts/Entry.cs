@@ -15,6 +15,7 @@ public class Entry
         // 打patch（即修改游戏代码的功能）用
         // 传入参数随意，只要不和其他人撞车即可
         var harmony = new Harmony("sts2.arkalin.frierenmod");
+        Godot.Bridge.ScriptManagerBridge.LookupScriptsInAssembly(typeof(Entry).Assembly);
         _ = MagicDeckStore.Data;
         BaseLib.Utils.CustomLocTableManager.Register("frieren");
         BaseLib.Config.ModConfigRegistry.Register("FrierenMod", new Presentation.PresentationSettings());

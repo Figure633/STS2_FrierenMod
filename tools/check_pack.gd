@@ -6,6 +6,10 @@ func _initialize():
 		push_error("Cannot mount PCK")
 		quit(1)
 		return
+	if not FileAccess.file_exists("res://Scripts/Frieren/UI/MagicFactorButton.cs"):
+		push_error("Missing top bar button script")
+		quit(1)
+		return
 	var textures = 0
 	for folder in ["cards", "powers", "relics", "character", "energy", "ui"]:
 		var path = "res://FrierenMod/images/" + folder
