@@ -27,10 +27,11 @@ public abstract class FrierenCard(int cost, CardType type, CardRarity rarity, Ta
             if (this is Imagination) yield return Tip("MANA_PAYMENT");
             if (this is HellFireSummoning) yield return Tip("SEALED");
             if (this is DefensiveMagic) yield return Tip("SECOND_DEFENSE");
-            if (this is IManaCard) yield return Tip("SYNCHRO");
+            if (this is IManaCard) yield return Tip(SynchroPresentation.Key(this));
             if (this is AirSlash or ClearMind) yield return Tip("ACCELERATED_SYNCHRO");
             if (this is LightningMagic) yield return Tip("ULTIMATE_SYNCHRO");
             if (this is LittleFire or HellFireSummoning) yield return Tip("BACKFIRE");
+            foreach (var preview in DerivedCardPreviews.For(this)) yield return preview;
         }
     }
 }

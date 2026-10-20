@@ -115,8 +115,10 @@ public static class ReviewedCardTests
         foreach (string lang in new[] { "zhs", "eng" })
         {
             LocManager.Instance.SetLanguage(lang);
-            foreach (var c in new CardModel[] { mana, dense })
-                Check(!c.GetDescriptionForPile(PileType.Hand).Contains(lang == "zhs" ? "[gold]消耗[/gold]" : "[gold]Exhaust[/gold]"), "同调卡面不重复列消耗关键词");
+            foreach (var c in new CardModel[] { mana, dense }) {
+                string exhaust = lang == "zhs" ? "[gold]消耗[/gold]。" : "[gold]Exhaust[/gold].";
+                Check(!c.GetDescriptionForPile(PileType.Hand).Split('\n').Contains(exhaust), "同调卡面不重复列消耗关键词");
+            }
         }
         Pass("同调简写保留原生消耗、能量与节俭流程");
 

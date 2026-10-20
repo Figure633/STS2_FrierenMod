@@ -11,11 +11,18 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
+using FrierenMod.Scripts.Presentation;
+using MegaCrit.Sts2.Core.Localization;
 
 namespace FrierenMod.Scripts.Cards;
 
 public sealed class HighDensityMana() : FrierenCard(0, CardType.Status, CardRarity.Uncommon, TargetType.Self), IManaCard
 {
+    protected override void AddExtraArgsToDescription(LocString description)
+    {
+        base.AddExtraArgsToDescription(description);
+        description.Add("Synchro", new LocString("frieren", $"TIP.{SynchroPresentation.Key(this)}.title").GetFormattedText());
+    }
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Amount", 1)];
     protected override PileType GetResultPileTypeForCardPlay()
     {

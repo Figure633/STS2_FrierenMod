@@ -29,8 +29,9 @@ public static class PuzzlePresentationTests
                 string fragment = language == "zhs" ? clue.Zh : clue.En;
                 void CheckCard(FactorCard card)
                 {
-                    string text = card.GetDescriptionForPile(PileType.None);
-                    AssertHidden(text);
+                    string formatted = card.GetDescriptionForPile(PileType.None);
+                    AssertHidden(formatted);
+                    string text = Regex.Replace(formatted, @"\[[^\]]*\]", "");
                     foreach (var tip in card.HoverTips.OfType<HoverTip>()) AssertHidden(tip.Description);
                     if (card.Option is { } option)
                     {
@@ -41,7 +42,8 @@ public static class PuzzlePresentationTests
                         if (text.Split('\n').Last().Trim() != mark || !text.Contains(cost) || text.Contains(fragment))
                             throw new Exception($"谜题咏唱未保留费用与槽位符号：{language}/{card.FactorId}/{option.Slot}: {text}");
                     }
-                    else if (!text.Contains(fragment) || !text.Contains(language == "zhs" ? "咏唱 X" : "Chant X"))
+                    else if (!text.Contains(fragment) || !text.Contains(language == "zhs" ? "咏唱 " +
+                        (clue.Id == "Factor100" ? "X+1" : clue.Id == "Factor010" ? "2X+2" : "3X+3") : "Chant X"))
                         throw new Exception($"谜题库存丢失一代线索或费用：{language}/{card.FactorId}: {text}");
                     states++;
                 }

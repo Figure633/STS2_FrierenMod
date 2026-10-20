@@ -1718,5 +1718,29 @@
     "source_kind": "local_author_assets",
     "sha256": "33eda76cdce06f30547e507e9bfe64709804b2bb192c57f746fe563b78db573e",
     "modified": false
+  },
+  {
+    "file": "FrierenMod/images/cards/Mana2.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/cards/Mana2_p.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "7a3f7e651c708e6e300d71d88118423ba0d7016c3b6cbf9a2da3364fa850af10",
+    "modified": false
+  },
+  {
+    "file": "FrierenMod/images/cards/Mana3.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/cards/Mana3_p.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "1c18fefd4e292a463d424326cadd7cdd0f977f8ef5965a53b22c7bd89033991e",
+    "modified": false
+  },
+  {
+    "file": "FrierenMod/images/cards/Mana4.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/cards/Mana4_p.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "d9b187bbadedfe48919eac0875ab5378b7b2a2c96d705890badc96d7fad2d1e5",
+    "modified": false
   }
 ]
