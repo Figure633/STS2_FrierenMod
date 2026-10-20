@@ -1662,5 +1662,53 @@
     "sha256": "c3872aa1f87fe25db4dc9e55ddd68e2fb623d1dde8fbfda176ac69a50d9994b8",
     "modified": false,
     "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/card_frames/frieren_attack.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/cardStyles/Frieren/1024/bg_attack.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "44b07a690a19355ae71f3a0d0cdbf27dafac31b4b3d8f2bde26ad53a0b68d59c",
+    "modified": false
+  },
+  {
+    "file": "FrierenMod/images/card_frames/frieren_skill.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/cardStyles/Frieren/1024/bg_skill.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "128a2d9eb5a9ac23f2f3214e53a4ec66f653e11a35aec913f6fdc2bcae386a4b",
+    "modified": false
+  },
+  {
+    "file": "FrierenMod/images/card_frames/frieren_power.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/cardStyles/Frieren/1024/bg_power.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "c2df59bf5732163d16dc921cafa788931c9fe633a9e207f1d70a3b8c171a631e",
+    "modified": false
+  },
+  {
+    "file": "FrierenMod/images/card_frames/shared_attack.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/cardStyles/Public/1024/bg_attack_FrierenFern.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "193919676cb7faef116afeabe286e16d621a692c838da046208b05b3050d042f",
+    "modified": false
+  },
+  {
+    "file": "FrierenMod/images/card_frames/shared_skill.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/cardStyles/Public/1024/bg_skill_FrierenFern.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "af46a43ad04f204605fa72964984cf72344e38578745c3063282a4b463c84876",
+    "modified": false
+  },
+  {
+    "file": "FrierenMod/images/card_frames/shared_power.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/cardStyles/Public/1024/bg_power_FrierenFern.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "c097c3a8e7cfad2f6bd5e2096953f12177b346130fd6308150354e61e832c10a",
+    "modified": false
   }
 ]

@@ -19,8 +19,8 @@ public sealed class HolyEmblem : CustomRelicModel
 {
     private string _magicDeckJson = new MagicDeckState().ToJson();
     public override RelicRarity Rarity => RelicRarity.Starter;
-    public override string PackedIconPath => "res://FrierenMod/images/relics/HolyEmblem.png";
-    protected override string PackedIconOutlinePath => "res://FrierenMod/images/relics/HolyEmblemOutline.png";
+    public override string PackedIconPath => "res://FrierenMod/images/relics/HolyEmblem.tres";
+    protected override string PackedIconOutlinePath => "res://FrierenMod/images/relics/HolyEmblemOutline.tres";
     protected override string BigIconPath => PackedIconPath;
 
     // 原生 string SavedProperty 同时覆盖 JSON 与网络包，不保存战斗对象引用。

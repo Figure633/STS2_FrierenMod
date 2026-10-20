@@ -11,7 +11,7 @@ namespace FrierenMod.Scripts.RestSite;
 public sealed class BuyMagicPropsOption(Player owner) : CustomRestSiteOption(owner)
 {
     public override string OptionId => "FRIEREN_MAGIC_SHOP";
-    public override string CustomIconPath => "res://FrierenMod/images/ui/buy_prop.png";
+    public override string CustomIconPath => "res://FrierenMod/images/ui/buy_prop.tres";
     public override bool IsEnabled => Owner.RunState.Players.Count == 1 && MagicDeckStore.Read(Owner).SetupCompleted;
     public override LocString Description => new("rest_site_ui", "OPTION_" + OptionId + (IsEnabled ? ".description" : ".descriptionDisabled"));
     public override Task<bool> OnSelect() => MagicPropCmd.VisitShop(Owner);

@@ -91,6 +91,10 @@ public partial class Runner : Node
                 GD.Print("UI_TODOS_OK: " + await UiTodoTests.Run(this));
                 await Finish(); return;
             }
+            if (OS.GetCmdlineUserArgs().Contains("--frames-only")) {
+                GD.Print("CARD_FRAMES_OK: " + await CardFrameTests.Run(this));
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--reviewed-only")) {
                 GD.Print("REVIEWED_TESTS_OK: " + await ReviewedCardTests.Run(this));
                 await Finish(); return;

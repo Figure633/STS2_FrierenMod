@@ -11,10 +11,10 @@ func _initialize():
 		quit(1)
 		return
 	var textures = 0
-	for folder in ["cards", "powers", "relics", "character", "energy", "ui"]:
+	for folder in ["cards", "powers", "relics", "character", "energy", "ui", "card_frames"]:
 		var path = "res://FrierenMod/images/" + folder
 		for file in DirAccess.get_files_at(path):
-			if not file.ends_with(".png"):
+			if not file.ends_with(".png") and not file.ends_with(".tres"):
 				continue
 			var texture = load(path + "/" + file)
 			if not texture is Texture2D or texture.get_width() <= 0:
