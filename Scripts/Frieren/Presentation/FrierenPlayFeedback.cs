@@ -15,7 +15,7 @@ public static class FrierenPlayFeedback
     private static string? MessageKey(CardModel card)
     {
         if (card is not FrierenCard || !card.IsMutable || card.Owner?.Creature.CombatState == null) return null;
-        if (card is ILegendaryCard && LegendaryCards.ChantsThisTurn(card.Owner) == 0) return "PLAY.NO_CHANT";
+        if (card is ILegendaryCard && !LegendaryCards.CanUse(card.Owner)) return "PLAY.NO_CHANT";
         return ChantCmd.IsChant(card) ? "PLAY.NO_MANA" : null;
     }
 

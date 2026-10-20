@@ -1,0 +1,8 @@
+{
+  "FRIERENMOD-BOTTLED_MANA.title": "瓶装魔力",
+  "FRIERENMOD-BOTTLED_MANA.description": "将{Cards}张[gold]魔力[/gold]加入手牌。",
+  "FRIERENMOD-DISSOLVE_CLOTH_POTION.title": "只溶解衣服的药水",
+  "FRIERENMOD-DISSOLVE_CLOTH_POTION.description": "移除目标的所有格挡，给予{VulnerablePower}层[gold]易伤[/gold]和{WeakPower}层[gold]虚弱[/gold]。",
+  "FRIERENMOD-EMPEROR_WINE.title": "皇帝酒",
+  "FRIERENMOD-EMPEROR_WINE.description": "从3张随机稀有牌中选择1张加入手牌，本回合耗能为0。"
+}

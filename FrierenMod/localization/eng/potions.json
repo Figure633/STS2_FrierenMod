@@ -1,0 +1,8 @@
+{
+  "FRIERENMOD-BOTTLED_MANA.title": "Bottled Mana",
+  "FRIERENMOD-BOTTLED_MANA.description": "Add {Cards} [gold]Mana[/gold] to your hand.",
+  "FRIERENMOD-DISSOLVE_CLOTH_POTION.title": "Clothes-Dissolving Potion",
+  "FRIERENMOD-DISSOLVE_CLOTH_POTION.description": "Remove all Block from an enemy. Apply {VulnerablePower} [gold]Vulnerable[/gold] and {WeakPower} [gold]Weak[/gold].",
+  "FRIERENMOD-EMPEROR_WINE.title": "Emperor's Wine",
+  "FRIERENMOD-EMPEROR_WINE.description": "Choose 1 of 3 random Rare cards to add to your hand. It costs 0 this turn."
+}

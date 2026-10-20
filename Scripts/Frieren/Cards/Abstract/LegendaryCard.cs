@@ -15,5 +15,5 @@ namespace FrierenMod.Scripts.Cards;
 public abstract class LegendaryCard(int cost, CardType type, CardRarity rarity, TargetType target, bool showInLibrary = true)
     : FrierenCard(cost, type, rarity, target, showInLibrary), ILegendaryCard
 {
-    protected override bool IsPlayable => Owner != null && LegendaryCards.ChantsThisTurn(Owner) > 0;
+    protected override bool IsPlayable => Owner != null && LegendaryCards.CanUse(Owner);
 }

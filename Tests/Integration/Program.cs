@@ -69,9 +69,9 @@ Test("终极咏唱和魔力膨胀费用升级", () => {
     var final = ModelDb.Card<FinalChant>().ToMutable(); final.UpgradeInternal(); Equal(1, final.EnergyCost.GetWithModifiers(CostModifiers.Local));
     var expansion = ModelDb.Card<ManaExpansion>().ToMutable(); expansion.UpgradeInternal(); Equal(0, expansion.EnergyCost.GetWithModifiers(CostModifiers.Local));
 });
-Test("魔力不升级且作为真实消耗卡", () => {
+Test("魔力不升级且同调不重复列出消耗关键字", () => {
     var mana = ModelDb.Card<Mana>(); Equal(0, mana.MaxUpgradeLevel); Equal(CardType.Status, mana.Type);
-    Equal(true, mana.Keywords.Contains(CardKeyword.Exhaust)); Equal(0, mana.EnergyCost.Canonical);
+    Equal(false, mana.Keywords.Contains(CardKeyword.Exhaust)); Equal(0, mana.EnergyCost.Canonical);
 });
 Test("真实模型 ID 与中英本地化一致", () => {
     var root = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../../../"));

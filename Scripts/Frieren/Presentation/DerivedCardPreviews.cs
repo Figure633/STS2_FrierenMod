@@ -11,7 +11,8 @@ public static class DerivedCardPreviews
 {
     private static readonly Type[] Tokens = [typeof(Mana), typeof(HighDensityMana), typeof(SecondDefensiveMagic),
         typeof(BlueMoonWeed), typeof(LittleFire), typeof(Laziness), typeof(GreenApple),
-        typeof(Ice), typeof(Fire), typeof(Thunder), typeof(Dark), typeof(Light), typeof(Regret)];
+        typeof(Ice), typeof(Fire), typeof(Thunder), typeof(Dark), typeof(Light), typeof(Regret),
+        typeof(Himmel), typeof(Repent), typeof(LongevityPain), typeof(Fatalism)];
 
     public static IEnumerable<IHoverTip> For(CardModel source)
     {

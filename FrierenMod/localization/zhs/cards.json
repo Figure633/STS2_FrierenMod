@@ -261,5 +261,13 @@
   "FRIERENMOD-TONGUE_TWISTER_SPELL.title": "说绕口令不会大舌头的魔法",
   "FRIERENMOD-TONGUE_TWISTER_SPELL.description": "抽{Cards:diff()}张牌。其中每抽到一张[gold]魔力[/gold]，获得{Block:diff()}点格挡。",
   "FRIERENMOD-TRICK.title": "欺骗魔族的小把戏",
-  "FRIERENMOD-TRICK.description": "每回合开始时，将一张[gold]魔力[/gold]抑制加入手牌。"
+  "FRIERENMOD-TRICK.description": "每回合开始时，将一张[gold]魔力[/gold]抑制加入手牌。",
+  "FRIERENMOD-HIMMEL.title": "辛美尔",
+  "FRIERENMOD-HIMMEL.description": "芙莉莲……\n回合结束时，若本牌在手牌中，将一张[gold]后悔莫及[/gold]加入手牌。",
+  "FRIERENMOD-REPENT.title": "后悔莫及",
+  "FRIERENMOD-REPENT.description": "选择弃牌堆中的{Cards:diff()}张牌移入手牌，本回合它们的耗能为0。",
+  "FRIERENMOD-LONGEVITY_PAIN.title": "长寿种的痛苦",
+  "FRIERENMOD-LONGEVITY_PAIN.description": "连续[gold]同调[/gold]10次后，将一张[gold]寿命论[/gold]加入手牌。\n（还剩{Remaining}次。）",
+  "FRIERENMOD-FATALISM.title": "寿命论",
+  "FRIERENMOD-FATALISM.description": "所有角色失去999点生命。"
 }

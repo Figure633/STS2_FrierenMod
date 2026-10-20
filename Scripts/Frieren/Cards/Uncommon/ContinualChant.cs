@@ -14,7 +14,7 @@ namespace FrierenMod.Scripts.Cards;
 
 public sealed class ContinualChant() : NormalChantCard(0, CardRarity.Uncommon, 3), ILegendaryCard
 {
-    protected override bool IsPlayable => Owner != null && LegendaryCards.ChantsThisTurn(Owner) > 0 &&
+    protected override bool IsPlayable => Owner != null && LegendaryCards.CanUse(Owner) &&
         (Owner.Creature.GetPower<BanManaGainPower>() == null || base.IsPlayable);
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {

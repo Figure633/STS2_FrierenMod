@@ -15,7 +15,7 @@ def load(path):
         return result
     return json.loads(path.read_text(encoding="utf-8-sig"), object_pairs_hook=unique)
 
-for table in ["cards", "characters", "relics", "frieren", "powers", "settings_ui", "rest_site_ui", "ancients"]:
+for table in ["cards", "characters", "relics", "potions", "frieren", "powers", "settings_ui", "rest_site_ui", "ancients"]:
     eng = load(ROOT / f"FrierenMod/localization/eng/{table}.json")
     zhs = load(ROOT / f"FrierenMod/localization/zhs/{table}.json")
     assert eng.keys() == zhs.keys(), f"localization key mismatch: {table}"
@@ -25,6 +25,9 @@ for table in ["cards", "characters", "relics", "frieren", "powers", "settings_ui
             if table == "cards" and key == "FRIERENMOD-MULTIPLE_OFFENSIVE_MAGIC.description":
                 # 作者指定 X 费正文保留 X+4 和升级后的 X+1，其他程序公式仍禁止。
                 text = re.sub(r"X\+(?:4|1)(?!\d)", "X", text)
+            if table == "frieren" and key.startswith("FACTOR."):
+                # 因子保留 X+1、2X 等咏唱费用或效果规则，仍禁止泄漏程序函数。
+                text = re.sub(r"\d*X(?:[+-]\d+)?", "X", text)
             assert not re.search(r"\b(?:max|min|Math\.\w+)\s*\(|\b\d+X\b|\bX[+-]\d", text), f"formula exposed in {language}/{table}/{key}"
     print(f"PASS {table}: {len(eng)} bilingual keys")
 for item in load(ROOT / "docs/assets.json"):

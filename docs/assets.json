@@ -1742,5 +1742,341 @@
     "source_kind": "local_author_assets",
     "sha256": "d9b187bbadedfe48919eac0875ab5378b7b2a2c96d705890badc96d7fad2d1e5",
     "modified": false
+  },
+  {
+    "file": "FrierenMod/images/relics/EarAccessory.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/relics/EarAccessory.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "7990eef70e0d74a27bfbcfb6ecb22afa8640b37a7c2fd9116c84101444b0fd61",
+    "modified": false
+  },
+  {
+    "file": "FrierenMod/images/relics/EarAccessoryOutline.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/relics/EarAccessory.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "92be6bc86568742bd6f17ebfc13c5d4226aafb304d1529a782cbeeff0bee1c8e",
+    "modified": true
+  },
+  {
+    "file": "FrierenMod/images/relics/FakeFlammeGrimoire.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/relics/FakeFlammeGrimoire.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "0415eb87a99cac8764035a29ffd53208a1d0731485200cec6fe0195549d51ff2",
+    "modified": false
+  },
+  {
+    "file": "FrierenMod/images/relics/FakeFlammeGrimoireOutline.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/relics/FakeFlammeGrimoire.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "0a3394349893846b632ee24e3b2c54ecebf071470fac65c1443e0d0388df1ce1",
+    "modified": true
+  },
+  {
+    "file": "FrierenMod/images/relics/FlammeGrimoire.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/relics/FlammeGrimoire.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "60b7fea623fddf76ed2a8575196e0b9aa847d75da9163f87e7e93461d21b2ed0",
+    "modified": false
+  },
+  {
+    "file": "FrierenMod/images/relics/FlammeGrimoireOutline.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/relics/FlammeGrimoire.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "0a3394349893846b632ee24e3b2c54ecebf071470fac65c1443e0d0388df1ce1",
+    "modified": true
+  },
+  {
+    "file": "FrierenMod/images/relics/HairAccessory.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/relics/HairAccessory.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "88441a77e75d5c67eba1b6c5e7f5e84207171d82657716b7b87c467f5dbf3cb9",
+    "modified": false
+  },
+  {
+    "file": "FrierenMod/images/relics/HairAccessoryOutline.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/relics/HairAccessory.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "35b17c601a47c088f650c01008499a81344e4f96720da5f0fcf6d1f55a3770b9",
+    "modified": true
+  },
+  {
+    "file": "FrierenMod/images/relics/HaitaaWand.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/relics/HaitaaWand.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "80b8c2c9e1482fff8f104b6dbc7a84a6de78314e44574948cd7ee59e8c8ac8c9",
+    "modified": false
+  },
+  {
+    "file": "FrierenMod/images/relics/HaitaaWandOutline.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/relics/HaitaaWand.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "dfac647fdcfc4ba37c113980157a91cb8c17fb4b369ff2f59a39a40e0b214fc3",
+    "modified": true
+  },
+  {
+    "file": "FrierenMod/images/relics/HimmelGravestone.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/relics/HimmelGravestone.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "2139ecf476eb96befb0d509512d7cf62c13c823dc20133c360917a5933a120dc",
+    "modified": false
+  },
+  {
+    "file": "FrierenMod/images/relics/HimmelGravestoneOutline.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/relics/HimmelGravestone.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "48c40d7b358badaa5db6ad3579eca8438314fcc3f0521fd71fc154b971377424",
+    "modified": true
+  },
+  {
+    "file": "FrierenMod/images/relics/IcicleCherryBlossom.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/relics/IcicleCherryBlossom.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "9ca47d2cd94efcd3c9212ce45d4171b993be392414c20ce687375091779ec85c",
+    "modified": false
+  },
+  {
+    "file": "FrierenMod/images/relics/IcicleCherryBlossomOutline.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/relics/IcicleCherryBlossom.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "87a4920ac38f38e633e1fa030a31c6dfb075c7ed34c8364c69513c7803fce429",
+    "modified": true
+  },
+  {
+    "file": "FrierenMod/images/relics/ImmovableCloak.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/relics/ImmovableCloak.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "f78df26adc6cb4d9192f90ee4d7a3c5b940b51d66bc4e918127e6563447e8a34",
+    "modified": false
+  },
+  {
+    "file": "FrierenMod/images/relics/ImmovableCloakOutline.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/relics/ImmovableCloak.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "69d14b2d4460af9c9fa49bdaf564911d6428d252571e1361366ffa9138f00c13",
+    "modified": true
+  },
+  {
+    "file": "FrierenMod/images/relics/MercuryPudding.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/relics/MercuryPudding.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "8c8e781e072a4207e8b0b83f18a76134779aacfe25e41753e3a65a7a89165cd5",
+    "modified": false
+  },
+  {
+    "file": "FrierenMod/images/relics/MercuryPuddingOutline.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/relics/MercuryPudding.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "79d922836fd863ef4bb61a6234fe1012af509bcfb9d08af3cf41bdf8a9adc97c",
+    "modified": true
+  },
+  {
+    "file": "FrierenMod/images/relics/MickeyHouse.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/relics/MickeyHouse.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "0d62e8151c52ecd1ffdf33f1022b86b1e602a4454f84b640bb6e75d41b40aabb",
+    "modified": false
+  },
+  {
+    "file": "FrierenMod/images/relics/MickeyHouseOutline.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/relics/MickeyHouse.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "60cff90ff3943e88e6d472648294f0a369d91d0de611ffab9ea21c5afca5feed",
+    "modified": true
+  },
+  {
+    "file": "FrierenMod/images/relics/MimicHead.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/relics/MimicHead.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "1e02670701b5b8bb9efb7e4d18a4ba9bba9eda14ed999ec1f2552cbaf3af7d6f",
+    "modified": false
+  },
+  {
+    "file": "FrierenMod/images/relics/MimicHeadOutline.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/relics/MimicHead.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "70dd79ef2d66f574feb4f563b3151e75e80ad08ec16a93608176b3264f62d3fc",
+    "modified": true
+  },
+  {
+    "file": "FrierenMod/images/relics/MirroredLotusRing.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/relics/MirroredLotusRing.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "9d02996f86de32bbf6fc403eda91321de4de9f67cb0c809bb99f16186325b147",
+    "modified": false
+  },
+  {
+    "file": "FrierenMod/images/relics/MirroredLotusRingOutline.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/relics/MirroredLotusRing.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "fb96c74ab304fc584fa5afe32afdb7f935e71d149c09c49069b0c2f7af8cdc17",
+    "modified": true
+  },
+  {
+    "file": "FrierenMod/images/relics/OldHairAccessory.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/relics/HairAccessory.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "88441a77e75d5c67eba1b6c5e7f5e84207171d82657716b7b87c467f5dbf3cb9",
+    "modified": false
+  },
+  {
+    "file": "FrierenMod/images/relics/OldHairAccessoryOutline.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/relics/HairAccessory.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "35b17c601a47c088f650c01008499a81344e4f96720da5f0fcf6d1f55a3770b9",
+    "modified": true
+  },
+  {
+    "file": "FrierenMod/images/relics/ScaleOfObedience.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/relics/ScaleOfObedience.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "978849ffc70bf064db11f347f3cfc6e804081958e418b84fc0286645c472da59",
+    "modified": false
+  },
+  {
+    "file": "FrierenMod/images/relics/ScaleOfObedienceOutline.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/relics/ScaleOfObedience.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "8faeae0d2a3f5473c93d49665511936372418152d801f97c8d867ba63355cf77",
+    "modified": true
+  },
+  {
+    "file": "FrierenMod/images/relics/StatueOfHimmel.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/relics/StatueOfHimmel.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "ad3c87f09500c001079d7c31aecac8503da1a5eaae64da2228ce7c1d2dae9999",
+    "modified": false
+  },
+  {
+    "file": "FrierenMod/images/relics/StatueOfHimmelOutline.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/relics/StatueOfHimmel.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "35006e037c42f079d4f05e575f8a0dbd80cc73c1faa8af0482fe9690d87efb6c",
+    "modified": true
+  },
+  {
+    "file": "FrierenMod/images/relics/Stille.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/relics/Stille.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "bc403aa53b2159528f4ab52270f9a61eccef6d6bbdb1431b749483710a56a6cc",
+    "modified": false
+  },
+  {
+    "file": "FrierenMod/images/relics/StilleOutline.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/relics/Stille.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "b947a0797142538447453ad38f6b281d473a61eda22b2f740bc825578debaabb",
+    "modified": true
+  },
+  {
+    "file": "FrierenMod/images/relics/UbelStaff.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/relics/UbelStaff.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "79365b8587d29343a2ecb403404ded7ddbd4fc28a807c2d7754109f271cd909c",
+    "modified": false
+  },
+  {
+    "file": "FrierenMod/images/relics/UbelStaffOutline.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/relics/UbelStaff.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "c531aa3527fd4f799dcea9a1abf5c363796dceb2cc786b0609fc06bd6b9bb28c",
+    "modified": true
+  },
+  {
+    "file": "FrierenMod/images/relics/ComfortableBed.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/relics/ComfortableBed.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "5ec233f0b6541f4dc8bbaf235e51bdff4751a1e2a00d5d353f3c817ce6120d14",
+    "modified": false
+  },
+  {
+    "file": "FrierenMod/images/relics/ComfortableBedOutline.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/relics/ComfortableBed.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "b4111a0c009e44627a681d8ec642d7637ac0abafed5f41f9d68b8512e585358e",
+    "modified": true
+  },
+  {
+    "file": "FrierenMod/images/cards/Himmel.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/cards/Himmel_p.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "360d3603548acd735012a3de81a944cb55e632d5b23dcad5c35054e0907991af",
+    "modified": false
+  },
+  {
+    "file": "FrierenMod/images/cards/Repent.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/cards/Repent_p.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "4c0ac1830e603ed3a3bbeb8bab6ec29de8d732a864a04474c217649f149f2932",
+    "modified": false
+  },
+  {
+    "file": "FrierenMod/images/cards/LongevityPain.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/cards/LongevityPain_p.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "72781a6fed574002a816924c9e30b0128d4583eadcfdad468100376923db8064",
+    "modified": false
+  },
+  {
+    "file": "FrierenMod/images/cards/Fatalism.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/cards/Fatalism_p.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "4a2da9c904c5a1196ad96903f787b305127e89ae50149a9806516e6cb28c5f6d",
+    "modified": false
+  },
+  {
+    "file": "FrierenMod/images/potions/DissolveClothPotion.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/potions/DissolveClothPotion.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "9eeb35ed7f105d8bccde99bc7ac88bb643405cde80664b9f00fc17c0e0017802",
+    "modified": false
+  },
+  {
+    "file": "FrierenMod/images/potions/DissolveClothPotionOutline.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/potions/DissolveClothPotion.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "ac126871113edf155d692147add0ef9ed749813e19760309f3a4cbf991547c43",
+    "modified": true
   }
 ]
