@@ -126,7 +126,8 @@ public sealed class MagicBookScreen
         View.VisibilityChanged += () => { if (!View.Visible) { Cancel(); RestoreOverlay(); } };
         View.TreeExiting += () => root.Resized -= Resize;
         var pointer = new MagicBookPointerInput { Name = "FrierenBookPointer", HandleButton = HandlePointer };
-        root.AddChild(pointer);
+        // 挂到视口末尾，先于游戏场景和其他界面的右键处理器接收输入。
+        root.GetViewport().CallDeferred(Node.MethodName.AddChild, pointer);
         View.TreeExiting += () => { pointer.HandleButton = null; pointer.QueueFree(); };
     }
 
@@ -166,9 +167,11 @@ public sealed class MagicBookScreen
         if (!View.IsVisibleInTree() || !View.CanProcess() || _applying) { _pointerPress = null; return false; }
         if (button.ButtonIndex is not (MouseButton.Left or MouseButton.Right)) return false;
         var scroll = _inventory.GetParent<ScrollContainer>();
+        bool Contains(Control control) => new Rect2(Vector2.Zero, control.Size).HasPoint(
+            control.GetGlobalTransformWithCanvas().AffineInverse() * button.Position);
         var hit = _cards.Reverse().FirstOrDefault(pair => pair.Value.IsVisibleInTree() &&
-            pair.Value.Hitbox.GetGlobalRect().HasPoint(button.Position) &&
-            (!_inventory.IsAncestorOf(pair.Value) || scroll.GetGlobalRect().HasPoint(button.Position)));
+            Contains(pair.Value.Hitbox) &&
+            (!_inventory.IsAncestorOf(pair.Value) || Contains(scroll)));
         if (hit.Value == null) { _pointerPress = null; return false; }
         if (button.Pressed) {
             _pointerPress = (hit.Key, button.ButtonIndex);
@@ -215,6 +218,8 @@ public sealed class MagicBookScreen
     private static NGridCardHolder CreateHolder(CardModel model)
     {
         var card = CreateCard(model);
+        card.MouseBehaviorRecursive = Control.MouseBehaviorRecursiveEnum.Inherited;
+        card.FocusBehaviorRecursive = Control.FocusBehaviorRecursiveEnum.Inherited;
         if (!TestMode.IsOn) return NGridCardHolder.Create(card)!;
         var holder = NodePool.Get<NGridCardHolder>();
         holder.Call(NCardHolder.MethodName.SetCard, card);

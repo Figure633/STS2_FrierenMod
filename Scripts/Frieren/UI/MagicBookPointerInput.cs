@@ -2,7 +2,7 @@ using Godot;
 
 namespace FrierenMod.Scripts.UI;
 
-// 独立输入节点留在 GlobalUi 末尾；卡面仍绘制在菜单下方，鼠标不依赖卡牌悬停焦点。
+// 输入节点位于视口末尾；卡面仍绘制在菜单下方，鼠标不依赖卡牌悬停焦点。
 public partial class MagicBookPointerInput : Node
 {
     public Func<InputEventMouseButton, bool>? HandleButton { get; set; }

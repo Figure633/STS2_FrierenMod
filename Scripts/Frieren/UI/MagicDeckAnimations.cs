@@ -8,6 +8,8 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Nodes.Cards;
 using MegaCrit.Sts2.Core.Nodes.GodotExtensions;
+using MegaCrit.Sts2.Core.Nodes.Vfx;
+using MegaCrit.Sts2.Core.Commands;
 
 namespace FrierenMod.Scripts.UI;
 
@@ -91,21 +93,37 @@ public static class MagicDeckAnimations
                 for (int start = 0; start < added.Length; start += 3) {
                     int count = Math.Min(3, added.Length - start);
                     for (int i = 0; i < count; i++) cards.Add(Show(added[start + i], i, count, false));
-                    var flight = layer.CreateTween().SetParallel();
+                    var flights = new List<Task>();
                     for (int i = 0; i < cards.Count; i++) {
-                        var card = cards[i]; double delay = 0.28 + i * 0.12;
-                        flight.TweenProperty(card, "global_position", destination.GetGlobalRect().GetCenter(), 0.55)
-                            .SetDelay(delay).SetTrans(Tween.TransitionType.Cubic).SetEase(Tween.EaseType.InOut);
-                        flight.TweenProperty(card, "scale", Vector2.One * 0.07f, 0.55).SetDelay(delay);
-                        flight.TweenProperty(card, "modulate:a", 0f, 0.16).SetDelay(delay + 0.39);
+                        flights.Add(Fly(cards[i], 0.28 + i * 0.12));
                     }
-                    if (!await flight.AwaitFinished(layer)) return;
-                    foreach (var card in cards) Release(card);
+                    await Task.WhenAll(flights);
+                    // 原生飞入特效自行释放卡牌；不能再次归还对象池。
                     cards.Clear();
                 }
             }
             catch (Exception error) { GD.PushWarning("魔法牌组动画未完成：" + error); }
             finally { foreach (var card in cards) Release(card); }
+        }
+
+        private async Task Fly(NCard card, double delay)
+        {
+            var pause = layer.CreateTween(); pause.TweenInterval(delay);
+            if (!await pause.AwaitFinished(layer)) return;
+            // 原生工厂只接受普通牌堆；同一原生场景改填魔法书终点，其余动画、拖尾与回收完全由原版执行。
+            var effect = GD.Load<PackedScene>(NCardFlyVfx.AssetPaths.Single()).Instantiate<NCardFlyVfx>();
+            effect.Set(NCardFlyVfx.PropertyName._card, card);
+            effect.Set(NCardFlyVfx.PropertyName._startPos, card.GlobalPosition);
+            effect.Set(NCardFlyVfx.PropertyName._endPos, destination.GetGlobalRect().GetCenter());
+            effect.Set(NCardFlyVfx.PropertyName._isAddingToPile, false);
+            effect.Set(NCardFlyVfx.PropertyName._trailPath, player.Character.TrailPath);
+            layer.AddChild(effect);
+            SfxCmd.Play("event:/sfx/ui/cards/card_movement_B_into_deck");
+            var exited = new TaskCompletionSource();
+            void OnExit() => exited.TrySetResult();
+            layer.TreeExiting += OnExit;
+            try { await Task.WhenAny(effect.SwooshAwayCompletion!.Task, exited.Task); }
+            finally { if (GodotObject.IsInstanceValid(layer)) layer.TreeExiting -= OnExit; }
         }
 
         private NCard Show(Item item, int index, int count, bool source)
@@ -114,8 +132,9 @@ public static class MagicDeckAnimations
             layer.AddChild(card);
             card.UpdateVisuals(PileType.None, CardPreviewMode.Normal);
             card.Name = (source ? "ConsumedMagicItem_" : "AcquiredMagicItem_") + item.Id;
-            card.MouseBehaviorRecursive = Control.MouseBehaviorRecursiveEnum.Disabled;
-            card.FocusBehaviorRecursive = Control.FocusBehaviorRecursiveEnum.Disabled;
+            // 输入屏蔽由专用父层承担，不能污染会被手牌和魔法书重复使用的 NCard 对象池。
+            card.MouseBehaviorRecursive = Control.MouseBehaviorRecursiveEnum.Inherited;
+            card.FocusBehaviorRecursive = Control.FocusBehaviorRecursiveEnum.Inherited;
             card.Modulate = Colors.White;
             float scale = Math.Min(layer.Size.X / 1920, layer.Size.Y / 1080);
             card.GlobalPosition = source && item.Position.HasValue ? item.Position.Value :

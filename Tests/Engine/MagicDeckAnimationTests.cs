@@ -17,12 +17,24 @@ using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.TestSupport;
 using MegaCrit.Sts2.Core.Unlocks;
+using MegaCrit.Sts2.Core.Nodes.Vfx;
+using HarmonyLib;
 
 public static class MagicDeckAnimationTests
 {
+    private static bool CreateTrail(Control card, string characterTrailPath, ref NCardTrailVfx __result)
+    {
+        // 原生 TestMode 跳过视觉工厂；测试仍使用原版场景、脚本和粒子，保留存档隔离。
+        __result = GD.Load<PackedScene>(characterTrailPath).Instantiate<NCardTrailVfx>();
+        __result.Set(NCardTrailVfx.PropertyName._nodeToFollow, card);
+        return false;
+    }
     public static async Task<int> Run(Node root)
     {
         int count = 0;
+        var visualFactory = new Harmony("frieren.tests.native_magic_flight");
+        visualFactory.Patch(AccessTools.Method(typeof(NCardTrailVfx), nameof(NCardTrailVfx.Create)),
+            prefix: new HarmonyMethod(typeof(MagicDeckAnimationTests), nameof(CreateTrail)));
         void Check(bool ok, string name) { if (!ok) throw new Exception(name); GD.Print("PASS 动画：" + name); count++; }
         async Task Tick() => await root.ToSignal(root.GetTree(), SceneTree.SignalName.ProcessFrame);
         async Task Snapshot(string name) {
@@ -39,7 +51,9 @@ public static class MagicDeckAnimationTests
         int box = deck.AddProp("MysteryBox").InstanceId;
         int circle = deck.AddProp("TransmutationCircle").InstanceId;
         MagicDeckStore.Write(player, deck);
-        var ui = new Control { Size = root.GetViewport().GetVisibleRect().Size }; root.AddChild(ui);
+        var canvas = new CanvasLayer { Transform = new Transform2D(0, Vector2.One * 0.85f, 0, new Vector2(40, 20)) };
+        root.AddChild(canvas);
+        var ui = new Control { Size = root.GetViewport().GetVisibleRect().Size }; canvas.AddChild(ui);
         MagicBookUi.Attach(ui, player, () => null, () => false);
         var layer = ui.GetNode<Control>("FrierenMagicDeckAnimations");
         Check(MagicDeckAnimations.IsAttached(player) && layer.MouseBehaviorRecursive == Control.MouseBehaviorRecursiveEnum.Disabled,
@@ -50,9 +64,24 @@ public static class MagicDeckAnimationTests
         var toggle = (MagicFactorButton)ui.FindChild("FrierenMagicBookButton", true, false);
         toggle.EmitSignal(NClickableControl.SignalName.Released, toggle);
         await Tick();
+        async Task RightClick(int id) {
+            var holder = (NGridCardHolder)ui.FindChild("Prop_" + id, true, false);
+            var point = holder.Hitbox.GetGlobalTransformWithCanvas() * (holder.Hitbox.Size / 2);
+            root.GetViewport().PushInput(new InputEventMouseButton { Position=point, GlobalPosition=point,
+                ButtonIndex=MouseButton.Right, Pressed=true }, true);
+            await Tick();
+            root.GetViewport().PushInput(new InputEventMouseButton { Position=point, GlobalPosition=point,
+                ButtonIndex=MouseButton.Right, Pressed=false }, true);
+            for (int i=0;i<8;i++) await Tick();
+        }
+        await RightClick(circle);
+        var circleHolder = (NGridCardHolder)ui.FindChild("Prop_" + circle, true, false);
+        Check(circleHolder.CardNode!.CardHighlight.Modulate.A > 0, "完整界面实际右键可选中魔具");
+        await RightClick(circle);
         var source = (NGridCardHolder)ui.FindChild("Prop_" + box, true, false);
         Vector2 sourcePosition = source.CardNode!.GlobalPosition;
-        var use = MagicPropCmd.UseSelected(player, box, []);
+        await RightClick(box);
+        var use = MagicDeckAnimations.WhenIdle(player);
         await Tick();
         var pulse = layer.GetNode<NCard>("UsedMagicProp");
         Check(pulse.GlobalPosition.DistanceTo(sourcePosition) < 1, "在魔具原位置播放绿光，不重复显示到屏幕中央");
@@ -73,14 +102,23 @@ public static class MagicDeckAnimationTests
                 await Snapshot("magic-factors-obtained");
             }
             if (seenFlight && flying.Length == 2 && flying[0].GlobalPosition.DistanceTo(flightStart!.Value) > 20) {
-                Check(flying[0].Scale.X < 0.75f, "因子朝魔法牌组图标移动并缩小");
+                Check(layer.GetChildren().OfType<NCardFlyVfx>().Any() &&
+                    layer.GetChildren().OfType<NCardTrailVfx>().Any() && flying[0].Body.Scale.X < 1,
+                    "原版飞入节点与粒子拖尾运行，卡面按原版规则缩小");
+                await Snapshot("magic-native-flight");
                 break;
             }
         }
         Check(seenFlight, "盲盒产生两个飞入节点：" + string.Join(",", layer.GetChildren().Select(c => c.Name.ToString())) + " completed=" + use.IsCompleted);
-        Check(await use, "盲盒完整动画成功结束");
-        await Tick();
+        await use;
+        for (int i=0;i<8;i++) await Tick();
         Check(layer.GetChildCount() == 0 && !MagicPropCmd.IsBusy(player), "动画结束释放卡牌节点和忙碌状态");
+        await RightClick(circle);
+        circleHolder = (NGridCardHolder)ui.FindChild("Prop_" + circle, true, false);
+        Check(circleHolder.CardNode!.CardHighlight.Modulate.A > 0 &&
+            circleHolder.CardNode.MouseBehaviorRecursive == Control.MouseBehaviorRecursiveEnum.Inherited,
+            "动画结束并复用卡牌后，实际右键仍可选中另一魔具");
+        await RightClick(circle);
         toggle.EmitSignal(NClickableControl.SignalName.Released, toggle);
         Check(!player.Deck.Cards.OfType<FrierenMod.Scripts.Cards.FactorCard>().Any(), "表现卡不进入普通牌组");
         deck = MagicDeckStore.Read(player); deck.Equip(deck.Items.Last().InstanceId, ManaSlot.Hand);
@@ -94,12 +132,17 @@ public static class MagicDeckAnimationTests
         selector.PrepareToSelect([1, 6]);
         Check(await MagicPropCmd.VisitShop(player), "魔具店八选二成功");
         await MagicDeckAnimations.WhenIdle(player);
+        for (int i=0;i<8;i++) await Tick();
         Check(layer.GetChildCount() == 0 && MagicDeckStore.Read(player).Props.Count == 3, "连续奖励和商店动画排队且不丢物品");
         deck = MagicDeckStore.Read(player); deck.Add("BuildUpBody"); MagicDeckStore.Write(player, deck);
         Task pending = MagicDeckAnimations.WhenIdle(player);
-        ui.QueueFree();
+        elapsed.Restart();
+        while (!layer.GetChildren().OfType<NCardFlyVfx>().Any() && elapsed.Elapsed < TimeSpan.FromSeconds(3)) await Tick();
+        Check(layer.GetChildren().OfType<NCardFlyVfx>().Any(), "退出检查发生于原生飞入特效运行期间");
+        canvas.QueueFree();
         for (int i = 0; i < 8; i++) await Tick();
         Check(pending.IsCompleted && !MagicDeckAnimations.IsAttached(player), "退出界面时终止动画并解除绑定，不悬挂异步流程");
+        visualFactory.UnpatchAll(visualFactory.Id);
         return count;
     }
 }
