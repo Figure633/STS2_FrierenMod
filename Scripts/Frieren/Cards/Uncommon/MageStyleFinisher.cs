@@ -16,7 +16,9 @@ namespace FrierenMod.Scripts.Cards;
 
 public sealed class MageStyleFinisher() : FrierenCard(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(5, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(5, ValueProp.Move),
+        new CalculationBaseVar(0), new CalculationExtraVar(1),
+        new CalculatedVar("CalculatedHits").WithMultiplier((card, _) => SynchroCmd.CountThisTurn(card.Owner))];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         int hits = SynchroCmd.CountThisTurn(Owner);

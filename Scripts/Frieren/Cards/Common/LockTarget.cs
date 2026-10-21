@@ -16,7 +16,10 @@ namespace FrierenMod.Scripts.Cards;
 
 public sealed class LockTarget() : FrierenCard(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(8, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(8, ValueProp.Move),
+        new CalculationBaseVar(0), new CalculationExtraVar(1),
+        new CalculatedVar("CalculatedHits").WithMultiplier((card, _) =>
+            ManaCmd.InPile(card.Owner, PileType.Draw).Count() >= ManaCmd.InPile(card.Owner, PileType.Discard).Count() ? 2 : 1)];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         int hits = ManaCmd.InPile(Owner, PileType.Draw).Count() >= ManaCmd.InPile(Owner, PileType.Discard).Count() ? 2 : 1;

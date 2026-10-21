@@ -107,6 +107,10 @@ public partial class Runner : Node
                 GD.Print("REWARD_PROPS_OK: " + await RewardMagicPropTests.Run(this));
                 await Finish(); return;
             }
+            if (OS.GetCmdlineUserArgs().Contains("--conditional-preview-only")) {
+                GD.Print("CONDITIONAL_PREVIEW_OK: " + await ConditionalPreviewTests.Run());
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--synchro-display-only")) {
                 GD.Print("SYNCHRO_DISPLAY_OK: " + await SynchroDisplayTests.Run(this));
                 await Finish(); return;
