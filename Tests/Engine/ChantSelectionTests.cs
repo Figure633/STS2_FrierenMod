@@ -50,6 +50,18 @@ public static class ChantSelectionTests
         combat.AddCreature(enemy); CombatManager.Instance.SetUpCombat(combat);
         AccessTools.Property(typeof(CombatManager), nameof(CombatManager.IsInProgress)).SetValue(CombatManager.Instance, true);
         var context = new BlockingPlayerChoiceContext();
+        var blockOption=ChantRules.Preview(ManaSlot.Draw,MagicDeckState.Definition("AdvancedDefensiveMagic"),2);
+        var blockFactor=FactorCard.Create(player,"AdvancedDefensiveMagic",ManaSlot.Draw,blockOption);
+        LocManager.Instance.SetLanguage("zhs");
+        var dex=await PowerCmd.Apply<MegaCrit.Sts2.Core.Models.Powers.DexterityPower>(context,player.Creature,3,player.Creature,null);
+        Check(blockFactor.GetDescriptionForPile(PileType.None).Contains("[green]5[/green]"),"咏唱因子按敏捷实时预览两次格挡并变绿");
+        await PowerCmd.Remove(dex!);
+        await PowerCmd.Apply<MegaCrit.Sts2.Core.Models.Powers.DexterityPower>(context,player.Creature,-3,player.Creature,null);
+        Check(blockFactor.GetDescriptionForPile(PileType.None).Contains("[red]0[/red]"),"负敏捷预览降至零并变红");
+        await PowerCmd.Remove(player.Creature.GetPower<MegaCrit.Sts2.Core.Models.Powers.DexterityPower>()!);
+        Check(blockFactor.GetDescriptionForPile(PileType.None).Contains("2 点格挡两次") && blockFactor.Option==blockOption,
+            "预览不改写因子基础奖励或支付费用");
+        LocManager.Instance.SetLanguage("eng");
         T Card<T>() where T : CardModel { var c = ModelDb.Card<T>().ToMutable(); c.Owner = player; return (T)c; }
         var deck = MagicDeckState.CreatePrototypeLoadout(); MagicDeckStore.Write(player, deck);
         foreach (var pile in new[] { PileType.Draw, PileType.Discard })

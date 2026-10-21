@@ -5,6 +5,8 @@ using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.ValueProps;
+using MegaCrit.Sts2.Core.Hooks;
 
 namespace FrierenMod.Scripts.Cards;
 
@@ -59,7 +61,13 @@ public abstract class FactorCard() : FrierenCard(-1, CardType.Skill, CardRarity.
         }
         description.Add("Context", contextText);
         var effect = new LocString("frieren", (Option.HasValue ? "EFFECT." : "FACTOR.") + FactorId);
-        effect.Add("Reward", Option?.Reward ?? 0);
+        if (Option.HasValue && FactorId == nameof(AdvancedDefensiveMagic)) {
+            // 选择模型不在战斗牌堆，原生预览不会自动跑增益钩子；显式复用格挡计算。
+            var block = new BlockVar("Reward", Option.Value.Reward, ValueProp.Move);
+            if (Owner?.Creature.CombatState is { } combat)
+                block.PreviewValue = Hook.ModifyBlock(combat, Owner.Creature, block.BaseValue, ValueProp.Move, this, null, out _);
+            effect.Add(block);
+        } else effect.Add("Reward", Option?.Reward ?? 0);
         effect.Add("Cost", Option?.Cost ?? 0);
         if (Option.HasValue && SpellCatalog.Get(FactorId).Puzzle)
         {

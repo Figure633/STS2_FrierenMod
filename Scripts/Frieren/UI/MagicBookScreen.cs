@@ -39,6 +39,7 @@ public sealed class MagicBookScreen
     private string _displayed = "";
     private bool _applying;
     private bool _inputCaptured;
+    private (int Id, MouseButton Button)? _pointerPress;
 
     private static string Text(string key) => new LocString("frieren", key).GetFormattedText();
 
@@ -124,6 +125,9 @@ public sealed class MagicBookScreen
         escape.Pressed += Back;
         View.VisibilityChanged += () => { if (!View.Visible) { Cancel(); RestoreOverlay(); } };
         View.TreeExiting += () => root.Resized -= Resize;
+        var pointer = new MagicBookPointerInput { Name = "FrierenBookPointer", HandleButton = HandlePointer };
+        root.AddChild(pointer);
+        View.TreeExiting += () => { pointer.HandleButton = null; pointer.QueueFree(); };
     }
 
     public void Open()
@@ -150,10 +154,36 @@ public sealed class MagicBookScreen
 
     private void Cancel()
     {
+        _pointerPress = null;
         _armed = null;
         _selected.Clear();
         RefreshSelection();
         _status.Text = Text("BOOK_HINT");
+    }
+
+    private bool HandlePointer(InputEventMouseButton button)
+    {
+        if (!View.IsVisibleInTree() || !View.CanProcess() || _applying) { _pointerPress = null; return false; }
+        if (button.ButtonIndex is not (MouseButton.Left or MouseButton.Right)) return false;
+        var scroll = _inventory.GetParent<ScrollContainer>();
+        var hit = _cards.Reverse().FirstOrDefault(pair => pair.Value.IsVisibleInTree() &&
+            pair.Value.Hitbox.GetGlobalRect().HasPoint(button.Position) &&
+            (!_inventory.IsAncestorOf(pair.Value) || scroll.GetGlobalRect().HasPoint(button.Position)));
+        if (hit.Value == null) { _pointerPress = null; return false; }
+        if (button.Pressed) {
+            _pointerPress = (hit.Key, button.ButtonIndex);
+            MegaCrit.Sts2.Core.Commands.SfxCmd.Play("event:/sfx/ui/clicks/ui_click");
+        }
+        else {
+            bool clicked = _pointerPress == (hit.Key, button.ButtonIndex);
+            _pointerPress = null;
+            if (clicked) {
+                if (button.ButtonIndex == MouseButton.Right) {
+                    if (hit.Value.CardModel is MagicPropCard) Arm(hit.Key);
+                } else Select(hit.Key);
+            }
+        }
+        return true;
     }
 
     public void Refresh()

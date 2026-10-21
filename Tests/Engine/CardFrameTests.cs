@@ -63,6 +63,25 @@ public static class CardFrameTests
         foreach(var type in new[]{typeof(BabySleeping),typeof(ShavedIceSpell),typeof(ManaDetection),typeof(GrapeSpell),typeof(FlyingMagic),typeof(Disperse),typeof(ClearMind)})
             if(!Card(type).Frame.ResourcePath.Contains("shared_")) throw new Exception("双色卡遗漏："+type.Name);
         Check(true,"七张一代双色卡全部保留公共卡背");
+        foreach(var type in new[]{typeof(LongevityPain),typeof(Laziness)}) {
+            var model=(CustomCardModel)Card(type);
+            Check(model.CustomFrame==null && model.CreateCustomFrameMaterial==null &&
+                model.Frame.ResourcePath=="res://images/atlases/ui_atlas.sprites/card/card_frame_skill_s.tres" &&
+                model.VisualCardPool is MegaCrit.Sts2.Core.Models.CardPools.StatusCardPool or MegaCrit.Sts2.Core.Models.CardPools.CurseCardPool,
+                type.Name+"状态或诅咒使用原版卡框");
+        }
+        foreach(var language in new[]{"zhs","eng"}) {
+            MegaCrit.Sts2.Core.Localization.LocManager.Instance.SetLanguage(language);
+            foreach(var model in new[]{Card(typeof(Mana)),Card(typeof(HighDensityMana))}) {
+                var node=NodePool.Get<NCard>();AccessTools.Property(typeof(NCard),nameof(NCard.Model)).SetValue(node,model);
+                ui.AddChild(node);node.UpdateVisuals(PileType.None,CardPreviewMode.Normal);
+                Check(node.GetNode<MegaCrit.Sts2.addons.mega_text.MegaLabel>("%TypeLabel").Text==(language=="zhs"?"魔力":"Mana"),
+                    model.GetType().Name+"实际类型牌匾显示魔力："+language);
+                Check(model.Type==CardType.Status && model.Frame.ResourcePath.EndsWith("magic.tres"),"魔力身份及紫色卡框保持兼容");
+                ui.RemoveChild(node);node.QueueFreeSafely();
+            }
+        }
+        MegaCrit.Sts2.Core.Localization.LocManager.Instance.SetLanguage("eng");
         var time=Card(typeof(TimeConcept));
         Check(!time.ShouldShowInCardLibrary && !time.CanBeGeneratedInCombat && !time.CanBeGeneratedByModifiers &&
             !player.Character.CardPool.GetUnlockedCards(player.UnlockState,CardMultiplayerConstraint.SingleplayerOnly).Any(c=>c is TimeConcept),

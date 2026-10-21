@@ -72,7 +72,8 @@ public static class RelicsPotionsTests
         }
         var relics = ModelDb.RelicPool<FrierenRelicPool>().AllRelics.ToArray();
         var potions = ModelDb.PotionPool<FrierenPotionPool>().AllPotions.ToArray();
-        Check(relics.Length == 19 && potions.Length == 3, "19件有效遗物和3种药水注册完整，无空壳StarkRelic");
+        Check(relics.Length == 19 && relics.Count(r => r.Rarity != RelicRarity.None) == 18 && potions.Length == 3,
+            "18件有效遗物、1件旧档废弃模型和3种药水注册完整");
         foreach (var relic in relics) {
             Check(relic.Icon.GetWidth() > 0 && relic.IconOutline.GetWidth() > 0 && ResourceLoader.Exists(relic is HolyEmblem ? relic.PackedIconPath :
                 $"res://FrierenMod/images/relics/{relic.GetType().Name}.png"), "遗物图标及轮廓可加载：" + relic.GetType().Name);
@@ -91,7 +92,8 @@ public static class RelicsPotionsTests
         Check(new[] { typeof(ComfortableBed), typeof(IcicleCherryBlossom), typeof(HimmelGravestone), typeof(ScaleOfObedience) }
             .All(t => ModelDb.GetById<RelicModel>(ModelDb.GetId(t)).Rarity == RelicRarity.Rare), "四件原Boss遗物登记稀有");
         Check(ModelDb.Relic<MimicHead>().Rarity == RelicRarity.Event && ModelDb.Relic<FlammeGrimoire>().Rarity == RelicRarity.Event &&
-            ModelDb.Relic<HairAccessory>().Rarity == RelicRarity.Starter && ModelDb.Relic<HaitaaWand>().Rarity == RelicRarity.Starter,
+            ModelDb.Relic<HairAccessory>().Rarity == RelicRarity.Starter && ModelDb.Relic<HaitaaWand>().Rarity == RelicRarity.None &&
+            !ModelDb.Relic<HaitaaWand>().IsAllowed(run) && !ModelDb.Relic<HaitaaWand>().IsAllowedInShops,
             "事件遗物和未来角色初始遗物保留获取限制");
         var grabBag = new RelicGrabBag(); grabBag.Populate(player, new MegaCrit.Sts2.Core.Random.Rng(60));
         Check(relics.All(r => grabBag.Contains(r) == (r.Rarity is RelicRarity.Common or RelicRarity.Uncommon or RelicRarity.Rare or RelicRarity.Shop)),
@@ -196,7 +198,9 @@ public static class RelicsPotionsTests
         await Reset(); var wand = await RelicCmd.Obtain<HaitaaWand>(player); await wand.AfterPlayerTurnStart(context, player);
         foreach (var pile in new[] { PileType.Hand, PileType.Draw, PileType.Discard }) await CardPileCmd.Add(Card<Mana>(), pile);
         await wand.BeforeSideTurnEnd(context, CombatSide.Player, [player.Creature]);
-        Check(ManaCmd.Total(player) == 0 && player.Creature.GetPowerAmount<ConcentrationPower>() == 4, "海塔法杖消耗三个牌堆的魔力转为专注");
+        Check(ManaCmd.Total(player) == 3 && player.Creature.GetPowerAmount<ConcentrationPower>() == 0 &&
+            RelicModel.FromSerializable(wand.ToSerializable()) is HaitaaWand,
+            "废弃海塔法杖不再生效，原存档ID仍可读取");
 
         await Reset(); int deckCount = player.Deck.Cards.Count; await RelicCmd.Obtain<HimmelGravestone>(player);
         var curse = player.Deck.Cards.OfType<LongevityPain>().Single();

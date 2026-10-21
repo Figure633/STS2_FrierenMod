@@ -15,7 +15,7 @@
   "FRIERENMOD-HAIR_ACCESSORY.description": "Whenever [gold]Mana[/gold] is exhausted, gain 1 [gold]Concentration[/gold].",
   "FRIERENMOD-HAIR_ACCESSORY.flavor": "It is the 16 years old Birthday present Frieren give to Fern, her apprentice.",
   "FRIERENMOD-HAITAA_WAND.title": "Heiter's Staff",
-  "FRIERENMOD-HAITAA_WAND.description": "At the start of your turn, gain 1 [gold]Concentration[/gold]. At the end of your turn, exhaust all [gold]Mana[/gold] in your hand, draw pile, and discard pile. Gain 1 [gold]Concentration[/gold] for each.",
+  "FRIERENMOD-HAITAA_WAND.description": "Deprecated. Cannot be obtained and has no effect.",
   "FRIERENMOD-HAITAA_WAND.flavor": "A staff left behind by Heiter.",
   "FRIERENMOD-HIMMEL_GRAVESTONE.title": "Himmel's Gravestone",
   "FRIERENMOD-HIMMEL_GRAVESTONE.description": "Gain 1 Energy at the start of each turn. Upon pickup, add [gold]The Pain of Longevity[/gold] to your deck.",

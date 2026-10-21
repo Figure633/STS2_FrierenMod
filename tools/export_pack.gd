@@ -12,6 +12,7 @@ func _initialize():
 	collect("res://FrierenMod", files)
 	# C# 节点由 DLL 实现；注册后的脚本路径仍需存在于 PCK 中。
 	files.append("res://Scripts/Frieren/UI/MagicFactorButton.cs")
+	files.append("res://Scripts/Frieren/UI/MagicBookPointerInput.cs")
 	var imported: Dictionary = {}
 	for path in files:
 		if path.ends_with(".import"):

@@ -9,7 +9,8 @@ public static class FrierenCardFrames
 {
     private static readonly Dictionary<(string Kind, string Style), (Texture2D Texture, ShaderMaterial Material)> Frames = [];
 
-    private static bool Applies(CustomCardModel card) => card.Rarity != CardRarity.Ancient;
+    private static bool Applies(CustomCardModel card) => card.Rarity != CardRarity.Ancient &&
+        (card is IManaCard || card.Type is not (CardType.Status or CardType.Curse));
 
     public static Texture2D? Texture(CustomCardModel card) => Applies(card) ? Get(card).Texture : null;
     public static Material? Material(CustomCardModel card) => Applies(card) ? Get(card).Material : null;

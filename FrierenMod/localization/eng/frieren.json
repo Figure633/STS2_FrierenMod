@@ -39,7 +39,7 @@
   "TIP.SEALED.description": "Removed from the pile at combat start. Play 5 [gold]Chant[/gold] cards in one turn to release it into your Hand.",
   "TIP.SECOND_DEFENSE.title": "Defensive Follow-up",
   "TIP.SECOND_DEFENSE.description": "Costs 0 Energy and Exhausts. [gold]Chant[/gold] 1 and gain the same Block as the Defensive Magic that created it, retaining its upgrade.",
-  "EFFECT.AdvancedDefensiveMagic": "Gain {Reward} Block twice.",
+  "EFFECT.AdvancedDefensiveMagic": "Gain {Reward:diff()} Block twice.",
   "FACTOR.AdvancedDefensiveMagic": "[gold]Chant[/gold] X: consume X [gold]Mana[/gold].\nGain X Block twice.",
   "EFFECT.BePrepared": "Gain {Reward} Vigor.",
   "FACTOR.BePrepared": "[gold]Chant[/gold] X: consume X [gold]Mana[/gold].\nGain X Vigor, plus 3 more.",
@@ -158,5 +158,7 @@
   "SORT_RARITY": "Rarity",
   "SORT_TYPE": "Type",
   "TIP.ULTIMATE_ACCELERATED_SYNCHRO.title": "Ultimate Accelerated Synchro",
-  "TIP.ULTIMATE_ACCELERATED_SYNCHRO.description": "Deal 15 damage to a random enemy. Draw 2 cards. [gold]Exhaust[/gold]."
+  "TIP.ULTIMATE_ACCELERATED_SYNCHRO.description": "Deal 15 damage to a random enemy. Draw 2 cards. [gold]Exhaust[/gold].",
+  "MANA_TYPE": "Mana",
+  "MAGIC_ITEM_ADDED": "Added {Card} to your Magic Deck."
 }
