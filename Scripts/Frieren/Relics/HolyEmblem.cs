@@ -48,7 +48,7 @@ public sealed class HolyEmblem : CustomRelicModel
         if (player != Owner) return;
         if (!MagicDeckCmd.SetupMustWait) await MagicDeckCmd.ChooseStartingFactors(context, Owner);
         Flash();
-        await ManaCmd.Generate(Owner, PileType.Draw, 1);
-        await ManaCmd.Generate(Owner, PileType.Discard, 1);
+        await ManaCmd.Generate(Owner, PileType.Draw, 1, previewTime: 0.35f);
+        await ManaCmd.Generate(Owner, PileType.Discard, 1, previewTime: 0.35f);
     }
 }

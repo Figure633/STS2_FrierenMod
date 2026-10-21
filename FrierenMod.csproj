@@ -7,7 +7,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
-    <Version>0.6.8</Version>
+    <Version>0.6.9</Version>
     <NoWarn>$(NoWarn);MSB3270</NoWarn>
   </PropertyGroup>
   <Import Project="GameReferences.props" />
