@@ -92,10 +92,15 @@ public static class MagicDeckAnimations
                 // 多件奖励并排展示、依次飞入，避免后生成的物品遮住先生成的物品。
                 for (int start = 0; start < added.Length; start += 3) {
                     int count = Math.Min(3, added.Length - start);
-                    for (int i = 0; i < count; i++) cards.Add(Show(added[start + i], i, count, false));
+                    for (int i = 0; i < count; i++) {
+                        var card = Show(added[start + i], i, count, false);
+                        cards.Add(card);
+                        // 一代盲盒会令新因子 superFlash；复用原版卡牌闪光，留出完整辨认时间。
+                        if (usedProp.HasValue) card.CardHighlight.AnimFlash();
+                    }
                     var flights = new List<Task>();
                     for (int i = 0; i < cards.Count; i++) {
-                        flights.Add(Fly(cards[i], 0.28 + i * 0.12));
+                        flights.Add(Fly(cards[i], (usedProp.HasValue ? 1.2 : 0.28) + i * 0.12));
                     }
                     await Task.WhenAll(flights);
                     // 原生飞入特效自行释放卡牌；不能再次归还对象池。

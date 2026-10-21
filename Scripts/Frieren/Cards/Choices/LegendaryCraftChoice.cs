@@ -1,6 +1,8 @@
 using FrierenMod.Core;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Localization;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Helpers;
 
 namespace FrierenMod.Scripts.Cards;
 
@@ -34,12 +36,15 @@ public sealed class LegendaryCraftChoice() : FrierenCard(0, CardType.Skill, Card
         "UpgradeAll" => "UpgradeAllOption",
         _ => nameof(SerieGrimoire)
     };
+    public override string Title => new LocString("frieren", "CRAFT_TITLE." + ArtName).GetFormattedText();
     protected override bool IsPlayable => false;
     public override int MaxUpgradeLevel => 0;
     protected override void AddExtraArgsToDescription(LocString description)
     {
         var text = new LocString("frieren", "CRAFT." + Effect.Kind);
-        text.Add("Amount", Effect.Amount);
+        if (Effect.Kind == "Cost")
+            text.Add(new EnergyVar("Amount", Effect.Amount) { ColorPrefix = EnergyIconHelper.GetPrefix(this) });
+        else text.Add("Amount", Effect.Amount);
         description.Add("Effect", text.GetFormattedText());
     }
 }

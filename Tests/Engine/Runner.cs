@@ -99,6 +99,10 @@ public partial class Runner : Node
                 GD.Print("PROP_CANCEL_OK: " + await MagicBookSelectionTests.Run(this));
                 await Finish(); return;
             }
+            if (OS.GetCmdlineUserArgs().Contains("--card-pool-isolation-only")) {
+                GD.Print("CARD_POOL_ISOLATION_OK: " + await CardPoolIsolationTests.Run());
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--book-scrolling-only")) {
                 GD.Print("BOOK_SCROLLING_OK: " + await MagicBookScrollingTests.Run(this));
                 await Finish(); return;

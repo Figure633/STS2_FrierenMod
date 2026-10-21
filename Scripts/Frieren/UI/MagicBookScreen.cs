@@ -296,7 +296,7 @@ public sealed class MagicBookScreen
                 _inventorySortKeys.Add(id, (rarity, prop ? -1 : 3));
             }
             // 原生卡牌悬停会从 0.8 放大到 1；父层统一缩放，预留边界避免裁切。
-            var scaleRoot = new Control { Scale = Vector2.One * (slot >= 0 ? 0.9f : 0.75f), Position = new(135, slot >= 0 ? 172 : 135),
+            var scaleRoot = new Control { Scale = Vector2.One * (slot >= 0 ? 1f : 0.8f), Position = new(135, slot >= 0 ? 172 : 135),
                 MouseFilter = Control.MouseFilterEnum.Ignore };
             cell.AddChild(scaleRoot);
             var holder = CreateHolder(model);
