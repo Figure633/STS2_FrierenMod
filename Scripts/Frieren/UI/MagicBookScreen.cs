@@ -14,6 +14,7 @@ using MegaCrit.Sts2.Core.Nodes.Cards;
 using MegaCrit.Sts2.Core.Nodes.Cards.Holders;
 using MegaCrit.Sts2.Core.TestSupport;
 using MegaCrit.Sts2.Core.Nodes.Screens.Overlays;
+using MegaCrit.Sts2.Core.Nodes.Screens.Capstones;
 
 namespace FrierenMod.Scripts.UI;
 
@@ -24,6 +25,7 @@ public sealed class MagicBookScreen
     private readonly Player _player;
     private readonly Control _canvas;
     private readonly Func<IOverlayScreen?> _currentOverlay;
+    private readonly NCapstoneContainer? _capstone;
     private IOverlayScreen? _coveredOverlay;
     private readonly Control _equipped;
     private readonly GridContainer _inventory;
@@ -59,8 +61,9 @@ public sealed class MagicBookScreen
     {
         _player = player;
         _currentOverlay = currentOverlay ?? (() => NOverlayStack.Instance?.Peek());
-        View = new Control { Name = "FrierenMagicBook", Visible = false, ZIndex = 100, ZAsRelative = false, MouseFilter = Control.MouseFilterEnum.Stop };
-        root.AddChild(View);
+        _capstone = (root as NGlobalUi)?.CapstoneContainer;
+        View = new MagicBookView { Name = "FrierenMagicBook", Visible = false, ZIndex = 100, ZAsRelative = false, MouseFilter = Control.MouseFilterEnum.Stop };
+        (_capstone as Control ?? root).AddChild(View);
         View.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
         _canvas = new Control { Name = "BookCanvas", Size = new Vector2(1920, 1080), MouseFilter = Control.MouseFilterEnum.Ignore };
         View.AddChild(_canvas);
@@ -109,6 +112,7 @@ public sealed class MagicBookScreen
         // 原生返回按钮保留二代的贴图、悬停动画和输入提示。
         var back = GD.Load<PackedScene>("res://scenes/ui/back_button.tscn").Instantiate<MegaCrit.Sts2.Core.Nodes.CommonUi.NBackButton>();
         _canvas.AddChild(back);
+        ((MagicBookView)View).DefaultFocusedControl = back;
         back.Connect(MegaCrit.Sts2.Core.Nodes.GodotExtensions.NButton.SignalName.Released, Callable.From<MegaCrit.Sts2.Core.Nodes.GodotExtensions.NButton>(_ => Back()));
         View.VisibilityChanged += () => {
             bool visible = View.IsVisibleInTree();
@@ -137,17 +141,22 @@ public sealed class MagicBookScreen
         Cancel(); Populate();
         _coveredOverlay = _currentOverlay();
         // 只暂时隐藏原生选牌屏，不移除它，也不完成或取消它的选择任务。
-        _coveredOverlay?.AfterOverlayHidden();
+        if (_capstone == null) _coveredOverlay?.AfterOverlayHidden();
         if (!MagicPropCmd.AllowsUseOver(_coveredOverlay)) _status.Text = Text("BOOK_VIEW_ONLY");
-        View.Show();
+        if (_capstone != null) _capstone.Open((MagicBookView)View); else View.Show();
     }
-    public void Close() { Cancel(); View.Hide(); }
+    public void Close()
+    {
+        Cancel();
+        if (_capstone?.CurrentCapstoneScreen == View) _capstone.Close(); else View.Hide();
+    }
     private void Back() { if (_armed.HasValue) Cancel(); else Close(); }
 
     private void RestoreOverlay()
     {
         var previous = _coveredOverlay;
         _coveredOverlay = null;
+        if (_capstone != null) return; // 原生容器负责恢复奖励/地图，避免重复调用展示回调。
         if (previous == null || previous != _currentOverlay()) return;
         if (previous is GodotObject node && !GodotObject.IsInstanceValid(node)) return;
         previous.AfterOverlayShown();

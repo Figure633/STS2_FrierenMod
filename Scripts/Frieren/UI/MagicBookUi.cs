@@ -40,7 +40,8 @@ public static class MagicBookUi
     {
         currentOverlay ??= () => NOverlayStack.Instance?.Peek();
         inputBlocked ??= () => root is NGlobalUi global &&
-            (global.CapstoneContainer.InUse || NModalContainer.Instance?.OpenModal != null);
+            ((global.CapstoneContainer.InUse && global.CapstoneContainer.CurrentCapstoneScreen is not MagicBookView) ||
+             NModalContainer.Instance?.OpenModal != null);
         var toggle = MagicFactorButton.Create(root);
 
         var hud = new Control { Name = "FrierenManaCounter",
@@ -163,10 +164,14 @@ public static class MagicBookUi
         root.AddChild(timer);
         if (root is NGlobalUi globalUi) {
             // 因子查看位于选牌层之上、原生菜单遮罩之下，暂停时自然变暗且不会挡住菜单。
-            foreach (var view in new[] { hud, root.GetNode<Control>("FrierenFactorPreview"), backdrop, book, animations }) {
+            foreach (var view in new[] { hud, root.GetNode<Control>("FrierenFactorPreview"), backdrop }) {
                 view.ZIndex = 0; view.ZAsRelative = true;
                 root.MoveChild(view, globalUi.CapstoneContainer.GetIndex());
             }
+            book.ZIndex = 0; book.ZAsRelative = true;
+            // 魔法书已归原生上层容器管理，动画放在同层最上方并继续穿透输入。
+            animations.Reparent(globalUi.CapstoneContainer);
+            animations.ZIndex = 0; animations.ZAsRelative = true;
         }
         RefreshInput();
     }

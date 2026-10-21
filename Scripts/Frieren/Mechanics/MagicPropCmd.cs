@@ -19,8 +19,9 @@ public static class MagicPropCmd
 {
     private static readonly HashSet<Player> Busy = [];
     public static bool IsBusy(Player player) => Busy.Contains(player);
-    // 原生战利品列表不持有选牌任务；选择具体卡牌时顶层会换成独立选牌屏。
-    public static bool AllowsUseOver(IOverlayScreen? screen) => screen is null or NRewardsScreen { IsComplete: false };
+    // IsComplete 仅表示奖励已领完，界面仍停留在“前进”；该阶段同样可以整理魔法牌组。
+    // 选择具体卡牌时顶层会换成独立选牌屏，仍保护其选择任务。
+    public static bool AllowsUseOver(IOverlayScreen? screen) => screen is null or NRewardsScreen;
     private static bool CanAct(Player player)
     {
         var combat = CombatManager.Instance;
