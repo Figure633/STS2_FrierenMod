@@ -8,9 +8,6 @@ using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Saves.Runs;
-using MegaCrit.Sts2.Core.Rooms;
-using MegaCrit.Sts2.Core.Rewards;
-using FrierenMod.Scripts.Rewards;
 
 namespace FrierenMod.Scripts.Relics;
 
@@ -44,19 +41,6 @@ public sealed class HolyEmblem : CustomRelicModel
         // 外层新跑局/读档仍可能处于加载中；届时由界面在加载完成后继续。
         if (MagicDeckCmd.SetupMustWait) return;
         await MagicDeckCmd.ChooseStartingFactors(new BlockingPlayerChoiceContext(), Owner);
-    }
-
-    public override bool TryModifyRewards(Player player, List<Reward> rewards, AbstractRoom? room)
-    {
-        if (player != Owner || room is not CombatRoom || room.RoomType == RoomType.Boss || rewards.OfType<FactorReward>().Any()) return false;
-        var deck = MagicDeckStore.Read(player);
-        bool drop = player.PlayerRng.Rewards.NextInt(100) < (room.RoomType == RoomType.Elite ? 70 : 40) + deck.RewardPity;
-        deck.RewardPity += drop ? -10 : 10;
-        MagicDeckStore.Write(player, deck);
-        if (!drop) return false;
-        var reward = new FactorReward(player) { Seed = player.PlayerRng.Rewards.NextInt() };
-        reward.Populate(); rewards.Add(reward);
-        return true;
     }
 
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext context, Player player)

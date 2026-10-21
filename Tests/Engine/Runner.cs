@@ -65,7 +65,7 @@ public partial class Runner : Node
             mods.Add(new Mod { path = "test", assembly = typeof(BaseLib.BaseLibMain).Assembly, state = ModLoadState.Loaded,
                 manifest = new ModManifest { id = "BaseLib" } });
             mods.Add(new Mod { path = "test", assembly = typeof(Mana).Assembly, state = ModLoadState.Loaded,
-                manifest = new ModManifest { id = "FrierenMod" } });
+                manifest = new ModManifest { id = "FrierenMod", dependencies = [new ModDependency("BaseLib", "3.4.7")] } });
             AccessTools.Property(typeof(ModManager), nameof(ModManager.State)).SetValue(null, ModManagerState.Initialized);
             BaseLib.BaseLibMain.Initialize();
             FrierenMod.Scripts.Entry.Init();
@@ -105,6 +105,10 @@ public partial class Runner : Node
             }
             if (OS.GetCmdlineUserArgs().Contains("--reward-props-only")) {
                 GD.Print("REWARD_PROPS_OK: " + await RewardMagicPropTests.Run(this));
+                await Finish(); return;
+            }
+            if (OS.GetCmdlineUserArgs().Contains("--magic-reward-drops-only")) {
+                GD.Print("MAGIC_REWARD_DROPS_OK: " + await MagicRewardDropTests.Run());
                 await Finish(); return;
             }
             if (OS.GetCmdlineUserArgs().Contains("--conditional-preview-only")) {

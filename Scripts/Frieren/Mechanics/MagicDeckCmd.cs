@@ -121,12 +121,10 @@ public static class MagicDeckCmd
 
     public static async Task<bool> ChooseReward(PlayerChoiceContext context, Player player, IReadOnlyList<string> ids)
     {
-        var cards = ids.Select(id => FactorCard.Create(player, id)).ToArray();
+        var cards = ids.Select(id => MagicPropRules.All.Any(p => p.Id == id)
+            ? (MegaCrit.Sts2.Core.Models.CardModel)MagicPropCard.Create(player, id) : FactorCard.Create(player, id)).ToArray();
         var selected = await CardSelectCmd.FromChooseACardScreen(context, cards, player, canSkip: true);
-        if (selected is not FactorCard factor) return false;
-        var deck = MagicDeckStore.Read(player);
-        deck.Add(factor.FactorId);
-        MagicDeckStore.Write(player, deck);
-        return true;
+        // 统一使用已有的魔法物品入库入口，保留所属玩家与原生飞入动画。
+        return selected != null && cards.Contains(selected) && MagicItemAcquisition.Receive(selected);
     }
 }

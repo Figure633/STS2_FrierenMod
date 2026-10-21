@@ -95,11 +95,12 @@ static class CombatTests
 
         var reward = new FactorReward(player) { Seed = 92376 }; reward.Populate();
         var rewardSave = reward.ToSerializable();
-        var recovered = FactorReward.Restore(rewardSave, player);
+        var recovered = (FactorReward)MegaCrit.Sts2.Core.Rewards.Reward.FromSerializable(rewardSave, player);
         Check(reward.Choices.SequenceEqual(recovered.Choices) && recovered.Choices.Distinct().Count() == 3, "因子奖励读档重掷或重复");
         selector.PrepareToSelect(new[] { 2 });
         Check(await MagicDeckCmd.ChooseReward(context, player, recovered.Choices), "奖励领取失败");
-        Check(MagicDeckStore.Read(player).Items.Last().SpellId == recovered.Choices[2], "奖励未加入库存");
+        var rewardDeck = MagicDeckStore.Read(player);
+        Check(rewardDeck.Items.Any(i => i.SpellId == recovered.Choices[2]) || rewardDeck.Props.Any(p => p.PropId == recovered.Choices[2]), "奖励未加入库存");
         Pass("奖励选项固定、领取加入库存");
 
         var expectedPowers = new Dictionary<string, (Type, int, bool)> {

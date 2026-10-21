@@ -112,4 +112,5 @@ Test("精准咏唱先按原系数算强度再减费", () => {
     Equal(2, intensity); Equal(5, ChantRules.Option(ManaSlot.Draw, 8, spell, intensity, concentration: 3)!.Value.Cost);
 });
 passed += MagicPropTests.Run();
+passed += MagicRewardTests.Run();
 Console.WriteLine($"{passed} tests passed.");

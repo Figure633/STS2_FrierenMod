@@ -24,7 +24,7 @@
   "CHANT_SLOT.Discard": "弃牌槽",
   "INITIAL": "装载至{Slot}",
   "COLLECT": "魔法因子 · 未装载",
-  "FACTOR_REWARD": "魔法因子（三选一）",
+  "FACTOR_REWARD": "魔法因子或魔具（三选一）",
   "TIP.CHANT.title": "咏唱",
   "TIP.CHANT.description": "选择一个装载中的因子，[gold]消耗[/gold]其牌堆所需的[gold]魔力[/gold]并发动效果。因子的 X 取[gold]咏唱[/gold]卡的数值。",
   "TIP.LEGENDARY.title": "传说魔法",

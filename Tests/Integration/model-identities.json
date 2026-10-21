@@ -191,5 +191,6 @@
   "FrierenMod.Scripts.Cards.Fatalism": "CARD.FATALISM",
   "FrierenMod.Scripts.Potions.BottledMana": "POTION.BOTTLED_MANA",
   "FrierenMod.Scripts.Potions.DissolveClothPotion": "POTION.DISSOLVE_CLOTH_POTION",
-  "FrierenMod.Scripts.Potions.EmperorWine": "POTION.EMPEROR_WINE"
+  "FrierenMod.Scripts.Potions.EmperorWine": "POTION.EMPEROR_WINE",
+  "FrierenMod.Scripts.Rewards.MagicItemRewardHooks": "SINGLETON.MAGIC_ITEM_REWARD_HOOKS"
 }

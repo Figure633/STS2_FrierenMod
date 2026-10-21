@@ -24,7 +24,7 @@
   "CHANT_SLOT.Discard": "Discard Slot",
   "INITIAL": "Equip to {Slot}",
   "COLLECT": "Magic factor · Unequipped",
-  "FACTOR_REWARD": "Magic Factor (choose one of three)",
+  "FACTOR_REWARD": "Magic Factor or Tool (choose one of three)",
   "TIP.CHANT.title": "Chant",
   "TIP.CHANT.description": "Choose an equipped factor. Consume the [gold]Mana[/gold] required from its pile to activate it. The [gold]Chant[/gold] card determines the factor's X.",
   "TIP.LEGENDARY.title": "Legendary Spell",

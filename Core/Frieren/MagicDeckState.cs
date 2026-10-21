@@ -6,7 +6,7 @@ public sealed record MagicItem(int InstanceId, string SpellId, int Slot = -1);
 public sealed record MagicProp(int InstanceId, string PropId);
 public sealed record MagicDeckSave(int Version, MagicItem[] Items, bool SetupCompleted = false,
     int DraftSlot = 0, string[]? Draft = null, int RewardPity = 0, MagicProp[]? Props = null, int NextId = 0,
-    bool StartingPropsGranted = false);
+    bool StartingPropsGranted = false, int RewardRarityOffset = MagicRewardRules.StartingOffset);
 
 // 使用实例 ID 区分同名因子；对象只属于单个玩家，存档采用值快照。
 public sealed class MagicDeckState
@@ -21,6 +21,7 @@ public sealed class MagicDeckState
     public int DraftSlot { get; private set; }
     public string[] Draft { get; private set; } = [];
     public int RewardPity { get; set; }
+    public int RewardRarityOffset { get; set; } = MagicRewardRules.StartingOffset;
 
     public MagicDeckState() : this([]) { }
     private MagicDeckState(IEnumerable<MagicItem> items) => _items = [.. items];
@@ -112,12 +113,14 @@ public sealed class MagicDeckState
         return null;
     }
 
-    public string ToJson() => JsonSerializer.Serialize(new MagicDeckSave(3, [.. _items], SetupCompleted, DraftSlot, Draft, RewardPity, [.. _props], _nextId, StartingPropsGranted));
+    public string ToJson() => JsonSerializer.Serialize(new MagicDeckSave(3, [.. _items], SetupCompleted, DraftSlot, Draft, RewardPity, [.. _props], _nextId, StartingPropsGranted, RewardRarityOffset));
 
     public static MagicDeckState FromJson(string json)
     {
         var save = JsonSerializer.Deserialize<MagicDeckSave>(json) ?? throw new JsonException("Magic Deck 存档为空。");
         if (save.Version is not (1 or 2 or 3)) throw new JsonException($"不支持的 Magic Deck 版本：{save.Version}");
+        if (save.RewardRarityOffset is < MagicRewardRules.MinimumOffset or > MagicRewardRules.StartingOffset)
+            throw new JsonException("魔法物品稀有度补偿无效。");
         if (save.Items == null || save.Items.Any(x => x == null || x.InstanceId < 1 || x.Slot < -1 || x.Slot > 2))
             throw new JsonException("Magic Deck 存档包含无效条目。");
         // 0.5.14 统一因子名称；保留实例、装载槽位与初始选择进度。
@@ -144,7 +147,7 @@ public sealed class MagicDeckState
         if (save.NextId < 0 || (save.NextId > 0 && save.NextId < nextId)) throw new JsonException("魔法牌组编号计数无效。");
         var result = new MagicDeckState(save.Items) { SetupCompleted = save.SetupCompleted, DraftSlot = save.DraftSlot,
             Draft = save.Draft ?? [], RewardPity = save.RewardPity, _nextId = Math.Max(nextId, save.NextId),
-            StartingPropsGranted = save.StartingPropsGranted };
+            StartingPropsGranted = save.StartingPropsGranted, RewardRarityOffset = save.RewardRarityOffset };
         result._props.AddRange(props);
         return result;
     }
