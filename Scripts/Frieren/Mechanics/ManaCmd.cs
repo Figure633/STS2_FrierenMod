@@ -25,13 +25,15 @@ public static class ManaCmd
     public static IEnumerable<CardModel> InPile(Player owner, PileType pile) =>
         CardPile.Get(pile, owner)?.Cards.Where(IsMana) ?? [];
 
-    public static async Task Generate(Player owner, PileType pile, int count, bool ignoreBan = false, float previewTime = 1.2f)
+    public static async Task Generate(Player owner, PileType pile, int count, bool ignoreBan = false, float previewTime = 1.2f,
+        bool fastAnimation = false)
     {
         ArgumentOutOfRangeException.ThrowIfNegative(count);
         if (owner.Creature.CombatState == null || (!ignoreBan && owner.Creature.GetPower<BanManaGainPower>() != null)) return;
         for (int i = 0; i < count; i++)
         {
             var mana = owner.Creature.CombatState.CreateCard<Mana>(owner);
+            using var animation = fastAnimation ? ManaAnimationSpeed.Begin([mana]) : null;
             await CardFlowCmd.AddGenerated(mana, pile, owner, previewTime);
         }
     }
@@ -41,7 +43,7 @@ public static class ManaCmd
         ArgumentOutOfRangeException.ThrowIfNegative(count);
         var cards = InPile(owner, Pile(slot)).Take(count).ToArray();
         if (cards.Length < count) return false;
-        using var animation = fastAnimation ? ManaExhaustAnimation.Begin(cards) : null;
+        using var animation = fastAnimation ? ManaAnimationSpeed.Begin(cards) : null;
         foreach (var card in cards) await CardCmd.Exhaust(context, card);
         return true;
     }

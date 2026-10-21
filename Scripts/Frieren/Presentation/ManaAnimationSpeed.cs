@@ -7,11 +7,13 @@ using HarmonyLib;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Nodes.Cards;
+using MegaCrit.Sts2.Core.Nodes.Vfx;
 
 namespace FrierenMod.Scripts.Presentation;
 
-// 仅标记本次支付的卡牌。原版继续逐张移动、播放消耗特效并执行全部钩子。
-public static class ManaExhaustAnimation
+// 仅标记本次生成或支付的卡牌；移动、飞入、消耗及玩法钩子继续由原版执行。
+public static class ManaAnimationSpeed
 {
     private sealed class Counter { public int Depth; }
     private static readonly ConditionalWeakTable<CardModel, Counter> Accelerated = new();
@@ -47,6 +49,21 @@ public static class ManaExhaustAnimation
         return any ? tween.SetSpeedScale(2) : tween;
     }
 
+    public static void ApplyFlightSpeed(NCardFlyVfx flight)
+    {
+        if (flight.Get(NCardFlyVfx.PropertyName._card).AsGodotObject() is not NCard { Model: { } card } ||
+            !Accelerated.TryGetValue(card, out var counter) || counter.Depth == 0) return;
+        // 原版飞行积分 v += a*dt；二倍速对应初速度乘2、加速度乘4。
+        flight.Set(NCardFlyVfx.PropertyName._speed, flight.Get(NCardFlyVfx.PropertyName._speed).AsSingle() * 2);
+        flight.Set(NCardFlyVfx.PropertyName._accel, flight.Get(NCardFlyVfx.PropertyName._accel).AsSingle() * 4);
+    }
+
+    [HarmonyPatch(typeof(NCardFlyVfx), nameof(NCardFlyVfx._Ready))]
+    private static class NativeFlightSpeedPatch
+    {
+        private static void Postfix(NCardFlyVfx __instance) => ApplyFlightSpeed(__instance);
+    }
+
     [HarmonyPatch]
     private static class NativePileTweenPatch
     {
@@ -67,7 +84,7 @@ public static class ManaExhaustAnimation
                 matches++;
                 yield return new CodeInstruction(OpCodes.Ldarg_0);
                 yield return new CodeInstruction(OpCodes.Ldfld, cards);
-                yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(ManaExhaustAnimation), nameof(ApplySpeed)));
+                yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(ManaAnimationSpeed), nameof(ApplySpeed)));
             }
             if (matches != 1) throw new InvalidOperationException("原版卡牌堆补间接口已改变，需重新适配咏唱动画速度。");
         }
