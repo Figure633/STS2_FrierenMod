@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Nodes.Screens;
 using MegaCrit.Sts2.Core.Nodes.Screens.Overlays;
 using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.Runs;
@@ -18,11 +19,13 @@ public static class MagicPropCmd
 {
     private static readonly HashSet<Player> Busy = [];
     public static bool IsBusy(Player player) => Busy.Contains(player);
+    // 原生战利品列表不持有选牌任务；选择具体卡牌时顶层会换成独立选牌屏。
+    public static bool AllowsUseOver(IOverlayScreen? screen) => screen is null or NRewardsScreen { IsComplete: false };
     private static bool CanAct(Player player)
     {
         var combat = CombatManager.Instance;
         return player.Character is Frieren && player.RunState.Players.Count == 1 &&
-            (NOverlayStack.Instance?.ScreenCount ?? 0) == 0 &&
+            AllowsUseOver(NOverlayStack.Instance?.Peek()) &&
             MagicDeckStore.Read(player).SetupCompleted && !player.Creature.IsDead &&
             !combat.IsStarting && !combat.IsEnding && (!combat.IsInProgress ||
                 (!combat.PlayerActionsDisabled && !combat.IsEnemyTurnStarted &&

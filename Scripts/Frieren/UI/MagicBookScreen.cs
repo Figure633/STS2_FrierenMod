@@ -138,7 +138,7 @@ public sealed class MagicBookScreen
         _coveredOverlay = _currentOverlay();
         // 只暂时隐藏原生选牌屏，不移除它，也不完成或取消它的选择任务。
         _coveredOverlay?.AfterOverlayHidden();
-        if (_coveredOverlay != null) _status.Text = Text("BOOK_VIEW_ONLY");
+        if (!MagicPropCmd.AllowsUseOver(_coveredOverlay)) _status.Text = Text("BOOK_VIEW_ONLY");
         View.Show();
     }
     public void Close() { Cancel(); View.Hide(); }
@@ -318,7 +318,7 @@ public sealed class MagicBookScreen
     private void Arm(int id)
     {
         if (_applying) return;
-        if (_currentOverlay() != null) { _status.Text = Text("BOOK_VIEW_ONLY"); return; }
+        if (!MagicPropCmd.AllowsUseOver(_currentOverlay())) { _status.Text = Text("BOOK_VIEW_ONLY"); return; }
         if (_armed == id) { Cancel(); return; }
         if (!MagicPropCmd.CanUse(_player, id)) { _status.Text = Text("PROP_UNAVAILABLE"); return; }
         _armed = id; _selected.Clear();
