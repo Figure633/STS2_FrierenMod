@@ -7,7 +7,33 @@ namespace FrierenMod.Scripts.Cards;
 public sealed class LegendaryCraftChoice() : FrierenCard(0, CardType.Skill, CardRarity.Token, TargetType.Self, false)
 {
     public LegendaryEffect Effect { get; set; } = new("Cost", 0);
-    protected override string ArtName => nameof(SerieGrimoire);
+    // 一代 optionCards/SerieGrimoire 各选项的原始插画。
+    protected override string ArtName => Effect.Kind switch {
+        "Cost" => $"Cost{Effect.Amount}",
+        "Chant" => "ChantOption",
+        "ManaDraw" => "ManaInDrawOption",
+        "ManaHand" => "ManaInHandOption",
+        "ManaDiscard" => "ManaInDiscardOption",
+        "Scry" => "ScryOption",
+        "RandomCard" => "GainRandomCardOption",
+        "Retain" => "SelfRetainOption",
+        "ZeroCost" => "CostZeroOption",
+        "Block" => "BlockOption",
+        "Damage" => "DamageOption",
+        "DamageTriple" => "DamageThirdOption",
+        "DamageAll" => "DamageAllOption",
+        "Energy" => "EnergyOption",
+        "Execute" => "ExtinguishOption",
+        "Draw" => "DrawOption",
+        "Dexterity" => "DexterityOption",
+        "Vulnerable" => "VulnerableOption",
+        "Intangible" => "IntangibleOption",
+        "UpgradeHand" => "UpgradeOption",
+        "DoubleStrength" => "StrengthOption",
+        "RemoveDebuffs" => "RemoveDebuffOption",
+        "UpgradeAll" => "UpgradeAllOption",
+        _ => nameof(SerieGrimoire)
+    };
     protected override bool IsPlayable => false;
     public override int MaxUpgradeLevel => 0;
     protected override void AddExtraArgsToDescription(LocString description)
