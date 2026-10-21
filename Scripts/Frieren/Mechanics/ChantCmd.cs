@@ -64,14 +64,15 @@ public static class ChantCmd
         var self = play.Card.Owner.Creature;
         var free = self.GetPower<ChantWithoutManaPower>() == null ? self.GetPower<ChantWithoutManaTimesPower>() : null;
         var options = Options(play.Card.Owner, null);
-        foreach (var option in options) await Resolve(context, play, option);
+        bool fastAnimation = options.Sum(option => option.Cost) > 5;
+        foreach (var option in options) await Resolve(context, play, option, fastAnimation);
         if (free != null && options.Count > 0) await PowerCmd.Decrement(free);
     }
 
-    public static async Task Resolve(PlayerChoiceContext context, CardPlay play, ChantOption option)
+    public static async Task Resolve(PlayerChoiceContext context, CardPlay play, ChantOption option, bool fastAnimation = false)
     {
         var player = play.Card.Owner;
-        if (!await ManaCmd.Spend(context, player, option.Slot, option.Cost)) return;
+        if (!await ManaCmd.Spend(context, player, option.Slot, option.Cost, fastAnimation || option.Cost > 5)) return;
         await FactorEffects.Apply(context, play, option);
         var listeners = player.Creature.Powers.Cast<object>().Concat(player.PlayerCombatState!.AllPiles
             .Where(p => p.Type is PileType.Draw or PileType.Hand or PileType.Discard).SelectMany(p => p.Cards)).OfType<IChantListener>().ToArray();

@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using FrierenMod.Scripts.Powers;
+using FrierenMod.Scripts.Presentation;
 using MegaCrit.Sts2.Core.Models;
 
 namespace FrierenMod.Scripts.Mechanics;
@@ -35,11 +36,12 @@ public static class ManaCmd
         }
     }
 
-    public static async Task<bool> Spend(PlayerChoiceContext context, Player owner, ManaSlot slot, int count)
+    public static async Task<bool> Spend(PlayerChoiceContext context, Player owner, ManaSlot slot, int count, bool fastAnimation = false)
     {
         ArgumentOutOfRangeException.ThrowIfNegative(count);
         var cards = InPile(owner, Pile(slot)).Take(count).ToArray();
         if (cards.Length < count) return false;
+        using var animation = fastAnimation ? ManaExhaustAnimation.Begin(cards) : null;
         foreach (var card in cards) await CardCmd.Exhaust(context, card);
         return true;
     }

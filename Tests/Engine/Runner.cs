@@ -119,6 +119,10 @@ public partial class Runner : Node
                 GD.Print("CUSTOM_SPELL_DISPLAY_OK: " + await CustomSpellDisplayTests.Run());
                 await Finish(); return;
             }
+            if (OS.GetCmdlineUserArgs().Contains("--chant-animation-speed-only")) {
+                GD.Print("CHANT_ANIMATION_SPEED_OK: " + await ChantAnimationSpeedTests.Run(this));
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--starting-setup-only")) {
                 GD.Print("STARTING_SETUP_OK: " + await StartingSetupTests.Run(this));
                 await Finish(); return;
