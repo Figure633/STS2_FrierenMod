@@ -5,7 +5,8 @@ namespace FrierenMod.Core;
 public sealed record MagicItem(int InstanceId, string SpellId, int Slot = -1);
 public sealed record MagicProp(int InstanceId, string PropId);
 public sealed record MagicDeckSave(int Version, MagicItem[] Items, bool SetupCompleted = false,
-    int DraftSlot = 0, string[]? Draft = null, int RewardPity = 0, MagicProp[]? Props = null, int NextId = 0);
+    int DraftSlot = 0, string[]? Draft = null, int RewardPity = 0, MagicProp[]? Props = null, int NextId = 0,
+    bool StartingPropsGranted = false);
 
 // 使用实例 ID 区分同名因子；对象只属于单个玩家，存档采用值快照。
 public sealed class MagicDeckState
@@ -16,6 +17,7 @@ public sealed class MagicDeckState
     public IReadOnlyList<MagicItem> Items => _items.AsReadOnly();
     public IReadOnlyList<MagicProp> Props => _props.AsReadOnly();
     public bool SetupCompleted { get; private set; }
+    public bool StartingPropsGranted { get; private set; }
     public int DraftSlot { get; private set; }
     public string[] Draft { get; private set; } = [];
     public int RewardPity { get; set; }
@@ -38,6 +40,15 @@ public sealed class MagicDeckState
         Draft = [];
         DraftSlot++;
         SetupCompleted = DraftSlot == 3;
+    }
+
+    public bool GrantStartingProps()
+    {
+        if (!SetupCompleted || StartingPropsGranted) return false;
+        AddProp("UnbelievableTool");
+        AddProp("UnbelievableTool");
+        StartingPropsGranted = true;
+        return true;
     }
 
     public void Unequip(int instanceId)
@@ -101,7 +112,7 @@ public sealed class MagicDeckState
         return null;
     }
 
-    public string ToJson() => JsonSerializer.Serialize(new MagicDeckSave(3, [.. _items], SetupCompleted, DraftSlot, Draft, RewardPity, [.. _props], _nextId));
+    public string ToJson() => JsonSerializer.Serialize(new MagicDeckSave(3, [.. _items], SetupCompleted, DraftSlot, Draft, RewardPity, [.. _props], _nextId, StartingPropsGranted));
 
     public static MagicDeckState FromJson(string json)
     {
@@ -132,7 +143,8 @@ public sealed class MagicDeckState
         int nextId = checked(ids.DefaultIfEmpty(0).Max() + 1);
         if (save.NextId < 0 || (save.NextId > 0 && save.NextId < nextId)) throw new JsonException("魔法牌组编号计数无效。");
         var result = new MagicDeckState(save.Items) { SetupCompleted = save.SetupCompleted, DraftSlot = save.DraftSlot,
-            Draft = save.Draft ?? [], RewardPity = save.RewardPity, _nextId = Math.Max(nextId, save.NextId) };
+            Draft = save.Draft ?? [], RewardPity = save.RewardPity, _nextId = Math.Max(nextId, save.NextId),
+            StartingPropsGranted = save.StartingPropsGranted };
         result._props.AddRange(props);
         return result;
     }

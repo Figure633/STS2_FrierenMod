@@ -41,7 +41,8 @@ public sealed class HolyEmblem : CustomRelicModel
 
     public override async Task AfterActEntered()
     {
-        // EnterRoom 的钩子仍处在转场黑幕内；章节钩子在淡入完成后才运行。
+        // 外层新跑局/读档仍可能处于加载中；届时由界面在加载完成后继续。
+        if (MagicDeckCmd.SetupMustWait) return;
         await MagicDeckCmd.ChooseStartingFactors(new BlockingPlayerChoiceContext(), Owner);
     }
 
@@ -61,7 +62,7 @@ public sealed class HolyEmblem : CustomRelicModel
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext context, Player player)
     {
         if (player != Owner) return;
-        await MagicDeckCmd.ChooseStartingFactors(context, Owner);
+        if (!MagicDeckCmd.SetupMustWait) await MagicDeckCmd.ChooseStartingFactors(context, Owner);
         Flash();
         await ManaCmd.Generate(Owner, PileType.Draw, 1);
         await ManaCmd.Generate(Owner, PileType.Discard, 1);

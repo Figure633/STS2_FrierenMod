@@ -158,6 +158,7 @@ public static class MagicBookUi
             manaFill.Modulate = Enum.GetValues<ManaSlot>().Any(s => ManaCmd.InPile(player, ManaCmd.Pile(s)).Any()) ? Colors.White : new Color("777777");
             screen.Refresh();
             preview.Refresh();
+            if (!inputBlocked() && !book.Visible && !overlay) MagicDeckCmd.TryResumeStartingFactors(player);
         };
         root.AddChild(timer);
         if (root is NGlobalUi globalUi) {

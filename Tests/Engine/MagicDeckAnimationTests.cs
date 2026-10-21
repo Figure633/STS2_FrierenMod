@@ -47,7 +47,7 @@ public static class MagicDeckAnimationTests
         RunManager.Instance.SetUpTest(run, new NetSingleplayerGameService()); LocalContext.NetId = 1;
         run.PushRoom(new RestSiteRoom());
         var deck = MagicDeckState.FromJson(JsonSerializer.Serialize(new MagicDeckSave(3,
-            MagicDeckState.CreatePrototypeLoadout().Items.ToArray(), true, 3)));
+            MagicDeckState.CreatePrototypeLoadout().Items.ToArray(), true, 3, StartingPropsGranted: true)));
         int box = deck.AddProp("MysteryBox").InstanceId;
         int circle = deck.AddProp("TransmutationCircle").InstanceId;
         MagicDeckStore.Write(player, deck);

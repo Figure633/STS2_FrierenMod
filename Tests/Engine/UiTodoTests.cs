@@ -61,6 +61,8 @@ public static class UiTodoTests
             foreach (var card in pile.Cards.ToArray()) pile.RemoveInternal(card);
         var deck = new MagicDeckState();
         for (int i = 0; i < 3; i++) { deck.PrepareDraft(_ => 0); deck.SelectInitial(deck.Draft[0]); }
+        deck.GrantStartingProps();
+        foreach (var gift in deck.Props.ToArray()) deck.Remove(gift.InstanceId);
         foreach (var (slot, id) in new[] { (ManaSlot.Draw,"BuildUpBody"), (ManaSlot.Hand,"BarrierMagic"), (ManaSlot.Discard,"GreatMageComposure") })
             deck.Equip(deck.Add(id).InstanceId, slot);
         var prop = deck.AddProp("MysteryBox"); MagicDeckStore.Write(player, deck);

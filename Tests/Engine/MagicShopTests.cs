@@ -42,7 +42,7 @@ public static class MagicShopTests
         var selector = new TestCardSelector();
         using var selection = CardSelectCmd.UseSelector(selector);
         MagicDeckState Fresh() => MagicDeckState.FromJson(JsonSerializer.Serialize(new MagicDeckSave(3,
-            MagicDeckState.CreatePrototypeLoadout().Items.ToArray(), true, 3)));
+            MagicDeckState.CreatePrototypeLoadout().Items.ToArray(), true, 3, StartingPropsGranted: true)));
         int Prepare(string prop, params string[] extra) {
             var deck = Fresh(); foreach (string id in extra) deck.Add(id);
             int instance = deck.AddProp(prop).InstanceId; MagicDeckStore.Write(player, deck); return instance;
