@@ -12,6 +12,7 @@ using MegaCrit.Sts2.Core.Nodes.Pooling;
 using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using MegaCrit.Sts2.Core.Nodes.Cards;
 using MegaCrit.Sts2.Core.Nodes.Cards.Holders;
+using MegaCrit.Sts2.Core.Nodes.GodotExtensions;
 using MegaCrit.Sts2.Core.TestSupport;
 using MegaCrit.Sts2.Core.Nodes.Screens.Overlays;
 using MegaCrit.Sts2.Core.Nodes.Screens.Capstones;
@@ -28,6 +29,8 @@ public sealed class MagicBookScreen
     private readonly NCapstoneContainer? _capstone;
     private IOverlayScreen? _coveredOverlay;
     private readonly Control _equipped;
+    private readonly ScrollContainer _scroll;
+    private readonly Control _scrollContent;
     private readonly GridContainer _inventory;
     private readonly Label _status;
     private readonly NCardViewSortButton _raritySorter;
@@ -36,7 +39,8 @@ public sealed class MagicBookScreen
     private bool _sortByType;
     private readonly Dictionary<int, NGridCardHolder> _cards = [];
     private readonly List<int> _selected = [];
-    private readonly Dictionary<int, (NCardHolder.PressedEventHandler Press, NCardHolder.AltPressedEventHandler Alt)> _handlers = [];
+    private readonly Dictionary<int, (NCardHolder.PressedEventHandler Press, NCardHolder.AltPressedEventHandler Alt,
+        NClickableControl.FocusedEventHandler Focus)> _handlers = [];
     private int? _armed;
     private string _displayed = "";
     private bool _applying;
@@ -74,20 +78,26 @@ public sealed class MagicBookScreen
         }
         root.Resized += Resize;
         Resize();
+        _scroll = new ScrollContainer { Name = "InventoryScroll", Position = new(255, 115), Size = new(1410, 835),
+            HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled, VerticalScrollMode = ScrollContainer.ScrollMode.Auto };
+        _canvas.AddChild(_scroll);
+        _scrollContent = new Control { Name = "BookContents", SizeFlagsHorizontal = Control.SizeFlags.ExpandFill,
+            MouseFilter = Control.MouseFilterEnum.Ignore };
+        _scroll.AddChild(_scrollContent);
         _equipped = new Control { Name = "EquippedFactors", MouseFilter = Control.MouseFilterEnum.Ignore };
-        _canvas.AddChild(_equipped);
+        _scrollContent.AddChild(_equipped);
         for (int i = 0; i < 3; i++)
-            _canvas.AddChild(Caption(Text("SLOT." + (ManaSlot)i), 25, new(480 + i * 360, 117), new(240, 42)));
-        var divider = new ColorRect { Position = new(260, 510), Size = new(1400, 2),
+            _scrollContent.AddChild(Caption(Text("SLOT." + (ManaSlot)i), 25, new(225 + i * 360, 2), new(240, 42)));
+        var divider = new ColorRect { Position = new(5, 395), Size = new(1380, 2),
             Color = new Color("ab91686b"), MouseFilter = Control.MouseFilterEnum.Ignore };
-        _canvas.AddChild(divider);
-        _canvas.AddChild(Caption(Text("BOOK_INVENTORY"), 24, new(280, 520), new(480, 42)));
+        _scrollContent.AddChild(divider);
+        _scrollContent.AddChild(Caption(Text("BOOK_INVENTORY"), 24, new(25, 405), new(480, 42)));
         NCardViewSortButton Sorter(string name, string key, float x, bool byType) {
             var sorter = GD.Load<PackedScene>("res://scenes/screens/deck_view_screen/deck_view_sort_button.tscn")
                 .Instantiate<NCardViewSortButton>();
             sorter.Name = name;
-            _canvas.AddChild(sorter);
-            sorter.Position = new(x, 520); sorter.Size = new(240, 42);
+            _scrollContent.AddChild(sorter);
+            sorter.Position = new(x, 405); sorter.Size = new(240, 42);
             sorter.SetLabel(Text(key));
             sorter.Released += _ => {
                 if (_sortByType != byType) { _sortByType = byType; sorter.IsDescending = false; }
@@ -95,15 +105,15 @@ public sealed class MagicBookScreen
             };
             return sorter;
         }
-        _raritySorter = Sorter("RaritySorter", "SORT_RARITY", 900, false);
-        _typeSorter = Sorter("TypeSorter", "SORT_TYPE", 1160, true);
-        var scroll = new ScrollContainer { Name = "InventoryScroll", Position = new(255, 565), Size = new(1410, 385),
-            HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled, VerticalScrollMode = ScrollContainer.ScrollMode.Auto };
-        _canvas.AddChild(scroll);
-        _inventory = new GridContainer { Name = "Inventory", Columns = 5, SizeFlagsHorizontal = Control.SizeFlags.ExpandFill };
+        _raritySorter = Sorter("RaritySorter", "SORT_RARITY", 645, false);
+        _typeSorter = Sorter("TypeSorter", "SORT_TYPE", 905, true);
+        _inventory = new GridContainer { Name = "Inventory", Columns = 5 };
         _inventory.AddThemeConstantOverride("h_separation", 10);
-        _inventory.AddThemeConstantOverride("v_separation", 30);
-        scroll.AddChild(_inventory);
+        _inventory.AddThemeConstantOverride("v_separation", 12);
+        _scrollContent.AddChild(_inventory);
+        _inventory.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.TopWide);
+        _inventory.Position = new(0, 450);
+        _inventory.MinimumSizeChanged += UpdateScrollHeight;
         _status = Caption(Text("BOOK_HINT"), 23, new(330, 978), new(1260, 78));
         _status.Name = "BookStatus";
         _status.AutowrapMode = TextServer.AutowrapMode.WordSmart;
@@ -138,7 +148,7 @@ public sealed class MagicBookScreen
     public void Open()
     {
         if (View.Visible) return;
-        Cancel(); Populate();
+        Cancel(); Populate(resetScroll: true);
         _coveredOverlay = _currentOverlay();
         // 只暂时隐藏原生选牌屏，不移除它，也不完成或取消它的选择任务。
         if (_capstone == null) _coveredOverlay?.AfterOverlayHidden();
@@ -175,12 +185,10 @@ public sealed class MagicBookScreen
     {
         if (!View.IsVisibleInTree() || !View.CanProcess() || _applying) { _pointerPress = null; return false; }
         if (button.ButtonIndex is not (MouseButton.Left or MouseButton.Right)) return false;
-        var scroll = _inventory.GetParent<ScrollContainer>();
         bool Contains(Control control) => new Rect2(Vector2.Zero, control.Size).HasPoint(
             control.GetGlobalTransformWithCanvas().AffineInverse() * button.Position);
         var hit = _cards.Reverse().FirstOrDefault(pair => pair.Value.IsVisibleInTree() &&
-            Contains(pair.Value.Hitbox) &&
-            (!_inventory.IsAncestorOf(pair.Value) || Contains(scroll)));
+            Contains(pair.Value.Hitbox) && Contains(_scroll));
         if (hit.Value == null) { _pointerPress = null; return false; }
         if (button.Pressed) {
             _pointerPress = (hit.Key, button.ButtonIndex);
@@ -211,7 +219,8 @@ public sealed class MagicBookScreen
     {
         if (!View.IsVisibleInTree() || !_cards.TryGetValue(id, out var holder) || holder.CardNode is not { } card)
             return null;
-        return View.GetGlobalRect().HasPoint(card.GlobalPosition) &&
+        return new Rect2(Vector2.Zero, _scroll.Size).HasPoint(_scroll.GetGlobalTransform().AffineInverse() * card.GlobalPosition) &&
+            View.GetGlobalRect().HasPoint(card.GlobalPosition) &&
             View.GetViewportRect().HasPoint(card.GlobalPosition) ? (card.GlobalPosition, card.GetGlobalTransform().Scale) : null;
     }
 
@@ -245,6 +254,7 @@ public sealed class MagicBookScreen
                 var handlers = _handlers[id];
                 holder.Pressed -= handlers.Press;
                 holder.AltPressed -= handlers.Alt;
+                holder.Hitbox.Focused -= handlers.Focus;
                 if (holder.CardNode?.CardHighlight is { } highlight && GodotObject.IsInstanceValid(highlight)) {
                     highlight.AnimHideInstantly();
                     highlight.Modulate = NCardHighlight.playableColor;
@@ -257,17 +267,25 @@ public sealed class MagicBookScreen
         _handlers.Clear();
     }
 
-    private void Populate()
+    private void UpdateScrollHeight()
     {
+        var minimum = _inventory.GetCombinedMinimumSize();
+        _inventory.OffsetBottom = _inventory.OffsetTop + minimum.Y;
+        _scrollContent.CustomMinimumSize = new(1390, 450 + minimum.Y);
+    }
+
+    private void Populate(bool resetScroll = false)
+    {
+        int scrollPosition = resetScroll ? 0 : _scroll.ScrollVertical;
         ReleaseCards();
         _inventorySortKeys.Clear();
         foreach (var node in _equipped.GetChildren().Concat(_inventory.GetChildren())) { node.GetParent().RemoveChild(node); node.QueueFree(); }
         _cards.Clear();
         var deck = MagicDeckStore.Read(_player);
         void Add(CardModel model, int id, int slot, bool prop) {
-            var cell = new Control { Name = "Item_" + id, CustomMinimumSize = new(270, 385), MouseFilter = Control.MouseFilterEnum.Pass };
+            var cell = new Control { Name = "Item_" + id, CustomMinimumSize = new(270, slot >= 0 ? 385 : 270), MouseFilter = Control.MouseFilterEnum.Pass };
             if (slot >= 0) {
-                cell.Position = new(465 + slot * 360, 160);
+                cell.Position = new(210 + slot * 360, 45);
                 _equipped.AddChild(cell);
             } else {
                 _inventory.AddChild(cell);
@@ -278,7 +296,7 @@ public sealed class MagicBookScreen
                 _inventorySortKeys.Add(id, (rarity, prop ? -1 : 3));
             }
             // 原生卡牌悬停会从 0.8 放大到 1；父层统一缩放，预留边界避免裁切。
-            var scaleRoot = new Control { Scale = Vector2.One * 0.9f, Position = new(135, slot >= 0 ? 172 : 192),
+            var scaleRoot = new Control { Scale = Vector2.One * (slot >= 0 ? 0.9f : 0.75f), Position = new(135, slot >= 0 ? 172 : 135),
                 MouseFilter = Control.MouseFilterEnum.Ignore };
             cell.AddChild(scaleRoot);
             var holder = CreateHolder(model);
@@ -287,9 +305,15 @@ public sealed class MagicBookScreen
             holder.CardNode!.UpdateVisuals(PileType.None, CardPreviewMode.Normal);
             NCardHolder.PressedEventHandler press = _ => Select(id);
             NCardHolder.AltPressedEventHandler alt = _ => { if (prop) Arm(id); };
+            NClickableControl.FocusedEventHandler focus = _ => Callable.From(() => {
+                if (GodotObject.IsInstanceValid(holder) && GodotObject.IsInstanceValid(_scroll) &&
+                    holder.IsInsideTree() && _scroll.IsVisibleInTree() && _scroll.IsAncestorOf(holder))
+                    _scroll.EnsureControlVisible(holder.Hitbox);
+            }).CallDeferred();
             holder.Pressed += press;
             holder.AltPressed += alt;
-            _handlers.Add(id, (press, alt));
+            holder.Hitbox.Focused += focus;
+            _handlers.Add(id, (press, alt, focus));
             _cards.Add(id, holder);
         }
         foreach (var item in deck.Items.OrderBy(i => i.Slot < 0 ? 3 : i.Slot)) {
@@ -306,6 +330,8 @@ public sealed class MagicBookScreen
         _displayed = deck.ToJson();
         SortInventory();
         RefreshSelection();
+        UpdateScrollHeight();
+        _scroll.SetDeferred(ScrollContainer.PropertyName.ScrollVertical, scrollPosition);
     }
 
     private void SortInventory()

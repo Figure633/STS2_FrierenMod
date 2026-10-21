@@ -99,6 +99,10 @@ public partial class Runner : Node
                 GD.Print("PROP_CANCEL_OK: " + await MagicBookSelectionTests.Run(this));
                 await Finish(); return;
             }
+            if (OS.GetCmdlineUserArgs().Contains("--book-scrolling-only")) {
+                GD.Print("BOOK_SCROLLING_OK: " + await MagicBookScrollingTests.Run(this));
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--magicbook-animations-only")) {
                 GD.Print("MAGICBOOK_ANIMATIONS_OK: " + await MagicDeckAnimationTests.Run(this));
                 await Finish(); return;
