@@ -16,6 +16,8 @@ namespace FrierenMod.Scripts.Cards;
 
 public sealed class ApexMagic() : FrierenCard(0, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies)
 {
+    protected override bool ShouldGlowGoldInternal => CombatState != null &&
+        new[] { PileType.Draw, PileType.Hand, PileType.Discard }.All(p => ManaCmd.InPile(Owner, p).Count() == 4);
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         if (new[] { PileType.Draw, PileType.Hand, PileType.Discard }.All(p => ManaCmd.InPile(Owner, p).Count() == 4))

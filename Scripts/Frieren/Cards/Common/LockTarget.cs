@@ -16,6 +16,8 @@ namespace FrierenMod.Scripts.Cards;
 
 public sealed class LockTarget() : FrierenCard(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
 {
+    protected override bool ShouldGlowGoldInternal => CombatState != null &&
+        ManaCmd.InPile(Owner, PileType.Draw).Count() >= ManaCmd.InPile(Owner, PileType.Discard).Count();
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(8, ValueProp.Move),
         new CalculationBaseVar(0), new CalculationExtraVar(1),
         new CalculatedVar("CalculatedHits").WithMultiplier((card, _) =>

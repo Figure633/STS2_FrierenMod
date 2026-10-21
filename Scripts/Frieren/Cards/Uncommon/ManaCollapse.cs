@@ -16,6 +16,8 @@ namespace FrierenMod.Scripts.Cards;
 
 public sealed class ManaCollapse() : FrierenCard(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
 {
+    protected override bool ShouldGlowGoldInternal => CombatState != null && CombatManager.Instance.History.CardPlaysStarted
+        .Count(e => e.Actor == Owner.Creature && e.HappenedThisTurn(CombatState)) < 10;
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(9, ValueProp.Move)];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {

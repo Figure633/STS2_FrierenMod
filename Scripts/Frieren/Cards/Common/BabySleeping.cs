@@ -16,6 +16,7 @@ namespace FrierenMod.Scripts.Cards;
 
 public sealed class BabySleeping() : FrierenCard(1, CardType.Skill, CardRarity.Common, TargetType.Self)
 {
+    protected override bool ShouldGlowGoldInternal => CombatState != null && !ManaCmd.InPile(Owner, PileType.Discard).Any();
     protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(7, ValueProp.Move)];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
