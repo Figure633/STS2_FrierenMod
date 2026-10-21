@@ -101,6 +101,13 @@ public static class MagicBookUi
         hud.MouseExited += preview.Hide;
         var screen = new MagicBookScreen(root, player, currentOverlay);
         var book = screen.View;
+        var animations = new Control { Name = "FrierenMagicDeckAnimations", ZIndex = 101,
+            MouseFilter = Control.MouseFilterEnum.Ignore,
+            MouseBehaviorRecursive = Control.MouseBehaviorRecursiveEnum.Disabled,
+            FocusBehaviorRecursive = Control.FocusBehaviorRecursiveEnum.Disabled };
+        root.AddChild(animations);
+        animations.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
+        MagicDeckAnimations.Bind(player, animations, toggle, screen);
         book.VisibilityChanged += () => {
             toggle.SetBookOpen(book.Visible);
             backdrop.Visible = book.Visible;
@@ -155,7 +162,7 @@ public static class MagicBookUi
         root.AddChild(timer);
         if (root is NGlobalUi globalUi) {
             // 因子查看位于选牌层之上、原生菜单遮罩之下，暂停时自然变暗且不会挡住菜单。
-            foreach (var view in new[] { hud, root.GetNode<Control>("FrierenFactorPreview"), backdrop, book }) {
+            foreach (var view in new[] { hud, root.GetNode<Control>("FrierenFactorPreview"), backdrop, book, animations }) {
                 view.ZIndex = 0; view.ZAsRelative = true;
                 root.MoveChild(view, globalUi.CapstoneContainer.GetIndex());
             }

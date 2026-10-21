@@ -21,5 +21,10 @@ public static class MagicDeckStore
         return MagicDeckState.FromJson(json);
     }
 
-    public static void Write(Player player, MagicDeckState deck) => Data.Set(player, deck.ToJson());
+    public static void Write(Player player, MagicDeckState deck, int? usedProp = null)
+    {
+        var before = UI.MagicDeckAnimations.IsAttached(player) ? Read(player) : null;
+        Data.Set(player, deck.ToJson());
+        if (before != null) UI.MagicDeckAnimations.Changed(player, before, deck, usedProp);
+    }
 }

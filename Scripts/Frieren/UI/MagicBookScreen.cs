@@ -195,6 +195,14 @@ public sealed class MagicBookScreen
         if (_armed.HasValue && !_applying && !MagicPropCmd.CanUse(_player, _armed.Value)) Cancel();
     }
 
+    internal (Vector2 Position, Vector2 Scale)? AnimationPose(int id)
+    {
+        if (!View.IsVisibleInTree() || !_cards.TryGetValue(id, out var holder) || holder.CardNode is not { } card)
+            return null;
+        return View.GetGlobalRect().HasPoint(card.GlobalPosition) &&
+            View.GetViewportRect().HasPoint(card.GlobalPosition) ? (card.GlobalPosition, card.GetGlobalTransform().Scale) : null;
+    }
+
     internal static NCard CreateCard(CardModel model)
     {
         if (!TestMode.IsOn) return NCard.Create(model)!;
