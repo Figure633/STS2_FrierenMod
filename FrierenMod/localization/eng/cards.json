@@ -181,7 +181,7 @@
   "FRIERENMOD-FIRE_SPELL.title": "Fire Blast",
   "FRIERENMOD-FIRE_SPELL.description": "For each enemy, add {Upgraded:cond:an upgraded|a} Little Fire to your hand.",
   "FRIERENMOD-FIVE_MINUTES_MORE.title": "Five More Minutes",
-  "FRIERENMOD-FIVE_MINUTES_MORE.description": "Gain 2 Energy. Add a Laziness to your {Upgraded:cond:hand|draw pile}.",
+  "FRIERENMOD-FIVE_MINUTES_MORE.description": "Gain {Energy:energyIcons()}. Add a Laziness to your {Upgraded:cond:hand|draw pile}.",
   "FRIERENMOD-FLYING_MAGIC.title": "Flight Magic",
   "FRIERENMOD-FLYING_MAGIC.description": "Gain 3 Intangible. At the end of your turn, [gold]Exhaust[/gold] {Amount:diff()} [gold]Mana[/gold] from your discard pile.",
   "FRIERENMOD-VIOLENT_EXORCISM.title": "Violent Exorcism",

@@ -59,6 +59,9 @@ def main():
     copy(RES / "img/UI/campfire/buyProp.png", ROOT / "FrierenMod/images/ui/buy_prop.png")
     for name in ["layer1", "layer2", "layer3", "layer4", "layer1d", "layer2d", "layer3d", "vfx"]:
         copy(RES / f"img/UI/orb/Frieren/{name}.png", ROOT / f"FrierenMod/images/energy/{name}.png")
+    # 沿用一代卡牌费用与正文的小能量徽记；底部能量球的红色旋转层直接引用二代原版。
+    for source, target in [("card_orb", "card_icon"), ("small_orb", "text_icon")]:
+        copy(RES / f"img/cardStyles/Frieren/orb/{source}.png", ROOT / f"FrierenMod/images/energy/{target}.png")
     # 仅迁入当前芙莉莲玩法有播放入口的音频；不混入菲伦、未实现事件和旧主菜单。
     tracks = ["STS_Level1_NewMix_v1.mp3", "STS_Level1-2_v2.mp3", "STS_Level2_NewMix_v1.mp3",
               "STS_Level2-2_v2.mp3", "STS_Level3_v2.mp3", "STS_Level3-2_v2.mp3",

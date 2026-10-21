@@ -23,6 +23,6 @@ public sealed class EarAccessory : FrierenRelic
     public override async Task BeforeHandDraw(Player player, PlayerChoiceContext context, ICombatState combatState)
     {
         if (player != Owner || player.PlayerCombatState!.TurnNumber != 1) return;
-        Flash(); await ManaCmd.Generate(Owner, PileType.Hand, 2, fastAnimation: true);
+        Flash(); await ManaCmd.Generate(Owner, PileType.Hand, 2);
     }
 }

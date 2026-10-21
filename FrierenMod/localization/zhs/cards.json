@@ -181,7 +181,7 @@
   "FRIERENMOD-FIRE_SPELL.title": "放出火焰的魔法",
   "FRIERENMOD-FIRE_SPELL.description": "当前每有一个敌人，将一张{Upgraded:cond:升级的|}小小火焰加入手牌。",
   "FRIERENMOD-FIVE_MINUTES_MORE.title": "再睡五分钟",
-  "FRIERENMOD-FIVE_MINUTES_MORE.description": "获得2点能量。将一张懒懒散散{Upgraded:cond:加入手牌|随机加入抽牌堆}。",
+  "FRIERENMOD-FIVE_MINUTES_MORE.description": "获得{Energy:energyIcons()}。将一张懒懒散散{Upgraded:cond:加入手牌|随机加入抽牌堆}。",
   "FRIERENMOD-FLYING_MAGIC.title": "飞行魔法",
   "FRIERENMOD-FLYING_MAGIC.description": "获得3层无实体。每回合结束时，[gold]消耗[/gold]弃牌堆的{Amount:diff()}张[gold]魔力[/gold]。",
   "FRIERENMOD-VIOLENT_EXORCISM.title": "物理超度",

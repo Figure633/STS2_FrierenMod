@@ -116,14 +116,14 @@ public static class ChantAnimationSpeedTests
             }
             Reset(); var ear = await RelicCmd.Obtain<EarAccessory>(player);
             await ear.BeforeHandDraw(player, context, combat);
-            Check(Generated.Count == 2 && Generated.All(e => Math.Abs(e.Step - 0.2) < 0.0001) && ManaCmd.InPile(player, PileType.Hand).Count() == 2,
-                "耳饰两张魔力沿原生生成入口入手，补间两倍速");
+            Check(Generated.Count == 2 && Generated.All(e => Math.Abs(e.Step - 0.1) < 0.0001) && ManaCmd.InPile(player, PileType.Hand).Count() == 2,
+                "耳饰两张魔力沿原生生成入口入手，补间保持原速");
             Check(Generated.All(e => Math.Abs(Step(e.Card) - 0.1) < 0.0001), "生成完成后清理加速标记");
             await ear.BeforeHandDraw(Player.CreateForNewRun<Frieren>(UnlockState.all, 2), context, combat);
             Check(Generated.Count == 2, "其他玩家的抽牌阶段不触发耳饰");
             Reset(); await Mana(PileType.Hand, CardPile.MaxCardsInHand);
             await ear.BeforeHandDraw(player, context, combat);
-            Check(Generated.Count == 2 && Generated.All(e => Math.Abs(e.Step - 0.2) < 0.0001) &&
+            Check(Generated.Count == 2 && Generated.All(e => Math.Abs(e.Step - 0.1) < 0.0001) &&
                 ManaCmd.InPile(player, PileType.Hand).Count() == CardPile.MaxCardsInHand && ManaCmd.InPile(player, PileType.Discard).Count() == 2,
                 "满手牌按原生规则溢出两张至弃牌堆");
             Reset(); await ManaCmd.Generate(player, PileType.Hand, 2);

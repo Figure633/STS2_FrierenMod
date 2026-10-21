@@ -2,7 +2,12 @@ extends SceneTree
 
 func _initialize():
 	var args = OS.get_cmdline_user_args()
-	if args.size() != 1 or not ProjectSettings.load_resource_pack(args[0], true):
+	# 场景直接引用原版能量纹理，检查时先挂载游戏资源，再挂载模组。
+	if args.size() == 2 and not ProjectSettings.load_resource_pack(args[1], true):
+		push_error("Cannot mount game PCK")
+		quit(1)
+		return
+	if args.size() < 1 or args.size() > 2 or not ProjectSettings.load_resource_pack(args[0], true):
 		push_error("Cannot mount PCK")
 		quit(1)
 		return

@@ -16,9 +16,13 @@ namespace FrierenMod.Scripts.Cards;
 
 public sealed class FiveMinutesMore() : FrierenCard(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
 {
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new EnergyVar(2)];
+    protected override IEnumerable<MegaCrit.Sts2.Core.HoverTips.IHoverTip> ExtraHoverTips =>
+        base.ExtraHoverTips.Append(EnergyHoverTip);
+
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
-        await PlayerCmd.GainEnergy(2, Owner);
+        await PlayerCmd.GainEnergy(DynamicVars.Energy.IntValue, Owner);
         await CardFlowCmd.Generate<Laziness>(Owner, IsUpgraded ? PileType.Hand : PileType.Draw);
     }
 }
