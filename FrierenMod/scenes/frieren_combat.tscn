@@ -577,8 +577,8 @@ polygons = [PackedInt32Array(18, 15, 16), PackedInt32Array(14, 12, 13), PackedIn
 
 [node name="Corpse" type="Sprite2D" parent="Visuals"]
 visible = false
-position = Vector2(-36, -113)
-scale = Vector2(0.42, 0.42)
+position = Vector2(-64, -185)
+scale = Vector2(0.75, 0.75)
 texture = ExtResource("2")
 [node name="Bounds" type="Control" parent="."]
 unique_name_in_owner = true

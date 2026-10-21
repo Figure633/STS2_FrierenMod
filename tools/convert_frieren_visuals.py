@@ -200,10 +200,11 @@ polygon = {vector_array(mesh['frames'][0])}
 uv = {vector_array(mesh['uv'])}
 polygons = [{triangles}]
 ''')
+    # 原图可见区域为 (175, 347)-(752, 515)，按可见区域居中并将底边对齐地面。
     content.append('''[node name="Corpse" type="Sprite2D" parent="Visuals"]
 visible = false
-position = Vector2(-36, -113)
-scale = Vector2(0.42, 0.42)
+position = Vector2(-64, -185)
+scale = Vector2(0.75, 0.75)
 texture = ExtResource("2")
 [node name="Bounds" type="Control" parent="."]
 unique_name_in_owner = true
