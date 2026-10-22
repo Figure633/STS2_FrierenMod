@@ -71,7 +71,7 @@ public abstract class FactorCard() : FrierenCard(-1, CardType.Skill, CardRarity.
         effect.Add("Cost", Option?.Cost ?? 0);
         if (Option.HasValue && SpellCatalog.Get(FactorId).Puzzle)
         {
-            // 一代战斗卡面只提示当前槽位的符号，不揭示解法。
+            // 咏唱时保留文字碎片，并提示当前槽位的符号。
             ManaSlot clueSlot = FactorId switch {
                 nameof(Factor100) => ManaSlot.Draw,
                 nameof(Factor010) => ManaSlot.Hand,

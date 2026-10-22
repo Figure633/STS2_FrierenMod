@@ -145,6 +145,17 @@ public static class ChantSelectionTests
             holder.Pressed += h => AccessTools.Method(typeof(NChooseACardSelectionScreen), "SelectHolder").Invoke(selection, [h]);
         }
         var completion = (TaskCompletionSource<IEnumerable<CardModel>>)AccessTools.Field(typeof(NChooseACardSelectionScreen), "_completionSource").GetValue(selection)!;
+        var rareOption = FactorCard.Create(player, "Factor001", ManaSlot.Discard, new(ManaSlot.Discard, "Factor001", 1, 6, 1));
+        var rareHolder = Holder(rareOption, new(1600, 1400));
+        rareHolder.CardNode!.ActivateRewardScreenGlow();
+        Check(rareHolder.CardNode.CardHighlight.Modulate != NCardHighlight.gold &&
+            !rareHolder.CardNode.GetNode<GpuParticles2D>("CardContainer/CardSparkles").Visible,
+            "咏唱稀有因子不触发原版奖励金光和闪点");
+        var rareReward = Holder(FactorCard.Create(player, "Factor001"), new(1600, 1800));
+        rareReward.CardNode!.ActivateRewardScreenGlow();
+        Check(rareReward.CardNode.CardHighlight.Modulate == NCardHighlight.gold &&
+            rareReward.CardNode.GetNode<GpuParticles2D>("CardContainer/CardSparkles").Visible,
+            "普通获得稀有因子时仍保留原版奖励金光");
         await Tick();
         foreach (string lang in new[] { "zhs", "eng" }) {
             LocManager.Instance.SetLanguage(lang);

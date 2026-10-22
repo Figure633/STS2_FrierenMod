@@ -139,6 +139,13 @@ public partial class Runner : Node
                 GD.Print("SYNCHRO_DISPLAY_OK: " + await SynchroDisplayTests.Run(this));
                 await Finish(); return;
             }
+            if (OS.GetCmdlineUserArgs().Contains("--puzzle-display-only")) {
+                var puzzlePlayer = MegaCrit.Sts2.Core.Entities.Players.Player.CreateForNewRun<FrierenMod.Scripts.Characters.Frieren>(MegaCrit.Sts2.Core.Unlocks.UnlockState.all, 1);
+                var puzzleRun = MegaCrit.Sts2.Core.Runs.RunState.CreateForTest([puzzlePlayer], seed: "PUZZLE-DISPLAY");
+                MegaCrit.Sts2.Core.Runs.RunManager.Instance.SetUpTest(puzzleRun, new MegaCrit.Sts2.Core.Multiplayer.NetSingleplayerGameService());
+                GD.Print("PUZZLE_DISPLAY_OK: " + PuzzlePresentationTests.Run(puzzlePlayer));
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--chant-selection-only")) {
                 GD.Print("CHANT_SELECTION_OK: " + await ChantSelectionTests.Run(this));
                 await Finish(); return;

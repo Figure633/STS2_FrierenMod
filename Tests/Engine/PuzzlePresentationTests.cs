@@ -10,7 +10,7 @@ using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using System.Text.RegularExpressions;
 
-// 谜题只保留一代的碎片与符号，奖励、库存、装载、咏唱和状态浮窗均不能直接给出答案。
+// 谜题只保留一代的碎片与符号，咏唱同样显示碎片与槽位符号，浮窗仍不直接给出答案。
 public static class PuzzlePresentationTests
 {
     public static int Run(Player player)
@@ -39,7 +39,7 @@ public static class PuzzlePresentationTests
                             ? option.Slot == clue.Slot ? "！" : "？"
                             : option.Slot == clue.Slot ? "@" : "?";
                         string cost = language == "zhs" ? $"消耗{option.Cost}张魔力" : $"Consume {option.Cost} Mana";
-                        if (text.Split('\n').Last().Trim() != mark || !text.Contains(cost) || text.Contains(fragment))
+                        if (text.Split('\n').Last().Trim() != mark || !text.Contains(cost) || !text.Contains(fragment))
                             throw new Exception($"谜题咏唱未保留费用与槽位符号：{language}/{card.FactorId}/{option.Slot}: {text}");
                     }
                     else if (!text.Contains(fragment) || !text.Contains(language == "zhs" ? "咏唱 " +
@@ -73,7 +73,7 @@ public static class PuzzlePresentationTests
                     throw new Exception($"谜题状态丢失一代碎片：{language}/{amount}");
                 states++;
             }
-            GD.Print($"PASS {language} 谜题呈现：{states} 个奖励/库存/装载/咏唱/状态场景，仅保留一代线索与费用");
+            GD.Print($"PASS {language} 谜题呈现：{states} 个奖励/库存/装载/咏唱/状态场景，显示线索与费用，咏唱保留文字和符号");
         }
         return 2;
     }

@@ -5,6 +5,8 @@ using HarmonyLib;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Cards.Holders;
+using MegaCrit.Sts2.Core.Nodes.Cards;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using MegaCrit.Sts2.Core.Nodes.Screens.CardSelection;
 
@@ -23,6 +25,12 @@ public static class ChantSelectionPresentation
         foreach (var holder in __instance.GetNode<Control>("CardRow").GetChildren().OfType<NGridCardHolder>())
             Decorate(holder);
     }
+
+    // 原版选择界面沿用了奖励稀有金光；咏唱只是发动已装载的因子。
+    [HarmonyPatch(typeof(NCard), nameof(NCard.ActivateRewardScreenGlow))]
+    [HarmonyPrefix]
+    private static bool RewardGlow(NCard __instance) =>
+        __instance.Model is not FactorCard { Option: not null, Rarity: CardRarity.Rare };
 
     public static void Decorate(NGridCardHolder holder)
     {
