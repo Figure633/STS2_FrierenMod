@@ -140,9 +140,10 @@ static class CombatTests
 
         await Reset(); CompleteDeck("Factor100", "Factor010", "Factor001");
         foreach (var slot in Enum.GetValues<ManaSlot>()) await ManaCmd.Generate(player, ManaCmd.Pile(slot), 8);
-        foreach (var option in ChantCmd.Options(player, 1)) await ChantCmd.Resolve(context, play, option);
-        Check(Power<PuzzlePower>() == 3, "因子序列无法完成");
-        Pass("三个谜题因子在对应槽位按顺序累积进度");
+        // 第三段现在会进入原生胜利清理，由独立 PuzzleResolutionTests 完整验证。
+        foreach (var option in ChantCmd.Options(player, 1).Take(2)) await ChantCmd.Resolve(context, play, option);
+        Check(Power<PuzzlePower>() == 2 && enemy.IsAlive, "谜题前两段进度异常");
+        Pass("谜题前两段在对应槽位按顺序累积进度");
 
         await Reset(); CompleteDeck("BuildUpBody", "HighSpeedMovement", "AdvancedDefensiveMagic");
         await PowerCmd.Apply<ConcentrationPower>(context, player.Creature, 2, player.Creature, null);
