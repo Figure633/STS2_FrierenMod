@@ -2136,22 +2136,6 @@
     "modified": false
   },
   {
-    "file": "FrierenMod/images/potions/DissolveClothPotion.png",
-    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/potions/DissolveClothPotion.png",
-    "source_commit": null,
-    "source_kind": "local_author_assets",
-    "sha256": "9eeb35ed7f105d8bccde99bc7ac88bb643405cde80664b9f00fc17c0e0017802",
-    "modified": false
-  },
-  {
-    "file": "FrierenMod/images/potions/DissolveClothPotionOutline.png",
-    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/potions/DissolveClothPotion.png",
-    "source_commit": null,
-    "source_kind": "local_author_assets",
-    "sha256": "ac126871113edf155d692147add0ef9ed749813e19760309f3a4cbf991547c43",
-    "modified": true
-  },
-  {
     "file": "FrierenMod/images/powers/Factor100Power.png",
     "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/powers/Factor100Power_84.png",
     "source_commit": null,
@@ -2174,5 +2158,68 @@
     "source_kind": "local_author_assets",
     "sha256": "db3ae6fd3dcd477538e71d0f7688aadc2b42e350d0b79d0b963504e392374c63",
     "modified": false
+  },
+  {
+    "file": "FrierenMod/images/potions/BottledMana.png",
+    "source": "generated: BottledMana",
+    "sha256": "b5de31847baa35d873391f4f2aa37b1b0e58c7a1ef8df2a4071ab2b147780fa9",
+    "modified": true,
+    "generation_manifest": "docs/generated_assets.json"
+  },
+  {
+    "file": "FrierenMod/images/potions/BottledManaOutline.png",
+    "source": "generated: BottledMana",
+    "sha256": "582d5a84b5163444f793e542fcf99da4279a885d126fe54b10d9b45c7bb4109d",
+    "modified": true,
+    "generation_manifest": "docs/generated_assets.json"
+  },
+  {
+    "file": "FrierenMod/images/potions/BottledManaLarge.png",
+    "source": "generated: BottledMana",
+    "sha256": "1d3b6166d97c721668952e70449eaec343a4b43a8e7081fda9438ad41a62b341",
+    "modified": true,
+    "generation_manifest": "docs/generated_assets.json"
+  },
+  {
+    "file": "FrierenMod/images/potions/EmperorWine.png",
+    "source": "generated: EmperorWine",
+    "sha256": "0e6ea9975bb897b016f0f2ec165b46df63944cb203a19cdc2e6430890dfa010d",
+    "modified": true,
+    "generation_manifest": "docs/generated_assets.json"
+  },
+  {
+    "file": "FrierenMod/images/potions/EmperorWineOutline.png",
+    "source": "generated: EmperorWine",
+    "sha256": "2fedd696cf395dd6b565a98d172c64603ce3ee31e76ed8d0295b1845d65d510a",
+    "modified": true,
+    "generation_manifest": "docs/generated_assets.json"
+  },
+  {
+    "file": "FrierenMod/images/potions/EmperorWineLarge.png",
+    "source": "generated: EmperorWine",
+    "sha256": "4caf0b5e02d9a0525d4d2d63f769ec96012f996ccff715ee4907021d3220fae5",
+    "modified": true,
+    "generation_manifest": "docs/generated_assets.json"
+  },
+  {
+    "file": "FrierenMod/images/potions/DissolveClothPotion.png",
+    "source": "generated: DissolveClothPotion",
+    "sha256": "343c60c033a704d2dd93fa91544ea99fbe8a9b4240de5c1bdb012e18e38dbc51",
+    "modified": true,
+    "generation_manifest": "docs/generated_assets.json"
+  },
+  {
+    "file": "FrierenMod/images/potions/DissolveClothPotionOutline.png",
+    "source": "generated: DissolveClothPotion",
+    "sha256": "8965963b9b5534d15b3acfd475528450a2e70a2a521aa9f825ee1b1e82439dea",
+    "modified": true,
+    "generation_manifest": "docs/generated_assets.json"
+  },
+  {
+    "file": "FrierenMod/images/potions/DissolveClothPotionLarge.png",
+    "source": "generated: DissolveClothPotion",
+    "sha256": "a185aa005afb347175b85d7242c4f7baba4060a18d72b605dc891e2de6f18901",
+    "modified": true,
+    "generation_manifest": "docs/generated_assets.json"
   }
 ]

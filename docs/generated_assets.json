@@ -26,6 +26,45 @@
       "source": "image_gen output exec-d4364898-82ce-4934-8dd9-38b86d76ad97.png; processed game asset is stored at target.",
       "target": "FrierenMod/images/character/map_marker_sts2.png",
       "sha256": "5c6e4ed21ffb3ba38f6b453442f3510e443ad3200ca5a25e6e3223efdb7810d3"
+    },
+    {
+      "key": "BottledMana",
+      "date": "2026-10-22",
+      "prompt": "Use case: stylized-concept. Asset type: final tiny potion UI icon for a Slay the Spire 2 mod. Draw ONE isolated full bottle, centered upright, silhouette filling 78% of square canvas. Hand-painted 2D fantasy game inventory art, thick dark brown contour, angular simple glass facets, restrained highlights, few large readable color shapes, readable at 64px. Genuine transparent alpha background, no ground shadow, no scenery, no text, no frame, no particles or glow outside bottle. Subject: a distinctive faceted teardrop flask, narrow short neck with cork and small silver collar, filled with saturated cyan-blue liquid, one simple white four-point star mark on front. Slightly asymmetric elven magical design; recognizable blue mana potion, avoid round sphere or classic heart bottle.",
+      "transparent_background": true,
+      "source": "built-in image_gen",
+      "targets": [
+        "FrierenMod/images/potions/BottledMana.png",
+        "FrierenMod/images/potions/BottledManaOutline.png",
+        "FrierenMod/images/potions/BottledManaLarge.png"
+      ],
+      "processing": "Godot Image Lanczos resize to native 80px and large 256px; outline from BitMap alpha dilation by 2px; generated alpha retained."
+    },
+    {
+      "key": "EmperorWine",
+      "date": "2026-10-22",
+      "prompt": "Use case: stylized-concept. Asset type: final tiny potion UI icon for a Slay the Spire 2 mod. Draw ONE isolated full bottle, centered upright, silhouette filling 78% of square canvas. Hand-painted 2D fantasy game inventory art, thick dark brown contour, angular simple glass facets, restrained highlights, few large readable color shapes, readable at 64px. Genuine transparent alpha background, no ground shadow, no scenery, no text, no frame, no particles or glow outside bottle. Subject: a regal squat hexagonal decanter, broad flat shoulders, short narrow neck, burgundy wax stopper, thin antique gold collar and a single simple gold sun seal, filled with rich amber-red wine. Strong broad silhouette, elegant rather than ornate, no letters, no crown sticking out.",
+      "transparent_background": true,
+      "source": "built-in image_gen",
+      "targets": [
+        "FrierenMod/images/potions/EmperorWine.png",
+        "FrierenMod/images/potions/EmperorWineOutline.png",
+        "FrierenMod/images/potions/EmperorWineLarge.png"
+      ],
+      "processing": "Godot Image Lanczos resize to native 80px and large 256px; outline from BitMap alpha dilation by 2px; generated alpha retained."
+    },
+    {
+      "key": "DissolveClothPotion",
+      "date": "2026-10-22",
+      "prompt": "Use case: stylized-concept. Asset type: final tiny potion UI icon for a Slay the Spire 2 mod. Draw ONE isolated full bottle, centered upright, silhouette filling 78% of square canvas. Hand-painted 2D fantasy game inventory art, thick dark brown contour, angular simple glass facets, restrained highlights, few large readable color shapes, readable at 64px. Genuine transparent alpha background, no ground shadow, no scenery, no text, no frame, no particles or glow outside bottle. Subject: a tilted-shoulder angular triangular flask, small stopper wrapped in a scrap of cream fabric, violet-magenta liquid with one pale acid bubble inside, clear chunky glass highlights. A tiny tattered fabric strip attached at neck, compact within bottle silhouette. Readable dissolving-cloth fantasy potion, no skull or text.",
+      "transparent_background": true,
+      "source": "built-in image_gen",
+      "targets": [
+        "FrierenMod/images/potions/DissolveClothPotion.png",
+        "FrierenMod/images/potions/DissolveClothPotionOutline.png",
+        "FrierenMod/images/potions/DissolveClothPotionLarge.png"
+      ],
+      "processing": "Godot Image Lanczos resize to native 80px and large 256px; outline from BitMap alpha dilation by 2px; generated alpha retained."
     }
   ]
 }
