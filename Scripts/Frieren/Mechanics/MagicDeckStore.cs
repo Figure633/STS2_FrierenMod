@@ -1,6 +1,7 @@
 using BaseLib.Utils;
 using FrierenMod.Core;
 using FrierenMod.Scripts.Relics;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Players;
 
 namespace FrierenMod.Scripts.Mechanics;
@@ -23,8 +24,14 @@ public static class MagicDeckStore
 
     public static void Write(Player player, MagicDeckState deck, int? usedProp = null)
     {
-        var before = UI.MagicDeckAnimations.IsAttached(player) ? Read(player) : null;
+        var before = Read(player);
         Data.Set(player, deck.ToJson());
-        if (before != null) UI.MagicDeckAnimations.Changed(player, before, deck, usedProp);
+        if (CombatManager.Instance.IsInProgress && player.Creature.CombatState != null &&
+            !before.Items.Where(i => i.Slot >= 0).OrderBy(i => i.Slot)
+                .SequenceEqual(deck.Items.Where(i => i.Slot >= 0).OrderBy(i => i.Slot))) {
+            // 装载影响手牌的可用条件；原生通知统一重算手牌图标、高亮及当前选择，不改动牌堆。
+            player.PlayerCombatState?.Hand.InvokeContentsChanged();
+        }
+        UI.MagicDeckAnimations.Changed(player, before, deck, usedProp);
     }
 }

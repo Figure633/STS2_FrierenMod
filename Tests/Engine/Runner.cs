@@ -162,6 +162,10 @@ public partial class Runner : Node
                 GD.Print("PLAY_FEEDBACK_OK: " + await PlayFeedbackTests.Run());
                 await Finish(); return;
             }
+            if (OS.GetCmdlineUserArgs().Contains("--magicdeck-playability-only")) {
+                GD.Print("MAGICDECK_PLAYABILITY_OK: " + await MagicDeckPlayabilityTests.Run(this));
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--card-ids-only")) {
                 GD.Print("CARD_IDS_OK: " + await CardIdTests.Run());
                 await Finish(); return;
