@@ -2161,65 +2161,140 @@
   },
   {
     "file": "FrierenMod/images/potions/BottledMana.png",
-    "source": "generated: BottledMana",
-    "sha256": "b5de31847baa35d873391f4f2aa37b1b0e58c7a1ef8df2a4071ab2b147780fa9",
-    "modified": true,
-    "generation_manifest": "docs/generated_assets.json"
+    "source": "desktop-1.0.jar",
+    "source_kind": "local_sts1_game_template",
+    "template": {
+      "shape": "heart",
+      "palette": "SWIFT",
+      "liquid": "0d429dff",
+      "spots": "00ffffff"
+    },
+    "layers": [
+      {
+        "path": "images/potion/heart/liquid.png",
+        "sha256": "1b590d98bc5459bfa4dc5ffc2b362f1d91b649cd8fdb8afe4f5d27c935f5fc1c"
+      },
+      {
+        "path": "images/potion/heart/spots.png",
+        "sha256": "caf957b797e4d94447322ff60d3e7fde3136c5bc8fd60a0d905c6e2508787891"
+      },
+      {
+        "path": "images/potion/heart/body.png",
+        "sha256": "e5e220160c609bda7756b7c4985a56ac2ddb41144f336328cb8a770eecf954bc"
+      }
+    ],
+    "composition": "liquid → optional hybrid → optional spots → body; outline uses native template",
+    "sha256": "050ba26014c67a4dfb9364fa248e2c5c78ed17ef021f096737adf447f0ef5be1",
+    "modified": true
   },
   {
     "file": "FrierenMod/images/potions/BottledManaOutline.png",
-    "source": "generated: BottledMana",
-    "sha256": "582d5a84b5163444f793e542fcf99da4279a885d126fe54b10d9b45c7bb4109d",
-    "modified": true,
-    "generation_manifest": "docs/generated_assets.json"
-  },
-  {
-    "file": "FrierenMod/images/potions/BottledManaLarge.png",
-    "source": "generated: BottledMana",
-    "sha256": "1d3b6166d97c721668952e70449eaec343a4b43a8e7081fda9438ad41a62b341",
-    "modified": true,
-    "generation_manifest": "docs/generated_assets.json"
+    "source": "desktop-1.0.jar",
+    "source_kind": "local_sts1_game_template",
+    "template": {
+      "shape": "heart",
+      "palette": "SWIFT",
+      "liquid": "0d429dff",
+      "spots": "00ffffff"
+    },
+    "layers": [
+      {
+        "path": "images/potion/heart/outline.png",
+        "sha256": "99914e60ecde6f577588d8bfbda31a885fd398c6019d35a56e556593daf355db"
+      }
+    ],
+    "composition": "liquid → optional hybrid → optional spots → body; outline uses native template",
+    "sha256": "4f89d6ab1a3bf91c4f8e8f2342c8cbd02de743fc9086c6f29239ac24a56524e1",
+    "modified": true
   },
   {
     "file": "FrierenMod/images/potions/EmperorWine.png",
-    "source": "generated: EmperorWine",
-    "sha256": "0e6ea9975bb897b016f0f2ec165b46df63944cb203a19cdc2e6430890dfa010d",
-    "modified": true,
-    "generation_manifest": "docs/generated_assets.json"
+    "source": "desktop-1.0.jar",
+    "source_kind": "local_sts1_game_template",
+    "template": {
+      "shape": "sphere",
+      "palette": "ENERGY",
+      "liquid": "ffd700ff"
+    },
+    "layers": [
+      {
+        "path": "images/potion/sphere/liquid.png",
+        "sha256": "91109a0973688299e3b8de34f9a4b820a9f6214ad4cd59fa7222fc7b48f12575"
+      },
+      {
+        "path": "images/potion/sphere/body.png",
+        "sha256": "ec175447c86074a2a5e642cdb7c8a352ae9258af88d82a1f9b885aec480e84cb"
+      }
+    ],
+    "composition": "liquid → optional hybrid → optional spots → body; outline uses native template",
+    "sha256": "60db55e4ee49eed2869387909bf68a6df2d3b02f395bdecf18a04d974fe8eb20",
+    "modified": true
   },
   {
     "file": "FrierenMod/images/potions/EmperorWineOutline.png",
-    "source": "generated: EmperorWine",
-    "sha256": "2fedd696cf395dd6b565a98d172c64603ce3ee31e76ed8d0295b1845d65d510a",
-    "modified": true,
-    "generation_manifest": "docs/generated_assets.json"
-  },
-  {
-    "file": "FrierenMod/images/potions/EmperorWineLarge.png",
-    "source": "generated: EmperorWine",
-    "sha256": "4caf0b5e02d9a0525d4d2d63f769ec96012f996ccff715ee4907021d3220fae5",
-    "modified": true,
-    "generation_manifest": "docs/generated_assets.json"
+    "source": "desktop-1.0.jar",
+    "source_kind": "local_sts1_game_template",
+    "template": {
+      "shape": "sphere",
+      "palette": "ENERGY",
+      "liquid": "ffd700ff"
+    },
+    "layers": [
+      {
+        "path": "images/potion/sphere/outline.png",
+        "sha256": "b75756e3531ed6d33112df9e15650c69d712f83066d9a3a6a2d502b2f313f066"
+      }
+    ],
+    "composition": "liquid → optional hybrid → optional spots → body; outline uses native template",
+    "sha256": "44953960da1cb83d2d032e34d7a904bd92dc8e4c965b2edeaf2152b21a484798",
+    "modified": true
   },
   {
     "file": "FrierenMod/images/potions/DissolveClothPotion.png",
-    "source": "generated: DissolveClothPotion",
-    "sha256": "343c60c033a704d2dd93fa91544ea99fbe8a9b4240de5c1bdb012e18e38dbc51",
-    "modified": true,
-    "generation_manifest": "docs/generated_assets.json"
+    "source": "desktop-1.0.jar",
+    "source_kind": "local_sts1_game_template",
+    "template": {
+      "shape": "bottle",
+      "palette": "WEAK",
+      "liquid": "ee82eeff",
+      "hybrid": "b03060ff"
+    },
+    "layers": [
+      {
+        "path": "images/potion/bottle/liquid.png",
+        "sha256": "28baabe39d55b5e19d08190f322437ff12668aaf0a3212ee2a43dfae27c443b7"
+      },
+      {
+        "path": "images/potion/bottle/hybrid.png",
+        "sha256": "e1bace6d4b5425d99f831ac994fca7c7acd5dda1f3c9e11296e2b83b8518ec56"
+      },
+      {
+        "path": "images/potion/bottle/body.png",
+        "sha256": "844af360aad1d3f0a526be40856f27dbfffd08c03f0991cb8fdf1a1a550f0ad9"
+      }
+    ],
+    "composition": "liquid → optional hybrid → optional spots → body; outline uses native template",
+    "sha256": "8a2d50d26cd3563b1d2b13bd3fc9890d8d7d4b20abc04a9ad4748eabaee62c8f",
+    "modified": true
   },
   {
     "file": "FrierenMod/images/potions/DissolveClothPotionOutline.png",
-    "source": "generated: DissolveClothPotion",
-    "sha256": "8965963b9b5534d15b3acfd475528450a2e70a2a521aa9f825ee1b1e82439dea",
-    "modified": true,
-    "generation_manifest": "docs/generated_assets.json"
-  },
-  {
-    "file": "FrierenMod/images/potions/DissolveClothPotionLarge.png",
-    "source": "generated: DissolveClothPotion",
-    "sha256": "a185aa005afb347175b85d7242c4f7baba4060a18d72b605dc891e2de6f18901",
-    "modified": true,
-    "generation_manifest": "docs/generated_assets.json"
+    "source": "desktop-1.0.jar",
+    "source_kind": "local_sts1_game_template",
+    "template": {
+      "shape": "bottle",
+      "palette": "WEAK",
+      "liquid": "ee82eeff",
+      "hybrid": "b03060ff"
+    },
+    "layers": [
+      {
+        "path": "images/potion/bottle/outline.png",
+        "sha256": "7aaab9c720d9f717516c56acf9ce63eefe60b3f2304a81978e4edd3c2adaeb64"
+      }
+    ],
+    "composition": "liquid → optional hybrid → optional spots → body; outline uses native template",
+    "sha256": "603e6799ee93a73b04f910b0e609e617ed2756bf8b96d69f6612b6a4ef097305",
+    "modified": true
   }
 ]

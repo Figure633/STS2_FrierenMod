@@ -13,7 +13,6 @@ public sealed class EmperorWine : FrierenPotion
     public override PotionRarity Rarity => PotionRarity.Rare;
     public override string CustomPackedImagePath => "res://FrierenMod/images/potions/EmperorWine.png";
     public override string CustomPackedOutlinePath => "res://FrierenMod/images/potions/EmperorWineOutline.png";
-    public override string CustomLargeImagePath => "res://FrierenMod/images/potions/EmperorWineLarge.png";
     protected override async Task OnUse(PlayerChoiceContext context, Creature? target)
     {
         var pool = Owner.Character.CardPool.GetUnlockedCards(Owner.UnlockState, Owner.RunState.CardMultiplayerConstraint)

@@ -15,7 +15,6 @@ public sealed class DissolveClothPotion : FrierenPotion
     public override TargetType TargetType => TargetType.AnyEnemy;
     public override string CustomPackedImagePath => "res://FrierenMod/images/potions/DissolveClothPotion.png";
     public override string CustomPackedOutlinePath => "res://FrierenMod/images/potions/DissolveClothPotionOutline.png";
-    public override string CustomLargeImagePath => "res://FrierenMod/images/potions/DissolveClothPotionLarge.png";
     protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<WeakPower>(3), new PowerVar<VulnerablePower>(3)];
     public override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<WeakPower>(), HoverTipFactory.FromPower<VulnerablePower>()];
     protected override async Task OnUse(PlayerChoiceContext context, Creature? target)

@@ -14,7 +14,6 @@ public sealed class BottledMana : FrierenPotion
     public override PotionRarity Rarity => PotionRarity.Common;
     public override string CustomPackedImagePath => "res://FrierenMod/images/potions/BottledMana.png";
     public override string CustomPackedOutlinePath => "res://FrierenMod/images/potions/BottledManaOutline.png";
-    public override string CustomLargeImagePath => "res://FrierenMod/images/potions/BottledManaLarge.png";
     protected override IEnumerable<DynamicVar> CanonicalVars => [new CardsVar(3)];
     public override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<Mana>()];
     protected override async Task OnUse(PlayerChoiceContext context, Creature? target) =>
