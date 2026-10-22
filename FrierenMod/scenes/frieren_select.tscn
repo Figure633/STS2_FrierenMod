@@ -19,9 +19,3 @@ mouse_filter = 2
 texture = ExtResource("1")
 expand_mode = 1
 stretch_mode = 6
-[node name="TextShade" type="ColorRect" parent="."]
-layout_mode = 1
-anchor_right = 0.42
-anchor_bottom = 1.0
-mouse_filter = 2
-color = Color(0.025, 0.04, 0.065, 0.65)
