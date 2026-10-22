@@ -79,6 +79,18 @@ public static class MagicBookScrollingTests
         scroll.ScrollVertical = 450; await Tick();
         Check(inventory.Columns == 5 && inventory.GetChildren().OfType<Control>().Take(15)
             .All(cell => scroll.GetGlobalRect().Encloses(cell.GetGlobalRect())), "一屏完整显示五列三行库存格");
+        var visibleCards=inventory.GetChildren().OfType<Control>().Take(15)
+            .Select(cell=>cell.FindChildren("*","",true,false).OfType<NGridCardHolder>().Single()).ToArray();
+        foreach(var holder in visibleCards) holder.Hitbox.EmitSignal(NClickableControl.SignalName.Unfocused,holder.Hitbox);
+        foreach(var holder in visibleCards)
+            if(holder.Get(NCardHolder.PropertyName._hoverTween).AsGodotObject() is Tween tween && tween.IsRunning())
+                await tween.AwaitFinished(holder);
+        Check(visibleCards.All(h=>scroll.GetGlobalRect().Encloses(h.Hitbox.GetGlobalRect())) &&
+            visibleCards.All(h=>h.CardNode!.GetGlobalTransform().Scale.X>=0.679f), "放大后的三行实际卡面完整可见："+
+            string.Join(";",visibleCards.Where(h=>!scroll.GetGlobalRect().Encloses(h.Hitbox.GetGlobalRect())).Select(h=>h.Hitbox.GetGlobalRect())));
+        Check(equipped.CardNode!.GetGlobalTransform().Scale.X>=0.823f &&
+            status.Position.Y>=scroll.Position.Y+scroll.Size.Y && status.Position.Y+status.Size.Y<=1080,
+            "已装载因子同步放大，底部提示仍在滚动区以外");
         await Snapshot("magic-book-scroll-three-rows");
         var first = inventory.GetChild<Control>(0).FindChildren("*", "", true, false).OfType<NGridCardHolder>().Single();
         first.Hitbox.EmitSignal(NClickableControl.SignalName.Focused, first.Hitbox); await Tick();

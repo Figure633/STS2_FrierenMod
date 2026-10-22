@@ -79,7 +79,7 @@ public sealed class MagicBookScreen
         }
         root.Resized += Resize;
         Resize();
-        _scroll = new ScrollContainer { Name = "InventoryScroll", Position = new(255, 115), Size = new(1410, 835),
+        _scroll = new ScrollContainer { Name = "InventoryScroll", Position = new(255, 115), Size = new(1410, 890),
             HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled, VerticalScrollMode = ScrollContainer.ScrollMode.Auto };
         _canvas.AddChild(_scroll);
         _scrollContent = new Control { Name = "BookContents", SizeFlagsHorizontal = Control.SizeFlags.ExpandFill,
@@ -115,7 +115,7 @@ public sealed class MagicBookScreen
         _inventory.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.TopWide);
         _inventory.Position = new(0, 450);
         _inventory.MinimumSizeChanged += UpdateScrollHeight;
-        _status = Caption(Text("BOOK_HINT"), 23, new(330, 978), new(1260, 78));
+        _status = Caption(Text("BOOK_HINT"), 23, new(330, 1016), new(1260, 58));
         _status.Name = "BookStatus";
         _status.AutowrapMode = TextServer.AutowrapMode.WordSmart;
         _canvas.AddChild(_status);
@@ -317,7 +317,7 @@ public sealed class MagicBookScreen
         _cards.Clear();
         var deck = MagicDeckStore.Read(_player);
         void Add(CardModel model, int id, int slot, bool prop) {
-            var cell = new Control { Name = "Item_" + id, CustomMinimumSize = new(270, slot >= 0 ? 385 : 270), MouseFilter = Control.MouseFilterEnum.Pass };
+            var cell = new Control { Name = "Item_" + id, CustomMinimumSize = new(270, slot >= 0 ? 385 : 288), MouseFilter = Control.MouseFilterEnum.Pass };
             if (slot >= 0) {
                 cell.Position = new(210 + slot * 360, 45);
                 _equipped.AddChild(cell);
@@ -330,7 +330,7 @@ public sealed class MagicBookScreen
                 _inventorySortKeys.Add(id, (rarity, prop ? -1 : 3));
             }
             // 原生卡牌悬停会从 0.8 放大到 1；父层统一缩放，预留边界避免裁切。
-            var scaleRoot = new Control { Scale = Vector2.One * (slot >= 0 ? 1f : 0.8f), Position = new(135, slot >= 0 ? 172 : 135),
+            var scaleRoot = new Control { Scale = Vector2.One * (slot >= 0 ? 1.03f : 0.85f), Position = new(135, slot >= 0 ? 172 : 144),
                 MouseFilter = Control.MouseFilterEnum.Ignore };
             cell.AddChild(scaleRoot);
             var holder = CreateHolder(model);
