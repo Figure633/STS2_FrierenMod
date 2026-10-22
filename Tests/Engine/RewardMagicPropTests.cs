@@ -10,6 +10,8 @@ using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Multiplayer;
 using MegaCrit.Sts2.Core.Nodes.Cards.Holders;
+using MegaCrit.Sts2.Core.Nodes.Cards;
+using MegaCrit.Sts2.Core.Nodes.Vfx;
 using MegaCrit.Sts2.Core.Nodes;
 using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using MegaCrit.Sts2.Core.Nodes.GodotExtensions;
@@ -100,8 +102,45 @@ public static class RewardMagicPropTests
         AccessTools.Field(typeof(NRewardsScreen), "_isTerminal").SetValue(native, true);
         _stack.Push(native);
         MagicBookUi.Attach(host, player);
+        Check(MagicDeckAnimations.IsAttached(player), "真实 GlobalUi 完成层级调整后仍保留动画监听");
         var toggle = (MagicFactorButton)host.FindChild("FrierenMagicBookButton", true, false);
         var book = capstone.GetNode<MagicBookView>("FrierenMagicBook");
+        var animationLayer = capstone.GetNode<Control>("FrierenMagicDeckAnimations");
+        async Task ObserveBoxAnimation(string context) {
+            var pending = MagicDeckAnimations.WhenIdle(player);
+            Check(!pending.IsCompleted && animationLayer.GetNodeOrNull<NCard>("UsedMagicProp") is { } used &&
+                used.IsVisibleInTree() && used.CardHighlight.Modulate.G > 0.8f,
+                context + "：真实动画层显示魔具绿光");
+            NCard[] acquired = [];
+            var elapsed = System.Diagnostics.Stopwatch.StartNew();
+            while (!pending.IsCompleted && elapsed.Elapsed < TimeSpan.FromSeconds(6)) {
+                await root.ToSignal(root.GetTree(), SceneTree.SignalName.ProcessFrame);
+                acquired = animationLayer.GetChildren().OfType<NCard>()
+                    .Where(c => c.Name.ToString().StartsWith("AcquiredMagicItem_")).ToArray();
+                if (acquired.Length == 2) break;
+            }
+            Check(acquired.Length == 2 && acquired.All(c => c.IsVisibleInTree() &&
+                c.GetGlobalTransform().Scale.X > 0.5f && c.Modulate.A > 0.9f &&
+                root.GetViewport().GetVisibleRect().HasPoint(c.GlobalPosition)), context + "：两个新因子在可见区域完整展示");
+            if (OS.GetCmdlineUserArgs().Contains("--ui-snapshot")) {
+                await Tick();
+                root.GetViewport().GetTexture().GetImage().SavePng(ProjectSettings.GlobalizePath(
+                    "res://../../artifacts/reward-props-acquired.png"));
+            }
+            Vector2 start = acquired[0].GlobalPosition;
+            bool moved = false;
+            while (!pending.IsCompleted && elapsed.Elapsed < TimeSpan.FromSeconds(6)) {
+                await root.ToSignal(root.GetTree(), SceneTree.SignalName.ProcessFrame);
+                if (animationLayer.GetChildren().OfType<NCardFlyVfx>().Any() &&
+                    GodotObject.IsInstanceValid(acquired[0]) && acquired[0].GlobalPosition.DistanceTo(start) > 20) {
+                    moved = true; break;
+                }
+            }
+            Check(moved, context + "：原生飞入特效实际移动新因子");
+            await pending; await Tick();
+            Check(animationLayer.GetChildCount()==0 && MagicDeckAnimations.IsAttached(player),
+                context + "：动画收尾后仍保持监听");
+        }
         void ToggleBook() => toggle.EmitSignal(NClickableControl.SignalName.Released, toggle);
         var buttons = native.GetNode<Control>("%RewardsContainer").GetChildren().ToArray();
         await Tick();
@@ -133,7 +172,7 @@ public static class RewardMagicPropTests
         Check(changed.Items[0].Slot==1 && changed.Items[1].Slot==0 && changed.Props.All(p=>p.InstanceId!=crystal),
             "选择目标正常交换槽位并只消耗一次魔具");
         await Click(Holder("Prop_" + box), MouseButton.Right);
-        await MagicDeckAnimations.WhenIdle(player); await Tick();
+        await ObserveBoxAnimation("战利品列表");
         Check(MagicDeckStore.Read(player).Items.Count==8 && MagicDeckStore.Read(player).Props.All(p=>p.InstanceId!=box),
             "战利品界面也可直接右键使用盲盒");
         Check(!reward.SuccessfullySelected && native.GetNode<Control>("%RewardsContainer").GetChildren().SequenceEqual(buttons) && overlays.Single()==native,
@@ -164,7 +203,7 @@ public static class RewardMagicPropTests
         Check(changed.Items[0].Slot==0 && changed.Items[1].Slot==1 && changed.Props.All(p=>p.InstanceId!=spare),
             "等待前进时选满目标仍正常结算，魔具只扣一次");
         await Click(Holder("Prop_" + lastBox), MouseButton.Right);
-        await MagicDeckAnimations.WhenIdle(player); await Tick();
+        await ObserveBoxAnimation("奖励领完等待前进");
         Check(MagicDeckStore.Read(player).Items.Count==10 && MagicDeckStore.Read(player).Props.All(p=>p.InstanceId!=lastBox),
             "等待前进时无目标盲盒也能直接使用");
         ToggleBook(); await Tick();
@@ -176,6 +215,7 @@ public static class RewardMagicPropTests
         int inventoryFactor = deck.Add("BigFire").InstanceId;
         int swap = deck.AddProp("UnbelievableTool").InstanceId;
         deck.AddProp("UnbelievableTool");
+        int mapBox = deck.AddProp("MysteryBox").InstanceId;
         MagicDeckStore.Write(player, deck); await MagicDeckAnimations.WhenIdle(player);
         AccessTools.Property(typeof(NMapScreen), nameof(NMapScreen.IsOpen)).SetValue(map, true);
         ActiveScreenContext.Instance.Update();
@@ -188,8 +228,10 @@ public static class RewardMagicPropTests
         await Click(Holder("Factor_" + inventoryFactor));
         await MagicDeckAnimations.WhenIdle(player); await Tick();
         changed=MagicDeckStore.Read(player);
-        Check(changed.Items.Single(i=>i.InstanceId==inventoryFactor).Slot==0 && changed.Props.Count==1,
+        Check(changed.Items.Single(i=>i.InstanceId==inventoryFactor).Slot==0 && changed.Props.Count==2,
             "地图上选择槽位与库存因子后工具正确结算");
+        await Click(Holder("Prop_" + mapBox), MouseButton.Right);
+        await ObserveBoxAnimation("地图");
         ToggleBook(); await Tick();
         Check(ActiveScreenContext.Instance.IsCurrent(map) && map.IsOpen && !capstone.InUse,
             "关闭后回到原地图并保持奖励完成状态");

@@ -108,7 +108,6 @@ public static class MagicBookUi
             FocusBehaviorRecursive = Control.FocusBehaviorRecursiveEnum.Disabled };
         root.AddChild(animations);
         animations.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
-        MagicDeckAnimations.Bind(player, animations, toggle, screen);
         book.VisibilityChanged += () => {
             toggle.SetBookOpen(book.Visible);
             backdrop.Visible = book.Visible;
@@ -173,6 +172,8 @@ public static class MagicBookUi
             animations.Reparent(globalUi.CapstoneContainer);
             animations.ZIndex = 0; animations.ZAsRelative = true;
         }
+        // Reparent 会触发 TreeExiting；必须在层级确定后绑定，避免初始化即被退出清理解绑。
+        MagicDeckAnimations.Bind(player, animations, toggle, screen);
         RefreshInput();
     }
 }
