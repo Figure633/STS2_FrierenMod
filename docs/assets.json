@@ -649,43 +649,113 @@
   },
   {
     "file": "FrierenMod/images/powers/StrikeUpPower.png",
-    "source": "src/main/resources/FrierenModResources/img/relics/HolyEmblem.png",
-    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
-    "sha256": "8db6c4db31c02fd2fb319007f9ccad0f46e318eb7f2639bef5bd2175eb814ea9",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
+    "source": "D:/Steam/steamapps/common/SlayTheSpire/desktop-1.0.jar!/powers/powers.png",
+    "source_commit": null,
+    "sha256": "46142356c2707f52718af89189b4998328b8be5deb4df848d041f38cadee64df",
+    "modified": true,
+    "redistribution_review": "pending; local prototype only",
+    "source_kind": "local_sts1_game_atlas",
+    "source_atlas": "powers/powers.atlas",
+    "source_region": "128/accuracy",
+    "source_rect": [
+      771,
+      846,
+      88,
+      86
+    ],
+    "source_sha256": [
+      "ded8ae04ee98facddef5c27fbd7174ab099438bb1dbb67336f78f317d3134fe4",
+      "c19562475e2cefb65a2fd8d033c2113ff27e04954218f132865cb7786d3203e0"
+    ],
+    "conversion": "导出一代原版能力图集区域，保留原像素"
   },
   {
     "file": "FrierenMod/images/powers/MetallicizePower.png",
-    "source": "src/main/resources/FrierenModResources/img/relics/HolyEmblem.png",
-    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
-    "sha256": "8db6c4db31c02fd2fb319007f9ccad0f46e318eb7f2639bef5bd2175eb814ea9",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
+    "source": "D:/Steam/steamapps/common/SlayTheSpire/desktop-1.0.jar!/powers/powers.png",
+    "source_commit": null,
+    "sha256": "fffefea2a545595cf84b95af1fe354b1a4d03ce34367782e45208d27c5364927",
+    "modified": true,
+    "redistribution_review": "pending; local prototype only",
+    "source_kind": "local_sts1_game_atlas",
+    "source_atlas": "powers/powers.atlas",
+    "source_region": "128/armor",
+    "source_rect": [
+      611,
+      936,
+      91,
+      86
+    ],
+    "source_sha256": [
+      "ded8ae04ee98facddef5c27fbd7174ab099438bb1dbb67336f78f317d3134fe4",
+      "c19562475e2cefb65a2fd8d033c2113ff27e04954218f132865cb7786d3203e0"
+    ],
+    "conversion": "导出一代原版能力图集区域，保留原像素"
   },
   {
     "file": "FrierenMod/images/powers/PhantasmalPower.png",
-    "source": "src/main/resources/FrierenModResources/img/relics/HolyEmblem.png",
-    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
-    "sha256": "8db6c4db31c02fd2fb319007f9ccad0f46e318eb7f2639bef5bd2175eb814ea9",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
+    "source": "D:/Steam/steamapps/common/SlayTheSpire/desktop-1.0.jar!/powers/powers.png",
+    "source_commit": null,
+    "sha256": "f46fcca89137e174a9c52f05322eb3e3e53063b3dec569e2c243fe18f9b71c54",
+    "modified": true,
+    "redistribution_review": "pending; local prototype only",
+    "source_kind": "local_sts1_game_atlas",
+    "source_atlas": "powers/powers.atlas",
+    "source_region": "128/phantasmal",
+    "source_rect": [
+      342,
+      810,
+      87,
+      86
+    ],
+    "source_sha256": [
+      "ded8ae04ee98facddef5c27fbd7174ab099438bb1dbb67336f78f317d3134fe4",
+      "c19562475e2cefb65a2fd8d033c2113ff27e04954218f132865cb7786d3203e0"
+    ],
+    "conversion": "导出一代原版能力图集区域，保留原像素"
   },
   {
     "file": "FrierenMod/images/powers/RestoreStrengthPower.png",
-    "source": "src/main/resources/FrierenModResources/img/relics/HolyEmblem.png",
-    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
-    "sha256": "8db6c4db31c02fd2fb319007f9ccad0f46e318eb7f2639bef5bd2175eb814ea9",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
+    "source": "D:/Steam/steamapps/common/SlayTheSpire/desktop-1.0.jar!/powers/powers.png",
+    "source_commit": null,
+    "sha256": "9c6b486175d250a90a832a507bb73d15330a039e701032e0a9507cb20114fdec",
+    "modified": true,
+    "redistribution_review": "pending; local prototype only",
+    "source_kind": "local_sts1_game_atlas",
+    "source_atlas": "powers/powers.atlas",
+    "source_region": "128/shackle",
+    "source_rect": [
+      1342,
+      934,
+      89,
+      88
+    ],
+    "source_sha256": [
+      "ded8ae04ee98facddef5c27fbd7174ab099438bb1dbb67336f78f317d3134fe4",
+      "c19562475e2cefb65a2fd8d033c2113ff27e04954218f132865cb7786d3203e0"
+    ],
+    "conversion": "导出一代原版能力图集区域，保留原像素"
   },
   {
     "file": "FrierenMod/images/powers/MantraPower.png",
-    "source": "src/main/resources/FrierenModResources/img/relics/HolyEmblem.png",
-    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
-    "sha256": "8db6c4db31c02fd2fb319007f9ccad0f46e318eb7f2639bef5bd2175eb814ea9",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
+    "source": "D:/Steam/steamapps/common/SlayTheSpire/desktop-1.0.jar!/powers/powers.png",
+    "source_commit": null,
+    "sha256": "152cc8c9e8d40e42848847fec00883b6a4425e6c4cea24fa2f77d0c63538d9bb",
+    "modified": true,
+    "redistribution_review": "pending; local prototype only",
+    "source_kind": "local_sts1_game_atlas",
+    "source_atlas": "powers/powers.atlas",
+    "source_region": "128/mantra",
+    "source_rect": [
+      350,
+      257,
+      87,
+      83
+    ],
+    "source_sha256": [
+      "ded8ae04ee98facddef5c27fbd7174ab099438bb1dbb67336f78f317d3134fe4",
+      "c19562475e2cefb65a2fd8d033c2113ff27e04954218f132865cb7786d3203e0"
+    ],
+    "conversion": "导出一代原版能力图集区域，保留原像素"
   },
   {
     "file": "FrierenMod/images/powers/DivinityPower.png",
