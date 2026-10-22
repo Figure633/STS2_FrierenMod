@@ -18,10 +18,17 @@ using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.TestSupport;
 using MegaCrit.Sts2.Core.Unlocks;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
+using MegaCrit.Sts2.Core.Nodes.Vfx.Cards;
 using HarmonyLib;
 
 public static class MagicDeckAnimationTests
 {
+    private static bool CreateExhaust(NCard card, ref NExhaustVfx __result)
+    {
+        __result = GD.Load<PackedScene>(NExhaustVfx.AssetPaths.Single()).Instantiate<NExhaustVfx>();
+        __result.Set(NExhaustVfx.PropertyName._card, card);
+        return false;
+    }
     private static bool CreateTrail(Control card, string characterTrailPath, ref NCardTrailVfx __result)
     {
         // 原生 TestMode 跳过视觉工厂；测试仍使用原版场景、脚本和粒子，保留存档隔离。
@@ -35,6 +42,8 @@ public static class MagicDeckAnimationTests
         var visualFactory = new Harmony("frieren.tests.native_magic_flight");
         visualFactory.Patch(AccessTools.Method(typeof(NCardTrailVfx), nameof(NCardTrailVfx.Create)),
             prefix: new HarmonyMethod(typeof(MagicDeckAnimationTests), nameof(CreateTrail)));
+        visualFactory.Patch(AccessTools.Method(typeof(NExhaustVfx), nameof(NExhaustVfx.Create)),
+            prefix: new HarmonyMethod(typeof(MagicDeckAnimationTests), nameof(CreateExhaust)));
         void Check(bool ok, string name) { if (!ok) throw new Exception(name); GD.Print("PASS 动画：" + name); count++; }
         async Task Tick() => await root.ToSignal(root.GetTree(), SceneTree.SignalName.ProcessFrame);
         async Task Snapshot(string name) {
@@ -89,27 +98,32 @@ public static class MagicDeckAnimationTests
             "盲盒成功使用后本体闪绿光，动画期间防止重复使用");
         Check(MagicDeckStore.Read(player).Items.Count == 5 && MagicDeckStore.Read(player).Props.Count == 1,
             "动画开始前库存已经准确提交一次");
+        Check(!source.IsVisibleInTree(), "消耗副本播放时隐藏旧魔具，不留下可复用的原卡面");
         await Snapshot("magic-prop-green-pulse");
-        bool seenFlight = false;
-        Vector2? flightStart = null;
+        bool seenExhaust = false, seenFly = false, capturedNew = false;
+        var seenNew = new HashSet<int>();
+        var addedIds = MagicDeckStore.Read(player).Items.TakeLast(2).Select(i=>i.InstanceId).ToArray();
         var elapsed = System.Diagnostics.Stopwatch.StartNew();
         while (elapsed.Elapsed < TimeSpan.FromSeconds(8) && !use.IsCompleted) {
             await Tick();
-            var flying = layer.GetChildren().OfType<NCard>().Where(c => c.Name.ToString().StartsWith("AcquiredMagicItem")).ToArray();
-            if (flying.Length == 2 && !seenFlight) {
-                seenFlight = true; flightStart = flying[0].GlobalPosition;
-                Check(layer.GetNodeOrNull<NCard>("UsedMagicProp") == null, "绿光及消耗完成后再展示两个新因子");
-                await Snapshot("magic-factors-obtained");
+            seenFly |= layer.GetChildren().OfType<NCardFlyVfx>().Any();
+            if (!seenExhaust && layer.GetChildren().OfType<NExhaustVfx>().Any()) {
+                seenExhaust = true;
+                Check(layer.GetChildren().OfType<NExhaustVfx>().SelectMany(e=>e.GetChildren()).OfType<GpuParticles2D>().Any(p=>p.Emitting),
+                    "魔具原位置运行原版消耗粒子");
+                var settle=layer.CreateTween(); settle.TweenInterval(0.16); await settle.AwaitFinished(layer);
+                await Snapshot("magic-prop-native-exhaust");
             }
-            if (seenFlight && flying.Length == 2 && flying[0].GlobalPosition.DistanceTo(flightStart!.Value) > 20) {
-                Check(layer.GetChildren().OfType<NCardFlyVfx>().Any() &&
-                    layer.GetChildren().OfType<NCardTrailVfx>().Any() && flying[0].Body.Scale.X < 1,
-                    "原版飞入节点与粒子拖尾运行，卡面按原版规则缩小");
-                await Snapshot("magic-native-flight");
-                break;
+            foreach (int id in addedIds) {
+                if (ui.FindChild("Factor_"+id,true,false) is NGridCardHolder holder && holder.IsVisibleInTree() &&
+                    holder.CardNode!.CardHighlight.Modulate==NCardHighlight.playableColor &&
+                    ui.FindChild("InventoryScroll",true,false) is ScrollContainer scroll &&
+                    scroll.GetGlobalRect().HasPoint(holder.CardNode.GlobalPosition))
+                    seenNew.Add(id);
             }
+            if (seenNew.Count==2 && !capturedNew) { await Snapshot("magic-factors-obtained"); capturedNew=true; }
         }
-        Check(seenFlight, "盲盒产生两个飞入节点：" + string.Join(",", layer.GetChildren().Select(c => c.Name.ToString())) + " completed=" + use.IsCompleted);
+        Check(seenExhaust && seenNew.Count==2 && !seenFly, "两个新因子直接在库存中依次闪光，不飞回魔法书图标");
         await use;
         for (int i=0;i<8;i++) await Tick();
         Check(layer.GetChildCount() == 0 && !MagicPropCmd.IsBusy(player), "动画结束释放卡牌节点和忙碌状态");
@@ -119,6 +133,14 @@ public static class MagicDeckAnimationTests
             circleHolder.CardNode.MouseBehaviorRecursive == Control.MouseBehaviorRecursiveEnum.Inherited,
             "动画结束并复用卡牌后，实际右键仍可选中另一魔具");
         await RightClick(circle);
+        var materialIds=MagicDeckStore.Read(player).Items.Take(2).Select(i=>i.InstanceId).ToArray();
+        var materialUse=MagicPropCmd.UseSelected(player,circle,materialIds);
+        int maxExhausts=0; elapsed.Restart();
+        while(!materialUse.IsCompleted && elapsed.Elapsed<TimeSpan.FromSeconds(8)) {
+            await Tick(); maxExhausts=Math.Max(maxExhausts,layer.GetChildren().OfType<NExhaustVfx>().Count());
+        }
+        Check(await materialUse && maxExhausts==3 && materialIds.All(id=>MagicDeckStore.Read(player).Items.All(i=>i.InstanceId!=id)) &&
+            layer.GetChildCount()==0, "炼成同时为魔具和两个材料播放原生消耗，结算及回收各一次");
         toggle.EmitSignal(NClickableControl.SignalName.Released, toggle);
         Check(!player.Deck.Cards.OfType<FrierenMod.Scripts.Cards.FactorCard>().Any(), "表现卡不进入普通牌组");
         deck = MagicDeckStore.Read(player); deck.Equip(deck.Items.Last().InstanceId, ManaSlot.Hand);
@@ -129,11 +151,15 @@ public static class MagicDeckAnimationTests
         Check(await MagicDeckCmd.ChooseReward(new BlockingPlayerChoiceContext(), player,
             ["AdvancedDefensiveMagic", "BuildUpBody", "HighSpeedMovement"]), "奖励选择成功");
         Check(layer.GetChildren().OfType<NCard>().Count() == 1, "奖励获得自动飞入魔法牌组");
+        elapsed.Restart();
+        while (!layer.GetChildren().OfType<NCardFlyVfx>().Any() && elapsed.Elapsed < TimeSpan.FromSeconds(3)) await Tick();
+        Check(layer.GetChildren().OfType<NCardFlyVfx>().Any() && layer.GetChildren().OfType<NCardTrailVfx>().Any(),
+            "魔法书外的奖励仍运行原版飞入和粒子拖尾");
         selector.PrepareToSelect([1, 6]);
         Check(await MagicPropCmd.VisitShop(player), "魔具店八选二成功");
         await MagicDeckAnimations.WhenIdle(player);
         for (int i=0;i<8;i++) await Tick();
-        Check(layer.GetChildCount() == 0 && MagicDeckStore.Read(player).Props.Count == 3, "连续奖励和商店动画排队且不丢物品");
+        Check(layer.GetChildCount() == 0 && MagicDeckStore.Read(player).Props.Count == 2, "连续奖励和商店动画排队且不丢物品");
         deck = MagicDeckStore.Read(player); deck.Add("BuildUpBody"); MagicDeckStore.Write(player, deck);
         Task pending = MagicDeckAnimations.WhenIdle(player);
         elapsed.Restart();

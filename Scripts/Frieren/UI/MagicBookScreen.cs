@@ -44,6 +44,7 @@ public sealed class MagicBookScreen
     private int? _armed;
     private string _displayed = "";
     private bool _applying;
+    private bool _presentingChange;
     private bool _inputCaptured;
     private (int Id, MouseButton Button)? _pointerPress;
 
@@ -183,7 +184,7 @@ public sealed class MagicBookScreen
 
     private bool HandlePointer(InputEventMouseButton button)
     {
-        if (!View.IsVisibleInTree() || !View.CanProcess() || _applying) { _pointerPress = null; return false; }
+        if (!View.IsVisibleInTree() || !View.CanProcess() || _applying || _presentingChange) { _pointerPress = null; return false; }
         if (button.ButtonIndex is not (MouseButton.Left or MouseButton.Right)) return false;
         bool Contains(Control control) => new Rect2(Vector2.Zero, control.Size).HasPoint(
             control.GetGlobalTransformWithCanvas().AffineInverse() * button.Position);
@@ -210,6 +211,7 @@ public sealed class MagicBookScreen
     {
         if (!View.Visible) return;
         if (_coveredOverlay != _currentOverlay()) { Close(); return; }
+        if (_presentingChange) return;
         var deck = MagicDeckStore.Read(_player);
         if (_displayed != deck.ToJson()) { Cancel(); Populate(); }
         if (_armed.HasValue && !_applying && !MagicPropCmd.CanUse(_player, _armed.Value)) Cancel();
@@ -222,6 +224,38 @@ public sealed class MagicBookScreen
         return new Rect2(Vector2.Zero, _scroll.Size).HasPoint(_scroll.GetGlobalTransform().AffineInverse() * card.GlobalPosition) &&
             View.GetGlobalRect().HasPoint(card.GlobalPosition) &&
             View.GetViewportRect().HasPoint(card.GlobalPosition) ? (card.GlobalPosition, card.GetGlobalTransform().Scale) : null;
+    }
+
+    internal void BeginInventoryAnimation() => _presentingChange = true;
+
+    internal void HideAnimatedItem(int id)
+    {
+        if (_cards.TryGetValue(id, out var holder)) holder.Visible = false;
+    }
+
+    internal void RevealInventoryChanges()
+    {
+        if (View.IsVisibleInTree()) { Cancel(); Populate(); }
+    }
+
+    internal bool FocusAcquiredItem(int id)
+    {
+        if (!View.IsVisibleInTree() || !_cards.TryGetValue(id, out var holder)) return false;
+        _scroll.EnsureControlVisible(holder.GetParent().GetParent<Control>());
+        return true;
+    }
+
+    internal void FlashAcquiredItem(int id)
+    {
+        if (!_cards.TryGetValue(id, out var holder) || !holder.IsVisibleInTree()) return;
+        holder.CardNode!.CardHighlight.Modulate = NCardHighlight.playableColor;
+        holder.CardNode.CardHighlight.AnimFlash();
+    }
+
+    internal void EndInventoryAnimation()
+    {
+        _presentingChange = false;
+        if (GodotObject.IsInstanceValid(View) && View.IsInsideTree() && View.Visible) Populate();
     }
 
     internal static NCard CreateCard(CardModel model)
@@ -352,7 +386,7 @@ public sealed class MagicBookScreen
 
     private void Arm(int id)
     {
-        if (_applying) return;
+        if (_applying || _presentingChange) return;
         if (!MagicPropCmd.AllowsUseOver(_currentOverlay())) { _status.Text = Text("BOOK_VIEW_ONLY"); return; }
         if (_armed == id) { Cancel(); return; }
         if (!MagicPropCmd.CanUse(_player, id)) { _status.Text = Text("PROP_UNAVAILABLE"); return; }
@@ -365,7 +399,7 @@ public sealed class MagicBookScreen
 
     private void Select(int id)
     {
-        if (_applying || !_armed.HasValue) return;
+        if (_applying || _presentingChange || !_armed.HasValue) return;
         var deck = MagicDeckStore.Read(_player);
         var prop = deck.Props.SingleOrDefault(p => p.InstanceId == _armed.Value);
         if (prop == null || !MagicPropCmd.CanUse(_player, prop.InstanceId)) { Cancel(); return; }

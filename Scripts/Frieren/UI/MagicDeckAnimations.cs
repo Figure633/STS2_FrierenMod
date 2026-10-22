@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Nodes.Cards;
 using MegaCrit.Sts2.Core.Nodes.GodotExtensions;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
+using MegaCrit.Sts2.Core.Nodes.Vfx.Cards;
 using MegaCrit.Sts2.Core.Commands;
 
 namespace FrierenMod.Scripts.UI;
@@ -71,9 +72,12 @@ public static class MagicDeckAnimations
             await previous;
             if (Closed) return;
             var cards = new List<NCard>();
+            var exhausts = new List<Task>();
+            screen.BeginInventoryAnimation();
             try {
                 foreach (var item in removed) {
                     if (Closed) return;
+                    screen.HideAnimatedItem(item.Id);
                     var card = Show(item, 0, 1, true); cards.Add(card);
                     if (item.Id == usedProp) {
                         card.Name = "UsedMagicProp";
@@ -83,17 +87,40 @@ public static class MagicDeckAnimations
                         var flash = layer.CreateTween(); flash.TweenInterval(0.48);
                         if (!await flash.AwaitFinished(layer)) return;
                     }
-                    var fade = layer.CreateTween().SetParallel();
-                    fade.TweenProperty(card, "modulate:a", 0f, 0.22);
-                    fade.TweenProperty(card, "scale", card.Scale * 0.65f, 0.22);
+                    // 与原生 CardPileCmd 消耗牌相同：粒子与音效由原版提供，卡面变灰后释放。
+                    var exhaust = NExhaustVfx.Create(card);
+                    if (exhaust != null) {
+                        exhaust.Scale = card.GetGlobalTransform().Scale / layer.GetGlobalTransform().Scale;
+                        layer.AddChild(exhaust);
+                        exhausts.Add(WaitForExit(exhaust));
+                    }
+                    var fade = layer.CreateTween();
+                    fade.TweenProperty(card, "modulate", StsColors.exhaustGray, 0.3);
                     if (!await fade.AwaitFinished(layer)) return;
                     Release(card); cards.Remove(card);
                 }
-                // 多件奖励并排展示、依次飞入，避免后生成的物品遮住先生成的物品。
-                for (int start = 0; start < added.Length; start += 3) {
-                    int count = Math.Min(3, added.Length - start);
+                // 魔法书已经打开时，直接展示库存中的新条目，不再从书内飞回右上角图标。
+                if (screen.View.IsVisibleInTree()) {
+                    screen.RevealInventoryChanges();
+                    // GridContainer 在下一帧完成排版后，才有正确的新条目滚动位置。
+                    await layer.ToSignal(layer.GetTree(), SceneTree.SignalName.ProcessFrame);
+                }
+                if (Closed) return;
+                var external = new List<Item>();
+                foreach (var item in added) {
+                    if (Closed) return;
+                    if (!screen.FocusAcquiredItem(item.Id)) { external.Add(item); continue; }
+                    await layer.ToSignal(layer.GetTree(), SceneTree.SignalName.ProcessFrame);
+                    if (Closed) return;
+                    screen.FlashAcquiredItem(item.Id);
+                    var reveal = layer.CreateTween(); reveal.TweenInterval(1.2);
+                    if (!await reveal.AwaitFinished(layer)) return;
+                }
+                // 外部奖励仍使用原版飞入；多件并排展示，依次起飞。
+                for (int start = 0; start < external.Count; start += 3) {
+                    int count = Math.Min(3, external.Count - start);
                     for (int i = 0; i < count; i++) {
-                        var card = Show(added[start + i], i, count, false);
+                        var card = Show(external[start + i], i, count, false);
                         cards.Add(card);
                         // 一代盲盒会令新因子 superFlash；复用原版卡牌闪光，留出完整辨认时间。
                         if (usedProp.HasValue) card.CardHighlight.AnimFlash();
@@ -106,10 +133,16 @@ public static class MagicDeckAnimations
                     // 原生飞入特效自行释放卡牌；不能再次归还对象池。
                     cards.Clear();
                 }
+                await Task.WhenAll(exhausts);
             }
             catch (Exception error) { GD.PushWarning("魔法牌组动画未完成：" + error); }
-            finally { foreach (var card in cards) Release(card); }
+            finally {
+                foreach (var card in cards) Release(card);
+                screen.EndInventoryAnimation();
+            }
         }
+
+        private static async Task WaitForExit(Node effect) => await effect.ToSignal(effect, Node.SignalName.TreeExiting);
 
         private async Task Fly(NCard card, double delay)
         {

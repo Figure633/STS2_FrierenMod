@@ -111,32 +111,26 @@ public static class RewardMagicPropTests
             Check(!pending.IsCompleted && animationLayer.GetNodeOrNull<NCard>("UsedMagicProp") is { } used &&
                 used.IsVisibleInTree() && used.CardHighlight.Modulate.G > 0.8f,
                 context + "：真实动画层显示魔具绿光");
-            NCard[] acquired = [];
+            int[] addedIds = MagicDeckStore.Read(player).Items.TakeLast(2).Select(i=>i.InstanceId).ToArray();
+            var seen = new HashSet<int>(); bool flew=false, captured=false;
             var elapsed = System.Diagnostics.Stopwatch.StartNew();
             while (!pending.IsCompleted && elapsed.Elapsed < TimeSpan.FromSeconds(6)) {
                 await root.ToSignal(root.GetTree(), SceneTree.SignalName.ProcessFrame);
-                acquired = animationLayer.GetChildren().OfType<NCard>()
-                    .Where(c => c.Name.ToString().StartsWith("AcquiredMagicItem_")).ToArray();
-                if (acquired.Length == 2) break;
-            }
-            Check(acquired.Length == 2 && acquired.All(c => c.IsVisibleInTree() &&
-                c.GetGlobalTransform().Scale.X > 0.5f && c.Modulate.A > 0.9f &&
-                root.GetViewport().GetVisibleRect().HasPoint(c.GlobalPosition)), context + "：两个新因子在可见区域完整展示");
-            if (OS.GetCmdlineUserArgs().Contains("--ui-snapshot")) {
-                await Tick();
-                root.GetViewport().GetTexture().GetImage().SavePng(ProjectSettings.GlobalizePath(
-                    "res://../../artifacts/reward-props-acquired.png"));
-            }
-            Vector2 start = acquired[0].GlobalPosition;
-            bool moved = false;
-            while (!pending.IsCompleted && elapsed.Elapsed < TimeSpan.FromSeconds(6)) {
-                await root.ToSignal(root.GetTree(), SceneTree.SignalName.ProcessFrame);
-                if (animationLayer.GetChildren().OfType<NCardFlyVfx>().Any() &&
-                    GodotObject.IsInstanceValid(acquired[0]) && acquired[0].GlobalPosition.DistanceTo(start) > 20) {
-                    moved = true; break;
+                flew |= animationLayer.GetChildren().OfType<NCardFlyVfx>().Any();
+                foreach(int id in addedIds) {
+                    if (book.FindChild("Factor_"+id,true,false) is NGridCardHolder holder && holder.IsVisibleInTree() &&
+                        holder.CardNode!.CardHighlight.Modulate==NCardHighlight.playableColor &&
+                        book.GetNode<ScrollContainer>("BookCanvas/InventoryScroll").GetGlobalRect().HasPoint(holder.CardNode.GlobalPosition))
+                        seen.Add(id);
+                }
+                if (seen.Count==2 && !captured && OS.GetCmdlineUserArgs().Contains("--ui-snapshot")) {
+                    root.GetViewport().GetTexture().GetImage().SavePng(ProjectSettings.GlobalizePath(
+                        "res://../../artifacts/reward-props-acquired.png"));
+                    captured=true;
                 }
             }
-            Check(moved, context + "：原生飞入特效实际移动新因子");
+            Check(seen.Count==2, context + "：两个新因子在实际库存中依次闪光并滚入可见区域");
+            Check(!flew, context + "：书内新增不再飞回右上角图标");
             await pending; await Tick();
             Check(animationLayer.GetChildCount()==0 && MagicDeckAnimations.IsAttached(player),
                 context + "：动画收尾后仍保持监听");
