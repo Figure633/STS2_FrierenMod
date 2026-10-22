@@ -10,7 +10,7 @@ using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using System.Text.RegularExpressions;
 
-// 谜题只保留一代的碎片与符号，咏唱同样显示碎片与槽位符号，浮窗仍不直接给出答案。
+// 卡面只显示一代的文字碎片与费用；三个独立能力保留各自的标题和图标。
 public static class PuzzlePresentationTests
 {
     public static int Run(Player player)
@@ -35,12 +35,9 @@ public static class PuzzlePresentationTests
                     foreach (var tip in card.HoverTips.OfType<HoverTip>()) AssertHidden(tip.Description);
                     if (card.Option is { } option)
                     {
-                        string mark = language == "zhs"
-                            ? option.Slot == clue.Slot ? "！" : "？"
-                            : option.Slot == clue.Slot ? "@" : "?";
                         string cost = language == "zhs" ? $"消耗{option.Cost}张魔力" : $"Consume {option.Cost} Mana";
-                        if (text.Split('\n').Last().Trim() != mark || !text.Contains(cost) || !text.Contains(fragment))
-                            throw new Exception($"谜题咏唱未保留费用与槽位符号：{language}/{card.FactorId}/{option.Slot}: {text}");
+                        if (Regex.IsMatch(text, @"[？?!！@]") || !text.Contains(cost) || !text.Contains(fragment))
+                            throw new Exception($"谜题咏唱费用、文字碎片或多余符号异常：{language}/{card.FactorId}/{option.Slot}: {text}");
                     }
                     else if (!text.Contains(fragment) || !text.Contains(language == "zhs" ? "咏唱 " +
                         (clue.Id == "Factor100" ? "X+1" : clue.Id == "Factor010" ? "2X+2" : "3X+3") : "Chant X"))
@@ -61,19 +58,23 @@ public static class PuzzlePresentationTests
                         CheckCard(FactorCard.Create(player, clue.Id, slot, new ChantOption(slot, clue.Id, 2, cost, 4)));
                 }
             }
-            var power = (PuzzlePower)ModelDb.GetById<PowerModel>(ModelDb.GetId(typeof(PuzzlePower))).ToMutable();
-            AccessTools.Property(typeof(PowerModel), nameof(PowerModel.Owner)).SetValue(power, player.Creature);
-            for (int amount = 0; amount <= 3; amount++)
-            {
-                power.SetAmount(amount);
+            var types = new[] { typeof(Factor100Power), typeof(Factor010Power), typeof(Factor001Power) };
+            var titles = language == "zhs" ? new[] { "！？？", "？！？", "？？！" } : new[] { "!??", "?!?", "??!" };
+            for (int i = 0; i < types.Length; i++) {
+                var power = (PuzzleCluePower)ModelDb.GetById<PowerModel>(ModelDb.GetId(types[i])).ToMutable();
+                AccessTools.Property(typeof(PowerModel), nameof(PowerModel.Owner)).SetValue(power, player.Creature);
                 AssertHidden(power.Title.GetFormattedText());
                 foreach (var tip in power.HoverTips.OfType<HoverTip>()) AssertHidden(tip.Description);
-                string fragment = amount == 0 ? "" : language == "zhs" ? clues[amount - 1].Zh : clues[amount - 1].En;
-                if (!power.Description.GetFormattedText().Contains(fragment, StringComparison.OrdinalIgnoreCase))
-                    throw new Exception($"谜题状态丢失一代碎片：{language}/{amount}");
+                string fragment = language == "zhs" ? clues[i].Zh : clues[i].En;
+                if (power.Title.GetFormattedText() != titles[i] || !power.IsVisible ||
+                    power.StackType != MegaCrit.Sts2.Core.Entities.Powers.PowerStackType.Single ||
+                    !power.Description.GetFormattedText().Contains(fragment, StringComparison.OrdinalIgnoreCase) ||
+                    GD.Load<Texture2D>(power.CustomPackedIconPath).GetWidth() != 84)
+                    throw new Exception($"谜题独立能力或一代图标异常：{language}/{i}");
                 states++;
             }
-            GD.Print($"PASS {language} 谜题呈现：{states} 个奖励/库存/装载/咏唱/状态场景，显示线索与费用，咏唱保留文字和符号");
+            if (ModelDb.Power<PuzzlePower>().IsVisible) throw new Exception("隐藏顺序状态不能额外显示为第四个谜题能力");
+            GD.Print($"PASS {language} 谜题呈现：{states} 个奖励/库存/装载/咏唱/状态场景，三个独立线索与一代图标，无额外槽位符号");
         }
         return 2;
     }

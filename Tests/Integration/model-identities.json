@@ -192,5 +192,8 @@
   "FrierenMod.Scripts.Potions.BottledMana": "POTION.BOTTLED_MANA",
   "FrierenMod.Scripts.Potions.DissolveClothPotion": "POTION.DISSOLVE_CLOTH_POTION",
   "FrierenMod.Scripts.Potions.EmperorWine": "POTION.EMPEROR_WINE",
-  "FrierenMod.Scripts.Rewards.MagicItemRewardHooks": "SINGLETON.MAGIC_ITEM_REWARD_HOOKS"
+  "FrierenMod.Scripts.Rewards.MagicItemRewardHooks": "SINGLETON.MAGIC_ITEM_REWARD_HOOKS",
+  "FrierenMod.Scripts.Powers.Factor100Power": "POWER.FACTOR100_POWER",
+  "FrierenMod.Scripts.Powers.Factor010Power": "POWER.FACTOR010_POWER",
+  "FrierenMod.Scripts.Powers.Factor001Power": "POWER.FACTOR001_POWER"
 }

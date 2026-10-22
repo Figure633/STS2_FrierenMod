@@ -69,16 +69,6 @@ public abstract class FactorCard() : FrierenCard(-1, CardType.Skill, CardRarity.
             effect.Add(block);
         } else effect.Add("Reward", Option?.Reward ?? 0);
         effect.Add("Cost", Option?.Cost ?? 0);
-        if (Option.HasValue && SpellCatalog.Get(FactorId).Puzzle)
-        {
-            // 咏唱时保留文字碎片，并提示当前槽位的符号。
-            ManaSlot clueSlot = FactorId switch {
-                nameof(Factor100) => ManaSlot.Draw,
-                nameof(Factor010) => ManaSlot.Hand,
-                _ => ManaSlot.Discard
-            };
-            effect.Add("PuzzleMark", new LocString("frieren", Option.Value.Slot == clueSlot ? "PUZZLE_MATCH" : "PUZZLE_MISS").GetFormattedText());
-        }
         description.Add("Effect", effect.GetFormattedText());
     }
 }

@@ -17,14 +17,14 @@ namespace FrierenMod.Scripts.Powers;
 
 public sealed class PuzzlePower : TurnOnlyPower
 {
-    // 复用一代各阶段的名称和碎片提示，实际累积及结算仍由 Amount 驱动。
-    public override LocString Title => Amount is >= 1 and <= 3 ? new("powers", $"{Id.Entry}.{Amount}.title") : base.Title;
-    public override LocString Description => Amount is >= 1 and <= 3 ? new("powers", $"{Id.Entry}.{Amount}.description") : base.Description;
+    // 保留原模型 ID，作为本回合的隐藏顺序状态；三个线索使用各自的可见能力。
+    public const int BrokenSequence = 4;
+    protected override bool IsVisibleInternal => false;
 
     public override async Task AfterPowerAmountChanged(PlayerChoiceContext context, PowerModel power, decimal amount, Creature? applier, CardModel? source)
     {
         // 使用原生能力变化钩子；第三段结算完成即触发，不再等待回合结束。
-        if (power == this && Amount >= 3)
+        if (power == this && Amount == 3)
             await CreatureCmd.Kill(CombatState.Enemies.Where(x => x.IsAlive).ToArray());
     }
 }

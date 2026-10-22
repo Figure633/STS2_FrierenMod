@@ -14,15 +14,21 @@ using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Multiplayer;
 using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.Unlocks;
 
 public static class PuzzleResolutionTests
 {
+    private static readonly List<string> Hints = [];
+    private static bool CaptureHint(LocString line) { Hints.Add(line.GetFormattedText()); return false; }
     public static async Task<int> Run()
     {
-        int count = 0;
+        int count = 0; Hints.Clear();
+        var hintPatch = new Harmony("frieren.tests.puzzle_hints");
+        hintPatch.Patch(AccessTools.Method(typeof(TalkCmd), nameof(TalkCmd.Play)),
+            prefix: new HarmonyMethod(typeof(PuzzleResolutionTests), nameof(CaptureHint)));
         void Check(bool ok, string name) { if (!ok) throw new Exception(name); GD.Print("PASS 谜题结算：" + name); count++; }
         var player = Player.CreateForNewRun<Frieren>(UnlockState.all, 1);
         var run = RunState.CreateForTest([player], seed: "FRIEREN-PUZZLE-INSTANT");
@@ -52,6 +58,7 @@ public static class PuzzleResolutionTests
         async Task Reset()
         {
             foreach (var power in player.Creature.Powers.ToArray()) await PowerCmd.Remove(power);
+            Hints.Clear();
             foreach (var pile in player.PlayerCombatState!.AllPiles)
                 foreach (var mana in pile.Cards.ToArray()) pile.RemoveInternal(mana);
             foreach (var slot in Enum.GetValues<ManaSlot>()) await ManaCmd.Generate(player, ManaCmd.Pile(slot), 8);
@@ -59,25 +66,48 @@ public static class PuzzleResolutionTests
         Task Chant(int stage, ManaSlot? slot = null) => ChantCmd.Resolve(context, play,
             new(slot ?? (ManaSlot)stage, ids[stage], 1, 2 * (stage + 1), 1));
 
-        await Reset(); await Chant(0, ManaSlot.Hand);
-        Check(Progress() == 0 && Alive(), "错误槽位不推进谜题或击杀");
-        await Chant(1);
-        Check(Progress() == 0 && Alive(), "跳过第一段不触发");
-        await Reset(); await Chant(0); await Chant(2);
-        Check(Progress() == 0 && Alive(), "顺序错误清除进度且不击杀");
-        await Reset(); await Chant(0); await Chant(0);
-        Check(Progress() == 0 && Alive(), "重复第一段仍按原规则清除进度");
+        var clueTypes = new[] { typeof(Factor100Power), typeof(Factor010Power), typeof(Factor001Power) };
+        PowerModel[] Clues() => player.Creature.Powers.Where(p => p is PuzzleCluePower).ToArray();
+        for (int stage=0;stage<3;stage++)
+            foreach (var slot in Enum.GetValues<ManaSlot>().Where(s => (int)s!=stage)) {
+                await Reset(); await Chant(stage, slot);
+                Check(Progress() == 0 && Clues().Length == 0 && Hints.Count == 1 && Alive(),
+                    "错误槽位只提示，不给予能力或推进谜题：" + ids[stage] + "/" + slot);
+            }
+        foreach (string language in new[] { "zhs", "eng" }) {
+            LocManager.Instance.SetLanguage(language); await Reset(); await Chant(1, ManaSlot.Draw);
+            Check(Hints.Single() == (language == "zhs" ? "这好像不太对…" : "This doesn’t seem right…"), "槽位错误使用原生角色气泡文案：" + language);
+        }
+        LocManager.Instance.SetLanguage("eng");
+        foreach (int[] order in new int[][] { [1,0,2], [0,2,1], [1,2,0], [2,0,1], [2,1,0] }) {
+            await Reset();
+            foreach (int stage in order) await Chant(stage);
+            Check(Progress() == PuzzlePower.BrokenSequence && Alive() && Hints.Count > 0,
+                "错误顺序不触发击杀且提示：" + string.Join(",", order));
+            Check(Clues().Select(p => p.GetType()).SequenceEqual(order.Select(i => clueTypes[i])),
+                "错序仍按实际获得顺序保留三个独立能力：" + string.Join(",", order));
+        }
+        await Reset(); await Chant(0); await Chant(0); await Chant(1); await Chant(2);
+        Check(Progress() == PuzzlePower.BrokenSequence && Clues().Length == 3 && Alive(), "重复第一段会令本回合失败，保留线索且无法重新完成");
+        await Reset(); await Chant(2); await Chant(0); await Chant(1);
+        await ManaCmd.Generate(player, PileType.Discard, 6); await Chant(2);
+        Check(Progress() == PuzzlePower.BrokenSequence && Hints.Count == 4 && Alive(), "同回合错序后再补一遍正确顺序仍不能完成");
         await Reset(); await Chant(0); await Chant(1);
         await PowerCmd.Apply<StrengthPower>(context, player.Creature, 1, player.Creature, card);
-        Check(Progress() == 2 && Alive(), "前两段与其他能力变化均不提前触发");
-        var incomplete = player.Creature.GetPower<PuzzlePower>()!;
-        await incomplete.AfterSideTurnEnd(context, CombatSide.Player, [player.Creature]);
-        Check(Progress() == 0 && Alive(), "未完成的进度仍在回合结束清除");
+        Check(Progress() == 2 && Clues().Length == 2 && Alive() && Hints.Count == 0, "正确前两段保留两个能力，其他能力不提前触发");
+        foreach (var power in player.Creature.Powers.OfType<TurnOnlyPower>().ToArray())
+            await power.AfterSideTurnEnd(context, CombatSide.Player, [player.Creature]);
+        Check(Progress() == 0 && Clues().Length == 0 && Alive(), "未完成时回合结束统一移除线索和顺序状态");
+        await Chant(1);
+        foreach (var power in player.Creature.Powers.OfType<TurnOnlyPower>().ToArray())
+            await power.AfterSideTurnEnd(context, CombatSide.Player, [player.Creature]);
+        Check(Progress() == 0 && Clues().Length == 0, "错误顺序锁定同样在回合结束清除");
+        Hints.Clear();
         await Reset(); await Chant(0); await Chant(1);
         int manaBefore = ManaCmd.InPile(player, PileType.Discard).Count();
         int hp = player.Creature.CurrentHp, round = combat.RoundNumber;
         await Chant(2);
-        Check(enemies.All(enemy => enemy.IsDead) && Progress() == 3 && combat.RoundNumber == round,
+        Check(enemies.All(enemy => enemy.IsDead) && Progress() == 3 && Clues().Length == 3 && Hints.Count == 0 && combat.RoundNumber == round,
             "第三段返回前两个敌人已通过原生命令死亡，无需结束回合");
         Check(player.Creature.CurrentHp == hp && ManaCmd.InPile(player, PileType.Discard).Count() == manaBefore - 6,
             "先支付正确牌堆魔力，击杀不影响玩家");
@@ -93,6 +123,7 @@ public static class PuzzleResolutionTests
         await Reset(); await ChantCmd.Final(context, play);
         Check(enemies.All(enemy => enemy.IsDead) && Progress() == 3,
             "终极咏唱按槽位顺序集齐时也立即击杀全部敌人");
+        hintPatch.UnpatchAll(hintPatch.Id);
         return count;
     }
 }

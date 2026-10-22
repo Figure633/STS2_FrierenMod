@@ -29,8 +29,6 @@
   "TIP.CHANT.description": "Choose an equipped factor. Consume the [gold]Mana[/gold] required from its pile to activate it. The [gold]Chant[/gold] card determines the factor's X.",
   "TIP.LEGENDARY.title": "Legendary Spell",
   "TIP.LEGENDARY.description": "Playable after you have played a [gold]Chant[/gold] card this turn.",
-  "PUZZLE_MATCH": "@",
-  "PUZZLE_MISS": "?",
   "TIP.DIVINITY.title": "Mantra & Divinity",
   "TIP.DIVINITY.description": "Every 10 Mantra are consumed to enter [gold]Divinity[/gold] and gain 3 Energy. [gold]Divinity[/gold] triples attack damage until your next turn.",
   "TIP.MANA_PAYMENT.title": "Mana Payment",
@@ -57,7 +55,7 @@
   "FACTOR.Sleeeep": "[gold]Chant[/gold] X: consume X [gold]Mana[/gold].\nDraw X additional cards next turn.",
   "EFFECT.TransferToAlchemist": "Apply {Reward} Poison to ALL enemies.",
   "FACTOR.TransferToAlchemist": "[gold]Chant[/gold] X: consume X [gold]Mana[/gold].\nApply Poison to ALL enemies equal to 2 times the [gold]Chant[/gold] intensity.",
-  "EFFECT.Factor100": "... [color=#e1c6ed]Frieren[/color] ...\n{PuzzleMark}",
+  "EFFECT.Factor100": "... [color=#e1c6ed]Frieren[/color] ...",
   "FACTOR.Factor100": "[gold]Chant[/gold] X: consume X [gold]Mana[/gold], plus 1 more.\n... [color=#e1c6ed]Frieren[/color] ...",
   "EFFECT.BarrierMagic": "Gain {Reward} Block and {Reward} Blur.",
   "FACTOR.BarrierMagic": "[gold]Chant[/gold] X+1: gain X Block and X Blur.",
@@ -79,7 +77,7 @@
   "FACTOR.PinchAndScrape": "[gold]Chant[/gold] X: consume X [gold]Mana[/gold].\nGain Frugality equal to 2 times the [gold]Chant[/gold] intensity. Each [gold]Synchro[/gold] uses one stack to discard its [gold]Mana[/gold] instead of Exhausting it.",
   "EFFECT.SpellBoost": "Deal double attack damage during the next {Reward} turns.",
   "FACTOR.SpellBoost": "[gold]Chant[/gold] X: 4 [gold]Mana[/gold] per intensity.\nDeal double attack damage during the next X turns.",
-  "EFFECT.Factor010": "... [color=#FFFE91]kill[/color] ...\n{PuzzleMark}",
+  "EFFECT.Factor010": "... [color=#FFFE91]kill[/color] ...",
   "FACTOR.Factor010": "[gold]Chant[/gold] X: 2 [gold]Mana[/gold] per intensity, plus 2 more.\n... [color=#FFFE91]kill[/color] ...",
   "EFFECT.GreatMageComposure": "The next {Reward} [gold]Chants[/gold] this turn consume no [gold]Mana[/gold].",
   "FACTOR.GreatMageComposure": "[gold]Chant[/gold] X: 4 [gold]Mana[/gold] per intensity.\nThe next X [gold]Chants[/gold] this turn consume no [gold]Mana[/gold].",
@@ -93,7 +91,7 @@
   "FACTOR.TheLivingLegend": "[gold]Chant[/gold] X: consume X [gold]Mana[/gold].\nAdd X random Legendary Spells to this slot's pile.",
   "EFFECT.Transcendence": "Gain {Reward} Mantra. Every 10 stacks grant [gold]Divinity[/gold] and 3 Energy.",
   "FACTOR.Transcendence": "[gold]Chant[/gold] X: consume X [gold]Mana[/gold].\nGain X Mantra. Every 10 stacks grant [gold]Divinity[/gold] and 3 Energy.",
-  "EFFECT.Factor001": "... [color=#ed1c24]monster[/color] ...\n{PuzzleMark}",
+  "EFFECT.Factor001": "... [color=#ed1c24]monster[/color] ...",
   "FACTOR.Factor001": "[gold]Chant[/gold] X: 3 [gold]Mana[/gold] per intensity, plus 3 more.\n... [color=#ed1c24]monster[/color] ...",
   "PROP.CrystalBall": "Swap the slots of two equipped factors.",
   "PROP.MysteryBox": "Gain two random factors (excluding puzzle factors) in your unequipped inventory.",
@@ -186,5 +184,6 @@
   "CRAFT_TITLE.UpgradeOption": "The Tower",
   "CRAFT_TITLE.StrengthOption": "The Empress",
   "CRAFT_TITLE.RemoveDebuffOption": "The Wands",
-  "CRAFT_TITLE.UpgradeAllOption": "The World"
+  "CRAFT_TITLE.UpgradeAllOption": "The World",
+  "PUZZLE_WRONG": "This doesn’t seem right…"
 }

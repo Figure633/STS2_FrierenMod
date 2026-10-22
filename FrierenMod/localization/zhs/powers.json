@@ -70,5 +70,11 @@
   "FRIERENMOD-GAIN_RELIC_POWER.title": "饰品魔法",
   "FRIERENMOD-GAIN_RELIC_POWER.description": "战斗胜利后额外获得{Amount}个随机遗物奖励。",
   "FRIERENMOD-TIME_TRAVEL_POWER.title": "时间回溯",
-  "FRIERENMOD-TIME_TRAVEL_POWER.description": "{Amount}回合后，恢复施法时的自身状态。"
+  "FRIERENMOD-TIME_TRAVEL_POWER.description": "{Amount}回合后，恢复施法时的自身状态。",
+  "FRIERENMOD-FACTOR100_POWER.title": "！？？",
+  "FRIERENMOD-FACTOR100_POWER.description": "...芙莉莲...",
+  "FRIERENMOD-FACTOR010_POWER.title": "？！？",
+  "FRIERENMOD-FACTOR010_POWER.description": "...消灭...",
+  "FRIERENMOD-FACTOR001_POWER.title": "？？！",
+  "FRIERENMOD-FACTOR001_POWER.description": "...怪物..."
 }

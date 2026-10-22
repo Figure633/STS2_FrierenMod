@@ -1090,9 +1090,9 @@
       "a80de00372b216259b3287112b7b1b6ed8d7a64074aa9424c883dc08e4d5aa3b",
       "baa9665454b479df094b3c1258ed7714d4a234b77f794211801514f8c5f84554"
     ],
-    "sha256": "d0370e87f84df5a8d7ba5e249c2594df36a17351513d0fa27096a510010f161f",
+    "sha256": "63836244763bfd7827126a0d3c9cfe844fa5b4274fa396514d3b03f96ccffffe",
     "modified": true,
-    "conversion": "Spine 3.8 Idle -> 24 fps Godot Polygon2D; original speed 1.2; synthetic action reactions",
+    "conversion": "Spine 3.8 Idle -> 24 fps Godot Polygon2D; original speed 1.2; synthetic action reactions; 0.6.13 调整死亡立绘大小与位置",
     "redistribution_review": "pending; local prototype only"
   },
   {
@@ -2078,5 +2078,29 @@
     "source_kind": "local_author_assets",
     "sha256": "ac126871113edf155d692147add0ef9ed749813e19760309f3a4cbf991547c43",
     "modified": true
+  },
+  {
+    "file": "FrierenMod/images/powers/Factor100Power.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/powers/Factor100Power_84.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "97c5b000aa34cacf5c807b6e1c6afc8138d44cebae58ee44b9a2fed0f6604d1a",
+    "modified": false
+  },
+  {
+    "file": "FrierenMod/images/powers/Factor010Power.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/powers/Factor010Power_84.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "82136849cb9dcebe5de8ee5cd22b3d7c44eeb9aec265a6b70d822d9e79aa734a",
+    "modified": false
+  },
+  {
+    "file": "FrierenMod/images/powers/Factor001Power.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/powers/Factor001Power_84.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "db3ae6fd3dcd477538e71d0f7688aadc2b42e350d0b79d0b963504e392374c63",
+    "modified": false
   }
 ]

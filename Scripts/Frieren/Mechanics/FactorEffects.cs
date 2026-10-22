@@ -66,12 +66,7 @@ public static class FactorEffects
                     await CardFlowCmd.AddGenerated(LegendaryCards.CreateRandom(player), ManaCmd.Pile(option.Slot), player);
                 break;
             case "Factor100": case "Factor010": case "Factor001":
-                int stage = option.SpellId == "Factor100" ? 1 : option.SpellId == "Factor010" ? 2 : 3;
-                if ((int)option.Slot != stage - 1) break;
-                var puzzle = self.GetPower<PuzzlePower>();
-                if ((puzzle?.Amount ?? 0) != stage - 1) await PowerCmd.Remove(puzzle);
-                else await Buff<PuzzlePower>(1);
-                break;
+                await PuzzleCmd.Chant(context, play, option); break;
             default: throw new InvalidOperationException($"因子未结算：{option.SpellId}");
         }
     }

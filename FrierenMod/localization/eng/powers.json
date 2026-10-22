@@ -70,5 +70,11 @@
   "FRIERENMOD-GAIN_RELIC_POWER.title": "Accessories Spell",
   "FRIERENMOD-GAIN_RELIC_POWER.description": "Gain {Amount} additional random Relic rewards after winning this combat.",
   "FRIERENMOD-TIME_TRAVEL_POWER.title": "Time Travel",
-  "FRIERENMOD-TIME_TRAVEL_POWER.description": "Restore your recorded state in {Amount} turns."
+  "FRIERENMOD-TIME_TRAVEL_POWER.description": "Restore your recorded state in {Amount} turns.",
+  "FRIERENMOD-FACTOR100_POWER.title": "!??",
+  "FRIERENMOD-FACTOR100_POWER.description": "...Frieren...",
+  "FRIERENMOD-FACTOR010_POWER.title": "?!?",
+  "FRIERENMOD-FACTOR010_POWER.description": "...kill...",
+  "FRIERENMOD-FACTOR001_POWER.title": "??!",
+  "FRIERENMOD-FACTOR001_POWER.description": "...monster..."
 }
