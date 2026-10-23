@@ -190,7 +190,7 @@
   "TUTORIAL_PAGE": "{Current} / {Total}",
   "TUTORIAL_SKIP": "Skip Tutorial",
   "TUTORIAL_DONE": "Begin Adventure",
-  "TUTORIAL_HELP": "Tutorial",
+  "TUTORIAL_HELP": "View Tutorial",
   "TUTORIAL_BODY_1": "Mana is a card resource spent on Chant effects. It is separate from Energy.\n\nAt the start of each of your turns, Holy Emblem adds 1 Mana to your draw pile and 1 to your discard pile.\n\nThe counters on the left show Mana in your draw pile, hand, and discard pile. Each pile is counted separately.",
   "TUTORIAL_BODY_2": "After playing a card with Chant, choose an available slot.\n\nSpend Mana from that slot's pile to trigger its Magic Factor. Mana from other piles cannot pay for it.\n\nFactors you cannot afford remain visible, but cannot be selected.",
   "TUTORIAL_BODY_3": "Click the purple book in the top right to view your Magic Factors and Magic Tools.\n\nRight-click a Tool to activate it, then left-click its targets as prompted. It takes effect once all targets are chosen. Right-click the Tool again or press Esc to cancel.\n\nBattles can reward new Factors and Tools. Click Tutorial in the Grimoire to review these instructions."

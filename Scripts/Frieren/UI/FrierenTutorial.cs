@@ -34,11 +34,14 @@ public partial class FrierenTutorial : NCombatRulesFtue
 
     private static string Text(string key) => new LocString("frieren", key).GetFormattedText();
 
+    // 原版教程开关不能表示玩家已学过本模组；模组仅使用自己的已读标记。
+    public static bool ShouldAutoShow(Player player) => LocalContext.IsMe(player) &&
+        !SaveManager.Instance.Progress.FtueCompleted.Contains(TutorialId);
+
     public static async Task<bool> Show(Player player, bool replay = false, CancellationToken cancellation = default)
     {
         if (!LocalContext.IsMe(player)) return true;
-        var progress = SaveManager.Instance.Progress;
-        if (!replay && (!progress.EnableFtues || progress.FtueCompleted.Contains(TutorialId))) return true;
+        if (!replay && !ShouldAutoShow(player)) return true;
         var modal = NModalContainer.Instance;
         // 无界面的测试不弹窗；实机缺少容器时留给界面兜底重试。
         if (modal == null) return TestMode.IsOn;

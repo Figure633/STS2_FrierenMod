@@ -122,11 +122,15 @@ public sealed class MagicBookScreen
         _status.AutowrapMode = TextServer.AutowrapMode.WordSmart;
         _canvas.AddChild(_status);
 
-        var help = new BaseLib.Config.UI.NConfigButton { Name = "ReplayMagicTutorial", Position = new(1680, 1004), Scale = Vector2.One * 0.65f };
+        // 原生按钮会在悬停时将自身缩放恢复为 1；缩放放在父节点，避免按钮越出屏幕。
+        var helpContainer = new Control { Name = "MagicTutorialButtonContainer", Position = new(1680, 155),
+            Size = new(324, 64), Scale = Vector2.One * 0.65f, MouseFilter = Control.MouseFilterEnum.Ignore };
+        _canvas.AddChild(helpContainer);
+        var help = new BaseLib.Config.UI.NConfigButton { Name = "ReplayMagicTutorial" };
         help.Initialize(Text("TUTORIAL_HELP"), () => {
             if (!_applying && !_presentingChange) TaskHelper.RunSafely(FrierenTutorial.Show(_player, replay: true));
         });
-        _canvas.AddChild(help);
+        helpContainer.AddChild(help);
 
         // 原生返回按钮保留二代的贴图、悬停动画和输入提示。
         var back = GD.Load<PackedScene>("res://scenes/ui/back_button.tscn").Instantiate<MegaCrit.Sts2.Core.Nodes.CommonUi.NBackButton>();

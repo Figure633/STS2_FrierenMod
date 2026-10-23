@@ -41,7 +41,7 @@ public static class MagicDeckCmd
         var combat = CombatManager.Instance;
         if (combat.IsInProgress && (combat.IsEnding || combat.PlayerActionsDisabled || combat.IsEnemyTurnStarted)) return;
         var deck = MagicDeckStore.Read(player);
-        if (deck.SetupCompleted && deck.StartingPropsGranted) return;
+        if (deck.SetupCompleted && deck.StartingPropsGranted && !FrierenTutorial.ShouldAutoShow(player)) return;
         var session = SetupSessions.GetValue(player, _ => new());
         if (session.Active || session.Lifetime.IsCancellationRequested) return;
         TaskHelper.RunSafely(ChooseStartingFactors(new BlockingPlayerChoiceContext(), player));
@@ -82,7 +82,7 @@ public static class MagicDeckCmd
     private static async Task ChooseStartingFactorsCore(PlayerChoiceContext context, Player player, CancellationToken cancellation)
     {
         var deck = MagicDeckStore.Read(player);
-        if (!deck.SetupCompleted && !await FrierenTutorial.Show(player, cancellation: cancellation)) return;
+        if (!await FrierenTutorial.Show(player, cancellation: cancellation)) return;
         while (!deck.SetupCompleted)
         {
             cancellation.ThrowIfCancellationRequested();

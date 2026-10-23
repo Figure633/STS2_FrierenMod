@@ -159,7 +159,20 @@ public static class RewardMagicPropTests
         var tutorialModal = new NModalContainer { Size = host.Size, MouseFilter = Control.MouseFilterEnum.Ignore };
         tutorialModal.AddChild(new ColorRect { Name = "Backstop", Size = host.Size, Color = new(0, 0, 0, 0), Visible = false });
         root.AddChild(tutorialModal);
-        var tutorialTask = FrierenTutorial.Show(player, replay: true); await Tick();
+        var help = book.GetNode<Control>("BookCanvas/MagicTutorialButtonContainer/ReplayMagicTutorial");
+        Vector2 originalSize = host.Size;
+        foreach (var size in new[] { new Vector2(1280, 720), new Vector2(1920, 1080), new Vector2(1280, 1024) }) {
+            host.Size = size; await Tick();
+            Check(host.GetGlobalRect().Encloses(help.GetGlobalRect()), "查看教程按钮完整位于魔法书内：" + size);
+        }
+        host.Size = originalSize; await Tick();
+        Vector2 helpPoint = help.GetGlobalRect().GetCenter();
+        root.GetViewport().PushInput(new InputEventMouseMotion { Position = helpPoint, GlobalPosition = helpPoint }, true); await Tick();
+        Check(host.GetGlobalRect().Encloses(help.GetGlobalRect()), "原生悬停动画后查看教程按钮仍不越界");
+        if (OS.GetCmdlineUserArgs().Contains("--ui-snapshot"))
+            root.GetViewport().GetTexture().GetImage().SavePng(ProjectSettings.GlobalizePath("res://../../artifacts/tutorial-button-native-capstone.png"));
+        root.GetViewport().PushInput(new InputEventMouseButton { Position = helpPoint, GlobalPosition = helpPoint, ButtonIndex = MouseButton.Left, Pressed = true }, true); await Tick();
+        root.GetViewport().PushInput(new InputEventMouseButton { Position = helpPoint, GlobalPosition = helpPoint, ButtonIndex = MouseButton.Left, Pressed = false }, true); await Tick();
         Check(book.ZIndex == 0 && tutorialModal.ZIndex == 0 && ActiveScreenContext.Instance.GetCurrentScreen() is FrierenTutorial,
             "重看教程沿用原版模态层级，不被魔法书盖住");
         Check(!book.CanProcess(), "教程打开后原生界面上下文暂停魔法书输入");
@@ -168,7 +181,7 @@ public static class RewardMagicPropTests
         if (OS.GetCmdlineUserArgs().Contains("--ui-snapshot"))
             root.GetViewport().GetTexture().GetImage().SavePng(ProjectSettings.GlobalizePath("res://../../artifacts/tutorial-native-capstone.png"));
         ((FrierenTutorial)tutorialModal.OpenModal!).Finish(false); await Tick();
-        Check(tutorialTask.IsCompletedSuccessfully && !await tutorialTask && book.CanProcess() && ActiveScreenContext.Instance.IsCurrent(book),
+        Check(tutorialModal.OpenModal == null && book.CanProcess() && ActiveScreenContext.Instance.IsCurrent(book),
             "退出教程经原版上下文恢复同一本魔法书");
         tutorialModal.QueueFree(); await Tick();
         AccessTools.Property(typeof(NModalContainer), nameof(NModalContainer.Instance)).SetValue(null, null);

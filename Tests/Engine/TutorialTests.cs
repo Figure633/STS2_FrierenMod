@@ -61,11 +61,10 @@ public static class TutorialTests
         void Next() => Current().GetNode<NButton>("RightArrow").EmitSignal(NButton.SignalName.Released, Current().GetNode<NButton>("RightArrow"));
         try {
             save.Progress.EnableFtues = false;
-            Check(await FrierenTutorial.Show(player) && modal.OpenModal == null, "尊重原版关闭教程设置");
-            save.Progress.EnableFtues = true;
             string before = MagicDeckStore.Read(player).ToJson(); int deckCards = player.Deck.Cards.Count;
             var pending = FrierenTutorial.Show(player);
             await Tick();
+            Check(modal.OpenModal is FrierenTutorial && !save.Progress.EnableFtues, "原版教程关闭时仍显示模组首次教程，不改动原版设置");
             Check(!pending.IsCompleted && blockers.Count == initialBlockers + 1, "首次显示原版模态界面并阻止背后快捷键");
             Check(Current().GetNode<TextureRect>("Image").GetChildren().OfType<NCard>().Count() == 1, "第一页使用真实魔力卡面");
             Check(Current().GetNode<MegaRichTextLabel>("%Description").Text.Contains("Mana"), "英文教程正文从本地化读取");
@@ -78,6 +77,7 @@ public static class TutorialTests
             Check(pending.IsCompletedSuccessfully && await pending && modal.OpenModal == null && blockers.Count == initialBlockers, "完成后关闭界面并释放原版输入锁");
             Check(MagicDeckStore.Read(player).ToJson() == before && player.Deck.Cards.Count == deckCards, "教程示例牌不进入魔法牌组或主牌组");
             Check(save.Progress.FtueCompleted.Contains(FrierenTutorial.TutorialId) && !save.Progress.FtueCompleted.Contains("combat_rules_ftue"), "只保存自定义教程标记");
+            Check(!save.Progress.EnableFtues, "完成模组教程后仍保留关闭原版教程的设置");
             save.Progress = ProgressState.FromSerializable(save.Progress.ToSerializable(), new DeserializationContext());
             Check(await FrierenTutorial.Show(player) && modal.OpenModal == null, "保存重载后不重复自动弹出");
 
@@ -110,6 +110,19 @@ public static class TutorialTests
             await Tick();
             Check(setup.IsCompletedSuccessfully && MagicDeckStore.Read(restored).SetupCompleted && MagicDeckStore.Read(restored).Props.Count == 2, "跳过后继续三槽选择，只赠送两个妙妙工具");
             Check(blockers.Count == initialBlockers && save.Progress.FtueCompleted.Contains(FrierenTutorial.TutorialId), "跳过也保存完成状态且选牌前已释放输入");
+
+            save.Progress = ProgressState.CreateDefault(); save.Progress.EnableFtues = false;
+            string completedDeck = MagicDeckStore.Read(restored).ToJson();
+            var oldRunUi = new Control { Size = new(1920, 1080) }; root.AddChild(oldRunUi);
+            MagicBookUi.Attach(oldRunUi, restored, () => null, () => false);
+            oldRunUi.GetNode<Godot.Timer>("FrierenManaRefresh").EmitSignal(Godot.Timer.SignalName.Timeout); await Tick();
+            Check(modal.OpenModal is FrierenTutorial && MagicDeckStore.Read(restored).ToJson() == completedDeck,
+                "已经选完因子的旧跑局经实际界面刷新补弹首次教程，不重选或重送工具");
+            Current().Finish(true); await Tick();
+            oldRunUi.GetNode<Godot.Timer>("FrierenManaRefresh").EmitSignal(Godot.Timer.SignalName.Timeout); await Tick();
+            Check(modal.OpenModal == null && MagicDeckStore.Read(restored).ToJson() == completedDeck && !save.Progress.EnableFtues,
+                "旧跑局看完只记录模组已读状态，后续刷新不再弹出");
+            oldRunUi.QueueFree(); await Tick();
         }
         finally {
             RunManager.Instance.CleanUp(); modal.Clear(); await Tick();
