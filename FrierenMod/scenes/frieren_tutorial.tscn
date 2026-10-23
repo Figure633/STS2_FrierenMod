@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/ftue/combat_rules_ftue.tscn" id="1"]
+[ext_resource type="Script" path="res://Scripts/Frieren/UI/FrierenTutorial.cs" id="2"]
+
+[node name="FrierenTutorial" instance=ExtResource("1")]
+script = ExtResource("2")

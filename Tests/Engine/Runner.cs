@@ -131,6 +131,10 @@ public partial class Runner : Node
                 GD.Print("CHANT_ANIMATION_SPEED_OK: " + await ChantAnimationSpeedTests.Run(this));
                 await Finish(); return;
             }
+            if (OS.GetCmdlineUserArgs().Contains("--tutorial-only")) {
+                GD.Print("TUTORIAL_OK: " + await TutorialTests.Run(this));
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--starting-setup-only")) {
                 GD.Print("STARTING_SETUP_OK: " + await StartingSetupTests.Run(this));
                 await Finish(); return;

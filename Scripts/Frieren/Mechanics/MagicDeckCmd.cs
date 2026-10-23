@@ -15,6 +15,8 @@ using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Nodes.Screens.Map;
 using Godot;
+using FrierenMod.Scripts.UI;
+using MegaCrit.Sts2.Core.Nodes.CommonUi;
 
 namespace FrierenMod.Scripts.Mechanics;
 
@@ -80,6 +82,7 @@ public static class MagicDeckCmd
     private static async Task ChooseStartingFactorsCore(PlayerChoiceContext context, Player player, CancellationToken cancellation)
     {
         var deck = MagicDeckStore.Read(player);
+        if (!deck.SetupCompleted && !await FrierenTutorial.Show(player, cancellation: cancellation)) return;
         while (!deck.SetupCompleted)
         {
             cancellation.ThrowIfCancellationRequested();
@@ -114,6 +117,7 @@ public static class MagicDeckCmd
         {
             var state = __instance.DebugOnlyGetState();
             if (state == null) return;
+            if (NModalContainer.Instance?.OpenModal is FrierenTutorial tutorial) tutorial.Finish(false);
             foreach (var player in state.Players)
                 if (SetupSessions.TryGetValue(player, out var session)) session.Lifetime.Cancel();
         }

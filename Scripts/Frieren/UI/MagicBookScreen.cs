@@ -67,7 +67,9 @@ public sealed class MagicBookScreen
         _player = player;
         _currentOverlay = currentOverlay ?? (() => NOverlayStack.Instance?.Peek());
         _capstone = (root as NGlobalUi)?.CapstoneContainer;
-        View = new MagicBookView { Name = "FrierenMagicBook", Visible = false, ZIndex = 100, ZAsRelative = false, MouseFilter = Control.MouseFilterEnum.Stop };
+        // 实机由原生 Capstone 管理层级，避免越过其上的教程和确认窗口。
+        View = new MagicBookView { Name = "FrierenMagicBook", Visible = false, ZIndex = _capstone != null ? 0 : 100,
+            ZAsRelative = false, MouseFilter = Control.MouseFilterEnum.Stop };
         (_capstone as Control ?? root).AddChild(View);
         View.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
         _canvas = new Control { Name = "BookCanvas", Size = new Vector2(1920, 1080), MouseFilter = Control.MouseFilterEnum.Ignore };
@@ -120,6 +122,12 @@ public sealed class MagicBookScreen
         _status.AutowrapMode = TextServer.AutowrapMode.WordSmart;
         _canvas.AddChild(_status);
 
+        var help = new BaseLib.Config.UI.NConfigButton { Name = "ReplayMagicTutorial", Position = new(1680, 1004), Scale = Vector2.One * 0.65f };
+        help.Initialize(Text("TUTORIAL_HELP"), () => {
+            if (!_applying && !_presentingChange) TaskHelper.RunSafely(FrierenTutorial.Show(_player, replay: true));
+        });
+        _canvas.AddChild(help);
+
         // 原生返回按钮保留二代的贴图、悬停动画和输入提示。
         var back = GD.Load<PackedScene>("res://scenes/ui/back_button.tscn").Instantiate<MegaCrit.Sts2.Core.Nodes.CommonUi.NBackButton>();
         _canvas.AddChild(back);
@@ -161,7 +169,10 @@ public sealed class MagicBookScreen
         Cancel();
         if (_capstone?.CurrentCapstoneScreen == View) _capstone.Close(); else View.Hide();
     }
-    private void Back() { if (_armed.HasValue) Cancel(); else Close(); }
+    private void Back() {
+        if (NModalContainer.Instance?.OpenModal != null) return;
+        if (_armed.HasValue) Cancel(); else Close();
+    }
 
     private void RestoreOverlay()
     {
@@ -184,7 +195,7 @@ public sealed class MagicBookScreen
 
     private bool HandlePointer(InputEventMouseButton button)
     {
-        if (!View.IsVisibleInTree() || !View.CanProcess() || _applying || _presentingChange) { _pointerPress = null; return false; }
+        if (!View.IsVisibleInTree() || !View.CanProcess() || NModalContainer.Instance?.OpenModal != null || _applying || _presentingChange) { _pointerPress = null; return false; }
         if (button.ButtonIndex is not (MouseButton.Left or MouseButton.Right)) return false;
         bool Contains(Control control) => new Rect2(Vector2.Zero, control.Size).HasPoint(
             control.GetGlobalTransformWithCanvas().AffineInverse() * button.Position);

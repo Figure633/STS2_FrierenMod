@@ -49,6 +49,13 @@ func _initialize():
 	for file in DirAccess.get_files_at("res://FrierenMod/scenes"):
 		if not file.ends_with(".tscn"):
 			continue
+		# 非 Mono 打包器无法创建原版 C# 教程节点；真实继承场景由引擎专项验证。
+		if file == "frieren_tutorial.tscn":
+			if not FileAccess.file_exists("res://Scripts/Frieren/UI/FrierenTutorial.cs"):
+				quit(1)
+				return
+			scenes += 1
+			continue
 		var packed = load("res://FrierenMod/scenes/" + file)
 		if not packed is PackedScene or not packed.can_instantiate():
 			push_error("Invalid scene: " + file)
@@ -57,7 +64,7 @@ func _initialize():
 		var scene = packed.instantiate()
 		scene.free()
 		scenes += 1
-	if textures < 119 or audio_count != 16 or scenes != 6:
+	if textures < 119 or audio_count != 16 or scenes != 7:
 		push_error("Missing texture files")
 		quit(1)
 		return

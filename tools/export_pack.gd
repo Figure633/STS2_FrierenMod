@@ -14,6 +14,7 @@ func _initialize():
 	files.append("res://Scripts/Frieren/UI/MagicFactorButton.cs")
 	files.append("res://Scripts/Frieren/UI/MagicBookPointerInput.cs")
 	files.append("res://Scripts/Frieren/UI/MagicBookView.cs")
+	files.append("res://Scripts/Frieren/UI/FrierenTutorial.cs")
 	var imported: Dictionary = {}
 	for path in files:
 		if path.ends_with(".import"):

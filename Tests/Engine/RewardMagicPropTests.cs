@@ -155,6 +155,23 @@ public static class RewardMagicPropTests
             await Tick();
         }
         var tool = Holder("Prop_" + crystal);
+        // 模拟 game.tscn：模态容器位于跑局界面之后，双方使用原版默认 Z 层级。
+        var tutorialModal = new NModalContainer { Size = host.Size, MouseFilter = Control.MouseFilterEnum.Ignore };
+        tutorialModal.AddChild(new ColorRect { Name = "Backstop", Size = host.Size, Color = new(0, 0, 0, 0), Visible = false });
+        root.AddChild(tutorialModal);
+        var tutorialTask = FrierenTutorial.Show(player, replay: true); await Tick();
+        Check(book.ZIndex == 0 && tutorialModal.ZIndex == 0 && ActiveScreenContext.Instance.GetCurrentScreen() is FrierenTutorial,
+            "重看教程沿用原版模态层级，不被魔法书盖住");
+        Check(!book.CanProcess(), "教程打开后原生界面上下文暂停魔法书输入");
+        await Click(tool, MouseButton.Right);
+        Check(tool.CardNode!.CardHighlight.Modulate.A == 0, "教程上点击不会启用下层魔具");
+        if (OS.GetCmdlineUserArgs().Contains("--ui-snapshot"))
+            root.GetViewport().GetTexture().GetImage().SavePng(ProjectSettings.GlobalizePath("res://../../artifacts/tutorial-native-capstone.png"));
+        ((FrierenTutorial)tutorialModal.OpenModal!).Finish(false); await Tick();
+        Check(tutorialTask.IsCompletedSuccessfully && !await tutorialTask && book.CanProcess() && ActiveScreenContext.Instance.IsCurrent(book),
+            "退出教程经原版上下文恢复同一本魔法书");
+        tutorialModal.QueueFree(); await Tick();
+        AccessTools.Property(typeof(NModalContainer), nameof(NModalContainer.Instance)).SetValue(null, null);
         await Click(tool, MouseButton.Right);
         Check(tool.CardNode!.CardHighlight.Modulate.A > 0, "战利品上打开魔法书后，实际右键可启用水晶球");
         if (OS.GetCmdlineUserArgs().Contains("--ui-snapshot"))
