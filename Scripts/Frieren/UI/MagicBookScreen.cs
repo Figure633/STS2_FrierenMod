@@ -252,6 +252,11 @@ public sealed class MagicBookScreen
         holder.CardNode.CardHighlight.AnimFlash();
     }
 
+    internal void ClearAcquiredItemFlash(int id)
+    {
+        if (_cards.TryGetValue(id, out var holder)) holder.CardNode?.CardHighlight.AnimHideInstantly();
+    }
+
     internal void EndInventoryAnimation()
     {
         _presentingChange = false;

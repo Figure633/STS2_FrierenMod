@@ -113,8 +113,9 @@ public static class MagicDeckAnimations
                     await layer.ToSignal(layer.GetTree(), SceneTree.SignalName.ProcessFrame);
                     if (Closed) return;
                     screen.FlashAcquiredItem(item.Id);
-                    var reveal = layer.CreateTween(); reveal.TweenInterval(1.2);
+                    var reveal = layer.CreateTween(); reveal.TweenInterval(0.5);
                     if (!await reveal.AwaitFinished(layer)) return;
+                    screen.ClearAcquiredItemFlash(item.Id);
                 }
                 // 外部奖励仍使用原版飞入；多件并排展示，依次起飞。
                 for (int start = 0; start < external.Count; start += 3) {

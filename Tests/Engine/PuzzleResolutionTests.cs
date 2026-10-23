@@ -18,17 +18,48 @@ using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Multiplayer;
 using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.Unlocks;
+using MegaCrit.Sts2.Core.Nodes.Vfx;
+using MegaCrit.Sts2.Core.Helpers;
 
 public static class PuzzleResolutionTests
 {
     private static readonly List<string> Hints = [];
     private static bool CaptureHint(LocString line) { Hints.Add(line.GetFormattedText()); return false; }
+    private static int BeamCount;
+    private static NHyperbeamVfx? BeamStub;
+    private static TaskCompletionSource? KillDelay;
+    private static float DelaySeconds;
+    private static bool RenderNative;
+    private static bool MutePreviewAudio() => !RenderNative;
+    private static bool InteractiveVisual(ref bool __result)
+    {
+        if (!RenderNative) return true;
+        __result = false; return false;
+    }
+    private static bool CaptureBeam(Creature owner, Creature target, ref NHyperbeamVfx? __result)
+    {
+        if (!target.IsAlive) throw new Exception("谜题特效开始前敌人已经死亡");
+        BeamCount++; __result = BeamStub = new NHyperbeamVfx(); return false;
+    }
+    private static bool CaptureDelay(float seconds, ref Task __result)
+    {
+        if (Math.Abs(seconds - 1.025f) > 0.001f) return true;
+        DelaySeconds = seconds; KillDelay = new TaskCompletionSource(); __result = KillDelay.Task; return false;
+    }
     public static async Task<int> Run()
     {
-        int count = 0; Hints.Clear();
+        int count = 0; Hints.Clear(); BeamCount = 0; RenderNative = false;
         var hintPatch = new Harmony("frieren.tests.puzzle_hints");
         hintPatch.Patch(AccessTools.Method(typeof(TalkCmd), nameof(TalkCmd.Play)),
             prefix: new HarmonyMethod(typeof(PuzzleResolutionTests), nameof(CaptureHint)));
+        hintPatch.Patch(AccessTools.Method(typeof(NHyperbeamVfx), nameof(NHyperbeamVfx.Create), [typeof(Creature),typeof(Creature)]),
+            prefix: new HarmonyMethod(typeof(PuzzleResolutionTests), nameof(CaptureBeam)));
+        hintPatch.Patch(AccessTools.Method(typeof(Cmd), nameof(Cmd.Wait), [typeof(float),typeof(bool)]),
+            prefix: new HarmonyMethod(typeof(PuzzleResolutionTests), nameof(CaptureDelay)));
+        hintPatch.Patch(AccessTools.PropertyGetter(typeof(NonInteractiveMode), nameof(NonInteractiveMode.IsActive)),
+            prefix: new HarmonyMethod(typeof(PuzzleResolutionTests), nameof(InteractiveVisual)));
+        hintPatch.Patch(AccessTools.Method(typeof(SfxCmd), nameof(SfxCmd.Play), [typeof(string),typeof(float)]),
+            prefix: new HarmonyMethod(typeof(PuzzleResolutionTests), nameof(MutePreviewAudio)));
         void Check(bool ok, string name) { if (!ok) throw new Exception(name); GD.Print("PASS 谜题结算：" + name); count++; }
         var player = Player.CreateForNewRun<Frieren>(UnlockState.all, 1);
         var run = RunState.CreateForTest([player], seed: "FRIEREN-PUZZLE-INSTANT");
@@ -106,7 +137,27 @@ public static class PuzzleResolutionTests
         await Reset(); await Chant(0); await Chant(1);
         int manaBefore = ManaCmd.InPile(player, PileType.Discard).Count();
         int hp = player.Creature.CurrentHp, round = combat.RoundNumber;
-        await Chant(2);
+        Check(BeamCount == 0, "错误槽位、错误顺序和未完成时均不播放完成特效");
+        var completing = Chant(2);
+        Check(!completing.IsCompleted && Alive() && BeamCount == 1 && KillDelay != null && Math.Abs(DelaySeconds - 1.025f) < 0.001f,
+            "正确第三段先启动原版光束，等待约1秒期间两个敌人保持存活");
+        // 直接加载原版场景验证光束阶段；TestMode 的工厂替身只用于控制结算暂停。
+        var root = ((SceneTree)Engine.GetMainLoop()).Root;
+        var nativeBeam = GD.Load<PackedScene>(NHyperbeamVfx.scenePath).Instantiate<NHyperbeamVfx>();
+        nativeBeam.Position = new Vector2(350, 540); nativeBeam.ApplyRotation(new(350,540), new(1450,540));
+        await root.ToSignal(root.GetTree(), SceneTree.SignalName.ProcessFrame);
+        RenderNative = true;
+        root.AddChild(nativeBeam);
+        Check(nativeBeam.Get(NHyperbeamVfx.PropertyName._laserLine).AsGodotObject() is Line2D { Visible: false },
+            "原版光束先隐藏，保留蓄力阶段");
+        await root.ToSignal(root.GetTree().CreateTimer(0.72), SceneTreeTimer.SignalName.Timeout);
+        Check(nativeBeam.IsInsideTree() && nativeBeam.Get(NHyperbeamVfx.PropertyName._laserLine).AsGodotObject() is Line2D { Visible: true },
+            "原版场景可加载并从蓄力进入光束阶段");
+        if (OS.GetCmdlineUserArgs().Contains("--ui-snapshot"))
+            root.GetTexture().GetImage().SavePng(ProjectSettings.GlobalizePath("res://../../artifacts/puzzle-native-hyperbeam.png"));
+        nativeBeam.QueueFree();
+        RenderNative = false;
+        KillDelay!.SetResult(); await completing; BeamStub!.Free();
         Check(enemies.All(enemy => enemy.IsDead) && Progress() == 3 && Clues().Length == 3 && Hints.Count == 0 && combat.RoundNumber == round,
             "第三段返回前两个敌人已通过原生命令死亡，无需结束回合");
         Check(player.Creature.CurrentHp == hp && ManaCmd.InPile(player, PileType.Discard).Count() == manaBefore - 6,
@@ -120,7 +171,9 @@ public static class PuzzleResolutionTests
         card = combat.CreateCard<FinalChant>(player);
         play = new CardPlay { Card = card, Target = null, IsAutoPlay = false, PlayIndex = 0, ResultPile = PileType.Discard, PlayCount = 1,
             Resources = new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 } };
-        await Reset(); await ChantCmd.Final(context, play);
+        await Reset(); var finishing = ChantCmd.Final(context, play);
+        Check(!finishing.IsCompleted && Alive() && BeamCount == 2, "终极咏唱也先播放完成特效，等待结束后才击杀");
+        KillDelay!.SetResult(); await finishing; BeamStub!.Free();
         Check(enemies.All(enemy => enemy.IsDead) && Progress() == 3,
             "终极咏唱按槽位顺序集齐时也立即击杀全部敌人");
         hintPatch.UnpatchAll(hintPatch.Id);

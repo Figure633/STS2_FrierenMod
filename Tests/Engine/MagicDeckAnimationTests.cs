@@ -102,6 +102,7 @@ public static class MagicDeckAnimationTests
         await Snapshot("magic-prop-green-pulse");
         bool seenExhaust = false, seenFly = false, capturedNew = false;
         var seenNew = new HashSet<int>();
+        var clearedNew = new HashSet<int>();
         var addedIds = MagicDeckStore.Read(player).Items.TakeLast(2).Select(i=>i.InstanceId).ToArray();
         var elapsed = System.Diagnostics.Stopwatch.StartNew();
         while (elapsed.Elapsed < TimeSpan.FromSeconds(8) && !use.IsCompleted) {
@@ -118,12 +119,16 @@ public static class MagicDeckAnimationTests
                 if (ui.FindChild("Factor_"+id,true,false) is NGridCardHolder holder && holder.IsVisibleInTree() &&
                     holder.CardNode!.CardHighlight.Modulate==NCardHighlight.playableColor &&
                     ui.FindChild("InventoryScroll",true,false) is ScrollContainer scroll &&
-                    scroll.GetGlobalRect().HasPoint(holder.CardNode.GlobalPosition))
-                    seenNew.Add(id);
+                    scroll.GetGlobalRect().HasPoint(holder.CardNode.GlobalPosition)) {
+                    float width = (float)AccessTools.Method(typeof(NCardHighlight), "GetShaderParameter").Invoke(holder.CardNode.CardHighlight, null)!;
+                    if (width > 0.01f) seenNew.Add(id);
+                    else if (seenNew.Contains(id)) clearedNew.Add(id);
+                }
             }
             if (seenNew.Count==2 && !capturedNew) { await Snapshot("magic-factors-obtained"); capturedNew=true; }
         }
         Check(seenExhaust && seenNew.Count==2 && !seenFly, "两个新因子直接在库存中依次闪光，不飞回魔法书图标");
+        Check(clearedNew.Count == 2, "两个因子的蓝光均在动画队列完成前独立清除，不残留原生闪光尾部高亮");
         await use;
         for (int i=0;i<8;i++) await Tick();
         Check(layer.GetChildCount() == 0 && !MagicPropCmd.IsBusy(player), "动画结束释放卡牌节点和忙碌状态");

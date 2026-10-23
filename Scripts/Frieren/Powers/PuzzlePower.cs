@@ -12,6 +12,10 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
+using MegaCrit.Sts2.Core.Nodes.GodotExtensions;
+using MegaCrit.Sts2.Core.Nodes.Rooms;
+using MegaCrit.Sts2.Core.Nodes.Vfx;
+using MegaCrit.Sts2.Core.Helpers;
 
 namespace FrierenMod.Scripts.Powers;
 
@@ -23,8 +27,19 @@ public sealed class PuzzlePower : TurnOnlyPower
 
     public override async Task AfterPowerAmountChanged(PlayerChoiceContext context, PowerModel power, decimal amount, Creature? applier, CardModel? source)
     {
-        // 使用原生能力变化钩子；第三段结算完成即触发，不再等待回合结束。
-        if (power == this && Amount == 3)
-            await CreatureCmd.Kill(CombatState.Enemies.Where(x => x.IsAlive).ToArray());
+        if (power != this || Amount != 3) return;
+        var enemies = CombatState.Enemies.Where(x => x.IsAlive).ToArray();
+        if (enemies.Length == 0) return;
+        // 复用原版 Hyperbeam 的蓄力、光束、音效与震屏，结束后再统一击杀。
+        var beam = NHyperbeamVfx.Create(Owner, enemies[^1]);
+        if (beam != null) {
+            NCombatRoom.Instance?.CombatVfxContainer.AddChildSafely(beam);
+            await Cmd.Wait(NHyperbeamVfx.hyperbeamAnticipationDuration + NHyperbeamVfx.hyperbeamLaserDuration);
+            foreach (var enemy in enemies.Where(x => x.IsAlive)) {
+                var impact = NHyperbeamImpactVfx.Create(Owner, enemy);
+                if (impact != null) NCombatRoom.Instance?.CombatVfxContainer.AddChildSafely(impact);
+            }
+        }
+        await CreatureCmd.Kill(enemies.Where(x => x.IsAlive).ToArray());
     }
 }
