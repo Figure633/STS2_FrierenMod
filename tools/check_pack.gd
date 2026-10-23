@@ -17,7 +17,7 @@ func _initialize():
 			quit(1)
 			return
 	var textures = 0
-	for folder in ["cards", "powers", "relics", "potions", "character", "energy", "ui", "card_frames"]:
+	for folder in ["cards", "powers", "relics", "potions", "character", "energy", "ui", "card_frames", "events"]:
 		var path = "res://FrierenMod/images/" + folder
 		for file in DirAccess.get_files_at(path):
 			if not file.ends_with(".png") and not file.ends_with(".tres"):

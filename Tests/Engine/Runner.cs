@@ -143,6 +143,10 @@ public partial class Runner : Node
                 GD.Print("STARTING_SETUP_OK: " + await StartingSetupTests.Run(this));
                 await Finish(); return;
             }
+            if (OS.GetCmdlineUserArgs().Contains("--opening-event-only")) {
+                GD.Print("OPENING_EVENT_OK: " + await OpeningEventTests.Run(this));
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--synchro-display-only")) {
                 GD.Print("SYNCHRO_DISPLAY_OK: " + await SynchroDisplayTests.Run(this));
                 await Finish(); return;

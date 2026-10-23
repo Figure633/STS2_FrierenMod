@@ -17,6 +17,7 @@ public class Entry
         var harmony = new Harmony("sts2.arkalin.frierenmod");
         Godot.Bridge.ScriptManagerBridge.LookupScriptsInAssembly(typeof(Entry).Assembly);
         _ = MagicDeckStore.Data;
+        _ = Events.ReadingGrimoireEntrance.Stage;
         _ = Rewards.FactorReward.SavedChoices;
         BaseLib.Utils.CustomLocTableManager.Register("frieren");
         BaseLib.Config.ModConfigRegistry.Register("FrierenMod", new Presentation.PresentationSettings());

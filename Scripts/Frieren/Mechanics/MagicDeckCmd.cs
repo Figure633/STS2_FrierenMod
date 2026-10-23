@@ -17,6 +17,8 @@ using MegaCrit.Sts2.Core.Nodes.Screens.Map;
 using Godot;
 using FrierenMod.Scripts.UI;
 using MegaCrit.Sts2.Core.Nodes.CommonUi;
+using MegaCrit.Sts2.Core.Rooms;
+using FrierenMod.Scripts.Events;
 
 namespace FrierenMod.Scripts.Mechanics;
 
@@ -33,10 +35,12 @@ public static class MagicDeckCmd
     public static bool SetupMustWait => RunManager.Instance.NetService.IsGameLoading ||
         NGame.Instance?.Transition?.InTransition == true || CombatManager.Instance.IsStarting;
 
+    public static bool StartingEventActive(Player player) => player.RunState.CurrentRoom is EventRoom { CanonicalEvent: ReadingGrimoireEvent };
+
     // 已有界面刷新在淡入及原生加载结束后恢复初始选择，不阻塞 LoadRun/房间转场。
     public static void TryResumeStartingFactors(Player player)
     {
-        if (SetupMustWait || RunManager.Instance.IsCleaningUp ||
+        if (SetupMustWait || StartingEventActive(player) || RunManager.Instance.IsCleaningUp ||
             !ReferenceEquals(RunManager.Instance.DebugOnlyGetState(), player.RunState)) return;
         var combat = CombatManager.Instance;
         if (combat.IsInProgress && (combat.IsEnding || combat.PlayerActionsDisabled || combat.IsEnemyTurnStarted)) return;
@@ -47,8 +51,14 @@ public static class MagicDeckCmd
         TaskHelper.RunSafely(ChooseStartingFactors(new BlockingPlayerChoiceContext(), player));
     }
 
-    public static async Task ChooseStartingFactors(PlayerChoiceContext context, Player player)
+    public static Task ChooseStartingFactors(PlayerChoiceContext context, Player player) => RunStartingSetup(context, player, false);
+
+    public static Task<bool> ChooseStartingEventFactor(PlayerChoiceContext context, Player player) => RunStartingSetup(context, player, true);
+
+    private static async Task<bool> RunStartingSetup(PlayerChoiceContext context, Player player, bool singleFactor)
     {
+        // 开局事件每次按钮只选一本，圣徽和界面兜底不得抢先完成三次选择。
+        if (!singleFactor && StartingEventActive(player)) return false;
         // 无涅奥开局可能同时进入第一回合；同一玩家只显示一组初始选择。
         var session = SetupSessions.GetValue(player, _ => new());
         bool entered = false;
@@ -60,9 +70,9 @@ public static class MagicDeckCmd
                 // 地图在原生屏幕上下文中的优先级高于选牌，必须经原生接口关闭后再弹出选项。
                 map.Close(animateOut: false);
             }
-            await ChooseStartingFactorsCore(context, player, session.Lifetime.Token);
+            return await ChooseStartingFactorsCore(context, player, session.Lifetime.Token, singleFactor);
         }
-        catch (OperationCanceledException) when (session.Lifetime.IsCancellationRequested) { }
+        catch (OperationCanceledException) when (session.Lifetime.IsCancellationRequested) { return false; }
         finally {
             try {
                 if (hiddenMap != null && GodotObject.IsInstanceValid(hiddenMap) && !session.Lifetime.IsCancellationRequested &&
@@ -79,10 +89,10 @@ public static class MagicDeckCmd
             await SaveManager.Instance.SaveRun(null, saveProgress: false);
     }
 
-    private static async Task ChooseStartingFactorsCore(PlayerChoiceContext context, Player player, CancellationToken cancellation)
+    private static async Task<bool> ChooseStartingFactorsCore(PlayerChoiceContext context, Player player, CancellationToken cancellation, bool singleFactor)
     {
         var deck = MagicDeckStore.Read(player);
-        if (!await FrierenTutorial.Show(player, cancellation: cancellation)) return;
+        if (!await FrierenTutorial.Show(player, cancellation: cancellation)) return false;
         while (!deck.SetupCompleted)
         {
             cancellation.ThrowIfCancellationRequested();
@@ -96,17 +106,24 @@ public static class MagicDeckCmd
             var offered = deck.Draft.ToArray();
             var selected = await CardSelectCmd.FromChooseACardScreen(context, cards, player).WaitAsync(cancellation);
             cancellation.ThrowIfCancellationRequested();
-            if (selected is not FactorCard factor) return;
+            if (selected is not FactorCard factor) return false;
             // 等待选牌期间的其他入库不能被旧快照覆盖；过期选择不能写入新跑局。
-            if (!ReferenceEquals(RunManager.Instance.DebugOnlyGetState(), player.RunState)) return;
+            if (!ReferenceEquals(RunManager.Instance.DebugOnlyGetState(), player.RunState)) return false;
             deck = MagicDeckStore.Read(player);
-            if (deck.SetupCompleted || deck.DraftSlot != slot || !deck.Draft.SequenceEqual(offered)) return;
+            if (deck.SetupCompleted || deck.DraftSlot != slot || !deck.Draft.SequenceEqual(offered)) return false;
             deck.SelectInitial(factor.FactorId);
             await SaveSetup(player, deck);
             Log.Info($"Frieren: 初始槽位 {deck.DraftSlot} 装载 {factor.FactorId}");
+            if (singleFactor) return true;
         }
         cancellation.ThrowIfCancellationRequested();
-        deck = MagicDeckStore.Read(player);
+        if (!singleFactor) await GrantStartingProps(player);
+        return true;
+    }
+
+    public static async Task GrantStartingProps(Player player)
+    {
+        var deck = MagicDeckStore.Read(player);
         if (deck.GrantStartingProps()) await SaveSetup(player, deck);
     }
 

@@ -2296,5 +2296,12 @@
     "composition": "liquid → optional hybrid → optional spots → body; outline uses native template",
     "sha256": "603e6799ee93a73b04f910b0e609e617ed2756bf8b96d69f6612b6a4ef097305",
     "modified": true
+  },
+  {
+    "file": "FrierenMod/images/events/ReadingGrimoire.png",
+    "source": "STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/events/Beta.png",
+    "source_kind": "local_sts1_source",
+    "sha256": "bff20561d21e24b492b1c06684c79f800e1735e6b42c8e286afddb53541b26ea",
+    "modified": false
   }
 ]
