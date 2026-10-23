@@ -72,10 +72,10 @@ public static class RelicsPotionsTests
         }
         var relics = ModelDb.RelicPool<FrierenRelicPool>().AllRelics.ToArray();
         var potions = ModelDb.PotionPool<FrierenPotionPool>().AllPotions.ToArray();
-        Check(relics.Length == 19 && relics.Count(r => r.Rarity != RelicRarity.None) == 18 && potions.Length == 3,
-            "18件有效遗物、1件旧档废弃模型和3种药水注册完整");
+        Check(relics.Length == 20 && relics.Count(r => r.Rarity != RelicRarity.None) == 19 && potions.Length == 3,
+            "19件有效遗物、1件旧档废弃模型和3种药水注册完整");
         foreach (var relic in relics) {
-            Check(relic.Icon.GetWidth() > 0 && relic.IconOutline.GetWidth() > 0 && ResourceLoader.Exists(relic is HolyEmblem ? relic.PackedIconPath :
+            Check(relic.Icon.GetWidth() > 0 && relic.IconOutline.GetWidth() > 0 && ResourceLoader.Exists(relic is HolyEmblem or UpgradedHolyEmblem ? relic.PackedIconPath :
                 $"res://FrierenMod/images/relics/{relic.GetType().Name}.png"), "遗物图标及轮廓可加载：" + relic.GetType().Name);
         }
         foreach (var potion in potions) Check(potion.Image.GetWidth() > 0 && potion.Outline?.GetWidth() > 0,

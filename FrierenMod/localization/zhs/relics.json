@@ -55,5 +55,8 @@
   "FRIERENMOD-UBEL_STAFF.flavor": "尤贝尔以她特有的魔法天赋“共鸣”的和“近乎无所不切魔法”而闻名，法杖发出的一斩曾切碎了身穿不动的外套的一级魔法使布鲁格",
   "FRIERENMOD-COMFORTABLE_BED.title": "舒适的床",
   "FRIERENMOD-COMFORTABLE_BED.description": "每回合开始时，获得1点能量。战斗开始时，向抽牌堆和弃牌堆各加入一张[gold]懒懒散散[/gold]。",
-  "FRIERENMOD-COMFORTABLE_BED.flavor": "连活了千年以上的大魔法使芙莉莲都无法挣脱它的束缚，可见其强大。"
+  "FRIERENMOD-COMFORTABLE_BED.flavor": "连活了千年以上的大魔法使芙莉莲都无法挣脱它的束缚，可见其强大。",
+  "FRIERENMOD-UPGRADED_HOLY_EMBLEM.title": "升级圣徽",
+  "FRIERENMOD-UPGRADED_HOLY_EMBLEM.description": "每回合抽牌后，将一张[gold]魔力[/gold]随机加入抽牌堆，并向弃牌堆和手牌各加入一张[gold]魔力[/gold]。",
+  "FRIERENMOD-UPGRADED_HOLY_EMBLEM.flavor": "旅途中的魔法积累。"
 }

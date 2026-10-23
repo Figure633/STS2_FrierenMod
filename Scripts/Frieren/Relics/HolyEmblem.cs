@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Saves.Runs;
+using MegaCrit.Sts2.Core.Models;
 
 namespace FrierenMod.Scripts.Relics;
 
@@ -16,6 +17,7 @@ public sealed class HolyEmblem : CustomRelicModel
 {
     private string _magicDeckJson = new MagicDeckState().ToJson();
     public override RelicRarity Rarity => RelicRarity.Starter;
+    public override RelicModel GetUpgradeReplacement() => ModelDb.Relic<UpgradedHolyEmblem>().ToMutable();
     public override string PackedIconPath => "res://FrierenMod/images/relics/HolyEmblem.tres";
     protected override string PackedIconOutlinePath => "res://FrierenMod/images/relics/HolyEmblemOutline.tres";
     protected override string BigIconPath => PackedIconPath;

@@ -55,5 +55,8 @@
   "FRIERENMOD-UBEL_STAFF.flavor": "Übel is known for her unique magical talent of resonance and Spell that slashes almost anything. The slash from the staff once sliced through the Immovable Cloak and the First-class Mage Burg who wore it",
   "FRIERENMOD-COMFORTABLE_BED.title": "Comfortable Bed",
   "FRIERENMOD-COMFORTABLE_BED.description": "Gain 1 Energy at the start of each turn. At the start of combat, add a [gold]Laziness[/gold] to your draw pile and discard pile.",
-  "FRIERENMOD-COMFORTABLE_BED.flavor": "Even the great mage who has lived for over a thousand years makes it impossible for to break free from its constraints, indicating its great power."
+  "FRIERENMOD-COMFORTABLE_BED.flavor": "Even the great mage who has lived for over a thousand years makes it impossible for to break free from its constraints, indicating its great power.",
+  "FRIERENMOD-UPGRADED_HOLY_EMBLEM.title": "Upgraded Holy Emblem",
+  "FRIERENMOD-UPGRADED_HOLY_EMBLEM.description": "After drawing cards each turn, shuffle 1 [gold]Mana[/gold] into your draw pile and add 1 [gold]Mana[/gold] each to your discard pile and hand.",
+  "FRIERENMOD-UPGRADED_HOLY_EMBLEM.flavor": "Magic gathered along the journey."
 }

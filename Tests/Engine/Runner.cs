@@ -87,6 +87,10 @@ public partial class Runner : Node
             new Harmony("frieren.tests.hover_host").Patch(
                 AccessTools.Method(typeof(MegaCrit.Sts2.Core.Nodes.Cards.Holders.NCardHolder), "CreateHoverTips"),
                 prefix: new HarmonyMethod(typeof(Runner), nameof(SkipGlobalHoverWindow)));
+            if (OS.GetCmdlineUserArgs().Contains("--upgraded-emblem-only")) {
+                GD.Print("UPGRADED_EMBLEM_OK: " + await UpgradedHolyEmblemTests.Run());
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--ui-todos-only")) {
                 GD.Print("UI_TODOS_OK: " + await UiTodoTests.Run(this));
                 await Finish(); return;
