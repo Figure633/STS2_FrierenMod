@@ -24,6 +24,7 @@ public abstract class FactorCard() : FrierenCard(-1, CardType.Skill, CardRarity.
     public IEnumerable<LocString> GetTypeModifiers() => [new("frieren", "FACTOR_TYPE")];
     public ManaSlot? Slot { get; private set; }
     public ChantOption? Option { get; private set; }
+    private CardModel? _chantSource;
     public bool CanSelectForChant { get; private set; } = true;
     public int? InventoryInstanceId { get; set; }
     public override int MaxUpgradeLevel => 0;
@@ -31,7 +32,7 @@ public abstract class FactorCard() : FrierenCard(-1, CardType.Skill, CardRarity.
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("ManaCost", 0), new DynamicVar("Reward", 0)];
 
     public static FactorCard Create(Player player, string id, ManaSlot? slot = null, ChantOption? option = null,
-        bool canSelectForChant = true)
+        bool canSelectForChant = true, CardModel? chantSource = null)
     {
         _ = SpellCatalog.Get(id);
         var type = typeof(FactorCard).Assembly.GetType(typeof(FactorCard).Namespace + "." + id, throwOnError: true)!;
@@ -39,6 +40,7 @@ public abstract class FactorCard() : FrierenCard(-1, CardType.Skill, CardRarity.
         card.Owner = player;
         card.Slot = slot;
         card.Option = option;
+        card._chantSource = chantSource;
         card.CanSelectForChant = canSelectForChant;
         if (option.HasValue)
         {
@@ -61,13 +63,14 @@ public abstract class FactorCard() : FrierenCard(-1, CardType.Skill, CardRarity.
         }
         description.Add("Context", contextText);
         var effect = new LocString("frieren", (Option.HasValue ? "EFFECT." : "FACTOR.") + FactorId);
-        if (Option.HasValue && FactorId == nameof(AdvancedDefensiveMagic)) {
-            // 选择模型不在战斗牌堆，原生预览不会自动跑增益钩子；显式复用格挡计算。
-            var block = new BlockVar("Reward", Option.Value.Reward, ValueProp.Move);
+        effect.Add("Reward", Option?.Reward ?? 0);
+        if (Option.HasValue && FactorId is nameof(AdvancedDefensiveMagic) or nameof(BarrierMagic)) {
+            // 格挡与残影等基础奖励分开；沿用实际咏唱牌的原生修正，包含附魔。
+            var block = new BlockVar(Option.Value.Reward, ValueProp.Move);
             if (Owner?.Creature.CombatState is { } combat)
-                block.PreviewValue = Hook.ModifyBlock(combat, Owner.Creature, block.BaseValue, ValueProp.Move, this, null, out _);
+                block.PreviewValue = Hook.ModifyBlock(combat, Owner.Creature, block.BaseValue, ValueProp.Move, _chantSource ?? this, null, out _);
             effect.Add(block);
-        } else effect.Add("Reward", Option?.Reward ?? 0);
+        }
         effect.Add("Cost", Option?.Cost ?? 0);
         description.Add("Effect", effect.GetFormattedText());
     }

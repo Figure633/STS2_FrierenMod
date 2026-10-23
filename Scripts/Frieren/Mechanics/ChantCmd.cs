@@ -47,7 +47,7 @@ public static class ChantCmd
         if (!options.Any(option => option.CanSelect)) { Log.Info("Frieren: 没有可用咏唱槽位；检查装载与各牌堆魔力。"); return null; }
         var free = player.Creature.GetPower<ChantWithoutManaPower>() == null ? player.Creature.GetPower<ChantWithoutManaTimesPower>() : null;
         var cards = options.Select(choice => FactorCard.Create(player, choice.Option.SpellId,
-            choice.Option.Slot, choice.Option, choice.CanSelect)).ToArray();
+            choice.Option.Slot, choice.Option, choice.CanSelect, play.Card)).ToArray();
         // 原生选择命令同步选项索引；不使用全局当前玩家或当前卡牌。
         var selected = await CardSelectCmd.FromChooseACardScreen(context, cards, player);
         int index = Array.IndexOf(cards, selected);

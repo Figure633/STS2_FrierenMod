@@ -123,6 +123,10 @@ public partial class Runner : Node
                 GD.Print("CONDITIONAL_PREVIEW_OK: " + await ConditionalPreviewTests.Run());
                 await Finish(); return;
             }
+            if (OS.GetCmdlineUserArgs().Contains("--factor-block-preview-only")) {
+                GD.Print("FACTOR_BLOCK_PREVIEW_OK: " + await FactorBlockPreviewTests.Run());
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--custom-spell-display-only")) {
                 GD.Print("CUSTOM_SPELL_DISPLAY_OK: " + await CustomSpellDisplayTests.Run());
                 await Finish(); return;
