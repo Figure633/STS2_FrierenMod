@@ -29,7 +29,7 @@ func _initialize():
 				return
 			textures += 1
 	for lang in ["eng", "zhs"]:
-		for table in ["cards", "characters", "relics", "potions", "frieren", "powers", "settings_ui", "rest_site_ui", "ancients"]:
+		for table in ["cards", "characters", "relics", "potions", "frieren", "powers", "settings_ui", "rest_site_ui", "ancients", "events"]:
 			var text = FileAccess.get_file_as_string("res://FrierenMod/localization/" + lang + "/" + table + ".json")
 			if not JSON.parse_string(text) is Dictionary:
 				push_error("Invalid localization: " + lang + "/" + table)
@@ -68,5 +68,5 @@ func _initialize():
 		push_error("Missing texture files")
 		quit(1)
 		return
-	print("PACK_CHECK_OK: ", textures, " textures + ", audio_count, " audio + ", scenes, " scenes + 18 localization tables")
+	print("PACK_CHECK_OK: ", textures, " textures + ", audio_count, " audio + ", scenes, " scenes + 20 localization tables")
 	quit(0)

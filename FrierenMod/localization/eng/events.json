@@ -1,0 +1,21 @@
+{
+  "FRIERENMOD-READING_GRIMOIRE_EVENT.title": "A New Beginning",
+  "FRIERENMOD-READING_GRIMOIRE_EVENT.pages.INITIAL.description": "“Wow, what a tall tower!”\n\nJust as you are looking forward to exploring another labyrinth, the three grimoires in your suitcase begin to [shake]stir[/shake]. Perhaps the great whale nearby has something to do with it…",
+  "FRIERENMOD-READING_GRIMOIRE_EVENT.pages.INITIAL.options.INSPECT.title": "Examine the Grimoires",
+  "FRIERENMOD-READING_GRIMOIRE_EVENT.pages.INITIAL.options.INSPECT.description": "Choose an initial [gold]Magic Factor[/gold] for each of your three slots.",
+  "FRIERENMOD-READING_GRIMOIRE_EVENT.pages.BOOK_0.description": "“Wow, what a tall tower!”\n\nJust as you are looking forward to exploring another labyrinth, the three grimoires in your suitcase begin to [shake]stir[/shake]. Perhaps the great whale nearby has something to do with it…",
+  "FRIERENMOD-READING_GRIMOIRE_EVENT.pages.BOOK_0.options.INSPECT.title": "Examine the First Grimoire",
+  "FRIERENMOD-READING_GRIMOIRE_EVENT.pages.BOOK_0.options.INSPECT.description": "Choose an initial [gold]Magic Factor[/gold] for your [gold]draw slot[/gold].",
+  "FRIERENMOD-READING_GRIMOIRE_EVENT.pages.BOOK_1.description": "You feel the [gold]Mana[/gold] flowing within you [wave]begin to change[/wave]…\n\nThe draw slot is ready. Two grimoires remain.",
+  "FRIERENMOD-READING_GRIMOIRE_EVENT.pages.BOOK_1.options.INSPECT.title": "Examine the Second…",
+  "FRIERENMOD-READING_GRIMOIRE_EVENT.pages.BOOK_1.options.INSPECT.description": "Choose an initial [gold]Magic Factor[/gold] for your [gold]hand slot[/gold].",
+  "FRIERENMOD-READING_GRIMOIRE_EVENT.pages.BOOK_2.description": "You feel the [gold]Mana[/gold] flowing within you [wave]begin to change[/wave]…\n\nThe hand slot is ready, too. Just one grimoire left.",
+  "FRIERENMOD-READING_GRIMOIRE_EVENT.pages.BOOK_2.options.INSPECT.title": "Examine the Last…",
+  "FRIERENMOD-READING_GRIMOIRE_EVENT.pages.BOOK_2.options.INSPECT.description": "Choose an initial [gold]Magic Factor[/gold] for your [gold]discard slot[/gold].",
+  "FRIERENMOD-READING_GRIMOIRE_EVENT.pages.TOOLS.description": "After examining the grimoires, you notice that some of your [gold]Mana[/gold] has [wave]taken shape[/wave].\n\nWith all three grimoires checked, you find a few Magic Tools in your suitcase.",
+  "FRIERENMOD-READING_GRIMOIRE_EVENT.pages.TOOLS.options.OBTAIN.title": "Some Magic Tools, Too?",
+  "FRIERENMOD-READING_GRIMOIRE_EVENT.pages.TOOLS.options.OBTAIN.description": "Gain [gold]two Unbelievable Tools[/gold].",
+  "FRIERENMOD-READING_GRIMOIRE_EVENT.pages.DONE.description": "You pack away the three grimoires and your [gold]two Unbelievable Tools[/gold], eager to enter the Spire.",
+  "FRIERENMOD-READING_GRIMOIRE_EVENT.pages.DONE.options.DEPART.title": "Let’s Go!",
+  "FRIERENMOD-READING_GRIMOIRE_EVENT.pages.DONE.options.DEPART.description": "Continue to the great whale’s blessing."
+}

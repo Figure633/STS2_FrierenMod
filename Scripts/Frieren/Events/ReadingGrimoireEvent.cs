@@ -14,7 +14,8 @@ namespace FrierenMod.Scripts.Events;
 public sealed class ReadingGrimoireEvent() : CustomEventModel(false)
 {
     private const string Key = "FRIERENMOD-READING_GRIMOIRE_EVENT";
-    public override string LocTable => "frieren";
+    // 原生结束页也从事件表读取 PROCEED 等通用选项，不能使用独立文本表。
+    public override string LocTable => "events";
     public override string CustomInitialPortraitPath => "res://FrierenMod/images/events/ReadingGrimoire.png";
     public override bool IsShared => true;
     public override bool IsAllowed(IRunState runState) => false;

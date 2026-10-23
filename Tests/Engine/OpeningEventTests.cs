@@ -121,11 +121,16 @@ public static class OpeningEventTests
         // 真实原版房间与事件布局：检查图片、双语正文和原生按钮，不替换玩家存档。
         var game = new NGame(); var scenes = new NSceneContainer(); var runNode = new NRun(); var roomContainer = new NSceneContainer();
         var global = new NGlobalUi(); var map = new NMapScreen(); var overlays = new NOverlayStack(); var capstone = new NCapstoneContainer();
+        var topBar = new NTopBar(); var roomIcon = new MegaCrit.sts2.Core.Nodes.TopBar.NTopBarRoomIcon();
+        var hp = new MegaCrit.sts2.Core.Nodes.TopBar.NTopBarHp();
         var controller = new NControllerManager(); var input = new NInputManager(); var shake = new NScreenShake();
         AccessTools.Property(typeof(NGame), nameof(NGame.RootSceneContainer)).SetValue(game, scenes);
         AccessTools.Property(typeof(NSceneContainer), nameof(NSceneContainer.CurrentScene)).SetValue(scenes, runNode);
         AccessTools.Field(typeof(NRun), "_roomContainer").SetValue(runNode, roomContainer);
         AccessTools.Property(typeof(NRun), nameof(NRun.GlobalUi)).SetValue(runNode, global);
+        AccessTools.Property(typeof(NGlobalUi), nameof(NGlobalUi.TopBar)).SetValue(global, topBar);
+        AccessTools.Property(typeof(NTopBar), nameof(NTopBar.RoomIcon)).SetValue(topBar, roomIcon);
+        AccessTools.Property(typeof(NTopBar), nameof(NTopBar.Hp)).SetValue(topBar, hp);
         AccessTools.Property(typeof(NGlobalUi), nameof(NGlobalUi.MapScreen)).SetValue(global, map);
         AccessTools.Property(typeof(NGlobalUi), nameof(NGlobalUi.Overlays)).SetValue(global, overlays);
         AccessTools.Property(typeof(NGlobalUi), nameof(NGlobalUi.CapstoneContainer)).SetValue(global, capstone);
@@ -177,6 +182,17 @@ public static class OpeningEventTests
                 Check(MagicDeckStore.Read(restored).DraftSlot == 1 && page.Description!.LocEntryKey.Contains("BOOK_1"),
                     "实际鼠标点击原版事件按钮，经同步器完成第一本并刷新第二本");
             }
+            if (language == "eng" && progress == 4) {
+                MagicDeckStore.Write(restored, complete);
+                var point = button.GetGlobalRect().GetCenter();
+                root.GetViewport().PushInput(new InputEventMouseMotion { Position = point, GlobalPosition = point }, true); await Tick();
+                root.GetViewport().PushInput(new InputEventMouseButton { Position = point, GlobalPosition = point, ButtonIndex = MouseButton.Left, Pressed = true }, true); await Tick();
+                root.GetViewport().PushInput(new InputEventMouseButton { Position = point, GlobalPosition = point, ButtonIndex = MouseButton.Left, Pressed = false }, true);
+                ulong deadline = Time.GetTicksMsec() + 5000;
+                while (state.CurrentRoom is not EventRoom { CanonicalEvent: Neow } && Time.GetTicksMsec() < deadline) await Tick();
+                Check(story.IsFinished && state.CurrentRoom is EventRoom { CanonicalEvent: Neow } && manager.EventSynchronizer.GetLocalEvent() is Neow,
+                    "保留实际房间界面点击出发，结束页刷新及切房不报错、不死锁");
+            }
             host.QueueFree(); await Tick();
             }
         }
@@ -185,11 +201,9 @@ public static class OpeningEventTests
         NHoverTipSet.shouldBlockHoverTips = previousHoverBlock;
         AccessTools.Property(typeof(NGame), nameof(NGame.Instance)).SetValue(null, null);
         scenes.Free(); runNode.Free(); roomContainer.Free(); global.Free(); map.Free(); overlays.Free(); capstone.Free();
+        topBar.Free(); roomIcon.Free(); hp.Free();
         input.Free(); controller.Free(); shake.Free(); game.Free();
 
-        await story.CurrentOptions.Single().Chosen().WaitAsync(TimeSpan.FromSeconds(5)); await Tick();
-        Check(state.CurrentRoom is EventRoom { CanonicalEvent: Neow } && manager.EventSynchronizer.GetLocalEvent() is Neow,
-            "出发后经真实切房返回原版涅奥，没有事件等待死锁");
         Check(manager.EventSynchronizer.GetLocalEvent().CurrentOptions.Count > 0 && ReadingGrimoireEntrance.Stage.Get(restored) == 2 &&
             MagicDeckStore.Read(restored).ToJson() == completeJson, "原版祝福选项正常生成且魔法书不改变");
         Check(((RoomSet)AccessTools.Field(typeof(ActModel), "_rooms").GetValue(state.Act)!).eventsVisited == 1,

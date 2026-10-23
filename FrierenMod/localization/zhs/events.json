@@ -1,0 +1,21 @@
+{
+  "FRIERENMOD-READING_GRIMOIRE_EVENT.title": "新的开始",
+  "FRIERENMOD-READING_GRIMOIRE_EVENT.pages.INITIAL.description": "“哇，好高一座塔！”\n\n在你为又能探索新迷宫而喜悦之时，你突然发现旅行箱中的三本魔导书出现了[shake]异样[/shake]。可能是一边的大鲸鱼导致的……",
+  "FRIERENMOD-READING_GRIMOIRE_EVENT.pages.INITIAL.options.INSPECT.title": "检查魔导书",
+  "FRIERENMOD-READING_GRIMOIRE_EVENT.pages.INITIAL.options.INSPECT.description": "依次为三个槽位选择初始[gold]魔法因子[/gold]。",
+  "FRIERENMOD-READING_GRIMOIRE_EVENT.pages.BOOK_0.description": "“哇，好高一座塔！”\n\n在你为又能探索新迷宫而喜悦之时，你突然发现旅行箱中的三本魔导书出现了[shake]异样[/shake]。可能是一边的大鲸鱼导致的……",
+  "FRIERENMOD-READING_GRIMOIRE_EVENT.pages.BOOK_0.options.INSPECT.title": "检查第一本魔导书",
+  "FRIERENMOD-READING_GRIMOIRE_EVENT.pages.BOOK_0.options.INSPECT.description": "选择一张初始[gold]魔法因子[/gold]，放入[gold]抽牌槽[/gold]。",
+  "FRIERENMOD-READING_GRIMOIRE_EVENT.pages.BOOK_1.description": "你感到体内流动的[gold]魔力[/gold]正在[wave]发生变化[/wave]……\n\n抽牌槽的因子已经装载。还有两本魔导书没有检查。",
+  "FRIERENMOD-READING_GRIMOIRE_EVENT.pages.BOOK_1.options.INSPECT.title": "检查第二本……",
+  "FRIERENMOD-READING_GRIMOIRE_EVENT.pages.BOOK_1.options.INSPECT.description": "选择一张初始[gold]魔法因子[/gold]，放入[gold]手牌槽[/gold]。",
+  "FRIERENMOD-READING_GRIMOIRE_EVENT.pages.BOOK_2.description": "你感到体内流动的[gold]魔力[/gold]正在[wave]发生变化[/wave]……\n\n手牌槽的因子也已装载。现在，只剩下最后一本。",
+  "FRIERENMOD-READING_GRIMOIRE_EVENT.pages.BOOK_2.options.INSPECT.title": "检查最后一本……",
+  "FRIERENMOD-READING_GRIMOIRE_EVENT.pages.BOOK_2.options.INSPECT.description": "选择一张初始[gold]魔法因子[/gold]，放入[gold]弃牌槽[/gold]。",
+  "FRIERENMOD-READING_GRIMOIRE_EVENT.pages.TOOLS.description": "查看魔导书后，你的部分[gold]魔力[/gold]似乎[wave]具象化[/wave]了。\n\n三本魔导书都检查完了，旅行箱里还有一些魔法道具。",
+  "FRIERENMOD-READING_GRIMOIRE_EVENT.pages.TOOLS.options.OBTAIN.title": "还有一些魔法道具？",
+  "FRIERENMOD-READING_GRIMOIRE_EVENT.pages.TOOLS.options.OBTAIN.description": "获得[gold]两个神奇妙妙工具[/gold]。",
+  "FRIERENMOD-READING_GRIMOIRE_EVENT.pages.DONE.description": "你收好了三本魔导书和[gold]两个神奇妙妙工具[/gold]，跃跃欲试地走向尖塔。",
+  "FRIERENMOD-READING_GRIMOIRE_EVENT.pages.DONE.options.DEPART.title": "出发！",
+  "FRIERENMOD-READING_GRIMOIRE_EVENT.pages.DONE.options.DEPART.description": "继续前往大鲸鱼的祝福。"
+}
