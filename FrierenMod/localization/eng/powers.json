@@ -12,7 +12,7 @@
   "FRIERENMOD-MANA_INSTEAD_OF_ENERGY_POWER.title": "Mana Payment",
   "FRIERENMOD-MANA_INSTEAD_OF_ENERGY_POWER.description": "Normal cards show {energyPrefix:energyIcons(0)} but consume [gold]Mana[/gold] equal to their cost (Draw, Hand, Discard). Insufficient [gold]Mana[/gold] prevents play. X-cost cards still use Energy.",
   "FRIERENMOD-SYNCHRO_WITHOUT_MANA_POWER.title": "Frugality",
-  "FRIERENMOD-SYNCHRO_WITHOUT_MANA_POWER.description": "The next {Amount} [gold]Synchros[/gold] return their [gold]Mana[/gold] to your hand instead of Exhausting it.",
+  "FRIERENMOD-SYNCHRO_WITHOUT_MANA_POWER.description": "The next {Amount} [gold]Synchros[/gold] return their [gold]Mana[/gold] to your hand instead of Exhausting it. High-Density Mana still grants its Energy when returned to your hand.",
   "FRIERENMOD-STRIKE_UP_POWER.title": "Melee Mage",
   "FRIERENMOD-STRIKE_UP_POWER.description": "Strikes deal {Amount} additional damage.",
   "FRIERENMOD-METALLICIZE_POWER.title": "Metallicize",

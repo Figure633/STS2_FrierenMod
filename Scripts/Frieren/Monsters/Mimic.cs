@@ -8,6 +8,8 @@ using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.MonsterMoves;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
+using MegaCrit.Sts2.Core.Localization;
+using MegaCrit.Sts2.Core.Nodes.Vfx;
 
 namespace FrierenMod.Scripts.Monsters;
 
@@ -24,7 +26,7 @@ public sealed class Mimic : CustomMonsterModel
         var disguise = new MoveState("DISGUISE", _ => Task.CompletedTask, new UnknownIntent());
         var swallow = new MoveState("SWALLOW", Swallow, new DebuffIntent());
         var strike = new MoveState("STRIKE", Strike, new SingleAttackIntent(Damage));
-        var rest = new MoveState("FULL", _ => { _hasRested = true; return Task.CompletedTask; }, new UnknownIntent());
+        var rest = new MoveState("FULL", _ => { _hasRested = true; Burp(Creature); return Task.CompletedTask; }, new UnknownIntent());
         var wake = new ConditionalBranchState("WAKE");
         wake.AddState(disguise, () => Creature.HasPower<MimicPower>());
         wake.AddState(swallow, () => true);
@@ -39,4 +41,6 @@ public sealed class Mimic : CustomMonsterModel
     }
     private Task Swallow(IReadOnlyList<Creature> targets) => PowerCmd.Apply<SwallowedPower>(new ThrowingPlayerChoiceContext(), targets, 2, Creature, null);
     private Task Strike(IReadOnlyList<Creature> targets) => DamageCmd.Attack(Damage).FromMonster(this).WithHitFx("vfx/vfx_attack_slash").Execute(null);
+    internal static void Burp(Creature speaker) =>
+        TalkCmd.Play(new LocString("monsters", "FRIERENMOD-MIMIC.burp"), speaker, VfxColor.White, VfxDuration.Long);
 }

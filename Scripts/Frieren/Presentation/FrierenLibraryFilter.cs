@@ -14,7 +14,7 @@ public static class FrierenLibraryFilter
 {
     public static bool IsMagicItem(CardModel card) => card is FactorCard or MagicPropCard;
 
-    public static bool IsCharacterCard(CardModel card) => !IsMagicItem(card) && card.Rarity is not
+    public static bool IsCharacterCard(CardModel card) => !IsMagicItem(card) && card is not IGeneratedOnlyCard && card.Rarity is not
         (CardRarity.Token or CardRarity.Status or CardRarity.Curse or CardRarity.Event or CardRarity.Quest);
 
     [HarmonyPostfix]
@@ -22,7 +22,7 @@ public static class FrierenLibraryFilter
         Dictionary<CharacterModel, NCardPoolFilter> ____cardPoolFilters, NCardPoolFilter ____miscPoolFilter)
     {
         var misc = ____poolFilters[____miscPoolFilter];
-        ____poolFilters[____miscPoolFilter] = card => misc(card) || IsMagicItem(card);
+        ____poolFilters[____miscPoolFilter] = card => misc(card) || IsMagicItem(card) || card is IGeneratedOnlyCard;
         if (!____cardPoolFilters.TryGetValue(ModelDb.Character<Frieren>(), out var filter)) return;
         var original = ____poolFilters[filter];
         ____poolFilters[filter] = card => original(card) && IsCharacterCard(card);
@@ -36,7 +36,8 @@ public static class FrierenLibraryVisibility
     [HarmonyPostfix]
     private static void IncludeMagicItems(HashSet<CardModel> ____unlockedCards, HashSet<ModelId> ____seenCards)
     {
-        foreach (var card in ModelDb.AllCards.Where(card => card.ShouldShowInCardLibrary && FrierenLibraryFilter.IsMagicItem(card)))
+        foreach (var card in ModelDb.AllCards.Where(card => card.ShouldShowInCardLibrary &&
+            (FrierenLibraryFilter.IsMagicItem(card) || card is IGeneratedOnlyCard)))
         {
             ____unlockedCards.Add(card);
             ____seenCards.Add(card.Id);

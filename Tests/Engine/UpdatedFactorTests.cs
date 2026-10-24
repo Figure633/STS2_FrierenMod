@@ -103,10 +103,10 @@ public static class UpdatedFactorTests
         var mana = combat.CreateCard<Mana>(player); await PlayMana(mana);
         Check(mana.Pile?.Type == PileType.Hand && player.Creature.GetPowerAmount<SynchroWithoutManaPower>() == 1, "普通魔力同调后回手并扣一层");
         var dense = combat.CreateCard<HighDensityMana>(player); await PlayMana(dense);
-        Check(dense.Pile?.Type == PileType.Hand && !player.Creature.HasPower<SynchroWithoutManaPower>() && player.PlayerCombatState!.Energy == 3,
-            "最后一层高密度魔力仍回手，不触发消耗能量");
+        Check(dense.Pile?.Type == PileType.Hand && !player.Creature.HasPower<SynchroWithoutManaPower>() && player.PlayerCombatState!.Energy == 4,
+            "最后一层高密度魔力回手并获得能量");
         await PlayMana(dense);
-        Check(dense.Pile?.Type == PileType.Exhaust && player.PlayerCombatState!.Energy == 4, "层数用完恢复原生消耗并触发能量");
+        Check(dense.Pile?.Type == PileType.Exhaust && player.PlayerCombatState!.Energy == 5, "层数用完恢复原生消耗并触发能量");
         LocManager.Instance.SetLanguage("eng"); RunManager.Instance.CleanUp(); return checks;
     }
 }

@@ -12,7 +12,7 @@
   "FRIERENMOD-MANA_INSTEAD_OF_ENERGY_POWER.title": "魔力代付",
   "FRIERENMOD-MANA_INSTEAD_OF_ENERGY_POWER.description": "普通卡牌显示 {energyPrefix:energyIcons(0)}，实际[gold]消耗[/gold]原费用对应的[gold]魔力[/gold]（抽牌堆→手牌→弃牌堆）。[gold]魔力[/gold]不足无法打出。X 费牌仍使用能量。",
   "FRIERENMOD-SYNCHRO_WITHOUT_MANA_POWER.title": "节俭",
-  "FRIERENMOD-SYNCHRO_WITHOUT_MANA_POWER.description": "接下来 {Amount} 次[gold]同调[/gold]将[gold]魔力[/gold]返回手牌而非[gold]消耗[/gold]。",
+  "FRIERENMOD-SYNCHRO_WITHOUT_MANA_POWER.description": "接下来 {Amount} 次[gold]同调[/gold]将[gold]魔力[/gold]返回手牌而非[gold]消耗[/gold]。高密度魔力回手时仍回复能量。",
   "FRIERENMOD-STRIKE_UP_POWER.title": "近战魔法使",
   "FRIERENMOD-STRIKE_UP_POWER.description": "打击伤害增加 {Amount}。",
   "FRIERENMOD-METALLICIZE_POWER.title": "金属化",

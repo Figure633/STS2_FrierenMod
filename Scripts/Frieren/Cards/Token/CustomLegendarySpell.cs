@@ -10,7 +10,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace FrierenMod.Scripts.Cards;
 
-public sealed class CustomLegendarySpell() : LegendaryCard(0, CardType.Skill, CardRarity.Token, TargetType.Self)
+public sealed class CustomLegendarySpell() : LegendaryCard(0, CardType.Skill, CardRarity.Rare, TargetType.Self), IGeneratedOnlyCard
 {
     private string _recipe = "[]";
     [SavedProperty]
@@ -33,6 +33,7 @@ public sealed class CustomLegendarySpell() : LegendaryCard(0, CardType.Skill, Ca
     public LegendaryEffect[] Effects => JsonSerializer.Deserialize<LegendaryEffect[]>(Recipe)!;
     public override int MaxUpgradeLevel => 0;
     public override bool CanBeGeneratedInCombat => false;
+    public override bool CanBeGeneratedByModifiers => false;
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(0, ValueProp.Move), new BlockVar(0, ValueProp.Move)];
     public override CardType Type => Effects.Any(e => e.Kind is "Damage" or "DamageAll" or "DamageTriple") ? CardType.Attack : CardType.Skill;
     public override TargetType TargetType => Effects.Any(e => e.Kind is "Damage" or "DamageTriple" or "Execute")

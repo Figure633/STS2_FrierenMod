@@ -6,7 +6,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 
 namespace FrierenMod.Scripts.Cards;
 
-public sealed class Repent() : FrierenCard(0, CardType.Skill, CardRarity.Token, TargetType.Self)
+public sealed class Repent() : FrierenCard(0, CardType.Skill, CardRarity.Rare, TargetType.Self), IGeneratedOnlyCard
 {
     public override bool CanBeGeneratedInCombat => false;
     public override bool CanBeGeneratedByModifiers => false;

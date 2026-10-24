@@ -111,7 +111,7 @@ public static class ReviewedCardTests
         Check(dense.Pile?.Type == PileType.Exhaust && player.PlayerCombatState!.Energy == 4, "高密度魔力消耗仍给能量");
         await PowerCmd.Apply<SynchroWithoutManaPower>(context, player.Creature, 1, player.Creature, null);
         var frugal = New<HighDensityMana>(); await Play(frugal);
-        Check(frugal.Pile?.Type == PileType.Hand && player.PlayerCombatState!.Energy == 4 && !player.Creature.HasPower<SynchroWithoutManaPower>(), "节俭回手且不能触发消耗能量");
+        Check(frugal.Pile?.Type == PileType.Hand && player.PlayerCombatState!.Energy == 5 && !player.Creature.HasPower<SynchroWithoutManaPower>(), "节俭回手时同样获得能量");
         foreach (string lang in new[] { "zhs", "eng" })
         {
             LocManager.Instance.SetLanguage(lang);

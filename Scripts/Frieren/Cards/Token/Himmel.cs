@@ -6,7 +6,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 
 namespace FrierenMod.Scripts.Cards;
 
-public sealed class Himmel() : FrierenCard(-1, CardType.Skill, CardRarity.Token, TargetType.None)
+public sealed class Himmel() : FrierenCard(-1, CardType.Skill, CardRarity.Rare, TargetType.None), IGeneratedOnlyCard
 {
     public override int MaxUpgradeLevel => 0;
     public override bool CanBeGeneratedInCombat => false;

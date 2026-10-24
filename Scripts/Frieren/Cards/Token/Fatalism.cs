@@ -5,7 +5,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace FrierenMod.Scripts.Cards;
 
-public sealed class Fatalism() : FrierenCard(10, CardType.Skill, CardRarity.Token, TargetType.Self)
+public sealed class Fatalism() : FrierenCard(10, CardType.Skill, CardRarity.Rare, TargetType.Self), IGeneratedOnlyCard
 {
     public override int MaxUpgradeLevel => 0;
     public override bool CanBeGeneratedInCombat => false;

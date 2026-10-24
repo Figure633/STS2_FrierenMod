@@ -12,6 +12,7 @@ public sealed class MimicPower : FrierenPower
         if (Owner.IsDead || play.Card.Owner.Creature.CombatState != Owner.CombatState) return;
         Flash();
         if (Amount > 1) { await PowerCmd.Decrement(this); return; }
+        Monsters.Mimic.Burp(Owner);
         await PowerCmd.Remove(this);
         foreach (var player in Owner.CombatState!.Players)
         {

@@ -21,6 +21,10 @@ public sealed class SynchroWithoutManaPower : FrierenPower
         card.Owner == Owner.Player && card is IManaCard ? (PileType.Hand, position) : (pileType, position);
     public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay play)
     {
-        if (play.Card.Owner == Owner.Player && play.Card is IManaCard) await PowerCmd.Decrement(this);
+        if (play.Card.Owner != Owner.Player || play.Card is not IManaCard) return;
+        // 原生出牌去向在结算前已确定；最后一层也须保留高密度魔力的能量收益。
+        if (play.ResultPile == PileType.Hand && play.Card is HighDensityMana dense)
+            await PlayerCmd.GainEnergy(dense.DynamicVars["Amount"].BaseValue, Owner.Player!);
+        await PowerCmd.Decrement(this);
     }
 }
