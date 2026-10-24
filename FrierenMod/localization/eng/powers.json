@@ -76,5 +76,13 @@
   "FRIERENMOD-FACTOR010_POWER.title": "?!?",
   "FRIERENMOD-FACTOR010_POWER.description": "...kill...",
   "FRIERENMOD-FACTOR001_POWER.title": "??!",
-  "FRIERENMOD-FACTOR001_POWER.description": "...monster..."
+  "FRIERENMOD-FACTOR001_POWER.description": "...monster...",
+  "FRIERENMOD-MIMIC_POWER.title": "Mimic",
+  "FRIERENMOD-MIMIC_POWER.description": "After [blue]{Amount}[/blue] more cards are played, end the turn, remove all Mana from the draw pile, hand, and discard pile, and gain Darkness.",
+  "FRIERENMOD-DARK_POWER.title": "Darkness",
+  "FRIERENMOD-DARK_POWER.description": "It is dark inside the Mimic… Your eyes gradually adjust each turn.",
+  "FRIERENMOD-SWALLOWED_POWER.title": "Swallowed",
+  "FRIERENMOD-SWALLOWED_POWER.description": "Maximum hand size is reduced by [blue]{Amount}[/blue] this combat.",
+  "FRIERENMOD-BIRD_CAPTURED_POWER.title": "Captured",
+  "FRIERENMOD-BIRD_CAPTURED_POWER.description": "Cannot act for [blue]{Amount}[/blue] turns."
 }

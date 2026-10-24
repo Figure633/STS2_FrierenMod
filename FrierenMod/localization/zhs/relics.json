@@ -58,5 +58,8 @@
   "FRIERENMOD-COMFORTABLE_BED.flavor": "连活了千年以上的大魔法使芙莉莲都无法挣脱它的束缚，可见其强大。",
   "FRIERENMOD-UPGRADED_HOLY_EMBLEM.title": "升级圣徽",
   "FRIERENMOD-UPGRADED_HOLY_EMBLEM.description": "每回合抽牌后，将一张[gold]魔力[/gold]随机加入抽牌堆，并向弃牌堆和手牌各加入一张[gold]魔力[/gold]。",
-  "FRIERENMOD-UPGRADED_HOLY_EMBLEM.flavor": "旅途中的魔法积累。"
+  "FRIERENMOD-UPGRADED_HOLY_EMBLEM.flavor": "旅途中的魔法积累。",
+  "FRIERENMOD-KRAFT_SERPENT_RING.title": "长蛇戒指",
+  "FRIERENMOD-KRAFT_SERPENT_RING.description": "每回合抽牌阶段额外抽 [blue]1[/blue] 张牌。",
+  "FRIERENMOD-KRAFT_SERPENT_RING.flavor": "克拉伏特送给你的饯别礼。"
 }

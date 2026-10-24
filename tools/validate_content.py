@@ -15,7 +15,7 @@ def load(path):
         return result
     return json.loads(path.read_text(encoding="utf-8-sig"), object_pairs_hook=unique)
 
-for table in ["cards", "characters", "relics", "potions", "frieren", "powers", "settings_ui", "rest_site_ui", "ancients", "events"]:
+for table in ["cards", "characters", "relics", "potions", "frieren", "powers", "settings_ui", "rest_site_ui", "ancients", "events", "monsters", "encounters"]:
     eng = load(ROOT / f"FrierenMod/localization/eng/{table}.json")
     zhs = load(ROOT / f"FrierenMod/localization/zhs/{table}.json")
     assert eng.keys() == zhs.keys(), f"localization key mismatch: {table}"

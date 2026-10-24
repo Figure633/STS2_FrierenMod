@@ -2303,5 +2303,173 @@
     "source_kind": "local_sts1_source",
     "sha256": "bff20561d21e24b492b1c06684c79f800e1735e6b42c8e286afddb53541b26ea",
     "modified": false
+  },
+  {
+    "file": "FrierenMod/images/events/FoodEvent.png",
+    "source": "src/main/resources/FrierenModResources/img/events/FoodEvent.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "f1fcb09797a16e30dc9bc9c458385c22bd4d2ac7b8b2da8ee5f0c94213a7f387",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/events/FreeFood.png",
+    "source": "src/main/resources/FrierenModResources/img/events/FreeFood.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "20d5760a9ad331fde08abf23a5bfabe136f762ca4eb8a865f7bc9d3fddb90171",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/events/Package.png",
+    "source": "src/main/resources/FrierenModResources/img/events/Package.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "05ed041277e4792c21182e082e854424f309401afff30323bb8ddb1ef5fe2bcf",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/events/Meal.png",
+    "source": "src/main/resources/FrierenModResources/img/events/Meal.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "7c9edc538c5c6fb2a75d306977fddfa58fad452120d280d76a33429560e7cd60",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/events/BigMeal.png",
+    "source": "src/main/resources/FrierenModResources/img/events/BigMeal.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "3cc4745a62fe4859d2cddd2f0361b8693fbcf2e67d7e6c8c95b900b900413106",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/events/Kraft1.png",
+    "source": "src/main/resources/FrierenModResources/img/events/Kraft1.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "fa497ab00fb3aa80df05c93104c1cfc8dfe664a28089e07d220f416ace46de8e",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/events/Kraft2.png",
+    "source": "src/main/resources/FrierenModResources/img/events/Kraft2.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "20528ab8ea8da7faf97aba475707077c45667a44c5d69b2a27a246125c980207",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/events/AnimalWell.png",
+    "source": "src/main/resources/FrierenModResources/img/events/AnimalWell.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "538341d2c02e225c3f035e12009482af51d80ba34412e42159061544a9949124",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/events/AnimalWell1.png",
+    "source": "src/main/resources/FrierenModResources/img/events/AnimalWell1.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "a9f84426f360ecec68af3e1d8949798d6bade5ec3f7c583455515e0efb3796a9",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/events/AnimalWell2.png",
+    "source": "src/main/resources/FrierenModResources/img/events/AnimalWell2.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "cfae3cf992f3f33cdaec285e6881708d2f1a5f3d17b29203a8b595543b42e71e",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/events/AnimalWell3.png",
+    "source": "src/main/resources/FrierenModResources/img/events/AnimalWell3.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "6d2b15c15c753313549ee117c77e6b9247e9b2cccddfa28fa02f653a4ccdad3b",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/events/MimicEvent1.png",
+    "source": "src/main/resources/FrierenModResources/img/events/MimicEvent1.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "28a8e7c7c464716273fe4181f368cd64cc758c4edce02385e2e633d287ddf5e0",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/events/MimicEvent2.png",
+    "source": "src/main/resources/FrierenModResources/img/events/MimicEvent2.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "a9e362bf8032210036fa80003e7433b3e50a773ff5c33ae5ad7254c9afa02b03",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/events/MimicEvent3.png",
+    "source": "src/main/resources/FrierenModResources/img/events/MimicEvent3.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "544051a13d95dbd334af472c7b7fc16c4a998f17249032d0d2643beca09f5eba",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/events/MimicEvent4.png",
+    "source": "src/main/resources/FrierenModResources/img/events/MimicEvent4.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "035b769dba1103a90ba3011fc6d95cbade6043a2013bf23ca599d70b9dacc8b1",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/EmergencyFood.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/EmergencyFood_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "fffe0878fa29d8face4d8a00bdc66c0be78720057f69823edeff0b60e2c7b668",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/BirdCapturingSpell.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/BirdCapturingSpell_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "d469d09308997742f8ef1594b957294b78bca4560b3659123ec31ea592f4079a",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/powers/MimicPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/MimicPower_84.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "c943304d5932e216746f31237bbfbc462f540de713e374fa1d60996fd3e23587",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/powers/DarkPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/DarkPower_84.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "1e0c88e16cfea59595df147daf459aac9a203c56829b40d836441dcb5d606bb4",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/powers/SwallowedPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/SwallowedPower_84.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "9b5490330a380bd60ca2d342482aa488d5fb15bdfd53d1fbbee9ebafc33b8701",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/monsters/Mimic.png",
+    "source": "src/main/resources/FrierenModResources/img/monsters/Mimic.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "2a1b90dc47c41c96a2d96850075ec5fd316c69f5bdaf001afd0371192b24d8b1",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
   }
 ]

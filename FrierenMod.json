@@ -1,12 +1,17 @@
 {
-  "id": "FrierenMod",           
+  "id": "FrierenMod",
   "name": "Frieren Mod — Playtest",
   "author": "Arkalin & Figure",
   "description": "芙莉莲移植测试版：营地逛魔具店、八种魔具与因子互动、咏唱、一代美术和音乐。",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "min_game_version": "0.107.1",
-  "has_pck": true,         
-  "has_dll": true,        
-  "dependencies": [{ "id": "BaseLib", "min_version": "3.4.7" }],
-  "affects_gameplay": true 
+  "has_pck": true,
+  "has_dll": true,
+  "dependencies": [
+    {
+      "id": "BaseLib",
+      "min_version": "3.4.7"
+    }
+  ],
+  "affects_gameplay": true
 }

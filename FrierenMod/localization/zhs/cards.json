@@ -269,5 +269,9 @@
   "FRIERENMOD-LONGEVITY_PAIN.title": "长寿种的痛苦",
   "FRIERENMOD-LONGEVITY_PAIN.description": "连续[gold]同调[/gold]10次后，将一张[gold]寿命论[/gold]加入手牌。\n（还剩{Remaining}次。）",
   "FRIERENMOD-FATALISM.title": "寿命论",
-  "FRIERENMOD-FATALISM.description": "所有角色失去999点生命。"
+  "FRIERENMOD-FATALISM.description": "所有角色失去999点生命。",
+  "FRIERENMOD-EMERGENCY_FOOD.title": "应急食物",
+  "FRIERENMOD-EMERGENCY_FOOD.description": "回复 [green]{Heal}[/green] 点生命。",
+  "FRIERENMOD-BIRD_CAPTURING_SPELL.title": "捕鸟魔法",
+  "FRIERENMOD-BIRD_CAPTURING_SPELL.description": "击晕一个鸟类或长得像鸟类的敌人 [blue]3[/blue] 回合。"
 }

@@ -76,5 +76,13 @@
   "FRIERENMOD-FACTOR010_POWER.title": "？！？",
   "FRIERENMOD-FACTOR010_POWER.description": "...消灭...",
   "FRIERENMOD-FACTOR001_POWER.title": "？？！",
-  "FRIERENMOD-FACTOR001_POWER.description": "...怪物..."
+  "FRIERENMOD-FACTOR001_POWER.description": "...怪物...",
+  "FRIERENMOD-MIMIC_POWER.title": "宝箱怪",
+  "FRIERENMOD-MIMIC_POWER.description": "再打出 [blue]{Amount}[/blue] 张牌后，强制结束回合，移除抽牌堆、手牌及弃牌堆的所有[gold]魔力[/gold]，并获得[gold]好黑啊[/gold]。",
+  "FRIERENMOD-DARK_POWER.title": "好黑啊",
+  "FRIERENMOD-DARK_POWER.description": "在宝箱怪肚子里看不清了……每回合逐渐适应黑暗。",
+  "FRIERENMOD-SWALLOWED_POWER.title": "被吞噬",
+  "FRIERENMOD-SWALLOWED_POWER.description": "本场战斗中，手牌上限降低 [blue]{Amount}[/blue]。",
+  "FRIERENMOD-BIRD_CAPTURED_POWER.title": "捕鸟魔法",
+  "FRIERENMOD-BIRD_CAPTURED_POWER.description": "接下来 [blue]{Amount}[/blue] 回合无法行动。"
 }

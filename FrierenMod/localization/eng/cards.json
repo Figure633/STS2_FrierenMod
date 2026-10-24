@@ -269,5 +269,9 @@
   "FRIERENMOD-LONGEVITY_PAIN.title": "The Pain of Longevity",
   "FRIERENMOD-LONGEVITY_PAIN.description": "After 10 consecutive [gold]Synchros[/gold], add [gold]Fatalism[/gold] to your hand.\n({Remaining} remaining.)",
   "FRIERENMOD-FATALISM.title": "Fatalism",
-  "FRIERENMOD-FATALISM.description": "ALL creatures lose 999 HP."
+  "FRIERENMOD-FATALISM.description": "ALL creatures lose 999 HP.",
+  "FRIERENMOD-EMERGENCY_FOOD.title": "Emergency Food",
+  "FRIERENMOD-EMERGENCY_FOOD.description": "Heal [green]{Heal}[/green] HP.",
+  "FRIERENMOD-BIRD_CAPTURING_SPELL.title": "Bird-Capturing Spell",
+  "FRIERENMOD-BIRD_CAPTURING_SPELL.description": "Stun a bird or birdlike enemy for [blue]3[/blue] turns."
 }
