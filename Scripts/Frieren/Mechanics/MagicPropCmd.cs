@@ -74,7 +74,10 @@ public static class MagicPropCmd
         var result = MagicPropRules.Apply(MagicDeckStore.Read(player), propId, targets,
             CombatManager.Instance.IsInProgress, player.PlayerRng.Rewards.NextInt);
         if (result == null) return false;
+        string usedProp = MagicDeckStore.Read(player).Props.Single(p => p.InstanceId == propId).PropId;
         MagicDeckStore.Write(player, result.Deck, propId);
+        if (usedProp == "UnbelievableTool") Presentation.FrierenAchievements.Unlock(player, "0006");
+        if (usedProp == "SeinNote") Presentation.FrierenAchievements.Unlock(player, "4013");
         if (result.Heal > 0) await CreatureCmd.Heal(player.Creature, result.Heal);
         if (result.Energy > 0) await PlayerCmd.GainEnergy(result.Energy, player);
         await UI.MagicDeckAnimations.WhenIdle(player);

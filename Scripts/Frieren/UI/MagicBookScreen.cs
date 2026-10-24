@@ -132,6 +132,18 @@ public sealed class MagicBookScreen
         });
         helpContainer.AddChild(help);
 
+        var backsHost = new Control { Name = "SlotBackLibraryButtonContainer", Position = new(1680, 220),
+            Size = new(324, 64), Scale = Vector2.One * 0.65f, MouseFilter = Control.MouseFilterEnum.Ignore };
+        _canvas.AddChild(backsHost);
+        var backs = new BaseLib.Config.UI.NConfigButton { Name = "OpenSlotBackLibrary" };
+        backs.Initialize(Text("BACK_LIBRARY"), () => {
+            if (!_applying && !_presentingChange) SlotBackLibrary.Open(root);
+        });
+        backsHost.AddChild(backs);
+        void RefreshBacks() { if (!_applying && !_presentingChange) Populate(); }
+        Presentation.SlotBackStore.Changed += RefreshBacks;
+        View.TreeExiting += () => Presentation.SlotBackStore.Changed -= RefreshBacks;
+
         // 原生返回按钮保留二代的贴图、悬停动画和输入提示。
         var back = GD.Load<PackedScene>("res://scenes/ui/back_button.tscn").Instantiate<MegaCrit.Sts2.Core.Nodes.CommonUi.NBackButton>();
         _canvas.AddChild(back);

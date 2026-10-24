@@ -1,4 +1,8 @@
 {
   "FRIERENMOD-ORIGINAL_MUSIC.title": "Original Frieren music",
-  "FRIERENMOD-ORIGINAL_MUSIC.hover.desc": "Use the original mod's act, elite, boss, shop and rest music in Frieren runs. Disable to restore StS2 music."
+  "FRIERENMOD-ORIGINAL_MUSIC.hover.desc": "Use the original mod's act, elite, boss, shop and rest music in Frieren runs. Disable to restore StS2 music.",
+  "FRIERENMOD-ACHIEVEMENTS.title": "Achievement unlocks",
+  "FRIERENMOD-ACHIEVEMENTS.hover.desc": "Enable Frieren achievements and slot-background unlocks. Collected backgrounds remain usable when disabled.",
+  "FRIERENMOD-BACK_LIBRARY.title": "Achievements and slot backgrounds",
+  "FRIERENMOD-BACK_LIBRARY_OPEN.title": "Browse and select"
 }

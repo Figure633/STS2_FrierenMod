@@ -11,6 +11,9 @@ const sharp = require('sharp');
 const rows = JSON.parse(await fs.readFile(path.join(work, 'records.json'), 'utf8'));
 const output = path.join(root, 'outputs/achievement-review-20261024');
 await fs.mkdir(output, { recursive: true });
+const outputFile = path.join(output, '成就与因子卡背对照表.xlsx');
+if (await fs.stat(outputFile).then(() => true, () => false))
+  throw new Error('对照表已存在，可能包含作者建议；禁止重新生成覆盖，请明确指定另一个输出文件。');
 const wb = Workbook.create();
 const sheet = wb.worksheets.add('成就与卡背');
 const pending = wb.worksheets.add('待决定');
@@ -102,7 +105,7 @@ pending.tables.add(`A6:G${decisions.length + 6}`, true, 'PendingAchievementDecis
 pending.tabColor = '#B97829';
 wb.recalculate();
 console.log((await wb.inspect({ kind: 'sheet,table', maxChars: 1800, tableMaxRows: 2, tableMaxCols: 4 })).ndjson);
-await (await SpreadsheetFile.exportXlsx(wb)).save(path.join(output, '成就与因子卡背对照表.xlsx'));
+await (await SpreadsheetFile.exportXlsx(wb)).save(outputFile);
 for (const [sheetName, range, file] of [
   ['成就与卡背', 'A1:F9', 'inventory-preview.png'],
   ['待决定', 'A6:G8', 'pending-preview.png'],

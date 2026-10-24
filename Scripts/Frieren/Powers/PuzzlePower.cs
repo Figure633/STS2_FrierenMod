@@ -30,6 +30,7 @@ public sealed class PuzzlePower : TurnOnlyPower
         if (power != this || Amount != 3) return;
         var enemies = CombatState.Enemies.Where(x => x.IsAlive).ToArray();
         if (enemies.Length == 0) return;
+        Presentation.FrierenAchievements.Unlock(Owner.Player!, "7002");
         // 作者指定演出前后各停顿一秒，等待仍走原生命令以兼容快进和战斗结束。
         await Cmd.Wait(1f);
         // 复用原版 Hyperbeam 的蓄力、光束、音效与震屏，结束后再统一击杀。

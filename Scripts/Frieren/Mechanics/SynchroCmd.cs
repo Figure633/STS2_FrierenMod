@@ -23,6 +23,7 @@ public static class SynchroCmd
         var owner = card.Owner;
         bool accelerated = owner.Creature.HasPower<AccelerateFlowPower>();
         bool thunder = owner.Creature.HasPower<ThunderPower>();
+        if (accelerated && thunder) Presentation.FrierenAchievements.Unlock(owner, "4015");
         if (thunder)
             await DamageCmd.Attack(15).FromCard(card).TargetingRandomOpponents(owner.Creature.CombatState!).Execute(context);
         if (accelerated || !thunder) await CardPileCmd.Draw(context, accelerated ? 2 : 1, owner);

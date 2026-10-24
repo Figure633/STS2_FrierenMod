@@ -87,6 +87,10 @@ public partial class Runner : Node
             new Harmony("frieren.tests.hover_host").Patch(
                 AccessTools.Method(typeof(MegaCrit.Sts2.Core.Nodes.Cards.Holders.NCardHolder), "CreateHoverTips"),
                 prefix: new HarmonyMethod(typeof(Runner), nameof(SkipGlobalHoverWindow)));
+            if (OS.GetCmdlineUserArgs().Contains("--achievements-only")) {
+                GD.Print("ACHIEVEMENTS_OK: " + await AchievementSystemTests.Run(this));
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--affinity-and-backs-only")) {
                 GD.Print("AFFINITY_AND_BACKS_OK: " + await AffinityAndBackTests.Run());
                 await Finish(); return;

@@ -6,6 +6,7 @@ public sealed class SlotBackProgress
 {
     public HashSet<string> Unlocked { get; set; } = ["0001", "0002", "0003"];
     public string[] Selected { get; set; } = ["0001", "0002", "0003"];
+    public HashSet<string> RewardedRuns { get; set; } = [];
 
     public bool Unlock(string id) => SlotBackCatalog.Contains(id) && Unlocked.Add(id);
 
@@ -20,6 +21,17 @@ public sealed class SlotBackProgress
     {
         var candidates = SlotBackCatalog.Ids.Where(id => id[0] == group && !Unlocked.Contains(id)).ToArray();
         return candidates.Length == 0 ? null : candidates[roll(candidates.Length)];
+    }
+
+    public IReadOnlyList<string> GrantVictory(string runKey, int ascension, Func<int, int> roll)
+    {
+        if (!RewardedRuns.Add(runKey)) return [];
+        var added = new List<string>();
+        foreach (var (group, minimum) in new[] { ('1', 0), ('2', 5), ('3', 10) }) {
+            if (ascension < minimum) continue;
+            if (Roll(group, roll) is { } id && Unlock(id)) added.Add(id);
+        }
+        return added;
     }
 
     public IEnumerable<string> CollectionRewards()
@@ -39,6 +51,7 @@ public sealed class SlotBackProgress
     {
         var state = JsonSerializer.Deserialize<SlotBackProgress>(json) ?? new();
         state.Unlocked ??= [];
+        state.RewardedRuns ??= [];
         state.Unlocked.RemoveWhere(id => !SlotBackCatalog.Contains(id));
         state.Unlocked.UnionWith(["0001", "0002", "0003"]);
         if (state.Selected is not { Length: 3 }) state.Selected = ["0001", "0002", "0003"];

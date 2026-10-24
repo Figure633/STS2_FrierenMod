@@ -20,8 +20,10 @@ public sealed class ApexMagic() : FrierenCard(0, CardType.Attack, CardRarity.Rar
         new[] { PileType.Draw, PileType.Hand, PileType.Discard }.All(p => ManaCmd.InPile(Owner, p).Count() == 4);
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
-        if (new[] { PileType.Draw, PileType.Hand, PileType.Discard }.All(p => ManaCmd.InPile(Owner, p).Count() == 4))
+        if (new[] { PileType.Draw, PileType.Hand, PileType.Discard }.All(p => ManaCmd.InPile(Owner, p).Count() == 4)) {
+            Presentation.FrierenAchievements.Unlock(Owner, "4003");
             await CreatureCmd.Kill(CombatState!.Enemies.Where(e => e.IsAlive).ToArray());
+        }
     }
     protected override void OnUpgrade() { AddKeyword(CardKeyword.Retain); }
 }

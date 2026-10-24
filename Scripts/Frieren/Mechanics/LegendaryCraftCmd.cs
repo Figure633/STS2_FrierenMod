@@ -48,6 +48,7 @@ public static class LegendaryCraftCmd
         }
         var spell = source.Owner.Creature.CombatState!.CreateCard<CustomLegendarySpell>(source.Owner);
         spell.Configure(cost, selected);
+        Presentation.FrierenAchievements.Unlock(source.Owner, "4014");
         await CardPileCmd.AddGeneratedCardToCombat(spell, PileType.Hand, source.Owner);
     }
 

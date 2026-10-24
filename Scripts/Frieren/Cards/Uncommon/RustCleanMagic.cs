@@ -19,7 +19,10 @@ public sealed class RustCleanMagic() : LegendaryCard(1, CardType.Skill, CardRari
     {
         if (Owner.Creature.CombatState!.Encounter?.RoomType != MegaCrit.Sts2.Core.Rooms.RoomType.Boss)
             await PowerCmd.Remove(play.Target!.Powers.FirstOrDefault(x => x.Type == PowerType.Buff));
-        await PowerCmd.Remove(Owner.Creature.Powers.FirstOrDefault(x => x.Type == PowerType.Debuff));
+        var debuff = Owner.Creature.Powers.FirstOrDefault(x => x.Type == PowerType.Debuff);
+        bool hex = debuff is MegaCrit.Sts2.Core.Models.Powers.HexPower;
+        await PowerCmd.Remove(debuff);
+        if (hex && !Owner.Creature.Powers.Contains(debuff!)) Presentation.FrierenAchievements.Unlock(Owner, "4006");
     }
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
 }

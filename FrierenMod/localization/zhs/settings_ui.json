@@ -1,4 +1,8 @@
 {
   "FRIERENMOD-ORIGINAL_MUSIC.title": "一代芙莉莲音乐",
-  "FRIERENMOD-ORIGINAL_MUSIC.hover.desc": "在芙莉莲跑局中使用一代的章节、精英、首领、商店和营地音乐。关闭后恢复二代音乐。"
+  "FRIERENMOD-ORIGINAL_MUSIC.hover.desc": "在芙莉莲跑局中使用一代的章节、精英、首领、商店和营地音乐。关闭后恢复二代音乐。",
+  "FRIERENMOD-ACHIEVEMENTS.title": "成就解锁",
+  "FRIERENMOD-ACHIEVEMENTS.hover.desc": "启用芙莉莲成就及卡槽背景解锁。关闭不影响已收藏背景的使用。",
+  "FRIERENMOD-BACK_LIBRARY.title": "成就与卡背收藏",
+  "FRIERENMOD-BACK_LIBRARY_OPEN.title": "查看与选择"
 }

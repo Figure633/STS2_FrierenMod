@@ -31,6 +31,7 @@ public sealed class MercuryPudding : FrierenRelic
     {
         if (Used || Owner.Creature.IsDead || Owner.Creature.CurrentHp > 10) return;
         Used = true; Flash();
+        Presentation.FrierenAchievements.Unlock(Owner, "4011");
         await CreatureCmd.Heal(Owner.Creature, decimal.Floor(Owner.Creature.MaxHp / 2m));
     }
 }

@@ -14,8 +14,10 @@ public sealed class BirdCapturingSpell() : FrierenCard(0, CardType.Skill, CardRa
     public static bool IsBird(MonsterModel? monster) => monster is Byrdpip or Byrdonis or OwlMagistrate or CalcifiedCultist or DampCultist;
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
-        if (play.Target != null && IsBird(play.Target.Monster))
+        if (play.Target != null && IsBird(play.Target.Monster)) {
             await PowerCmd.Apply<BirdCapturedPower>(context, play.Target, 3, Owner.Creature, this);
+            if (play.Target.HasPower<BirdCapturedPower>()) Presentation.FrierenAchievements.Unlock(Owner, "4004");
+        }
     }
     protected override void OnUpgrade() => AddKeyword(CardKeyword.Innate);
 }

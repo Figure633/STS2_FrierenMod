@@ -27,6 +27,7 @@ public sealed class OrdinaryOffensiveMagic() : FrierenCard(2, CardType.Attack, C
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         SfxCmd.Play("res://FrierenMod/audio/normal_attack.mp3");
+        Presentation.FrierenAchievements.CheckDamage(this, play.Target, 2 * ManaCmd.InPile(Owner, PileType.Exhaust).Count(), 100, "4008");
         await DamageCmd.Attack(2 * ManaCmd.InPile(Owner, PileType.Exhaust).Count()).FromCard(this).Targeting(play.Target!).Execute(context);
     }
     protected override void OnUpgrade() { EnergyCost.UpgradeBy(-1); }

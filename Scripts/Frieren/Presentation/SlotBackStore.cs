@@ -2,7 +2,6 @@ using FrierenMod.Core;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Saves;
-using MegaCrit.Sts2.Core.TestSupport;
 
 namespace FrierenMod.Scripts.Presentation;
 
@@ -24,9 +23,9 @@ public static class SlotBackStore
         int profile = manager.IsProfileInitialized ? manager.CurrentProfileId : -1;
         if (_manager == manager && _profile == profile) return _progress;
         _manager = manager; _profile = profile; _progress = new(); _writable = true;
-        if (!TestMode.IsOn && profile >= 0) {
+        if (profile >= 0) {
             try {
-                if (Store.ReadFile(FilePath) is { Length: > 0 } json) _progress = SlotBackProgress.FromJson(json);
+                if (Store.FileExists(FilePath) && Store.ReadFile(FilePath) is { Length: > 0 } json) _progress = SlotBackProgress.FromJson(json);
             } catch (Exception ex) {
                 // 不以默认值覆盖损坏的收藏存档，保留原文件供恢复。
                 _writable = false; Log.Warn("FrierenMod 卡背收藏读取失败，保留原存档：" + ex.Message);
@@ -37,7 +36,7 @@ public static class SlotBackStore
 
     private static void Save()
     {
-        if (TestMode.IsOn || _profile < 0 || !_writable) return;
+        if (_profile < 0 || !_writable) return;
         try {
             Store.CreateDirectory(Folder);
             Store.WriteFile(FilePath, _progress.ToJson());
@@ -63,6 +62,23 @@ public static class SlotBackStore
     {
         if (!Read().Select(slot, id)) return false;
         Save(); Changed?.Invoke(); return true;
+    }
+
+    public static bool SelectAll(IReadOnlyList<string> ids)
+    {
+        var progress = Read();
+        if (ids.Count != 3 || ids.Any(id => !progress.Unlocked.Contains(id))) return false;
+        for (int i = 0; i < 3; i++) progress.Select(i, ids[i]);
+        Save(); Changed?.Invoke(); return true;
+    }
+
+    public static void GrantVictory(string runKey, int ascension)
+    {
+        if (Read().RewardedRuns.Contains(runKey)) return;
+        var added = Read().GrantVictory(runKey, ascension, Random.Shared.Next);
+        // 即使当前组已集齐，也保存本局奖励标记，避免读档后重复结算。
+        Save(); Changed?.Invoke();
+        foreach (var id in added) Unlocked?.Invoke(id);
     }
 
     public static string Selected(int slot) => Read().Selected[slot];

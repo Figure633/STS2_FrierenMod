@@ -16,8 +16,12 @@ public sealed class FairyTaleEnd() : LegendaryCard(1, CardType.Attack, CardRarit
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [new FairyTaleDamageVar(), new DynamicVar("BaseDamage", 6)];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
-    protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play) =>
-        await DamageCmd.Attack(((FairyTaleDamageVar)DynamicVars.Damage).Calculate(this)).FromCard(this).Targeting(play.Target!).Execute(context);
+    protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
+    {
+        decimal amount = ((FairyTaleDamageVar)DynamicVars.Damage).Calculate(this);
+        Presentation.FrierenAchievements.CheckDamage(this, play.Target, amount, 1000, "4005");
+        await DamageCmd.Attack(amount).FromCard(this).Targeting(play.Target!).Execute(context);
+    }
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(2);
