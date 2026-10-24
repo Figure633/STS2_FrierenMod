@@ -275,5 +275,13 @@
   "FRIERENMOD-BIRD_CAPTURING_SPELL.title": "捕鸟魔法",
   "FRIERENMOD-BIRD_CAPTURING_SPELL.description": "击晕一个鸟类或长得像鸟类的敌人 [blue]3[/blue] 回合。",
   "FRIERENMOD-UPSIDE_DOWN.title": "颠倒",
-  "FRIERENMOD-UPSIDE_DOWN.description": "每[gold]同调[/gold]一次，交换抽牌堆和弃牌堆，并失去 [red]2[/red] 点生命。"
+  "FRIERENMOD-UPSIDE_DOWN.description": "每[gold]同调[/gold]一次，交换抽牌堆和弃牌堆，并失去 [red]2[/red] 点生命。",
+  "FRIERENMOD-MANA_AFFINITY.title": "魔力亲和",
+  "FRIERENMOD-MANA_AFFINITY.description": "魔力获得[gold]保留[/gold]。",
+  "FRIERENMOD-SNUGGLE.title": "贴贴",
+  "FRIERENMOD-SNUGGLE.description": "选择：\n弃掉至多{Amount}张牌，每弃掉1张[gold]魔力[/gold]，获得{energyPrefix:energyIcons(1)}。\n或在手牌生成1张[gold]魔力[/gold]。",
+  "FRIERENMOD-SNUGGLE1.title": "和芙莉莲贴贴",
+  "FRIERENMOD-SNUGGLE1.description": "弃掉至多{Amount}张牌，每弃掉1张[gold]魔力[/gold]，获得{energyPrefix:energyIcons(1)}。",
+  "FRIERENMOD-SNUGGLE2.title": "和修塔尔克贴贴",
+  "FRIERENMOD-SNUGGLE2.description": "在手牌生成1张[gold]魔力[/gold]。"
 }

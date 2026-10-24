@@ -101,5 +101,7 @@
   "FRIERENMOD-SPELL_CASTER_POWER.spells.5": "{Cost} Mana: Perfect Defense SP. Gain {Buffer} Buffer and 8 Metallicize.",
   "FRIERENMOD-SPELL_CASTER_POWER.spells.6": "{Cost} Mana: Bird-Capturing Magic. Summon a Damp Cultist.",
   "FRIERENMOD-SPELL_CASTER_POWER.spells.7": "{Cost} Mana: Flying Magic SP. Gain 1 Intangible.",
-  "FRIERENMOD-SPELL_CASTER_POWER.spells.5.enhanced": "{Cost} Mana: Perfect Defense SP. Gain {Buffer} Buffer and 2 Malleable."
+  "FRIERENMOD-SPELL_CASTER_POWER.spells.5.enhanced": "{Cost} Mana: Perfect Defense SP. Gain {Buffer} Buffer and 2 Malleable.",
+  "FRIERENMOD-MANA_AFFINITY_POWER.title": "Mana Affinity",
+  "FRIERENMOD-MANA_AFFINITY_POWER.description": "Mana has [gold]Retain[/gold]."
 }

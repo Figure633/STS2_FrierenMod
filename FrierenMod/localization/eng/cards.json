@@ -275,5 +275,13 @@
   "FRIERENMOD-BIRD_CAPTURING_SPELL.title": "Bird-Capturing Spell",
   "FRIERENMOD-BIRD_CAPTURING_SPELL.description": "Stun a bird or birdlike enemy for [blue]3[/blue] turns.",
   "FRIERENMOD-UPSIDE_DOWN.title": "Upside Down",
-  "FRIERENMOD-UPSIDE_DOWN.description": "Whenever you [gold]Synchro[/gold], swap your draw and discard piles and lose [red]2[/red] HP."
+  "FRIERENMOD-UPSIDE_DOWN.description": "Whenever you [gold]Synchro[/gold], swap your draw and discard piles and lose [red]2[/red] HP.",
+  "FRIERENMOD-MANA_AFFINITY.title": "Mana Affinity",
+  "FRIERENMOD-MANA_AFFINITY.description": "Mana has [gold]Retain[/gold].",
+  "FRIERENMOD-SNUGGLE.title": "Snuggle",
+  "FRIERENMOD-SNUGGLE.description": "Choose:\nDiscard up to {Amount} cards. Gain {energyPrefix:energyIcons(1)} for each [gold]Mana[/gold] discarded.\nOr add 1 [gold]Mana[/gold] to your Hand.",
+  "FRIERENMOD-SNUGGLE1.title": "Snuggle with Frieren",
+  "FRIERENMOD-SNUGGLE1.description": "Discard up to {Amount} cards. Gain {energyPrefix:energyIcons(1)} for each [gold]Mana[/gold] discarded.",
+  "FRIERENMOD-SNUGGLE2.title": "Snuggle with Stark",
+  "FRIERENMOD-SNUGGLE2.description": "Add 1 [gold]Mana[/gold] to your Hand."
 }

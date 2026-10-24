@@ -17,7 +17,8 @@ func _initialize():
 			quit(1)
 			return
 	var textures = 0
-	for folder in ["cards", "powers", "relics", "potions", "character", "energy", "ui", "card_frames", "events", "monsters", "vfx"]:
+	var slot_backs = 0
+	for folder in ["cards", "powers", "relics", "potions", "character", "energy", "ui", "card_frames", "events", "monsters", "vfx", "slot_backs", "achievement"]:
 		var path = "res://FrierenMod/images/" + folder
 		for file in DirAccess.get_files_at(path):
 			if not file.ends_with(".png") and not file.ends_with(".tres"):
@@ -28,6 +29,8 @@ func _initialize():
 				quit(1)
 				return
 			textures += 1
+			if folder == "slot_backs":
+				slot_backs += 1
 	for lang in ["eng", "zhs"]:
 		for table in ["cards", "characters", "relics", "potions", "frieren", "powers", "settings_ui", "rest_site_ui", "ancients", "events", "monsters", "encounters"]:
 			var text = FileAccess.get_file_as_string("res://FrierenMod/localization/" + lang + "/" + table + ".json")
@@ -71,8 +74,8 @@ func _initialize():
 		var scene = packed.instantiate()
 		scene.free()
 		scenes += 1
-	if textures < 119 or audio_count != 19 or scenes != 11:
-		push_error("Missing texture files")
+	if textures < 119 or slot_backs != 104 or audio_count != 20 or scenes != 11:
+		push_error("Resource count mismatch: textures=%d slot_backs=%d audio=%d scenes=%d" % [textures, slot_backs, audio_count, scenes])
 		quit(1)
 		return
 	print("PACK_CHECK_OK: ", textures, " textures + ", audio_count, " audio + ", scenes, " scenes + 24 localization tables")

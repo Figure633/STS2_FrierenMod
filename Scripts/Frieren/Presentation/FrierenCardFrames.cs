@@ -19,7 +19,7 @@ public static class FrierenCardFrames
     {
         string kind = card.Type switch { CardType.Attack => "attack", CardType.Power => "power", _ => "skill" };
         // 一代因子、魔具和魔力共用紫色卡背，七张 FRIEREN_FERN_CARD 另用双色卡背。
-        bool shared = card is BabySleeping or ShavedIceSpell or ManaDetection or GrapeSpell or FlyingMagic or Disperse or ClearMind;
+        bool shared = card is BabySleeping or ShavedIceSpell or ManaDetection or GrapeSpell or FlyingMagic or Disperse or ClearMind or ManaAffinity or Snuggle;
         string style = card is FactorCard or MagicPropCard or IManaCard ? "magic" : shared ? "shared" : "frieren";
         var key = (kind, style);
         if (Frames.TryGetValue(key, out var cached)) return cached;

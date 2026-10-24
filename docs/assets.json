@@ -2466,11 +2466,11 @@
   },
   {
     "file": "FrierenMod/images/monsters/SpiegelFrieren.png",
-    "source": "src/main/resources/FrierenModResources/img/monsters/Spiegel_Frieren.png",
-    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
-    "sha256": "4a25e7d8ffe79971df3f211cbdc6834cc6f09669118169e457cb2aea1e58a921",
+    "source": "作者2026年10月24日提供的透明复制体立绘 codex-clipboard-53e6ab68-6f7f-4cad-af87-e5651b8d1027.png",
+    "sha256": "a531b918b973dca2e1461569a37783da13fc93652a483ee064c282903520a82f",
     "modified": false,
-    "redistribution_review": "pending; local prototype only"
+    "redistribution_review": "pending; local prototype only",
+    "source_collection": "作者直接提供"
   },
   {
     "file": "FrierenMod/images/monsters/Spiegel_node.png",
@@ -2607,5 +2607,901 @@
     "modified": true,
     "modification": "手工勾选人物与书本轮廓、去除床和背景、裁切与等比缩放；本次未生成或补画人物。tools/compose_rest_pose.py可复现；座椅使用二代原生营地场景。",
     "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/Snuggle.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/Snuggle.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "3d59ef20af571579d48b8ee3e10ea7a8b24742ff32ebe133632ccb3948a2a9f3",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/cards/Snuggle1.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/Snuggle1.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "e30beee06fe25a137542877d6cae37d04140887e6b1f6fb561f90da077852d68",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/cards/Snuggle2.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/Snuggle2.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "18b005990e21c861cd96504cb08f5dbf7758d52142819e09319e66c6ec475e90",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/cards/ManaAffinity.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/ManaAffinity.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "67f673096f52858878466b0b0f3b75c62cff4ccfa25f08766ffd39b5ffc252c6",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/powers/ManaAffinityPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/ManaAffinityPower_84.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "111cd21a36167c613f8c25195edf803e822d94e359ee15a45366845c9f5c16a1",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/0001.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/0001.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "3835d7faa9c03f7dc24b7641a3f38cd425f56420c9400739e975c64507d39a4e",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/0002.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/0002.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "90c8b5913eb90e2bdf8094754e711ff3c9573895b4180c762cdd3c03b4ee9d11",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/0003.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/0003.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "2baa557e7c7934ed7a9e750eb514895aac0ee9cb56bfe5a15d763b27a8f0e179",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/0004.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/0004.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "79792159fdc6bed222dfd062992047402114ac25db9331f830c3431221126175",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/0005.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/0005.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "646e359324ad031f2f5f70a9e3ca45534bee8188adbfdb2aede0257be0d42829",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/0006.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/0006.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "41be2d418f1a2a79690b865cb7ed04425e39566c05cb3158c322029400004474",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/0007.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/0007.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "e63b9bae53689b2c9bddbd561fa465abe53c1b422ed7ff39f2c96599e97e2785",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/0008.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/0008.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "6e1cc54e812eb6cfeaf679297a6446fd9aed5142b094266b308270247d55a890",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/0009.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/0009.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "9f31f99858c66e6657c99a7599636dd0ddbedda18d8d71cfaa0514c9a7397b10",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/0010.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/0010.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "36ab8ce9a0814ca208c260b7ec508c130a0cb683dd39e92e838ef9b4a3d648e5",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/1001.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/1001.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "d391d312cddb14793e9758bde119f02da550063ff31b7e974af483794bc89758",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/1002.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/1002.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "c01961d5ce4513d28f822f2fe8d6c9ea97a47b85a5dac05e7f53f63eef49a946",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/1003.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/1003.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "58ff4e8ab159dba1fa41cedc66bb922d27ac9897ed661f888a9286fed8850cf9",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/1004.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/1004.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "bd0139d53833a79625ef5fceedf33174a64a8a1bfa43cf9a72f6eb4a4f162d9e",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/1005.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/1005.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "2b8883386e4baf25d43b6b646e53fbf4cd541e8abd7b2237ae2795b3a7966084",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/1006.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/1006.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "c408e06b8dd49180ba42a49b0e8f58d504d875a8454f0e5ad456f5a5a9e64535",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/1007.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/1007.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "8ff817f5c431fb5cbdc01aff5831bce46ba4c1f968f79b8139ff356279786343",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/1008.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/1008.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "631bc2c2de320bc93eace0a2368ac400e1fc7890472d0ed7a333bb653880296b",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/1009.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/1009.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "1569c126e0312205ac43966fedb959f4fb49103af4e894dd78acf384f3c7fe65",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/1010.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/1010.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "867c81e55c18fea1e8f6227eb4d642cf50894d191033104bbd7af1db7383bc18",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/1011.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/1011.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "e7d9a4030f6fb557d4716e62deb8942c608059b069a1fe02aa862de62a22a582",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/1012.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/1012.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "574d4808f7a42a16e3c7837c363a89cc7d496f5eca4f52eb73d34c2ebcbbf8ca",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/1013.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/1013.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "885ab91086dbe62d6edbb58a7cc34185526e2cb839cc4514f44e4fd2d1835e6e",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/1014.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/1014.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "16a8b34514324c3d5a2cf33d28ce15b73f180fabc0956fb896011c283b7adc47",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/1015.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/1015.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "bab2049e4a43cc1972e16394c7c3e0ffab052678bd634606eb3ba630d5613a77",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/1016.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/1016.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "836ddda3159349e52e65acebdd0cbc845183a4a20c04a6922fe2425aa6512bda",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/1017.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/1017.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "8ad0dd2cb53c6e96da975de8da2bb5e5a62a8488e36fde38d6f794a87586cf02",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/1018.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/1018.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "d353b516edb08a0975c90a82c84b38811a57332f0ee6cf0d6063f03e3e119136",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/2001.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/2001.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "9df6be434730487b2d8723be1e090a3b89486591eda33460c7ba482440764fbd",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/2002.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/2002.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "f01b7227e4a93c538b402b0a1e693a12169a840cbec303556e68996744b71703",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/2003.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/2003.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "6b15224ef7bfb4a3a066061842ebbb3dd2f3c40f8537513ba50a0b47ee5c6676",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/2004.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/2004.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "07a8d9db328e7400719e3038875e75e5e1687e095df07f49bdb0122b6f0e877e",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/2005.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/2005.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "5158ef150783154014cc6b1f4c616381871bb0e0610ef8a8694d04f637c60493",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/2006.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/2006.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "86678d64c43335c06e2e20c9be8f419268417d6870fba8cf592b903e8ba70b1f",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/2007.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/2007.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "eebdeb0233a6ea18ff749eac198ea03c3edad270a91f038cb1fc12e46e266856",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/2008.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/2008.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "051df4a71cd5ec9eae849e10f92a4254e42de1f8b58825ca7f03cd2202a47d05",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/2009.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/2009.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "e313ed81ffdf5656450acd33e61e36265a5de2c085ec946d5c2510cd0056be37",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/2010.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/2010.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "3b8fc2c48f9b78a8c4891d1633e3597a768df54c40edb5d4ddd57de35e498d7d",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/2011.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/2011.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "2638707e9874c3545f2447253c485c0e95a18c04e6d3ce7f60674e21d7340fa2",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/2012.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/2012.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "c20ad200079a5e0bdd46650f65b7c534bf10e3a9c7af0a7dd0782448a28a01e5",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/2013.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/2013.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "b6476513d91658e3f5a35496aa8bbf6120bf63a9eec8886b57bdbc523db1737f",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/2014.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/2014.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "9cba70982ca9984c9ebda9e0570ddcc4b15a498222b987741f4153b1b7990cc0",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/2015.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/2015.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "943835f8eea21fbbadef14f9d3cab3c4d31deaf57ad3170803778785fb238937",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/2016.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/2016.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "f2d6adc3d21f682c65eff0fe05047fbf2c44118d6c43d1d4560e62f0ecca2bf3",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/2017.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/2017.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "8dad3db318409c7f46a7f93803eb2d6f8504cfdee7bd9e1fa97303a08d44253b",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/2018.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/2018.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "e9749423bb5d0a2c7c7c1e454b247ae6f424d5acb54514835aef72c92d10b357",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/3001.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/3001.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "c802cdaebc54d3852a5dfa837b9fc84570bfa3df2fb468427c019172b704a092",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/3002.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/3002.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "1919d417575cefa6df8f66d3196709a4a39e69b21f3d1a555372c4db0973a9c5",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/3003.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/3003.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "11f28b2ec4e823b4f5d10f306cba5a3e51e66b01fe3fcda662cd56cc742365ae",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/3004.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/3004.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "ddfb5fef98351ae4ebff7e28f1fb88ad1d7f80e6e27842b210ff800e875a472c",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/3005.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/3005.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "7adcbb55ad8ccbce0f1339ef73185c1faf1092d384ecca64f3f2cab94c1aa6d8",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/3006.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/3006.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "38e6973c0521724c840737601f3cfed95005a1a32bca64fb9936475f97c5ef1c",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/3007.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/3007.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "61a71ee02620977d35c56b783bb9676e61b944b8ebaf0135f0ae85de0a22f9b4",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/3008.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/3008.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "cf6029eeebe8ed951a7cc23b7089188f337c31b1106f4fe947886567ed741d43",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/3009.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/3009.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "d6abbd1fa83b7b9acc53be18c1b0b414bafb04502c37fc7e930832326290ec2f",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/3010.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/3010.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "9cba70982ca9984c9ebda9e0570ddcc4b15a498222b987741f4153b1b7990cc0",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/3011.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/3011.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "f3c43e6f8cbec56ca19899bd8508c0da4ccffd4f2fdaca629f447509d6692026",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/3012.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/3012.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "1c6b963342e71ae2576594e243f1038897de5edf93dcb4b7fe8d2963a57d115f",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/3013.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/3013.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "904a2087779ac0611996b26213eb8794950cfe48f0fbccffd36f121dcb81ccd9",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/3014.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/3014.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "7ecf859f278a2bcf9c8728bc54761784d0edb8ba0697da2b5253091333412c24",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/3015.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/3015.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "be2a25c5671546c44af5ad8be4094444e6fa7b8107e3dcdf97bc8480747ad691",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/3016.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/3016.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "cf1e6f59f7e5053e11d2375711706cc4bafd05fc3b58fdbbbef1d5b6316ffc57",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/3017.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/3017.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "01a5df791aa9150f946971a6b897abf26c39cace0c1c09105e9314cb5909d7cd",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/3018.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/3018.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "905a0311b8c63197c4081c23861edbd730683742ef9b2ca2dccb2e425dc3f27d",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/4001.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/4001.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "8b703123bf396f6496442094f60984d3a36993dac6e5121bfdfd6ec526002762",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/4002.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/4002.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "720602275aeb2aeae9665df07851cc72c046d58cead76abff9775ee21374ddf6",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/4003.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/4003.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "ae8984c743f2585c165f53e7bb947b44867d8909ce7587723599c57d8d30d7c8",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/4004.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/4004.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "9ea439bbb34ea7c89638c74f3a5a9a84ce4c31ddba736c6aa9c69c248af438c6",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/4005.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/4005.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "33c3f8c711ac6ec4590abebb24b69e4db2337b4926db3427c11b9e7a3ad681d9",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/4006.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/4006.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "ead6fa1274fffbfa5a18c8256e863098d7a28581c53bda3d3eb3566aca03ede4",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/4007.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/4007.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "8d50da7d0233b3d86c9d98577284e91e153c3c2095f00f50de6dc9c98e02aed6",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/4008.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/4008.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "e1a3ea23b1af76bc7e34bcc15e1629003c7b39875c1875d69f916eb5081f4317",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/4009.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/4009.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "93221bc2b24075fa470ee869c26f55368ec754300d34ef71cb834e2d412433d4",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/4010.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/4010.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "f1e33d750a6c65ae0e48d3f630f3f0f57d68316d362989449d23a24eb919a966",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/4011.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/4011.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "f55413ec2de149c34543aee11af522733ce6fa1d2a642df86b577537695484a4",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/4012.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/4012.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "f123d7fb49a9801e3b0d0d1163e0c5eb5fa47c6dd9710c9efd19e6a1b122af57",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/4013.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/4013.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "de3621805f33ef0eff3346442fb65e41ae763b6f97db59e206797515c8994913",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/4014.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/4014.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "026330af1752ed854a5c7a86ffc1630bb21a3db308d15f8af1a24894e879d8cc",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/4015.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/4015.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "4aa1e4e2e0826c4aa34b247b36da331f52d67149470f033cf7a09a15b4517a9e",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/5001.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/5001.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "00a36d76769b83e7f8a61fcc64704ca88081a30a6b031dcd471ba0460c9f2aab",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/5002.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/5002.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "e6e9e47b5abdf6b5f3351389a0cfb0f8cc9de22a9199727858f451059ea6a712",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/5003.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/5003.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "c81f91ea4f4bc2ad85f2fa9e3d2c62146beaaa045fc239325105b6da097021a3",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/5004.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/5004.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "5c9bf8ed74c8a9cffa82f6aa63dd773ab8b92f83d74b3908fa959fb39ff4bd42",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/5005.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/5005.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "d27419474c2a2f17ea2663b27fd36e28fa902c7e8dbda369e464ad5391f4bc28",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/5006.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/5006.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "ce1df5a565fe3dd866ee11128252077cd2b73caca940b262b572ccbf0d85af19",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/5007.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/5007.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "ef895a0c7eb797b36ad9d3dbfb66ff69867bd1f3267a1a1b3fa27762b244ed7a",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/5008.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/5008.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "2c282dac3350545afdcb25478844e4810952ac6dd489eb09316ca9900ebcc3e3",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/5009.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/5009.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "fb11a2344fb77bcae5e973c1ea24d4aa995b6b5e6cbe913881d78d1d4f761631",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/5010.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/5010.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "f5dcf873c795b3f4d69436e572b4fd8530e0d0c8960db42e8275cb671da13c6e",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/5011.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/5011.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "7697695f73e3c84c931ffe067ee2b4551756464effef6379fab9c9d6c1104bbd",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/5012.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/5012.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "9f22348ac654d0e40af3b5c6205ba4a331724f5845a5eb362ccc2f6a0e8db064",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/5013.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/5013.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "377de99b78a916ccc198c044e8dd7d8e813f3b8b1fde289fcb4e86f330046a65",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/5014.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/5014.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "5fb06a0846e9b863c9921e7b28b50c7d9ac0d1e1e06d30f2ae4b4143fbfe87ce",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/5015.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/5015.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "d3000176412824f37455f6f2358bd88b7e3cbf842ed637ba105f30c166c4a98a",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/6001.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/6001.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "f08d615ac6ca425fac37233aa715dfd7922377c6259878be1cb07681ccbe3094",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/6002.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/6002.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "a97ed1af6ffbc9af442d6d164fb4e894a06c914f398d4995621b84e87ba6cae1",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/7001.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/7001.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "1816cf6789b682b6fd489efcea24ca95092b41649d8248c0d3a65c8532ab78c2",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/7002.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/7002.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "86bdec78d2c6a4ffe2fdba66ae0f47ed0cb7ecf4e050e3aa5b8a8df36fd42177",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/9001.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/9001.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "456f9a5709f88fb336bef946d87035e415d6e2257b1c6580ea7c11cf4ad132f7",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/9002.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/9002.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "076da738985ae56ec191d82c66a83ecd172b5219b250522eb22a4ce59ef4c274",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/9003.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/9003.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "ad742bfecd1a1c4493c8c5495b4c79e0b3996d61549fdf9ea4647237a66b6bab",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/9997.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/9997.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "fdc1e16bfecf21a7ffc70f919dd461bc9d4aef104561b6160046657a46ae3a17",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/9998.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/9998.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "d93ec1bd0a91cf1a74a528a046bf9c468bbd2d744f6c494b7a86d70327b302f5",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/9999.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotBg/9999.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "f4e73baa2bb2be95273f61b2e4df07635f75115128aaecea8abe9a3693c3935a",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/achievement/background.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/achievement/background.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "ec678696c748ddeaef3f9d79f8d3b7f428e1ff8eea36dac3e164c4a82d87bbe5",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/achievement/silhouette.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotPreviewAndLibrary/bd_slot_silhouette.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "53cb1ef80511c2a6c6dca52cfd604dda9fe7b07940fa1e19ca473312e3a7ee26",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/audio/achievement.mp3",
+    "source": "src/main/resources/FrierenModResources/audio/sound/achievement.mp3",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "2cacc71e79bf863c84f44907321384288899e717df099a8a2ceaed68a3099c9b",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
   }
 ]
