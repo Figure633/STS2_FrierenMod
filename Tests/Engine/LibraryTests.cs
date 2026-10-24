@@ -38,7 +38,7 @@ public static class LibraryTests
             .Any(p => p.PatchMethod == apply), "百科初始化已注册分类补丁");
         apply.Invoke(null, [filters, new Dictionary<CharacterModel, NCardPoolFilter> { [ModelDb.Character<Frieren>()] = character }, misc]);
         foreach (var card in items)
-            Check(filters[misc](card) && !filters[character](card), "仅收录于衍生牌分类：" + card.GetType().Name);
+            Check(!filters[misc](card) && !filters[character](card) && FrierenLibraryFilter.IsMagicItem(card), "仅收录于魔法因子和魔具分类：" + card.GetType().Name);
         Check(ReferenceEquals(filters[other], originalOther), "其他角色分类保留原过滤器");
         Check(filters[character](ModelDb.Card<RapidChant>()) && filters[character](ModelDb.Card<HighDensityMana>()) &&
             !filters[misc](ModelDb.Card<RapidChant>()) && !filters[misc](ModelDb.Card<HighDensityMana>()), "普通角色卡分类不变");

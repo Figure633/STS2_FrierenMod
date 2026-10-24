@@ -42,16 +42,4 @@ if ($LASTEXITCODE -ne 0) {
 # Install release files
 Write-Host "[2/2] Installing..."
 
-$source = Join-Path $root "artifacts\FrierenMod"
-$target = Join-Path $gameDir "mods\FrierenMod"
-
-foreach ($file in @("FrierenMod.dll", "FrierenMod.pck", "FrierenMod.json")) {
-    if (-not (Test-Path (Join-Path $source $file))) {
-        throw "Missing release file: $file"
-    }
-}
-
-New-Item -ItemType Directory -Force -Path $target | Out-Null
-Copy-Item (Join-Path $source "*") $target -Recurse -Force
-
-Write-Host "Installed to: $target" -ForegroundColor Green
+& (Join-Path $root 'tools/install.ps1')

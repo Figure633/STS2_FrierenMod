@@ -104,7 +104,7 @@ public static class ChantSelectionTests
         Check(tokens.All(c => !filters[filter](c) && (uint)(c.Rarity - CardRarity.Event) <= 4u) && filters[filter](Card<HighDensityMana>()) && filters[filter](Card<RapidChant>()),
             "实际百科过滤器排除衍生牌，原生杂项收录；高密度魔力和普通角色卡保留");
         Check(!ModelDb.Card<PaperPlaneSpell>().ShouldShowInCardLibrary && !ModelDb.Card<TimeConcept>().ShouldShowInCardLibrary &&
-            ModelDb.CardPool<FrierenCardPool>().AllCards.OfType<FactorCard>().All(c => c.ShouldShowInCardLibrary && !filters[filter](c) && filters[misc](c)), "兼容旧档的废弃牌继续隐藏，因子进入杂项分类");
+            ModelDb.CardPool<FrierenCardPool>().AllCards.OfType<FactorCard>().All(c => c.ShouldShowInCardLibrary && !filters[filter](c) && !filters[misc](c)), "兼容旧档的废弃牌继续隐藏，因子由独立分类收录");
         filter.Free(); misc.Free();
 
         // 使用真实原生卡牌、悬停场景与宿主；只跳过独立测试不需要的游戏启动。
