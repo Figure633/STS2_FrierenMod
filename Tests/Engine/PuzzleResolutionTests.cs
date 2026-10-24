@@ -29,6 +29,7 @@ public static class PuzzleResolutionTests
     private static NHyperbeamVfx? BeamStub;
     private static TaskCompletionSource? KillDelay;
     private static float DelaySeconds;
+    private static readonly List<float> Delays = [];
     private static bool RenderNative;
     private static bool MutePreviewAudio() => !RenderNative;
     private static bool InteractiveVisual(ref bool __result)
@@ -43,12 +44,12 @@ public static class PuzzleResolutionTests
     }
     private static bool CaptureDelay(float seconds, ref Task __result)
     {
-        if (Math.Abs(seconds - 1.025f) > 0.001f) return true;
-        DelaySeconds = seconds; KillDelay = new TaskCompletionSource(); __result = KillDelay.Task; return false;
+        if (Math.Abs(seconds - 1.025f) > 0.001f && Math.Abs(seconds - 1f) > 0.001f) return true;
+        Delays.Add(seconds); DelaySeconds = seconds; KillDelay = new TaskCompletionSource(); __result = KillDelay.Task; return false;
     }
     public static async Task<int> Run()
     {
-        int count = 0; Hints.Clear(); BeamCount = 0; RenderNative = false;
+        int count = 0; Hints.Clear(); BeamCount = 0; Delays.Clear(); RenderNative = false;
         var hintPatch = new Harmony("frieren.tests.puzzle_hints");
         hintPatch.Patch(AccessTools.Method(typeof(TalkCmd), nameof(TalkCmd.Play)),
             prefix: new HarmonyMethod(typeof(PuzzleResolutionTests), nameof(CaptureHint)));
@@ -139,8 +140,11 @@ public static class PuzzleResolutionTests
         int hp = player.Creature.CurrentHp, round = combat.RoundNumber;
         Check(BeamCount == 0, "错误槽位、错误顺序和未完成时均不播放完成特效");
         var completing = Chant(2);
-        Check(!completing.IsCompleted && Alive() && BeamCount == 1 && KillDelay != null && Math.Abs(DelaySeconds - 1.025f) < 0.001f,
-            "正确第三段先启动原版光束，等待约1秒期间两个敌人保持存活");
+        Check(!completing.IsCompleted && Alive() && BeamCount == 0 && Delays.SequenceEqual(new[] { 1f }),
+            "正确第三段先停顿1秒，敌人存活且尚未播放特效");
+        KillDelay!.SetResult();
+        Check(!completing.IsCompleted && Alive() && BeamCount == 1 && Math.Abs(DelaySeconds - 1.025f) < 0.001f,
+            "停顿后启动原版光束，等待蓄力及光束结束期间敌人仍存活");
         // 直接加载原版场景验证光束阶段；TestMode 的工厂替身只用于控制结算暂停。
         var root = ((SceneTree)Engine.GetMainLoop()).Root;
         var nativeBeam = GD.Load<PackedScene>(NHyperbeamVfx.scenePath).Instantiate<NHyperbeamVfx>();
@@ -157,6 +161,9 @@ public static class PuzzleResolutionTests
             root.GetTexture().GetImage().SavePng(ProjectSettings.GlobalizePath("res://../../artifacts/puzzle-native-hyperbeam.png"));
         nativeBeam.QueueFree();
         RenderNative = false;
+        KillDelay!.SetResult();
+        Check(!completing.IsCompleted && Alive() && Delays.SequenceEqual(new[] { 1f, 1.025f, 1f }),
+            "特效结束后再停顿1秒，不提前击杀敌人");
         KillDelay!.SetResult(); await completing; BeamStub!.Free();
         Check(enemies.All(enemy => enemy.IsDead) && Progress() == 3 && Clues().Length == 3 && Hints.Count == 0 && combat.RoundNumber == round,
             "第三段返回前两个敌人已通过原生命令死亡，无需结束回合");
@@ -171,8 +178,12 @@ public static class PuzzleResolutionTests
         card = combat.CreateCard<FinalChant>(player);
         play = new CardPlay { Card = card, Target = null, IsAutoPlay = false, PlayIndex = 0, ResultPile = PileType.Discard, PlayCount = 1,
             Resources = new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 } };
-        await Reset(); var finishing = ChantCmd.Final(context, play);
-        Check(!finishing.IsCompleted && Alive() && BeamCount == 2, "终极咏唱也先播放完成特效，等待结束后才击杀");
+        await Reset(); Delays.Clear(); var finishing = ChantCmd.Final(context, play);
+        Check(!finishing.IsCompleted && Alive() && BeamCount == 1 && Delays.SequenceEqual(new[] { 1f }), "终极咏唱完成后也先停顿1秒");
+        KillDelay!.SetResult();
+        Check(!finishing.IsCompleted && Alive() && BeamCount == 2 && Delays.Count == 2, "终极咏唱等待原版特效结束");
+        KillDelay!.SetResult();
+        Check(!finishing.IsCompleted && Alive() && Delays.SequenceEqual(new[] { 1f, 1.025f, 1f }), "终极咏唱特效后也保留1秒停顿");
         KillDelay!.SetResult(); await finishing; BeamStub!.Free();
         Check(enemies.All(enemy => enemy.IsDead) && Progress() == 3,
             "终极咏唱按槽位顺序集齐时也立即击杀全部敌人");

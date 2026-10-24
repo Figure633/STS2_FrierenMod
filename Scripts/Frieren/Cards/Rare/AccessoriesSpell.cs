@@ -14,7 +14,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace FrierenMod.Scripts.Cards;
 
-public sealed class AccessoriesSpell() : LegendaryCard(4, CardType.Power, CardRarity.Rare, TargetType.Self)
+public sealed class AccessoriesSpell() : LegendaryCard(3, CardType.Power, CardRarity.Rare, TargetType.Self)
 {
     public override bool CanBeGeneratedInCombat => false;
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Amount", 1)];
@@ -23,5 +23,5 @@ public sealed class AccessoriesSpell() : LegendaryCard(4, CardType.Power, CardRa
     {
         await PowerCmd.Apply<GainRelicPower>(context, Owner.Creature, (int)DynamicVars["Amount"].BaseValue, Owner.Creature, this);
     }
-    protected override void OnUpgrade() { EnergyCost.UpgradeBy(-1); }
+    protected override void OnUpgrade() => RemoveKeyword(CardKeyword.Innate);
 }

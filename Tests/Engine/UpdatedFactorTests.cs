@@ -78,7 +78,7 @@ public static class UpdatedFactorTests
             LocManager.Instance.SetLanguage(lang);
             var preview = FactorCard.Create(player, "BloodSpell", ManaSlot.Draw, ChantRules.Preview(ManaSlot.Draw, SpellCatalog.Get("BloodSpell").Rules, 3));
             string text = preview.GetDescriptionForPile(PileType.None);
-            Check(text.Contains("[red]3[/red]") && !text.Contains(lang == "zhs" ? "消耗" : "Consume", StringComparison.OrdinalIgnoreCase), lang + "驭血预览生命标红且没有魔力支付前缀");
+            Check(text.Contains("[red]3[/red]") && !text.Contains(lang == "zhs" ? "从" : "from", StringComparison.OrdinalIgnoreCase), lang + "驭血预览生命标红且没有魔力支付前缀");
         }
         await Reset(); Equip("GreatMageComposure", "BuildUpBody", "HighSpeedMovement");
         await ManaCmd.Generate(player, PileType.Draw, 8);

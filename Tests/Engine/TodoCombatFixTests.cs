@@ -90,13 +90,13 @@ public static class TodoCombatFixTests
             for (int i = 0; i < 4; i++) await disguise.AfterCardPlayedLate(context, play);
             Check(Spoken.Count == 0, "前四张牌不提前播放宝箱怪提示");
             await disguise.AfterCardPlayedLate(context, play);
-            Check(Spoken.SequenceEqual(new[] { "[sine]嗝[/sine]" }) && !mimic.HasPower<MimicPower>(), "伪装问号触发时播放原生摇摆嗝气泡");
+            Check(Spoken.SequenceEqual(new[] { "（咀嚼的声音）" }) && !mimic.HasPower<MimicPower>(), "伪装问号触发时播放咀嚼气泡");
             await PowerCmd.Apply<SwallowedPower>(context, player.Creature, 6, mimic, null);
             await monster.PerformMove(); monster.RollMove([player.Creature]);
             await monster.PerformMove(); monster.RollMove([player.Creature]);
             Check(monster.NextMove.Id == "FULL", "吞噬后首次吃撑进入休息问号回合");
             await monster.PerformMove(); monster.RollMove([player.Creature]);
-            Check(Spoken.Count == 2 && monster.NextMove.Id != "FULL", "一代吃撑回合保留嗝气泡并正常继续行动");
+            Check(Spoken.SequenceEqual(new[] { "（咀嚼的声音）", "[sine]嗝~~~~~~~[/sine]" }) && monster.NextMove.Id != "FULL", "一代吃撑回合保留嗝气泡并正常继续行动");
         } finally { capture.UnpatchAll(capture.Id); }
         var host = new Control { Size = new Vector2(1920, 1080) }; root.AddChild(host);
         host.AddChild(new ColorRect { Size = host.Size, Color = new Color("17202c"), MouseFilter = Control.MouseFilterEnum.Ignore });

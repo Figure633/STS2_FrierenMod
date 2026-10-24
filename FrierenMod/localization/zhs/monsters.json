@@ -13,5 +13,6 @@
   "FRIERENMOD-MIMIC.moves.STRIKE.title": "重击",
   "FRIERENMOD-MIMIC.moves.SWALLOW.title": "吞噬",
   "FRIERENMOD-MIMIC.moves.FULL.title": "吃撑了",
-  "FRIERENMOD-MIMIC.burp": "[sine]嗝[/sine]"
+  "FRIERENMOD-MIMIC.burp": "[sine]嗝~~~~~~~[/sine]",
+  "FRIERENMOD-MIMIC.chew": "（咀嚼的声音）"
 }

@@ -43,4 +43,6 @@ public sealed class Mimic : CustomMonsterModel
     private Task Strike(IReadOnlyList<Creature> targets) => DamageCmd.Attack(Damage).FromMonster(this).WithHitFx("vfx/vfx_attack_slash").Execute(null);
     internal static void Burp(Creature speaker) =>
         TalkCmd.Play(new LocString("monsters", "FRIERENMOD-MIMIC.burp"), speaker, VfxColor.White, VfxDuration.Long);
+    internal static void Chew(Creature speaker) =>
+        TalkCmd.Play(new LocString("monsters", "FRIERENMOD-MIMIC.chew"), speaker, VfxColor.White, VfxDuration.Long);
 }
