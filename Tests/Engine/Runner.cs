@@ -143,6 +143,10 @@ public partial class Runner : Node
                 GD.Print("UPGRADED_EMBLEM_OK: " + await UpgradedHolyEmblemTests.Run());
                 await Finish(); return;
             }
+            if (OS.GetCmdlineUserArgs().Contains("--factor-feedback-only")) {
+                GD.Print("FACTOR_FEEDBACK_OK: " + await UiTodoTests.RunFactorFeedback(this));
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--ui-todos-only")) {
                 GD.Print("UI_TODOS_OK: " + await UiTodoTests.Run(this));
                 await Finish(); return;

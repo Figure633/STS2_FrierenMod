@@ -426,9 +426,10 @@
   "BACK_LIBRARY": "成就与卡背",
   "BACK_SEARCH": "搜索 ID、名称或解锁条件",
   "BACK_OWNED_ONLY": "只看已解锁",
-  "BACK_SAVE": "保存选择",
+  "BACK_SAVE": "保存",
   "BACK_PROGRESS": "收藏进度 {Count} / {Total}",
-  "BACK_LOCKED": "未解锁",
-  "BACK_UNLOCKED": "已解锁",
-  "BACK_NEW": "新卡槽背景解锁！"
+  "BACK_LOCKED": "未解锁！",
+  "BACK_UNLOCKED": "已解锁！",
+  "BACK_NEW": "新卡槽背景解锁！",
+  "BACK_EXIT": "退出"
 }

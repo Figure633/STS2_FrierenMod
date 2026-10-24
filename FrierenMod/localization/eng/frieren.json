@@ -426,9 +426,10 @@
   "BACK_LIBRARY": "Achievements & Backs",
   "BACK_SEARCH": "Search ID, name or condition",
   "BACK_OWNED_ONLY": "Unlocked only",
-  "BACK_SAVE": "Save selection",
+  "BACK_SAVE": "Save",
   "BACK_PROGRESS": "Collected {Count} / {Total}",
-  "BACK_LOCKED": "Locked",
-  "BACK_UNLOCKED": "Unlocked",
-  "BACK_NEW": "New slot background unlocked!"
+  "BACK_LOCKED": "Locked!",
+  "BACK_UNLOCKED": "Unlocked!",
+  "BACK_NEW": "New slot background unlocked!",
+  "BACK_EXIT": "Exit"
 }

@@ -3503,5 +3503,45 @@
     "sha256": "2cacc71e79bf863c84f44907321384288899e717df099a8a2ceaed68a3099c9b",
     "modified": false,
     "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/achievement/SlotLibraryBg.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotPreviewAndLibrary/SlotLibraryBg.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "98a6d84de564cb111f3166e50aa5f73c9a613343de93ff7cffbeff8f2bc6d3bb",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/achievement/SlotLibraryBgBoard.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotPreviewAndLibrary/SlotLibraryBgBoard.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "5d717fc236f30371a10144500370ab0c18d3ee6fcde99d65607169d454b4bef0",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/achievement/saveButton.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotPreviewAndLibrary/saveButton.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "7832bafc0c4cd1bf4f8d87414706a9a08ca2676192dfaec104c9881de85184af",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/achievement/graySaveButton.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotPreviewAndLibrary/graySaveButton.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "f1859042dcfabc26938ed6370f51a2bac58ea7b92127630e422ddfea76bb6c42",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/achievement/cancelButton.png",
+    "source": "src/main/resources/FrierenModResources/img/UI/slotPreviewAndLibrary/cancelButton.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "70574d737c45358d7cea3378fa9db40e280c4712f7d743d0311784f1955bec83",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1"
   }
 ]

@@ -44,6 +44,38 @@ public static class UiTodoTests
         public void AfterOverlayHidden() { Hidden++; view.Hide(); }
     }
 
+    public static async Task<int> RunFactorFeedback(Node root)
+    {
+        var player=Player.CreateForNewRun<Frieren>(UnlockState.all,1);
+        var run=RunState.CreateForTest([player],seed:"FACTOR-FEEDBACK");
+        RunManager.Instance.SetUpTest(run,new NetSingleplayerGameService()); LocalContext.NetId=1;
+        var deck=new MagicDeckState();
+        for(int i=0;i<3;i++){deck.PrepareDraft(_=>0);deck.SelectInitial(deck.Draft[0]);}
+        var tool=deck.AddProp("UnbelievableTool");
+        deck.Add("BarrierMagic"); MagicDeckStore.Write(player,deck);
+        LocManager.Instance.SetLanguage("zhs");
+        var ui=new Control {Size=new(1920,1080)};root.AddChild(ui);
+        ui.AddChild(new ColorRect {Size=ui.Size,Color=new Color("17202c"),MouseFilter=Control.MouseFilterEnum.Ignore});
+        var book=new MagicBookScreen(ui,player);book.Open();
+        for(int i=0;i<4;i++)await root.ToSignal(root.GetTree(),SceneTree.SignalName.ProcessFrame);
+        var toolHolder=(NGridCardHolder)book.View.FindChild("Prop_"+tool.InstanceId,true,false);
+        toolHolder.EmitSignal(NCardHolder.SignalName.AltPressed,toolHolder);
+        var target=(NGridCardHolder)book.View.FindChild("Factor_"+deck.Items[0].InstanceId,true,false);
+        target.EmitSignal(NCardHolder.SignalName.Pressed,target);
+        await root.ToSignal(root.GetTree().CreateTimer(.6),SceneTreeTimer.SignalName.Timeout);
+        var glow=target.CardNode!.CardHighlight;
+        if(!glow.IsVisibleInTree() || glow.Modulate.A<.9f || ((ShaderMaterial)glow.Material).GetShaderParameter("width").AsSingle()<.05f)
+            throw new Exception("被选中的因子没有持续外光反馈");
+        if(!((Label)book.View.FindChild("BookStatus",true,false)).Text.Contains("1/2"))throw new Exception("因子目标选择未生效");
+        if(OS.GetCmdlineUserArgs().Contains("--ui-snapshot"))
+            root.GetViewport().GetTexture().GetImage().SavePng(ProjectSettings.GlobalizePath("res://../../artifacts/factor-selection.png"));
+        target.EmitSignal(NCardHolder.SignalName.Pressed,target);
+        if(glow.Modulate.A!=0)throw new Exception("取消选中后仍保留外光");
+        book.Close(); ui.QueueFree();
+        for(int i=0;i<4;i++)await root.ToSignal(root.GetTree(),SceneTree.SignalName.ProcessFrame);
+        RunManager.Instance.CleanUp();return 3;
+    }
+
     public static async Task<int> Run(Node root)
     {
         int count = 0;
