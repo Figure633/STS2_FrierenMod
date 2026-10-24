@@ -38,7 +38,7 @@ print(f"PASS asset provenance: {len(load(ROOT / 'docs/assets.json'))} file hashe
 for item in load(ROOT / "docs/generated_assets.json")["assets"]:
     path = ROOT / item["target"]
     assert hashlib.sha256(path.read_bytes()).hexdigest() == item["sha256"], str(path)
-print("PASS generated asset provenance: 2 file hashes and saved prompts")
+print(f"PASS generated asset provenance: {len(load(ROOT / 'docs/generated_assets.json')['assets'])} file hashes and saved prompts")
 manifest = load(ROOT / "FrierenMod.json")
 project_version = ET.parse(ROOT / "FrierenMod.csproj").findtext("./PropertyGroup/Version")
 assert project_version and manifest["version"] == project_version, "manifest/project version mismatch"

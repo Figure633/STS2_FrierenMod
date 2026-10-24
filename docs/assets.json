@@ -2597,5 +2597,15 @@
     "sha256": "c430d13a84b3558df93b084339c095b0aaa747c823f691f39e49b53a3922631e",
     "modified": false,
     "redistribution_review": "Mixed license; see LICENSE.WATCHER; local non-commercial prototype"
+  },
+  {
+    "file": "FrierenMod/images/character/rest_original.png",
+    "source": "docs/reference/frieren-rest-source.png",
+    "source_collection": "作者2026年10月24日TODOs.docx中提供的坐姿参考图word/media/image1.png",
+    "sha256": "9daa5e52fe2df56230cbdd3abd947747caa020244e17410ce53c777ef72b1688",
+    "source_sha256": "960648c4fa4f2414a08b980b6e0278398db5e78cbb0336b52ae3d0da999a0186",
+    "modified": true,
+    "modification": "手工勾选人物与书本轮廓、去除床和背景、裁切与等比缩放；本次未生成或补画人物。tools/compose_rest_pose.py可复现；座椅使用二代原生营地场景。",
+    "redistribution_review": "pending; local prototype only"
   }
 ]

@@ -1,6 +1,6 @@
 # 美术与音乐迁移 0.5.2
 
-一代来源冻结在 `8604c9cd072dba6ae1bf8f47986fdc291b26c3cc`。复制素材和原生角色场景记录于 `assets.json`。0.5.0 按用户授权以内置 image_gen 补充两张透明素材；原图保持独立，生成参数和 SHA-256 在 `generated_assets.json`。接口不提供版本选择，因此不声称使用 IMAGE 2.5。
+一代来源冻结在 `8604c9cd072dba6ae1bf8f47986fdc291b26c3cc`。复制素材和原生角色场景记录于 `assets.json`。0.5.0 曾以内置 image_gen 补充两张透明素材；0.7.8 已移除其中的营地图，改用作者在 TODO 中提供的读书坐姿图手工抠图，没有生成或补画人物。原图保留在 `reference/frieren-rest-source.png`，轮廓及裁切规则在 `tools/compose_rest_pose.py`。现存地图标记的生成参数和 SHA-256 在 `generated_assets.json`。
 
 ## 场景映射与妥协
 
@@ -12,7 +12,7 @@
 | corpse_character | Dead | 显示原尸体图，恢复待机时清除 |
 | Character_Portrait / Character_Button | 选人、顶部头像 | 原图等比适配；选人图左侧增加暗底保证文字可读 |
 | 新 map_marker_sts2.png | 地图标记 | 保留芙莉莲辨识特征，去掉方框，粗轮廓；Godot 按 64×64 导入，源图不损失 |
-| 新 rest_sts2.png | 营地 | 完整坐姿阅读、透明背景，0.28 倍显示，保留二代原生营地互动命中框；静态美术 |
+| 作者提供的读书坐姿图 → rest_original.png | 营地 | 手工抠出人物和书本，去掉床与背景，按二代五名原版角色的坐姿比例对齐原生木桩；沿用原生翻转、悬停命中框与气泡 |
 | UI/orb/Frieren | 能量球 | 四层图与二代原生数字、旋转、失能处理结合 |
 | UI/manaPanel / icons | 魔力与魔法书 | 旧魔力饰件容纳三牌堆数字，仅常驻三个魔力数字与短标签，详情悬停查看；只裁透明留白 |
 | Victory1–3 | 暂不使用 | 只保留来源资源；建筑师阶段沿用二代原生背景，不呈现一代终幕 |

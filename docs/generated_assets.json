@@ -4,18 +4,6 @@
   "date": "2026-10-17",
   "assets": [
     {
-      "key": "rest",
-      "prompt": "Use case: stylized-concept. Create a production transparent PNG sprite for a Slay the Spire 2 Frieren mod camp/rest site. Input 1 is the old cropped rear-view camp art, identity reference only. Input 2 is her portrait, identity and costume reference. Draw ONE complete seated Frieren, ancient adult elf mage, silver twin tails, pointed ears, calm green eyes, white and gold cape over black-striped white dress, black tights and brown boots. Three-quarter side view facing RIGHT, sitting on a small low stone with an open old magic book resting in her lap, both hands naturally holding the book, entire head, ears, hair, cape, legs and boots visible. Compact silhouette that fits roughly 300 wide by 330 high on screen. Hand-painted dark fantasy 2D game art, bold confident dark contours, simple readable shapes, painterly cel-shaded surfaces, slightly angular STS2-compatible shapes, restrained warm cream/gold and cool lavender shadows, subtle warm campfire rim light from right. Keep Frieren recognizable and outfit faithful. Center the complete seated silhouette within a square canvas with 8% transparent padding. True transparent alpha background. No fire, background scenery, UI, text, frame, staff, extra characters, cropped body parts, oversized empty space. This is final game sprite art, not a concept sheet.",
-      "referenced_image_paths": [
-        "FrierenMod/images/character/rest.png",
-        "FrierenMod/images/character/icon.png"
-      ],
-      "transparent_background": true,
-      "source": "image_gen output exec-dba7638f-68cc-49df-8307-da487a9ba304.png; processed game asset is stored at target.",
-      "target": "FrierenMod/images/character/rest_sts2.png",
-      "sha256": "57f54c21cb05772f394d8f11ea776e5bea9f06653992c6b4e379a9a44f501103"
-    },
-    {
       "key": "map",
       "prompt": "Use case: stylized-concept. Create ONE tiny-game-map-marker sprite, transparent PNG, for Frieren in Slay the Spire 2. Input 1 is Frieren's old portrait: identity reference only, REMOVE the jade square frame completely. Input 2 is the actual STS2 Regent map marker: match its compact icon simplicity, very thick nearly-black outline, angular chunky shapes, hand-painted cel shading and diamond-ish vertical silhouette, but represent Frieren instead. Frieren recognizable front-view head and a tiny tapered cream/gold collar: silver white twin tails, two long pointed elf ears, calm green eyes, center parted bangs. Bold large hair masses and simple facial marks readable at 48 pixels. Three or four muted colors (warm pale silver, deep charcoal outline, subtle lavender shadow, tiny muted gold collar). No circular or square badge, no frame, no gem or background. Single centered isolated symbol occupying about 80% of a square canvas, generous transparent alpha border, no text, no scenery, no full body, no ornamental clutter, no glow. Final game UI icon.",
       "referenced_image_paths": [
