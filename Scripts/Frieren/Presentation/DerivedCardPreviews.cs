@@ -27,6 +27,7 @@ public static class DerivedCardPreviews
             ElementsBombing => [typeof(Ice), typeof(Fire), typeof(Thunder), typeof(Dark), typeof(Light)],
             _ => Array.Empty<Type>()
         };
+        var previews = new List<CardModel>();
         foreach (var type in Tokens) {
             if (source.GetType() == type) continue;
             var canonical = ModelDb.GetById<CardModel>(ModelDb.GetId(type));
@@ -35,7 +36,9 @@ public static class DerivedCardPreviews
             if (readable.Owner is { } owner) preview.Owner = owner;
             bool upgraded = readable.IsUpgraded && explicitTypes.Contains(type) && source is not FiveMinutesMore;
             if (upgraded && preview.MaxUpgradeLevel > 0) { preview.UpgradeInternal(); preview.FinalizeUpgradeInternal(); }
-            yield return new CardHoverTip(preview);
+            previews.Add(preview);
         }
+        if (previews.Count > 1) yield return new CyclingCardHoverTip(previews);
+        else if (previews.Count == 1) yield return new CardHoverTip(previews[0]);
     }
 }

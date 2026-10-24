@@ -111,7 +111,7 @@ public static class SynchroDisplayTests
                 Check(card.HoverTips.OfType<CardHoverTip>().Any(p=>p.Card.GetType()==target && p.Card.IsUpgraded),
                     source.Name+"正确预览升级后的衍生卡");
             }
-            Check(Card<ElementsBombing>().HoverTips.OfType<CardHoverTip>().Count()==5,"元素生成牌预览全部五种可能的元素");
+            Check(Card<ElementsBombing>().HoverTips.OfType<FrierenMod.Scripts.Presentation.CyclingCardHoverTip>().Single().Cards.Count==5,"元素生成牌轮播全部五种可能的元素");
             foreach(string keyword in new[]{"SYNCHRO","ACCELERATED_SYNCHRO","ULTIMATE_SYNCHRO","ULTIMATE_ACCELERATED_SYNCHRO"}) {
                 string tip=Plain(new LocString("frieren","TIP."+keyword+".description").GetFormattedText());
                 Check(tip.Length<(lang=="zhs"?40:90),keyword+"说明保持简短");
