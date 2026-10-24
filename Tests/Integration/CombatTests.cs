@@ -124,7 +124,7 @@ static class CombatTests
             if (expectedPowers.TryGetValue(factor.Id, out var expected))
                 Check((expected.Item3 ? enemy : player.Creature).Powers.Single(p => p.GetType() == expected.Item1).Amount == expected.Item2, "能力数值错误: " + factor.Id);
             if (factor.Id == "AdvancedDefensiveMagic") Check(player.Creature.Block == 2, "双次格挡错误");
-            if (factor.Id == "BloodSpell") Check(player.Creature.CurrentHp == player.Creature.MaxHp - 3, "血魔法错误");
+            if (factor.Id == "BloodSpell") Check(player.Creature.CurrentHp == player.Creature.MaxHp - 1, "驭血魔法生命消耗错误");
             if (factor.Id == "IceArrows") Check(enemy.CurrentHp == enemy.MaxHp - 4, "冰箭错误");
             if (factor.Id == "BigFire") Check(player.PlayerCombatState!.DrawPile.Cards.OfType<LittleFire>().Count() == 1, "小小火未生成");
             if (factor.Id == "TheLivingLegend") Check(player.PlayerCombatState!.DrawPile.Cards.OfType<ILegendaryCard>().Count() == 1, "传奇魔法未生成");
@@ -205,9 +205,9 @@ static class CombatTests
         await Reset(); CompleteDeck("BuildUpBody");
         await PowerCmd.Apply<SynchroWithoutManaPower>(context, player.Creature, 1, player.Creature, null);
         var manaCard = combat.CreateCard<Mana>(player); await Play(manaCard);
-        Check(manaCard.Pile?.Type == PileType.Discard && Power<SynchroWithoutManaPower>() == 0, "节俭没有保留魔力");
+        Check(manaCard.Pile?.Type == PileType.Hand && Power<SynchroWithoutManaPower>() == 0, "节俭没有保留魔力");
         await Play(manaCard); Check(manaCard.Pile?.Type == PileType.Exhaust, "节俭次数用完后未恢复消耗");
-        Pass("节俭在真实同调出牌中改为弃置，并正确扣次数");
+        Pass("节俭在真实同调出牌中返回手牌，并正确扣次数");
 
         await Reset(); CompleteDeck("BuildUpBody");
         await Play(combat.CreateCard<FolkGrimoire>(player));

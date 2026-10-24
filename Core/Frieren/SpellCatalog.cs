@@ -18,7 +18,7 @@ public static class SpellCatalog
         F("TransferToAlchemist", reward: 2), F("Factor100", offset: 1, puzzle: true),
         F("BarrierMagic", FactorRarity.Uncommon, offset: 1),
         F("BigFire", FactorRarity.Uncommon, cost: 2),
-        F("BloodSpell", FactorRarity.Uncommon, offset: -2, rewardOffset: 2),
+        F("BloodSpell", FactorRarity.Uncommon),
         F("BluePrint", FactorRarity.Uncommon), F("HighSpeedMovement", FactorRarity.Uncommon),
         F("Hypnosis", FactorRarity.Uncommon, cost: 2),
         F("NatureBeauty", FactorRarity.Uncommon, offset: 1),

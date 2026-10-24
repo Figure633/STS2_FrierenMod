@@ -48,7 +48,11 @@ public static class FactorEffects
             case "Hypnosis":
                 await Debuff<WeakPower>(reward); await Debuff<VulnerablePower>(reward); break;
             case "NatureBeauty": await Buff<EnergyNextTurnPower>(reward); break;
-            case "BloodSpell": await CreatureCmd.Damage(context, self, reward, ValueProp.Unblockable | ValueProp.Unpowered, self, play.Card); break;
+            case "BloodSpell":
+                await CreatureCmd.Damage(context, self, option.Intensity,
+                    ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move, play.Card);
+                if (self.IsAlive) await ManaCmd.Generate(player, ManaCmd.Pile(option.Slot), reward);
+                break;
             case "PassOnTheTorch": await ManaCmd.Generate(player, ManaCmd.Pile((ManaSlot)(((int)option.Slot + 1) % 3)), reward); break;
             case "PinchAndScrape": await Buff<SynchroWithoutManaPower>(reward); break;
             case "SpellBoost": await Buff<PhantasmalPower>(reward); break;

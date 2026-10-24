@@ -15,6 +15,7 @@ public static class ChantRules
     {
         ArgumentOutOfRangeException.ThrowIfNegative(intensity);
         Validate(spell);
+        if (spell.Id == "BloodSpell") return 0;
         return free ? 0 : Math.Max(0, checked(intensity * spell.CostMultiplier + spell.CostOffset - concentration + weakened));
     }
 
@@ -23,6 +24,8 @@ public static class ChantRules
     {
         ArgumentOutOfRangeException.ThrowIfNegative(mana);
         Validate(spell);
+        // 驭血魔法只接受普通咏唱指定的 X，自动咏唱不能以生命换魔力。
+        if (spell.Id == "BloodSpell") return 0;
         return Math.Max(0, (mana - spell.CostOffset) / spell.CostMultiplier);
     }
 

@@ -1,3 +1,3 @@
 namespace FrierenMod.Scripts.Powers;
 
-public sealed class ChantWithoutManaTimesPower : TurnOnlyPower;
+public sealed class ChantWithoutManaTimesPower : FrierenPower;

@@ -102,9 +102,10 @@ Test("蓝图连续与循环解析", () => {
     deck.Equip(deck.Add("BluePrint").InstanceId, ManaSlot.Discard); Equal<SpellDefinition?>(null, deck.ResolveSlot(ManaSlot.Draw));
     deck.Unequip(2); Equal<SpellDefinition?>(null, deck.ResolveSlot(ManaSlot.Draw));
 });
-Test("血魔法负偏移与精准强度", () => {
+Test("驭血魔法免耗魔力且不参与自动咏唱", () => {
     var spell = MagicDeckState.Definition("BloodSpell"); Equal(0, ChantRules.Cost(1, spell));
-    Equal(2, ChantRules.PreciseIntensity(0, spell)); Equal(4, ChantRules.Option(ManaSlot.Draw, 0, spell, 2)!.Value.Reward);
+    Equal(0, ChantRules.PreciseIntensity(0, spell)); Equal(0, ChantRules.PreciseIntensity(99, spell));
+    Equal(0, ChantRules.Cost(9, spell, weakened: 99)); Equal(2, ChantRules.Option(ManaSlot.Draw, 0, spell, 2)!.Value.Reward);
 });
 Test("正常咏唱免耗允许零魔力", () => Equal(0, ChantRules.Option(ManaSlot.Draw, 0, basic, 3, free: true)!.Value.Cost));
 Test("精准咏唱先按原系数算强度再减费", () => {

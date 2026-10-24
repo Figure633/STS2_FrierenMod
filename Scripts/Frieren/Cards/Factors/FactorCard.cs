@@ -54,7 +54,7 @@ public abstract class FactorCard() : FrierenCard(-1, CardType.Skill, CardRarity.
     protected override void AddExtraArgsToDescription(LocString description)
     {
         string contextText = "";
-        if (Option.HasValue || Slot.HasValue || InventoryInstanceId.HasValue) {
+        if ((Option.HasValue || Slot.HasValue || InventoryInstanceId.HasValue) && !(Option.HasValue && FactorId == nameof(BloodSpell))) {
             string key = InventoryInstanceId.HasValue ? "INVENTORY_CONTEXT" : Option.HasValue ? "CHANT" : "INITIAL";
             var context = new LocString("frieren", key);
             context.Add("Slot", new LocString("frieren", Slot.HasValue ? $"SLOT.{Slot}" : "UNEQUIPPED").GetFormattedText());

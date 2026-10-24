@@ -18,7 +18,7 @@ namespace FrierenMod.Scripts.Powers;
 public sealed class SynchroWithoutManaPower : FrierenPower
 {
     public override (PileType, CardPilePosition) ModifyCardPlayResultPileTypeAndPosition(CardModel card, bool isAutoPlay, ResourceInfo resources, PileType pileType, CardPilePosition position) =>
-        card.Owner == Owner.Player && card is IManaCard ? (PileType.Discard, position) : (pileType, position);
+        card.Owner == Owner.Player && card is IManaCard ? (PileType.Hand, position) : (pileType, position);
     public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay play)
     {
         if (play.Card.Owner == Owner.Player && play.Card is IManaCard) await PowerCmd.Decrement(this);

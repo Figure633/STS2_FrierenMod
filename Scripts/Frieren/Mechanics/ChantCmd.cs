@@ -74,6 +74,7 @@ public static class ChantCmd
         var player = play.Card.Owner;
         if (!await ManaCmd.Spend(context, player, option.Slot, option.Cost, fastAnimation || option.Cost > 5)) return;
         await FactorEffects.Apply(context, play, option);
+        if (player.Creature.IsDead) return;
         var listeners = player.Creature.Powers.Cast<object>().Concat(player.PlayerCombatState!.AllPiles
             .Where(p => p.Type is PileType.Draw or PileType.Hand or PileType.Discard).SelectMany(p => p.Cards)).OfType<IChantListener>().ToArray();
         foreach (var listener in listeners) await listener.AfterChant(context, play);
