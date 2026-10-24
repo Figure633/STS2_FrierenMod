@@ -87,6 +87,10 @@ public partial class Runner : Node
             new Harmony("frieren.tests.hover_host").Patch(
                 AccessTools.Method(typeof(MegaCrit.Sts2.Core.Nodes.Cards.Holders.NCardHolder), "CreateHoverTips"),
                 prefix: new HarmonyMethod(typeof(Runner), nameof(SkipGlobalHoverWindow)));
+            if (OS.GetCmdlineUserArgs().Contains("--event-layout-fixes-only")) {
+                GD.Print("EVENT_LAYOUT_FIXES_OK: " + await EventLayoutFixTests.Run(this));
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--todo-combat-fixes-only")) {
                 GD.Print("TODO_COMBAT_FIXES_OK: " + await TodoCombatFixTests.Run(this));
                 await Finish(); return;
