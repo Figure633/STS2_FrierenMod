@@ -99,7 +99,7 @@
   "PROP.SeinNote": "Remove two unequipped factors or other tools. Heal 10 HP.",
   "PROP.ShadowDragonHorn": "Combat only. Remove two unequipped factors or other tools. Gain {energyPrefix:energyIcons(2)}.",
   "PROP.TransmutationCircle": "Transform two factors into random factors of the same rarity (excluding puzzle factors), keeping their slots.",
-  "PROP.UnbelievableTool": "Swap an equipped factor with an unequipped factor. Keep the previous factor in inventory.",
+  "PROP.UnbelievableTool": "Choose an equipped factor and an unequipped factor. Swap their slots.",
   "PROP.UnbelievableToolBox": "Remove two unequipped factors or other tools. Gain two Unbelievable Tools.",
   "BOOK_BUTTON": "Magic Factors",
   "BOOK_INVENTORY": "Unequipped Factors & Tools",

@@ -145,7 +145,7 @@
   "FRIERENMOD-TRANSMUTATION_CIRCLE.title": "某科学的炼成阵",
   "FRIERENMOD-TRANSMUTATION_CIRCLE.description": "将两张因子变为同稀有度的随机因子（不含谜题因子），[gold]保留[/gold]各自槽位。",
   "FRIERENMOD-UNBELIEVABLE_TOOL.title": "神奇妙妙工具",
-  "FRIERENMOD-UNBELIEVABLE_TOOL.description": "选择一张已装载和一张未装载的因子，用库存因子替换已装载因子；原有因子退回库存。",
+  "FRIERENMOD-UNBELIEVABLE_TOOL.description": "选择一张已装载和一张未装载的因子，使它们交换槽位",
   "FRIERENMOD-UNBELIEVABLE_TOOL_BOX.title": "妙妙工具箱",
   "FRIERENMOD-UNBELIEVABLE_TOOL_BOX.description": "移除两张未装载的因子或其他魔具，获得两件神奇妙妙工具。",
   "FRIERENMOD-ACCESSORIES_SPELL.title": "寻找遗失饰品的魔法",

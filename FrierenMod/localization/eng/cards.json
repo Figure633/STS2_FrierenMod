@@ -145,7 +145,7 @@
   "FRIERENMOD-TRANSMUTATION_CIRCLE.title": "Scientific Transmutation",
   "FRIERENMOD-TRANSMUTATION_CIRCLE.description": "Transform two factors into random factors of the same rarity (excluding puzzle factors), keeping their slots.",
   "FRIERENMOD-UNBELIEVABLE_TOOL.title": "Unbelievable Tool",
-  "FRIERENMOD-UNBELIEVABLE_TOOL.description": "Swap an equipped factor with an unequipped factor. Keep the previous factor in inventory.",
+  "FRIERENMOD-UNBELIEVABLE_TOOL.description": "Choose an equipped factor and an unequipped factor. Swap their slots.",
   "FRIERENMOD-UNBELIEVABLE_TOOL_BOX.title": "Unbelievable Toolbox",
   "FRIERENMOD-UNBELIEVABLE_TOOL_BOX.description": "Remove two unequipped factors or other tools. Gain two Unbelievable Tools.",
   "FRIERENMOD-ACCESSORIES_SPELL.title": "Spell to Find Lost Accessory",

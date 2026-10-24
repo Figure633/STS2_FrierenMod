@@ -99,7 +99,7 @@
   "PROP.SeinNote": "移除两张未装载的因子或其他魔具，回复 10 点生命。",
   "PROP.ShadowDragonHorn": "仅在战斗中使用。移除两张未装载的因子或其他魔具，获得 {energyPrefix:energyIcons(2)}。",
   "PROP.TransmutationCircle": "将两张因子变为同稀有度的随机因子（不含谜题因子），保留各自槽位。",
-  "PROP.UnbelievableTool": "选择一张已装载和一张未装载的因子，用库存因子替换已装载因子；原有因子退回库存。",
+  "PROP.UnbelievableTool": "选择一张已装载和一张未装载的因子，使它们交换槽位",
   "PROP.UnbelievableToolBox": "移除两张未装载的因子或其他魔具，获得两件神奇妙妙工具。",
   "BOOK_BUTTON": "魔法因子",
   "BOOK_INVENTORY": "未装载因子与魔具",

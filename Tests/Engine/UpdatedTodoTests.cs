@@ -35,7 +35,7 @@ public static class UpdatedTodoTests
         var stage=GD.Load<PackedScene>("res://FrierenMod/scenes/spiegel_encounter.tscn").Instantiate();
         var reference=GD.Load<PackedScene>("res://scenes/encounters/queen_boss.tscn").Instantiate();
         Check(stage.GetNode<Marker2D>("Boss").Position.Y==reference.GetNode<Marker2D>("queen").Position.Y,"复制体对齐原版第三幕Boss站位");stage.Free();reference.Free();
-        Check(MagicPropRules.All.All(p=>MagicPropCard.Create(player,p.Id).Rarity==CardRarity.Event),"全部魔具采用原生紫色事件稀有度");
+        Check(MagicPropRules.All.All(p=>MagicPropCard.Create(player,p.Id).Rarity==CardRarity.Token && MagicPropCard.Create(player,p.Id).BannerMaterial.ResourcePath.EndsWith("card_banner_curse_mat.tres")),"全部魔具保持衍生牌身份并使用实际紫色横幅材质");
         foreach(var language in new[]{"zhs","eng"}){
             LocManager.Instance.SetLanguage(language);
             var accessories=(AccessoriesSpell)ModelDb.Card<AccessoriesSpell>().ToMutable();accessories.Owner=player;

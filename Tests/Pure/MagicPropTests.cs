@@ -18,9 +18,23 @@ static class MagicPropTests
             var result = Use(Deck(), "CrystalBall", [1, 2]);
             Check(result.Deck.Items.Single(i => i.InstanceId == 1).Slot == 1 && result.Deck.Items.Single(i => i.InstanceId == 2).Slot == 0 && result.Deck.Props.Count == 0);
         });
-        Test("妙妙工具用库存替换装载，原因子保留", () => {
+        Test("妙妙工具交换已装载和未装载因子的槽位", () => {
             var result = Use(Deck(), "UnbelievableTool", [1, 4]);
             Check(result.Deck.Items.Single(i => i.InstanceId == 1).Slot == -1 && result.Deck.Items.Single(i => i.InstanceId == 4).Slot == 0 && result.Deck.Items.Count == 6);
+        });
+        Test("妙妙工具交换覆盖三个槽位和两种选择顺序，保留原实例", () => {
+            foreach (var slot in Enum.GetValues<ManaSlot>()) foreach (bool reverse in new[] { false, true }) {
+                var deck = Deck(); var loaded = deck.Items.Single(i => i.Slot == (int)slot);
+                var held = deck.Items.Single(i => i.InstanceId == 4);
+                int tool = deck.AddProp("UnbelievableTool").InstanceId; string before = deck.ToJson();
+                var result = MagicPropRules.Apply(deck, tool,
+                    reverse ? [held.InstanceId, loaded.InstanceId] : [loaded.InstanceId, held.InstanceId], false,
+                    _ => throw new Exception("槽位交换不应使用随机数"))!;
+                Check(result.Deck.Items.Single(i => i.InstanceId == loaded.InstanceId).Slot == -1 &&
+                    result.Deck.Items.Single(i => i.InstanceId == held.InstanceId).Slot == (int)slot &&
+                    result.Deck.Items.Select(i => i.InstanceId).SequenceEqual(deck.Items.Select(i => i.InstanceId)) &&
+                    result.Deck.Props.Count == 0 && deck.ToJson() == before);
+            }
         });
         Test("盲盒生成两张非谜题因子", () => {
             var result = Use(Deck(), "MysteryBox", []);
