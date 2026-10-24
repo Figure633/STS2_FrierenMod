@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Frieren/Presentation/Divinity/FrierenDivinityEyeSpawner.cs" id="1_eyes"]
+[ext_resource type="Script" path="res://Scripts/Frieren/Presentation/Divinity/FrierenDivinityActivationBurst.cs" id="2_burst"]
+[ext_resource type="Script" path="res://Scripts/Frieren/Presentation/Divinity/FrierenAuraBlobEmitter.cs" id="3_blobs"]
+
+
+[node name="DivinityAura" type="Node2D"]
+scale = Vector2(0.85, 0.85)
+
+[node name="FloatingEyes" type="Node2D" parent="."]
+position = Vector2(0, -150)
+script = ExtResource("1_eyes")
+
+[node name="AuraBlobs" type="Node2D" parent="."]
+position = Vector2(0, -188)
+script = ExtResource("3_blobs")
+BlobColor = Color(0.15, 0, 0.15, 1)
+
+[node name="ActivationBurst" type="Node2D" parent="."]
+position = Vector2(0, -175)
+script = ExtResource("2_burst")

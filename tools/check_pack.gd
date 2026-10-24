@@ -17,7 +17,7 @@ func _initialize():
 			quit(1)
 			return
 	var textures = 0
-	for folder in ["cards", "powers", "relics", "potions", "character", "energy", "ui", "card_frames", "events", "monsters"]:
+	for folder in ["cards", "powers", "relics", "potions", "character", "energy", "ui", "card_frames", "events", "monsters", "vfx"]:
 		var path = "res://FrierenMod/images/" + folder
 		for file in DirAccess.get_files_at(path):
 			if not file.ends_with(".png") and not file.ends_with(".tres"):
@@ -50,6 +50,13 @@ func _initialize():
 		if not file.ends_with(".tscn"):
 			continue
 		# 非 Mono 打包器无法创建原版 C# 教程节点；真实继承场景由引擎专项验证。
+		if file == "divinity_aura.tscn":
+			for script in ["FrierenDivinityEyeSpawner", "FrierenDivinityActivationBurst", "FrierenAuraBlobEmitter", "DivinityPresentation", "FrierenScreenFlashEffect"]:
+				if not FileAccess.file_exists("res://Scripts/Frieren/Presentation/Divinity/" + script + ".cs"):
+					quit(1)
+					return
+			scenes += 1
+			continue
 		if file == "frieren_tutorial.tscn":
 			if not FileAccess.file_exists("res://Scripts/Frieren/UI/FrierenTutorial.cs"):
 				quit(1)
@@ -64,7 +71,7 @@ func _initialize():
 		var scene = packed.instantiate()
 		scene.free()
 		scenes += 1
-	if textures < 119 or audio_count != 17 or scenes != 10:
+	if textures < 119 or audio_count != 19 or scenes != 11:
 		push_error("Missing texture files")
 		quit(1)
 		return

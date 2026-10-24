@@ -7,7 +7,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
-    <Version>0.7.4</Version>
+    <Version>0.7.5</Version>
     <NoWarn>$(NoWarn);MSB3270</NoWarn>
   </PropertyGroup>
   <Import Project="GameReferences.props" />
@@ -22,6 +22,6 @@
   <!-- 构建只写工作目录；部署由用户显式执行。 -->
   <Target Name="StageMod" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
     <MakeDir Directories="$(MSBuildProjectDirectory)/artifacts/FrierenMod" />
-    <Copy SourceFiles="$(TargetPath);FrierenMod.json;LICENSE.STS1;README.md" DestinationFolder="$(MSBuildProjectDirectory)/artifacts/FrierenMod" />
+    <Copy SourceFiles="$(TargetPath);FrierenMod.json;LICENSE.STS1;LICENSE.WATCHER;README.md" DestinationFolder="$(MSBuildProjectDirectory)/artifacts/FrierenMod" />
   </Target>
 </Project>

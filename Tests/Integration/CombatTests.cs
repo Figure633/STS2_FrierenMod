@@ -120,7 +120,7 @@ static class CombatTests
             var option = ChantCmd.Options(player, 1).Single(x => x.Slot == ManaSlot.Draw);
             await ChantCmd.Resolve(context, play, option);
             int remaining = ManaCmd.InPile(player, PileType.Draw).Count();
-            Check(remaining == 10 - option.Cost - (factor.Id == "PeacefulDays" ? 1 : 0), "扣费错误: " + factor.Id);
+            Check(remaining == 10 - option.Cost - (factor.Id == "PeacefulDays" ? 1 : 0) + (factor.Id == "BloodSpell" ? option.Reward : 0), "扣费错误: " + factor.Id);
             if (expectedPowers.TryGetValue(factor.Id, out var expected))
                 Check((expected.Item3 ? enemy : player.Creature).Powers.Single(p => p.GetType() == expected.Item1).Amount == expected.Item2, "能力数值错误: " + factor.Id);
             if (factor.Id == "AdvancedDefensiveMagic") Check(player.Creature.Block == 2, "双次格挡错误");

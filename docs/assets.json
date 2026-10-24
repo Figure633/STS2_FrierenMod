@@ -758,14 +758,6 @@
     "conversion": "导出一代原版能力图集区域，保留原像素"
   },
   {
-    "file": "FrierenMod/images/powers/DivinityPower.png",
-    "source": "src/main/resources/FrierenModResources/img/relics/HolyEmblem.png",
-    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
-    "sha256": "8db6c4db31c02fd2fb319007f9ccad0f46e318eb7f2639bef5bd2175eb814ea9",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
-  },
-  {
     "file": "FrierenMod/images/powers/PuzzlePower.png",
     "source": "src/main/resources/FrierenModResources/img/relics/HolyEmblem.png",
     "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
@@ -2535,5 +2527,75 @@
     "sha256": "667a3e7f518e6ba32950c79f105fd0bf3c4f090660f7c84c55df60a7ab73b623",
     "modified": false,
     "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/powers/DivinityPower.png",
+    "source": "Watcher/images/powers/divinity_stance.png",
+    "source_repository": "https://github.com/lamali292/WatcherMod",
+    "source_commit": "d5637b7b04b59cdb7c630739ffbbd84fc74deb0d",
+    "source_kind": "local_watcher_mod_reference",
+    "sha256": "523a32d14abb0a8272472adcccbf5908fb91afdcea44ab84dd25d9051b095a81",
+    "modified": false,
+    "redistribution_review": "Mixed license; see LICENSE.WATCHER; local non-commercial prototype"
+  },
+  {
+    "file": "FrierenMod/images/vfx/eye_anim.png",
+    "source": "Watcher/images/vfx/eye_anim.png",
+    "source_repository": "https://github.com/lamali292/WatcherMod",
+    "source_commit": "d5637b7b04b59cdb7c630739ffbbd84fc74deb0d",
+    "source_kind": "local_watcher_mod_reference",
+    "sha256": "011cecf22d1a58beb4cb358b0028fbf7529522a2f0e9062b3ea1e503250c59d7",
+    "modified": false,
+    "redistribution_review": "Mixed license; see LICENSE.WATCHER; local non-commercial prototype"
+  },
+  {
+    "file": "FrierenMod/images/vfx/glow_spark.png",
+    "source": "Watcher/images/vfx/glow_spark.png",
+    "source_repository": "https://github.com/lamali292/WatcherMod",
+    "source_commit": "d5637b7b04b59cdb7c630739ffbbd84fc74deb0d",
+    "source_kind": "local_watcher_mod_reference",
+    "sha256": "454090f0ab6f3011751163703de6b6e366058c641cf1bc598eeb99b8c43538ff",
+    "modified": false,
+    "redistribution_review": "Mixed license; see LICENSE.WATCHER; local non-commercial prototype"
+  },
+  {
+    "file": "FrierenMod/images/vfx/big_blur.png",
+    "source": "Watcher/images/vfx/big_blur.png",
+    "source_repository": "https://github.com/lamali292/WatcherMod",
+    "source_commit": "d5637b7b04b59cdb7c630739ffbbd84fc74deb0d",
+    "source_kind": "local_watcher_mod_reference",
+    "sha256": "a07f6423a6d6c277c4b94a6eacd4332be892e6ee7d4e023c08d12ceaa4d2bc5a",
+    "modified": false,
+    "redistribution_review": "Mixed license; see LICENSE.WATCHER; local non-commercial prototype"
+  },
+  {
+    "file": "FrierenMod/images/vfx/screenflash.png",
+    "source": "Watcher/images/vfx/screenflash.png",
+    "source_repository": "https://github.com/lamali292/WatcherMod",
+    "source_commit": "d5637b7b04b59cdb7c630739ffbbd84fc74deb0d",
+    "source_kind": "local_watcher_mod_reference",
+    "sha256": "13a956350c56f1bd0eecaa428a84d9b5ce7fa82fcf81ee434e5766f3d8492b4c",
+    "modified": false,
+    "redistribution_review": "Mixed license; see LICENSE.WATCHER; local non-commercial prototype"
+  },
+  {
+    "file": "FrierenMod/audio/divinity_enter.ogg",
+    "source": "Watcher/audio/divinity_enter.ogg",
+    "source_repository": "https://github.com/lamali292/WatcherMod",
+    "source_commit": "d5637b7b04b59cdb7c630739ffbbd84fc74deb0d",
+    "source_kind": "local_watcher_mod_reference",
+    "sha256": "7ef48cb943ce5e465263b6b8641772ccae388778cfca418f0938bd09aef18eac",
+    "modified": false,
+    "redistribution_review": "Mixed license; see LICENSE.WATCHER; local non-commercial prototype"
+  },
+  {
+    "file": "FrierenMod/audio/divinity_loop.ogg",
+    "source": "Watcher/audio/divinity_loop.ogg",
+    "source_repository": "https://github.com/lamali292/WatcherMod",
+    "source_commit": "d5637b7b04b59cdb7c630739ffbbd84fc74deb0d",
+    "source_kind": "local_watcher_mod_reference",
+    "sha256": "c430d13a84b3558df93b084339c095b0aaa747c823f691f39e49b53a3922631e",
+    "modified": false,
+    "redistribution_review": "Mixed license; see LICENSE.WATCHER; local non-commercial prototype"
   }
 ]

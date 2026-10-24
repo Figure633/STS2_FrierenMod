@@ -87,6 +87,10 @@ public partial class Runner : Node
             new Harmony("frieren.tests.hover_host").Patch(
                 AccessTools.Method(typeof(MegaCrit.Sts2.Core.Nodes.Cards.Holders.NCardHolder), "CreateHoverTips"),
                 prefix: new HarmonyMethod(typeof(Runner), nameof(SkipGlobalHoverWindow)));
+            if (OS.GetCmdlineUserArgs().Contains("--divinity-presentation-only")) {
+                GD.Print("DIVINITY_PRESENTATION_OK: " + await DivinityPresentationTests.Run(this));
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--updated-factors-only")) {
                 GD.Print("UPDATED_FACTORS_OK: " + await UpdatedFactorTests.Run());
                 await Finish(); return;
