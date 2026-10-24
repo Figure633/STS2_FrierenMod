@@ -84,5 +84,22 @@
   "FRIERENMOD-SWALLOWED_POWER.title": "Swallowed",
   "FRIERENMOD-SWALLOWED_POWER.description": "Maximum hand size is reduced by [blue]{Amount}[/blue] this combat.",
   "FRIERENMOD-BIRD_CAPTURED_POWER.title": "Captured",
-  "FRIERENMOD-BIRD_CAPTURED_POWER.description": "Cannot act for [blue]{Amount}[/blue] turns."
+  "FRIERENMOD-BIRD_CAPTURED_POWER.description": "Cannot act for [blue]{Amount}[/blue] turns.",
+  "FRIERENMOD-COPY_POWER.title": "Replica",
+  "FRIERENMOD-COPY_POWER.description": "Gain Mana equal to unblocked damage taken. Whenever a player gains Block, gain the same amount. At [red]100[/red] HP or less, unleash your full power!",
+  "FRIERENMOD-ENEMY_MANA_POWER.title": "Mana",
+  "FRIERENMOD-ENEMY_MANA_POWER.description": "You have [blue]{StoredMana}[/blue] Mana. Casting a spell spends its Mana cost.",
+  "FRIERENMOD-SPELL_CASTER_POWER.title": "Mastery of Magic",
+  "FRIERENMOD-SPELL_CASTER_POWER.description": "When you have enough Mana, cast these spells in order, for up to two cycles:\n{Spells}",
+  "FRIERENMOD-SPIEGEL_MALLEABLE_POWER.title": "Malleable",
+  "FRIERENMOD-SPIEGEL_MALLEABLE_POWER.description": "When you take unblocked attack damage, gain [blue]{Amount}[/blue] Block. Each trigger grants [blue]1[/blue] more Block this turn.",
+  "FRIERENMOD-SPELL_CASTER_POWER.spells.0": "{Cost} Mana: Defend the Hoard. Gain Barricade and {Block} Block.",
+  "FRIERENMOD-SPELL_CASTER_POWER.spells.1": "{Cost} Mana: Rapid Chant SP. Gain {Ritual} Ritual.",
+  "FRIERENMOD-SPELL_CASTER_POWER.spells.2": "{Cost} Mana: Stone Golem Magic SP. Gain 1 Artifact.",
+  "FRIERENMOD-SPELL_CASTER_POWER.spells.3": "{Cost} Mana: Hellfire SP. Add {Burns} Burns to each player’s draw pile.",
+  "FRIERENMOD-SPELL_CASTER_POWER.spells.4": "{Cost} Mana: Ruinous Lightning SP. Apply 2 Vulnerable and Weak to all players.",
+  "FRIERENMOD-SPELL_CASTER_POWER.spells.5": "{Cost} Mana: Perfect Defense SP. Gain {Buffer} Buffer and 8 Metallicize.",
+  "FRIERENMOD-SPELL_CASTER_POWER.spells.6": "{Cost} Mana: Bird-Capturing Magic. Summon a Damp Cultist.",
+  "FRIERENMOD-SPELL_CASTER_POWER.spells.7": "{Cost} Mana: Flying Magic SP. Gain 1 Intangible.",
+  "FRIERENMOD-SPELL_CASTER_POWER.spells.5.enhanced": "{Cost} Mana: Perfect Defense SP. Gain {Buffer} Buffer and 2 Malleable."
 }

@@ -84,5 +84,22 @@
   "FRIERENMOD-SWALLOWED_POWER.title": "被吞噬",
   "FRIERENMOD-SWALLOWED_POWER.description": "本场战斗中，手牌上限降低 [blue]{Amount}[/blue]。",
   "FRIERENMOD-BIRD_CAPTURED_POWER.title": "捕鸟魔法",
-  "FRIERENMOD-BIRD_CAPTURED_POWER.description": "接下来 [blue]{Amount}[/blue] 回合无法行动。"
+  "FRIERENMOD-BIRD_CAPTURED_POWER.description": "接下来 [blue]{Amount}[/blue] 回合无法行动。",
+  "FRIERENMOD-COPY_POWER.title": "复制体",
+  "FRIERENMOD-COPY_POWER.description": "受到未被格挡的伤害时，获得等量[gold]魔力[/gold]。玩家获得[gold]格挡[/gold]时，获得相同数量的格挡。生命降至 [red]100[/red] 或以下时，将使出全力！",
+  "FRIERENMOD-ENEMY_MANA_POWER.title": "魔力",
+  "FRIERENMOD-ENEMY_MANA_POWER.description": "当前有 [blue]{StoredMana}[/blue] 层魔力。施放魔法时消耗对应层数。",
+  "FRIERENMOD-SPELL_CASTER_POWER.title": "魔法精通",
+  "FRIERENMOD-SPELL_CASTER_POWER.description": "魔力足够时，依次施放以下魔法，最多两轮：\n{Spells}",
+  "FRIERENMOD-SPIEGEL_MALLEABLE_POWER.title": "柔韧",
+  "FRIERENMOD-SPIEGEL_MALLEABLE_POWER.description": "受到未被格挡的攻击伤害时，获得 [blue]{Amount}[/blue] 点格挡；本回合每触发一次，下一次多获得 [blue]1[/blue] 点格挡。",
+  "FRIERENMOD-SPELL_CASTER_POWER.spells.0": "{Cost}魔力：誓死守护宝库的魔法，获得壁垒与{Block}点格挡。",
+  "FRIERENMOD-SPELL_CASTER_POWER.spells.1": "{Cost}魔力：高速咏唱SP，获得{Ritual}层仪式。",
+  "FRIERENMOD-SPELL_CASTER_POWER.spells.2": "{Cost}魔力：操纵石像的魔法SP，获得1层人工制品。",
+  "FRIERENMOD-SPELL_CASTER_POWER.spells.3": "{Cost}魔力：地狱业火魔法SP，在玩家抽牌堆放入{Burns}张灼伤。",
+  "FRIERENMOD-SPELL_CASTER_POWER.spells.4": "{Cost}魔力：破灭之雷魔法SP，使玩家获得2层易伤与虚弱。",
+  "FRIERENMOD-SPELL_CASTER_POWER.spells.5": "{Cost}魔力：防御魔法完全体SP，获得{Buffer}层缓冲和8层金属化。",
+  "FRIERENMOD-SPELL_CASTER_POWER.spells.6": "{Cost}魔力：捕鸟魔法，召唤1只潮湿邪教徒。",
+  "FRIERENMOD-SPELL_CASTER_POWER.spells.7": "{Cost}魔力：飞行魔法SP，获得1层无实体。",
+  "FRIERENMOD-SPELL_CASTER_POWER.spells.5.enhanced": "{Cost}魔力：防御魔法完全体SP，获得{Buffer}层缓冲和2层柔韧。"
 }

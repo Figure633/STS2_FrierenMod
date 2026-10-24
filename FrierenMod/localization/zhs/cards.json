@@ -273,5 +273,7 @@
   "FRIERENMOD-EMERGENCY_FOOD.title": "应急食物",
   "FRIERENMOD-EMERGENCY_FOOD.description": "回复 [green]{Heal}[/green] 点生命。",
   "FRIERENMOD-BIRD_CAPTURING_SPELL.title": "捕鸟魔法",
-  "FRIERENMOD-BIRD_CAPTURING_SPELL.description": "击晕一个鸟类或长得像鸟类的敌人 [blue]3[/blue] 回合。"
+  "FRIERENMOD-BIRD_CAPTURING_SPELL.description": "击晕一个鸟类或长得像鸟类的敌人 [blue]3[/blue] 回合。",
+  "FRIERENMOD-UPSIDE_DOWN.title": "颠倒",
+  "FRIERENMOD-UPSIDE_DOWN.description": "每[gold]同调[/gold]一次，交换抽牌堆和弃牌堆，并失去 [red]2[/red] 点生命。"
 }

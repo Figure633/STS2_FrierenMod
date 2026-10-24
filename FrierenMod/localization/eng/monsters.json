@@ -1,3 +1,16 @@
 {
-  "FRIERENMOD-MIMIC.name": "Mimic"
+  "FRIERENMOD-MIMIC.name": "Mimic",
+  "FRIERENMOD-SPIEGEL_FRIEREN.name": "Spiegel: Frieren’s Replica",
+  "FRIERENMOD-SPIEGEL_FRIEREN.moves.MANA_SUPPRESSION.title": "Mana Suppression",
+  "FRIERENMOD-SPIEGEL_FRIEREN.moves.OFFENSIVE_MAGIC.title": "Offensive Magic SP",
+  "FRIERENMOD-SPIEGEL_FRIEREN.moves.MANA_POLLUTION.title": "Mana Pollution",
+  "FRIERENMOD-SPIEGEL_FRIEREN.moves.UPSIDE_DOWN.title": "Upside Down",
+  "FRIERENMOD-SPIEGEL_FRIEREN.moves.CHANT_SUPPRESSION.title": "Chant Suppression",
+  "FRIERENMOD-SPIEGEL_FRIEREN.moves.MULTIPLE_OFFENSIVE_MAGIC.title": "Multiple Offensive Magic SP",
+  "FRIERENMOD-SPIEGEL_FRIEREN.moves.APEX_PREPARATION.title": "Full Power",
+  "FRIERENMOD-SPIEGEL_FRIEREN.moves.APEX_MAGIC.title": "Apex Magic SP",
+  "FRIERENMOD-MIMIC.moves.DISGUISE.title": "Disguise",
+  "FRIERENMOD-MIMIC.moves.STRIKE.title": "Heavy Strike",
+  "FRIERENMOD-MIMIC.moves.SWALLOW.title": "Swallow",
+  "FRIERENMOD-MIMIC.moves.FULL.title": "Overstuffed"
 }

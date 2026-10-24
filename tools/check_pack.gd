@@ -64,7 +64,7 @@ func _initialize():
 		var scene = packed.instantiate()
 		scene.free()
 		scenes += 1
-	if textures < 119 or audio_count != 16 or scenes != 8:
+	if textures < 119 or audio_count != 17 or scenes != 10:
 		push_error("Missing texture files")
 		quit(1)
 		return

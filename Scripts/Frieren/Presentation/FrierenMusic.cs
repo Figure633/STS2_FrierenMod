@@ -2,6 +2,7 @@ using System.Runtime.CompilerServices;
 using Godot;
 using HarmonyLib;
 using FrierenMod.Scripts.Characters;
+using FrierenMod.Scripts.Encounters;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Nodes.Audio;
@@ -51,6 +52,8 @@ public static class FrierenMusic
         }
         var path = ResolveTrack(run.CurrentActIndex, run.CurrentRoom?.RoomType ?? RoomType.Unassigned,
             CombatManager.Instance.IsInProgress, run.Rng.Seed);
+        if (CombatManager.Instance.IsInProgress && run.CurrentRoom is CombatRoom { Encounter: SpiegelFrierenEncounter })
+            path = Folder + "Frieren_The_Slayer.mp3";
         if (!ResourceLoader.Exists(path)) return; // 缺失资源时保留二代音乐。
         bool wasStopped = session.CurrentTrack == null;
         session.Play(path);

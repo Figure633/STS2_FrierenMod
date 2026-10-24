@@ -273,5 +273,7 @@
   "FRIERENMOD-EMERGENCY_FOOD.title": "Emergency Food",
   "FRIERENMOD-EMERGENCY_FOOD.description": "Heal [green]{Heal}[/green] HP.",
   "FRIERENMOD-BIRD_CAPTURING_SPELL.title": "Bird-Capturing Spell",
-  "FRIERENMOD-BIRD_CAPTURING_SPELL.description": "Stun a bird or birdlike enemy for [blue]3[/blue] turns."
+  "FRIERENMOD-BIRD_CAPTURING_SPELL.description": "Stun a bird or birdlike enemy for [blue]3[/blue] turns.",
+  "FRIERENMOD-UPSIDE_DOWN.title": "Upside Down",
+  "FRIERENMOD-UPSIDE_DOWN.description": "Whenever you [gold]Synchro[/gold], swap your draw and discard piles and lose [red]2[/red] HP."
 }

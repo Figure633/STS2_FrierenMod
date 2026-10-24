@@ -2471,5 +2471,69 @@
     "sha256": "2a1b90dc47c41c96a2d96850075ec5fd316c69f5bdaf001afd0371192b24d8b1",
     "modified": false,
     "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/monsters/SpiegelFrieren.png",
+    "source": "src/main/resources/FrierenModResources/img/monsters/Spiegel_Frieren.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "4a25e7d8ffe79971df3f211cbdc6834cc6f09669118169e457cb2aea1e58a921",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/monsters/Spiegel_node.png",
+    "source": "src/main/resources/FrierenModResources/img/monsters/Spiegel_icon_1.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "e458713f3096e77ca956ac41df07151871009ca142bef97a555add4bb18957df",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/monsters/Spiegel_node_outline.png",
+    "source": "src/main/resources/FrierenModResources/img/monsters/Spiegel_icon_2.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "e458713f3096e77ca956ac41df07151871009ca142bef97a555add4bb18957df",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/audio/Frieren_The_Slayer.mp3",
+    "source": "src/main/resources/FrierenModResources/audio/sound/Frieren_The_Slayer.mp3",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "eec41915244d287b842f137d6467211c0ecc8841b1215005fa829c7af44096b3",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/cards/UpsideDown.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/UpsideDown_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "64f6817824113bfddbd3cd9975ec58c9ca0865935c299be8fb28e7935d28a4ea",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/powers/CopyPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/CopyPower_84.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "0c7194dd7c9b6b09b9ea1dbf0c0f546d280708014de8715009c280389cdd444a",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/powers/SpellCasterPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/SpellCasterPower_84.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "2e762a92590894546e6a56abee23f33c48af1dd3bdc524e53aa1c7d4303d156c",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/powers/EnemyManaPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/EnemyManaPower_84.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "667a3e7f518e6ba32950c79f105fd0bf3c4f090660f7c84c55df60a7ab73b623",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only"
   }
 ]
