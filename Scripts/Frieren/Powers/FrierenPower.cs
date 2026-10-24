@@ -14,11 +14,13 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using MegaCrit.Sts2.Core.HoverTips;
 using FrierenMod.Scripts.Presentation;
+using MegaCrit.Sts2.Core.Helpers;
 
 namespace FrierenMod.Scripts.Powers;
 
 public abstract class FrierenPower : CustomPowerModel
 {
+    public override LocString Description { get { var text = base.Description; text.Add("energyPrefix", EnergyIconHelper.GetPrefix(this)); return text; } }
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
     public override string CustomPackedIconPath => $"res://FrierenMod/images/powers/{GetType().Name}.png";

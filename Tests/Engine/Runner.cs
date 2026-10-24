@@ -87,6 +87,10 @@ public partial class Runner : Node
             new Harmony("frieren.tests.hover_host").Patch(
                 AccessTools.Method(typeof(MegaCrit.Sts2.Core.Nodes.Cards.Holders.NCardHolder), "CreateHoverTips"),
                 prefix: new HarmonyMethod(typeof(Runner), nameof(SkipGlobalHoverWindow)));
+            if (OS.GetCmdlineUserArgs().Contains("--updated-todos-only")) {
+                GD.Print("UPDATED_TODOS_OK: " + await UpdatedTodoTests.Run(this));
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--spiegel-boss-only")) {
                 GD.Print("SPIEGEL_BOSS_OK: " + await SpiegelBossTests.Run(this));
                 await Finish(); return;

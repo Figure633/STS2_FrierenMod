@@ -42,7 +42,7 @@ public sealed class LegendaryCraftChoice() : FrierenCard(0, CardType.Skill, Card
     protected override void AddExtraArgsToDescription(LocString description)
     {
         var text = new LocString("frieren", "CRAFT." + Effect.Kind);
-        if (Effect.Kind == "Cost")
+        if (Effect.Kind is "Cost" or "Energy")
             text.Add(new EnergyVar("Amount", Effect.Amount) { ColorPrefix = EnergyIconHelper.GetPrefix(this) });
         else text.Add("Amount", Effect.Amount);
         description.Add("Effect", text.GetFormattedText());

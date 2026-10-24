@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using MegaCrit.Sts2.Core.Hooks;
+using MegaCrit.Sts2.Core.Helpers;
 
 namespace FrierenMod.Scripts.Cards;
 
@@ -64,6 +65,9 @@ public abstract class FactorCard() : FrierenCard(-1, CardType.Skill, CardRarity.
         description.Add("Context", contextText);
         var effect = new LocString("frieren", (Option.HasValue ? "EFFECT." : "FACTOR.") + FactorId);
         effect.Add("Reward", Option?.Reward ?? 0);
+        effect.Add("energyPrefix", EnergyIconHelper.GetPrefix(this));
+        if (FactorId is nameof(Strategizing) or nameof(NatureBeauty))
+            effect.Add(new EnergyVar("Reward", Option?.Reward ?? 0) { ColorPrefix = EnergyIconHelper.GetPrefix(this) });
         if (Option.HasValue && FactorId is nameof(AdvancedDefensiveMagic) or nameof(BarrierMagic)) {
             // 格挡与残影等基础奖励分开；沿用实际咏唱牌的原生修正，包含附魔。
             var block = new BlockVar(Option.Value.Reward, ValueProp.Move);

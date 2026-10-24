@@ -10,6 +10,12 @@ namespace FrierenMod.Scripts.Presentation;
 
 public static class FrierenHoverTips
 {
+    private static LocString TipDescription(string key)
+    {
+        var text = new LocString("frieren", $"TIP.{key}.description");
+        text.Add("energyPrefix", ModelDb.CardPool<FrierenMod.Scripts.Characters.FrierenCardPool>().EnergyColorName);
+        return text;
+    }
     private static readonly string[] Keywords = ["CHANT", "LEGENDARY", "DIVINITY", "MANA_PAYMENT",
         "SEALED", "SECOND_DEFENSE", "SYNCHRO", "ACCELERATED_SYNCHRO", "ULTIMATE_SYNCHRO",
         "ULTIMATE_ACCELERATED_SYNCHRO", "BACKFIRE"];
@@ -36,12 +42,12 @@ public static class FrierenHoverTips
         foreach (string key in Keywords) {
             var title = new LocString("frieren", $"TIP.{key}.title");
             if (keys.Contains(key) || words.Contains(title.GetFormattedText()))
-                yield return new HoverTip(title, new LocString("frieren", $"TIP.{key}.description"));
+                yield return new HoverTip(title, TipDescription(key));
         }
         // 正文只写“传说魔法”的生成牌同样需要解释它所依赖的咏唱。
         if (!keys.Contains("CHANT") && words.Contains(new LocString("frieren", "TIP.LEGENDARY.title").GetFormattedText()) &&
             !words.Contains(new LocString("frieren", "TIP.CHANT.title").GetFormattedText()))
-            yield return new HoverTip(new LocString("frieren", "TIP.CHANT.title"), new LocString("frieren", "TIP.CHANT.description"));
+            yield return new HoverTip(new LocString("frieren", "TIP.CHANT.title"), TipDescription("CHANT"));
         foreach (var tip in NativeReferences(words))
             if (!source.HoverTipsNativeKeywordsContain(tip.Id)) yield return tip;
         foreach (var preview in DerivedCardPreviews.For(source)) yield return preview;
@@ -54,7 +60,7 @@ public static class FrierenHoverTips
         foreach (string key in Keywords) {
             var title = new LocString("frieren", $"TIP.{key}.title");
             if (words.Contains(title.GetFormattedText()))
-                yield return new HoverTip(title, new LocString("frieren", $"TIP.{key}.description"));
+                yield return new HoverTip(title, TipDescription(key));
         }
         foreach (var tip in NativeReferences(words)) yield return tip;
     }

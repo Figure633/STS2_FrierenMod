@@ -10,10 +10,10 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="Boss" type="Marker2D" parent="."]
-position = Vector2(1400, 820)
+position = Vector2(1400, 695)
 
 [node name="Bird1" type="Marker2D" parent="."]
-position = Vector2(1080, 820)
+position = Vector2(1080, 709)
 
 [node name="Bird2" type="Marker2D" parent="."]
-position = Vector2(1720, 820)
+position = Vector2(1720, 709)
