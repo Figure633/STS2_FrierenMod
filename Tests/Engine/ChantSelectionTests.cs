@@ -144,7 +144,7 @@ public static class ChantSelectionTests
         foreach (var holder in holders) {
             ChantSelectionPresentation.Decorate(holder);
             var factorModel = (FactorCard)holder.CardModel!;
-            Check(holder.GetNode<TextureRect>("ChantSlotBackground").Texture.ResourcePath.EndsWith(SlotBackStore.Selected((int)factorModel.Slot!.Value) + ".png") &&
+            Check(holder.GetNode<TextureRect>("ChantSlotVisual/ChantSlotBackground").Texture.ResourcePath.EndsWith(SlotBackStore.Selected((int)factorModel.Slot!.Value) + ".png") &&
                 factorModel.CustomFrame!.ResourcePath.EndsWith("magic.tres"), "咏唱槽位背景独立位于原紫色因子卡后方");
             holder.Pressed += h => AccessTools.Method(typeof(NChooseACardSelectionScreen), "SelectHolder").Invoke(selection, [h]);
         }
@@ -166,16 +166,25 @@ public static class ChantSelectionTests
             foreach (var holder in holders) {
                 holder.CardNode!.UpdateVisuals(PileType.None, CardPreviewMode.Normal);
                 var f = (FactorCard)holder.CardModel;
-                holder.GetNode<Label>("ChantSlotHeader").Text = new LocString("frieren", $"CHANT_SLOT.{f.Slot}").GetFormattedText();
+                holder.GetNode<Label>("ChantSlotVisual/ChantSlotHeader").Text = new LocString("frieren", $"CHANT_SLOT.{f.Slot}").GetFormattedText();
                 string text = Regex.Replace(f.GetDescriptionForPile(PileType.None), @"\[[^\]]*\]", "");
                 Check(!text.Contains('·') && text.Contains(lang == "zhs" ? "从" + new LocString("frieren", $"SLOT.{f.Slot}").GetFormattedText() + "消耗2张魔力" : "Consume 2 Mana from your"), "槽位与费用形成完整消耗句：" + lang + "/" + f.Slot);
-                Check(holder.GetNode<Label>("ChantSlotHeader").Position.Y + 50 < -211 && holder.GetNode<Label>("ChantSlotHeader").Modulate.A == 1,
+                Check(holder.GetNode<Label>("ChantSlotVisual/ChantSlotHeader").Position.Y + 50 < -211 && holder.GetNode<Label>("ChantSlotVisual/ChantSlotHeader").Modulate.A == 1,
                     "槽位标题位于卡面上方且不随禁用因子淡化：" + f.Slot);
             }
-            Check(holders[1].CardNode!.Modulate.A == 0.6f && holders[0].CardNode!.Modulate.A == 1 && holders[2].CardNode!.Modulate.A == 1,
-                "只有魔力不足的因子呈半透明：" + lang);
+            Check(holders[1].CardNode!.Modulate.A == .35f && holders[0].CardNode!.Modulate.A == .85f && holders[2].CardNode!.Modulate.A == .85f,
+                "可用因子85%不透明、不可用因子35%不透明：" + lang);
             await Snapshot("chant-choice-" + lang);
         }
+        var fixedBackground = holders[0].GetNode<TextureRect>("ChantSlotVisual/ChantSlotBackground");
+        var beforeSize = fixedBackground.GetGlobalRect().Size;
+        var beforeCardScale = holders[0].CardNode!.GetGlobalTransform().Scale;
+        holders[0].Scale = Vector2.One * 1.1f; await Tick();
+        Check(fixedBackground.GetGlobalRect().Size.IsEqualApprox(beforeSize) &&
+            holders[0].CardNode!.GetGlobalTransform().Scale.X > beforeCardScale.X,
+            "放大因子时背景尺寸固定，只有卡面放大");
+        await Snapshot("chant-hover-fixed-background");
+        holders[0].Scale = holders[0].SmallScale; await Tick();
         Click(holders[1]); await Tick();
         holders[1]._GuiInput(new InputEventAction { Action = MegaInput.select, Pressed = true }); await Tick();
         AccessTools.Method(typeof(NChooseACardSelectionScreen), "SelectHolder").Invoke(selection, [holders[1]]);
@@ -189,16 +198,16 @@ public static class ChantSelectionTests
 
         var probe = Holder(FactorCard.Create(player, choices[1].Option.SpellId, ManaSlot.Hand, choices[1].Option, false), new(960, 600));
         ChantSelectionPresentation.Decorate(probe); ChantSelectionPresentation.Decorate(probe);
-        Check(probe.GetChildren().Count(n => n.Name == "ChantSlotHeader") == 1 && probe.CardNode!.Modulate.A == 0.6f,
-            "重复刷新只保留一个槽位标题，禁用因子仍有六成不透明度");
+        Check(probe.GetChildren().Count(n => n.Name == "ChantSlotVisual") == 1 && probe.CardNode!.Modulate.A == .35f,
+            "重复刷新只保留一个槽位标题，禁用因子仍有35%不透明度");
         probe.ReassignToCard(Card<RapidChant>(), PileType.None, null, ModelVisibility.Visible);
-        Check(!probe.HasNode("ChantSlotHeader") && !probe.HasNode("ChantSlotBackground") && !probe.HasMeta("FrierenChantChoice") && probe.CardNode!.Modulate.A == 1,
+        Check(!probe.HasNode("ChantSlotVisual") && !probe.HasMeta("FrierenChantChoice") && probe.CardNode!.Modulate.A == 1,
             "未归还对象池而直接换成百科普通卡时同样清理槽位与淡化状态");
         probe.ReassignToCard(FactorCard.Create(player, choices[1].Option.SpellId, ManaSlot.Hand, choices[1].Option, false),
             PileType.None, null, ModelVisibility.Visible);
         ChantSelectionPresentation.Decorate(probe);
         probe.QueueFreeSafely(); await Tick();
-        Check(!probe.HasNode("ChantSlotHeader") && !probe.HasNode("ChantSlotBackground") && !probe.HasMeta("FrierenChantChoice"), "真实归还对象池时清除槽位标题和选择状态");
+        Check(!probe.HasNode("ChantSlotVisual") && !probe.HasMeta("FrierenChantChoice"), "真实归还对象池时清除槽位标题和选择状态");
         var reused = Holder(Card<RapidChant>(), new(960, 600));
         Check(ReferenceEquals(reused, probe) && !reused.HasNode("ChantSlotHeader") && reused.CardNode!.Modulate.A == 1,
             "百科普通卡复用同一控件时没有槽位文字或透明度残留");

@@ -48,14 +48,17 @@ public static class ChantSelectionPresentation
         holder.SetMeta("FrierenChantChoice", true);
         holder.SetClickable(factor.CanSelectForChant);
         // 原生入场补间作用于 holder；仅淡化卡面，避免补间把禁用透明度恢复成白色。
-        card.Modulate = new Color(1, 1, 1, factor.CanSelectForChant ? 1 : 0.6f);
+        card.Modulate = new Color(1, 1, 1, factor.CanSelectForChant ? .85f : .35f);
+        var slotVisual = new ChantSlotVisual { Name = "ChantSlotVisual", MouseFilter = Control.MouseFilterEnum.Ignore,
+            ShowBehindParent = true };
+        holder.AddChild(slotVisual); holder.MoveChild(slotVisual, 0);
         var background = new TextureRect {
             Name = "ChantSlotBackground", Texture = UI.SlotBackLibrary.Texture(SlotBackStore.Selected((int)factor.Slot!.Value)),
             Position = new(-200, -307), Size = new(400, 614),
             ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered,
             MouseFilter = Control.MouseFilterEnum.Ignore, ShowBehindParent = true
         };
-        holder.AddChild(background); holder.MoveChild(background, 0);
+        slotVisual.AddChild(background);
         var header = new Label {
             Name = "ChantSlotHeader",
             Text = new LocString("frieren", $"CHANT_SLOT.{factor.Slot}").GetFormattedText(),
@@ -68,19 +71,14 @@ public static class ChantSelectionPresentation
         header.AddThemeColorOverride("font_color", new Color("f2e4bc"));
         header.AddThemeColorOverride("font_shadow_color", Colors.Black);
         header.AddThemeConstantOverride("shadow_offset_y", 3);
-        holder.AddChild(header);
+        slotVisual.AddChild(header);
     }
 
     private static void Clear(NGridCardHolder holder)
     {
-        var header = holder.GetNodeOrNull<Label>("ChantSlotHeader");
-        var background = holder.GetNodeOrNull<TextureRect>("ChantSlotBackground");
-        if (header == null && background == null && !holder.HasMeta("FrierenChantChoice")) return;
-        if (background != null) { holder.RemoveChild(background); background.Free(); }
-        if (header != null) {
-            holder.RemoveChild(header);
-            header.Free();
-        }
+        var visual = holder.GetNodeOrNull<Control>("ChantSlotVisual");
+        if (visual == null && !holder.HasMeta("FrierenChantChoice")) return;
+        if (visual != null) { holder.RemoveChild(visual); visual.Free(); }
         if (holder.HasMeta("FrierenChantChoice")) holder.RemoveMeta("FrierenChantChoice");
         holder.SetClickable(true);
         if (holder.CardNode is { } card) card.Modulate = Colors.White;
@@ -103,5 +101,21 @@ public static class ChantSelectionPresentation
             AccessTools.DeclaredMethod(typeof(NGridCardHolder), "OnCardReassigned")
         ];
         private static void Prefix(NGridCardHolder __instance) => Clear(__instance);
+    }
+}
+
+// 保留 holder 的位置和入场动画，但抵消其悬停缩放；背景与槽位标题始终使用初始尺寸。
+public partial class ChantSlotVisual : Control
+{
+    public override void _EnterTree() { SetNotifyTransform(true); KeepSlotSize(); }
+    public override void _Notification(int what) {
+        if (what == NotificationTransformChanged) KeepSlotSize();
+    }
+    private void KeepSlotSize() {
+        if (GetParent() is not NGridCardHolder holder) return;
+        var scale = holder.Scale;
+        if (Mathf.IsZeroApprox(scale.X) || Mathf.IsZeroApprox(scale.Y)) return;
+        var desired = holder.SmallScale / scale;
+        if (!Scale.IsEqualApprox(desired)) Scale = desired;
     }
 }
