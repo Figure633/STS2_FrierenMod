@@ -56,8 +56,11 @@ public static class LibraryTests
         Check(items.All(c => (ModelVisibility)visibility.Invoke(grid, [c])! == ModelVisibility.Visible),
             "原生百科网格完整显示，不是锁定或未见卡背");
         Check(items.All(c => SaveManager.Instance.Progress.DiscoveredCards.Contains(c.Id)), "原生名称搜索和放大查看的发现条件满足");
+        Check((ModelVisibility)visibility.Invoke(grid, [ModelDb.Card<Flow>()])! == ModelVisibility.Visible &&
+            SaveManager.Instance.Progress.DiscoveredCards.Contains(ModelDb.Card<Flow>().Id),
+            "初始专属流转在百科正常解锁且可搜索");
         Check(SaveManager.Instance.Progress.DiscoveredCards.Except(oldSeen).All(id => items.Any(c => c.Id == id) ||
-            ModelDb.GetById<CardModel>(id) is IGeneratedOnlyCard),
+            ModelDb.GetById<CardModel>(id) is IGeneratedOnlyCard or Flow),
             "不提前发现其他卡牌");
         Check(pool.GetUnlockedCards(UnlockState.all, CardMultiplayerConstraint.None).Select(c => c.Id).ToHashSet().SetEquals(oldUnlocks) &&
             !pool.GetUnlockedCards(UnlockState.all, CardMultiplayerConstraint.None).OfType<FactorCard>().Any(),

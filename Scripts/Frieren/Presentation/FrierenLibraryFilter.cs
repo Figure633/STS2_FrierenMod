@@ -63,7 +63,7 @@ public static class FrierenLibraryFilter
     }
 }
 
-// 因子不进入普通奖励解锁池，百科需单独允许查看；沿用 BaseLib 的默认已见机制。
+// 因子、衍生牌及初始专属流转不进入普通奖励池，百科需单独允许查看。
 [HarmonyPatch(typeof(NCardLibraryGrid), nameof(NCardLibraryGrid.RefreshVisibility))]
 public static class FrierenLibraryVisibility
 {
@@ -71,7 +71,7 @@ public static class FrierenLibraryVisibility
     private static void IncludeMagicItems(HashSet<CardModel> ____unlockedCards, HashSet<ModelId> ____seenCards)
     {
         foreach (var card in ModelDb.AllCards.Where(card => card.ShouldShowInCardLibrary &&
-            (FrierenLibraryFilter.IsMagicItem(card) || card is IGeneratedOnlyCard)))
+            (FrierenLibraryFilter.IsMagicItem(card) || card is IGeneratedOnlyCard or Flow)))
         {
             ____unlockedCards.Add(card);
             ____seenCards.Add(card.Id);

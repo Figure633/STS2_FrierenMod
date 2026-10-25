@@ -76,6 +76,13 @@ public static class LibraryUiTests
             var items = ModelDb.AllCards.Where(FrierenLibraryFilter.IsMagicItem).ToArray();
             Check(items.All(c => filters[magic](c) && !filters[misc](c)) && !filters[magic](ModelDb.Card<Mana>()), "仅因子和魔具进入新分类，魔力保留衍生归属");
             library.OnSubmenuOpened(); await Tick();
+            grid.FilterCards(c => c is Flow); await Tick();
+            var flowRows = (List<List<NGridCardHolder>>)AccessTools.Field(typeof(NCardGrid), "_cardRows").GetValue(grid)!;
+            Check(flowRows.SelectMany(r => r).Any(h => h.Visible && h.CardNode is { Visibility: ModelVisibility.Visible, Model: Flow }),
+                "初始专属流转在实际百科中显示完整卡面：" + language);
+            Check(!ModelDb.CardPool<FrierenCardPool>().GetUnlockedCards(UnlockState.all, CardMultiplayerConstraint.None).OfType<Flow>().Any(),
+                "百科可见不会使流转进入奖励、商店或生成卡池");
+            if (OS.GetCmdlineUserArgs().Contains("--ui-snapshot")) root.GetViewport().GetTexture().GetImage().SavePng(ProjectSettings.GlobalizePath("res://../../artifacts/library-flow-" + language + ".png"));
             magic.IsSelected = true; magic.EmitSignal(NCardPoolFilter.SignalName.Toggled, magic); await Tick();
             Check(grid.VisibleCards.Count() == items.Length && grid.VisibleCards.All(FrierenLibraryFilter.IsMagicItem) && filters.Keys.Count(c => c.IsSelected) == 1,
                 "原生切换信号显示全部因子和八种魔具，并取消其他分类");
