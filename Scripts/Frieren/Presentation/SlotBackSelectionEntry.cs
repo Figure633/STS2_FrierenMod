@@ -42,7 +42,6 @@ public static class SlotBackSelectionEntry
                 IgnoreTextureSize = true, StretchMode = TextureButton.StretchModeEnum.KeepAspectCentered };
             panel.AddChild(button); previews[i] = button;
             button.PivotOffset = button.Size / 2;
-            button.MouseDefaultCursorShape = Control.CursorShape.PointingHand;
             var glow = new Panel { Name = "HoverGlow", Position = new(-5, -5), Size = button.Size + new Vector2(10, 10),
                 Visible = false, ShowBehindParent = true, MouseFilter = Control.MouseFilterEnum.Ignore };
             glow.AddThemeStyleboxOverride("panel", new StyleBoxFlat { BgColor = new Color(0, 0, 0, 0),

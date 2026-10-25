@@ -15,7 +15,7 @@ namespace FrierenMod.Scripts.Events;
 // 随机事件共用原生选项、卡牌获得动画与结束页；不绕过事件同步器。
 public abstract class FrierenStoryEvent : CustomEventModel
 {
-    public override bool IsAllowed(IRunState runState) => runState.Players.All(p => p.Character is Frieren);
+    public override bool IsAllowed(IRunState runState) => Encounters.FrierenEncounterEligibility.IsFrierenRun(runState);
     protected abstract string[] Portraits { get; }
     public override string CustomInitialPortraitPath => PortraitPath(Portraits[0]);
     private static string PortraitPath(string name) => $"res://FrierenMod/images/events/{name}.png";

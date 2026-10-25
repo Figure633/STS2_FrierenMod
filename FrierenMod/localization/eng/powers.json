@@ -98,10 +98,10 @@
   "FRIERENMOD-SPELL_CASTER_POWER.spells.2": "{Cost} Mana: Stone Golem Magic SP. Gain 1 Artifact.",
   "FRIERENMOD-SPELL_CASTER_POWER.spells.3": "{Cost} Mana: Hellfire SP. Add {Burns} Burns to each player’s draw pile.",
   "FRIERENMOD-SPELL_CASTER_POWER.spells.4": "{Cost} Mana: Ruinous Lightning SP. Apply 2 Vulnerable and Weak to all players.",
-  "FRIERENMOD-SPELL_CASTER_POWER.spells.5": "{Cost} Mana: Perfect Defense SP. Gain {Buffer} Buffer and 8 Metallicize.",
+  "FRIERENMOD-SPELL_CASTER_POWER.spells.5": "{Cost} Mana: Perfect Defense SP. Gain {Buffer} Buffer.",
   "FRIERENMOD-SPELL_CASTER_POWER.spells.6": "{Cost} Mana: Bird-Capturing Magic. Summon a Damp Cultist.",
   "FRIERENMOD-SPELL_CASTER_POWER.spells.7": "{Cost} Mana: Flying Magic SP. Gain 1 Intangible.",
-  "FRIERENMOD-SPELL_CASTER_POWER.spells.5.enhanced": "{Cost} Mana: Perfect Defense SP. Gain {Buffer} Buffer and 2 Malleable.",
+  "FRIERENMOD-SPELL_CASTER_POWER.spells.5.enhanced": "{Cost} Mana: Perfect Defense SP. Gain {Buffer} Buffer.",
   "FRIERENMOD-MANA_AFFINITY_POWER.title": "Mana Affinity",
   "FRIERENMOD-MANA_AFFINITY_POWER.description": "Mana has [gold]Retain[/gold]."
 }

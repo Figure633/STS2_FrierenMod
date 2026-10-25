@@ -196,7 +196,7 @@ public static class AchievementSystemTests
         await root.ToSignal(root.GetTree().CreateTimer(.3), SceneTreeTimer.SignalName.Timeout);
         Check(tip.Visible && tip.GetNode<Label>("Contents/Status").Text == SlotBackLibrary.Text("BACK_LOCKED"), "悬停未解锁卡背显示名称、条件和红色状态");
         Check(Mathf.IsEqualApprox(grid.GetNode<Control>("Back_" + lockedId).Scale.X, .7f), "未解锁项悬停不放大");
-        Check(tip.GetNode<Label>("Contents/Title").Position.Y + tip.GetNode<Label>("Contents/Title").Size.Y < tip.GetNode<Label>("Contents/Condition").Position.Y,
+        Check(tip.GetNode<Label>("Contents/Title").Position.Y + tip.GetNode<Label>("Contents/Title").Size.Y <= tip.GetNode<Label>("Contents/Condition").Position.Y,
             "长名称撑高提示框，不覆盖解锁条件");
         await Snapshot("achievement-library-locked");
         locked.EmitSignal(Control.SignalName.MouseExited);
@@ -264,6 +264,7 @@ public static class AchievementSystemTests
         var entryPanel = ui.GetNode<Control>("FrierenSlotBackSelection");
         Check(Mathf.IsEqualApprox(entryPanel.GetNode<ColorRect>("ReadabilityBackground").Color.A, .5f), "选人三槽入口保留一代半透明黑底");
         var slotPreview = entryPanel.GetNode<TextureButton>("SlotBack0");
+        Check(slotPreview.MouseDefaultCursorShape == Control.CursorShape.Arrow, "选人槽位保持游戏默认鼠标指针");
         slotPreview.EmitSignal(Control.SignalName.MouseEntered);
         await root.ToSignal(root.GetTree().CreateTimer(.2), SceneTreeTimer.SignalName.Timeout);
         Check(slotPreview.Scale.X > 1.1f && slotPreview.GetNode<Control>("HoverGlow").Visible, "槽位悬停放大并显示绿色光圈");

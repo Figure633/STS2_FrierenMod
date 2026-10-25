@@ -98,10 +98,10 @@
   "FRIERENMOD-SPELL_CASTER_POWER.spells.2": "{Cost}魔力：操纵石像的魔法SP，获得1层人工制品。",
   "FRIERENMOD-SPELL_CASTER_POWER.spells.3": "{Cost}魔力：地狱业火魔法SP，在玩家抽牌堆放入{Burns}张灼伤。",
   "FRIERENMOD-SPELL_CASTER_POWER.spells.4": "{Cost}魔力：破灭之雷魔法SP，使玩家获得2层易伤与虚弱。",
-  "FRIERENMOD-SPELL_CASTER_POWER.spells.5": "{Cost}魔力：防御魔法完全体SP，获得{Buffer}层缓冲和8层金属化。",
+  "FRIERENMOD-SPELL_CASTER_POWER.spells.5": "{Cost}魔力：防御魔法完全体SP，获得{Buffer}层缓冲。",
   "FRIERENMOD-SPELL_CASTER_POWER.spells.6": "{Cost}魔力：捕鸟魔法，召唤1只潮湿邪教徒。",
   "FRIERENMOD-SPELL_CASTER_POWER.spells.7": "{Cost}魔力：飞行魔法SP，获得1层无实体。",
-  "FRIERENMOD-SPELL_CASTER_POWER.spells.5.enhanced": "{Cost}魔力：防御魔法完全体SP，获得{Buffer}层缓冲和2层柔韧。",
+  "FRIERENMOD-SPELL_CASTER_POWER.spells.5.enhanced": "{Cost}魔力：防御魔法完全体SP，获得{Buffer}层缓冲。",
   "FRIERENMOD-MANA_AFFINITY_POWER.title": "魔力亲和",
   "FRIERENMOD-MANA_AFFINITY_POWER.description": "魔力获得[gold]保留[/gold]。"
 }

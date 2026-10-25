@@ -3543,5 +3543,54 @@
     "sha256": "70574d737c45358d7cea3378fa9db40e280c4712f7d743d0311784f1955bec83",
     "modified": false,
     "redistribution_review": "Original mod assets; see LICENSE.STS1"
+  },
+  {
+    "file": "FrierenMod/images/achievement/tipTop.png",
+    "source": "SlayTheSpire/desktop-1.0.jar!/images/ui/tip/tipTop.png",
+    "sha256": "36ddc8bdb294e8cec044fb141dffac3a8fe70803915f1a39ebe965772d92499c",
+    "modified": false,
+    "redistribution_review": "base game asset; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/achievement/tipMid.png",
+    "source": "SlayTheSpire/desktop-1.0.jar!/images/ui/tip/tipMid.png",
+    "sha256": "1cf5ca094af4ea8daaf21e54081dc970602e0eed0320eea8ae50b3835c342ea1",
+    "modified": false,
+    "redistribution_review": "base game asset; local prototype only"
+  },
+  {
+    "file": "FrierenMod/images/achievement/tipBot.png",
+    "source": "SlayTheSpire/desktop-1.0.jar!/images/ui/tip/tipBot.png",
+    "sha256": "90d14f6f9beb516bc9938a0a1615623e08aa0a42578d5770f459015aa80b9d65",
+    "modified": false,
+    "redistribution_review": "base game asset; local prototype only"
+  },
+  {
+    "file": "FrierenMod/fonts/SourceHanSerifSC-Bold.otf",
+    "source": "SlayTheSpire/desktop-1.0.jar!/font/zhs/SourceHanSerifSC-Bold.otf",
+    "sha256": "4564e8fb84d572e0b8b4e2980f3e23efc0c9956e64c84affce715a6de77cee27",
+    "modified": false,
+    "redistribution_review": "base game asset; local prototype only"
+  },
+  {
+    "file": "FrierenMod/fonts/NotoSansMonoCJKsc-Regular.otf",
+    "source": "SlayTheSpire/desktop-1.0.jar!/font/zhs/NotoSansMonoCJKsc-Regular.otf",
+    "sha256": "2b1dbdc50df666a00c50ecd77377e2394c6babd35a71e37505ab411ff55c7906",
+    "modified": false,
+    "redistribution_review": "base game asset; local prototype only"
+  },
+  {
+    "file": "FrierenMod/fonts/Kreon-Regular.ttf",
+    "source": "SlayTheSpire/desktop-1.0.jar!/font/Kreon-Regular.ttf",
+    "sha256": "4eb273bc72f0d4efd9fe3e37178cfc44ba2ce2f5a05c521521781f390b75ea73",
+    "modified": false,
+    "redistribution_review": "base game asset; local prototype only"
+  },
+  {
+    "file": "FrierenMod/fonts/Kreon-Bold.ttf",
+    "source": "SlayTheSpire/desktop-1.0.jar!/font/Kreon-Bold.ttf",
+    "sha256": "708826a917fd27c5c52bd81860a11f4d2d1cdeab0f21e787e534762a5503035a",
+    "modified": false,
+    "redistribution_review": "base game asset; local prototype only"
   }
 ]

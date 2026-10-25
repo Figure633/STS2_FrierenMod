@@ -53,8 +53,6 @@ public sealed class SpellCasterPower : FrierenPower
                     await PowerCmd.Apply<WeakPower>(context, Owner.CombatState.PlayerCreatures, 2, Owner, null); break;
                 case 5:
                     await PowerCmd.Apply<BufferPower>(context, Owner, Enhanced ? 2 : 1, Owner, null);
-                    if (Enhanced) await PowerCmd.Apply<SpiegelMalleablePower>(context, Owner, 2, Owner, null);
-                    else await PowerCmd.Apply<MetallicizePower>(context, Owner, 8, Owner, null);
                     break;
                 case 6:
                     // 召唤使用二代现有邪教徒，模型、动画、仪式和AI均由原版管理。

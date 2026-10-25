@@ -34,11 +34,31 @@ public static class SpiegelBossTests
         int count = 0;
         void Check(bool ok, string text) { if (!ok) throw new Exception(text); count++; GD.Print("PASS 复制体Boss：" + text); }
         AddActContent.Patch(new Harmony("frieren.tests.boss.act_content"));
-        Check(ModelDb.Act<Glory>().AllBossEncounters.Any(e => e is SpiegelFrierenEncounter) && !ModelDb.Act<Overgrowth>().AllBossEncounters.Any(e => e is SpiegelFrierenEncounter),
-            "通过BaseLib进入第三幕原生Boss池，第一幕不出现");
+        var cachedAct = ModelDb.Act<Glory>();
+        foreach (var character in ModelDb.AllCharacters.Where(c => c is not Frieren)) {
+            var other = Player.CreateForNewRun(character, UnlockState.all, 1);
+            var otherRun = RunState.CreateForTest([other], seed: "OTHER-BOSS");
+            RunManager.Instance.SetUpTest(otherRun, new NetSingleplayerGameService());
+            Check(!cachedAct.AllBossEncounters.Any(e => e is SpiegelFrierenEncounter), character.Id + "的Boss池排除复制体");
+            var savedAct = cachedAct.ToMutable();
+            savedAct.SetBossEncounter(ModelDb.Encounter<SpiegelFrierenEncounter>());
+            savedAct.ValidateRoomsAfterLoad(otherRun.Rng.UpFront);
+            Check(savedAct.BossEncounter is not SpiegelFrierenEncounter, "其他角色旧存档替换复制体Boss");
+            savedAct.SetSecondBossEncounter(ModelDb.Encounter<SpiegelFrierenEncounter>());
+            savedAct.ValidateRoomsAfterLoad(otherRun.Rng.UpFront);
+            Check(savedAct.SecondBossEncounter is not SpiegelFrierenEncounter && savedAct.SecondBossEncounter?.Id != savedAct.BossEncounter.Id, "旧存档第二Boss替换且不重复");
+            var events = new EventModel[] { ModelDb.Event<FrierenMod.Scripts.Events.FoodEvent>(), ModelDb.Event<FrierenMod.Scripts.Events.KraftGift>(), ModelDb.Event<FrierenMod.Scripts.Events.AnimalWell>(), ModelDb.Event<FrierenMod.Scripts.Events.MimicFight>() };
+            for (int act = 0; act < 3; act++) {
+                AccessTools.Property(typeof(RunState), nameof(RunState.CurrentActIndex)).SetValue(otherRun, act);
+                Check(events.All(e => !e.IsAllowed(otherRun)), "其他角色第" + (act + 1) + "幕排除芙莉莲事件");
+            }
+            RunManager.Instance.CleanUp();
+        }
         var player = Player.CreateForNewRun<Frieren>(UnlockState.all, 1);
         var run = RunState.CreateForTest([player], seed: "FRIEREN-SPIEGEL-BOSS");
         RunManager.Instance.SetUpTest(run, new NetSingleplayerGameService()); LocalContext.NetId = 1; SaveManager.Instance.InitPrefsDataForTest();
+        Check(ModelDb.Act<Glory>().AllBossEncounters.Any(e => e is SpiegelFrierenEncounter) && !ModelDb.Act<Overgrowth>().AllBossEncounters.Any(e => e is SpiegelFrierenEncounter),
+            "通过BaseLib进入第三幕原生Boss池，第一幕不出现");
         player.Creature.SetMaxHpInternal(5000); player.Creature.SetCurrentHpInternal(5000);
         var encounter = ModelDb.Encounter<SpiegelFrierenEncounter>().ToMutable(); encounter.GenerateMonstersWithSlots(run);
         var combat = new CombatState(encounter, run); combat.AddPlayer(player);
@@ -46,7 +66,7 @@ public static class SpiegelBossTests
         var boss = combat.CreateCreature(monster, CombatSide.Enemy, "Boss"); combat.AddCreature(boss);
         CombatManager.Instance.SetUpCombat(combat); AccessTools.Property(typeof(CombatManager), nameof(CombatManager.IsInProgress)).SetValue(CombatManager.Instance, true);
         monster.RegisterSceneConversions(); var visual = monster.CreateVisuals(); root.AddChild(visual);
-        Check(visual.Bounds.Size == new Vector2(250,352) && encounter.Slots.SequenceEqual(new[] { "Boss","Bird1","Bird2" }), "原图比例、血条范围和召唤槽位正确"); visual.QueueFree();
+        Check(visual.Bounds.Size.IsEqualApprox(new Vector2(275,387.2f)) && encounter.Slots.SequenceEqual(new[] { "Boss","Bird1","Bird2" }), "放大10%后的血条范围和召唤槽位正确"); visual.QueueFree();
         Check(encounter.MapNodeAssetPaths.All(path => ResourceLoader.Exists(path)) && GD.Load<AudioStream>("res://FrierenMod/audio/Frieren_The_Slayer.mp3").GetLength() > 0,
             "一代Boss地图图标、轮廓和专属音乐可加载");
         monster.RollMove([player.Creature]); await monster.AfterAddedToRoom();
@@ -64,7 +84,7 @@ public static class SpiegelBossTests
         Check(caster.SpellsCast == 8 && boss.GetPower<EnemyManaPower>()!.StoredMana == 0 && boss.GetPower<RitualPower>()!.Amount == 5 && boss.HasPower<ArtifactPower>(),
             "连续足量魔力按顺序结算第一轮八种法术，余量保留");
         Check(player.PlayerCombatState!.DrawPile.Cards.OfType<Burn>().Count() == 2 && player.Creature.GetPowerAmount<WeakPower>() == 2 &&
-            boss.GetPowerAmount<BufferPower>() == 1 && boss.HasPower<IntangiblePower>() && combat.Enemies.Count(c => c.Monster is DampCultist) == 1,
+            boss.GetPowerAmount<BufferPower>() == 1 && !boss.HasPower<MetallicizePower>() && !boss.HasPower<SpiegelMalleablePower>() && boss.HasPower<IntangiblePower>() && combat.Enemies.Count(c => c.Monster is DampCultist) == 1,
             "灼伤、减益、防御、无实体和原生召唤生效");
         foreach (var language in new[] { "zhs", "eng" }) {
             LocManager.Instance.SetLanguage(language);
@@ -122,8 +142,8 @@ public static class SpiegelBossTests
         CombatManager.Instance.SetUpCombat(hardCombat);AccessTools.Property(typeof(CombatManager),nameof(CombatManager.IsInProgress)).SetValue(CombatManager.Instance,true);
         await hardMonster.AfterAddedToRoom();
         await PowerCmd.ModifyAmount(context,hardBoss.GetPower<EnemyManaPower>()!,130,hardBoss,null);await hardBoss.GetPower<SpellCasterPower>()!.Resolve(context);
-        Check(hardMonster.Enhanced && hardBoss.GetPowerAmount<RitualPower>()==8 && hardBoss.GetPowerAmount<BufferPower>()==2 && hardBoss.GetPowerAmount<SpiegelMalleablePower>()==2,
-            "二代敌人强化档正确启用一代高进阶仪式、缓冲及柔韧");
+        Check(hardMonster.Enhanced && hardBoss.GetPowerAmount<RitualPower>()==8 && hardBoss.GetPowerAmount<BufferPower>()==2 && !hardBoss.HasPower<SpiegelMalleablePower>() && !hardBoss.HasPower<MetallicizePower>(),
+            "高进阶SP只获得2层缓冲，不获得柔韧或金属化");
         LocManager.Instance.SetLanguage("eng"); RunManager.Instance.CleanUp(); return count;
     }
 }

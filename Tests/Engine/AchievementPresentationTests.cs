@@ -36,6 +36,7 @@ public static class AchievementPresentationTests
         LocManager.Instance.SetLanguage("zhs");
         // 提前领取一次性纪念背景，后面单独验证指定成就的解锁提示。
         SlotBackStore.CollectLibraryRewards();
+        SlotBackStore.Unlock("4015");
         var player = Player.CreateForNewRun<Frieren>(UnlockState.all, 1);
         RunManager.Instance.SetUpTest(RunState.CreateForTest([player], seed: "ACHIEVEMENT-PRESENTATION"), new NetSingleplayerGameService()); LocalContext.NetId = 1;
         var patch = new Harmony("frieren.tests.achievement_presentation");
@@ -85,6 +86,17 @@ public static class AchievementPresentationTests
         await Snapshot("achievement-in-run");
         var tip = library.GetNode<Control>("LibraryCanvas/BackTooltip");
         var grid = library.GetNode<Control>("LibraryCanvas/BackScroll/BackGrid");
+        foreach (string id in new[] { "1001", "4015" }) {
+            var card = grid.GetNode<TextureButton>($"Back_{id}/SelectBack_{id}");
+            library.GetNode<ScrollContainer>("LibraryCanvas/BackScroll").EnsureControlVisible(card); await Tick();
+            card.EmitSignal(Control.SignalName.MouseEntered);
+            library.GetNode<Godot.Timer>("LibraryCanvas/HoverDelay").EmitSignal(Godot.Timer.SignalName.Timeout); await Tick();
+            Check(Mathf.IsEqualApprox(tip.Size.X, 320), "一代提示框320基准宽度：" + id);
+            Check(tip.GetNode<Label>("Contents/Title").GetThemeFontSize("font_size") == 23 &&
+                tip.GetNode<Label>("Contents/Condition").GetThemeFontSize("font_size") == 22, "一代标题与正文的23/22字号");
+            await Snapshot("achievement-legacy-tip-" + id);
+            card.EmitSignal(Control.SignalName.MouseExited);
+        }
         foreach (string language in new[] { "zhs", "eng" }) {
             LocManager.Instance.SetLanguage(language);
             var samples = SlotBackCatalog.Ids.OrderByDescending(id => SlotBackLibrary.Text($"BACK.{id}.title").Length).Take(4)

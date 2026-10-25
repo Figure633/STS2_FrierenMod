@@ -98,18 +98,20 @@ public sealed class SlotBackLibrary
             Shortcut = new Shortcut { Events = [new InputEventKey { PhysicalKeycode = Key.Escape }] } };
         _canvas.AddChild(escape); escape.Pressed += Back;
         _save.Shortcut = new Shortcut { Events = [new InputEventKey { PhysicalKeycode = Key.Enter }] };
-        var tipPanel = new PanelContainer { Name = "BackTooltip", Visible = false,
-            CustomMinimumSize = new(410, 0), MouseFilter = Control.MouseFilterEnum.Ignore };
-        tipPanel.AddThemeStyleboxOverride("panel", PopupStyle());
+        var tipPanel = new LegacyAchievementTip { Name = "BackTooltip", Visible = false,
+            CustomMinimumSize = new(320, 0), MouseFilter = Control.MouseFilterEnum.Ignore };
+        tipPanel.AddThemeStyleboxOverride("panel", new StyleBoxEmpty { ContentMarginLeft = 22, ContentMarginRight = 18,
+            ContentMarginTop = 14, ContentMarginBottom = 14 });
         _tip = tipPanel;
         _canvas.AddChild(_tip);
         var tipContents = new VBoxContainer { Name = "Contents", MouseFilter = Control.MouseFilterEnum.Ignore };
-        tipContents.AddThemeConstantOverride("separation", 6); _tip.AddChild(tipContents);
+        tipContents.AddThemeConstantOverride("separation", 0); _tip.AddChild(tipContents);
         tipContents.MinimumSizeChanged += _tip.ResetSize;
-        _tipTitle = MakeLabel(tipContents, "Title", "", Vector2.Zero, new(362, 0), 30);
+        _tipTitle = MakeLabel(tipContents, "Title", "", Vector2.Zero, new(280, 0), 23);
         _tipTitle.AddThemeColorOverride("font_color", new Color("ffcc4d"));
-        _tipCondition = MakeLabel(tipContents, "Condition", "", Vector2.Zero, new(362, 0), 25);
-        _tipStatus = MakeLabel(tipContents, "Status", "", Vector2.Zero, new(362, 0), 25);
+        _tipCondition = MakeLabel(tipContents, "Condition", "", Vector2.Zero, new(280, 0), 22);
+        _tipCondition.AddThemeColorOverride("font_color", new Color(1, .9725f, .8745f));
+        _tipStatus = MakeLabel(tipContents, "Status", "", Vector2.Zero, new(280, 0), 22);
         _tip.Resized += PlaceTip;
         _hoverTimer = new Timer { Name = "HoverDelay", WaitTime = .2, OneShot = true };
         _canvas.AddChild(_hoverTimer); _hoverTimer.Timeout += ShowTip;
@@ -272,6 +274,9 @@ public sealed class SlotBackLibrary
         bool owned = SlotBackStore.Read().Unlocked.Contains(id);
         _tipTitle.Text = Text($"BACK.{id}.title"); _tipCondition.Text = Text($"BACK.{id}.description");
         _tipStatus.Text = Text(owned ? "BACK_UNLOCKED" : "BACK_LOCKED");
+        LegacyAchievementTip.ApplyFont(_tipTitle, true);
+        LegacyAchievementTip.ApplyFont(_tipCondition, false);
+        LegacyAchievementTip.ApplyFont(_tipStatus, false);
         _tipStatus.AddThemeColorOverride("font_color", owned ? new Color("89ff00") : new Color("ff4b4b"));
         // 容器在实际字体换行后决定高度；不能用改 Text 当帧的旧 MinimumSize 排版。
         _tip.ResetSize();
