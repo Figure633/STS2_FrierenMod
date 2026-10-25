@@ -51,7 +51,7 @@ public static class ChantSelectionPresentation
         // 原生入场补间作用于 holder；仅淡化卡面，避免补间把禁用透明度恢复成白色。
         holder.Scale = holder.SmallScale;
         card.Scale = Vector2.One;
-        card.Modulate = new Color(1, 1, 1, factor.CanSelectForChant ? .9f : .35f);
+        card.Modulate = new Color(1, 1, 1, factor.CanSelectForChant ? 1f : .35f);
         var slotVisual = new Control { Name = "ChantSlotVisual", MouseFilter = Control.MouseFilterEnum.Ignore,
             ShowBehindParent = true };
         holder.AddChild(slotVisual); holder.MoveChild(slotVisual, 0);

@@ -172,8 +172,8 @@ public static class ChantSelectionTests
                 Check(holder.GetNode<Label>("ChantSlotVisual/ChantSlotHeader").Position.Y + 50 < -211 && holder.GetNode<Label>("ChantSlotVisual/ChantSlotHeader").Modulate.A == 1,
                     "槽位标题位于卡面上方且不随禁用因子淡化：" + f.Slot);
             }
-            Check(holders[1].CardNode!.Modulate.A == .35f && holders[0].CardNode!.Modulate.A == .9f && holders[2].CardNode!.Modulate.A == .9f,
-                "可用因子90%不透明、不可用因子35%不透明：" + lang);
+            Check(holders[1].CardNode!.Modulate.A == .35f && holders[0].CardNode!.Modulate.A == 1 && holders[2].CardNode!.Modulate.A == 1,
+                "可用因子完全不透明、不可用因子35%不透明：" + lang);
             await Snapshot("chant-choice-" + lang);
         }
         var baseCardScale = holders[0].CardNode!.GetGlobalTransform().Scale;
