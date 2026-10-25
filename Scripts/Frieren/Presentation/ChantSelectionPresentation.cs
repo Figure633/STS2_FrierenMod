@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Cards.Holders;
 using MegaCrit.Sts2.Core.Nodes.Cards;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.UI;
 using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using MegaCrit.Sts2.Core.Nodes.Screens.CardSelection;
 
@@ -48,8 +49,10 @@ public static class ChantSelectionPresentation
         holder.SetMeta("FrierenChantChoice", true);
         holder.SetClickable(factor.CanSelectForChant);
         // 原生入场补间作用于 holder；仅淡化卡面，避免补间把禁用透明度恢复成白色。
-        card.Modulate = new Color(1, 1, 1, factor.CanSelectForChant ? .85f : .35f);
-        var slotVisual = new ChantSlotVisual { Name = "ChantSlotVisual", MouseFilter = Control.MouseFilterEnum.Ignore,
+        holder.Scale = holder.SmallScale;
+        card.Scale = Vector2.One;
+        card.Modulate = new Color(1, 1, 1, factor.CanSelectForChant ? .9f : .35f);
+        var slotVisual = new Control { Name = "ChantSlotVisual", MouseFilter = Control.MouseFilterEnum.Ignore,
             ShowBehindParent = true };
         holder.AddChild(slotVisual); holder.MoveChild(slotVisual, 0);
         var background = new TextureRect {
@@ -78,10 +81,30 @@ public static class ChantSelectionPresentation
     {
         var visual = holder.GetNodeOrNull<Control>("ChantSlotVisual");
         if (visual == null && !holder.HasMeta("FrierenChantChoice")) return;
+        if (AccessTools.Field(typeof(NCardHolder), "_hoverTween").GetValue(holder) is Tween tween) tween.Kill();
         if (visual != null) { holder.RemoveChild(visual); visual.Free(); }
         if (holder.HasMeta("FrierenChantChoice")) holder.RemoveMeta("FrierenChantChoice");
         holder.SetClickable(true);
-        if (holder.CardNode is { } card) card.Modulate = Colors.White;
+        if (holder.CardNode is { } card) { card.Modulate = Colors.White; card.Scale = Vector2.One; }
+    }
+
+    // 原生悬停放大整个 holder；咏唱界面仅改动因子节点，背景不参与缩放。
+    [HarmonyPatch(typeof(NCardHolder), "DoCardHoverEffects")]
+    [HarmonyPrefix]
+    private static bool HoverFactor(NCardHolder __instance, bool isHovered, ref Tween? ____hoverTween)
+    {
+        if (!__instance.HasMeta("FrierenChantChoice") || __instance.CardNode is not { } card) return true;
+        ____hoverTween?.Kill();
+        if (isHovered) {
+            card.Scale = Vector2.One / __instance.SmallScale;
+            if (card.Visibility == ModelVisibility.Visible) __instance.Call(NCardHolder.MethodName.CreateHoverTips);
+        } else {
+            ____hoverTween = __instance.CreateTween();
+            ____hoverTween.TweenProperty(card, "scale", Vector2.One, .5)
+                .SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Expo);
+            __instance.Call(NCardHolder.MethodName.ClearHoverTips);
+        }
+        return false;
     }
 
     // 同时保护鼠标、手柄和直接发出信号的路径；不会改变普通发现/选牌界面。
@@ -101,21 +124,5 @@ public static class ChantSelectionPresentation
             AccessTools.DeclaredMethod(typeof(NGridCardHolder), "OnCardReassigned")
         ];
         private static void Prefix(NGridCardHolder __instance) => Clear(__instance);
-    }
-}
-
-// 保留 holder 的位置和入场动画，但抵消其悬停缩放；背景与槽位标题始终使用初始尺寸。
-public partial class ChantSlotVisual : Control
-{
-    public override void _EnterTree() { SetNotifyTransform(true); KeepSlotSize(); }
-    public override void _Notification(int what) {
-        if (what == NotificationTransformChanged) KeepSlotSize();
-    }
-    private void KeepSlotSize() {
-        if (GetParent() is not NGridCardHolder holder) return;
-        var scale = holder.Scale;
-        if (Mathf.IsZeroApprox(scale.X) || Mathf.IsZeroApprox(scale.Y)) return;
-        var desired = holder.SmallScale / scale;
-        if (!Scale.IsEqualApprox(desired)) Scale = desired;
     }
 }

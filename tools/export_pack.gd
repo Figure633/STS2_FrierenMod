@@ -15,7 +15,6 @@ func _initialize():
 	files.append("res://Scripts/Frieren/UI/MagicBookPointerInput.cs")
 	files.append("res://Scripts/Frieren/UI/MagicBookView.cs")
 	files.append("res://Scripts/Frieren/UI/LegacyAchievementTip.cs")
-	files.append("res://Scripts/Frieren/Presentation/ChantSelectionPresentation.cs")
 	files.append("res://Scripts/Frieren/UI/FrierenTutorial.cs")
 	for script in ["FrierenDivinityEyeSpawner", "FrierenDivinityActivationBurst", "FrierenAuraBlobEmitter", "DivinityPresentation", "FrierenScreenFlashEffect"]:
 		files.append("res://Scripts/Frieren/Presentation/Divinity/" + script + ".cs")

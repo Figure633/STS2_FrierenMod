@@ -121,7 +121,7 @@ public static class ChantSelectionTests
         root.AddChild(game); AccessTools.Property(typeof(NGame), nameof(NGame.Instance)).SetValue(null, game);
         var hoverHost = new Control { ZIndex = 100, MouseFilter = Control.MouseFilterEnum.Ignore }; game.AddChild(hoverHost);
         AccessTools.Property(typeof(NGame), nameof(NGame.HoverTipsContainer)).SetValue(game, hoverHost);
-        var ui = new Control { Size = game.Size }; game.AddChild(ui);
+        var ui = new Control { Size = game.Size, ProcessMode = Node.ProcessModeEnum.Always }; game.AddChild(ui);
         ui.AddChild(new ColorRect { Size = ui.Size, Color = new("17202c"), MouseFilter = Control.MouseFilterEnum.Ignore });
         NGridCardHolder Holder(CardModel model, Vector2 position) {
             var node = NodePool.Get<NCard>(); AccessTools.Property(typeof(NCard), nameof(NCard.Model)).SetValue(node, model);
@@ -172,19 +172,25 @@ public static class ChantSelectionTests
                 Check(holder.GetNode<Label>("ChantSlotVisual/ChantSlotHeader").Position.Y + 50 < -211 && holder.GetNode<Label>("ChantSlotVisual/ChantSlotHeader").Modulate.A == 1,
                     "槽位标题位于卡面上方且不随禁用因子淡化：" + f.Slot);
             }
-            Check(holders[1].CardNode!.Modulate.A == .35f && holders[0].CardNode!.Modulate.A == .85f && holders[2].CardNode!.Modulate.A == .85f,
-                "可用因子85%不透明、不可用因子35%不透明：" + lang);
+            Check(holders[1].CardNode!.Modulate.A == .35f && holders[0].CardNode!.Modulate.A == .9f && holders[2].CardNode!.Modulate.A == .9f,
+                "可用因子90%不透明、不可用因子35%不透明：" + lang);
             await Snapshot("chant-choice-" + lang);
         }
-        var fixedBackground = holders[0].GetNode<TextureRect>("ChantSlotVisual/ChantSlotBackground");
-        var beforeSize = fixedBackground.GetGlobalRect().Size;
-        var beforeCardScale = holders[0].CardNode!.GetGlobalTransform().Scale;
-        holders[0].Scale = Vector2.One * 1.1f; await Tick();
-        Check(fixedBackground.GetGlobalRect().Size.IsEqualApprox(beforeSize) &&
-            holders[0].CardNode!.GetGlobalTransform().Scale.X > beforeCardScale.X,
-            "放大因子时背景尺寸固定，只有卡面放大");
-        await Snapshot("chant-hover-fixed-background");
-        holders[0].Scale = holders[0].SmallScale; await Tick();
+        var baseCardScale = holders[0].CardNode!.GetGlobalTransform().Scale;
+        Check(holders.All(h => h.CardNode!.GetGlobalTransform().Scale.IsEqualApprox(baseCardScale)),
+            "可咏唱与不可咏唱因子的基础大小一致");
+        foreach (var holder in holders) {
+            var fixedBackground = holder.GetNode<TextureRect>("ChantSlotVisual/ChantSlotBackground");
+            var beforeRect = fixedBackground.GetGlobalRect();
+            holder.Hitbox.EmitSignal(NClickableControl.SignalName.Focused, holder.Hitbox); await Tick();
+            Check(fixedBackground.GetGlobalRect().IsEqualApprox(beforeRect) && holder.Scale.IsEqualApprox(holder.SmallScale) &&
+                holder.CardNode!.GetGlobalTransform().Scale.X > baseCardScale.X,
+                "真实悬停时只有因子放大、背景位置和大小固定：" + ((FactorCard)holder.CardModel).Slot);
+            await Snapshot("chant-hover-fixed-background-" + ((FactorCard)holder.CardModel).Slot);
+            holder.Hitbox.EmitSignal(NClickableControl.SignalName.Unfocused, holder.Hitbox);
+            await root.ToSignal(root.GetTree().CreateTimer(.6), SceneTreeTimer.SignalName.Timeout);
+            Check(holder.CardNode!.GetGlobalTransform().Scale.IsEqualApprox(baseCardScale), "离开后恢复相同基础大小");
+        }
         Click(holders[1]); await Tick();
         holders[1]._GuiInput(new InputEventAction { Action = MegaInput.select, Pressed = true }); await Tick();
         AccessTools.Method(typeof(NChooseACardSelectionScreen), "SelectHolder").Invoke(selection, [holders[1]]);

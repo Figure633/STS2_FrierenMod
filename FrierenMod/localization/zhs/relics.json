@@ -1,6 +1,6 @@
 {
   "FRIERENMOD-HOLY_EMBLEM.title": "圣徽",
-  "FRIERENMOD-HOLY_EMBLEM.description": "开局为三个槽位各选择一个初始魔法因子。每回合抽牌后，将一张魔力随机加入抽牌堆，并将一张魔力加入弃牌堆。通过魔法书查看因子并使用魔具调整装载。",
+  "FRIERENMOD-HOLY_EMBLEM.description": "每个回合开始时，在抽牌堆和弃牌堆各放入1张[gold]魔力[/gold]。",
   "FRIERENMOD-HOLY_EMBLEM.flavor": "旅途中的魔法积累。",
   "FRIERENMOD-EAR_ACCESSORY.title": "精美的耳饰",
   "FRIERENMOD-EAR_ACCESSORY.description": "战斗开始时，将2张[gold]魔力[/gold]加入手牌。",
@@ -57,7 +57,7 @@
   "FRIERENMOD-COMFORTABLE_BED.description": "每回合开始时，获得{energyPrefix:energyIcons(1)}。战斗开始时，向抽牌堆和弃牌堆各加入一张[gold]懒懒散散[/gold]。",
   "FRIERENMOD-COMFORTABLE_BED.flavor": "连活了千年以上的大魔法使芙莉莲都无法挣脱它的束缚，可见其强大。",
   "FRIERENMOD-UPGRADED_HOLY_EMBLEM.title": "升级圣徽",
-  "FRIERENMOD-UPGRADED_HOLY_EMBLEM.description": "每回合抽牌后，将一张[gold]魔力[/gold]随机加入抽牌堆，并向弃牌堆和手牌各加入一张[gold]魔力[/gold]。",
+  "FRIERENMOD-UPGRADED_HOLY_EMBLEM.description": "每个回合开始时，在抽牌堆、手牌和弃牌堆各放入1张[gold]魔力[/gold]。",
   "FRIERENMOD-UPGRADED_HOLY_EMBLEM.flavor": "旅途中的魔法积累。",
   "FRIERENMOD-KRAFT_SERPENT_RING.title": "长蛇戒指",
   "FRIERENMOD-KRAFT_SERPENT_RING.description": "每回合抽牌阶段额外抽 [blue]1[/blue] 张牌。",

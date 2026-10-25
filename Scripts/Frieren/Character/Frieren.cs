@@ -17,8 +17,8 @@ public sealed class Frieren : PlaceholderCharacterModel
     public override string CustomIconPath => Scenes + "frieren_icon.tscn";
     public override string CustomIconTexturePath => Images + "icon.png";
     public override string CustomIconOutlineTexturePath => Images + "icon.png";
-    public override string CustomCharacterSelectIconPath => Images + "icon.png";
-    public override string CustomCharacterSelectLockedIconPath => Images + "icon.png";
+    public override string CustomCharacterSelectIconPath => Images + "select_icon.png";
+    public override string CustomCharacterSelectLockedIconPath => Images + "select_icon.png";
     public override string CustomMapMarkerPath => Images + "map_marker_sts2.png";
     public override string CustomRestSiteAnimPath => Scenes + "frieren_rest.tscn";
     public override string CustomMerchantAnimPath => Scenes + "frieren_merchant.tscn";
