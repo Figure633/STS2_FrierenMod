@@ -431,5 +431,6 @@
   "BACK_LOCKED": "Locked!",
   "BACK_UNLOCKED": "Unlocked!",
   "BACK_NEW": "New slot background unlocked!",
-  "BACK_EXIT": "Exit"
+  "BACK_EXIT": "Exit",
+  "BACK_CHOOSE_SLOT": "Choose a slot background"
 }

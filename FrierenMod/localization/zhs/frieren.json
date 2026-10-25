@@ -431,5 +431,6 @@
   "BACK_LOCKED": "未解锁！",
   "BACK_UNLOCKED": "已解锁！",
   "BACK_NEW": "新卡槽背景解锁！",
-  "BACK_EXIT": "退出"
+  "BACK_EXIT": "退出",
+  "BACK_CHOOSE_SLOT": "选择要更换背景的槽位"
 }

@@ -22,6 +22,7 @@ public class Entry
         BaseLib.Utils.CustomLocTableManager.Register("frieren");
         BaseLib.Config.ModConfigRegistry.Register("FrierenMod", new Presentation.PresentationSettings());
         harmony.PatchAll();
+        Presentation.AchievementNotifications.Initialize();
         Log.Info($"FrierenMod {typeof(Entry).Assembly.GetName().Version?.ToString(3)}: 已加载。");
     }
 }

@@ -90,8 +90,9 @@ public static class ChantSelectionTests
         await PowerCmd.Remove(player.Creature.GetPower<ChantWithoutManaTimesPower>()!);
         var pileCounts = player.PlayerCombatState!.AllPiles.Select(p => p.Cards.Count).ToArray();
 
-        var tokens = ModelDb.CardPool<FrierenCardPool>().AllCards.Where(c => c.Rarity == CardRarity.Token &&
-            c is not FactorCard and not MagicPropCard and not ChantChoice and not LegendaryCraftChoice and not PaperPlaneSpell).ToArray();
+        // 衍生牌现包含保留稀有品质的 IGeneratedOnlyCard；贴贴的内部选项不属于百科卡。
+        var tokens = ModelDb.CardPool<FrierenCardPool>().AllCards.Where(c => (c.Rarity == CardRarity.Token || c is IGeneratedOnlyCard) &&
+            c is not FactorCard and not MagicPropCard and not ChantChoice and not LegendaryCraftChoice and not PaperPlaneSpell and not Snuggle1 and not Snuggle2).ToArray();
         Check(tokens.Length >= 12 && tokens.All(c => c.ShouldShowInCardLibrary && !FrierenLibraryFilter.IsCharacterCard(c)),
             "所有启用的衍生牌包含魔力、苍月草和额外防御，均可见且排除芙莉莲分类");
         var filter = new NCardPoolFilter();
@@ -101,7 +102,7 @@ public static class ChantSelectionTests
             [misc] = c => (uint)(c.Rarity - CardRarity.Event) <= 4u
         };
         AccessTools.Method(typeof(FrierenLibraryFilter), "Apply").Invoke(null, [filters, new Dictionary<CharacterModel, NCardPoolFilter> { [player.Character] = filter }, misc]);
-        Check(tokens.All(c => !filters[filter](c) && (uint)(c.Rarity - CardRarity.Event) <= 4u) && filters[filter](Card<HighDensityMana>()) && filters[filter](Card<RapidChant>()),
+        Check(tokens.All(c => !filters[filter](c) && filters[misc](c)) && filters[filter](Card<HighDensityMana>()) && filters[filter](Card<RapidChant>()),
             "实际百科过滤器排除衍生牌，原生杂项收录；高密度魔力和普通角色卡保留");
         Check(!ModelDb.Card<PaperPlaneSpell>().ShouldShowInCardLibrary && !ModelDb.Card<TimeConcept>().ShouldShowInCardLibrary &&
             ModelDb.CardPool<FrierenCardPool>().AllCards.OfType<FactorCard>().All(c => c.ShouldShowInCardLibrary && !filters[filter](c) && !filters[misc](c)), "兼容旧档的废弃牌继续隐藏，因子由独立分类收录");
@@ -139,9 +140,12 @@ public static class ChantSelectionTests
             holder.Hitbox.EmitSignal(NClickableControl.SignalName.MouseReleased, new InputEventMouseButton { ButtonIndex = right ? MouseButton.Right : MouseButton.Left });
         }
         var selection = new NChooseACardSelectionScreen();
-        var holders = choices.Select((c, i) => Holder(FactorCard.Create(player, c.Option.SpellId, c.Option.Slot, c.Option, c.CanSelect), new(620 + 340 * i, 600))).ToArray();
+        var holders = choices.Select((c, i) => Holder(FactorCard.Create(player, c.Option.SpellId, c.Option.Slot, c.Option, c.CanSelect), new(500 + 460 * i, 600))).ToArray();
         foreach (var holder in holders) {
             ChantSelectionPresentation.Decorate(holder);
+            var factorModel = (FactorCard)holder.CardModel!;
+            Check(holder.GetNode<TextureRect>("ChantSlotBackground").Texture.ResourcePath.EndsWith(SlotBackStore.Selected((int)factorModel.Slot!.Value) + ".png") &&
+                factorModel.CustomFrame!.ResourcePath.EndsWith("magic.tres"), "咏唱槽位背景独立位于原紫色因子卡后方");
             holder.Pressed += h => AccessTools.Method(typeof(NChooseACardSelectionScreen), "SelectHolder").Invoke(selection, [h]);
         }
         var completion = (TaskCompletionSource<IEnumerable<CardModel>>)AccessTools.Field(typeof(NChooseACardSelectionScreen), "_completionSource").GetValue(selection)!;
@@ -188,13 +192,13 @@ public static class ChantSelectionTests
         Check(probe.GetChildren().Count(n => n.Name == "ChantSlotHeader") == 1 && probe.CardNode!.Modulate.A == 0.6f,
             "重复刷新只保留一个槽位标题，禁用因子仍有六成不透明度");
         probe.ReassignToCard(Card<RapidChant>(), PileType.None, null, ModelVisibility.Visible);
-        Check(!probe.HasNode("ChantSlotHeader") && !probe.HasMeta("FrierenChantChoice") && probe.CardNode!.Modulate.A == 1,
+        Check(!probe.HasNode("ChantSlotHeader") && !probe.HasNode("ChantSlotBackground") && !probe.HasMeta("FrierenChantChoice") && probe.CardNode!.Modulate.A == 1,
             "未归还对象池而直接换成百科普通卡时同样清理槽位与淡化状态");
         probe.ReassignToCard(FactorCard.Create(player, choices[1].Option.SpellId, ManaSlot.Hand, choices[1].Option, false),
             PileType.None, null, ModelVisibility.Visible);
         ChantSelectionPresentation.Decorate(probe);
         probe.QueueFreeSafely(); await Tick();
-        Check(!probe.HasNode("ChantSlotHeader") && !probe.HasMeta("FrierenChantChoice"), "真实归还对象池时清除槽位标题和选择状态");
+        Check(!probe.HasNode("ChantSlotHeader") && !probe.HasNode("ChantSlotBackground") && !probe.HasMeta("FrierenChantChoice"), "真实归还对象池时清除槽位标题和选择状态");
         var reused = Holder(Card<RapidChant>(), new(960, 600));
         Check(ReferenceEquals(reused, probe) && !reused.HasNode("ChantSlotHeader") && reused.CardNode!.Modulate.A == 1,
             "百科普通卡复用同一控件时没有槽位文字或透明度残留");

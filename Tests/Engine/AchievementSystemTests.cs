@@ -33,6 +33,7 @@ using MegaCrit.Sts2.Core.Unlocks;
 
 public static class AchievementSystemTests
 {
+    private static bool CombatEnding(ref bool __result) { __result = true; return false; }
     public static async Task<int> Run(Node root)
     {
         SaveManager.Instance.InitPrefsDataForTest();
@@ -149,14 +150,16 @@ public static class AchievementSystemTests
         player.Creature.SetCurrentHpInternal(player.Creature.MaxHp);
         AccessTools.Property(typeof(CombatManager), nameof(CombatManager.IsInProgress)).SetValue(CombatManager.Instance, false);
 
-        // 检查 BaseLib 已缓存 canonical 材质后，槽位卡背仍能正确切换。
-        _ = ModelDb.Card<BarrierMagic>().CustomFrameMaterial;
+        // 槽位背景不再替换因子本身的紫色卡框，包括装载、普通预览和咏唱模型。
         var factor = FactorCard.Create(player, "BarrierMagic", ManaSlot.Hand);
+        string frame = factor.CustomFrame!.ResourcePath;
         SlotBackStore.Select(1, "0004");
-        Check(((AtlasTexture)factor.CustomFrame!).Atlas.ResourcePath.EndsWith("0004.png") &&
-            ((ShaderMaterial)factor.CustomFrameMaterial!).GetShaderParameter("source_region").AsVector4() == new Vector4(0, 0, 1, 1), "实际因子卡面及缓存材质使用所选卡背");
+        Check(frame.EndsWith("magic.tres") && factor.CustomFrame.ResourcePath == frame,
+            "更换槽位背景不改变装载因子的紫色卡框");
+        var chantFactor = FactorCard.Create(player, "BarrierMagic", ManaSlot.Hand, new(ManaSlot.Hand, "BarrierMagic", 1, 1, 1));
+        Check(chantFactor.CustomFrame!.ResourcePath == frame && ModelDb.Card<BarrierMagic>().CustomFrame!.ResourcePath == frame,
+            "咏唱因子与百科因子都保留原卡框，槽位背景由选择界面独立绘制");
         SlotBackStore.Select(1, "0002");
-        Check(((AtlasTexture)factor.CustomFrame!).Atlas.ResourcePath.EndsWith("0002.png"), "同一槽位切换卡背立即生效");
 
         LocManager.Instance.SetLanguage("zhs");
         var ui = new Control { Name = "AchievementTestUi", Size = new(1920, 1080) }; root.AddChild(ui);
@@ -191,9 +194,9 @@ public static class AchievementSystemTests
         locked.EmitSignal(Control.SignalName.MouseEntered);
         Check(!tip.Visible, "提示等待一代0.2秒悬停延迟");
         await root.ToSignal(root.GetTree().CreateTimer(.3), SceneTreeTimer.SignalName.Timeout);
-        Check(tip.Visible && tip.GetNode<Label>("Status").Text == SlotBackLibrary.Text("BACK_LOCKED"), "悬停未解锁卡背显示名称、条件和红色状态");
+        Check(tip.Visible && tip.GetNode<Label>("Contents/Status").Text == SlotBackLibrary.Text("BACK_LOCKED"), "悬停未解锁卡背显示名称、条件和红色状态");
         Check(Mathf.IsEqualApprox(grid.GetNode<Control>("Back_" + lockedId).Scale.X, .7f), "未解锁项悬停不放大");
-        Check(tip.GetNode<Label>("Title").Position.Y + tip.GetNode<Label>("Title").Size.Y < tip.GetNode<Label>("Condition").Position.Y,
+        Check(tip.GetNode<Label>("Contents/Title").Position.Y + tip.GetNode<Label>("Contents/Title").Size.Y < tip.GetNode<Label>("Contents/Condition").Position.Y,
             "长名称撑高提示框，不覆盖解锁条件");
         await Snapshot("achievement-library-locked");
         locked.EmitSignal(Control.SignalName.MouseExited);
@@ -202,7 +205,7 @@ public static class AchievementSystemTests
         backScroll.EnsureControlVisible(selected); await Tick();
         selected.EmitSignal(Control.SignalName.MouseEntered);
         await root.ToSignal(root.GetTree().CreateTimer(.3), SceneTreeTimer.SignalName.Timeout);
-        Check(tip.Visible && tip.GetNode<Label>("Status").Text == SlotBackLibrary.Text("BACK_UNLOCKED") &&
+        Check(tip.Visible && tip.GetNode<Label>("Contents/Status").Text == SlotBackLibrary.Text("BACK_UNLOCKED") &&
             Mathf.IsEqualApprox(grid.GetNode<Control>("Back_0004").Scale.X, .75f), "已解锁项悬停放大至0.75并显示绿色状态");
         await Snapshot("achievement-library-hover");
         selected.EmitSignal(Control.SignalName.MouseExited);
@@ -235,20 +238,55 @@ public static class AchievementSystemTests
         library.SaveAndClose(); await Tick();
         Check(SlotBackStore.Selected(1) == "0004" && SlotBackStore.Selected(0) == drawBack && SlotBackStore.Selected(2) == discardBack,
             "保存只改变打开的槽位，不影响另两个槽");
+        // 普通入口先选择三个槽之一，保存后回到三槽预览，可连续配置全部槽位。
+        library = SlotBackLibrary.Open(ui); await Tick();
+        var selector = library.View.GetNode<Control>("SlotSelector");
+        Check(selector.Visible && !library.View.GetNode<Control>("LibraryCanvas").Visible, "魔法书和设置入口先显示三槽选择");
+        await Snapshot("achievement-three-slots");
+        for (int slot = 0; slot < 3; slot++) {
+            string target = new[] {"0002", "0003", "0001"}[slot];
+            selector.GetNode<TextureButton>("SlotBack" + slot).EmitSignal(BaseButton.SignalName.Pressed); await Tick();
+            Check(!selector.Visible, "可进入槽位收藏：" + slot);
+            library.View.GetNode<TextureButton>($"LibraryCanvas/BackScroll/BackGrid/Back_{target}/SelectBack_{target}").EmitSignal(BaseButton.SignalName.Pressed);
+            library.SaveAndClose(); await Tick();
+            Check(selector.Visible && SlotBackStore.Selected(slot) == target, "保存对应槽位后返回三槽预览：" + slot);
+        }
+        library.Close(); await Tick();
         var book = new MagicBookScreen(ui, player); book.Open(); await Tick();
         Check(book.View.FindChild("OpenSlotBackLibrary", true, false) != null, "魔法书提供实际收藏入口");
         await Snapshot("achievement-slots");
         book.Close(); book.View.QueueFree(); await Tick();
         SlotBackSelectionEntry.Attach(ui, true);
         Check(ui.GetNode<Control>("FrierenSlotBackSelection").Visible, "选人页面可显示三个卡背入口");
+        Check(ui.GetNode<Control>("FrierenSlotBackSelection").Position.Y < 100 && ui.GetNode<Control>("FrierenSlotBackSelection").Position.X > 1400,
+            "选人页收藏入口位于右上角");
+        await Snapshot("achievement-character-entry");
+        var entryPanel = ui.GetNode<Control>("FrierenSlotBackSelection");
+        Check(Mathf.IsEqualApprox(entryPanel.GetNode<ColorRect>("ReadabilityBackground").Color.A, .5f), "选人三槽入口保留一代半透明黑底");
+        var slotPreview = entryPanel.GetNode<TextureButton>("SlotBack0");
+        slotPreview.EmitSignal(Control.SignalName.MouseEntered);
+        await root.ToSignal(root.GetTree().CreateTimer(.2), SceneTreeTimer.SignalName.Timeout);
+        Check(slotPreview.Scale.X > 1.1f && slotPreview.GetNode<Control>("HoverGlow").Visible, "槽位悬停放大并显示绿色光圈");
+        await Snapshot("achievement-character-hover");
+        slotPreview.EmitSignal(Control.SignalName.MouseExited);
         SlotBackSelectionEntry.Attach(ui, false);
         Check(!ui.GetNode<Control>("FrierenSlotBackSelection").Visible, "切换其他角色时隐藏入口");
         var session = AchievementNotifications.Attach(ui);
+        var endingPatch = new Harmony("frieren.tests.achievement_ending");
+        endingPatch.Patch(AccessTools.PropertyGetter(typeof(CombatManager), nameof(CombatManager.IsEnding)),
+            prefix: new HarmonyMethod(typeof(AchievementSystemTests), nameof(CombatEnding)));
         SlotBackStore.Unlock("4002"); SlotBackStore.Unlock("4007");
         Check(session.PendingCount == 2, "同时解锁时提示排队，不互相覆盖");
         await root.ToSignal(root.GetTree().CreateTimer(0.5), SceneTreeTimer.SignalName.Timeout);
         await Snapshot("achievement-unlock");
-        Check(ui.GetNode<Control>("FrierenAchievementPopup").MouseFilter == Control.MouseFilterEnum.Ignore, "成就提示不拦截输入");
+        Check(ui.GetNode<Control>("FrierenAchievementLayer/FrierenAchievementPopup").MouseFilter == Control.MouseFilterEnum.Ignore, "成就提示不拦截输入");
+        var sound = root.GetTree().Root.GetChildren().OfType<AudioStreamPlayer>()
+            .FirstOrDefault(p => p.Stream?.ResourcePath.EndsWith("achievement.mp3") == true);
+        Check(sound != null && sound.Playing && sound.GetPlaybackPosition() > 0, "战斗结束时成就原音效仍实际播放");
+        Check(ui.GetNode<CanvasLayer>("FrierenAchievementLayer").Layer == 100, "成就弹窗使用全局前景层");
+        endingPatch.UnpatchAll(endingPatch.Id);
+        // 不把音频池留给测试进程退出；生产环境由 BaseLib 正常回收。
+        if (sound != null) { sound.Stop(); sound.GetParent()?.RemoveChild(sound); sound.Free(); }
         ui.QueueFree(); await Tick();
         SlotBackStore.Unlock("4010");
         Check(session.PendingCount <= 1, "离开场景后清除队列并解绑解锁监听");

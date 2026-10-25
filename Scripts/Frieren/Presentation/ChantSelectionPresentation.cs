@@ -17,13 +17,22 @@ public static class ChantSelectionPresentation
 {
     [HarmonyPatch(typeof(NChooseACardSelectionScreen), nameof(NChooseACardSelectionScreen._Ready))]
     [HarmonyPostfix]
-    private static void Ready(NChooseACardSelectionScreen __instance, IReadOnlyList<CardModel> ____cards)
+    private static void Ready(NChooseACardSelectionScreen __instance, IReadOnlyList<CardModel> ____cards, ref Tween? ____cardTween)
     {
         if (____cards.Count == 0 || ____cards.Any(card => card is not FactorCard { Option: not null })) return;
         __instance.GetNode<NCommonBanner>("Banner").label.SetTextAutoSize(
             new LocString("frieren", "CHANT_CHOOSE").GetFormattedText());
-        foreach (var holder in __instance.GetNode<Control>("CardRow").GetChildren().OfType<NGridCardHolder>())
+        // 一代槽位背景在原卡后独立绘制，比因子卡大；为三张背景留出间距。
+        ____cardTween?.Kill();
+        ____cardTween = __instance.CreateTween().SetParallel();
+        var holders = __instance.GetNode<Control>("CardRow").GetChildren().OfType<NGridCardHolder>().ToArray();
+        for (int i = 0; i < holders.Length; i++) {
+            var holder = holders[i];
             Decorate(holder);
+            ____cardTween.TweenProperty(holder, "position", new Vector2((i - (holders.Length - 1) / 2f) * 460, 0), .5)
+                .SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Expo);
+            ____cardTween.TweenProperty(holder, "modulate", Colors.White, .5);
+        }
     }
 
     // 原版选择界面沿用了奖励稀有金光；咏唱只是发动已装载的因子。
@@ -40,10 +49,17 @@ public static class ChantSelectionPresentation
         holder.SetClickable(factor.CanSelectForChant);
         // 原生入场补间作用于 holder；仅淡化卡面，避免补间把禁用透明度恢复成白色。
         card.Modulate = new Color(1, 1, 1, factor.CanSelectForChant ? 1 : 0.6f);
+        var background = new TextureRect {
+            Name = "ChantSlotBackground", Texture = UI.SlotBackLibrary.Texture(SlotBackStore.Selected((int)factor.Slot!.Value)),
+            Position = new(-200, -307), Size = new(400, 614),
+            ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered,
+            MouseFilter = Control.MouseFilterEnum.Ignore, ShowBehindParent = true
+        };
+        holder.AddChild(background); holder.MoveChild(background, 0);
         var header = new Label {
             Name = "ChantSlotHeader",
             Text = new LocString("frieren", $"CHANT_SLOT.{factor.Slot}").GetFormattedText(),
-            Position = new Vector2(-150, -280), Size = new Vector2(300, 50),
+            Position = new Vector2(-190, -298), Size = new Vector2(380, 50),
             HorizontalAlignment = HorizontalAlignment.Center,
             VerticalAlignment = VerticalAlignment.Center,
             MouseFilter = Control.MouseFilterEnum.Ignore
@@ -58,7 +74,9 @@ public static class ChantSelectionPresentation
     private static void Clear(NGridCardHolder holder)
     {
         var header = holder.GetNodeOrNull<Label>("ChantSlotHeader");
-        if (header == null && !holder.HasMeta("FrierenChantChoice")) return;
+        var background = holder.GetNodeOrNull<TextureRect>("ChantSlotBackground");
+        if (header == null && background == null && !holder.HasMeta("FrierenChantChoice")) return;
+        if (background != null) { holder.RemoveChild(background); background.Free(); }
         if (header != null) {
             holder.RemoveChild(header);
             header.Free();

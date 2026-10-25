@@ -4,16 +4,23 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Nodes;
 using MegaCrit.Sts2.Core.Nodes.HoverTips;
 using MegaCrit.Sts2.Core.Nodes.TopBar;
+using MegaCrit.Sts2.addons.mega_text;
 
 namespace FrierenMod.Scripts.UI;
 
 public partial class MagicFactorButton : NTopBarButton
 {
     private bool _bookOpen;
+    private int _itemCount = -1;
 
     public override void _Ready() => InitTopBarButton();
     protected override bool IsOpen() => _bookOpen;
     public void SetBookOpen(bool open) { _bookOpen = open; UpdateScreenOpen(); NHoverTipSet.Remove(this); }
+    public void SetItemCount(int count) {
+        if (_itemCount == count) return;
+        _itemCount = count;
+        GetNode<MegaLabel>("DeckCardCount").SetTextAutoSize(count.ToString());
+    }
 
     private static HoverTip CreateHoverTip() => new(new LocString("frieren", "TIP.MAGIC_DECK.title"),
         new LocString("frieren", "TIP.MAGIC_DECK.description"));
@@ -42,6 +49,10 @@ public partial class MagicFactorButton : NTopBarButton
             FocusMode = Control.FocusModeEnum.All
         };
         button.AddChild(visual);
+        // 保留原版牌组按钮右下角的数量标签和排版，统计魔法书中的全部因子与魔具。
+        var countLabel = template.GetNode<MegaLabel>("DeckCardCount");
+        template.RemoveChild(countLabel); countLabel.Owner = null;
+        button.AddChild(countLabel);
         var icon = visual.GetNode<TextureRect>("Icon");
         icon.Texture = GD.Load<Texture2D>("res://FrierenMod/images/ui/magic_deck.png");
         icon.Material = (Material)icon.Material.Duplicate();

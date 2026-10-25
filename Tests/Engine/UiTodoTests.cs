@@ -76,7 +76,7 @@ public static class UiTodoTests
         RunManager.Instance.CleanUp();return 3;
     }
 
-    public static async Task<int> Run(Node root)
+    public static async Task<int> Run(Node root, bool topBarOnly = false)
     {
         int count = 0;
         void Check(bool value, string name) { if (!value) throw new Exception(name); GD.Print("PASS 因子界面：" + name); count++; }
@@ -149,7 +149,23 @@ public static class UiTodoTests
         var reward = new FactorReward(player);
         string rewardIcon = (string)AccessTools.Property(typeof(MegaCrit.Sts2.Core.Rewards.Reward), "IconPath").GetValue(reward)!;
         Check(button.GetNode<TextureRect>("Control/Icon").Texture.ResourcePath == rewardIcon &&
-            button.FindChildren("*","Label",true,false).Count == 0, "顶部入口为纯图标，奖励使用同一图标");
+            button.HasNode("DeckCardCount"), "顶部入口复用原生图标与右下角数量，奖励使用同一图标");
+        var countLabel = button.GetNode<MegaCrit.Sts2.addons.mega_text.MegaLabel>("DeckCardCount");
+        var countDeck = MagicDeckStore.Read(player);
+        Check(countLabel.Text == (countDeck.Items.Count + countDeck.Props.Count).ToString(), "数量包含全部因子和魔具，包括装载中的因子");
+        int extraProp = countDeck.AddProp("UnbelievableTool").InstanceId;
+        MagicDeckStore.Write(player, countDeck); timer.EmitSignal(Godot.Timer.SignalName.Timeout);
+        Check(countLabel.Text == (countDeck.Items.Count + countDeck.Props.Count).ToString(), "获得魔具后牌组数量更新");
+        countDeck.Remove(extraProp); MagicDeckStore.Write(player, countDeck); timer.EmitSignal(Godot.Timer.SignalName.Timeout);
+        Check(countLabel.Text == (countDeck.Items.Count + countDeck.Props.Count).ToString(), "消耗魔具后牌组数量恢复");
+        if (topBarOnly) {
+            await root.ToSignal(root.GetTree().CreateTimer(.5), SceneTreeTimer.SignalName.Timeout);
+            if (OS.GetCmdlineUserArgs().Contains("--ui-snapshot"))
+                root.GetViewport().GetTexture().GetImage().SavePng(ProjectSettings.GlobalizePath("res://../../artifacts/magic-deck-count.png"));
+            ui.QueueFree();
+            for (int i = 0; i < 5; i++) await root.ToSignal(root.GetTree(), SceneTree.SignalName.ProcessFrame);
+            RunManager.Instance.CleanUp(); return count;
+        }
         foreach (var factor in SpellCatalog.All) {
             var card = FactorCard.Create(player,factor.Id);
             var expected = factor.Rarity switch { FactorRarity.Rare => CardRarity.Rare, FactorRarity.Uncommon => CardRarity.Uncommon, _ => CardRarity.Common };

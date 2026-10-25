@@ -43,6 +43,8 @@ public static class MagicBookUi
             ((global.CapstoneContainer.InUse && global.CapstoneContainer.CurrentCapstoneScreen is not MagicBookView) ||
              NModalContainer.Instance?.OpenModal != null);
         var toggle = MagicFactorButton.Create(root);
+        var initialDeck = MagicDeckStore.Read(player);
+        toggle.SetItemCount(initialDeck.Items.Count + initialDeck.Props.Count);
 
         var hud = new Control { Name = "FrierenManaCounter",
             Size = new Vector2(108, 264), MouseFilter = Control.MouseFilterEnum.Pass };
@@ -144,6 +146,7 @@ public static class MagicBookUi
             hud.Visible = CombatManager.Instance.IsInProgress && !overlay && !book.Visible;
             if (!hud.Visible) preview.Hide();
             var deck = MagicDeckStore.Read(player);
+            toggle.SetItemCount(deck.Items.Count + deck.Props.Count);
             foreach (var slot in Enum.GetValues<ManaSlot>())
             {
                 int mana = ManaCmd.InPile(player, ManaCmd.Pile(slot)).Count();

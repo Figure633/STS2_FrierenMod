@@ -87,6 +87,14 @@ public partial class Runner : Node
             new Harmony("frieren.tests.hover_host").Patch(
                 AccessTools.Method(typeof(MegaCrit.Sts2.Core.Nodes.Cards.Holders.NCardHolder), "CreateHoverTips"),
                 prefix: new HarmonyMethod(typeof(Runner), nameof(SkipGlobalHoverWindow)));
+            if (OS.GetCmdlineUserArgs().Contains("--achievement-presentation-only")) {
+                GD.Print("ACHIEVEMENT_PRESENTATION_OK: " + await AchievementPresentationTests.Run(this));
+                await Finish(); return;
+            }
+            if (OS.GetCmdlineUserArgs().Contains("--magic-deck-count-only")) {
+                GD.Print("MAGIC_DECK_COUNT_OK: " + await UiTodoTests.Run(this, topBarOnly: true));
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--achievements-only")) {
                 GD.Print("ACHIEVEMENTS_OK: " + await AchievementSystemTests.Run(this));
                 await Finish(); return;

@@ -23,10 +23,13 @@ public sealed class SlotBackLibrary
     private readonly Label _tipTitle, _tipCondition, _tipStatus;
     private readonly Timer _hoverTimer;
     private readonly Dictionary<string, Control> _cards = [];
+    private Control? _selector;
+    private readonly List<TextureButton> _slotPreviews = [];
+    private readonly bool _returnToSelector;
     private readonly NCapstoneContainer? _capstone;
     private readonly ICapstoneScreen? _previous;
-    private readonly int _slot;
-    private readonly string _opening;
+    private int _slot;
+    private string _opening;
     private string _chosen;
     private string? _hovered;
     private bool _closing, _dragging;
@@ -36,7 +39,7 @@ public sealed class SlotBackLibrary
     public static Texture2D Texture(string id) => GD.Load<Texture2D>($"res://FrierenMod/images/slot_backs/{id}.png");
     private static Texture2D Art(string name) => GD.Load<Texture2D>($"res://FrierenMod/images/achievement/{name}.png");
 
-    public static SlotBackLibrary Open(Control root, int slot = 0)
+    public static SlotBackLibrary Open(Control root, int? slot = null)
     {
         if (PresentationSettings.Achievements) SlotBackStore.CollectLibraryRewards();
         var library = new SlotBackLibrary(root, slot);
@@ -45,9 +48,9 @@ public sealed class SlotBackLibrary
         return library;
     }
 
-    private SlotBackLibrary(Control root, int slot)
+    private SlotBackLibrary(Control root, int? slot)
     {
-        _root = root; _slot = Math.Clamp(slot, 0, 2);
+        _root = root; _slot = Math.Clamp(slot ?? 0, 0, 2); _returnToSelector = slot == null;
         _opening = _chosen = SlotBackStore.Selected(_slot);
         _capstone = (root as NGlobalUi)?.CapstoneContainer;
         _previous = _capstone?.CurrentCapstoneScreen;
@@ -79,11 +82,12 @@ public sealed class SlotBackLibrary
         _save = new TextureButton { Name = "SaveBack", Position = new(1350, 950), Size = new(570, 130), IgnoreTextureSize = true };
         _canvas.AddChild(_save); _save.Pressed += SaveAndClose;
         _saveLabel = MakeLabel(_canvas, "SaveLabel", Text("BACK_SAVE"), new(1650, 1007), new(180, 45), 30);
-        var cancel = new TextureButton { Name = "CancelBack", Position = new(720, 1000), Size = new(440, 100),
+        var cancel = new TextureButton { Name = "CancelBack", Position = new(740, 980), Size = new(440, 100),
             TextureNormal = Art("cancelButton"), IgnoreTextureSize = true, StretchMode = TextureButton.StretchModeEnum.Scale };
-        _canvas.AddChild(cancel); cancel.Pressed += Close;
-        var cancelLabel = MakeLabel(cancel, "Caption", Text("BACK_EXIT"), new(0, 7), new(440, 45), 30);
+        _canvas.AddChild(cancel); cancel.Pressed += Back;
+        var cancelLabel = MakeLabel(cancel, "Caption", Text("BACK_EXIT"), Vector2.Zero, new(440, 100), 30);
         cancelLabel.HorizontalAlignment = HorizontalAlignment.Center;
+        cancelLabel.VerticalAlignment = VerticalAlignment.Center;
         cancel.MouseEntered += () => cancelLabel.Modulate = new Color("ffcc4d");
         cancel.MouseExited += () => cancelLabel.Modulate = Colors.White;
         _save.MouseEntered += () => { if (!_save.Disabled) _saveLabel.Modulate = new Color("ffcc4d"); };
@@ -92,18 +96,21 @@ public sealed class SlotBackLibrary
         var escape = new Button { Name = "CancelShortcut", Flat = true, Size = Vector2.One, Modulate = Colors.Transparent,
             MouseFilter = Control.MouseFilterEnum.Ignore, FocusMode = Control.FocusModeEnum.None,
             Shortcut = new Shortcut { Events = [new InputEventKey { PhysicalKeycode = Key.Escape }] } };
-        _canvas.AddChild(escape); escape.Pressed += Close;
+        _canvas.AddChild(escape); escape.Pressed += Back;
         _save.Shortcut = new Shortcut { Events = [new InputEventKey { PhysicalKeycode = Key.Enter }] };
-        _tip = new Control { Name = "BackTooltip", Visible = false, Size = new(410, 180), MouseFilter = Control.MouseFilterEnum.Ignore };
+        var tipPanel = new PanelContainer { Name = "BackTooltip", Visible = false,
+            CustomMinimumSize = new(410, 0), MouseFilter = Control.MouseFilterEnum.Ignore };
+        tipPanel.AddThemeStyleboxOverride("panel", PopupStyle());
+        _tip = tipPanel;
         _canvas.AddChild(_tip);
-        var tipFrame = new NinePatchRect { Texture = Art("background"), Size = _tip.Size,
-            RegionRect = new Rect2(23, 26, 515, 282), PatchMarginLeft = 24, PatchMarginRight = 24,
-            PatchMarginTop = 30, PatchMarginBottom = 24, MouseFilter = Control.MouseFilterEnum.Ignore };
-        _tip.AddChild(tipFrame);
-        _tipTitle = MakeLabel(_tip, "Title", "", new(24, 16), new(362, 45), 30);
+        var tipContents = new VBoxContainer { Name = "Contents", MouseFilter = Control.MouseFilterEnum.Ignore };
+        tipContents.AddThemeConstantOverride("separation", 6); _tip.AddChild(tipContents);
+        tipContents.MinimumSizeChanged += _tip.ResetSize;
+        _tipTitle = MakeLabel(tipContents, "Title", "", Vector2.Zero, new(362, 0), 30);
         _tipTitle.AddThemeColorOverride("font_color", new Color("ffcc4d"));
-        _tipCondition = MakeLabel(_tip, "Condition", "", new(24, 64), new(362, 65), 25);
-        _tipStatus = MakeLabel(_tip, "Status", "", new(24, 128), new(362, 36), 25);
+        _tipCondition = MakeLabel(tipContents, "Condition", "", Vector2.Zero, new(362, 0), 25);
+        _tipStatus = MakeLabel(tipContents, "Status", "", Vector2.Zero, new(362, 0), 25);
+        _tip.Resized += PlaceTip;
         _hoverTimer = new Timer { Name = "HoverDelay", WaitTime = .2, OneShot = true };
         _canvas.AddChild(_hoverTimer); _hoverTimer.Timeout += ShowTip;
         View.TreeExiting += () => { root.Resized -= Resize; SlotBackStore.Changed -= Refresh; NHotkeyManager.Instance?.RemoveBlockingScreen(View); };
@@ -113,7 +120,55 @@ public sealed class SlotBackLibrary
         };
         SlotBackStore.Changed += Refresh;
         Refresh();
+        if (_returnToSelector) { CreateSelector(); ShowSelector(); }
     }
+
+    public static StyleBoxTexture PopupStyle() => new() {
+        Texture = Art("background"), RegionRect = new(23, 26, 515, 282),
+        TextureMarginLeft = 18, TextureMarginRight = 18, TextureMarginTop = 18, TextureMarginBottom = 18,
+        ContentMarginLeft = 24, ContentMarginRight = 24, ContentMarginTop = 22, ContentMarginBottom = 22
+    };
+
+    private void CreateSelector()
+    {
+        _selector = new Control { Name = "SlotSelector", Size = new(1920, 1080), MouseFilter = Control.MouseFilterEnum.Stop };
+        View.AddChild(_selector);
+        Picture(_selector, "Background", Art("SlotLibraryBg"), Vector2.Zero, new(1920, 1100));
+        Picture(_selector, "Foreground", Art("SlotLibraryBgBoard"), Vector2.Zero, new(1920, 1100));
+        var heading = MakeLabel(_selector, "Heading", Text("BACK_CHOOSE_SLOT"), new(400, 190), new(1120, 60), 34);
+        heading.HorizontalAlignment = HorizontalAlignment.Center;
+        for (int i = 0; i < 3; i++) {
+            int index = i;
+            var preview = new TextureButton { Name = "SlotBack" + i, Position = new(490 + 360 * i, 340), Size = new(220, 337),
+                IgnoreTextureSize = true, StretchMode = TextureButton.StretchModeEnum.KeepAspectCentered };
+            _selector.AddChild(preview); _slotPreviews.Add(preview);
+            preview.Pressed += () => {
+                _slot = index; _opening = _chosen = SlotBackStore.Selected(index);
+                _scroll.ScrollVertical = 0; Refresh(); _selector.Hide(); _canvas.Show();
+                View.DefaultFocusedControl = _canvas.GetNode<TextureButton>("CancelBack");
+            };
+            var caption = MakeLabel(_selector, "SlotName" + i, Text("CHANT_SLOT." + (ManaSlot)i), new(470 + 360 * i, 715), new(260, 60), 30);
+            caption.HorizontalAlignment = HorizontalAlignment.Center;
+        }
+        var exit = new TextureButton { Name = "ExitSelector", Position = new(740, 980), Size = new(440, 100),
+            TextureNormal = Art("cancelButton"), IgnoreTextureSize = true, StretchMode = TextureButton.StretchModeEnum.Scale,
+            Shortcut = new Shortcut { Events = [new InputEventKey { PhysicalKeycode = Key.Escape }] } };
+        _selector.AddChild(exit); exit.Pressed += Close;
+        var label = MakeLabel(exit, "Caption", Text("BACK_EXIT"), Vector2.Zero, new(440, 100), 30);
+        label.HorizontalAlignment = HorizontalAlignment.Center;
+        label.VerticalAlignment = VerticalAlignment.Center;
+        Resize();
+    }
+
+    private void ShowSelector()
+    {
+        HideTip();
+        for (int i = 0; i < _slotPreviews.Count; i++) _slotPreviews[i].TextureNormal = Texture(SlotBackStore.Selected(i));
+        _canvas.Hide(); _selector!.Show();
+        View.DefaultFocusedControl = _slotPreviews[0];
+    }
+
+    private void Back() { if (_returnToSelector) ShowSelector(); else Close(); }
 
     private static TextureRect Picture(Control parent, string name, Texture2D texture, Vector2 position, Vector2 size)
     {
@@ -136,8 +191,16 @@ public sealed class SlotBackLibrary
 
     private void Resize()
     {
-        float scale = Math.Max(.1f, Math.Min(_root.Size.X / 1920, _root.Size.Y / 1080));
-        _canvas.Scale = Vector2.One * scale; _canvas.Position = (_root.Size - _canvas.Size * scale) / 2;
+        // 跑局中的原生顶栏在 Capstone 之后绘制；使用它下面的可用区域，避免挡住收藏进度。
+        // TopBar 根节点铺满整个窗口，真正占用顶部的是100像素高的 BgImage。
+        float top = _root is NGlobalUi global
+            ? Math.Max(100, (global.TopBar?.GetNodeOrNull<Control>("BgImage")?.GetGlobalRect().End.Y ?? 100) - _root.GlobalPosition.Y)
+            : 0;
+        top = Math.Min(top, _root.Size.Y * .2f);
+        Vector2 available = _root.Size - new Vector2(0, top);
+        float scale = Math.Max(.1f, Math.Min(available.X / 1920, available.Y / 1080));
+        _canvas.Scale = Vector2.One * scale; _canvas.Position = new Vector2(0, top) + (available - _canvas.Size * scale) / 2;
+        if (_selector != null) { _selector.Scale = _canvas.Scale; _selector.Position = _canvas.Position; }
     }
 
     private void Refresh()
@@ -210,16 +273,18 @@ public sealed class SlotBackLibrary
         _tipTitle.Text = Text($"BACK.{id}.title"); _tipCondition.Text = Text($"BACK.{id}.description");
         _tipStatus.Text = Text(owned ? "BACK_UNLOCKED" : "BACK_LOCKED");
         _tipStatus.AddThemeColorOverride("font_color", owned ? new Color("89ff00") : new Color("ff4b4b"));
-        // 一代 TipHelper 随正文撑高；长标题也须参与排版，不能盖住条件。
-        _tipTitle.Size = new(362, Math.Max(42, _tipTitle.GetMinimumSize().Y));
-        _tipCondition.Position = new(24, _tipTitle.Position.Y + _tipTitle.Size.Y + 5);
-        _tipCondition.Size = new(362, Math.Max(34, _tipCondition.GetMinimumSize().Y));
-        _tipStatus.Position = new(24, _tipCondition.Position.Y + _tipCondition.Size.Y + 8);
-        _tip.Size = new(410, _tipStatus.Position.Y + 52);
-        _tip.GetChild<Control>(0).Size = _tip.Size;
-        Vector2 center = _canvas.GetGlobalTransform().AffineInverse() * (_cards[id].GetGlobalTransform() * _cards[id].PivotOffset);
-        _tip.Position = new(Math.Clamp(center.X + (center.X > 1200 ? -420 : 175), 25, 1485), Math.Clamp(center.Y - 200, 115, 1000 - _tip.Size.Y));
+        // 容器在实际字体换行后决定高度；不能用改 Text 当帧的旧 MinimumSize 排版。
+        _tip.ResetSize();
         _tip.Show();
+        Callable.From(() => { if (!_closing && _hovered == id) { _tip.ResetSize(); PlaceTip(); } }).CallDeferred();
+    }
+
+    private void PlaceTip()
+    {
+        if (_hovered == null || !_cards.TryGetValue(_hovered, out var card)) return;
+        Vector2 center = _canvas.GetGlobalTransform().AffineInverse() * (card.GetGlobalTransform() * card.PivotOffset);
+        _tip.Position = new(Math.Clamp(center.X + (center.X > 1200 ? -_tip.Size.X - 10 : 175), 25, 1895 - _tip.Size.X),
+            Math.Clamp(center.Y - 200, 115, Math.Max(115, 1000 - _tip.Size.Y)));
     }
 
     private void HideTip() { _hovered = null; _hoverTimer?.Stop(); _tip?.Hide(); }
@@ -237,7 +302,7 @@ public sealed class SlotBackLibrary
 
     public void SaveAndClose()
     {
-        if (_chosen != _opening && SlotBackStore.Select(_slot, _chosen)) Close();
+        if (_chosen != _opening && SlotBackStore.Select(_slot, _chosen)) Back();
     }
 
     public void Close()

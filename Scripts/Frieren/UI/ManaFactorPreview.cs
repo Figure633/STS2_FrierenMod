@@ -69,7 +69,7 @@ public sealed class ManaFactorPreview
     private void Populate()
     {
         var deck = MagicDeckStore.Read(_player);
-        string state = deck.ToJson() + string.Join(',', Presentation.SlotBackStore.Read().Selected);
+        string state = deck.ToJson();
         if (_displayed == state) return;
         ReleaseCards();
         foreach (var child in _view.GetChildren()) { _view.RemoveChild(child); child.QueueFree(); }
