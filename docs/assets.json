@@ -834,10 +834,10 @@
   {
     "file": "FrierenMod/images/character/icon.png",
     "source": "docs/reference/frieren_avatar_original.png (作者提供头像原图)",
-    "sha256": "9095092e08fdb34df6cc6fdc159b8aba422410ddf18afbdeb045a7a6fa929cd8",
+    "sha256": "ccd2afd7b011e7ea4b8c38ca00cc72b51710168f7dca24d5d666fca689e889ec",
     "modified": true,
     "redistribution_review": "pending; local prototype only",
-    "modification": "tools/cutout_avatar.py 手工贝塞尔蒙版抠图，仅修改alpha并裁切；保留原图RGB像素"
+    "modification": "tools/cutout_avatar.py 手工轮廓抠图，原始透明抠图保存在docs/reference；UI图标等比缩放为85x85透明画布，四周保留7像素安全区"
   },
   {
     "file": "FrierenMod/images/character/corpse.png",

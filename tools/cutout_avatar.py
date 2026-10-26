@@ -5,6 +5,7 @@ from PIL import Image, ImageDraw
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "docs/reference/frieren_avatar_original.png"
 OUTPUT = ROOT / "FrierenMod/images/character/icon.png"
+CUTOUT = ROOT / "docs/reference/frieren_avatar_cutout.png"
 
 # 原图为502x502。沿人物外缘手工描点，以三次贝塞尔曲线保留发丝、耳尖和围巾。
 PATH = [
@@ -70,8 +71,15 @@ def main():
     original.putalpha(mask)
     # 保留源像素，只裁去人物外围的空白；不缩放、补画或改色。
     original = original.crop((39, 106, 447, 502))
-    original.save(OUTPUT)
-    print(f"CUTOUT_OK {original.size} -> {OUTPUT}")
+    original.save(CUTOUT)
+    # 历史记录按贴图原始大小布局；与原版角色图标一致，输出85x85。
+    # 四周保留7像素安全区，连历史记录选中时1.1倍放大也不会侵入邻接控件。
+    small = original.copy()
+    small.thumbnail((71, 71), Image.Resampling.LANCZOS)
+    icon = Image.new("RGBA", (85, 85))
+    icon.alpha_composite(small, ((85-small.width)//2, (85-small.height)//2))
+    icon.save(OUTPUT)
+    print(f"CUTOUT_OK {original.size} -> {CUTOUT}; UI_ICON_OK 85x85 -> {OUTPUT}")
 
 
 if __name__ == "__main__":

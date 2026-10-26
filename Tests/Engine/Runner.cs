@@ -99,6 +99,10 @@ public partial class Runner : Node
                 GD.Print("ACHIEVEMENTS_OK: " + await AchievementSystemTests.Run(this));
                 await Finish(); return;
             }
+            if (OS.GetCmdlineUserArgs().Contains("--portrait-layout-only")) {
+                GD.Print("PORTRAIT_LAYOUT_OK: " + await PortraitLayoutTests.Run(this));
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--affinity-and-backs-only")) {
                 GD.Print("AFFINITY_AND_BACKS_OK: " + await AffinityAndBackTests.Run());
                 await Finish(); return;
