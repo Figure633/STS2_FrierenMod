@@ -13,7 +13,9 @@ public static class FrierenEncounterEligibility
     public static bool IsFrierenRun(IRunState? run) => run is { Players.Count: > 0 } && run.Players.All(p => p.Character is Frieren);
     private static void Postfix(ref IEnumerable<EncounterModel> __result) {
         if (!IsFrierenRun(RunManager.Instance.DebugOnlyGetState()))
-            __result = __result.Where(e => e is not SpiegelFrierenEncounter);
+            __result = __result.Where(e => e is not SpiegelFrierenEncounter and not AuraEncounter);
+        else if (!Presentation.PresentationSettings.AllowOtherActTwoBosses && __result.Any(e => e is AuraEncounter))
+            __result = __result.Where(e => e is AuraEncounter);
     }
 
     [HarmonyPatch(typeof(ActModel), nameof(ActModel.ValidateRoomsAfterLoad))]
@@ -21,9 +23,9 @@ public static class FrierenEncounterEligibility
     {
         private static void Postfix(ActModel __instance, Rng rng) {
             if (IsFrierenRun(RunManager.Instance.DebugOnlyGetState())) return;
-            if (__instance.BossEncounter is SpiegelFrierenEncounter)
+            if (__instance.BossEncounter is SpiegelFrierenEncounter or AuraEncounter)
                 __instance.SetBossEncounter(rng.NextItem(__instance.AllBossEncounters.Where(e => e.Id != __instance.SecondBossEncounter?.Id)));
-            if (__instance.SecondBossEncounter is SpiegelFrierenEncounter)
+            if (__instance.SecondBossEncounter is SpiegelFrierenEncounter or AuraEncounter)
                 __instance.SetSecondBossEncounter(rng.NextItem(__instance.AllBossEncounters.Where(e => e.Id != __instance.BossEncounter.Id)));
         }
     }

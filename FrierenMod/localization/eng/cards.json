@@ -283,5 +283,7 @@
   "FRIERENMOD-SNUGGLE1.title": "Snuggle with Frieren",
   "FRIERENMOD-SNUGGLE1.description": "Discard up to {Amount} cards. Gain {energyPrefix:energyIcons(1)} for each [gold]Mana[/gold] discarded.",
   "FRIERENMOD-SNUGGLE2.title": "Snuggle with Stark",
-  "FRIERENMOD-SNUGGLE2.description": "Add 1 [gold]Mana[/gold] to your Hand."
+  "FRIERENMOD-SNUGGLE2.description": "Add 1 [gold]Mana[/gold] to your Hand.",
+  "FRIERENMOD-AURA_DISPEL.title": "Dispel Magic",
+  "FRIERENMOD-AURA_DISPEL.description": "Destroy a Controlled Soldier, triggering [gold]Soul Release[/gold]."
 }

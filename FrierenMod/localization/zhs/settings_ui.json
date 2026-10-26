@@ -4,5 +4,7 @@
   "FRIERENMOD-ACHIEVEMENTS.title": "成就解锁",
   "FRIERENMOD-ACHIEVEMENTS.hover.desc": "启用芙莉莲成就及卡槽背景解锁。关闭不影响已收藏背景的使用。",
   "FRIERENMOD-BACK_LIBRARY.title": "成就与卡背收藏",
-  "FRIERENMOD-BACK_LIBRARY_OPEN.title": "查看与选择"
+  "FRIERENMOD-BACK_LIBRARY_OPEN.title": "查看与选择",
+  "FRIERENMOD-ALLOW_OTHER_ACT_TWO_BOSSES.title": "允许遇到其他二层Boss",
+  "FRIERENMOD-ALLOW_OTHER_ACT_TWO_BOSSES.hover.desc": "关闭时，芙莉莲新跑局的二层Boss固定为阿乌拉；开启后从阿乌拉与原版Boss中选择。仅限全员芙莉莲队伍，已生成的跑局不变。"
 }

@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3]
+[ext_resource type="Texture2D" path="res://FrierenMod/images/monsters/Aura.png" id="1"]
+[sub_resource type="AtlasTexture" id="Atlas"]
+atlas = ExtResource("1")
+region = Rect2(316, 54, 790, 1915)
+
+[node name="Aura" type="Node2D"]
+[node name="Visuals" type="Node2D" parent="."]
+unique_name_in_owner = true
+[node name="Body" type="Sprite2D" parent="Visuals"]
+position = Vector2(0, -220.225)
+scale = Vector2(0.23, 0.23)
+texture = SubResource("Atlas")
+[node name="Bounds" type="Control" parent="."]
+unique_name_in_owner = true
+offset_left = -90.85
+offset_top = -440.45
+offset_right = 90.85
+mouse_filter = 2
+[node name="IntentPos" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -480.45)
+[node name="CenterPos" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -220.225)
+[node name="TalkPos" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(-100, -490.45)

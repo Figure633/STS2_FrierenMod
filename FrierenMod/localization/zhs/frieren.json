@@ -432,5 +432,7 @@
   "BACK_UNLOCKED": "已解锁！",
   "BACK_NEW": "新卡槽背景解锁！",
   "BACK_EXIT": "退出",
-  "BACK_CHOOSE_SLOT": "选择要更换背景的槽位"
+  "BACK_CHOOSE_SLOT": "选择要更换背景的槽位",
+  "AURA.PLAYER": "玩家魔力",
+  "AURA.COUNTDOWN": "服从天平 · 第{Turn}回合"
 }

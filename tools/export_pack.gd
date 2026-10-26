@@ -16,6 +16,7 @@ func _initialize():
 	files.append("res://Scripts/Frieren/UI/MagicBookView.cs")
 	files.append("res://Scripts/Frieren/UI/LegacyAchievementTip.cs")
 	files.append("res://Scripts/Frieren/UI/FrierenTutorial.cs")
+	files.append("res://Scripts/Frieren/UI/AuraScalesHud.cs")
 	for script in ["FrierenDivinityEyeSpawner", "FrierenDivinityActivationBurst", "FrierenAuraBlobEmitter", "DivinityPresentation", "FrierenScreenFlashEffect"]:
 		files.append("res://Scripts/Frieren/Presentation/Divinity/" + script + ".cs")
 	var imported: Dictionary = {}

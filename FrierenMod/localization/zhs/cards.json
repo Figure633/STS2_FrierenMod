@@ -283,5 +283,7 @@
   "FRIERENMOD-SNUGGLE1.title": "和芙莉莲贴贴",
   "FRIERENMOD-SNUGGLE1.description": "弃掉至多{Amount}张牌，每弃掉1张[gold]魔力[/gold]，获得{energyPrefix:energyIcons(1)}。",
   "FRIERENMOD-SNUGGLE2.title": "和修塔尔克贴贴",
-  "FRIERENMOD-SNUGGLE2.description": "在手牌生成1张[gold]魔力[/gold]。"
+  "FRIERENMOD-SNUGGLE2.description": "在手牌生成1张[gold]魔力[/gold]。",
+  "FRIERENMOD-AURA_DISPEL.title": "解除魔法",
+  "FRIERENMOD-AURA_DISPEL.description": "消灭一个被操纵的士兵，触发其[gold]灵魂解放[/gold]。"
 }

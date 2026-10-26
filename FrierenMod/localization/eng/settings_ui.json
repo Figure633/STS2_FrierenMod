@@ -4,5 +4,7 @@
   "FRIERENMOD-ACHIEVEMENTS.title": "Achievement unlocks",
   "FRIERENMOD-ACHIEVEMENTS.hover.desc": "Enable Frieren achievements and slot-background unlocks. Collected backgrounds remain usable when disabled.",
   "FRIERENMOD-BACK_LIBRARY.title": "Achievements and slot backgrounds",
-  "FRIERENMOD-BACK_LIBRARY_OPEN.title": "Browse and select"
+  "FRIERENMOD-BACK_LIBRARY_OPEN.title": "Browse and select",
+  "FRIERENMOD-ALLOW_OTHER_ACT_TWO_BOSSES.title": "Allow other Act 2 bosses",
+  "FRIERENMOD-ALLOW_OTHER_ACT_TWO_BOSSES.hover.desc": "Off: Aura is the fixed Act 2 boss for new Frieren runs. On: Aura joins the normal boss pool. Only all-Frieren parties can meet her. Existing runs are unchanged."
 }

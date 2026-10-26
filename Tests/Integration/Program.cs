@@ -92,8 +92,9 @@ Test("重构保持全部已注册模型身份", () => {
     var actual = typeof(Mana).Assembly.GetTypes()
         .Where(t => !t.IsAbstract && typeof(AbstractModel).IsAssignableFrom(t))
         .ToDictionary(t => t.FullName!, t => ModelDb.GetId(t).ToString());
-    Equal(expected.Count, actual.Count);
     foreach (var (name, id) in expected) Equal(id, actual[name]);
+    if (expected.Count != actual.Count)
+        throw new Exception("未登记模型：" + JsonSerializer.Serialize(actual.Where(pair => !expected.ContainsKey(pair.Key)).ToDictionary()));
 });
 Test("一代77张有效芙莉莲卡牌均有可获得模型", () => {
     var root = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../../../"));

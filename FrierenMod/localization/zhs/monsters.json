@@ -14,5 +14,17 @@
   "FRIERENMOD-MIMIC.moves.SWALLOW.title": "吞噬",
   "FRIERENMOD-MIMIC.moves.FULL.title": "吃撑了",
   "FRIERENMOD-MIMIC.burp": "[sine]嗝~~~~~~~[/sine]",
-  "FRIERENMOD-MIMIC.chew": "（咀嚼的声音）"
+  "FRIERENMOD-MIMIC.chew": "（咀嚼的声音）",
+  "FRIERENMOD-AURA.name": "阿乌拉",
+  "FRIERENMOD-AURA_SOLDIER.name": "被操纵的士兵",
+  "FRIERENMOD-AURA.taunt": "哈哈哈，葬送的芙莉莲也不过如此。",
+  "FRIERENMOD-AURA.moves.SCALES.title": "服从天平",
+  "FRIERENMOD-AURA.moves.GUILLOTINE.title": "断头台",
+  "FRIERENMOD-AURA.moves.STAGGER.title": "天平反制",
+  "FRIERENMOD-AURA.moves.TAUNT.title": "嘲讽",
+  "FRIERENMOD-AURA.moves.SUMMON.title": "操纵士兵",
+  "FRIERENMOD-AURA.moves.BARRAGE.title": "连击魔法",
+  "FRIERENMOD-AURA.moves.MEDITATE.title": "冥想",
+  "FRIERENMOD-AURA_SOLDIER.moves.STRIKE.title": "斩击",
+  "FRIERENMOD-AURA_SOLDIER.moves.GUARD.title": "护卫"
 }

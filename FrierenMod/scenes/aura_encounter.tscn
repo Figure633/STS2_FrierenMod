@@ -1,0 +1,15 @@
+[gd_scene format=3]
+[node name="AuraEncounter" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+[node name="Boss" type="Marker2D" parent="."]
+position = Vector2(1450, 695)
+[node name="Soldier1" type="Marker2D" parent="."]
+position = Vector2(1120, 715)
+[node name="Soldier2" type="Marker2D" parent="."]
+position = Vector2(1750, 715)

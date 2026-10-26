@@ -11,7 +11,7 @@ func _initialize():
 		push_error("Cannot mount PCK")
 		quit(1)
 		return
-	for script in ["MagicFactorButton", "MagicBookPointerInput", "MagicBookView"]:
+	for script in ["MagicFactorButton", "MagicBookPointerInput", "MagicBookView", "AuraScalesHud"]:
 		if not FileAccess.file_exists("res://Scripts/Frieren/UI/" + script + ".cs"):
 			push_error("Missing UI script: " + script)
 			quit(1)
@@ -74,7 +74,7 @@ func _initialize():
 		var scene = packed.instantiate()
 		scene.free()
 		scenes += 1
-	if textures < 119 or slot_backs != 104 or audio_count != 20 or scenes != 11:
+	if textures < 119 or slot_backs != 104 or audio_count != 20 or scenes != 14:
 		push_error("Resource count mismatch: textures=%d slot_backs=%d audio=%d scenes=%d" % [textures, slot_backs, audio_count, scenes])
 		quit(1)
 		return

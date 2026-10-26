@@ -14,5 +14,17 @@
   "FRIERENMOD-MIMIC.moves.SWALLOW.title": "Swallow",
   "FRIERENMOD-MIMIC.moves.FULL.title": "Overstuffed",
   "FRIERENMOD-MIMIC.burp": "[sine]Buuurp…[/sine]",
-  "FRIERENMOD-MIMIC.chew": "(Chewing sounds)"
+  "FRIERENMOD-MIMIC.chew": "(Chewing sounds)",
+  "FRIERENMOD-AURA.name": "Aura",
+  "FRIERENMOD-AURA_SOLDIER.name": "Controlled Soldier",
+  "FRIERENMOD-AURA.taunt": "Hahaha! So much for Frieren the Slayer.",
+  "FRIERENMOD-AURA.moves.SCALES.title": "Scales of Obedience",
+  "FRIERENMOD-AURA.moves.GUILLOTINE.title": "Guillotine",
+  "FRIERENMOD-AURA.moves.STAGGER.title": "Overpowered",
+  "FRIERENMOD-AURA.moves.TAUNT.title": "Taunt",
+  "FRIERENMOD-AURA.moves.SUMMON.title": "Command Soldier",
+  "FRIERENMOD-AURA.moves.BARRAGE.title": "Magic Barrage",
+  "FRIERENMOD-AURA.moves.MEDITATE.title": "Meditate",
+  "FRIERENMOD-AURA_SOLDIER.moves.STRIKE.title": "Slash",
+  "FRIERENMOD-AURA_SOLDIER.moves.GUARD.title": "Guard"
 }

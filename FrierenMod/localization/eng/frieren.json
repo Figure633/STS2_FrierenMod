@@ -432,5 +432,7 @@
   "BACK_UNLOCKED": "Unlocked!",
   "BACK_NEW": "New slot background unlocked!",
   "BACK_EXIT": "Exit",
-  "BACK_CHOOSE_SLOT": "Choose a slot background"
+  "BACK_CHOOSE_SLOT": "Choose a slot background",
+  "AURA.PLAYER": "Your mana",
+  "AURA.COUNTDOWN": "Scales of Obedience · Turn {Turn}"
 }

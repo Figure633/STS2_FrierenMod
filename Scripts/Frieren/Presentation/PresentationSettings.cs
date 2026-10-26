@@ -8,6 +8,7 @@ public sealed class PresentationSettings : SimpleModConfig
 {
     public static bool OriginalMusic { get; set; } = true;
     public static bool Achievements { get; set; } = true;
+    public static bool AllowOtherActTwoBosses { get; set; } = false;
 
     public override void SetupConfigUI(Control optionContainer)
     {
