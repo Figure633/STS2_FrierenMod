@@ -34,6 +34,12 @@ public static class FrierenMusic
     public static bool Applies(IRunState run) => LocalContext.NetId is { } id &&
         run.Players.Any(p => p.NetId == id && p.Character is Frieren);
 
+    // 涅奥的主题通过 SfxCmd 循环播放，独立于跑局音乐控制器，stop_music 无法停止它。
+    public static bool SuppressOpeningTheme(IRunState? run, string path) =>
+        path == "event:/sfx/ambience/act1_neow" && run != null && Applies(run) &&
+        PresentationSettings.OriginalMusic && run.CurrentRoom?.IsVictoryRoom != true &&
+        ResourceLoader.Exists(ResolveTrack(run.CurrentActIndex, RoomType.Event, false, run.Rng.Seed));
+
     public static void Refresh(NRunMusicController controller, IRunState run, bool nativeMayHaveStarted = true)
     {
         if (!Applies(run)) return;
@@ -138,6 +144,13 @@ public static class FrierenMusic
             CurrentTrack = null;
         }
     }
+}
+
+[HarmonyPatch(typeof(MegaCrit.Sts2.Core.Commands.SfxCmd), nameof(MegaCrit.Sts2.Core.Commands.SfxCmd.PlayLoop), [typeof(string), typeof(bool)])]
+public static class FrierenOpeningThemePatch
+{
+    [HarmonyPrefix]
+    public static bool Prefix(string sfx) => !FrierenMusic.SuppressOpeningTheme(RunManager.Instance.DebugOnlyGetState(), sfx);
 }
 
 [HarmonyPatch]

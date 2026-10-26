@@ -19,12 +19,20 @@ public sealed class SealPower : FrierenPower, IChantListener
 {
     private List<CardModel>? _cards;
     public List<CardModel> Cards => _cards ??= [];
-    public override int DisplayAmount => Cards.Count;
+    public override int DisplayAmount => Owner?.Player is { PlayerCombatState: not null } player
+        ? LegendaryCards.ChantsThisTurn(player) : 0;
     public async Task AfterChant(PlayerChoiceContext context, CardPlay play)
     {
-        if (LegendaryCards.ChantsThisTurn(Owner.Player!) < 5) return;
+        InvokeDisplayAmountChanged();
+        if (DisplayAmount < 5) return;
         foreach (var card in Cards.ToArray()) await CardPileCmd.Add(card, PileType.Hand);
         Cards.Clear();
         await PowerCmd.Remove(this);
+    }
+
+    public override Task AfterPlayerTurnStart(PlayerChoiceContext context, Player player)
+    {
+        if (player == Owner.Player) InvokeDisplayAmountChanged();
+        return Task.CompletedTask;
     }
 }

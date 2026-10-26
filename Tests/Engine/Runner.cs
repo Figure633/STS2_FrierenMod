@@ -87,6 +87,14 @@ public partial class Runner : Node
             new Harmony("frieren.tests.hover_host").Patch(
                 AccessTools.Method(typeof(MegaCrit.Sts2.Core.Nodes.Cards.Holders.NCardHolder), "CreateHoverTips"),
                 prefix: new HarmonyMethod(typeof(Runner), nameof(SkipGlobalHoverWindow)));
+            if (OS.GetCmdlineUserArgs().Contains("--export-card-catalog")) {
+                GD.Print("CARD_CATALOG_OK: " + CardCatalogAudit.Run());
+                await Finish(); return;
+            }
+            if (OS.GetCmdlineUserArgs().Contains("--current-todo-fixes-only")) {
+                GD.Print("CURRENT_TODO_FIXES_OK: " + await CurrentTodoFixTests.Run());
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--achievement-presentation-only")) {
                 GD.Print("ACHIEVEMENT_PRESENTATION_OK: " + await AchievementPresentationTests.Run(this));
                 await Finish(); return;
