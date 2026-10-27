@@ -40,8 +40,22 @@ public static class AuraCompanionVisual
     {
         private static void Postfix(NCreature __instance)
         {
-            if (__instance.Entity?.Player?.GetRelic<AuraCompanion>() != null)
-                __instance.AddChild(Create());
+            if (__instance.Entity?.Player?.GetRelic<AuraCompanion>() == null) return;
+            // BaseLib 优先读取生物的直接 AnimatedSprite2D，不能让宠物抢走角色的 AnimationPlayer。
+            var host = new Node2D { Name = "AuraCompanionHost" };
+            __instance.AddChild(host);
+            host.AddChild(Create());
+        }
+    }
+
+    [HarmonyPatch(typeof(NCreature), nameof(NCreature.StartDeathAnim))]
+    private static class KeepCompanyAfterDeath
+    {
+        private static void Postfix(NCreature __instance)
+        {
+            if (__instance.Entity?.Player == null || __instance.GetNodeOrNull<Node2D>("AuraCompanionHost") is not { } host) return;
+            // 只移动宠物宿主，角色死亡图仍由原有 Dead 动画控制。
+            host.Position = new Vector2(-100, 0);
         }
     }
 

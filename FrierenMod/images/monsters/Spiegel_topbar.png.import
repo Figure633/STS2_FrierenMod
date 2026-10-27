@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ni82ymfc1bj0"
-path="res://.godot/imported/Aura_node.svg-eb5db90eb17f1599bc2376666457e2dc.ctex"
+uid="uid://bckxsplq8rlct"
+path="res://.godot/imported/Spiegel_topbar.png-86c1674aff6ff34d1b6a761b83af2a37.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://FrierenMod/images/monsters/Aura_node.svg"
-dest_files=["res://.godot/imported/Aura_node.svg-eb5db90eb17f1599bc2376666457e2dc.ctex"]
+source_file="res://FrierenMod/images/monsters/Spiegel_topbar.png"
+dest_files=["res://.godot/imported/Spiegel_topbar.png-86c1674aff6ff34d1b6a761b83af2a37.ctex"]
 
 [params]
 
@@ -38,6 +38,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false

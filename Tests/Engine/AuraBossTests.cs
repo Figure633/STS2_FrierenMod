@@ -50,7 +50,8 @@ public static class AuraBossTests
         SaveManager.Instance.InitPrefsDataForTest();
         PresentationSettings.AllowOtherActTwoBosses = false;
         Check(ModelDb.Act<Hive>().AllBossEncounters.Any(e => e is AuraEncounter), "芙莉莲二层候选含阿乌拉");
-        var act = ModelDb.Act<Hive>().ToMutable(); act.ApplyDiscoveryOrderModifications(UnlockState.all);
+        RunManager.Instance.GenerateRooms();
+        var act = run.Acts.OfType<Hive>().Single();
         Check(act.BossEncounter is AuraEncounter, "原生发现顺序不能覆盖固定Boss");
         PresentationSettings.AllowOtherActTwoBosses = true;
         Check(ModelDb.Act<Hive>().AllBossEncounters.Any(e => e is AuraEncounter) && ModelDb.Act<Hive>().AllBossEncounters.Count() > 1,

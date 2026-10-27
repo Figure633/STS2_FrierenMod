@@ -74,12 +74,23 @@ public sealed class MagicBookScreen
             ZAsRelative = false, MouseFilter = Control.MouseFilterEnum.Stop };
         (_capstone as Control ?? root).AddChild(View);
         View.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
+        if (readOnly) {
+            // 历史页作为子菜单会平移自身；查看层使用视口坐标，不继承子菜单的偏移和缩放。
+            View.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.TopLeft);
+            View.TopLevel = true;
+            var backdrop = new ColorRect { Name = "HistoryBookBackdrop", Color = new Color("10131af5"),
+                MouseFilter = Control.MouseFilterEnum.Stop };
+            View.AddChild(backdrop);
+            backdrop.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
+        }
         _canvas = new Control { Name = "BookCanvas", Size = new Vector2(1920, 1080), MouseFilter = Control.MouseFilterEnum.Ignore };
         View.AddChild(_canvas);
         void Resize() {
-            float scale = Math.Min(root.Size.X / 1920, root.Size.Y / 1080);
+            var size = readOnly ? root.GetViewportRect().Size : root.Size;
+            if (readOnly) { View.Position = Vector2.Zero; View.Size = size; }
+            float scale = Math.Min(size.X / 1920, size.Y / 1080);
             _canvas.Scale = Vector2.One * scale;
-            _canvas.Position = (root.Size - _canvas.Size * scale) / 2;
+            _canvas.Position = (size - _canvas.Size * scale) / 2;
         }
         root.Resized += Resize;
         Resize();
@@ -127,7 +138,7 @@ public sealed class MagicBookScreen
         // 原生按钮会在悬停时将自身缩放恢复为 1；缩放放在父节点，避免按钮越出屏幕。
         var helpContainer = new Control { Name = "MagicTutorialButtonContainer", Position = new(1680, 155),
             Size = new(324, 64), Scale = Vector2.One * 0.65f, MouseFilter = Control.MouseFilterEnum.Ignore };
-        _canvas.AddChild(helpContainer);
+        _canvas.AddChild(helpContainer); helpContainer.Visible = !readOnly;
         var help = new BaseLib.Config.UI.NConfigButton { Name = "ReplayMagicTutorial" };
         help.Initialize(Text("TUTORIAL_HELP"), () => {
             if (!_applying && !_presentingChange) TaskHelper.RunSafely(FrierenTutorial.Show(_player, replay: true));
@@ -136,7 +147,7 @@ public sealed class MagicBookScreen
 
         var backsHost = new Control { Name = "SlotBackLibraryButtonContainer", Position = new(1680, 220),
             Size = new(324, 64), Scale = Vector2.One * 0.65f, MouseFilter = Control.MouseFilterEnum.Ignore };
-        _canvas.AddChild(backsHost);
+        _canvas.AddChild(backsHost); backsHost.Visible = !readOnly;
         var backs = new BaseLib.Config.UI.NConfigButton { Name = "OpenSlotBackLibrary" };
         backs.Initialize(Text("BACK_LIBRARY"), () => {
             if (!_applying && !_presentingChange) SlotBackLibrary.Open(root);
@@ -176,7 +187,8 @@ public sealed class MagicBookScreen
         _coveredOverlay = _currentOverlay();
         // 只暂时隐藏原生选牌屏，不移除它，也不完成或取消它的选择任务。
         if (_capstone == null) _coveredOverlay?.AfterOverlayHidden();
-        if (_readOnly || !MagicPropCmd.AllowsUseOver(_coveredOverlay)) _status.Text = Text("BOOK_VIEW_ONLY");
+        if (_readOnly) _status.Text = Text("HISTORY_BOOK_HINT");
+        else if (!MagicPropCmd.AllowsUseOver(_coveredOverlay)) _status.Text = Text("BOOK_VIEW_ONLY");
         if (_capstone != null) _capstone.Open((MagicBookView)View); else View.Show();
     }
     public void Close()

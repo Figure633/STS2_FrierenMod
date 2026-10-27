@@ -149,6 +149,7 @@
   "TIP.ULTIMATE_SYNCHRO.description": "随机对1个敌人造成15点伤害。[gold]消耗[/gold]。",
   "TIP.BACKFIRE.title": "回火",
   "TIP.BACKFIRE.description": "每次打出后，本牌在本回合的费用增加 1。",
+  "HISTORY_BOOK_HINT": "历史魔法牌组 · 仅供查看",
   "BOOK_VIEW_ONLY": "选牌期间可查看因子与魔具。关闭后继续选牌。",
   "FACTOR_TYPE": "魔法因子",
   "PROP_TYPE": "魔具",

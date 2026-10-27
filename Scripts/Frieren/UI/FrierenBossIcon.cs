@@ -17,13 +17,13 @@ public static class FrierenBossIcon
     private static void Fit(TextureRect icon, TextureRect outline)
     {
         if (icon.Texture is not { } texture || !texture.ResourcePath.Contains("/monsters/Spiegel_node")) return;
-        // 顶栏空间很小，聚焦原图中心镜面；地图继续使用完整碎镜图。
-        var region = new Rect2(490, 430, 490, 650);
-        icon.Texture = new AtlasTexture { Atlas = texture, Region = region };
-        if (outline.Texture is { } border) outline.Texture = new AtlasTexture { Atlas = border, Region = region };
+        // 原版主图、次图均为44像素；使用独立小图，避免大幅Atlas参与最小尺寸计算。
+        icon.Texture = GD.Load<Texture2D>("res://FrierenMod/images/monsters/Spiegel_topbar.png");
+        outline.Texture = GD.Load<Texture2D>("res://FrierenMod/images/monsters/Spiegel_topbar_outline.png");
         foreach (var view in new[] { icon, outline }) {
             view.ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize;
             view.StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered;
+            view.CustomMinimumSize = new Vector2(44,44);
         }
     }
 }

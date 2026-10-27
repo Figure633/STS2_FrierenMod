@@ -149,6 +149,7 @@
   "TIP.ULTIMATE_SYNCHRO.description": "Deal 15 damage to a random enemy. [gold]Exhaust[/gold].",
   "TIP.BACKFIRE.title": "Backfire",
   "TIP.BACKFIRE.description": "After this card is played, it costs 1 more Energy this turn.",
+  "HISTORY_BOOK_HINT": "Historical Magic Deck · View only",
   "BOOK_VIEW_ONLY": "View your factors and tools while choosing cards. Close this screen to continue your selection.",
   "FACTOR_TYPE": "Magic Factor",
   "PROP_TYPE": "Magic Tool",

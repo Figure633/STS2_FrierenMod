@@ -90,7 +90,7 @@ public static class FrierenMusic
         private readonly float[] _gains = [0, 0];
         private Tween? _fade;
         private Tween? _noticeFade;
-        private Label? _notice;
+        private UI.NowPlayingNotice? _notice;
         private readonly bool _announce;
         private int _active;
         private bool _lastEnabled = PresentationSettings.OriginalMusic;
@@ -155,14 +155,10 @@ public static class FrierenMusic
             if (_notice == null) {
                 var layer = new CanvasLayer { Name = "FrierenNowPlaying", Layer = 5 };
                 _root.AddChild(layer);
-                _notice = new Label { Position = new Vector2(24, 112), MouseFilter = Control.MouseFilterEnum.Ignore };
-                _notice.AddThemeFontSizeOverride("font_size", 20);
-                _notice.AddThemeColorOverride("font_color", new Color("e1d5bd"));
-                _notice.AddThemeColorOverride("font_outline_color", Colors.Black);
-                _notice.AddThemeConstantOverride("outline_size", 6);
+                _notice = new UI.NowPlayingNotice();
                 layer.AddChild(_notice);
             }
-            _notice.Text = "♫  " + title; _notice.Modulate = Colors.Transparent; _notice.Show();
+            _notice.SetTitle(title); _notice.Modulate = Colors.Transparent; _notice.Show();
             _noticeFade = _root.CreateTween();
             _noticeFade.TweenProperty(_notice, "modulate:a", 1f, 0.3);
             _noticeFade.TweenInterval(3);

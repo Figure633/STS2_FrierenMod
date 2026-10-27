@@ -25,37 +25,21 @@ public sealed class AuraEncounter() : CustomEncounterModel(RoomType.Boss)
     }
 }
 
-// 首次遭遇顺序会覆盖 GenerateRooms 随机池，必须在原生发现顺序处理之后再次保证固定Boss。
-[HarmonyPatch]
+// 在原生跑局生成（含发现顺序和双Boss抽取）完成时只设置一次；此后地图、存档和战斗共用原生 RoomSet。
+[HarmonyPatch(typeof(RunManager), nameof(RunManager.GenerateRooms))]
 public static class AuraFixedBoss
 {
-    private static IEnumerable<System.Reflection.MethodBase> TargetMethods()
+    private static void Postfix(RunManager __instance)
     {
-        yield return AccessTools.Method(typeof(ActModel), nameof(ActModel.GenerateRooms));
-        yield return AccessTools.Method(typeof(ActModel), nameof(ActModel.ApplyDiscoveryOrderModifications));
-    }
-    private static void Postfix(ActModel __instance)
-    {
-        if (PresentationSettings.AllowOtherActTwoBosses ||
-            !FrierenEncounterEligibility.IsFrierenRun(RunManager.Instance.DebugOnlyGetState())) return;
-        if (__instance is Hive) __instance.SetBossEncounter(ModelDb.Encounter<AuraEncounter>());
-        if (__instance is Glory) __instance.SetBossEncounter(ModelDb.Encounter<SpiegelFrierenEncounter>());
-    }
-
-    [HarmonyPatch(typeof(RunManager), nameof(RunManager.GenerateRooms))]
-    private static class DoubleBossOrder
-    {
-        private static void Postfix(RunManager __instance)
+        var run = __instance.DebugOnlyGetState();
+        if (PresentationSettings.AllowOtherActTwoBosses || !FrierenEncounterEligibility.IsFrierenRun(run)) return;
+        foreach (var act in run!.Acts)
         {
-            var run = __instance.DebugOnlyGetState();
-            if (PresentationSettings.AllowOtherActTwoBosses || !FrierenEncounterEligibility.IsFrierenRun(run) ||
-                run!.Acts.LastOrDefault() is not Glory act || act.SecondBossEncounter == null) return;
-            if (act.BossEncounter is SpiegelFrierenEncounter && run.Rng.UpFront.NextInt(2) == 1)
-            {
-                var first = act.BossEncounter;
-                act.SetBossEncounter(act.SecondBossEncounter);
-                act.SetSecondBossEncounter(first);
-            }
+            if (act is Hive) act.SetBossEncounter(ModelDb.Encounter<AuraEncounter>());
+            if (act is not Glory) continue;
+            // 原生已经抽到复制体时保留它的原位置；不再事后随机交换前后Boss。
+            if (act.BossEncounter is SpiegelFrierenEncounter || act.SecondBossEncounter is SpiegelFrierenEncounter) continue;
+            act.SetBossEncounter(ModelDb.Encounter<SpiegelFrierenEncounter>());
         }
     }
 }

@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using MegaCrit.Sts2.Core.Nodes.GodotExtensions;
 using MegaCrit.Sts2.Core.Nodes.Screens.CardSelection;
+using MegaCrit.Sts2.Core.Nodes.Screens.Overlays;
 
 namespace FrierenMod.Scripts.UI;
 
@@ -22,7 +23,8 @@ public static class MagicPropShopCancel
         __instance.AddChild(back);
         back.Connect(NButton.SignalName.Released, Callable.From<NButton>(_ => {
             back.Disable();
-            ____completionSource.TrySetResult([]);
+            if (____completionSource.TrySetResult([]))
+                NOverlayStack.Instance?.Remove(__instance);
         }));
         back.Enable();
     }

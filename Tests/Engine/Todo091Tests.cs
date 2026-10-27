@@ -3,6 +3,9 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.Rewards;
 using MegaCrit.Sts2.Core.CardSelection;
+using MegaCrit.Sts2.Core.Nodes.Screens.Overlays;
+using MegaCrit.Sts2.Core.Entities.Characters;
+using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using MegaCrit.Sts2.Core.Nodes.GodotExtensions;
 using MegaCrit.Sts2.Core.Nodes.Screens.CardSelection;
@@ -32,6 +35,9 @@ using MegaCrit.Sts2.Core.Unlocks;
 
 public static class Todo091Tests
 {
+    private static NOverlayStack? _stack;
+    private static bool StackInstance(ref NOverlayStack? __result) { __result = _stack; return false; }
+    private static bool SkipReady() => false;
     public static async Task<int> Run(Node root)
     {
         int count = 0;
@@ -48,6 +54,12 @@ public static class Todo091Tests
             bool first = bossAct.BossEncounter is SpiegelFrierenEncounter;
             Check(bossAct.SecondBossEncounter != null && first != (bossAct.SecondBossEncounter is SpiegelFrierenEncounter), "双Boss恰有一个复制体，种子" + seed);
             positions.Add(first);
+            var restoredAct=ActModel.FromSave(bossAct.ToSave());
+            Check(restoredAct.BossEncounter.Id == bossAct.BossEncounter.Id && restoredAct.SecondBossEncounter!.Id == bossAct.SecondBossEncounter!.Id,
+                "保存读取保留地图Boss顺序，种子"+seed);
+            Check(restoredAct.PullNextEncounter(RoomType.Boss).Id == restoredAct.BossEncounter.Id, "第一战对应第一个地图Boss");
+            restoredAct.MarkRoomVisited(RoomType.Boss);
+            Check(restoredAct.PullNextEncounter(RoomType.Boss).Id == restoredAct.SecondBossEncounter!.Id, "第二战对应第二个地图Boss");
             RunManager.Instance.CleanUp();
         }
         Check(positions.Count == 2, "复制体可随机出现在第一或第二Boss位置");
@@ -62,18 +74,21 @@ public static class Todo091Tests
         Check(auraRewards.OfType<RelicReward>().Count(r => r.Relic is AuraCompanion) == 1, "已有原生宠物仍可获得阿乌拉陪伴奖励");
         var pool = ModelDb.CardPool<FrierenCardPool>();
         var cards = pool.GetUnlockedCards(UnlockState.all, CardMultiplayerConstraint.SingleplayerOnly).ToArray();
-        Check(cards.Length > 50 && cards.All(FrierenCardAvailability.IsRandomCandidate), "普通池仅保留可随机获取的正式牌");
+        Check(cards.Any(c=>c is StrikeFrieren) && cards.Any(c=>c is DefendFrieren), "百科解锁池保留初始打击与防御");
+        var random = CardCreationOptions.ForRoom(player,RoomType.Monster).GetPossibleCards(player).ToArray();
+        Check(random.Length > 50 && random.All(FrierenCardAvailability.IsRandomCandidate), "真实奖励入口排除衍生牌，不影响百科解锁池");
         Check(!ModelDb.Card<DiscardChantChoice>().CanBeGeneratedInCombat && !ModelDb.Card<Mana>().CanBeGeneratedByModifiers &&
-            !cards.Any(c => c is PaperPlaneSpell), "咏唱选项、魔力衍生牌、弃用纸飞机排除");
+            !random.Any(c => c is PaperPlaneSpell), "咏唱选项、魔力衍生牌、弃用纸飞机排除");
         Check(FrierenMusic.TrackTitle(FrierenMusic.Folder + "STS_Merchant_NewMix_v1.ogg") == "Grassy Turtles and Seed Rats", "商店曲名按原音频元数据核对");
-        var act = ModelDb.Act<Glory>().ToMutable(); act.ApplyDiscoveryOrderModifications(UnlockState.all);
-        Check(act.BossEncounter is SpiegelFrierenEncounter && act.AllBossEncounters.Count() > 1, "三层默认固定复制体，保留双Boss候选");
+        RunManager.Instance.GenerateRooms();
+        var act = run.Acts.OfType<Glory>().Single();
+        Check(act.BossEncounter is SpiegelFrierenEncounter && act.AllBossEncounters.Count() > 1, "三层单Boss固定复制体，保留原生候选模型");
         LocManager.Instance.SetLanguage("zhs");
         var energyText = ModelDb.Relic<ComfortableBed>().DynamicDescription.GetFormattedText();
         Check(energyText.Contains("res://FrierenMod/images/energy/text_icon.png"), "未持有遗物预览能量图标指向有效资源");
         var apple = ModelDb.Card<RedAppleSpell>().ToMutable(); apple.UpgradeInternal();
         string appleText = apple.GetDescriptionForPile(PileType.None);
-        Check(appleText.Contains("青苹果+") && appleText.Contains("[red]力量[/red]") && appleText.Contains("[green]敏捷[/green]"), "升级牌名及力量敏捷颜色");
+        Check(appleText.Contains("[green]青苹果+[/green]") && appleText.Contains("[gold]力量[/gold]") && appleText.Contains("[gold]敏捷[/gold]"), "升级牌名及力量敏捷颜色");
         var deck = MagicDeckState.CreatePrototypeLoadout(); deck.AddProp("UnbelievableTool");
         var history = new RunHistoryPlayer { Id = 1, Character = player.Character.Id };
         MagicDeckHistory.Data.Set(history, deck.ToJson());
@@ -97,22 +112,36 @@ public static class Todo091Tests
         AccessTools.Property(typeof(NInputManager), nameof(NInputManager.ControllerManager)).SetValue(input, controller);
         AccessTools.Property(typeof(MegaCrit.Sts2.Core.Nodes.NGame), "InputManager").SetValue(game, input);
         AccessTools.Property(typeof(MegaCrit.Sts2.Core.Nodes.NGame), "Instance").SetValue(null, game);
-        var panel = new Control { Size = new Vector2(1920,1080) }; root.AddChild(panel);
+        var panel = new Control { Position = new Vector2(270,130), Size = new Vector2(1380,800) }; root.AddChild(panel);
         var book = new MagicBookScreen(panel, player, readOnly: true);
         AccessTools.Method(typeof(MagicBookScreen), "Arm").Invoke(book, [deck.Props.Single().InstanceId]);
         Check(MagicDeckStore.Read(player).ToJson() == deck.ToJson(), "历史只读魔法书不能使用魔具");
-        book.View.QueueFree();
+        book.Open();
+        for (int i=0;i<5;i++) await root.ToSignal(root.GetTree(),SceneTree.SignalName.ProcessFrame);
+        Check(book.View.GetGlobalRect().Position.IsEqualApprox(Vector2.Zero) && book.View.GetGlobalRect().Size.IsEqualApprox(root.GetViewport().GetVisibleRect().Size),
+            "历史子菜单偏移后，魔法书仍覆盖整个视口且居中");
+        Check(book.View.GetNode<ColorRect>("HistoryBookBackdrop").Color.A>.9f, "历史魔法书有足够遮挡背景，文字不会叠透");
+        if (OS.GetCmdlineUserArgs().Contains("--ui-snapshot"))
+            root.GetViewport().GetTexture().GetImage().SavePng(ProjectSettings.GlobalizePath("res://../../artifacts/history-book-review.png"));
+        book.Close(); book.View.QueueFree(); panel.Position=Vector2.Zero; panel.Size=new Vector2(1920,1080);
+        var patches = new Harmony("frieren.tests.todo_review");
+        patches.Patch(AccessTools.PropertyGetter(typeof(NOverlayStack),"Instance"),prefix:new HarmonyMethod(typeof(Todo091Tests),nameof(StackInstance)));
+        patches.Patch(AccessTools.Method(typeof(NOverlayStack),"_Ready"),prefix:new HarmonyMethod(typeof(Todo091Tests),nameof(SkipReady)));
+        _stack = new NOverlayStack();
+        var backstop = new Control { Name="OverlayBackstop" }; _stack.AddChild(backstop);
+        AccessTools.Field(typeof(NOverlayStack),"_backstop").SetValue(_stack,backstop); panel.AddChild(_stack);
         var props = MagicPropRules.All.Take(2).Select(p => (CardModel)MagicPropCard.Create(player,p.Id)).ToArray();
         var shop = NSimpleCardSelectScreen.Create(props, new CardSelectorPrefs(new LocString("frieren","SHOP_SELECT"),2) { Cancelable = true });
         // 原生卡牌节点工厂在 TestMode 下返回 null；仅显示选牌界面时启用节点创建。
         MegaCrit.Sts2.Core.TestSupport.TestMode.IsOn = false;
-        panel.AddChild(shop);
+        _stack.Push(shop);
         for (int i=0; i<5; i++) await root.ToSignal(root.GetTree(), SceneTree.SignalName.ProcessFrame);
         MegaCrit.Sts2.Core.TestSupport.TestMode.IsOn = true;
         var back = shop.GetNode<NBackButton>("FrierenShopCancel");
         back.EmitSignal(NButton.SignalName.Released, back);
         var completion = (TaskCompletionSource<IEnumerable<CardModel>>)AccessTools.Field(typeof(NCardGridSelectionScreen),"_completionSource").GetValue(shop)!;
         Check(completion.Task.IsCompletedSuccessfully && !(await completion.Task).Any(), "原生魔具店返回按钮完成空选择");
+        Check(_stack.ScreenCount==0 && shop.IsQueuedForDeletion(), "取消同时移除原生选牌屏，恢复营地界面");
         panel.QueueFree();
         var combat = new CombatState(runState: run); combat.AddPlayer(player);
         combat.AddCreature(combat.CreateCreature(ModelDb.Monster<MegaCrit.Sts2.Core.Models.Monsters.Axebot>().ToMutable(), CombatSide.Enemy, null));
@@ -154,9 +183,11 @@ public static class Todo091Tests
             backdrop.QueueFree();
         }
         pet.QueueFree();
+        count += await TodoVisualReview.Run(root,player,run);
         for (int i=0; i<5; i++) await root.ToSignal(root.GetTree(), SceneTree.SignalName.ProcessFrame);
         AccessTools.Property(typeof(MegaCrit.Sts2.Core.Nodes.NGame), "Instance").SetValue(null, null);
         game.Free(); input.Free(); controller.Free();
+        _stack=null; patches.UnpatchAll("frieren.tests.todo_review");
         RunManager.Instance.CleanUp(); LocManager.Instance.SetLanguage("eng");
         return count;
     }

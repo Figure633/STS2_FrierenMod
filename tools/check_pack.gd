@@ -11,7 +11,7 @@ func _initialize():
 		push_error("Cannot mount PCK")
 		quit(1)
 		return
-	for script in ["MagicFactorButton", "MagicBookPointerInput", "MagicBookView", "AuraScalesHud"]:
+	for script in ["MagicFactorButton", "MagicBookPointerInput", "MagicBookView", "AuraScalesHud", "NowPlayingNotice", "RecordDisc"]:
 		if not FileAccess.file_exists("res://Scripts/Frieren/UI/" + script + ".cs"):
 			push_error("Missing UI script: " + script)
 			quit(1)

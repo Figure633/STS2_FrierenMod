@@ -1,0 +1,5 @@
+工具：内置 imagegen，透明背景。
+参考：作者 TODOs.docx 内 Aura 头部图（image9）与无五官风格图（image8）。
+提示词：依据阿乌拉参考完整绘制双角、分束刘海、蓬松两侧头发与两条辫子；保留角的分节和人物头型；空白脸，无眼鼻嘴；只有统一深灰色和透明负空间线条。无肩膀、双手、天平或饰物，正面居中完整头部，占画面85%，适合96至128像素的尖塔地图图标。
+最终原稿：FrierenMod/images/monsters/Aura_node_source.png
+游戏图由 render_aura_icon.gd 统一灰色并生成白色轮廓。
