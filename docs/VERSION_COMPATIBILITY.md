@@ -9,6 +9,8 @@
 
 测试版运行时来自本机此前安装版本的测试依赖副本；本轮本机已切回正式版。引擎战斗验证加载正式版共用资源，不能把它表述为测试版完整资源和流程验收。游戏程序集只保存在忽略的本地工作区，不随模组分发。
 
+0.9.5复查此前测试版启动日志：10月27日18:22的日志中，本模组0.9.3在旧牌堆补间补丁初始化失败，该接口已于0.9.4适配；18:25的日志中本模组已加载，随后另有HakureiReimu初始化失败及其界面脚本缺失。现有证据不能保证完整模组组合可启动。按作者安排，保留双版本适配，完整测试版启动与界面验收暂缓至工坊发布前处理。
+
 ## 参考后采用的做法
 
 - [BaseLib：BetaMainCompatibility](https://github.com/Alchyr/BaseLib-StS2/blob/master/Utils/BetaMainCompatibility.cs)：复用 `FromCardCompatibility`、`VariableMethod`，按实际签名选择调用；不凭版本字符串猜测接口。

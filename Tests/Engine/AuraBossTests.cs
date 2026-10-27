@@ -165,6 +165,27 @@ public static class AuraBossTests
         Check(hud.CurrentAngle > 0.2f, "阿乌拉魔力高：右盘下沉");
         for (int i = 0; i < 180; i++) hud.UpdateDisplay(50, 50, 12, 1d/60);
         Check(Math.Abs(hud.CurrentAngle) < 0.002f, "魔力相同：天平动画回到水平");
+        var pivot = hud.GetGlobalTransform() * hud.PivotOffset;
+        hud.PlayJudgment();
+        var judgment = (Tween)AccessTools.Field(typeof(AuraScalesHud), "_judgmentTween").GetValue(hud)!;
+        judgment.Pause(); judgment.CustomStep(0.15);
+        Check(hud.Scale.X > 1.27f && hud.Modulate.R > 1.7f, "天平判定明显放大28%并第一次闪亮");
+        Check((hud.GetGlobalTransform() * hud.PivotOffset).DistanceTo(pivot) < 0.01f,
+            "放大时悬挂点固定，天平不偏移");
+        judgment.CustomStep(0.28);
+        Check(hud.Modulate.IsEqualApprox(Colors.White), "第一次闪亮后恢复原色");
+        judgment.CustomStep(0.33);
+        Check(hud.Modulate.R > 1.5f, "判定期间第二次闪亮");
+        judgment.CustomStep(0.85);
+        Check(hud.Scale.IsEqualApprox(Vector2.One) && hud.Modulate.IsEqualApprox(Colors.White),
+            "判定结束恢复原大小和原色");
+        hud.PlayJudgment();
+        ((Tween)AccessTools.Field(typeof(AuraScalesHud), "_judgmentTween").GetValue(hud)!).CustomStep(0.1);
+        hud.PlayJudgment();
+        Check(hud.Scale.IsEqualApprox(Vector2.One) &&
+            hud.MouseBehaviorRecursive == Control.MouseBehaviorRecursiveEnum.Disabled,
+            "重复判定重置而不叠加放大，提示不阻挡输入");
+        ((Tween)AccessTools.Field(typeof(AuraScalesHud), "_judgmentTween").GetValue(hud)!).CustomStep(2);
         foreach (var model in new MonsterModel[] { aura, soldiers[0].Monster! }) {
             ((BaseLib.Abstracts.CustomMonsterModel)model).RegisterSceneConversions(); var visuals = model.CreateVisuals(); root.AddChild(visuals);
             Check(visuals.Bounds.Size.Y > 200, "战斗立绘和选中范围可加载"); visuals.QueueFree();
@@ -184,6 +205,11 @@ public static class AuraBossTests
             for (int i=0;i<180;i++) hud.UpdateDisplay(20,185,3,1d/60);
             for (int i=0;i<6;i++) await root.ToSignal(root.GetTree(), SceneTree.SignalName.ProcessFrame);
             root.GetViewport().GetTexture().GetImage().SavePng(ProjectSettings.GlobalizePath("res://../../artifacts/aura-layout.png"));
+            hud.PlayJudgment();
+            var pulse = (Tween)AccessTools.Field(typeof(AuraScalesHud), "_judgmentTween").GetValue(hud)!;
+            pulse.Pause(); pulse.CustomStep(0.15); hud.UpdateDisplay(20,185,3,0);
+            for (int i=0;i<3;i++) await root.ToSignal(root.GetTree(),SceneTree.SignalName.ProcessFrame);
+            root.GetViewport().GetTexture().GetImage().SavePng(ProjectSettings.GlobalizePath("res://../../artifacts/aura-judgment.png"));
         }
         panel.QueueFree();
         await aura.AfterDeath(context, boss, false, 0);

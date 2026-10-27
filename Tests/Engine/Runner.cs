@@ -116,6 +116,10 @@ public partial class Runner : Node
                 GD.Print("VERSION_COMPAT_OK: " + await VersionCompatibilityTests.Run());
                 await Finish(); return;
             }
+            if (OS.GetCmdlineUserArgs().Contains("--pet-feasibility-only")) {
+                GD.Print("PET_FEASIBILITY_OK: " + await PetFeasibilityTests.Run());
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--music092-only")) {
                 GD.Print("MUSIC092_OK: " + await MusicTests.Run(this));
                 await Finish(); return;

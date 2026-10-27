@@ -15,6 +15,7 @@ public partial class AuraScalesHud : Control
     private Label _left = null!, _right = null!, _caption = null!;
     private float _angle;
     private float _judgmentTime;
+    private Tween? _judgmentTween;
     private float _velocity;
     private Aura? _aura;
     public float CurrentAngle => _angle;
@@ -23,8 +24,34 @@ public partial class AuraScalesHud : Control
 
     public static void Judgment()
     {
-        if (NCombatRoom.Instance?.GetNodeOrNull<AuraScalesHud>("AuraScalesHud") is { } hud) hud._judgmentTime = 1.6f;
+        NCombatRoom.Instance?.GetNodeOrNull<AuraScalesHud>("AuraScalesHud")?.PlayJudgment();
     }
+
+    public void PlayJudgment()
+    {
+        _judgmentTween?.Kill();
+        _judgmentTime = 1.6f;
+        Scale = Vector2.One;
+        Modulate = Colors.White;
+        _judgmentTween = CreateTween().SetParallel();
+        // 以悬挂点为中心放大，秤盘和数字一起提示；两次亮暗变化后完整恢复。
+        _judgmentTween.TweenProperty(this, "scale", Vector2.One * 1.28f, 0.16)
+            .SetTrans(Tween.TransitionType.Cubic).SetEase(Tween.EaseType.Out);
+        _judgmentTween.TweenProperty(this, "scale", Vector2.One, 0.38).SetDelay(1.1)
+            .SetTrans(Tween.TransitionType.Cubic).SetEase(Tween.EaseType.InOut);
+        var flash = new Color(1.8f, 1.4f, 1.9f);
+        _judgmentTween.TweenProperty(this, "modulate", flash, 0.14);
+        _judgmentTween.TweenProperty(this, "modulate", Colors.White, 0.22).SetDelay(0.18);
+        _judgmentTween.TweenProperty(this, "modulate", flash, 0.14).SetDelay(0.64);
+        _judgmentTween.TweenProperty(this, "modulate", Colors.White, 0.3).SetDelay(0.86);
+        _judgmentTween.Finished += () => {
+            Scale = Vector2.One;
+            Modulate = Colors.White;
+            _judgmentTime = 0;
+        };
+    }
+
+    public override void _ExitTree() => _judgmentTween?.Kill();
 
     public override void _Ready()
     {
@@ -32,6 +59,7 @@ public partial class AuraScalesHud : Control
         MouseBehaviorRecursive = MouseBehaviorRecursiveEnum.Disabled;
         SetAnchorsPreset(LayoutPreset.CenterTop);
         OffsetLeft = -260; OffsetRight = 260; OffsetTop = 110; OffsetBottom = 340;
+        PivotOffset = new Vector2(260, 48);
         _art = GD.Load<Texture2D>("res://FrierenMod/images/ui/AuraScales.png");
         _left = MakeLabel(new Vector2(0, 30), new Vector2(120, 52), 34, new Color("b5efff"));
         _right = MakeLabel(new Vector2(400, 30), new Vector2(120, 52), 34, new Color("d9b1eb"));
@@ -73,7 +101,6 @@ public partial class AuraScalesHud : Control
         text.Add("Turn", ((turn + 2) / 3) * 3);
         _judgmentTime = Math.Max(0, _judgmentTime - (float)delta);
         _caption.Text = _judgmentTime > 0 ? new LocString("frieren", "AURA.JUDGMENT").GetFormattedText() : text.GetFormattedText();
-        Modulate = _judgmentTime > 0 ? new Color(1.5f, 1.25f, 1.6f) : Colors.White;
         // 阻尼弹簧：魔力变化时轻摆，平衡后自然停住；正角使右侧下降。
         float dt = Math.Min((float)delta, 1f / 30);
         _velocity += (TargetAngle(playerMana, auraMana) - _angle) * 75 * dt;
