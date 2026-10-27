@@ -20,6 +20,6 @@ public sealed class UpsideDown() : FrierenCard(-1, CardType.Curse, CardRarity.Cu
         // 先快照再逐张通过原生换堆，保留牌对象与牌堆变更通知；不视为抽牌或弃牌。
         foreach (var card in draw) await CardPileCmd.Add(card, PileType.Discard, CardPilePosition.Top);
         foreach (var card in discard) await CardPileCmd.Add(card, PileType.Draw, CardPilePosition.Top);
-        await CreatureCmd.Damage(context, Owner.Creature, 2, ValueProp.Unblockable | ValueProp.Unpowered, null, this);
+        await CreatureCmd.Damage(context, Owner.Creature, 2, ValueProp.Unblockable | ValueProp.Unpowered, null, this, null);
     }
 }

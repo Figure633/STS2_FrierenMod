@@ -42,14 +42,14 @@ public static class FactorBlockPreviewTests
         var combat = new CombatState(runState: run); combat.AddPlayer(player);
         var enemy = combat.CreateCreature(ModelDb.Monster<MegaCrit.Sts2.Core.Models.Monsters.Axebot>().ToMutable(), CombatSide.Enemy, null);
         combat.AddCreature(enemy); CombatManager.Instance.SetUpCombat(combat);
-        AccessTools.Property(typeof(CombatManager), nameof(CombatManager.IsInProgress)).SetValue(CombatManager.Instance, true);
+        CombatTestState.SetInProgress(true);
         var context = new BlockingPlayerChoiceContext();
         var source = combat.CreateCard<DefensiveMagic>(player);
-        var play = new CardPlay { Card = source, Target = null, IsAutoPlay = false, PlayIndex = 0, PlayCount = 1, ResultPile = PileType.Discard,
+        var play = new CardPlay { Card = source, Player = source.Owner, Target = null, IsAutoPlay = false, PlayIndex = 0, PlayCount = 1, ResultPile = PileType.Discard,
             Resources = new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 } };
         async Task Clear() {
             foreach (var power in player.Creature.Powers.ToArray()) await PowerCmd.Remove(power);
-            await CreatureCmd.LoseBlock(player.Creature, decimal.MaxValue);
+            await CreatureCmd.LoseBlock(context, player.Creature, decimal.MaxValue, player.Creature);
         }
         foreach (string language in new[] { "zhs", "eng" }) {
             LocManager.Instance.SetLanguage(language);

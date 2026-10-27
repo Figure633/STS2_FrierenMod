@@ -38,12 +38,12 @@ static class CombatTests
         var enemy = combat.CreateCreature(ModelDb.Monster<MegaCrit.Sts2.Core.Models.Monsters.Axebot>().ToMutable(), CombatSide.Enemy, null);
         combat.AddCreature(enemy);
         CombatManager.Instance.SetUpCombat(combat);
-        typeof(CombatManager).GetProperty(nameof(CombatManager.IsInProgress))!.SetValue(CombatManager.Instance, true);
+        CombatTestState.SetInProgress(true);
         var deck = MagicDeckState.CreatePrototypeLoadout();
         MagicDeckStore.Write(player, deck);
         await ManaCmd.Generate(player, PileType.Draw, 3);
         var card = combat.CreateCard<RapidChant>(player);
-        var play = new CardPlay { Card = card, Target = null, ResultPile = PileType.Discard,
+        var play = new CardPlay { Card = card, Player = card.Owner, Target = null, ResultPile = PileType.Discard,
             Resources = new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 }, IsAutoPlay = false, PlayIndex = 0, PlayCount = 1 };
         await ChantCmd.Resolve(new ThrowingPlayerChoiceContext(), play, ChantCmd.Options(player, 2).Single(x => x.Slot == ManaSlot.Draw));
         if (player.Creature.Block != 4 || ManaCmd.InPile(player, PileType.Draw).Count() != 1)
@@ -79,7 +79,8 @@ static class CombatTests
         var selector = new TestCardSelector();
         using var selection = CardSelectCmd.UseSelector(selector);
         for (int i = 0; i < 3; i++) selector.PrepareToSelect(new[] { i });
-        await player.GetRelic<FrierenMod.Scripts.Relics.HolyEmblem>()!.AfterActEntered();
+        // 当前开局由魔导书事件/界面兜底推进；此夹具直接走同一个原生选牌入口。
+        await MagicDeckCmd.ChooseStartingFactors(context, player);
         var initialized = MagicDeckStore.Read(player);
         Check(initialized.SetupCompleted && initialized.Items.Count == 3 && initialized.Items.All(i => i.Slot >= 0), "初始三选一未完成装载");
         await MagicDeckCmd.ChooseStartingFactors(context, player);
@@ -171,7 +172,7 @@ static class CombatTests
         await paid.SpendResources();
         Check(ManaCmd.Total(player) == 0 && player.PlayerCombatState.Energy == energy, $"魔力代付扣费错误: 剩余魔力={ManaCmd.Total(player)}, 能量={player.PlayerCombatState.Energy}, 原能量={energy}, 代付费用={player.Creature.GetPower<ManaInsteadOfEnergyPower>()?.Cost(paid)}");
         Check(!combat.CreateCard<StrikeFrieren>(player).CanPlay(), "魔力不足仍能出牌");
-        await Hook.AfterTurnEnd(combat, CombatSide.Player, [player.Creature]);
+        await Hook.AfterSideTurnEnd(combat, CombatSide.Player, [player.Creature]);
         Check(Power<ManaInsteadOfEnergyPower>() == 0 && Power<BanManaGainPower>() == 0 && Power<ChantWithoutManaPower>() == 0, "想象力回合结束未清除: " + string.Join(",", player.Creature.Powers.Select(p => p.GetType().Name)));
         Pass("想象力：禁生成、跨牌堆代付、资源不足拦截、回合清理");
 
@@ -189,7 +190,7 @@ static class CombatTests
         await Reset(); CompleteDeck("BuildUpBody", "HighSpeedMovement", "AdvancedDefensiveMagic");
         Check(!combat.CreateCard<PreciseChant>(player).CanPlay() && !combat.CreateCard<FinalChant>(player).CanPlay(), "无有效因子时仍消耗能量空打");
         await ManaCmd.Generate(player, PileType.Hand, 3);
-        selector.PrepareToSelect(new[] { 0 }); await Play(combat.CreateCard<LureTheEnemyInDeep>(player));
+        selector.PrepareToSelect(new[] { 1 }); await Play(combat.CreateCard<LureTheEnemyInDeep>(player));
         Check(player.PlayerCombatState!.Hand.Cards.Any(c => c is LureTheEnemyInDeep), "手牌槽咏唱未回手");
         Pass("无可用槽位阻止空打；诱敌深入使用手牌槽后回手");
 
@@ -274,9 +275,9 @@ static class CombatTests
             Preview(deckPreview, 24);
             foreach (var creature in combat.Creatures)
                 foreach (var power in creature.Powers.ToArray()) await PowerCmd.Remove(power);
-            typeof(CombatManager).GetProperty(nameof(CombatManager.IsInProgress))!.SetValue(CombatManager.Instance, false);
+            CombatTestState.SetInProgress(false);
             Preview(deckPreview, 24);
-            typeof(CombatManager).GetProperty(nameof(CombatManager.IsInProgress))!.SetValue(CombatManager.Instance, true);
+            CombatTestState.SetInProgress(true);
             Pass("童话牌组/奖励预览在战斗外仍显示牌组倍率，不混入战斗临时增减益");
 
             deckPreview.DynamicVars.Damage.BaseValue = 50000;
@@ -286,7 +287,7 @@ static class CombatTests
         }
         finally
         {
-            typeof(CombatManager).GetProperty(nameof(CombatManager.IsInProgress))!.SetValue(CombatManager.Instance, true);
+            CombatTestState.SetInProgress(true);
             player.Deck.Clear(silent: true);
             foreach (var savedCard in savedDeck) player.Deck.AddInternal(savedCard, silent: true);
             await Reset();

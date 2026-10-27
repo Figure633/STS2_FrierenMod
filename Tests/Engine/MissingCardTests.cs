@@ -40,7 +40,7 @@ public static class MissingCardTests
         combat.AddCreature(enemy);
         enemy.SetMaxHpInternal(9999); enemy.SetCurrentHpInternal(9999);
         CombatManager.Instance.SetUpCombat(combat);
-        typeof(CombatManager).GetProperty(nameof(CombatManager.IsInProgress))!.SetValue(CombatManager.Instance, true);
+        CombatTestState.SetInProgress(true);
         var context = new ThrowingPlayerChoiceContext();
         var selector = new TestCardSelector();
         using var selection = CardSelectCmd.UseSelector(selector);
@@ -62,7 +62,7 @@ public static class MissingCardTests
             if (upgraded) c.UpgradeInternal();
             return c;
         }
-        CardPlay MakePlay(CardModel c, Creature? target = null) => new() { Card = c, Target = target, ResultPile = PileType.Discard,
+        CardPlay MakePlay(CardModel c, Creature? target = null) => new() { Card = c, Player = c.Owner, Target = target, ResultPile = PileType.Discard,
             Resources = new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 }, PlayCount = 1, PlayIndex = 0, IsAutoPlay = false };
         async Task Play(CardModel c, Creature? target = null)
         {

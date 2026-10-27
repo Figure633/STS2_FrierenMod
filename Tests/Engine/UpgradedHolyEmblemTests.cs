@@ -55,7 +55,7 @@ public static class UpgradedHolyEmblemTests
         combat.AddCreature(combat.CreateCreature(ModelDb.Monster<MegaCrit.Sts2.Core.Models.Monsters.Axebot>().ToMutable(),
             CombatSide.Enemy, null));
         CombatManager.Instance.SetUpCombat(combat);
-        AccessTools.Property(typeof(CombatManager), nameof(CombatManager.IsInProgress)).SetValue(CombatManager.Instance, true);
+        CombatTestState.SetInProgress(true);
         var context = new BlockingPlayerChoiceContext();
         void Clear() {
             foreach (var pile in new[] { PileType.Draw, PileType.Hand, PileType.Discard })

@@ -7,11 +7,22 @@ namespace FrierenMod.Scripts.UI;
 [HarmonyPatch(typeof(NTopBarBossIcon), nameof(NTopBarBossIcon.RefreshBossIcon))]
 public static class FrierenBossIcon
 {
-    private static void Postfix(TextureRect ____bossIcon, TextureRect ____bossIconOutline,
+    private static void Postfix(NTopBarBossIcon __instance, TextureRect ____bossIcon, TextureRect ____bossIconOutline,
         TextureRect? ____secondBossIcon, TextureRect? ____secondBossIconOutline)
     {
+        __instance.CustomMinimumSize=Vector2.Zero;
+        ____bossIcon.SizeFlagsHorizontal=Control.SizeFlags.ShrinkCenter;
         Fit(____bossIcon, ____bossIconOutline);
-        if (____secondBossIcon != null && ____secondBossIconOutline != null) Fit(____secondBossIcon, ____secondBossIconOutline);
+        if (____secondBossIcon != null && ____secondBossIconOutline != null) {
+            Fit(____secondBossIcon, ____secondBossIconOutline);
+            if (____secondBossIcon.Visible && (____bossIcon.Texture?.ResourcePath.Contains("/monsters/Spiegel_") == true ||
+                ____secondBossIcon.Texture?.ResourcePath.Contains("/monsters/Spiegel_") == true))
+            {
+                ____secondBossIcon.Position = new Vector2(48,14);
+                __instance.CustomMinimumSize = new Vector2(96,44);
+                ____bossIcon.SizeFlagsHorizontal = Control.SizeFlags.ShrinkBegin;
+            }
+        }
     }
 
     private static void Fit(TextureRect icon, TextureRect outline)

@@ -36,7 +36,7 @@ public static class ReviewedCardTests
         combat.AddCreature(enemy);
         enemy.SetMaxHpInternal(9999); enemy.SetCurrentHpInternal(9999);
         CombatManager.Instance.SetUpCombat(combat);
-        typeof(CombatManager).GetProperty(nameof(CombatManager.IsInProgress))!.SetValue(CombatManager.Instance, true);
+        CombatTestState.SetInProgress(true);
         var context = new ThrowingPlayerChoiceContext();
         var selector = new TestCardSelector();
         using var selection = CardSelectCmd.UseSelector(selector);
@@ -58,7 +58,7 @@ public static class ReviewedCardTests
             if (upgrade) { card.UpgradeInternal(); card.FinalizeUpgradeInternal(); }
             return card;
         }
-        CardPlay MakePlay(CardModel c) => new() { Card = c, Target = null, IsAutoPlay = false, ResultPile = PileType.Discard,
+        CardPlay MakePlay(CardModel c) => new() { Card = c, Player = c.Owner, Target = null, IsAutoPlay = false, ResultPile = PileType.Discard,
             Resources = new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 }, PlayCount = 1, PlayIndex = 0 };
         async Task Play(CardModel c, Creature? target = null)
         {

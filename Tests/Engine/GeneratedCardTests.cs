@@ -32,7 +32,7 @@ public static class GeneratedCardTests
         var combat = new CombatState(runState: run); combat.AddPlayer(player);
         var enemy = combat.CreateCreature(ModelDb.Monster<MegaCrit.Sts2.Core.Models.Monsters.Axebot>().ToMutable(), CombatSide.Enemy, null);
         combat.AddCreature(enemy); CombatManager.Instance.SetUpCombat(combat);
-        AccessTools.Property(typeof(CombatManager), nameof(CombatManager.IsInProgress)).SetValue(CombatManager.Instance, true);
+        CombatTestState.SetInProgress(true);
         var context = new BlockingPlayerChoiceContext();
         // 记录调用真实原生动画入口的结果，TestMode 内部跳过画面，不改动存档或原生结算。
         var harmony = new Harmony("frieren.tests.generated_cards");
@@ -44,7 +44,7 @@ public static class GeneratedCardTests
             if (upgrade) { card.UpgradeInternal(); card.FinalizeUpgradeInternal(); }
             return card;
         }
-        CardPlay Play(CardModel card) => new() { Card = card, Target = null, IsAutoPlay = false,
+        CardPlay Play(CardModel card) => new() { Card = card, Player = card.Owner, Target = null, IsAutoPlay = false,
             ResultPile = PileType.Discard, PlayCount = 1, PlayIndex = 0,
             Resources = new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 } };
         async Task Effect(CardModel card) => await (Task)AccessTools.Method(card.GetType(), "OnPlay").Invoke(card, [context, Play(card)])!;

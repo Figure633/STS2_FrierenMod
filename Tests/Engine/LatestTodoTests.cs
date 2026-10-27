@@ -45,7 +45,7 @@ public static class LatestTodoTests
                 var monster = (Mimic)ModelDb.Monster<Mimic>().ToMutable();
                 var mimic = combat.CreateCreature(monster, CombatSide.Enemy, null); combat.AddCreature(mimic);
                 CombatManager.Instance.SetUpCombat(combat);
-                AccessTools.Property(typeof(CombatManager), nameof(CombatManager.IsInProgress)).SetValue(CombatManager.Instance, true);
+                CombatTestState.SetInProgress(true);
                 var context = new ThrowingPlayerChoiceContext();
                 var resources = new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 };
                 foreach (var slot in Enum.GetValues<ManaSlot>()) {
@@ -71,7 +71,7 @@ public static class LatestTodoTests
                 }
                 monster.RollMove([player.Creature]); await monster.AfterAddedToRoom();
                 var disguise = mimic.GetPower<MimicPower>()!;
-                var play = new CardPlay { Card = combat.CreateCard<StrikeFrieren>(player), Target = mimic, ResultPile = PileType.Discard,
+                var play = new CardPlay { Card = combat.CreateCard<StrikeFrieren>(player), Player = player, Target = mimic, ResultPile = PileType.Discard,
                     IsAutoPlay = false, PlayIndex = 0, PlayCount = 1, Resources = resources };
                 for (int i = 0; i < 4; i++) await disguise.AfterCardPlayedLate(context, play);
                 Check(Spoken.Count == 0, "伪装前四次不提前说话");

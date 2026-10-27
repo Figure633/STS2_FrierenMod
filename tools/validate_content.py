@@ -42,7 +42,7 @@ print(f"PASS generated asset provenance: {len(load(ROOT / 'docs/generated_assets
 manifest = load(ROOT / "FrierenMod.json")
 project_version = ET.parse(ROOT / "FrierenMod.csproj").findtext("./PropertyGroup/Version")
 assert project_version and manifest["version"] == project_version, "manifest/project version mismatch"
-assert manifest["min_game_version"] == "0.107.1"
+assert manifest["min_game_version"] == "0.111.0"
 assert manifest["dependencies"] == [{"id": "BaseLib", "min_version": "3.4.7"}]
 assert not list((ROOT / "FrierenMod").rglob("*.dll"))
 assert not list((ROOT / "FrierenMod").rglob("*.cs"))
@@ -55,6 +55,6 @@ assert len({t["id"] for t in music["tracks"]})==20
 for track in music["tracks"]:
     path=ROOT / "FrierenMod/audio/bgm" / track["file"]
     assert hashlib.sha256(path.read_bytes()).hexdigest()==track["sha256"],str(path)
-    assert abs(track["integratedLufs"]-music["targetLufs"])<=1,track["id"]
+    assert abs(track["integratedLufs"]-track.get("targetLufs",music["targetLufs"]))<=1,track["id"]
     assert track["truePeakDb"]<=-.3,track["id"]
 print("PASS music: 20 unique tracks, file hashes and matched loudness")

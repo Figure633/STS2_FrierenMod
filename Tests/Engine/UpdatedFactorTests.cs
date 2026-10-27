@@ -32,7 +32,7 @@ public static class UpdatedFactorTests
         var combat = new CombatState(runState: run); combat.AddPlayer(player);
         var enemy = combat.CreateCreature(ModelDb.Monster<Axebot>().ToMutable(), CombatSide.Enemy, null); combat.AddCreature(enemy);
         CombatManager.Instance.SetUpCombat(combat);
-        typeof(CombatManager).GetProperty(nameof(CombatManager.IsInProgress))!.SetValue(CombatManager.Instance, true);
+        CombatTestState.SetInProgress(true);
         var context = new ThrowingPlayerChoiceContext(); var selector = new TestCardSelector(); using var selection = CardSelectCmd.UseSelector(selector);
         void Equip(params string[] ids) {
             var deck = new MagicDeckState();
@@ -40,7 +40,7 @@ public static class UpdatedFactorTests
             for (int i = 0; i < ids.Length; i++) deck.Equip(deck.Add(ids[i]).InstanceId, (ManaSlot)i);
             MagicDeckStore.Write(player, deck);
         }
-        CardPlay PlayOf<T>() where T : CardModel => new() { Card = combat.CreateCard<T>(player), Target = null, ResultPile = PileType.Discard,
+        CardPlay PlayOf<T>() where T : CardModel => new() { Card = combat.CreateCard<T>(player), Player = player, Target = null, ResultPile = PileType.Discard,
             Resources = new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 }, IsAutoPlay = false, PlayIndex = 0, PlayCount = 1 };
         async Task Reset() {
             foreach (var creature in combat.Creatures) { foreach (var power in creature.Powers.ToArray()) await PowerCmd.Remove(power); creature.SetCurrentHpInternal(creature.MaxHp); }

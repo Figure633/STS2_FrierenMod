@@ -87,8 +87,8 @@ public static class LegendaryCraftCmd
                     break;
                 case "Block": await CreatureCmd.GainBlock(owner.Creature, card.DynamicVars.Block, play); break;
                 case "Damage": case "DamageTriple":
-                    await DamageCmd.Attack(n).FromCard(card).Targeting(play.Target!).WithHitCount(effect.Kind == "DamageTriple" ? 3 : 1).Execute(context); break;
-                case "DamageAll": await DamageCmd.Attack(n).FromCard(card).TargetingAllOpponents(owner.Creature.CombatState!).Execute(context); break;
+                    await DamageCmd.Attack(n).FromCard(card, play).Targeting(play.Target!).WithHitCount(effect.Kind == "DamageTriple" ? 3 : 1).Execute(context); break;
+                case "DamageAll": await DamageCmd.Attack(n).FromCard(card, play).TargetingAllOpponents(owner.Creature.CombatState!).Execute(context); break;
                 case "Energy": await PlayerCmd.GainEnergy(n, owner); break;
                 case "Execute": if (play.Target!.CurrentHp <= n) await CreatureCmd.Kill(play.Target); break;
                 case "Draw": await CardPileCmd.Draw(context, n, owner); break;

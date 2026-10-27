@@ -62,16 +62,18 @@ public partial class Runner : Node
                 throw new Exception("先打包 FrierenMod.pck 再运行引擎测试。");
             Godot.Bridge.ScriptManagerBridge.LookupScriptsInAssembly(typeof(ModelDb).Assembly);
             var mods = (List<Mod>)ModManager.Mods;
-            mods.Add(new Mod { path = "test", assembly = typeof(BaseLib.BaseLibMain).Assembly, state = ModLoadState.Loaded,
+            mods.Add(new Mod { path = "test", assemblies = [typeof(BaseLib.BaseLibMain).Assembly], state = ModLoadState.Loaded,
                 manifest = new ModManifest { id = "BaseLib" } });
-            mods.Add(new Mod { path = "test", assembly = typeof(Mana).Assembly, state = ModLoadState.Loaded,
+            mods.Add(new Mod { path = "test", assemblies = [typeof(Mana).Assembly], state = ModLoadState.Loaded,
                 manifest = new ModManifest { id = "FrierenMod", dependencies = [new ModDependency("BaseLib", "3.4.7")] } });
             AccessTools.Property(typeof(ModManager), nameof(ModManager.State)).SetValue(null, ModManagerState.Initialized);
+            AssemblyInfo.Init();
             BaseLib.BaseLibMain.Initialize();
             FrierenMod.Scripts.Entry.Init();
             ModelDb.Init();
             ModelIdSerializationCache.Init();
             ModelDb.InitIds();
+            GD.Print("NATIVE_SAVE_OK: " + NativeSaveTests.Run());
             if (reviewedOnly) GD.Print("REVIEWED: 模型已加载");
             SaveManager.Instance.InitSettingsData();
             SaveManager.Instance.SettingsSave.Language = "eng";
@@ -87,6 +89,14 @@ public partial class Runner : Node
             new Harmony("frieren.tests.hover_host").Patch(
                 AccessTools.Method(typeof(MegaCrit.Sts2.Core.Nodes.Cards.Holders.NCardHolder), "CreateHoverTips"),
                 prefix: new HarmonyMethod(typeof(Runner), nameof(SkipGlobalHoverWindow)));
+            if (OS.GetCmdlineUserArgs().Contains("--todo093-only")) {
+                GD.Print("TODO093_OK: " + await Todo093Tests.Run(this));
+                await Finish(); return;
+            }
+            if (OS.GetCmdlineUserArgs().Contains("--combat-api-only")) {
+                GD.Print("COMBAT_API_OK: " + await CombatTests.Run());
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--music092-only")) {
                 GD.Print("MUSIC092_OK: " + await MusicTests.Run(this));
                 await Finish(); return;
@@ -340,7 +350,7 @@ public partial class Runner : Node
                 if (!new Rect2(Vector2.Zero, size).Encloses(book.GetRect()) || !new Rect2(Vector2.Zero, size).Encloses(hud.GetRect()))
                     throw new Exception("魔法书或魔力计数器超出界面：" + size);
             }
-            AccessTools.Property(typeof(MegaCrit.Sts2.Core.Combat.CombatManager), "IsInProgress").SetValue(MegaCrit.Sts2.Core.Combat.CombatManager.Instance, false);
+            CombatTestState.SetInProgress(false);
             ui.GetNode<Godot.Timer>("FrierenManaRefresh").EmitSignal(Godot.Timer.SignalName.Timeout);
             GD.Print("PASS 原生 Godot UI：紧凑计数与悬停说明、魔法书遮罩、槽位只读"); count++;
             if (OS.GetCmdlineUserArgs().Contains("--ui-snapshot"))
@@ -349,7 +359,7 @@ public partial class Runner : Node
                 for (int i = 0; i < 5; i++) await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
                 GetViewport().GetTexture().GetImage().SavePng(ProjectSettings.GlobalizePath("res://../../artifacts/magic-book.png"));
                 book.Hide();
-                AccessTools.Property(typeof(MegaCrit.Sts2.Core.Combat.CombatManager), "IsInProgress").SetValue(MegaCrit.Sts2.Core.Combat.CombatManager.Instance, true);
+                CombatTestState.SetInProgress(true);
                 ui.GetNode<Godot.Timer>("FrierenManaRefresh").EmitSignal(Godot.Timer.SignalName.Timeout);
                 for (int i = 0; i < 5; i++) await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
                 GetViewport().GetTexture().GetImage().SavePng(ProjectSettings.GlobalizePath("res://../../artifacts/mana-counter.png"));

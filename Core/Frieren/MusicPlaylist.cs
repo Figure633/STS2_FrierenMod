@@ -1,9 +1,9 @@
 namespace FrierenMod.Core;
 
 // 音乐使用独立随机源，不消耗地图、战斗或奖励的随机序列。
-public sealed class MusicPlaylist(uint seed)
+public sealed class MusicPlaylist(ulong seed)
 {
-    private readonly Random _random = new(unchecked((int)(seed ^ 0x5A17B6C3)));
+    private readonly Random _random = new(unchecked((int)(seed ^ (seed >> 32) ^ 0x5A17B6C3)));
     private readonly Dictionary<string,int> _last = [];
     public int Next(string pool, int count)
     {

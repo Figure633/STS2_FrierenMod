@@ -33,8 +33,7 @@ public static class RestSiteTests
         var run = RunState.CreateForTest([player], seed: "FRIERENREST");
         RunManager.Instance.SetUpTest(run, new NetSingleplayerGameService());
         LocalContext.NetId = 1;
-        AccessTools.Property(typeof(CombatManager), nameof(CombatManager.IsInProgress))
-            .SetValue(CombatManager.Instance, false);
+        CombatTestState.SetInProgress(false);
         run.PushRoom(new RestSiteRoom());
         var deck = MagicDeckState.CreatePrototypeLoadout();
         MagicDeckStore.Write(player, deck);

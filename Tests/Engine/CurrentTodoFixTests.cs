@@ -28,14 +28,14 @@ public static class CurrentTodoFixTests
         var enemy = combat.CreateCreature(ModelDb.Monster<MegaCrit.Sts2.Core.Models.Monsters.Axebot>().ToMutable(), CombatSide.Enemy, null);
         combat.AddCreature(enemy);
         CombatManager.Instance.SetUpCombat(combat);
-        typeof(CombatManager).GetProperty(nameof(CombatManager.IsInProgress))!.SetValue(CombatManager.Instance, true);
+        CombatTestState.SetInProgress(true);
         var context = new ThrowingPlayerChoiceContext();
         var hellfire = combat.CreateCard<HellFireSummoning>(player);
         await CardPileCmd.Add(hellfire, PileType.Draw); await hellfire.BeforeCombatStart();
         var seal = player.Creature.GetPower<SealPower>()!;
         int updates = 0; seal.DisplayAmountChanged += () => updates++;
         Check(seal.Cards.Count == 1 && seal.DisplayAmount == 0, "封印初始显示零次咏唱，不显示封印卡数");
-        CardPlay MakePlay(CardModel card) => new() { Card = card, Target = null, IsAutoPlay = false, ResultPile = PileType.Discard,
+        CardPlay MakePlay(CardModel card) => new() { Card = card, Player = card.Owner, Target = null, IsAutoPlay = false, ResultPile = PileType.Discard,
             Resources = new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 }, PlayCount = 1, PlayIndex = 0 };
         var ordinary = MakePlay(combat.CreateCard<StrikeFrieren>(player));
         CombatManager.Instance.History.CardPlayStarted(combat, ordinary);

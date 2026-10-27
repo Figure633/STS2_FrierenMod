@@ -36,7 +36,8 @@
       "title": "Too Many Grimoires",
       "pool": "event",
       "source": "download:Too Many Grimoires.mp4",
-      "file": "grimoires.ogg"
+      "file": "grimoires.ogg",
+      "targetLufs": -19.5
     },
     {
       "id": "waltz",
@@ -106,14 +107,16 @@
       "title": "First-Class Mage",
       "pool": "boss",
       "source": "download:first-class mage.mp4",
-      "file": "first_class_mage.ogg"
+      "file": "first_class_mage.ogg",
+      "preFilter": "dynaudnorm=f=500:g=31:m=2:p=0.9"
     },
     {
       "id": "golden_land",
       "title": "The Golden Land",
       "pool": "boss",
       "source": "download:the golden land.mp4",
-      "file": "golden_land.ogg"
+      "file": "golden_land.ogg",
+      "preFilter": "dynaudnorm=f=500:g=31:m=3:p=0.9"
     },
     {
       "id": "south_hero",
@@ -134,7 +137,8 @@
       "title": "Sleepy Frieren",
       "pool": "merchant",
       "source": "legacy:STS_Merchant_NewMix_v2.mp3",
-      "file": "sleepy_frieren.ogg"
+      "file": "sleepy_frieren.ogg",
+      "targetLufs": -19.5
     },
     {
       "id": "peace",

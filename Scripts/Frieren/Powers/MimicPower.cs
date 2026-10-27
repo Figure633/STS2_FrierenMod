@@ -1,4 +1,5 @@
 using FrierenMod.Scripts.Cards;
+using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -7,6 +8,7 @@ namespace FrierenMod.Scripts.Powers;
 
 public sealed class MimicPower : FrierenPower
 {
+    public override PowerType Type => PowerType.None;
     public override async Task AfterCardPlayedLate(PlayerChoiceContext context, CardPlay play)
     {
         if (Owner.IsDead || play.Card.Owner.Creature.CombatState != Owner.CombatState) return;

@@ -24,7 +24,7 @@ public sealed class MultipleOffensiveMagic() : FrierenCard(0, CardType.Attack, C
     {
         int x = ResolveEnergyXValue();
         int hits = x + DynamicVars["Hits"].IntValue;
-        if (hits > 0) await DamageCmd.Attack(x + DynamicVars.Damage.BaseValue).FromCard(this).TargetingRandomOpponents(CombatState!).WithHitCount(hits).Execute(context);
+        if (hits > 0) await DamageCmd.Attack(x + DynamicVars.Damage.BaseValue).FromCard(this, play).TargetingRandomOpponents(CombatState!).WithHitCount(hits).Execute(context);
         await ManaCmd.Generate(Owner, PileType.Hand, x);
     }
     protected override bool HasEnergyCostX => true;

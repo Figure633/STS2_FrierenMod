@@ -20,7 +20,7 @@ public sealed class DissolveClothPotion : FrierenPotion
     protected override async Task OnUse(PlayerChoiceContext context, Creature? target)
     {
         AssertValidForTargetedPotion(target);
-        await CreatureCmd.LoseBlock(target, target.Block);
+        await CreatureCmd.LoseBlock(context, target, target.Block, Owner.Creature);
         await PowerCmd.Apply<VulnerablePower>(context, target, DynamicVars.Vulnerable.IntValue, Owner.Creature, null);
         await PowerCmd.Apply<WeakPower>(context, target, DynamicVars.Weak.IntValue, Owner.Creature, null);
     }

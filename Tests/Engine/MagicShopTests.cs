@@ -106,7 +106,7 @@ public static class MagicShopTests
         var enemy = combat.CreateCreature(ModelDb.Monster<MegaCrit.Sts2.Core.Models.Monsters.Axebot>().ToMutable(), CombatSide.Enemy, null);
         combat.AddCreature(enemy);
         CombatManager.Instance.SetUpCombat(combat);
-        AccessTools.Property(typeof(CombatManager), nameof(CombatManager.IsInProgress)).SetValue(CombatManager.Instance, true);
+        CombatTestState.SetInProgress(true);
         Check(!MagicPropCmd.CanUse(player, prop), "战斗开场阶段禁止插入魔具操作");
         AccessTools.Property(typeof(CombatManager), nameof(CombatManager.IsStarting)).SetValue(CombatManager.Instance, false);
         AccessTools.Property(typeof(CombatManager), nameof(CombatManager.PlayerActionsDisabled)).SetValue(CombatManager.Instance, true);
@@ -115,7 +115,7 @@ public static class MagicShopTests
         player.PlayerCombatState!.Energy = 3;
         Check(await Use(prop, 0, 1) && player.PlayerCombatState.Energy == 5 && Read().Items.Count == 3,
             "龙角在战斗中消耗两件材料并实际增加能量");
-        AccessTools.Property(typeof(CombatManager), nameof(CombatManager.IsInProgress)).SetValue(CombatManager.Instance, false);
+        CombatTestState.SetInProgress(false);
 
         prop = Prepare("MysteryBox");
         var ui = new Control { Size = new Vector2(1920, 1080) }; root.AddChild(ui);

@@ -34,7 +34,7 @@ public static class AffinityAndBackTests
         var combat = new CombatState(runState: run); combat.AddPlayer(player); combat.AddPlayer(other);
         var enemy = combat.CreateCreature(ModelDb.Monster<Axebot>().ToMutable(), CombatSide.Enemy, null); combat.AddCreature(enemy);
         CombatManager.Instance.SetUpCombat(combat);
-        typeof(CombatManager).GetProperty(nameof(CombatManager.IsInProgress))!.SetValue(CombatManager.Instance, true);
+        CombatTestState.SetInProgress(true);
         var context = new ThrowingPlayerChoiceContext();
         var mana = combat.CreateCard<Mana>(player); var dense = combat.CreateCard<HighDensityMana>(player);
         var foreign = combat.CreateCard<Mana>(other); var strike = combat.CreateCard<StrikeFrieren>(player);
@@ -109,7 +109,7 @@ public static class AffinityAndBackTests
         Check(state.Roll('3', _ => 0) == null, "收集完同组背景后不再重复随机奖励");
         var restored = SlotBackProgress.FromJson("{\"Unlocked\":[\"bogus\"],\"Selected\":[\"bogus\",\"bogus\",\"bogus\"]}");
         Check(restored.Selected.SequenceEqual(new[] { "0001", "0002", "0003" }), "旧或无效选项回退到初始背景");
-        typeof(CombatManager).GetProperty(nameof(CombatManager.IsInProgress))!.SetValue(CombatManager.Instance, false);
+        CombatTestState.SetInProgress(false);
         RunManager.Instance.CleanUp();
         return count;
     }

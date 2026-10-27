@@ -48,7 +48,7 @@ public static class ChantSelectionTests
         var combat = new CombatState(runState: run); combat.AddPlayer(player);
         var enemy = combat.CreateCreature(ModelDb.Monster<MegaCrit.Sts2.Core.Models.Monsters.Axebot>().ToMutable(), CombatSide.Enemy, null);
         combat.AddCreature(enemy); CombatManager.Instance.SetUpCombat(combat);
-        AccessTools.Property(typeof(CombatManager), nameof(CombatManager.IsInProgress)).SetValue(CombatManager.Instance, true);
+        CombatTestState.SetInProgress(true);
         var context = new BlockingPlayerChoiceContext();
         var blockOption=ChantRules.Preview(ManaSlot.Draw,MagicDeckState.Definition("AdvancedDefensiveMagic"),2);
         var blockFactor=FactorCard.Create(player,"AdvancedDefensiveMagic",ManaSlot.Draw,blockOption);

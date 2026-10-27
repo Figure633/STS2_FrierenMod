@@ -18,14 +18,14 @@ public static class SynchroCmd
         .Where(e => e.Actor == player.Creature && e.HappenedThisTurn(player.Creature.CombatState))
         .Reverse().TakeWhile(e => ManaCmd.IsMana(e.CardPlay.Card)).Count();
 
-    public static async Task Play(PlayerChoiceContext context, CardModel card)
+    public static async Task Play(PlayerChoiceContext context, CardModel card, CardPlay? play = null)
     {
         var owner = card.Owner;
         bool accelerated = owner.Creature.HasPower<AccelerateFlowPower>();
         bool thunder = owner.Creature.HasPower<ThunderPower>();
         if (accelerated && thunder) Presentation.FrierenAchievements.Unlock(owner, "4015");
         if (thunder)
-            await DamageCmd.Attack(15).FromCard(card).TargetingRandomOpponents(owner.Creature.CombatState!).Execute(context);
+            await DamageCmd.Attack(15).FromCard(card, play).TargetingRandomOpponents(owner.Creature.CombatState!).Execute(context);
         if (accelerated || !thunder) await CardPileCmd.Draw(context, accelerated ? 2 : 1, owner);
         foreach (var fire in owner.PlayerCombatState!.DiscardPile.Cards.OfType<LittleFire>().ToArray())
             await CardPileCmd.Add(fire, PileType.Hand);

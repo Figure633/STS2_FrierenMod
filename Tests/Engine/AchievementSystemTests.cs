@@ -89,7 +89,7 @@ public static class AchievementSystemTests
         var combat = new CombatState(runState: run); combat.AddPlayer(player); combat.AddPlayer(other);
         var enemy = combat.CreateCreature(ModelDb.Monster<Axebot>().ToMutable(), CombatSide.Enemy, null); combat.AddCreature(enemy);
         CombatManager.Instance.SetUpCombat(combat);
-        AccessTools.Property(typeof(CombatManager), nameof(CombatManager.IsInProgress)).SetValue(CombatManager.Instance, true);
+        CombatTestState.SetInProgress(true);
         var context = new ThrowingPlayerChoiceContext();
         void Equip(params string[] ids) {
             var deck = new MagicDeckState();
@@ -115,7 +115,7 @@ public static class AchievementSystemTests
         await Hook.AfterPlayerTurnStart(combat, context, player);
         foreach (string id in new[] { "5001", "5002", "5003", "5005", "5006", "5015", "7001" })
             Check(SlotBackStore.Read().Unlocked.Contains(id), "原生回合钩子实际解锁 " + id);
-        CardPlay Play(CardModel card) => new() { Card = card, Resources = new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 }, ResultPile = PileType.Discard,
+        CardPlay Play(CardModel card) => new() { Card = card, Player = card.Owner, Resources = new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 }, ResultPile = PileType.Discard,
             Target = enemy, IsAutoPlay = false, PlayIndex = 0, PlayCount = 1 };
         await Hook.AfterCardPlayed(combat, context, Play(combat.CreateCard<RapidChant>(player)));
         await Hook.AfterCardPlayed(combat, context, Play(combat.CreateCard<LightningMagic>(player)));
@@ -148,7 +148,7 @@ public static class AchievementSystemTests
         RunManager.Instance.OnEnded(false);
         Check(SlotBackStore.Read().Unlocked.Contains("0008") && SlotBackStore.Read().Unlocked.Contains("0009"), "猎人杀手战败对接原生结算");
         player.Creature.SetCurrentHpInternal(player.Creature.MaxHp);
-        AccessTools.Property(typeof(CombatManager), nameof(CombatManager.IsInProgress)).SetValue(CombatManager.Instance, false);
+        CombatTestState.SetInProgress(false);
 
         // 槽位背景不再替换因子本身的紫色卡框，包括装载、普通预览和咏唱模型。
         var factor = FactorCard.Create(player, "BarrierMagic", ManaSlot.Hand);

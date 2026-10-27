@@ -31,7 +31,7 @@ public static class MagicDeckPlayabilityTests
         var combat = new CombatState(runState: run); combat.AddPlayer(player);
         combat.AddCreature(combat.CreateCreature(ModelDb.Monster<MegaCrit.Sts2.Core.Models.Monsters.Axebot>().ToMutable(), CombatSide.Enemy, null));
         CombatManager.Instance.SetUpCombat(combat);
-        AccessTools.Property(typeof(CombatManager), nameof(CombatManager.IsInProgress)).SetValue(CombatManager.Instance, true);
+        CombatTestState.SetInProgress(true);
         player.PlayerCombatState!.Energy = 10;
         for (int i=0;i<2;i++) await CardPileCmd.Add(combat.CreateCard<Mana>(player), PileType.Draw);
         var deck = new MagicDeckState();
@@ -93,7 +93,7 @@ public static class MagicDeckPlayabilityTests
             int replacement = deck.Add("AdvancedDefensiveMagic").InstanceId;
             deck.Equip(replacement, ManaSlot.Hand); await Commit(deck);
             Check(Ready(), "修改蓝图引用的其他槽位后也立即更新");
-            AccessTools.Property(typeof(CombatManager), nameof(CombatManager.IsInProgress)).SetValue(CombatManager.Instance, false);
+            CombatTestState.SetInProgress(false);
             previous=notifications; deck.Equip(costly, ManaSlot.Hand); await Commit(deck);
             Check(notifications==previous && MagicDeckStore.Read(player).InSlot(ManaSlot.Hand)!.Id=="SpellBoost",
                 "战斗外照常保存装载且不发送战斗刷新");

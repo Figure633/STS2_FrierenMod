@@ -20,7 +20,7 @@ public sealed class PaperPlanePower : FrierenPower
     private int _consecutive;
     private int _attacks;
     public override int DisplayAmount => _attacks;
-    public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource) =>
+    public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource, CardPlay? cardPlay) =>
         dealer == Owner && props.HasFlag(ValueProp.Move) && _attacks > 0 ? 2 : 1;
     public override Task AfterCardPlayed(PlayerChoiceContext context, CardPlay play)
     {

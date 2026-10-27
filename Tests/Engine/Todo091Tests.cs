@@ -146,7 +146,7 @@ public static class Todo091Tests
         var combat = new CombatState(runState: run); combat.AddPlayer(player);
         combat.AddCreature(combat.CreateCreature(ModelDb.Monster<MegaCrit.Sts2.Core.Models.Monsters.Axebot>().ToMutable(), CombatSide.Enemy, null));
         CombatManager.Instance.SetUpCombat(combat);
-        AccessTools.Property(typeof(CombatManager), nameof(CombatManager.IsInProgress)).SetValue(CombatManager.Instance,true);
+        CombatTestState.SetInProgress(true);
         var counterRoot = new Control { Size = new Vector2(1920,1080) }; root.AddChild(counterRoot);
         var selectionOverlay = new NSimpleCardSelectScreen();
         MagicBookUi.Attach(counterRoot, player, () => selectionOverlay, () => false);
@@ -156,7 +156,7 @@ public static class Todo091Tests
             "原生选牌界面魔力计数可见，不抢占选牌输入");
         counterRoot.QueueFree(); selectionOverlay.Free();
         var context = new ThrowingPlayerChoiceContext();
-        CardPlay Play(CardModel card) => new() { Card = card, Target = player.Creature, ResultPile = PileType.Discard,
+        CardPlay Play(CardModel card) => new() { Card = card, Player = card.Owner, Target = player.Creature, ResultPile = PileType.Discard,
             Resources = new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 }, PlayCount = 1, PlayIndex = 0, IsAutoPlay = false };
         var recycle = combat.CreateCard<Recycle>(player); var original = Play(recycle);
         await AccessTools.Method(typeof(Recycle), "OnPlay").Invoke(recycle, [context, original])!.AsTask();

@@ -64,7 +64,7 @@ public static class AuraBossTests
         var combat = new CombatState(encounter, run); combat.AddPlayer(player);
         foreach (var (model, slot) in encounter.MonstersWithSlots) combat.AddCreature(combat.CreateCreature(model, CombatSide.Enemy, slot));
         CombatManager.Instance.SetUpCombat(combat);
-        AccessTools.Property(typeof(CombatManager), nameof(CombatManager.IsInProgress)).SetValue(CombatManager.Instance, true);
+        CombatTestState.SetInProgress(true);
         var aura = (Aura)combat.Enemies.Single(c => c.Monster is Aura).Monster;
         var boss = aura.Creature;
         var soldiers = combat.Enemies.Where(c => c.Monster is AuraSoldier).ToArray();
@@ -78,13 +78,13 @@ public static class AuraBossTests
         Check(boss.Block == 10 && soldiers[1].Monster.NextMove.Id == "STRIKE", "护卫给阿乌拉10甲后斩击");
 
         var context = new BlockingPlayerChoiceContext();
-        await CreatureCmd.Damage(context, boss, 30, ValueProp.Unpowered, player.Creature, null);
+        await CreatureCmd.Damage(context, boss, 30, ValueProp.Unpowered, player.Creature, null, null);
         Check(boss.CurrentHp == 200 && aura.Mana == 180 && boss.Block == 0, "先抵扣格挡，再用20魔力抵消剩余伤害");
         var elegance = boss.GetPower<AuraElegancePower>()!;
         elegance.ModifyHpLostAfterOstyLate(boss, 15, ValueProp.Unpowered, player.Creature, null);
         Check(aura.Mana == 180, "伤害预览不消费魔力");
         await aura.ChangeMana(-175);
-        await CreatureCmd.Damage(context, boss, 8, ValueProp.Unpowered, player.Creature, null);
+        await CreatureCmd.Damage(context, boss, 8, ValueProp.Unpowered, player.Creature, null, null);
         Check(aura.Mana == 0 && boss.CurrentHp == 197 && boss.HasPower<AuraElegancePower>(), "魔力不足溢出3点生命伤害，零魔力能力保留");
         await aura.ChangeMana(200);
         await aura.AfterSideTurnStart(CombatSide.Player, [player.Creature], combat);
@@ -92,7 +92,7 @@ public static class AuraBossTests
         var dispel = player.PlayerCombatState!.Hand.Cards.OfType<AuraDispel>().Single();
         Check(dispel.IsValidTarget(soldiers[0]) && !dispel.IsValidTarget(boss) && dispel.Keywords.Contains(CardKeyword.Retain) && dispel.Keywords.Contains(CardKeyword.Exhaust),
             "开场只赠一次解除魔法，仅可选士兵，保留消耗");
-        var play = new CardPlay { Card = dispel, Target = soldiers[0], ResultPile = PileType.Exhaust, IsAutoPlay = false,
+        var play = new CardPlay { Card = dispel, Player = dispel.Owner, Target = soldiers[0], ResultPile = PileType.Exhaust, IsAutoPlay = false,
             PlayIndex = 0, PlayCount = 1, Resources = new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 } };
         await (Task)AccessTools.Method(typeof(AuraDispel), "OnPlay").Invoke(dispel, [context, play])!;
         Check(soldiers[0].IsDead && aura.Mana == 185 && ManaCmd.Total(player) == 10 && aura.NextMove.Id == "TAUNT", "解除魔法立即解放士兵，削15／加10并改嘲讽");

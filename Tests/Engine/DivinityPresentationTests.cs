@@ -27,7 +27,7 @@ public static class DivinityPresentationTests
         RunManager.Instance.SetUpTest(run, new NetSingleplayerGameService()); LocalContext.NetId = 1;
         var combat = new CombatState(runState: run); combat.AddPlayer(player);
         combat.AddCreature(combat.CreateCreature(ModelDb.Monster<Axebot>().ToMutable(), CombatSide.Enemy, null));
-        CombatManager.Instance.SetUpCombat(combat); AccessTools.Property(typeof(CombatManager), nameof(CombatManager.IsInProgress)).SetValue(CombatManager.Instance, true);
+        CombatManager.Instance.SetUpCombat(combat); CombatTestState.SetInProgress(true);
         var character = (Frieren)player.Character; character.RegisterSceneConversions();
         var host = new Node2D(); root.AddChild(host);
         var background = new ColorRect { Size = new Vector2(1920, 1080), Color = new Color("17202c"), MouseFilter = Control.MouseFilterEnum.Ignore }; host.AddChild(background);

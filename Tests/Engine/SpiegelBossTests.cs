@@ -64,7 +64,7 @@ public static class SpiegelBossTests
         var combat = new CombatState(encounter, run); combat.AddPlayer(player);
         var monster = (SpiegelFrieren)encounter.MonstersWithSlots.Single().Item1;
         var boss = combat.CreateCreature(monster, CombatSide.Enemy, "Boss"); combat.AddCreature(boss);
-        CombatManager.Instance.SetUpCombat(combat); AccessTools.Property(typeof(CombatManager), nameof(CombatManager.IsInProgress)).SetValue(CombatManager.Instance, true);
+        CombatManager.Instance.SetUpCombat(combat); CombatTestState.SetInProgress(true);
         monster.RegisterSceneConversions(); var visual = monster.CreateVisuals(); root.AddChild(visual);
         Check(visual.Bounds.Size.IsEqualApprox(new Vector2(275,387.2f)) && encounter.Slots.SequenceEqual(new[] { "Boss","Bird1","Bird2" }), "放大10%后的血条范围和召唤槽位正确"); visual.QueueFree();
         Check(encounter.MapNodeAssetPaths.All(path => ResourceLoader.Exists(path)) && GD.Load<AudioStream>("res://FrierenMod/audio/Frieren_The_Slayer.mp3").GetLength() > 0,
@@ -76,7 +76,7 @@ public static class SpiegelBossTests
         await CreatureCmd.GainBlock(player.Creature, 7, ValueProp.Unpowered, null);
         Check(boss.Block == 7, "原生格挡钩子复制玩家获得的格挡");
         boss.LoseBlockInternal(boss.Block);
-        await CreatureCmd.Damage(context, boss, 10, ValueProp.Unpowered, player.Creature, null);
+        await CreatureCmd.Damage(context, boss, 10, ValueProp.Unpowered, player.Creature, null, null);
         Check(boss.CurrentHp == 490 && boss.HasPower<BarricadePower>() && boss.Block == 10 && boss.GetPower<EnemyManaPower>()!.StoredMana == 0,
             "实际受伤积累魔力，10点自动触发第一种法术且准确支付");
         var caster = boss.GetPower<SpellCasterPower>()!;
@@ -116,7 +116,7 @@ public static class SpiegelBossTests
         Check(repeat == 2 && ((MultiAttackIntent)monster.NextMove.Intents.Single()).Repeats == 3, "后期多重攻击从两次起逐次递增");
         boss.SetCurrentHpInternal(110); boss.LoseBlockInternal(boss.Block);
         foreach(var power in new PowerModel?[] { boss.GetPower<IntangiblePower>(), boss.GetPower<BufferPower>() }) if(power!=null) await PowerCmd.Remove(power);
-        await CreatureCmd.Damage(context, boss, 10, ValueProp.Unpowered, player.Creature, null);
+        await CreatureCmd.Damage(context, boss, 10, ValueProp.Unpowered, player.Creature, null, null);
         Check(monster.NextMove.Id == "APEX_PREPARATION", "100生命立即改为全力准备意图");
         await monster.PerformMove(); monster.RollMove([player.Creature]);
         var intent = (MultiAttackIntent)monster.NextMove.Intents.Single();
@@ -126,7 +126,7 @@ public static class SpiegelBossTests
         var draw = combat.CreateCard<StrikeFrieren>(player); var discard = combat.CreateCard<DefendFrieren>(player);
         await CardPileCmd.Add(draw, PileType.Draw); await CardPileCmd.Add(discard, PileType.Discard);
         var hp = player.Creature.CurrentHp;
-        var play = new CardPlay { Card = combat.CreateCard<Mana>(player), Target=null, ResultPile=PileType.Discard, IsAutoPlay=false, PlayIndex=0, PlayCount=1,
+        var play = new CardPlay { Card = combat.CreateCard<Mana>(player), Player = player, Target=null, ResultPile=PileType.Discard, IsAutoPlay=false, PlayIndex=0, PlayCount=1,
             Resources=new ResourceInfo { EnergySpent=0,EnergyValue=0,StarsSpent=0,StarValue=0 } };
         await curse.AfterCardPlayed(context, play);
         Check(draw.Pile?.Type == PileType.Discard && discard.Pile?.Type == PileType.Draw && player.Creature.CurrentHp == hp-2,
@@ -139,7 +139,7 @@ public static class SpiegelBossTests
         RunManager.Instance.SetUpTest(hardRun,new NetSingleplayerGameService());LocalContext.NetId=1;
         var hardCombat=new CombatState(ModelDb.Encounter<SpiegelFrierenEncounter>().ToMutable(),hardRun);hardCombat.AddPlayer(hardPlayer);
         var hardMonster=(SpiegelFrieren)ModelDb.Monster<SpiegelFrieren>().ToMutable();var hardBoss=hardCombat.CreateCreature(hardMonster,CombatSide.Enemy,"Boss");hardCombat.AddCreature(hardBoss);
-        CombatManager.Instance.SetUpCombat(hardCombat);AccessTools.Property(typeof(CombatManager),nameof(CombatManager.IsInProgress)).SetValue(CombatManager.Instance,true);
+        CombatManager.Instance.SetUpCombat(hardCombat);CombatTestState.SetInProgress(true);
         await hardMonster.AfterAddedToRoom();
         await PowerCmd.ModifyAmount(context,hardBoss.GetPower<EnemyManaPower>()!,130,hardBoss,null);await hardBoss.GetPower<SpellCasterPower>()!.Resolve(context);
         Check(hardMonster.Enhanced && hardBoss.GetPowerAmount<RitualPower>()==8 && hardBoss.GetPowerAmount<BufferPower>()==2 && !hardBoss.HasPower<SpiegelMalleablePower>() && !hardBoss.HasPower<MetallicizePower>(),

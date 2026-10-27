@@ -50,7 +50,7 @@ public static class StoryEventTests
             player.Creature.SetMaxHpInternal(maxHp); player.Creature.SetCurrentHpInternal(hp);
             if (player.Gold > 0) await PlayerCmd.LoseGold(player.Gold, player);
             if (gold > 0) await PlayerCmd.GainGold(gold, player);
-            var story = (T)ModelDb.Event<T>().ToMutable(); await story.BeginEvent(player, false); return story;
+            var story = (T)ModelDb.Event<T>().ToMutable(); await story.BeginEvent(player, null, false); return story;
         }
         var originals = new EventModel[] { ModelDb.Event<FoodEvent>(), ModelDb.Event<KraftGift>(), ModelDb.Event<AnimalWell>(), ModelDb.Event<MimicFight>() };
         var iron = Player.CreateForNewRun<Ironclad>(UnlockState.all, 1); var otherRun = Start(iron);
@@ -62,7 +62,7 @@ public static class StoryEventTests
         foreach (var language in new[] { "zhs", "eng" }) {
             LocManager.Instance.SetLanguage(language);
             foreach (var canonical in originals) {
-                var story = canonical.ToMutable(); await story.BeginEvent(own, false);
+                var story = canonical.ToMutable(); await story.BeginEvent(own, null, false);
                 foreach (var option in story.CurrentOptions) story.DynamicVars.AddTo(option.Description);
                 Check(story.CreateInitialPortrait().GetWidth() > 0 && !story.Title.GetFormattedText().Contains("FRIERENMOD-") &&
                     story.CurrentOptions.All(o => !o.Title.GetFormattedText().Contains("LOC_ERR") && !o.Description.GetFormattedText().Contains("LOC_ERR")),
@@ -86,7 +86,7 @@ public static class StoryEventTests
         Check(kraft.Owner!.GetRelic<MeatOnTheBone>() != null, "80最大生命可领取带骨肉");
         kraft = await Story<KraftGift>(); while (kraft.Owner!.Deck.Cards.Count < 30) await CardPileCmd.Add(kraft.Owner.RunState.CreateCard<StrikeFrieren>(kraft.Owner), PileType.Deck);
         // 原生选项在进事件时冻结，重新开始以计算新的可选条件。
-        var fullDeck = (KraftGift)ModelDb.Event<KraftGift>().ToMutable(); await fullDeck.BeginEvent(kraft.Owner, false); await fullDeck.CurrentOptions[2].Chosen();
+        var fullDeck = (KraftGift)ModelDb.Event<KraftGift>().ToMutable(); await fullDeck.BeginEvent(kraft.Owner, null, false); await fullDeck.CurrentOptions[2].Chosen();
         var ring = kraft.Owner.GetRelic<KraftSerpentRing>()!;
         Check(ring != null && ring.ModifyHandDraw(kraft.Owner, 5) == 6 && ring.Icon.GetWidth() > 0 && ring.IconOutline.GetWidth() > 0,
             "30张牌获得每回合额外抽一张的长蛇戒指，原生图标可用");
@@ -109,7 +109,7 @@ public static class StoryEventTests
         var encounter = ModelDb.Encounter<MimicEncounter>().ToMutable(); encounter.GenerateMonstersWithSlots(run);
         var combat = new CombatState(encounter, run, [], [], run.MultiplayerScalingModel); combat.AddPlayer(player);
         var monster = (Mimic)ModelDb.Monster<Mimic>().ToMutable(); var enemy = combat.CreateCreature(monster, CombatSide.Enemy, null); combat.AddCreature(enemy);
-        CombatManager.Instance.SetUpCombat(combat); AccessTools.Property(typeof(CombatManager), nameof(CombatManager.IsInProgress)).SetValue(CombatManager.Instance, true);
+        CombatManager.Instance.SetUpCombat(combat); CombatTestState.SetInProgress(true);
         monster.RollMove([player.Creature]);
         Check(monster.NextMove.Id == "DISGUISE" && monster.MinInitialHp == 160 && monster.MaxInitialHp == 164, "宝箱怪初始血量和伪装意图");
         monster.RegisterSceneConversions();
@@ -118,7 +118,7 @@ public static class StoryEventTests
         await monster.AfterAddedToRoom(); var countdown = enemy.GetPower<MimicPower>()!;
         var context = new BlockingPlayerChoiceContext();
         await ManaCmd.Generate(player, PileType.Draw, 1); await ManaCmd.Generate(player, PileType.Hand, 1); await ManaCmd.Generate(player, PileType.Discard, 1);
-        var play = new CardPlay { Card = combat.CreateCard<StrikeFrieren>(player), Target = enemy, IsAutoPlay = false, ResultPile = PileType.Discard,
+        var play = new CardPlay { Card = combat.CreateCard<StrikeFrieren>(player), Player = player, Target = enemy, IsAutoPlay = false, ResultPile = PileType.Discard,
             PlayCount = 1, PlayIndex = 0, Resources = new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 } };
         for (int i = 0; i < 4; i++) await countdown.AfterCardPlayedLate(context, play);
         Check(countdown.Amount == 1 && ManaCmd.Total(player) == 3, "前四张牌只减少伪装倒计时");

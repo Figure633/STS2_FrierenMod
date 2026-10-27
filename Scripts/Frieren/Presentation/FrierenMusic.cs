@@ -19,7 +19,7 @@ public static class FrierenMusic
     private static readonly ConditionalWeakTable<NRunMusicController, MusicSession> Sessions = new();
 
     // 无状态预览/资源检查入口；正式播放由会话维护上一首及事件实例。
-    public static string ResolveTrack(int actIndex, RoomType room, bool fighting, uint seed)
+    public static string ResolveTrack(int actIndex, RoomType room, bool fighting, ulong seed)
     {
         var candidates=MusicCatalog.For(MusicCatalog.Resolve(room,fighting));
         return candidates[(int)(seed%(uint)candidates.Count)].Path;
@@ -53,6 +53,10 @@ public static class FrierenMusic
         }
         var pool=MusicCatalog.Resolve(run.CurrentRoom?.RoomType??RoomType.Unassigned,
             CombatManager.Instance.IsInProgress,run.CurrentRoom is CombatRoom {Encounter: SpiegelFrierenEncounter});
+        // Boss胜利后的奖励与地图查看仍留在同一战斗房间，不立即切回常规曲。
+        if (!CombatManager.Instance.IsInProgress && run.CurrentRoom is CombatRoom {RoomType:RoomType.Boss} &&
+            session.CurrentPool is MusicPool.Boss or MusicPool.Spiegel)
+            pool=session.CurrentPool.Value;
         bool wasStopped=session.CurrentTrack==null;
         session.FollowContext(pool,run.CurrentRoom,nativeMayHaveStarted);
         if (session.CurrentTrack!=null && (nativeMayHaveStarted || wasStopped))

@@ -24,8 +24,8 @@ $baseLibDir = & dotnet msbuild "$projectRoot/FrierenMod.csproj" -nologo -getProp
 if ($LASTEXITCODE -ne 0) { throw "无法读取 BaseLibDir。" }
 $releaseInfo = Get-Content -Raw -LiteralPath "$gameDir/release_info.json" | ConvertFrom-Json
 $baseManifest = Get-Content -Raw -LiteralPath "$baseLibDir/BaseLib.json" | ConvertFrom-Json
-if ($releaseInfo.version -ne "v0.107.1" -or $baseManifest.version -ne "v3.4.7") {
-    throw "此实验版验证基线为 StS2 v0.107.1 + BaseLib v3.4.7，请先处理版本升级兼容性。"
+if ($releaseInfo.version -ne "v0.111.0" -or $baseManifest.version -ne "v3.4.7") {
+    throw "此实验版验证基线为 StS2 v0.111.0 + BaseLib v3.4.7，请先处理版本升级兼容性。"
 }
 
 Invoke-Checked "dotnet" @(

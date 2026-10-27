@@ -45,10 +45,12 @@ public partial class MagicFactorButton : NTopBarButton
         visual.Owner = null;
         foreach (var child in visual.FindChildren("*", "", true, false)) child.Owner = null;
         var button = new MagicFactorButton {
-            Name = "FrierenMagicBookButton", CustomMinimumSize = new(80, 80),
+            Name = "FrierenMagicBookButton", CustomMinimumSize = new(80, 80), Size = new(80,80),
             FocusMode = Control.FocusModeEnum.All
         };
         button.AddChild(visual);
+        // 脱离原生父模板时旧锚点尺寸可能仍是0；显式让可见图标与80像素点击框一致。
+        visual.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
         // 保留原版牌组按钮右下角的数量标签和排版，统计魔法书中的全部因子与魔具。
         var countLabel = template.GetNode<MegaLabel>("DeckCardCount");
         template.RemoveChild(countLabel); countLabel.Owner = null;
@@ -58,7 +60,11 @@ public partial class MagicFactorButton : NTopBarButton
         icon.Material = (Material)icon.Material.Duplicate();
         icon.ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize;
         icon.StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered;
-        template.Free();
+        // 模板未绑定玩家；新版 DeckButton 的释放回调要求先 Initialize。
+        // 此处只借用布局，移除原生脚本后再释放空模板。
+        ulong templateId = template.GetInstanceId();
+        template.SetScript(default(Variant));
+        GodotObject.InstanceFromId(templateId).Free();
 
         var row = root.FindChild("RightAlignedStuff", true, false) as BoxContainer;
         if (row == null) {

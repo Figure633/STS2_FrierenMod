@@ -14,6 +14,20 @@
       "source": "image_gen output exec-d4364898-82ce-4934-8dd9-38b86d76ad97.png; processed game asset is stored at target.",
       "target": "FrierenMod/images/character/map_marker_sts2.png",
       "sha256": "5c6e4ed21ffb3ba38f6b453442f3510e443ad3200ca5a25e6e3223efdb7810d3"
+    },
+    {
+      "key": "spiegel_boss_outline_candidate",
+      "date": "2026-10-27",
+      "prompt_file": "tools/spiegel_icon_prompt.txt",
+      "referenced_image_paths": [
+        "TODOs.docx:word/media/image1.png",
+        "FrierenMod/images/monsters/Aura_node.png"
+      ],
+      "transparent_background": true,
+      "source": "built-in image_gen exec-9a3c0302-e799-4f1b-8011-52e9904db053.png",
+      "target": "FrierenMod/images/monsters/Spiegel_node_candidate.png",
+      "sha256": "edeb78ea10e1a70d8a33707036824aae3b757778fb59d302277a1e3b2861a428",
+      "status": "preview only; not activated"
     }
   ]
 }

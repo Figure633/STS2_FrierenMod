@@ -34,8 +34,10 @@ def main():
         digest=hashlib.sha256(source.read_bytes()).hexdigest()
         target=out/track['file']
         previous=old.get(track['id'])
-        if previous and previous['sourceSha256']==digest and target.exists() and hashlib.sha256(target.read_bytes()).hexdigest()==previous['sha256']:
-            print('CACHE',track['id'],flush=True);return previous
+        target_lufs=track.get('targetLufs',manifest['targetLufs'])
+        pre_filter=track.get('preFilter','')
+        if previous and previous.get('targetLufs',manifest['targetLufs'])==target_lufs and previous.get('preFilter','')==pre_filter and previous['sourceSha256']==digest and target.exists() and hashlib.sha256(target.read_bytes()).hexdigest()==previous['sha256']:
+            print('CACHE',track['id'],flush=True);return {**previous,'targetLufs':target_lufs,'preFilter':pre_filter}
         analysis=run(['-i',str(source),'-map','0:a:0','-af','silencedetect=noise=-55dB:d=0.35','-f','null','-'])
         m=re.search(r'Duration: (\d+):(\d+):([\d.]+)',analysis)
         if not m: raise RuntimeError('无法识别时长：'+str(source))
@@ -49,15 +51,16 @@ def main():
             elif len(silence)>=2 and silence[-1][1]>=duration-.1 and silence[-2][0]=='start': end=min(duration,silence[-2][1]+.03)
         if end-start<10: raise RuntimeError('有效音频过短，停止处理：'+name)
         trim=f'atrim=start={start:.6f}:end={end:.6f},asetpts=PTS-STARTPTS'
-        norm=f'loudnorm=I={manifest["targetLufs"]}:TP={manifest["truePeakDb"]}:LRA=50'
+        if pre_filter: trim+=','+pre_filter
+        norm=f'loudnorm=I={target_lufs}:TP={manifest["truePeakDb"]}:LRA=50'
         measured=loudness(run(['-i',str(source),'-map','0:a:0','-af',trim+','+norm+':print_format=json','-f','null','-']))
         linear=norm+':measured_I='+measured['input_i']+':measured_TP='+measured['input_tp']+':measured_LRA='+measured['input_lra']+':measured_thresh='+measured['input_thresh']+':offset='+measured['target_offset']+':linear=true'
         temp=target.with_suffix('.tmp.ogg')
         run(['-y','-i',str(source),'-map','0:a:0','-vn','-af',trim+','+linear,'-c:a','libvorbis','-q:a','5','-ar','48000','-ac','2','-map_metadata','-1','-metadata','title='+track['title'],str(temp)])
         temp.replace(target)
         verified=loudness(run(['-i',str(target),'-af',norm+':print_format=json','-f','null','-']))
-        result={**track,'sourceSha256':digest,'sha256':hashlib.sha256(target.read_bytes()).hexdigest(),'durationSeconds':round(end-start,3),'trimStartSeconds':round(start,3),'trimEndSeconds':round(duration-end,3),'integratedLufs':float(verified['input_i']),'truePeakDb':float(verified['input_tp'])}
-        if abs(result['integratedLufs']-manifest['targetLufs'])>1 or result['truePeakDb']>-.3:
+        result={**track,'targetLufs':target_lufs,'preFilter':pre_filter,'sourceSha256':digest,'sha256':hashlib.sha256(target.read_bytes()).hexdigest(),'durationSeconds':round(end-start,3),'trimStartSeconds':round(start,3),'trimEndSeconds':round(duration-end,3),'integratedLufs':float(verified['input_i']),'truePeakDb':float(verified['input_tp'])}
+        if abs(result['integratedLufs']-target_lufs)>1 or result['truePeakDb']>-.3:
             raise RuntimeError('响度检查未通过：'+json.dumps(result,ensure_ascii=False))
         print('READY',track['id'],result['durationSeconds'],'seconds',result['integratedLufs'],'LUFS',flush=True)
         return result

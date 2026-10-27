@@ -19,6 +19,7 @@ using MegaCrit.Sts2.Core.Unlocks;
 public static class MusicTests
 {
     private static bool Interactive(ref bool __result){__result=false;return false;}
+    private static bool BankAvailable(ref bool __result){__result=true;return false;}
     public static async Task<int> Run(Node root)
     {
         int count=0;
@@ -73,6 +74,9 @@ public static class MusicTests
         var patch=new Harmony("frieren.tests.music092");
         var nonInteractive=AccessTools.PropertyGetter(typeof(MegaCrit.Sts2.Core.Helpers.NonInteractiveMode),"IsActive");
         patch.Patch(nonInteractive,prefix:new HarmonyMethod(typeof(MusicTests),nameof(Interactive)));
+        // 独立测试没有 FMOD 扩展，只替代音频库加载；原生控制器与模组路由照常执行。
+        patch.Patch(AccessTools.Method(typeof(NRunMusicController), "LoadActBank"),
+            prefix:new HarmonyMethod(typeof(MusicTests),nameof(BankAvailable)));
         run.PushRoom(new RestSiteRoom());
         var controller=new NRunMusicController();var proxy=new Node {Name="Proxy"};proxy.SetScript(GD.Load<Script>("res://music_proxy.gd"));
         controller.AddChild(proxy);controller.SetRunState(run);root.AddChild(controller);
@@ -86,8 +90,14 @@ public static class MusicTests
         Check(routed.CurrentTrack==null && proxy.Get("started").AsInt32()>1,"关闭模组音乐立即恢复原生");
         PresentationSettings.OriginalMusic=true;await Wait(.6);Check(routed.CurrentTrack!=null,"重新开启音乐恢复曲池");
         var boss1=new CombatRoom(ModelDb.Encounter<SpiegelFrierenEncounter>().ToMutable(),run);run.PushRoom(boss1);
-        AccessTools.Property(typeof(CombatManager),nameof(CombatManager.IsInProgress)).SetValue(CombatManager.Instance,true);
+        CombatManager.Instance.SetUpCombat(boss1.CombatState);
+        CombatTestState.SetInProgress(true);
         controller.UpdateMusic();await Wait(.6);Check(routed.CurrentPool==MusicPool.Spiegel,"实际复制体房间使用专属曲");
+        string victoryTrack=routed.CurrentTrack!;
+        CombatTestState.SetInProgress(false);
+        controller.UpdateMusic();await Wait(.4);
+        Check(routed.CurrentTrack==victoryTrack && routed.CurrentPool==MusicPool.Spiegel,"Boss胜利后保留当前音乐，不立即切常规曲");
+        CombatTestState.SetInProgress(true);
         run.PopCurrentRoom();run.PushRoom(new CombatRoom(ModelDb.Encounter<QueenBoss>().ToMutable(),run));
         controller.StopMusic();controller.UpdateMusic();await Wait(.6);
         Check(routed.CurrentPool==MusicPool.Boss && routed.CurrentTrack!=MusicCatalog.For(MusicPool.Spiegel)[0].Path,"第二Boss切场后有音乐且不沿用复制体曲");
@@ -96,7 +106,7 @@ public static class MusicTests
         player.Creature.SetCurrentHpInternal(player.Creature.MaxHp);
         PresentationSettings.OriginalMusic=false;controller.StopMusic();controller.QueueFree();await Wait(.1);
         patch.UnpatchAll(patch.Id);PresentationSettings.OriginalMusic=true;
-        AccessTools.Property(typeof(CombatManager),nameof(CombatManager.IsInProgress)).SetValue(CombatManager.Instance,false);
+        CombatTestState.SetInProgress(false);
         run.PopCurrentRoom();run.PopCurrentRoom();RunManager.Instance.CleanUp();
         return count;
     }

@@ -24,14 +24,14 @@ public sealed class HighDensityMana() : FrierenCard(0, CardType.Status, CardRari
         description.Add("Synchro", new LocString("frieren", $"TIP.{SynchroPresentation.Key(this)}.title").GetFormattedText());
     }
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Amount", 1)];
-    protected override PileType GetResultPileTypeForCardPlay()
+    protected override CardLocation GetResultLocationForCardPlay()
     {
-        var pile = base.GetResultPileTypeForCardPlay();
-        return pile == PileType.Discard ? PileType.Exhaust : pile;
+        var pile = base.GetResultLocationForCardPlay();
+        return pile.pileType == PileType.Discard ? new CardLocation(pile.player,PileType.Exhaust,pile.position) : pile;
     }
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
-        await SynchroCmd.Play(context, this);
+        await SynchroCmd.Play(context, this, play);
     }
     protected override void OnUpgrade() { DynamicVars["Amount"].UpgradeValueBy(1); }
     public override async Task AfterCardExhausted(PlayerChoiceContext context, CardModel card, bool causedByEthereal)

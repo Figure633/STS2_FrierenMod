@@ -22,7 +22,7 @@ public sealed class MageStyleFinisher() : FrierenCard(1, CardType.Attack, CardRa
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         int hits = SynchroCmd.CountThisTurn(Owner);
-        if (hits > 0) await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(play.Target!).WithHitCount(hits).Execute(context);
+        if (hits > 0) await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this, play).Targeting(play.Target!).WithHitCount(hits).Execute(context);
     }
     protected override void OnUpgrade() { DynamicVars.Damage.UpgradeValueBy(2); }
 }

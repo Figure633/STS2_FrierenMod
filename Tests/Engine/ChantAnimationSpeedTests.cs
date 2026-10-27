@@ -53,10 +53,10 @@ public static class ChantAnimationSpeedTests
         var combat = new CombatState(runState: run); combat.AddPlayer(player);
         combat.AddCreature(combat.CreateCreature(ModelDb.Monster<MegaCrit.Sts2.Core.Models.Monsters.Axebot>().ToMutable(), CombatSide.Enemy, null));
         CombatManager.Instance.SetUpCombat(combat);
-        AccessTools.Property(typeof(CombatManager), nameof(CombatManager.IsInProgress)).SetValue(CombatManager.Instance, true);
+        CombatTestState.SetInProgress(true);
         var context = new BlockingPlayerChoiceContext();
         var source = combat.CreateCard<FinalChant>(player);
-        var play = new CardPlay { Card = source, Target = null, ResultPile = PileType.Discard, PlayCount = 1, PlayIndex = 0, IsAutoPlay = false,
+        var play = new CardPlay { Card = source, Player = source.Owner, Target = null, ResultPile = PileType.Discard, PlayCount = 1, PlayIndex = 0, IsAutoPlay = false,
             Resources = new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 } };
         async Task<CardModel[]> Mana(PileType pile, int n, bool dense = false) {
             var cards = new List<CardModel>();

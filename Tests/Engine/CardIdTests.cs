@@ -34,7 +34,7 @@ public static class CardIdTests
         var enemy = combat.CreateCreature(ModelDb.Monster<MegaCrit.Sts2.Core.Models.Monsters.Axebot>().ToMutable(), CombatSide.Enemy, null);
         combat.AddCreature(enemy);
         CombatManager.Instance.SetUpCombat(combat);
-        AccessTools.Property(typeof(CombatManager), nameof(CombatManager.IsInProgress)).SetValue(CombatManager.Instance, true);
+        CombatTestState.SetInProgress(true);
         var cases = new (Type Type, string OldName, string OldEntry, string NewEntry)[] {
             (typeof(ViolentExorcism), "Free", "FREE", "VIOLENT_EXORCISM"),
             (typeof(Envy), "HalfTheSky", "HALF_THE_SKY", "ENVY"),
@@ -93,7 +93,7 @@ public static class CardIdTests
         for (int i = 0; i < 2; i++) await CardPileCmd.Add(combat.CreateCard<Mana>(player), PileType.Draw);
         var envy = combat.CreateCard<Envy>(player); await CardPileCmd.Add(envy, PileType.Discard);
         var chant = combat.CreateCard<RapidChant>(player);
-        var play = new CardPlay { Card = chant, Target = null, IsAutoPlay = false, ResultPile = PileType.Discard, PlayCount = 1, PlayIndex = 0,
+        var play = new CardPlay { Card = chant, Player = chant.Owner, Target = null, IsAutoPlay = false, ResultPile = PileType.Discard, PlayCount = 1, PlayIndex = 0,
             Resources = new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 } };
         var option = ChantCmd.Options(player, 2).Single(x => x.SpellId == "MetalPetalSpell");
         await ChantCmd.Resolve(new BlockingPlayerChoiceContext(), play, option);

@@ -33,7 +33,7 @@ public static class SynchroDisplayTests
         var combat=new CombatState(runState:run); combat.AddPlayer(player);
         var enemy=combat.CreateCreature(ModelDb.Monster<MegaCrit.Sts2.Core.Models.Monsters.Axebot>().ToMutable(),CombatSide.Enemy,null);
         combat.AddCreature(enemy); CombatManager.Instance.SetUpCombat(combat);
-        AccessTools.Property(typeof(CombatManager),nameof(CombatManager.IsInProgress)).SetValue(CombatManager.Instance,true);
+        CombatTestState.SetInProgress(true);
         var context=new BlockingPlayerChoiceContext();
         T Card<T>(bool upgrade=false) where T:CardModel {
             var card=(T)ModelDb.GetById<CardModel>(ModelDb.GetId(typeof(T))).ToMutable(); card.Owner=player;
@@ -134,7 +134,7 @@ public static class SynchroDisplayTests
         ui.RemoveChild(sourceNode); ui.RemoveChild(previewNode); sourceNode.QueueFreeSafely(); previewNode.QueueFreeSafely();
         ui.QueueFree();
         for(int i=0;i<5;i++) await root.ToSignal(root.GetTree(),SceneTree.SignalName.ProcessFrame);
-        AccessTools.Property(typeof(CombatManager),nameof(CombatManager.IsInProgress)).SetValue(CombatManager.Instance,false);
+        CombatTestState.SetInProgress(false);
         return count;
     }
 }

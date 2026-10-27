@@ -16,7 +16,7 @@ public sealed class Envy() : FrierenCard(0, CardType.Attack, CardRarity.Common, 
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(4, ValueProp.Move)];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play) =>
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(play.Target!).Execute(context);
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this, play).Targeting(play.Target!).Execute(context);
     public async Task AfterChant(PlayerChoiceContext context, CardPlay play)
     {
         if (Pile?.Type == PileType.Discard) await CardPileCmd.Add(this, PileType.Hand);

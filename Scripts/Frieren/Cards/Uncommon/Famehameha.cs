@@ -17,6 +17,6 @@ public sealed class Famehameha() : LegendaryCard(4, CardType.Attack, CardRarity.
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(31, ValueProp.Move)];
     public Task AfterChant(PlayerChoiceContext context, CardPlay play) { EnergyCost.AddThisTurn(-1); return Task.CompletedTask; }
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play) =>
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(play.Target!).Execute(context);
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this, play).Targeting(play.Target!).Execute(context);
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(10);
 }

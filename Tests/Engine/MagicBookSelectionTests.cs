@@ -106,8 +106,7 @@ public static class MagicBookSelectionTests
         var enemy=combat.CreateCreature(MegaCrit.Sts2.Core.Models.ModelDb.Monster<MegaCrit.Sts2.Core.Models.Monsters.Axebot>().ToMutable(),
             MegaCrit.Sts2.Core.Combat.CombatSide.Enemy,null);combat.AddCreature(enemy);enemy.SetCurrentHpInternal(50);
         MegaCrit.Sts2.Core.Combat.CombatManager.Instance.SetUpCombat(combat);
-        HarmonyLib.AccessTools.Property(typeof(MegaCrit.Sts2.Core.Combat.CombatManager),"IsInProgress")
-            .SetValue(MegaCrit.Sts2.Core.Combat.CombatManager.Instance,true);
+        CombatTestState.SetInProgress(true);
         HarmonyLib.AccessTools.Property(typeof(MegaCrit.Sts2.Core.Combat.CombatManager),"IsStarting")
             .SetValue(MegaCrit.Sts2.Core.Combat.CombatManager.Instance,false);
         source=Holder("Prop_"+prop);target=Holder("Factor_"+deck.Items[0].InstanceId);

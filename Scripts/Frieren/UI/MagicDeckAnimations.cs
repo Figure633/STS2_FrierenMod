@@ -88,16 +88,19 @@ public static class MagicDeckAnimations
                         if (!await flash.AwaitFinished(layer)) return;
                     }
                     // 与原生 CardPileCmd 消耗牌相同：粒子与音效由原版提供，卡面变灰后释放。
-                    var exhaust = NExhaustVfx.Create(card);
+                    var exhaust = MegaCrit.Sts2.Core.Nodes.Vfx.Cards.NCardExhaustVfx.Create(card);
                     if (exhaust != null) {
                         exhaust.Scale = card.GetGlobalTransform().Scale / layer.GetGlobalTransform().Scale;
                         layer.AddChild(exhaust);
                         exhausts.Add(WaitForExit(exhaust));
+                        _ = TaskHelper.RunSafely(exhaust.PlayAnimation());
+                        // 原生消耗特效持有并释放卡牌；交还所有权后不再手动回收。
+                        cards.Remove(card);
                     }
                     var fade = layer.CreateTween();
                     fade.TweenProperty(card, "modulate", StsColors.exhaustGray, 0.3);
                     if (!await fade.AwaitFinished(layer)) return;
-                    Release(card); cards.Remove(card);
+                    if (exhaust == null) { Release(card); cards.Remove(card); }
                 }
                 // 魔法书已经打开时，直接展示库存中的新条目，不再从书内飞回右上角图标。
                 if (screen.View.IsVisibleInTree()) {

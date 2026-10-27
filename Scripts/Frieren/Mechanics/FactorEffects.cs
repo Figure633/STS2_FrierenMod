@@ -31,7 +31,7 @@ public static class FactorEffects
             case "BuildUpBody": await Buff<StrengthPower>(reward); break;
             case "HighSpeedMovement": await Buff<DexterityPower>(reward); break;
             case "BePrepared": await Buff<VigorPower>(reward); break;
-            case "IceArrows": await CreatureCmd.Damage(context, enemies, reward, ValueProp.Unblockable | ValueProp.Unpowered, self, play.Card); break;
+            case "IceArrows": await CreatureCmd.Damage(context, enemies, reward, ValueProp.Unblockable | ValueProp.Unpowered, self, play.Card, play); break;
             case "TransferToAlchemist": await Debuff<PoisonPower>(reward); break;
             case "MeleeMage": await Buff<StrikeUpPower>(reward); break;
             case "MetalPetalSpell": await Buff<MetallicizePower>(reward); break;
@@ -50,7 +50,7 @@ public static class FactorEffects
             case "NatureBeauty": await Buff<EnergyNextTurnPower>(reward); break;
             case "BloodSpell":
                 await CreatureCmd.Damage(context, self, option.Intensity,
-                    ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move, play.Card);
+                    ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move, play.Card, play);
                 if (self.IsAlive) await ManaCmd.Generate(player, ManaCmd.Pile(option.Slot), reward);
                 break;
             case "PassOnTheTorch": await ManaCmd.Generate(player, ManaCmd.Pile((ManaSlot)(((int)option.Slot + 1) % 3)), reward); break;

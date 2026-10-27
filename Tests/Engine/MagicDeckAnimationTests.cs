@@ -1,3 +1,4 @@
+using NExhaustVfx = MegaCrit.Sts2.Core.Nodes.Vfx.Cards.NCardExhaustVfx;
 using System.Text.Json;
 using FrierenMod.Core;
 using FrierenMod.Scripts.Characters;
@@ -23,11 +24,16 @@ using HarmonyLib;
 
 public static class MagicDeckAnimationTests
 {
-    private static bool CreateExhaust(NCard card, ref NExhaustVfx __result)
+    private static int ExhaustsCreated;
+    private static void CreateExhaust(ref bool __state)
     {
-        __result = GD.Load<PackedScene>(NExhaustVfx.AssetPaths.Single()).Instantiate<NExhaustVfx>();
-        __result.Set(NExhaustVfx.PropertyName._card, card);
-        return false;
+        __state = TestMode.IsOn;
+        TestMode.IsOn = false;
+    }
+    private static void RestoreTestMode(bool __state, NExhaustVfx? __result)
+    {
+        TestMode.IsOn = __state;
+        if (__result != null) ExhaustsCreated++;
     }
     private static bool CreateTrail(Control card, string characterTrailPath, ref NCardTrailVfx __result)
     {
@@ -43,7 +49,8 @@ public static class MagicDeckAnimationTests
         visualFactory.Patch(AccessTools.Method(typeof(NCardTrailVfx), nameof(NCardTrailVfx.Create)),
             prefix: new HarmonyMethod(typeof(MagicDeckAnimationTests), nameof(CreateTrail)));
         visualFactory.Patch(AccessTools.Method(typeof(NExhaustVfx), nameof(NExhaustVfx.Create)),
-            prefix: new HarmonyMethod(typeof(MagicDeckAnimationTests), nameof(CreateExhaust)));
+            prefix: new HarmonyMethod(typeof(MagicDeckAnimationTests), nameof(CreateExhaust)),
+            postfix: new HarmonyMethod(typeof(MagicDeckAnimationTests), nameof(RestoreTestMode)));
         void Check(bool ok, string name) { if (!ok) throw new Exception(name); GD.Print("PASS 动画：" + name); count++; }
         async Task Tick() => await root.ToSignal(root.GetTree(), SceneTree.SignalName.ProcessFrame);
         async Task Snapshot(string name) {
@@ -110,7 +117,7 @@ public static class MagicDeckAnimationTests
             seenFly |= layer.GetChildren().OfType<NCardFlyVfx>().Any();
             if (!seenExhaust && layer.GetChildren().OfType<NExhaustVfx>().Any()) {
                 seenExhaust = true;
-                Check(layer.GetChildren().OfType<NExhaustVfx>().SelectMany(e=>e.GetChildren()).OfType<GpuParticles2D>().Any(p=>p.Emitting),
+                Check(layer.GetChildren().OfType<NExhaustVfx>().SelectMany(e=>e.FindChildren("*", "", true, false)).OfType<GpuParticles2D>().Any(p=>p.Emitting),
                     "魔具原位置运行原版消耗粒子");
                 var settle=layer.CreateTween(); settle.TweenInterval(0.16); await settle.AwaitFinished(layer);
                 await Snapshot("magic-prop-native-exhaust");
@@ -128,9 +135,11 @@ public static class MagicDeckAnimationTests
             if (seenNew.Count==2 && !capturedNew) { await Snapshot("magic-factors-obtained"); capturedNew=true; }
         }
         Check(seenExhaust && seenNew.Count==2 && !seenFly, "两个新因子直接在库存中依次闪光，不飞回魔法书图标");
-        Check(clearedNew.Count == 2, "两个因子的蓝光均在动画队列完成前独立清除，不残留原生闪光尾部高亮");
         await use;
         for (int i=0;i<8;i++) await Tick();
+        Check(addedIds.All(id => ui.FindChild("Factor_"+id,true,false) is NGridCardHolder holder &&
+            (float)AccessTools.Method(typeof(NCardHighlight), "GetShaderParameter").Invoke(holder.CardNode!.CardHighlight, null)! < .001f),
+            "两个因子完成队列并重新排版后均无残留蓝光");
         Check(layer.GetChildCount() == 0 && !MagicPropCmd.IsBusy(player), "动画结束释放卡牌节点和忙碌状态");
         await RightClick(circle);
         circleHolder = (NGridCardHolder)ui.FindChild("Prop_" + circle, true, false);
@@ -139,13 +148,15 @@ public static class MagicDeckAnimationTests
             "动画结束并复用卡牌后，实际右键仍可选中另一魔具");
         await RightClick(circle);
         var materialIds=MagicDeckStore.Read(player).Items.Take(2).Select(i=>i.InstanceId).ToArray();
+        int previousExhausts=ExhaustsCreated;
         var materialUse=MagicPropCmd.UseSelected(player,circle,materialIds);
         int maxExhausts=0; elapsed.Restart();
         while(!materialUse.IsCompleted && elapsed.Elapsed<TimeSpan.FromSeconds(8)) {
             await Tick(); maxExhausts=Math.Max(maxExhausts,layer.GetChildren().OfType<NExhaustVfx>().Count());
         }
-        Check(await materialUse && maxExhausts==3 && materialIds.All(id=>MagicDeckStore.Read(player).Items.All(i=>i.InstanceId!=id)) &&
-            layer.GetChildCount()==0, "炼成同时为魔具和两个材料播放原生消耗，结算及回收各一次");
+        // TestMode 会跳过原生特效尾部等待，统计创建次数而不依赖尾部存活时长。
+        Check(await materialUse && ExhaustsCreated-previousExhausts==3 && maxExhausts>0 && materialIds.All(id=>MagicDeckStore.Read(player).Items.All(i=>i.InstanceId!=id)) &&
+            layer.GetChildCount()==0, "炼成为魔具和两个材料分别播放原生消耗，结算及回收各一次");
         toggle.EmitSignal(NClickableControl.SignalName.Released, toggle);
         Check(!player.Deck.Cards.OfType<FrierenMod.Scripts.Cards.FactorCard>().Any(), "表现卡不进入普通牌组");
         deck = MagicDeckStore.Read(player); deck.Equip(deck.Items.Last().InstanceId, ManaSlot.Hand);

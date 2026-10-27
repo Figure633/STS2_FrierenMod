@@ -17,7 +17,7 @@ public sealed class ReadyStance() : FrierenCard(1, CardType.Attack, CardRarity.C
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(6, ValueProp.Move)];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(play.Target!).Execute(context);
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this, play).Targeting(play.Target!).Execute(context);
         var chant = Owner.PlayerCombatState!.DrawPile.Cards.FirstOrDefault(c => ChantCmd.IsChant(c));
         if (chant == null) return;
         await CardPileCmd.Add(chant, PileType.Draw, CardPilePosition.Top);

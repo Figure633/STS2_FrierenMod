@@ -31,7 +31,7 @@ public static class PlayFeedbackTests
         var combat = new CombatState(runState: run); combat.AddPlayer(player);
         var enemy = combat.CreateCreature(ModelDb.Monster<MegaCrit.Sts2.Core.Models.Monsters.Axebot>().ToMutable(), CombatSide.Enemy, null);
         combat.AddCreature(enemy); CombatManager.Instance.SetUpCombat(combat);
-        AccessTools.Property(typeof(CombatManager), nameof(CombatManager.IsInProgress)).SetValue(CombatManager.Instance, true);
+        CombatTestState.SetInProgress(true);
         MagicDeckStore.Write(player, MagicDeckState.CreatePrototypeLoadout());
         player.PlayerCombatState!.Energy = 10;
         var context = new BlockingPlayerChoiceContext();
@@ -50,7 +50,7 @@ public static class PlayFeedbackTests
             Check(!playable && reason == UnplayableReason.BlockedByCardLogic && ReferenceEquals(preventer, card) &&
                 Message(reason, preventer) == Text(key), card.GetType().Name + " 使用具体失败原因：" + key);
         }
-        CardPlay Play(CardModel card) => new() { Card = card, Target = null, IsAutoPlay = false,
+        CardPlay Play(CardModel card) => new() { Card = card, Player = card.Owner, Target = null, IsAutoPlay = false,
             ResultPile = PileType.Discard, PlayCount = 1, PlayIndex = 0,
             Resources = new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 } };
 

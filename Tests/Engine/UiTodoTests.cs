@@ -88,7 +88,7 @@ public static class UiTodoTests
         combat.AddCreature(combat.CreateCreature(ModelDb.Monster<MegaCrit.Sts2.Core.Models.Monsters.Axebot>().ToMutable(),
             CombatSide.Enemy, null));
         CombatManager.Instance.SetUpCombat(combat);
-        AccessTools.Property(typeof(CombatManager), nameof(CombatManager.IsInProgress)).SetValue(CombatManager.Instance, true);
+        CombatTestState.SetInProgress(true);
         foreach (var pile in player.PlayerCombatState!.AllPiles)
             foreach (var card in pile.Cards.ToArray()) pile.RemoveInternal(card);
         var deck = new MagicDeckState();

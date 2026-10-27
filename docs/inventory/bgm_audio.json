@@ -13,7 +13,9 @@
       "trimStartSeconds": 0.404,
       "trimEndSeconds": 6.163,
       "integratedLufs": -17.96,
-      "truePeakDb": -1.29
+      "truePeakDb": -1.29,
+      "targetLufs": -18,
+      "preFilter": ""
     },
     {
       "id": "time_flows",
@@ -27,7 +29,9 @@
       "trimStartSeconds": 0.38,
       "trimEndSeconds": 5.035,
       "integratedLufs": -17.99,
-      "truePeakDb": -3.09
+      "truePeakDb": -3.09,
+      "targetLufs": -18,
+      "preFilter": ""
     },
     {
       "id": "odd_clouds",
@@ -41,7 +45,9 @@
       "trimStartSeconds": 0.411,
       "trimEndSeconds": 4.852,
       "integratedLufs": -18.18,
-      "truePeakDb": -1.53
+      "truePeakDb": -1.53,
+      "targetLufs": -18,
+      "preFilter": ""
     },
     {
       "id": "heroes_return",
@@ -55,7 +61,9 @@
       "trimStartSeconds": 0.405,
       "trimEndSeconds": 5.149,
       "integratedLufs": -18.12,
-      "truePeakDb": -4.1
+      "truePeakDb": -4.1,
+      "targetLufs": -18,
+      "preFilter": ""
     },
     {
       "id": "grimoires",
@@ -63,13 +71,15 @@
       "pool": "event",
       "source": "download:Too Many Grimoires.mp4",
       "file": "grimoires.ogg",
+      "targetLufs": -19.5,
+      "preFilter": "",
       "sourceSha256": "3cbdda3d45142b26a26fcd61d1a800a704f27103ce8522aae9cfe49000d5652a",
-      "sha256": "ea306d1e432ae180b7a7312d1afc7d9e979b58308195c0630faaae5cc6718d84",
+      "sha256": "e0561efe355fe9bd1968d5a5094b306bb52858fda03cdef673a79410fbe1270f",
       "durationSeconds": 43.176,
       "trimStartSeconds": 0.387,
       "trimEndSeconds": 4.397,
-      "integratedLufs": -17.93,
-      "truePeakDb": -1.45
+      "integratedLufs": -19.47,
+      "truePeakDb": -1.5
     },
     {
       "id": "waltz",
@@ -83,7 +93,9 @@
       "trimStartSeconds": 0.493,
       "trimEndSeconds": 4.51,
       "integratedLufs": -18.03,
-      "truePeakDb": -5.6
+      "truePeakDb": -5.6,
+      "targetLufs": -18,
+      "preFilter": ""
     },
     {
       "id": "dragon_smasher",
@@ -97,7 +109,9 @@
       "trimStartSeconds": 0.405,
       "trimEndSeconds": 0.0,
       "integratedLufs": -18.08,
-      "truePeakDb": -6.09
+      "truePeakDb": -6.09,
+      "targetLufs": -18,
+      "preFilter": ""
     },
     {
       "id": "deep_dungeon",
@@ -111,7 +125,9 @@
       "trimStartSeconds": 0.374,
       "trimEndSeconds": 0.0,
       "integratedLufs": -18.02,
-      "truePeakDb": -5.6
+      "truePeakDb": -5.6,
+      "targetLufs": -18,
+      "preFilter": ""
     },
     {
       "id": "ready_weapon",
@@ -125,7 +141,9 @@
       "trimStartSeconds": 0.0,
       "trimEndSeconds": 4.23,
       "integratedLufs": -18.07,
-      "truePeakDb": -3.67
+      "truePeakDb": -3.67,
+      "targetLufs": -18,
+      "preFilter": ""
     },
     {
       "id": "magic_within",
@@ -139,7 +157,9 @@
       "trimStartSeconds": 0.404,
       "trimEndSeconds": 0.411,
       "integratedLufs": -18.08,
-      "truePeakDb": -6.43
+      "truePeakDb": -6.43,
+      "targetLufs": -18,
+      "preFilter": ""
     },
     {
       "id": "knife_throat",
@@ -153,7 +173,9 @@
       "trimStartSeconds": 0.354,
       "trimEndSeconds": 6.045,
       "integratedLufs": -18.1,
-      "truePeakDb": -5.5
+      "truePeakDb": -5.5,
+      "targetLufs": -18,
+      "preFilter": ""
     },
     {
       "id": "dangerous_medley",
@@ -167,7 +189,9 @@
       "trimStartSeconds": 0.0,
       "trimEndSeconds": 0.0,
       "integratedLufs": -18.1,
-      "truePeakDb": -7.33
+      "truePeakDb": -7.33,
+      "targetLufs": -18,
+      "preFilter": ""
     },
     {
       "id": "zoltraak",
@@ -181,7 +205,9 @@
       "trimStartSeconds": 0.362,
       "trimEndSeconds": 3.816,
       "integratedLufs": -18.08,
-      "truePeakDb": -7.57
+      "truePeakDb": -7.57,
+      "targetLufs": -18,
+      "preFilter": ""
     },
     {
       "id": "divine_revolte",
@@ -195,7 +221,9 @@
       "trimStartSeconds": 0.0,
       "trimEndSeconds": 4.374,
       "integratedLufs": -18.04,
-      "truePeakDb": -2.24
+      "truePeakDb": -2.24,
+      "targetLufs": -18,
+      "preFilter": ""
     },
     {
       "id": "first_class_mage",
@@ -203,8 +231,10 @@
       "pool": "boss",
       "source": "download:first-class mage.mp4",
       "file": "first_class_mage.ogg",
+      "preFilter": "dynaudnorm=f=500:g=31:m=2:p=0.9",
+      "targetLufs": -18,
       "sourceSha256": "2ccd667b892692564218f42107f8e162771882091dded2e92128492a1ddb505e",
-      "sha256": "33c689f29eead81047882318e8e30205fde582e05d8bcdf1c8bb99167d06632a",
+      "sha256": "03a35dd9d86e66a485cc704e72fc7ed8f32d69441fa69407968290ab6d6a7ba5",
       "durationSeconds": 151.316,
       "trimStartSeconds": 0.0,
       "trimEndSeconds": 3.404,
@@ -217,13 +247,15 @@
       "pool": "boss",
       "source": "download:the golden land.mp4",
       "file": "golden_land.ogg",
+      "preFilter": "dynaudnorm=f=500:g=31:m=3:p=0.9",
+      "targetLufs": -18,
       "sourceSha256": "93746538180368a5c5b0b74d75e2aef0d3725d722dd6a67015bac18dd1e2983f",
-      "sha256": "30e19c6f84c1110cf0f5d257cbf4a65c48f3019f7d57ccc485b8b65fe3d8dfc8",
+      "sha256": "18885350f4eca3d79380d55e7c3a07dae73075f69946ce22ed709463a63581a8",
       "durationSeconds": 175.563,
       "trimStartSeconds": 0.0,
       "trimEndSeconds": 4.037,
-      "integratedLufs": -18.15,
-      "truePeakDb": -6.04
+      "integratedLufs": -18.1,
+      "truePeakDb": -5.96
     },
     {
       "id": "south_hero",
@@ -237,7 +269,9 @@
       "trimStartSeconds": 0.0,
       "trimEndSeconds": 3.393,
       "integratedLufs": -18.13,
-      "truePeakDb": -5.21
+      "truePeakDb": -5.21,
+      "targetLufs": -18,
+      "preFilter": ""
     },
     {
       "id": "frieren_slayer",
@@ -251,7 +285,9 @@
       "trimStartSeconds": 0.388,
       "trimEndSeconds": 3.664,
       "integratedLufs": -18.1,
-      "truePeakDb": -7.68
+      "truePeakDb": -7.68,
+      "targetLufs": -18,
+      "preFilter": ""
     },
     {
       "id": "sleepy_frieren",
@@ -259,13 +295,15 @@
       "pool": "merchant",
       "source": "legacy:STS_Merchant_NewMix_v2.mp3",
       "file": "sleepy_frieren.ogg",
+      "targetLufs": -19.5,
+      "preFilter": "",
       "sourceSha256": "9b811951e7b5f0ab6f07069afbaafd0c82fdd75f33d4ac4836579de52e48c6f8",
-      "sha256": "66b4987dccd25df2892dfcc235a9261dcbcdebb30de30aca7246824dcd2a42eb",
+      "sha256": "874765909833ca810b2e76cb1b58f6bb8350314deb764f054ef49f1d6fc55936",
       "durationSeconds": 112.159,
       "trimStartSeconds": 0.38,
       "trimEndSeconds": 0.57,
-      "integratedLufs": -17.98,
-      "truePeakDb": -1.36
+      "integratedLufs": -19.47,
+      "truePeakDb": -1.5
     },
     {
       "id": "peace",
@@ -279,7 +317,9 @@
       "trimStartSeconds": 0.373,
       "trimEndSeconds": 7.164,
       "integratedLufs": -17.97,
-      "truePeakDb": -2.12
+      "truePeakDb": -2.12,
+      "targetLufs": -18,
+      "preFilter": ""
     }
   ]
 }

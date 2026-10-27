@@ -52,9 +52,9 @@ public static class MagicRewardDropTests
         Check(reward.IsPopulated && reward.Choices.Length==3 && reward.Choices.Distinct().Count()==3 &&
             MagicDeckStore.Read(player).RewardPity==90,"战斗胜利经原生额外奖励入口生成固定的三选一，并减少掉落补偿");
         Check(!room.ExtraRewards.ContainsKey(other),"其他角色不获得芙莉莲魔法物品奖励");
-        string stateAfter=MagicDeckStore.Read(player).ToJson();int rngAfter=player.PlayerRng.Rewards.Counter;
+        string stateAfter=MagicDeckStore.Read(player).ToJson();int rngAfter=player.PlayerRng.Rewards.ToSerializable().counter;
         await Victory(room);
-        Check(room.ExtraRewards[player].Count==1 && MagicDeckStore.Read(player).ToJson()==stateAfter && player.PlayerRng.Rewards.Counter==rngAfter,
+        Check(room.ExtraRewards[player].Count==1 && MagicDeckStore.Read(player).ToJson()==stateAfter && player.PlayerRng.Rewards.ToSerializable().counter==rngAfter,
             "同场胜利重复通知不会重复掉落或推进随机数");
         await RelicCmd.Remove(player.GetRelic<HolyEmblem>()!);SetPity(100);
         var withoutEmblem=Room<TurretOperatorWeak>();await Victory(withoutEmblem);
@@ -63,8 +63,8 @@ public static class MagicRewardDropTests
         Check(boss.ExtraRewards[player].OfType<FactorReward>().Count()==1,"Boss 按一代普通房规则参与掉落");
         SetPity(-100);var miss=Room<TurretOperatorWeak>();await Victory(miss);
         Check(!miss.ExtraRewards.ContainsKey(player) && MagicDeckStore.Read(player).RewardPity==-90,"未掉落时补偿增加10");
-        int missRng=player.PlayerRng.Rewards.Counter;await Victory(miss);
-        Check(player.PlayerRng.Rewards.Counter==missRng && MagicDeckStore.Read(player).RewardPity==-90,"未掉落场次也不会重复判定");
+        int missRng=player.PlayerRng.Rewards.ToSerializable().counter;await Victory(miss);
+        Check(player.PlayerRng.Rewards.ToSerializable().counter==missRng && MagicDeckStore.Read(player).RewardPity==-90,"未掉落场次也不会重复判定");
         void Escape(CombatRoom battle) {
             var enemy=battle.CombatState.CreateCreature(ModelDb.Monster<MegaCrit.Sts2.Core.Models.Monsters.Axebot>().ToMutable(),CombatSide.Enemy,null);
             battle.CombatState.AddCreature(enemy);battle.CombatState.CreatureEscaped(enemy);
@@ -80,16 +80,16 @@ public static class MagicRewardDropTests
         });
         var current=MagicDeckStore.Read(player);current.RewardRarityOffset=5;MagicDeckStore.Write(player,current);
         reward=new FactorReward(player){Seed=seed};reward.Populate();
-        string[] offered=reward.Choices;stateAfter=MagicDeckStore.Read(player).ToJson();rngAfter=player.PlayerRng.Rewards.Counter;
+        string[] offered=reward.Choices;stateAfter=MagicDeckStore.Read(player).ToJson();rngAfter=player.PlayerRng.Rewards.ToSerializable().counter;
         reward.Populate();
-        Check(reward.Choices.SequenceEqual(offered) && MagicDeckStore.Read(player).ToJson()==stateAfter && player.PlayerRng.Rewards.Counter==rngAfter,
+        Check(reward.Choices.SequenceEqual(offered) && MagicDeckStore.Read(player).ToJson()==stateAfter && player.PlayerRng.Rewards.ToSerializable().counter==rngAfter,
             "混合奖励重复展开不重掷、不重复更新补偿");
         var save=reward.ToSerializable();
         string json=JsonSerializer.Serialize(save,JsonSerializationUtility.Options);
         var saved=JsonSerializer.Deserialize<SerializableReward>(json,JsonSerializationUtility.Options)!;
         var restored=(FactorReward)Reward.FromSerializable(saved,player);
         Check(json.Contains("FrierenMagicItemChoices") && restored.Choices.SequenceEqual(offered),"BaseLib 扩展 JSON 保存完整混合选项");
-        Check(MagicDeckStore.Read(player).ToJson()==stateAfter && player.PlayerRng.Rewards.Counter==rngAfter,
+        Check(MagicDeckStore.Read(player).ToJson()==stateAfter && player.PlayerRng.Rewards.ToSerializable().counter==rngAfter,
             "恢复奖励不重算稀有度，也不推进玩家 RNG");
         var writer=new PacketWriter();save.Serialize(writer);var reader=new PacketReader();reader.Reset(writer.Buffer);
         var packet=new SerializableReward();packet.Deserialize(reader);

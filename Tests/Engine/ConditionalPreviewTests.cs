@@ -30,14 +30,14 @@ public static class ConditionalPreviewTests
         var enemy=combat.CreateCreature(ModelDb.Monster<MegaCrit.Sts2.Core.Models.Monsters.Axebot>().ToMutable(),CombatSide.Enemy,null);
         combat.AddCreature(enemy);enemy.SetMaxHpInternal(9999);enemy.SetCurrentHpInternal(9999);
         CombatManager.Instance.SetUpCombat(combat);
-        AccessTools.Property(typeof(CombatManager),nameof(CombatManager.IsInProgress)).SetValue(CombatManager.Instance,true);
+        CombatTestState.SetInProgress(true);
         var context=new BlockingPlayerChoiceContext();
         async Task<T> Card<T>(bool upgraded=false) where T:CardModel {
             var card=combat.CreateCard<T>(player);
             if(upgraded){card.UpgradeInternal();card.FinalizeUpgradeInternal();}
             await CardPileCmd.Add(card,PileType.Hand);return card;
         }
-        CardPlay Play(CardModel card) => new() { Card=card,Target=enemy,ResultPile=PileType.Discard,PlayCount=1,PlayIndex=0,IsAutoPlay=false,
+        CardPlay Play(CardModel card) => new() { Card=card, Player = card.Owner,Target=enemy,ResultPile=PileType.Discard,PlayCount=1,PlayIndex=0,IsAutoPlay=false,
             Resources=new ResourceInfo {EnergySpent=0,EnergyValue=0,StarsSpent=0,StarValue=0} };
         string Text(CardModel card) {
             card.UpdateDynamicVarPreview(CardPreviewMode.Normal,enemy,card.DynamicVars);

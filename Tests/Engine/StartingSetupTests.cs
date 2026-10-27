@@ -125,7 +125,7 @@ public static class StartingSetupTests
         var combat=new CombatState(runState:fallback.RunState);combat.AddPlayer(fallback);
         combat.AddCreature(combat.CreateCreature(ModelDb.Monster<MegaCrit.Sts2.Core.Models.Monsters.Axebot>().ToMutable(),CombatSide.Enemy,null));
         CombatManager.Instance.SetUpCombat(combat);
-        AccessTools.Property(typeof(CombatManager),nameof(CombatManager.IsInProgress)).SetValue(CombatManager.Instance,true);
+        CombatTestState.SetInProgress(true);
         RunManager.Instance.NetService.SetGameLoading(true);
         await fallback.GetRelic<HolyEmblem>()!.AfterPlayerTurnStart(context,fallback);
         Check(MagicDeckStore.Read(fallback).Draft.Length==0 && ManaCmd.InPile(fallback,PileType.Draw).Count()==1 &&

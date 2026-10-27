@@ -54,9 +54,24 @@ public static class AuraCompanionVisual
         private static void Postfix(NCreature __instance)
         {
             if (__instance.Entity?.Player == null || __instance.GetNodeOrNull<Node2D>("AuraCompanionHost") is not { } host) return;
-            // 只移动宠物宿主，角色死亡图仍由原有 Dead 动画控制。
-            host.Position = new Vector2(-100, 0);
+            var pet=host.GetChild<AnimatedSprite2D>(0);
+            var corpse=__instance.Visuals?.FindChild("Corpse",true,false) as Sprite2D;
+            if(corpse==null) { host.Position=new Vector2(-200,0); return; }
+            PlaceBesideCorpse(host,pet,corpse,__instance);
         }
+    }
+
+    public static void PlaceBesideCorpse(Node2D host,AnimatedSprite2D pet,Sprite2D corpse,Node creature)
+    {
+        // 与死亡图处在同一实际Z层，且用真实贴图边界留出间距，避免覆盖或挤在一起。
+        int layer=0;
+        for(Node? node=corpse;node!=null && node!=creature;node=node.GetParent())
+            if(node is CanvasItem canvas) {layer+=canvas.ZIndex;if(!canvas.ZAsRelative)break;}
+        host.ZIndex=layer;
+        Rect2 bounds=corpse.GlobalTransform*corpse.GetRect();
+        var frame=pet.SpriteFrames.GetFrameTexture(pet.Animation,pet.Frame);
+        Vector2 half=frame.GetSize()*pet.GlobalScale.Abs()/2;
+        pet.GlobalPosition=new Vector2(bounds.Position.X-40-half.X,bounds.End.Y-half.Y);
     }
 
     [HarmonyPatch(typeof(RewardsSet), "GenerateRewardsFor")]

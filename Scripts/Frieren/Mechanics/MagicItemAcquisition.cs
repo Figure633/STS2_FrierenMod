@@ -28,24 +28,24 @@ public static class MagicItemAcquisition
     }
 
     [HarmonyPatch(typeof(CardPileCmd), nameof(CardPileCmd.Add), new[] {
-        typeof(IEnumerable<CardModel>), typeof(CardPile), typeof(CardPilePosition), typeof(AbstractModel), typeof(bool) })]
+        typeof(IEnumerable<CardModel>), typeof(CardPile), typeof(CardPilePosition), typeof(AbstractModel), typeof(bool), typeof(bool) })]
     private static class RedirectPileAdd
     {
         private static bool Prefix(IEnumerable<CardModel> cards, CardPile newPile, CardPilePosition position,
-            AbstractModel? clonedBy, bool skipVisuals, ref Task<IReadOnlyList<CardPileAddResult>> __result)
+            AbstractModel? clonedBy, bool skipVisuals, bool isChangingOwners, ref Task<IReadOnlyList<CardPileAddResult>> __result)
         {
             var items = cards.ToArray();
             if (!items.Any(IsMagicItem)) return true;
-            __result = Add(items, newPile, position, clonedBy, skipVisuals);
+            __result = Add(items, newPile, position, clonedBy, skipVisuals, isChangingOwners);
             return false;
         }
 
         private static async Task<IReadOnlyList<CardPileAddResult>> Add(CardModel[] cards, CardPile pile,
-            CardPilePosition position, AbstractModel? clonedBy, bool skipVisuals)
+            CardPilePosition position, AbstractModel? clonedBy, bool skipVisuals, bool isChangingOwners)
         {
             var results = new List<CardPileAddResult>();
             foreach (var card in cards) {
-                if (!IsMagicItem(card)) { results.Add(await CardPileCmd.Add(card, pile, position, clonedBy, skipVisuals)); continue; }
+                if (!IsMagicItem(card)) { results.AddRange(await CardPileCmd.Add(new[] { card }, pile, position, clonedBy, skipVisuals, isChangingOwners)); continue; }
                 var old = card.Pile;
                 results.Add(new CardPileAddResult { cardAdded = card, oldPile = old, success = Receive(card) });
             }

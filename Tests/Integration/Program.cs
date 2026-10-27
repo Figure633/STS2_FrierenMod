@@ -30,24 +30,7 @@ Test("圣徽可变副本不共享 Magic Deck", () => {
     Equal(0, b.ReadMagicDeck().Items.Count);
     Equal<SpellDefinition?>(null, a.ReadMagicDeck().InSlot(ManaSlot.Draw));
 });
-Test("原生 SavedProperties JSON 属性载入", () => {
-    var a = (HolyEmblem)ModelDb.Relic<HolyEmblem>().ToMutable(); var deck = a.ReadMagicDeck(); deck.Add("BuildUpBody"); a.SaveMagicDeck(deck);
-    SavedPropertiesTypeCache.InjectTypeIntoCache(typeof(HolyEmblem));
-    var props = SavedProperties.FromInternal(a, null)!;
-    Equal(a.MagicDeckJson, props.strings!.Single(x => x.name == nameof(HolyEmblem.MagicDeckJson)).value);
-    var json = JsonSerializer.Serialize(props, JsonSerializationUtility.Options);
-    var restored = JsonSerializer.Deserialize<SavedProperties>(json, JsonSerializationUtility.Options)!;
-    var b = (HolyEmblem)ModelDb.Relic<HolyEmblem>().ToMutable(); restored.Fill(b); Equal(a.MagicDeckJson, b.MagicDeckJson);
-});
-Test("原生网络包往返保持 Magic Deck", () => {
-    var a = (HolyEmblem)ModelDb.Relic<HolyEmblem>().ToMutable();
-    var props = SavedProperties.FromInternal(a, null)!;
-    var writer = new PacketWriter(); props.Serialize(writer);
-    var reader = new PacketReader(); reader.Reset(writer.Buffer);
-    var restored = new SavedProperties(); restored.Deserialize(reader);
-    var b = (HolyEmblem)ModelDb.Relic<HolyEmblem>().ToMutable(); restored.Fill(b); Equal(a.MagicDeckJson, b.MagicDeckJson);
-    Equal(writer.BitPosition, reader.BitPosition);
-});
+// 原生存档与网络往返在 Engine/NativeSaveTests 中运行（新版初始化依赖 Godot）。
 Test("起始牌组与一代一致", () => {
     var character = ModelDb.Character<FrierenMod.Scripts.Characters.Frieren>();
     Equal(75, character.StartingHp); Equal(99, character.StartingGold);

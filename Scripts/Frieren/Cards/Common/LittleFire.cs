@@ -17,7 +17,7 @@ public sealed class LittleFire() : FrierenCard(0, CardType.Attack, CardRarity.Co
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(3, ValueProp.Move)];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(play.Target!).Execute(context);
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this, play).Targeting(play.Target!).Execute(context);
         foreach (var fire in Owner.PlayerCombatState!.AllCards.OfType<LittleFire>())
             fire.DynamicVars.Damage.BaseValue += 2;
         EnergyCost.AddThisTurn(1);

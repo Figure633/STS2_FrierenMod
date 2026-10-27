@@ -27,7 +27,7 @@ public sealed class LockTarget() : FrierenCard(1, CardType.Attack, CardRarity.Co
         int hits = ManaCmd.InPile(Owner, PileType.Draw).Count() >= ManaCmd.InPile(Owner, PileType.Discard).Count() ? 2 : 1;
         for (int i = 0; i < hits; i++)
         {
-            await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(play.Target!).Execute(context);
+            await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this, play).Targeting(play.Target!).Execute(context);
             await CardPileCmd.Draw(context, 1, Owner);
         }
     }

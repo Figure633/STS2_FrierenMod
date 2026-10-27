@@ -129,7 +129,7 @@ public static class MagicBookUi
         };
         void RefreshInput()
         {
-            bool blocked = inputBlocked() || currentOverlay() != null;
+            bool blocked = inputBlocked() || !MagicPropCmd.AllowsUseOver(currentOverlay());
             toggle.SetEnabled(!blocked);
             foreach (var view in new[] { hud, book, backdrop }) {
                 view.MouseBehaviorRecursive = blocked ? Control.MouseBehaviorRecursiveEnum.Disabled : Control.MouseBehaviorRecursiveEnum.Inherited;

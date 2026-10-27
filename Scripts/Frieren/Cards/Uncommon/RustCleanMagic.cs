@@ -1,28 +1,25 @@
-using FrierenMod.Scripts.Mechanics;
-using FrierenMod.Scripts.Powers;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.ValueProps;
 
 namespace FrierenMod.Scripts.Cards;
 
-public sealed class RustCleanMagic() : LegendaryCard(1, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy)
+public sealed class RustCleanMagic() : LegendaryCard(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new EnergyVar(2)];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
-        if (Owner.Creature.CombatState!.Encounter?.RoomType != MegaCrit.Sts2.Core.Rooms.RoomType.Boss)
-            await PowerCmd.Remove(play.Target!.Powers.FirstOrDefault(x => x.Type == PowerType.Buff));
-        var debuff = Owner.Creature.Powers.FirstOrDefault(x => x.Type == PowerType.Debuff);
-        bool hex = debuff is MegaCrit.Sts2.Core.Models.Powers.HexPower;
-        await PowerCmd.Remove(debuff);
-        if (hex && !Owner.Creature.Powers.Contains(debuff!)) Presentation.FrierenAchievements.Unlock(Owner, "4006");
+        var debuffs = Owner.Creature.Powers.Where(p=>p.Type==PowerType.Debuff).ToArray();
+        if (debuffs.Length==0) { await PlayerCmd.GainEnergy(DynamicVars.Energy.IntValue,Owner); return; }
+        bool hex=debuffs.Any(p=>p is MegaCrit.Sts2.Core.Models.Powers.HexPower);
+        foreach(var power in debuffs) await PowerCmd.Remove(power);
+        if(hex && !Owner.Creature.HasPower<MegaCrit.Sts2.Core.Models.Powers.HexPower>())
+            Presentation.FrierenAchievements.Unlock(Owner,"4006");
     }
-    protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
+    protected override void OnUpgrade() => DynamicVars.Energy.UpgradeValueBy(1);
 }

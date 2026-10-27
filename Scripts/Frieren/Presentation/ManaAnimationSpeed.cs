@@ -1,7 +1,4 @@
-using System.Reflection;
-using System.Reflection.Emit;
 using System.Runtime.CompilerServices;
-using BaseLib.Extensions;
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Commands;
@@ -64,29 +61,15 @@ public static class ManaAnimationSpeed
         private static void Postfix(NCardFlyVfx __instance) => ApplyFlightSpeed(__instance);
     }
 
-    [HarmonyPatch]
+    [HarmonyPatch(typeof(CardPileCmd), nameof(CardPileCmd.GetTweenForCardsChangingPiles),
+        [typeof(IEnumerable<CardPileAddResult>), typeof(bool)])]
     private static class NativePileTweenPatch
     {
-        private static MethodBase TargetMethod() => AccessTools.Method(typeof(CardPileCmd), nameof(CardPileCmd.Add),
-            [typeof(IEnumerable<CardModel>), typeof(CardPile), typeof(CardPilePosition), typeof(AbstractModel), typeof(bool)])
-            .StateMachineType().GetMethod("MoveNext", BindingFlags.Instance | BindingFlags.NonPublic)!;
-
-        // 在原版 Add 创建的补间上设置速度，保留全部原生动画内容及快进设置。
-        private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, MethodBase __originalMethod)
+        // 新版将牌堆补间提取为公开工厂，直接调整返回的原生补间。
+        private static void Postfix(IEnumerable<CardPileAddResult> results, (Tween?, bool) __result)
         {
-            var createTween = AccessTools.Method(typeof(Node), nameof(Node.CreateTween));
-            var cards = __originalMethod.DeclaringType!.FindStateMachineField("cards");
-            int matches = 0;
-            foreach (var instruction in instructions)
-            {
-                yield return instruction;
-                if (!instruction.Calls(createTween)) continue;
-                matches++;
-                yield return new CodeInstruction(OpCodes.Ldarg_0);
-                yield return new CodeInstruction(OpCodes.Ldfld, cards);
-                yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(ManaAnimationSpeed), nameof(ApplySpeed)));
-            }
-            if (matches != 1) throw new InvalidOperationException("原版卡牌堆补间接口已改变，需重新适配咏唱动画速度。");
+            if (__result.Item1 is { } tween)
+                ApplySpeed(tween, results.Where(r => r.success).Select(r => r.cardAdded));
         }
     }
 }

@@ -63,7 +63,7 @@ def main():
         "source_file_count": len(files),
         "sts2_upstream": {"url": "https://github.com/FrierenModForSlayTheSpire/FrierenMod_STS2", "commit": baseline["target_upstream_commit"]},
         "sts1_reference": {"url": "https://github.com/FrierenModForSlayTheSpire/FrierenMod_STS1", "commit": baseline["source_commit"]},
-        "dependencies": {"game": "v0.107.1", "BaseLib": "v3.4.7", "dotnet_sdk": "9.0.306", "Godot": "4.5.1"},
+        "dependencies": {"game": "v0.111.0", "BaseLib": "v3.4.7", "dotnet_sdk": "9.0.306", "Godot": "4.5.1"},
         "pending": ["starting tool + random prop grant", "starting factor guidance", "first-play tutorial"],
         "excluded": ["git history", "build/import caches", "game and BaseLib binaries", "personal settings and saves", "raw machine logs"],
         "integrity": "SHA256SUMS.txt covers every other file, including SOURCE_SNAPSHOT.json",

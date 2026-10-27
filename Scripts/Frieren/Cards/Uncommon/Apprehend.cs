@@ -19,7 +19,7 @@ public sealed class Apprehend() : FrierenCard(1, CardType.Attack, CardRarity.Unc
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(8, ValueProp.Move), new CardsVar(3)];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(play.Target!).Execute(context);
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this, play).Targeting(play.Target!).Execute(context);
         var drawn = (await CardPileCmd.Draw(context, DynamicVars.Cards.BaseValue, Owner)).ToArray();
         await CardCmd.Discard(context, drawn.Where(c => ManaCmd.IsMana(c) && c.Pile?.Type == PileType.Hand));
     }

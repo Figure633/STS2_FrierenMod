@@ -14,11 +14,11 @@ public static class FrierenEventLayout
     {
         if (____event is not FrierenStoryEvent and not ReadingGrimoireEvent) return;
         var image = __instance.GetNode<TextureRect>("%Portrait");
-        // 原生左侧肖像是多余的第三张图：保留铺满背景与顶层事件内容。
-        image.Hide();
+        // 保留作者要求的左半幅；使用覆盖裁剪填满，不露出其下的全幅背景。
+        image.Show();
         image.Scale = Vector2.One; image.PivotOffset = Vector2.Zero;
-        Area(image, 0.035f, 0.17f, 0.465f, 0.94f);
-        image.StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered;
+        Area(image, 0, 0, 0.5f, 1);
+        image.StretchMode = TextureRect.StretchModeEnum.KeepAspectCovered;
         image.ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize;
         image.MouseFilter = Control.MouseFilterEnum.Ignore;
 

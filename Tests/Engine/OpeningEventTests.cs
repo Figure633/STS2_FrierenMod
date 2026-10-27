@@ -73,7 +73,7 @@ public static class OpeningEventTests
             var fresh = Start(player);
             Check(fresh.ExtraFields.StartedWithNeow == (player.Character is Frieren), "未解锁涅奥的新档仅为芙莉莲保留魔导书开局");
             if (player.Character is Frieren) {
-                var blessing = ModelDb.AncientEvent<Neow>().ToMutable(); await blessing.BeginEvent(player, false);
+                var blessing = ModelDb.AncientEvent<Neow>().ToMutable(); await blessing.BeginEvent(player, null, false);
                 Check(!blessing.IsFinished && blessing.CurrentOptions.Count > 0, "未解锁涅奥的新档也有可选的原版祝福");
             }
             manager.CleanUp(); await Tick();

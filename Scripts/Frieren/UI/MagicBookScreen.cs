@@ -208,6 +208,7 @@ public sealed class MagicBookScreen
         if (_capstone != null) return; // 原生容器负责恢复奖励/地图，避免重复调用展示回调。
         if (previous == null || previous != _currentOverlay()) return;
         if (previous is GodotObject node && !GodotObject.IsInstanceValid(node)) return;
+        if (previous is Node view && (!view.IsInsideTree() || view.IsQueuedForDeletion())) return;
         previous.AfterOverlayShown();
     }
 

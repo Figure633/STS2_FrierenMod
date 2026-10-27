@@ -44,11 +44,11 @@ public static class RelicsPotionsTests
         var enemy = combat.CreateCreature(ModelDb.Monster<MegaCrit.Sts2.Core.Models.Monsters.Axebot>().ToMutable(), CombatSide.Enemy, null);
         combat.AddCreature(enemy); enemy.SetMaxHpInternal(9999); enemy.SetCurrentHpInternal(9999);
         CombatManager.Instance.SetUpCombat(combat);
-        AccessTools.Property(typeof(CombatManager), nameof(CombatManager.IsInProgress)).SetValue(CombatManager.Instance, true);
+        CombatTestState.SetInProgress(true);
         var context = new BlockingPlayerChoiceContext();
         var selector = new TestCardSelector(); using var selection = CardSelectCmd.UseSelector(selector);
         T Card<T>() where T : CardModel => combat.CreateCard<T>(player);
-        CardPlay PlayInfo(CardModel card) => new() { Card = card, Target = null, ResultPile = PileType.Discard,
+        CardPlay PlayInfo(CardModel card) => new() { Card = card, Player = card.Owner, Target = null, ResultPile = PileType.Discard,
             Resources = new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 },
             PlayCount = 1, PlayIndex = 0, IsAutoPlay = false };
         async Task Play(CardModel card) {
