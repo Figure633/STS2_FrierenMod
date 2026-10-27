@@ -26,13 +26,36 @@ public sealed class AuraEncounter() : CustomEncounterModel(RoomType.Boss)
 }
 
 // 首次遭遇顺序会覆盖 GenerateRooms 随机池，必须在原生发现顺序处理之后再次保证固定Boss。
-[HarmonyPatch(typeof(ActModel), nameof(ActModel.ApplyDiscoveryOrderModifications))]
+[HarmonyPatch]
 public static class AuraFixedBoss
 {
+    private static IEnumerable<System.Reflection.MethodBase> TargetMethods()
+    {
+        yield return AccessTools.Method(typeof(ActModel), nameof(ActModel.GenerateRooms));
+        yield return AccessTools.Method(typeof(ActModel), nameof(ActModel.ApplyDiscoveryOrderModifications));
+    }
     private static void Postfix(ActModel __instance)
     {
-        if (__instance is Hive && !PresentationSettings.AllowOtherActTwoBosses &&
-            FrierenEncounterEligibility.IsFrierenRun(RunManager.Instance.DebugOnlyGetState()))
-            __instance.SetBossEncounter(ModelDb.Encounter<AuraEncounter>());
+        if (PresentationSettings.AllowOtherActTwoBosses ||
+            !FrierenEncounterEligibility.IsFrierenRun(RunManager.Instance.DebugOnlyGetState())) return;
+        if (__instance is Hive) __instance.SetBossEncounter(ModelDb.Encounter<AuraEncounter>());
+        if (__instance is Glory) __instance.SetBossEncounter(ModelDb.Encounter<SpiegelFrierenEncounter>());
+    }
+
+    [HarmonyPatch(typeof(RunManager), nameof(RunManager.GenerateRooms))]
+    private static class DoubleBossOrder
+    {
+        private static void Postfix(RunManager __instance)
+        {
+            var run = __instance.DebugOnlyGetState();
+            if (PresentationSettings.AllowOtherActTwoBosses || !FrierenEncounterEligibility.IsFrierenRun(run) ||
+                run!.Acts.LastOrDefault() is not Glory act || act.SecondBossEncounter == null) return;
+            if (act.BossEncounter is SpiegelFrierenEncounter && run.Rng.UpFront.NextInt(2) == 1)
+            {
+                var first = act.BossEncounter;
+                act.SetBossEncounter(act.SecondBossEncounter);
+                act.SetSecondBossEncounter(first);
+            }
+        }
     }
 }

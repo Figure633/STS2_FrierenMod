@@ -235,7 +235,7 @@
   "FRIERENMOD-RECALL.title": "Recall",
   "FRIERENMOD-RECALL.description": "Choose {Amount:diff()} cards in your exhaust pile. Put them into your hand and [gold]Retain[/gold] them this turn.",
   "FRIERENMOD-RECYCLE.title": "Recycle",
-  "FRIERENMOD-RECYCLE.description": "Shuffle [gold]Mana[/gold] into your draw pile equal to the [gold]Mana[/gold] in your discard pile.",
+  "FRIERENMOD-RECYCLE.description": "For the rest of this turn, gain {RecyclePower} Block whenever you play a card.",
   "FRIERENMOD-RED_APPLE_SPELL.title": "Turn Red Apples Green",
   "FRIERENMOD-RED_APPLE_SPELL.description": "Swap your Strength and Dexterity this turn. Add {Upgraded:cond:an upgraded|a} Green Apple to your hand.",
   "FRIERENMOD-RESTRAINT_MAGIC.title": "Binding Magic",

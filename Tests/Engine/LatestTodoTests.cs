@@ -65,7 +65,7 @@ public static class LatestTodoTests
                     await CardPileCmd.Add(card, PileType.Hand);
                     await card.OnPlayWrapper(context, null, false, resources, skipCardPileVisuals: true);
                     var reward = player.Creature.GetPower<GainRelicPower>()!;
-                    var room = new CombatRoom(combat); await reward.AfterCombatVictory(room);
+                    var room = new CombatRoom(combat); await reward.AfterCombatEnd(room);
                     Check(room.ExtraRewards[player].OfType<RelicReward>().Count() == 1, "饰品魔法胜利奖励仍为一件遗物：" + upgraded);
                     await PowerCmd.Remove(reward);
                 }

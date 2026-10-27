@@ -14,8 +14,6 @@ public static class FrierenEncounterEligibility
     private static void Postfix(ref IEnumerable<EncounterModel> __result) {
         if (!IsFrierenRun(RunManager.Instance.DebugOnlyGetState()))
             __result = __result.Where(e => e is not SpiegelFrierenEncounter and not AuraEncounter);
-        else if (!Presentation.PresentationSettings.AllowOtherActTwoBosses && __result.Any(e => e is AuraEncounter))
-            __result = __result.Where(e => e is AuraEncounter);
     }
 
     [HarmonyPatch(typeof(ActModel), nameof(ActModel.ValidateRoomsAfterLoad))]

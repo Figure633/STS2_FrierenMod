@@ -107,11 +107,13 @@
   "FRIERENMOD-AURA_ELEGANCE_POWER.title": "Elegance",
   "FRIERENMOD-AURA_ELEGANCE_POWER.description": "Current mana: [blue]{Mana}[/blue]. Unblocked damage consumes an equal amount of mana first. Any excess damage reduces HP.",
   "FRIERENMOD-AURA_SCALES_POWER.title": "Scales of Obedience",
-  "FRIERENMOD-AURA_SCALES_POWER.description": "Every 3 turns, compare current mana. If Aura has more, draw 2 fewer cards next turn and her next ordinary action deals 25 damage (40 from the third weighing). If you have more, Aura loses 30 mana and skips her next ordinary action. Ties have no effect. Gain Dispel Magic after each weighing.",
+  "FRIERENMOD-AURA_SCALES_POWER.description": "At the end of every third round, compare current mana without using an action. If Aura has more, draw 2 fewer cards next turn and her next ordinary action deals 25 damage (40 from the third weighing). If you have more, Aura loses 30 mana and skips her next ordinary action. Ties have no effect. Gain Dispel Magic after each weighing.",
   "FRIERENMOD-AURA_ARROGANCE_POWER.title": "Arrogance",
   "FRIERENMOD-AURA_ARROGANCE_POWER.description": "Your first Dispel Magic makes Aura taunt on her next available ordinary action. The scales and their verdict take priority. Once per combat.",
   "FRIERENMOD-AURA_SOUL_POWER.title": "Soul Release",
   "FRIERENMOD-AURA_SOUL_POWER.description": "On death, Aura loses 15 mana. Add 10 Mana to your discard pile.",
   "FRIERENMOD-AURA_SUBMISSION_POWER.title": "Submission",
-  "FRIERENMOD-AURA_SUBMISSION_POWER.description": "Draw [blue]{Amount}[/blue] fewer cards next turn. Aura is preparing Guillotine."
+  "FRIERENMOD-AURA_SUBMISSION_POWER.description": "Draw [blue]{Amount}[/blue] fewer cards next turn. Aura is preparing Guillotine.",
+  "FRIERENMOD-RECYCLE_POWER.title": "Recycle",
+  "FRIERENMOD-RECYCLE_POWER.description": "Gain {Amount} Block whenever you play a card this turn."
 }

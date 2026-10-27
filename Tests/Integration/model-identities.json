@@ -231,5 +231,7 @@
   "FrierenMod.Scripts.Cards.UpsideDown": "CARD.UPSIDE_DOWN",
   "FrierenMod.Scripts.Cards.AuraDispel": "CARD.AURA_DISPEL",
   "FrierenMod.Scripts.Cards.ManaAffinity": "CARD.MANA_AFFINITY",
-  "FrierenMod.Scripts.Cards.Snuggle": "CARD.SNUGGLE"
+  "FrierenMod.Scripts.Cards.Snuggle": "CARD.SNUGGLE",
+  "FrierenMod.Scripts.Powers.RecyclePower": "POWER.RECYCLE_POWER",
+  "FrierenMod.Scripts.Relics.AuraCompanion": "RELIC.AURA_COMPANION"
 }

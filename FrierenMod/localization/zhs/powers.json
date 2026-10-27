@@ -107,11 +107,13 @@
   "FRIERENMOD-AURA_ELEGANCE_POWER.title": "优雅",
   "FRIERENMOD-AURA_ELEGANCE_POWER.description": "当前魔力：[blue]{Mana}[/blue]。受到未被格挡的伤害时，优先消耗等量魔力；不足部分扣除生命。",
   "FRIERENMOD-AURA_SCALES_POWER.title": "服从天平",
-  "FRIERENMOD-AURA_SCALES_POWER.description": "每3回合比较双方当前魔力。阿乌拉更高：你下回合少抽2张牌，阿乌拉下一次普通行动造成25点伤害；第三次天平起提升至40。你更高：阿乌拉失去30魔力，下一次普通行动空过。平局无效果。每次结算后获得一张解除魔法。",
+  "FRIERENMOD-AURA_SCALES_POWER.description": "每3回合结束时额外比较双方当前魔力，不占用行动。阿乌拉更高：你下回合少抽2张牌，阿乌拉下一次普通行动造成25点伤害；第三次天平起提升至40。你更高：阿乌拉失去30魔力，下一次普通行动空过。平局无效果。每次结算后获得一张解除魔法。",
   "FRIERENMOD-AURA_ARROGANCE_POWER.title": "自大的魔族",
   "FRIERENMOD-AURA_ARROGANCE_POWER.description": "你首次打出解除魔法后，阿乌拉下一次普通行动改为嘲讽。天平及其裁决优先。每场战斗仅一次。",
   "FRIERENMOD-AURA_SOUL_POWER.title": "灵魂解放",
   "FRIERENMOD-AURA_SOUL_POWER.description": "死亡时，阿乌拉失去15魔力，在你的弃牌堆生成10张魔力。",
   "FRIERENMOD-AURA_SUBMISSION_POWER.title": "服从",
-  "FRIERENMOD-AURA_SUBMISSION_POWER.description": "下回合少抽[blue]{Amount}[/blue]张牌。阿乌拉即将使用断头台。"
+  "FRIERENMOD-AURA_SUBMISSION_POWER.description": "下回合少抽[blue]{Amount}[/blue]张牌。阿乌拉即将使用断头台。",
+  "FRIERENMOD-RECYCLE_POWER.title": "再循环",
+  "FRIERENMOD-RECYCLE_POWER.description": "本回合，每打出一张牌，获得{Amount}点格挡。"
 }

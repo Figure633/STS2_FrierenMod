@@ -61,5 +61,8 @@
   "FRIERENMOD-UPGRADED_HOLY_EMBLEM.flavor": "旅途中的魔法积累。",
   "FRIERENMOD-KRAFT_SERPENT_RING.title": "长蛇戒指",
   "FRIERENMOD-KRAFT_SERPENT_RING.description": "每回合抽牌阶段额外抽 [blue]1[/blue] 张牌。",
-  "FRIERENMOD-KRAFT_SERPENT_RING.flavor": "克拉伏特送给你的饯别礼。"
+  "FRIERENMOD-KRAFT_SERPENT_RING.flavor": "克拉伏特送给你的饯别礼。",
+  "FRIERENMOD-AURA_COMPANION.title": "阿乌拉的陪伴",
+  "FRIERENMOD-AURA_COMPANION.description": "阿乌拉会在战斗中陪伴你。",
+  "FRIERENMOD-AURA_COMPANION.flavor": "阿乌拉，跟上。"
 }

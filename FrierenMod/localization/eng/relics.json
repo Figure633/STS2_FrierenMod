@@ -61,5 +61,8 @@
   "FRIERENMOD-UPGRADED_HOLY_EMBLEM.flavor": "Magic gathered along the journey.",
   "FRIERENMOD-KRAFT_SERPENT_RING.title": "Ring of the Serpent",
   "FRIERENMOD-KRAFT_SERPENT_RING.description": "Draw [blue]1[/blue] additional card each turn.",
-  "FRIERENMOD-KRAFT_SERPENT_RING.flavor": "A parting gift from Kraft."
+  "FRIERENMOD-KRAFT_SERPENT_RING.flavor": "A parting gift from Kraft.",
+  "FRIERENMOD-AURA_COMPANION.title": "Aura’s Company",
+  "FRIERENMOD-AURA_COMPANION.description": "Aura accompanies you in combat.",
+  "FRIERENMOD-AURA_COMPANION.flavor": "Aura, keep up."
 }

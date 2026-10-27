@@ -87,6 +87,10 @@ public partial class Runner : Node
             new Harmony("frieren.tests.hover_host").Patch(
                 AccessTools.Method(typeof(MegaCrit.Sts2.Core.Nodes.Cards.Holders.NCardHolder), "CreateHoverTips"),
                 prefix: new HarmonyMethod(typeof(Runner), nameof(SkipGlobalHoverWindow)));
+            if (OS.GetCmdlineUserArgs().Contains("--todo091-only")) {
+                GD.Print("TODO091_OK: " + await Todo091Tests.Run(this));
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--aura-boss-only")) {
                 GD.Print("AURA_BOSS_OK: " + await AuraBossTests.Run(this));
                 await Finish(); return;

@@ -31,6 +31,17 @@ public static class FrierenMusic
         return Folder + (alternate ? $"STS_Level{act}-2_v2.mp3" : act == 3 ? "STS_Level3_v2.mp3" : $"STS_Level{act}_NewMix_v1.mp3");
     }
 
+    // 只展示从原始文件标签确认的曲名；不把文件名或推测名称当作曲名。
+    public static string? TrackTitle(string path) => System.IO.Path.GetFileName(path) switch {
+        "Frieren_The_Slayer.mp3" => "Frieren the Slayer",
+        "Frieren_DeathStinger.mp3" => "In Times of Peace",
+        "STS_Boss2_NewMix_v1.mp3" => "Zoltraak",
+        "STS_EliteBoss_NewMix_v1.ogg" => "Knife to the Throat",
+        "STS_Merchant_NewMix_v1.ogg" => "Grassy Turtles and Seed Rats",
+        "STS_Shrine_NewMix_v1.ogg" => "Phantoms of the Dead",
+        _ => null
+    };
+
     public static bool Applies(IRunState run) => LocalContext.NetId is { } id &&
         run.Players.Any(p => p.NetId == id && p.Character is Frieren);
 
@@ -78,6 +89,9 @@ public static class FrierenMusic
         private readonly AudioStreamPlayer[] _players;
         private readonly float[] _gains = [0, 0];
         private Tween? _fade;
+        private Tween? _noticeFade;
+        private Label? _notice;
+        private readonly bool _announce;
         private int _active;
         private bool _lastEnabled = PresentationSettings.OriginalMusic;
         public string? CurrentTrack { get; private set; }
@@ -85,6 +99,7 @@ public static class FrierenMusic
         public MusicSession(Node root, IRunState? run = null)
         {
             _root = root;
+            _announce = run != null;
             _players = [new() { Name = "FrierenMusicA", Bus = "Master" }, new() { Name = "FrierenMusicB", Bus = "Master" }];
             foreach (var player in _players) root.AddChild(player);
             var timer = new Godot.Timer { Name = "FrierenMusicVolume", WaitTime = 0.2, Autostart = true };
@@ -96,6 +111,8 @@ public static class FrierenMusic
                     _lastEnabled = PresentationSettings.OriginalMusic;
                     Refresh(controller, run, false);
                 }
+                else if (run != null && root is NRunMusicController activeController)
+                    Refresh(activeController, run, false);
                 else if (run == null && !PresentationSettings.OriginalMusic) Stop();
             };
             root.AddChild(timer);
@@ -103,7 +120,8 @@ public static class FrierenMusic
 
         public void Play(string path, bool loop = true)
         {
-            if (path == CurrentTrack) return;
+            if (path == CurrentTrack && _players[_active].Playing) return;
+            bool changed = path != CurrentTrack;
             var stream = GD.Load<AudioStream>(path)?.Duplicate() as AudioStream;
             if (stream == null) return;
             if (stream is AudioStreamMP3 mp3) mp3.Loop = loop;
@@ -119,6 +137,7 @@ public static class FrierenMusic
             UpdateVolume();
             next.Play();
             CurrentTrack = path;
+            if (changed && _announce) Announce(path);
             _fade = _root.CreateTween();
             _fade.TweenMethod(Callable.From<float>(t =>
             {
@@ -127,6 +146,27 @@ public static class FrierenMusic
                 UpdateVolume();
             }), 0f, 1f, 0.45);
             _fade.TweenCallback(Callable.From(() => { _players[old].Stop(); _players[old].Stream = null; }));
+        }
+
+        private void Announce(string path)
+        {
+            _noticeFade?.Kill();
+            if (TrackTitle(path) is not { } title) { _notice?.Hide(); return; }
+            if (_notice == null) {
+                var layer = new CanvasLayer { Name = "FrierenNowPlaying", Layer = 5 };
+                _root.AddChild(layer);
+                _notice = new Label { Position = new Vector2(24, 112), MouseFilter = Control.MouseFilterEnum.Ignore };
+                _notice.AddThemeFontSizeOverride("font_size", 20);
+                _notice.AddThemeColorOverride("font_color", new Color("e1d5bd"));
+                _notice.AddThemeColorOverride("font_outline_color", Colors.Black);
+                _notice.AddThemeConstantOverride("outline_size", 6);
+                layer.AddChild(_notice);
+            }
+            _notice.Text = "♫  " + title; _notice.Modulate = Colors.Transparent; _notice.Show();
+            _noticeFade = _root.CreateTween();
+            _noticeFade.TweenProperty(_notice, "modulate:a", 1f, 0.3);
+            _noticeFade.TweenInterval(3);
+            _noticeFade.TweenProperty(_notice, "modulate:a", 0f, 0.8);
         }
 
         public void UpdateVolume()
@@ -138,6 +178,7 @@ public static class FrierenMusic
 
         public void Stop()
         {
+            _noticeFade?.Kill(); _notice?.Hide();
             _fade?.Kill();
             foreach (var player in _players) { player.Stop(); player.Stream = null; }
             _gains[0] = _gains[1] = 0;

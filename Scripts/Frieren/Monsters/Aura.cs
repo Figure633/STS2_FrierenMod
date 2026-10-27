@@ -1,4 +1,6 @@
 using BaseLib.Abstracts;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Powers;
 using FrierenMod.Scripts.Cards;
 using FrierenMod.Scripts.Mechanics;
 using FrierenMod.Scripts.Powers;
@@ -17,6 +19,7 @@ namespace FrierenMod.Scripts.Monsters;
 public sealed class Aura : CustomMonsterModel
 {
     private int _actions;
+    private int _lastWeighedAction;
     private int _summonedCycle = -1;
     private bool _openingGranted, _tauntUsed, _tauntPending, _meditateNext;
     private string? _verdict;
@@ -65,10 +68,9 @@ public sealed class Aura : CustomMonsterModel
 
     private string ChooseMove()
     {
-        if (UpcomingTurn % 3 == 0) return "SCALES";
         if (_verdict != null) return _verdict;
         if (_tauntPending) return "TAUNT";
-        if (Mana >= 25 && _summonedCycle != _actions / 3 && !CombatState.Enemies.Any(c => c.IsAlive && c.Monster is AuraSoldier)) return "SUMMON";
+        if (Mana >= 40 && _summonedCycle != _actions / 3 && !CombatState.Enemies.Any(c => c.IsAlive && c.Monster is AuraSoldier)) return "SUMMON";
         return _meditateNext ? "MEDITATE" : "BARRAGE";
     }
 
@@ -82,7 +84,6 @@ public sealed class Aura : CustomMonsterModel
             _moves.Add(id, move);
             next.AddState(move, () => ChooseMove() == id);
         }
-        Add("SCALES", Weigh, new DebuffIntent(true));
         Add("GUILLOTINE", async () => { _verdict = null; await Attack(GuillotineDamage, 1); }, new SingleAttackIntent(() => GuillotineDamage));
         Add("STAGGER", () => { _verdict = null; return Task.CompletedTask; }, new StunIntent());
         Add("TAUNT", () => {
@@ -92,13 +93,16 @@ public sealed class Aura : CustomMonsterModel
         }, new UnknownIntent());
         Add("SUMMON", async () => {
             // 意图公布后魔力可能已被打空；资源不足则召唤失败，不产生负魔力或免费士兵。
-            if (Mana < 25 || CombatState.Enemies.Any(c => c.IsAlive && c.Monster is AuraSoldier)) return;
+            if (Mana < 40 || CombatState.Enemies.Any(c => c.IsAlive && c.Monster is AuraSoldier)) return;
             _summonedCycle = _actions / 3;
-            await ChangeMana(-25);
+            await ChangeMana(-40);
             await CreatureCmd.Add<AuraSoldier>(CombatState, "Soldier1");
+            var guard = (AuraSoldier)ModelDb.Monster<AuraSoldier>().ToMutable();
+            guard.GuardFirst = true;
+            await CreatureCmd.Add(guard, CombatState, CombatSide.Enemy, "Soldier2");
         }, new SummonIntent());
         Add("BARRAGE", async () => { _meditateNext = true; await Attack(6, 3); }, new MultiAttackIntent(6, 3));
-        Add("MEDITATE", async () => { _meditateNext = false; await ChangeMana(20); }, new BuffIntent());
+        Add("MEDITATE", async () => { _meditateNext = false; await ChangeMana(20); await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), Creature, 2, Creature, null); }, new BuffIntent());
         return new MonsterMoveStateMachine(_moves.Values.Cast<MonsterState>().Append(next), next);
     }
 
@@ -111,9 +115,24 @@ public sealed class Aura : CustomMonsterModel
             await CardFlowCmd.Generate<AuraDispel>(player, PileType.Hand);
     }
 
+    public override async Task AfterSideTurnEnd(PlayerChoiceContext context, CombatSide side, IEnumerable<Creature> participants)
+    {
+        if (side != CombatSide.Enemy || !Creature.IsAlive || _actions == 0 || _actions % 3 != 0 || _lastWeighedAction == _actions) return;
+        _lastWeighedAction = _actions;
+        await Weigh();
+        RefreshOrdinaryIntent();
+    }
+
     private async Task Weigh()
     {
         ScaleCount++;
+        if (!MegaCrit.Sts2.Core.TestSupport.TestMode.IsOn)
+        {
+            SfxCmd.Play("event:/sfx/enemy/enemy_attacks/terror_eel/terror_eel_debuff");
+            VfxCmd.PlayOnCreatureCenter(Creature, VfxCmd.gazePath);
+            FrierenMod.Scripts.UI.AuraScalesHud.Judgment();
+            await Cmd.CustomScaledWait(0.6f, 0.6f);
+        }
         // 单人取本人；全芙莉莲联机队伍按平均魔力比较，避免人数直接决定天平胜负。
         var players = CombatState.Players.Where(p => p.Creature.IsAlive).ToArray();
         decimal playerMana = players.Length == 0 ? 0 : players.Average(p => (decimal)ManaCmd.Total(p));

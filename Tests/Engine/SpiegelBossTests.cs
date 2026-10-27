@@ -120,7 +120,7 @@ public static class SpiegelBossTests
         Check(monster.NextMove.Id == "APEX_PREPARATION", "100生命立即改为全力准备意图");
         await monster.PerformMove(); monster.RollMove([player.Creature]);
         var intent = (MultiAttackIntent)monster.NextMove.Intents.Single();
-        Check(!boss.HasPower<IntangiblePower>() && intent.Repeats == 999, "准备阶段移除无实体，下一回合999次攻击");
+        Check(!boss.Powers.Any() && boss.Block == 0 && intent.Repeats == 999, "准备阶段移除所有能力和格挡，下一回合999次攻击");
         var curse = combat.CreateCard<UpsideDown>(player); await CardPileCmd.Add(curse, PileType.Hand);
         foreach(var card in player.PlayerCombatState.DrawPile.Cards.Concat(player.PlayerCombatState.DiscardPile.Cards).ToArray()) card.RemoveFromCurrentPile();
         var draw = combat.CreateCard<StrikeFrieren>(player); var discard = combat.CreateCard<DefendFrieren>(player);

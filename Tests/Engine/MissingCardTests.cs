@@ -435,7 +435,7 @@ public static class MissingCardTests
         Check(grand.EnergyCost.GetWithModifiers(CostModifiers.All) == 0, "十字斩咏唱后费用");
         await Play(New<AccessoriesSpell>());
         var room = new MegaCrit.Sts2.Core.Rooms.CombatRoom(combat);
-        await player.Creature.GetPower<GainRelicPower>()!.AfterCombatVictory(room);
+        await player.Creature.GetPower<GainRelicPower>()!.AfterCombatEnd(room);
         Check(room.ExtraRewards[player].OfType<MegaCrit.Sts2.Core.Rewards.RelicReward>().Count() == 1, "饰品胜利奖励");
         Pass("十字斩咏唱费用与饰品魔法胜利奖励");
 

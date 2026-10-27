@@ -24,6 +24,7 @@ public sealed class MagicBookScreen
 {
     public Control View { get; }
     private readonly Player _player;
+    private readonly bool _readOnly;
     private readonly Control _canvas;
     private readonly Func<IOverlayScreen?> _currentOverlay;
     private readonly NCapstoneContainer? _capstone;
@@ -62,9 +63,10 @@ public sealed class MagicBookScreen
         return label;
     }
 
-    public MagicBookScreen(Control root, Player player, Func<IOverlayScreen?>? currentOverlay = null)
+    public MagicBookScreen(Control root, Player player, Func<IOverlayScreen?>? currentOverlay = null, bool readOnly = false)
     {
         _player = player;
+        _readOnly = readOnly;
         _currentOverlay = currentOverlay ?? (() => NOverlayStack.Instance?.Peek());
         _capstone = (root as NGlobalUi)?.CapstoneContainer;
         // 实机由原生 Capstone 管理层级，避免越过其上的教程和确认窗口。
@@ -174,7 +176,7 @@ public sealed class MagicBookScreen
         _coveredOverlay = _currentOverlay();
         // 只暂时隐藏原生选牌屏，不移除它，也不完成或取消它的选择任务。
         if (_capstone == null) _coveredOverlay?.AfterOverlayHidden();
-        if (!MagicPropCmd.AllowsUseOver(_coveredOverlay)) _status.Text = Text("BOOK_VIEW_ONLY");
+        if (_readOnly || !MagicPropCmd.AllowsUseOver(_coveredOverlay)) _status.Text = Text("BOOK_VIEW_ONLY");
         if (_capstone != null) _capstone.Open((MagicBookView)View); else View.Show();
     }
     public void Close()
@@ -415,7 +417,7 @@ public sealed class MagicBookScreen
 
     private void Arm(int id)
     {
-        if (_applying || _presentingChange) return;
+        if (_readOnly || _applying || _presentingChange) return;
         if (!MagicPropCmd.AllowsUseOver(_currentOverlay())) { _status.Text = Text("BOOK_VIEW_ONLY"); return; }
         if (_armed == id) { Cancel(); return; }
         if (!MagicPropCmd.CanUse(_player, id)) { _status.Text = Text("PROP_UNAVAILABLE"); return; }
@@ -428,7 +430,7 @@ public sealed class MagicBookScreen
 
     private void Select(int id)
     {
-        if (_applying || _presentingChange || !_armed.HasValue) return;
+        if (_readOnly || _applying || _presentingChange || !_armed.HasValue) return;
         var deck = MagicDeckStore.Read(_player);
         var prop = deck.Props.SingleOrDefault(p => p.InstanceId == _armed.Value);
         if (prop == null || !MagicPropCmd.CanUse(_player, prop.InstanceId)) { Cancel(); return; }

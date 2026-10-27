@@ -15,6 +15,8 @@ namespace FrierenMod.Scripts.Cards;
 public abstract class FrierenCard(int cost, CardType type, CardRarity rarity, TargetType target,
     bool showInLibrary = true) : ModCard(cost, type, rarity, target, showInLibrary)
 {
+    public override bool CanBeGeneratedInCombat => Mechanics.FrierenCardAvailability.IsRandomCandidate(this);
+    public override bool CanBeGeneratedByModifiers => Mechanics.FrierenCardAvailability.IsRandomCandidate(this);
     protected override string CardArtDirectory => "res://FrierenMod/images/cards";
     public override CardPoolModel VisualCardPool => this is IManaCard ? base.VisualCardPool : Type switch {
         CardType.Status => ModelDb.CardPool<StatusCardPool>(),

@@ -17,5 +17,5 @@ public sealed class FrierenCardPool : CustomCardPoolModel
     public override string TextEnergyIconPath => "res://FrierenMod/images/energy/text_icon.png";
     // 保留模型注册及存档 ID；普通奖励、商店和生成入口排除因子、专属衍生牌及仅初始获取的流转。
     protected override IEnumerable<CardModel> FilterThroughEpochs(UnlockState unlockState, IEnumerable<CardModel> cards) =>
-        base.FilterThroughEpochs(unlockState, cards).Where(card => card is not FactorCard and not TimeConcept and not Flow and not IGeneratedOnlyCard);
+        base.FilterThroughEpochs(unlockState, cards).Where(Mechanics.FrierenCardAvailability.IsRandomCandidate);
 }

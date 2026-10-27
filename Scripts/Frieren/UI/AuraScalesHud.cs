@@ -14,11 +14,17 @@ public partial class AuraScalesHud : Control
     private Texture2D _art = null!;
     private Label _left = null!, _right = null!, _caption = null!;
     private float _angle;
+    private float _judgmentTime;
     private float _velocity;
     private Aura? _aura;
     public float CurrentAngle => _angle;
     public static float TargetAngle(decimal playerMana, int auraMana) =>
         Math.Clamp((float)(auraMana - playerMana) / 100f, -1, 1) * 0.25f;
+
+    public static void Judgment()
+    {
+        if (NCombatRoom.Instance?.GetNodeOrNull<AuraScalesHud>("AuraScalesHud") is { } hud) hud._judgmentTime = 1.6f;
+    }
 
     public override void _Ready()
     {
@@ -65,7 +71,9 @@ public partial class AuraScalesHud : Control
         _right.Text = auraMana.ToString();
         var text = new LocString("frieren", "AURA.COUNTDOWN");
         text.Add("Turn", ((turn + 2) / 3) * 3);
-        _caption.Text = text.GetFormattedText();
+        _judgmentTime = Math.Max(0, _judgmentTime - (float)delta);
+        _caption.Text = _judgmentTime > 0 ? new LocString("frieren", "AURA.JUDGMENT").GetFormattedText() : text.GetFormattedText();
+        Modulate = _judgmentTime > 0 ? new Color(1.5f, 1.25f, 1.6f) : Colors.White;
         // 阻尼弹簧：魔力变化时轻摆，平衡后自然停住；正角使右侧下降。
         float dt = Math.Min((float)delta, 1f / 30);
         _velocity += (TargetAngle(playerMana, auraMana) - _angle) * 75 * dt;

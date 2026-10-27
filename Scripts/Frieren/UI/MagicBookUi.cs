@@ -1,4 +1,5 @@
 using FrierenMod.Core;
+using MegaCrit.Sts2.Core.Nodes.Screens.CardSelection;
 using FrierenMod.Scripts.Cards;
 using FrierenMod.Scripts.Characters;
 using FrierenMod.Scripts.Mechanics;
@@ -42,6 +43,7 @@ public static class MagicBookUi
         inputBlocked ??= () => root is NGlobalUi global &&
             ((global.CapstoneContainer.InUse && global.CapstoneContainer.CurrentCapstoneScreen is not MagicBookView) ||
              NModalContainer.Instance?.OpenModal != null);
+        bool ShowCounter() => currentOverlay() is NCardGridSelectionScreen or NChooseACardSelectionScreen || currentOverlay() == null && !inputBlocked();
         var toggle = MagicFactorButton.Create(root);
         var initialDeck = MagicDeckStore.Read(player);
         toggle.SetItemCount(initialDeck.Items.Count + initialDeck.Props.Count);
@@ -113,7 +115,7 @@ public static class MagicBookUi
         book.VisibilityChanged += () => {
             toggle.SetBookOpen(book.Visible);
             backdrop.Visible = book.Visible;
-            hud.Visible = CombatManager.Instance.IsInProgress && !book.Visible && currentOverlay() == null;
+            hud.Visible = CombatManager.Instance.IsInProgress && !book.Visible && ShowCounter();
             if (!hud.Visible) preview.Hide();
         };
         backdrop.GuiInput += input => {
@@ -127,7 +129,7 @@ public static class MagicBookUi
         };
         void RefreshInput()
         {
-            bool blocked = inputBlocked();
+            bool blocked = inputBlocked() || currentOverlay() != null;
             toggle.SetEnabled(!blocked);
             foreach (var view in new[] { hud, book, backdrop }) {
                 view.MouseBehaviorRecursive = blocked ? Control.MouseBehaviorRecursiveEnum.Disabled : Control.MouseBehaviorRecursiveEnum.Inherited;
@@ -143,7 +145,7 @@ public static class MagicBookUi
         {
             RefreshInput();
             bool overlay = currentOverlay() != null;
-            hud.Visible = CombatManager.Instance.IsInProgress && !overlay && !book.Visible;
+            hud.Visible = CombatManager.Instance.IsInProgress && ShowCounter() && !book.Visible;
             if (!hud.Visible) preview.Hide();
             var deck = MagicDeckStore.Read(player);
             toggle.SetItemCount(deck.Items.Count + deck.Props.Count);
@@ -166,7 +168,7 @@ public static class MagicBookUi
         root.AddChild(timer);
         if (root is NGlobalUi globalUi) {
             // 因子查看位于选牌层之上、原生菜单遮罩之下，暂停时自然变暗且不会挡住菜单。
-            foreach (var view in new[] { hud, root.GetNode<Control>("FrierenFactorPreview"), backdrop }) {
+            foreach (var view in new[] { root.GetNode<Control>("FrierenFactorPreview"), backdrop }) {
                 view.ZIndex = 0; view.ZAsRelative = true;
                 root.MoveChild(view, globalUi.CapstoneContainer.GetIndex());
             }
@@ -175,6 +177,7 @@ public static class MagicBookUi
             animations.Reparent(globalUi.CapstoneContainer);
             animations.ZIndex = 0; animations.ZAsRelative = true;
         }
+        hud.ZIndex = 100; hud.ZAsRelative = false;
         // Reparent 会触发 TreeExiting；必须在层级确定后绑定，避免初始化即被退出清理解绑。
         MagicDeckAnimations.Bind(player, animations, toggle, screen);
         RefreshInput();

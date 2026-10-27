@@ -1,4 +1,6 @@
 using System.Reflection;
+using FrierenMod.Scripts.Cards;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using System.Reflection.Emit;
 using BaseLib.Extensions;
 using FrierenMod.Scripts.Characters;
@@ -15,11 +17,15 @@ namespace FrierenMod.Scripts.Mechanics;
 // 统一限制随机获取；模型注册、百科、旧档和芙莉莲本人的卡池不受影响。
 public static class FrierenCardAvailability
 {
+    public static bool IsRandomCandidate(CardModel card) =>
+        card.Rarity is CardRarity.Common or CardRarity.Uncommon or CardRarity.Rare &&
+        card is not FactorCard and not MagicPropCard and not TimeConcept and not Flow and not IGeneratedOnlyCard;
+
     public static IEnumerable<CardPoolModel> Pools(IEnumerable<CardPoolModel> pools, Player player) =>
         player.Character is Frieren ? pools : pools.Where(pool => pool is not FrierenCardPool);
 
     public static IEnumerable<CardModel> Cards(IEnumerable<CardModel> cards, Player player) =>
-        player.Character is Frieren ? cards : cards.Where(card => card.Pool is not FrierenCardPool);
+        cards.Where(card => card.Pool is not FrierenCardPool || player.Character is Frieren && IsRandomCandidate(card));
 
     // 万花筒先随机选择角色池，必须在抽池之前排除，避免抽中空池后奖励生成失败。
     // 棱彩宝石也复用同一处规则，保留原生解锁、随机数、奖励与存档流程。

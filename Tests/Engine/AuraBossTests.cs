@@ -7,6 +7,7 @@ using FrierenMod.Scripts.Powers;
 using FrierenMod.Scripts.Presentation;
 using FrierenMod.Scripts.UI;
 using Godot;
+using MegaCrit.Sts2.Core.Models.Powers;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
@@ -48,7 +49,7 @@ public static class AuraBossTests
         RunManager.Instance.SetUpTest(run, new NetSingleplayerGameService()); LocalContext.NetId = 1;
         SaveManager.Instance.InitPrefsDataForTest();
         PresentationSettings.AllowOtherActTwoBosses = false;
-        Check(ModelDb.Act<Hive>().AllBossEncounters.Single() is AuraEncounter, "默认二层固定阿乌拉");
+        Check(ModelDb.Act<Hive>().AllBossEncounters.Any(e => e is AuraEncounter), "芙莉莲二层候选含阿乌拉");
         var act = ModelDb.Act<Hive>().ToMutable(); act.ApplyDiscoveryOrderModifications(UnlockState.all);
         Check(act.BossEncounter is AuraEncounter, "原生发现顺序不能覆盖固定Boss");
         PresentationSettings.AllowOtherActTwoBosses = true;
@@ -98,46 +99,57 @@ public static class AuraBossTests
         Check(aura.Mana == 185 && ManaCmd.Total(player) == 10, "死亡奖励不会重复领取");
         await aura.PerformMove(); aura.RollMove([player.Creature]);
         Check(aura.NextMove.Id == "BARRAGE", "嘲讽空过后继续普通行动");
-        hp = player.Creature.CurrentHp;
-        await aura.PerformMove(); aura.RollMove([player.Creature]);
-        Check(player.Creature.CurrentHp == hp - 18 && aura.NextMove.Id == "SCALES", "连击6×3，第3回合必为天平");
-        aura.NoticeDispel(); Check(aura.NextMove.Id == "SCALES", "重复解除魔法不改天平");
-        await aura.PerformMove(); aura.RollMove([player.Creature]);
-        Check(aura.NextMove.Id == "GUILLOTINE" && player.Creature.GetPowerAmount<AuraSubmissionPower>() == 2 && aura.ScaleCount == 1,
-            "天平失败少抽2，下一普通行动断头台");
+        async Task Step()
+        {
+            await aura.PerformMove();
+            await aura.AfterSideTurnEnd(context, CombatSide.Enemy, combat.Enemies);
+            aura.RollMove([player.Creature]);
+        }
+        hp = player.Creature.CurrentHp; await Step();
+        Check(player.Creature.CurrentHp == hp - 18 && aura.NextMove.Id == "MEDITATE" && aura.ScaleCount == 0,
+            "第二回合连击，第3回合仍正常冥想，不单独消耗天平行动");
+        aura.NoticeDispel(); Check(aura.NextMove.Id == "MEDITATE", "重复解除魔法不改普通意图");
+        int mana = aura.Mana; await Step();
+        Check(aura.Mana == mana + 20 && boss.GetPowerAmount<StrengthPower>() == 2 && aura.ScaleCount == 1 &&
+            aura.NextMove.Id == "GUILLOTINE", "第3回合冥想20魔力2力量后额外判定天平");
+        await aura.AfterSideTurnEnd(context, CombatSide.Enemy, combat.Enemies);
+        Check(aura.ScaleCount == 1, "同一回合末不会重复判定");
         var submission = player.Creature.GetPower<AuraSubmissionPower>()!;
         submission.AmountOnTurnStart = submission.Amount;
         Check(submission.ModifyHandDraw(player, 5) == 3, "服从实际减少开场抽牌");
         await submission.AfterSideTurnStart(CombatSide.Player, [player.Creature], combat);
-        Check(!player.Creature.HasPower<AuraSubmissionPower>(), "抽牌惩罚生效后移除");
-        hp = player.Creature.CurrentHp;
-        await aura.PerformMove(); aura.RollMove([player.Creature]);
-        Check(player.Creature.CurrentHp == hp - 25 && aura.NextMove.Id == "MEDITATE", "断头台25，随后轮到冥想");
-        int mana = aura.Mana; await aura.PerformMove(); aura.RollMove([player.Creature]);
-        Check(aura.Mana == mana + 20 && aura.NextMove.Id == "SCALES", "冥想20，回合6固定天平");
-        var extraMana = Enumerable.Range(0, 40).Select(_ => combat.CreateCard<Mana>(player)).ToArray();
+        Check(player.Creature.HasPower<AuraSubmissionPower>(), "选牌暂停抽牌时不能提前移除服从");
+        await submission.AfterModifyingHandDraw();
+        Check(submission.ModifyHandDraw(player, 5) == 5, "同回合不重复减少抽牌");
+        await submission.AfterSideTurnEnd(context, CombatSide.Player, [player.Creature]);
+        Check(!player.Creature.HasPower<AuraSubmissionPower>(), "抽牌后回合结束移除服从");
+        hp = player.Creature.CurrentHp; await Step();
+        Check(player.Creature.CurrentHp == hp - 27, "断头台25加2力量");
+        await Step();
+        var extraMana = Enumerable.Range(0, 100).Select(_ => combat.CreateCard<Mana>(player)).ToArray();
         foreach (var card in extraMana) await CardPileCmd.Add(card, PileType.Discard);
         await aura.ChangeMana(40 - aura.Mana);
-        await aura.PerformMove(); aura.RollMove([player.Creature]);
-        Check(aura.Mana == 10 && aura.NextMove.Id == "STAGGER", "玩家赢天平，准确扣除30魔力并空过");
+        await Step();
+        Check(aura.Mana == 30 && aura.NextMove.Id == "STAGGER" && aura.ScaleCount == 2, "第6回合先冥想20再因天平失败失去30魔力");
         foreach (var card in extraMana) await CardPileCmd.RemoveFromCombat(card);
-        hp = player.Creature.CurrentHp;
-        await aura.PerformMove(); aura.RollMove([player.Creature]);
-        Check(player.Creature.CurrentHp == hp, "空过不攻击");
+        hp = player.Creature.CurrentHp; await Step();
+        Check(player.Creature.CurrentHp == hp, "失败后空过不攻击");
         await aura.ChangeMana(100);
         await CreatureCmd.Kill(soldiers[1]);
         Check(aura.NextMove.Id == "SUMMON", "清空士兵后可预判召唤");
-        mana = aura.Mana;
-        await aura.PerformMove(); aura.RollMove([player.Creature]);
-        Check(aura.Mana == mana - 25 && combat.Enemies.Count(c => c.IsAlive && c.Monster is AuraSoldier) == 1 && aura.NextMove.Id == "SCALES", "召唤扣25，只补一名，回合9仍为天平");
-        await aura.PerformMove(); aura.RollMove([player.Creature]);
-        Check(aura.ScaleCount == 3 && aura.NextMove.Id == "GUILLOTINE" && ((SingleAttackIntent)aura.NextMove.Intents.Single()).GetTotalDamage([player.Creature], boss) == 40,
-            "第三次起断头台意图显示40伤害");
-        hp = player.Creature.CurrentHp; await aura.PerformMove(); aura.RollMove([player.Creature]);
-        Check(player.Creature.CurrentHp == hp - 40, "第三次断头台实际40伤害");
-        await aura.PerformMove(); aura.RollMove([player.Creature]);
+        mana = aura.Mana; await Step();
+        Check(aura.Mana == mana - 40 && combat.Enemies.Count(c => c.IsAlive && c.Monster is AuraSoldier) == 2,
+            "召唤扣40，补两名士兵");
+        hp = player.Creature.CurrentHp; await Step();
+        Check(player.Creature.CurrentHp == hp - 30 && aura.ScaleCount == 3 && aura.NextMove.Id == "GUILLOTINE",
+            "第9回合连击正常造成10×3后额外判定第三次天平");
+        Check(((SingleAttackIntent)aura.NextMove.Intents.Single()).GetTotalDamage([player.Creature], boss) == 44,
+            "第三次断头台意图40加4力量");
+        hp = player.Creature.CurrentHp; await Step();
+        Check(player.Creature.CurrentHp == hp - 44, "第三次断头台结算44伤害");
+        await Step();
         await aura.ChangeMana(ManaCmd.Total(player) - aura.Mana);
-        await aura.PerformMove(); aura.RollMove([player.Creature]);
+        await Step();
         Check(aura.NextMove.Id is not "GUILLOTINE" and not "STAGGER", "天平平局无惩罚、无眩晕");
 
         foreach (var lang in new[] { "zhs", "eng" }) {

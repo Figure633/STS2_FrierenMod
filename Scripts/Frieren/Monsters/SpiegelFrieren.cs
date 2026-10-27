@@ -120,7 +120,8 @@ public sealed class SpiegelFrieren : CustomMonsterModel
     }
     private async Task PrepareApex(IReadOnlyList<Creature> targets)
     {
-        if (Creature.GetPower<IntangiblePower>() is { } power) await PowerCmd.Remove(power);
+        foreach (var power in Creature.Powers.ToArray()) await PowerCmd.Remove(power);
+        await CreatureCmd.LoseBlock(Creature, Creature.Block);
     }
     public override async Task AfterDeath(PlayerChoiceContext context, Creature creature, bool prevented, float animLength)
     {
