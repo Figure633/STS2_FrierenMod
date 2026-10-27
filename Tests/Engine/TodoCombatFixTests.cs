@@ -85,8 +85,7 @@ public static class TodoCombatFixTests
         try {
             monster.RollMove([player.Creature]); await monster.AfterAddedToRoom();
             var disguise = mimic.GetPower<MimicPower>()!;
-            var play = new CardPlay { Card = combat.CreateCard<StrikeFrieren>(player), Player = player, Target = mimic, ResultPile = PileType.Discard,
-                IsAutoPlay = false, PlayIndex = 0, PlayCount = 1, Resources = resources };
+            var play = CombatTestState.NewPlay(card: combat.CreateCard<StrikeFrieren>(player), target: mimic, resultPile: PileType.Discard, isAutoPlay: false, playIndex: 0, playCount: 1, resources: resources);
             for (int i = 0; i < 4; i++) await disguise.AfterCardPlayedLate(context, play);
             Check(Spoken.Count == 0, "前四张牌不提前播放宝箱怪提示");
             await disguise.AfterCardPlayedLate(context, play);

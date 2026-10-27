@@ -1,3 +1,4 @@
+using FrierenMod.Scripts.Shared.Compatibility;
 using FrierenMod.Core;
 using FrierenMod.Scripts.Mechanics;
 using FrierenMod.Scripts.Powers;
@@ -26,7 +27,7 @@ public sealed class ManaParcel() : FrierenCard(0, CardType.Skill, CardRarity.Unc
     public override async Task AfterCardDrawn(PlayerChoiceContext context, CardModel card, bool fromHandDraw)
     {
         if (card != this) return;
-        await CardCmd.Exhaust(context, this);
+        await GameApi.Exhaust(context, this);
         await ManaCmd.Generate(Owner, PileType.Hand, (int)DynamicVars["Amount"].BaseValue, ignoreBan: true);
     }
 }

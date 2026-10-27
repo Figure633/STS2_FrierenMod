@@ -1,3 +1,4 @@
+using BaseLib.Utils;
 using FrierenMod.Scripts.Mechanics;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -14,7 +15,7 @@ public sealed class Flow() : FrierenCard(0, CardType.Attack, CardRarity.Common, 
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         ArgumentNullException.ThrowIfNull(play.Target);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this, play).Targeting(play.Target).Execute(context);
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardCompatibility(this, play).Targeting(play.Target).Execute(context);
         foreach (var pile in new[] { PileType.Draw, PileType.Discard })
         {
             var mana = ManaCmd.InPile(Owner, pile).FirstOrDefault();

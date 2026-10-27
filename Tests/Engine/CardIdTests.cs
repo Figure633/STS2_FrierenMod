@@ -93,8 +93,7 @@ public static class CardIdTests
         for (int i = 0; i < 2; i++) await CardPileCmd.Add(combat.CreateCard<Mana>(player), PileType.Draw);
         var envy = combat.CreateCard<Envy>(player); await CardPileCmd.Add(envy, PileType.Discard);
         var chant = combat.CreateCard<RapidChant>(player);
-        var play = new CardPlay { Card = chant, Player = chant.Owner, Target = null, IsAutoPlay = false, ResultPile = PileType.Discard, PlayCount = 1, PlayIndex = 0,
-            Resources = new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 } };
+        var play = CombatTestState.NewPlay(card: chant, target: null, isAutoPlay: false, resultPile: PileType.Discard, playCount: 1, playIndex: 0, resources: new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 });
         var option = ChantCmd.Options(player, 2).Single(x => x.SpellId == "MetalPetalSpell");
         await ChantCmd.Resolve(new BlockingPlayerChoiceContext(), play, option);
         Check(player.Creature.GetPowerAmount<MetallicizePower>() == 2 && !ManaCmd.InPile(player, PileType.Draw).Any(),

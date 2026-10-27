@@ -1,3 +1,4 @@
+using FrierenMod.Scripts.Shared.Compatibility;
 using FrierenMod.Core;
 using FrierenMod.Scripts.Cards;
 using MegaCrit.Sts2.Core.Commands;
@@ -44,7 +45,7 @@ public static class ManaCmd
         var cards = InPile(owner, Pile(slot)).Take(count).ToArray();
         if (cards.Length < count) return false;
         using var animation = fastAnimation ? ManaAnimationSpeed.Begin(cards) : null;
-        foreach (var card in cards) await CardCmd.Exhaust(context, card);
+        foreach (var card in cards) await GameApi.Exhaust(context, card);
         return true;
     }
 }

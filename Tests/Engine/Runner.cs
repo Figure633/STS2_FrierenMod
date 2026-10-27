@@ -15,6 +15,19 @@ public partial class Runner : Node
     { __result = TestHotkeys; return false; }
 
     private static bool SkipGlobalHoverWindow() => false;
+    private static bool ReleasePaths(ref string[] __result)
+    {
+        __result=[System.Environment.GetEnvironmentVariable("FRIEREN_RELEASE_INFO") ??
+            Path.Combine(System.Environment.GetEnvironmentVariable("FRIEREN_STS2_DIR")!,"release_info.json")];
+        return false;
+    }
+    private static Mod TestMod(string id, System.Reflection.Assembly assembly, ModManifest manifest)
+    {
+        var mod=new Mod {path="test",state=ModLoadState.Loaded,manifest=manifest};
+        if(AccessTools.Field(typeof(Mod),"assemblies") is {} many) many.SetValue(mod,new List<System.Reflection.Assembly>{assembly});
+        else AccessTools.Field(typeof(Mod),"assembly").SetValue(mod,assembly);
+        return mod;
+    }
 
     private async Task Finish()
     {
@@ -62,15 +75,17 @@ public partial class Runner : Node
                 throw new Exception("先打包 FrierenMod.pck 再运行引擎测试。");
             Godot.Bridge.ScriptManagerBridge.LookupScriptsInAssembly(typeof(ModelDb).Assembly);
             var mods = (List<Mod>)ModManager.Mods;
-            mods.Add(new Mod { path = "test", assemblies = [typeof(BaseLib.BaseLibMain).Assembly], state = ModLoadState.Loaded,
-                manifest = new ModManifest { id = "BaseLib" } });
-            mods.Add(new Mod { path = "test", assemblies = [typeof(Mana).Assembly], state = ModLoadState.Loaded,
-                manifest = new ModManifest { id = "FrierenMod", dependencies = [new ModDependency("BaseLib", "3.4.7")] } });
+            mods.Add(TestMod("BaseLib",typeof(BaseLib.BaseLibMain).Assembly,new ModManifest{id="BaseLib"}));
+            mods.Add(TestMod("FrierenMod",typeof(Mana).Assembly,new ModManifest {id="FrierenMod",dependencies=[new ModDependency("BaseLib","3.4.7")]}));
             AccessTools.Property(typeof(ModManager), nameof(ModManager.State)).SetValue(null, ModManagerState.Initialized);
-            AssemblyInfo.Init();
+            AccessTools.TypeByName("MegaCrit.Sts2.Core.Modding.AssemblyInfo")?.GetMethod("Init")?.Invoke(null,null);
+            new Harmony("frieren.tests.release_info").Patch(
+                AccessTools.Method(typeof(MegaCrit.Sts2.Core.Debug.ReleaseInfoManager),"GetPossibleReleaseInfoPaths"),
+                prefix:new HarmonyMethod(typeof(Runner),nameof(ReleasePaths)));
             BaseLib.BaseLibMain.Initialize();
             FrierenMod.Scripts.Entry.Init();
-            ModelDb.Init();
+            var initModels=AccessTools.Method(typeof(ModelDb),"Init");
+            initModels.Invoke(null,initModels.GetParameters().Length==0?null:[null]);
             ModelIdSerializationCache.Init();
             ModelDb.InitIds();
             GD.Print("NATIVE_SAVE_OK: " + NativeSaveTests.Run());
@@ -95,6 +110,10 @@ public partial class Runner : Node
             }
             if (OS.GetCmdlineUserArgs().Contains("--combat-api-only")) {
                 GD.Print("COMBAT_API_OK: " + await CombatTests.Run());
+                await Finish(); return;
+            }
+            if (OS.GetCmdlineUserArgs().Contains("--version-compat-only")) {
+                GD.Print("VERSION_COMPAT_OK: " + await VersionCompatibilityTests.Run());
                 await Finish(); return;
             }
             if (OS.GetCmdlineUserArgs().Contains("--music092-only")) {

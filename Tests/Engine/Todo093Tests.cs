@@ -51,8 +51,7 @@ public static class Todo093Tests
         Check(ModelDb.Power<MimicPower>().Type==PowerType.None,"宝箱怪计数按一代保持中性");
         foreach(var p in new PowerModel[]{ModelDb.Power<FlyingMagicPower>(),ModelDb.Power<ManaReturnPower>(),ModelDb.Power<SwallowedPower>(),ModelDb.Power<WeakenedChantPower>()})
             Check(p.Type==PowerType.Debuff,"核对原有减益分类："+p.GetType().Name);
-        CardPlay Play(CardModel c)=>new(){Card=c, Player = c.Owner,Target=player.Creature,ResultPile=PileType.Exhaust,
-            Resources=new ResourceInfo{EnergySpent=0,EnergyValue=0,StarsSpent=0,StarValue=0},PlayCount=1,PlayIndex=0,IsAutoPlay=false};
+        CardPlay Play(CardModel c)=>CombatTestState.NewPlay(card: c, target: player.Creature, resultPile: PileType.Exhaust, resources: new ResourceInfo{EnergySpent=0,EnergyValue=0,StarsSpent=0,StarValue=0}, playCount: 1, playIndex: 0, isAutoPlay: false);
         async Task Use(CardModel c)=>await (Task)AccessTools.Method(typeof(RustCleanMagic),"OnPlay").Invoke(c,[context,Play(c)])!;
         var rust=combat.CreateCard<RustCleanMagic>(player);
         Check(rust.Rarity==CardRarity.Uncommon && rust.Type==CardType.Skill && rust.TargetType==TargetType.Self && rust.EnergyCost.Canonical==0 && rust.Keywords.Contains(CardKeyword.Exhaust),"清洁铜像：0费罕见技能，自身目标且消耗");

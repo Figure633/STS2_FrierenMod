@@ -44,9 +44,7 @@ public static class GeneratedCardTests
             if (upgrade) { card.UpgradeInternal(); card.FinalizeUpgradeInternal(); }
             return card;
         }
-        CardPlay Play(CardModel card) => new() { Card = card, Player = card.Owner, Target = null, IsAutoPlay = false,
-            ResultPile = PileType.Discard, PlayCount = 1, PlayIndex = 0,
-            Resources = new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 } };
+        CardPlay Play(CardModel card) => CombatTestState.NewPlay(card: card, target: null, isAutoPlay: false, resultPile: PileType.Discard, playCount: 1, playIndex: 0, resources: new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 });
         async Task Effect(CardModel card) => await (Task)AccessTools.Method(card.GetType(), "OnPlay").Invoke(card, [context, Play(card)])!;
         void Reset() {
             foreach (var pile in player.PlayerCombatState!.AllPiles)

@@ -73,7 +73,7 @@ public static class OpeningEventTests
             var fresh = Start(player);
             Check(fresh.ExtraFields.StartedWithNeow == (player.Character is Frieren), "未解锁涅奥的新档仅为芙莉莲保留魔导书开局");
             if (player.Character is Frieren) {
-                var blessing = ModelDb.AncientEvent<Neow>().ToMutable(); await blessing.BeginEvent(player, null, false);
+                var blessing = ModelDb.AncientEvent<Neow>().ToMutable(); await CombatTestState.BeginEvent(blessing,player);
                 Check(!blessing.IsFinished && blessing.CurrentOptions.Count > 0, "未解锁涅奥的新档也有可选的原版祝福");
             }
             manager.CleanUp(); await Tick();
@@ -82,7 +82,7 @@ public static class OpeningEventTests
         Check(Create() is EventRoom { CanonicalEvent: Neow }, "多人混合角色不替换全队的原版开局");
         manager.CleanUp(); await Tick();
 
-        var selector = new TestCardSelector(); using var choices = CardSelectCmd.UseSelector(selector);
+        var selector = new TestCardSelector(); using var choices = CombatTestState.UseSelector(selector);
         var owner = Player.CreateForNewRun<Frieren>(UnlockState.all, 1); var state = Start(owner); var story = await Enter(state);
         Check(((RoomSet)AccessTools.Field(typeof(ActModel), "_rooms").GetValue(state.Act)!).eventsVisited == 0,
             "前置事件不会提前消耗后续普通事件序列");

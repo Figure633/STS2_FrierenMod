@@ -1,4 +1,7 @@
 using System.Runtime.CompilerServices;
+using System.Reflection;
+using System.Reflection.Emit;
+using BaseLib.Extensions;
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Commands;
@@ -61,15 +64,43 @@ public static class ManaAnimationSpeed
         private static void Postfix(NCardFlyVfx __instance) => ApplyFlightSpeed(__instance);
     }
 
-    [HarmonyPatch(typeof(CardPileCmd), nameof(CardPileCmd.GetTweenForCardsChangingPiles),
-        [typeof(IEnumerable<CardPileAddResult>), typeof(bool)])]
+    private static readonly MethodInfo? TweenFactory = AccessTools.Method(typeof(CardPileCmd), "GetTweenForCardsChangingPiles",
+        [typeof(IEnumerable<CardPileAddResult>),typeof(bool)]);
+
+    [HarmonyPatch]
     private static class NativePileTweenPatch
     {
+        private static bool Prepare() => TweenFactory != null;
+        private static MethodBase TargetMethod() => TweenFactory!;
         // 新版将牌堆补间提取为公开工厂，直接调整返回的原生补间。
         private static void Postfix(IEnumerable<CardPileAddResult> results, (Tween?, bool) __result)
         {
             if (__result.Item1 is { } tween)
                 ApplySpeed(tween, results.Where(r => r.success).Select(r => r.cardAdded));
+        }
+    }
+
+    [HarmonyPatch]
+    private static class MainPileTweenPatch
+    {
+        private static bool Prepare() => TweenFactory == null;
+        private static MethodBase TargetMethod() => AccessTools.Method(typeof(CardPileCmd), nameof(CardPileCmd.Add),
+            [typeof(IEnumerable<CardModel>),typeof(CardPile),typeof(CardPilePosition),typeof(AbstractModel),typeof(bool)])
+            .StateMachineType().GetMethod("MoveNext", BindingFlags.Instance|BindingFlags.NonPublic)!;
+        private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, MethodBase __originalMethod)
+        {
+            var createTween=AccessTools.Method(typeof(Node),nameof(Node.CreateTween));
+            var cards=__originalMethod.DeclaringType!.FindStateMachineField("cards");
+            int matches=0;
+            foreach(var instruction in instructions) {
+                yield return instruction;
+                if(!instruction.Calls(createTween))continue;
+                matches++;
+                yield return new CodeInstruction(OpCodes.Ldarg_0);
+                yield return new CodeInstruction(OpCodes.Ldfld,cards);
+                yield return new CodeInstruction(OpCodes.Call,AccessTools.Method(typeof(ManaAnimationSpeed),nameof(ApplySpeed)));
+            }
+            if(matches!=1)throw new InvalidOperationException("正式版牌堆补间接口改变，需核查咏唱速度");
         }
     }
 }

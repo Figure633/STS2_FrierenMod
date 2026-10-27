@@ -43,8 +43,7 @@ static class CombatTests
         MagicDeckStore.Write(player, deck);
         await ManaCmd.Generate(player, PileType.Draw, 3);
         var card = combat.CreateCard<RapidChant>(player);
-        var play = new CardPlay { Card = card, Player = card.Owner, Target = null, ResultPile = PileType.Discard,
-            Resources = new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 }, IsAutoPlay = false, PlayIndex = 0, PlayCount = 1 };
+        var play = CombatTestState.NewPlay(card: card, target: null, resultPile: PileType.Discard, resources: new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 }, isAutoPlay: false, playIndex: 0, playCount: 1);
         await ChantCmd.Resolve(new ThrowingPlayerChoiceContext(), play, ChantCmd.Options(player, 2).Single(x => x.Slot == ManaSlot.Draw));
         if (player.Creature.Block != 4 || ManaCmd.InPile(player, PileType.Draw).Count() != 1)
             throw new Exception("实际咏唱结算或指定牌堆扣费错误。");
@@ -77,7 +76,7 @@ static class CombatTests
         await Reset();
         MagicDeckStore.Write(player, new MagicDeckState());
         var selector = new TestCardSelector();
-        using var selection = CardSelectCmd.UseSelector(selector);
+        using var selection = CombatTestState.UseSelector(selector);
         for (int i = 0; i < 3; i++) selector.PrepareToSelect(new[] { i });
         // 当前开局由魔导书事件/界面兜底推进；此夹具直接走同一个原生选牌入口。
         await MagicDeckCmd.ChooseStartingFactors(context, player);
@@ -172,7 +171,7 @@ static class CombatTests
         await paid.SpendResources();
         Check(ManaCmd.Total(player) == 0 && player.PlayerCombatState.Energy == energy, $"魔力代付扣费错误: 剩余魔力={ManaCmd.Total(player)}, 能量={player.PlayerCombatState.Energy}, 原能量={energy}, 代付费用={player.Creature.GetPower<ManaInsteadOfEnergyPower>()?.Cost(paid)}");
         Check(!combat.CreateCard<StrikeFrieren>(player).CanPlay(), "魔力不足仍能出牌");
-        await Hook.AfterSideTurnEnd(combat, CombatSide.Player, [player.Creature]);
+        await CombatTestState.EndTurn(combat, CombatSide.Player, [player.Creature]);
         Check(Power<ManaInsteadOfEnergyPower>() == 0 && Power<BanManaGainPower>() == 0 && Power<ChantWithoutManaPower>() == 0, "想象力回合结束未清除: " + string.Join(",", player.Creature.Powers.Select(p => p.GetType().Name)));
         Pass("想象力：禁生成、跨牌堆代付、资源不足拦截、回合清理");
 

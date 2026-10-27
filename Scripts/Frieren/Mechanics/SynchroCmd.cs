@@ -1,3 +1,4 @@
+using BaseLib.Utils;
 using FrierenMod.Scripts.Cards;
 using FrierenMod.Scripts.Powers;
 using MegaCrit.Sts2.Core.Combat;
@@ -25,7 +26,7 @@ public static class SynchroCmd
         bool thunder = owner.Creature.HasPower<ThunderPower>();
         if (accelerated && thunder) Presentation.FrierenAchievements.Unlock(owner, "4015");
         if (thunder)
-            await DamageCmd.Attack(15).FromCard(card, play).TargetingRandomOpponents(owner.Creature.CombatState!).Execute(context);
+            await DamageCmd.Attack(15).FromCardCompatibility(card, play).TargetingRandomOpponents(owner.Creature.CombatState!).Execute(context);
         if (accelerated || !thunder) await CardPileCmd.Draw(context, accelerated ? 2 : 1, owner);
         foreach (var fire in owner.PlayerCombatState!.DiscardPile.Cards.OfType<LittleFire>().ToArray())
             await CardPileCmd.Add(fire, PileType.Hand);

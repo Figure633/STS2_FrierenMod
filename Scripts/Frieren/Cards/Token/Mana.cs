@@ -19,11 +19,6 @@ public sealed class Mana() : FrierenCard(0, CardType.Status, CardRarity.Token, T
     }
     public override int MaxUpgradeLevel => 0;
     // 同调本身包含消耗，卡面不再重复列出“消耗”；仍走原生出牌去向与节俭钩子。
-    protected override CardLocation GetResultLocationForCardPlay()
-    {
-        var pile = base.GetResultLocationForCardPlay();
-        return pile.pileType == PileType.Discard ? new CardLocation(pile.player,PileType.Exhaust,pile.position) : pile;
-    }
     protected override IEnumerable<DynamicVar> CanonicalVars => [new CardsVar(1)];
     protected override Task OnPlay(PlayerChoiceContext context, CardPlay play) => SynchroCmd.Play(context, this, play);
 }

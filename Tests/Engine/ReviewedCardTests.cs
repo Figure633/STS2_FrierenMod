@@ -39,7 +39,7 @@ public static class ReviewedCardTests
         CombatTestState.SetInProgress(true);
         var context = new ThrowingPlayerChoiceContext();
         var selector = new TestCardSelector();
-        using var selection = CardSelectCmd.UseSelector(selector);
+        using var selection = CombatTestState.UseSelector(selector);
         async Task Reset()
         {
             foreach (var creature in combat.Creatures)
@@ -58,8 +58,7 @@ public static class ReviewedCardTests
             if (upgrade) { card.UpgradeInternal(); card.FinalizeUpgradeInternal(); }
             return card;
         }
-        CardPlay MakePlay(CardModel c) => new() { Card = c, Player = c.Owner, Target = null, IsAutoPlay = false, ResultPile = PileType.Discard,
-            Resources = new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 }, PlayCount = 1, PlayIndex = 0 };
+        CardPlay MakePlay(CardModel c) => CombatTestState.NewPlay(card: c, target: null, isAutoPlay: false, resultPile: PileType.Discard, resources: new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 }, playCount: 1, playIndex: 0);
         async Task Play(CardModel c, Creature? target = null)
         {
             await CardPileCmd.Add(c, PileType.Hand);

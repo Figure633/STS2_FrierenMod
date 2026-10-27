@@ -43,7 +43,7 @@ public static class MissingCardTests
         CombatTestState.SetInProgress(true);
         var context = new ThrowingPlayerChoiceContext();
         var selector = new TestCardSelector();
-        using var selection = CardSelectCmd.UseSelector(selector);
+        using var selection = CombatTestState.UseSelector(selector);
         async Task Reset()
         {
             foreach (var creature in combat.Creatures)
@@ -62,8 +62,7 @@ public static class MissingCardTests
             if (upgraded) c.UpgradeInternal();
             return c;
         }
-        CardPlay MakePlay(CardModel c, Creature? target = null) => new() { Card = c, Player = c.Owner, Target = target, ResultPile = PileType.Discard,
-            Resources = new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 }, PlayCount = 1, PlayIndex = 0, IsAutoPlay = false };
+        CardPlay MakePlay(CardModel c, Creature? target = null) => CombatTestState.NewPlay(card: c, target: target, resultPile: PileType.Discard, resources: new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 }, playCount: 1, playIndex: 0, isAutoPlay: false);
         async Task Play(CardModel c, Creature? target = null)
         {
             await CardPileCmd.Add(c, PileType.Hand);

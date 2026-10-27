@@ -115,8 +115,7 @@ public static class AchievementSystemTests
         await Hook.AfterPlayerTurnStart(combat, context, player);
         foreach (string id in new[] { "5001", "5002", "5003", "5005", "5006", "5015", "7001" })
             Check(SlotBackStore.Read().Unlocked.Contains(id), "原生回合钩子实际解锁 " + id);
-        CardPlay Play(CardModel card) => new() { Card = card, Player = card.Owner, Resources = new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 }, ResultPile = PileType.Discard,
-            Target = enemy, IsAutoPlay = false, PlayIndex = 0, PlayCount = 1 };
+        CardPlay Play(CardModel card) => CombatTestState.NewPlay(card: card, resources: new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 }, resultPile: PileType.Discard, target: enemy, isAutoPlay: false, playIndex: 0, playCount: 1);
         await Hook.AfterCardPlayed(combat, context, Play(combat.CreateCard<RapidChant>(player)));
         await Hook.AfterCardPlayed(combat, context, Play(combat.CreateCard<LightningMagic>(player)));
         Check(SlotBackStore.Read().Unlocked.Contains("0004") && SlotBackStore.Read().Unlocked.Contains("4001"), "原生出牌钩子解锁咏唱和破灭之雷魔法");

@@ -1,3 +1,4 @@
+using FrierenMod.Scripts.Shared.Compatibility;
 using FrierenMod.Core;
 using FrierenMod.Scripts.Mechanics;
 using FrierenMod.Scripts.Powers;
@@ -30,6 +31,6 @@ public sealed class Laziness() : FrierenCard(0, CardType.Status, CardRarity.Toke
     public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay play)
     {
         if (play.Card.Owner == Owner && ChantCmd.IsChant(play.Card) && Pile?.Type == PileType.Hand)
-            await CardCmd.Exhaust(context, this);
+            await GameApi.Exhaust(context, this);
     }
 }

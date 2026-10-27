@@ -1,3 +1,4 @@
+using BaseLib.Utils;
 using FrierenMod.Core;
 using FrierenMod.Scripts.Mechanics;
 using FrierenMod.Scripts.Powers;
@@ -19,7 +20,7 @@ public sealed class SeeThroughPhantom() : FrierenCard(1, CardType.Attack, CardRa
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(8, ValueProp.Move), new DynamicVar("Amount", 1)];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this, play).Targeting(play.Target!).Execute(context);
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardCompatibility(this, play).Targeting(play.Target!).Execute(context);
         if (play.Target!.Monster?.NextMove?.Intents.Any(i => i is MegaCrit.Sts2.Core.MonsterMoves.Intents.AttackIntent) == true)
             await PowerCmd.Apply<WeakPower>(context, play.Target, (int)DynamicVars["Amount"].BaseValue, Owner.Creature, this);
         else await PowerCmd.Apply<VulnerablePower>(context, play.Target, (int)DynamicVars["Amount"].BaseValue, Owner.Creature, this);

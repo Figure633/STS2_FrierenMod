@@ -94,7 +94,7 @@ public static class TutorialTests
             book.View.QueueFree(); await Tick();
 
             save.ResetFtues();
-            var selector = new TestCardSelector(); using var choices = CardSelectCmd.UseSelector(selector);
+            var selector = new TestCardSelector(); using var choices = CombatTestState.UseSelector(selector);
             var context = new BlockingPlayerChoiceContext();
             Task setup = MagicDeckCmd.ChooseStartingFactors(context, player); await Tick();
             Check(modal.OpenModal is FrierenTutorial && MagicDeckStore.Read(player).Draft.Length == 0, "重置原版教程后，在开局抽选项之前显示");

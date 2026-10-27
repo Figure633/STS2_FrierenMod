@@ -20,6 +20,7 @@ public static class MusicTests
 {
     private static bool Interactive(ref bool __result){__result=false;return false;}
     private static bool BankAvailable(ref bool __result){__result=true;return false;}
+    private static bool SkipBankLoad()=>false;
     public static async Task<int> Run(Node root)
     {
         int count=0;
@@ -75,8 +76,9 @@ public static class MusicTests
         var nonInteractive=AccessTools.PropertyGetter(typeof(MegaCrit.Sts2.Core.Helpers.NonInteractiveMode),"IsActive");
         patch.Patch(nonInteractive,prefix:new HarmonyMethod(typeof(MusicTests),nameof(Interactive)));
         // 独立测试没有 FMOD 扩展，只替代音频库加载；原生控制器与模组路由照常执行。
-        patch.Patch(AccessTools.Method(typeof(NRunMusicController), "LoadActBank"),
-            prefix:new HarmonyMethod(typeof(MusicTests),nameof(BankAvailable)));
+        if(AccessTools.Method(typeof(NRunMusicController), "LoadActBank") is {} bankLoader)
+            patch.Patch(bankLoader,prefix:new HarmonyMethod(typeof(MusicTests),
+                bankLoader.ReturnType==typeof(bool)?nameof(BankAvailable):nameof(SkipBankLoad)));
         run.PushRoom(new RestSiteRoom());
         var controller=new NRunMusicController();var proxy=new Node {Name="Proxy"};proxy.SetScript(GD.Load<Script>("res://music_proxy.gd"));
         controller.AddChild(proxy);controller.SetRunState(run);root.AddChild(controller);

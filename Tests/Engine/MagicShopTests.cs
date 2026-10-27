@@ -40,7 +40,7 @@ public static class MagicShopTests
         LocalContext.NetId = 1;
         run.PushRoom(new RestSiteRoom());
         var selector = new TestCardSelector();
-        using var selection = CardSelectCmd.UseSelector(selector);
+        using var selection = CombatTestState.UseSelector(selector);
         MagicDeckState Fresh() => MagicDeckState.FromJson(JsonSerializer.Serialize(new MagicDeckSave(3,
             MagicDeckState.CreatePrototypeLoadout().Items.ToArray(), true, 3, StartingPropsGranted: true)));
         int Prepare(string prop, params string[] extra) {

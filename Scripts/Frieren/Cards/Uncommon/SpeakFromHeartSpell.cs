@@ -1,3 +1,4 @@
+using FrierenMod.Scripts.Shared.Compatibility;
 using FrierenMod.Core;
 using FrierenMod.Scripts.Mechanics;
 using FrierenMod.Scripts.Powers;
@@ -19,7 +20,7 @@ public sealed class SpeakFromHeartSpell() : FrierenCard(2, CardType.Skill, CardR
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         var mana = ManaCmd.InPile(Owner, PileType.Hand).ToArray();
-        foreach (var card in mana) await CardCmd.Exhaust(context, card);
+        foreach (var card in mana) await GameApi.Exhaust(context, card);
         await CardPileCmd.AutoPlayFromDrawPile(context, Owner, mana.Length * (IsUpgraded ? 2 : 1), CardPilePosition.Top, false);
     }
 }

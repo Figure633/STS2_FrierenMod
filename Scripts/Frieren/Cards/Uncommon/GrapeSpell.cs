@@ -1,3 +1,4 @@
+using FrierenMod.Scripts.Shared.Compatibility;
 using FrierenMod.Core;
 using FrierenMod.Scripts.Mechanics;
 using FrierenMod.Scripts.Powers;
@@ -20,7 +21,7 @@ public sealed class GrapeSpell() : FrierenCard(1, CardType.Skill, CardRarity.Unc
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         foreach (var card in await CardFlowCmd.Choose(context, this, PileType.Hand, 2))
-            await CardCmd.Exhaust(context, card);
+            await GameApi.Exhaust(context, card);
         await ManaCmd.Generate(Owner, PileType.Hand, 2);
     }
     protected override void OnUpgrade() { EnergyCost.UpgradeBy(-1); }

@@ -56,8 +56,7 @@ public static class ChantAnimationSpeedTests
         CombatTestState.SetInProgress(true);
         var context = new BlockingPlayerChoiceContext();
         var source = combat.CreateCard<FinalChant>(player);
-        var play = new CardPlay { Card = source, Player = source.Owner, Target = null, ResultPile = PileType.Discard, PlayCount = 1, PlayIndex = 0, IsAutoPlay = false,
-            Resources = new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 } };
+        var play = CombatTestState.NewPlay(card: source, target: null, resultPile: PileType.Discard, playCount: 1, playIndex: 0, isAutoPlay: false, resources: new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 });
         async Task<CardModel[]> Mana(PileType pile, int n, bool dense = false) {
             var cards = new List<CardModel>();
             for (int i = 0; i < n; i++) {

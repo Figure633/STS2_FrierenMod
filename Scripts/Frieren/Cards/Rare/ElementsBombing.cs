@@ -1,3 +1,4 @@
+using FrierenMod.Scripts.Shared.Compatibility;
 using FrierenMod.Core;
 using FrierenMod.Scripts.Mechanics;
 using FrierenMod.Scripts.Powers;
@@ -20,7 +21,7 @@ public sealed class ElementsBombing() : FrierenCard(2, CardType.Skill, CardRarit
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         var hand = Owner.PlayerCombatState!.Hand.Cards.Where(c => c != this).ToArray();
-        foreach (var c in hand) await CardCmd.Exhaust(context, c);
+        foreach (var c in hand) await GameApi.Exhaust(context, c);
         foreach (var c in hand)
         {
             int roll = Owner.RunState.Rng.CombatCardGeneration.NextInt(101);

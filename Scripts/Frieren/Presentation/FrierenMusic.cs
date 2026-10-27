@@ -1,3 +1,4 @@
+using FrierenMod.Scripts.Shared.Compatibility;
 using System.Runtime.CompilerServices;
 using FrierenMod.Core;
 using Godot;
@@ -36,7 +37,7 @@ public static class FrierenMusic
     public static bool SuppressOpeningTheme(IRunState? run,string path) =>
         path=="event:/sfx/ambience/act1_neow" && run!=null && Applies(run) &&
         PresentationSettings.OriginalMusic && run.CurrentRoom?.IsVictoryRoom!=true &&
-        ResourceLoader.Exists(ResolveTrack(run.CurrentActIndex,RoomType.Event,false,run.Rng.Seed));
+        ResourceLoader.Exists(ResolveTrack(run.CurrentActIndex,RoomType.Event,false,GameApi.Seed(run.Rng)));
 
     public static void Refresh(NRunMusicController controller,IRunState run,bool nativeMayHaveStarted=true)
     {
@@ -84,7 +85,7 @@ public static class FrierenMusic
         public MusicPool? CurrentPool {get;private set;}
         public MusicSession(Node root,IRunState? run=null)
         {
-            _root=root;_announce=run!=null;_playlist=new MusicPlaylist(run?.Rng.Seed??0);
+            _root=root;_announce=run!=null;_playlist=new MusicPlaylist(run==null?0:GameApi.Seed(run.Rng));
             _players=[new(){Name="FrierenMusicA",Bus="Master"},new(){Name="FrierenMusicB",Bus="Master"}];
             for (int i=0;i<_players.Length;i++) {
                 int index=i;_players[i].Finished+=()=>Finished(index);root.AddChild(_players[i]);

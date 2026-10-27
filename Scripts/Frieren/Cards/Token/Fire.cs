@@ -1,3 +1,4 @@
+using BaseLib.Utils;
 using FrierenMod.Core;
 using FrierenMod.Scripts.Mechanics;
 using FrierenMod.Scripts.Powers;
@@ -20,7 +21,7 @@ public sealed class Fire() : FrierenCard(0, CardType.Attack, CardRarity.Token, T
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust, CardKeyword.Ethereal];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this, play).Targeting(play.Target!).WithHitCount(2).Execute(context);
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardCompatibility(this, play).Targeting(play.Target!).WithHitCount(2).Execute(context);
     }
     protected override void OnUpgrade() { DynamicVars.Damage.UpgradeValueBy(2); }
 }

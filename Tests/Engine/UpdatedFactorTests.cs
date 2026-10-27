@@ -33,15 +33,15 @@ public static class UpdatedFactorTests
         var enemy = combat.CreateCreature(ModelDb.Monster<Axebot>().ToMutable(), CombatSide.Enemy, null); combat.AddCreature(enemy);
         CombatManager.Instance.SetUpCombat(combat);
         CombatTestState.SetInProgress(true);
-        var context = new ThrowingPlayerChoiceContext(); var selector = new TestCardSelector(); using var selection = CardSelectCmd.UseSelector(selector);
+        var context = new ThrowingPlayerChoiceContext(); var selector = new TestCardSelector(); using var selection = CombatTestState.UseSelector(selector);
         void Equip(params string[] ids) {
             var deck = new MagicDeckState();
             for (int i = 0; i < 3; i++) { deck.PrepareDraft(_ => 0); deck.SelectInitial(deck.Draft[0]); }
             for (int i = 0; i < ids.Length; i++) deck.Equip(deck.Add(ids[i]).InstanceId, (ManaSlot)i);
             MagicDeckStore.Write(player, deck);
         }
-        CardPlay PlayOf<T>() where T : CardModel => new() { Card = combat.CreateCard<T>(player), Player = player, Target = null, ResultPile = PileType.Discard,
-            Resources = new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 }, IsAutoPlay = false, PlayIndex = 0, PlayCount = 1 };
+        CardPlay PlayOf<T>() where T : CardModel => CombatTestState.NewPlay(combat.CreateCard<T>(player), null, PileType.Discard,
+            new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 });
         async Task Reset() {
             foreach (var creature in combat.Creatures) { foreach (var power in creature.Powers.ToArray()) await PowerCmd.Remove(power); creature.SetCurrentHpInternal(creature.MaxHp); }
             foreach (var pile in player.PlayerCombatState!.AllPiles) foreach (var card in pile.Cards.ToArray()) pile.RemoveInternal(card);

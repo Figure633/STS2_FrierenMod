@@ -41,7 +41,7 @@ public static class StartingSetupTests
         Player Copy(Player p) => Player.FromSerializable(JsonSerializer.Deserialize<SerializablePlayer>(
             JsonSerializer.Serialize(p.ToSerializable(),JsonSerializationUtility.Options),JsonSerializationUtility.Options)!);
         var context=new BlockingPlayerChoiceContext();
-        var selector=new TestCardSelector();using var choices=CardSelectCmd.UseSelector(selector);
+        var selector=new TestCardSelector();using var choices=CombatTestState.UseSelector(selector);
         SaveManager.Instance.InitPrefsDataForTest();
 
         for(int slot=0;slot<3;slot++) {

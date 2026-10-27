@@ -1,3 +1,4 @@
+using BaseLib.Utils;
 using FrierenMod.Scripts.Mechanics;
 using FrierenMod.Scripts.Powers;
 using MegaCrit.Sts2.Core.Combat;
@@ -16,6 +17,6 @@ public sealed class MoldSpell() : LegendaryCard(2, CardType.Attack, CardRarity.U
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(4, ValueProp.Move), new DynamicVar("Hits", 5)];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play) =>
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this, play).Targeting(play.Target!).WithHitCount(DynamicVars["Hits"].IntValue).Execute(context);
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardCompatibility(this, play).Targeting(play.Target!).WithHitCount(DynamicVars["Hits"].IntValue).Execute(context);
     protected override void OnUpgrade() => DynamicVars["Hits"].UpgradeValueBy(1);
 }

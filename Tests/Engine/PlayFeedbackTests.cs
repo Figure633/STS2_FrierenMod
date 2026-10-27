@@ -50,9 +50,7 @@ public static class PlayFeedbackTests
             Check(!playable && reason == UnplayableReason.BlockedByCardLogic && ReferenceEquals(preventer, card) &&
                 Message(reason, preventer) == Text(key), card.GetType().Name + " 使用具体失败原因：" + key);
         }
-        CardPlay Play(CardModel card) => new() { Card = card, Player = card.Owner, Target = null, IsAutoPlay = false,
-            ResultPile = PileType.Discard, PlayCount = 1, PlayIndex = 0,
-            Resources = new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 } };
+        CardPlay Play(CardModel card) => CombatTestState.NewPlay(card: card, target: null, isAutoPlay: false, resultPile: PileType.Discard, playCount: 1, playIndex: 0, resources: new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 });
 
         foreach (string language in new[] { "zhs", "eng" }) {
             LocManager.Instance.SetLanguage(language); CombatManager.Instance.History.Clear();

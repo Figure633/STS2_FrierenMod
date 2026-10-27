@@ -78,8 +78,7 @@ public static class PuzzleResolutionTests
         CombatTestState.SetInProgress(true);
         var context = new BlockingPlayerChoiceContext();
         CardModel card = combat.CreateCard<RapidChant>(player);
-        var play = new CardPlay { Card = card, Player = card.Owner, Target = null, IsAutoPlay = false, PlayIndex = 0, ResultPile = PileType.Discard, PlayCount = 1,
-            Resources = new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 } };
+        var play = CombatTestState.NewPlay(card: card, target: null, isAutoPlay: false, playIndex: 0, resultPile: PileType.Discard, playCount: 1, resources: new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 });
         var ids = new[] { "Factor100", "Factor010", "Factor001" };
         var deck = new MagicDeckState();
         for (int i = 0; i < 3; i++) { deck.PrepareDraft(_ => 0); deck.SelectInitial(deck.Draft[0]); }
@@ -176,8 +175,7 @@ public static class PuzzleResolutionTests
         CombatTestState.SetInProgress(true);
         MagicDeckStore.Write(player, deck);
         card = combat.CreateCard<FinalChant>(player);
-        play = new CardPlay { Card = card, Player = card.Owner, Target = null, IsAutoPlay = false, PlayIndex = 0, ResultPile = PileType.Discard, PlayCount = 1,
-            Resources = new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 } };
+        play = CombatTestState.NewPlay(card: card, target: null, isAutoPlay: false, playIndex: 0, resultPile: PileType.Discard, playCount: 1, resources: new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 });
         await Reset(); Delays.Clear(); var finishing = ChantCmd.Final(context, play);
         Check(!finishing.IsCompleted && Alive() && BeamCount == 1 && Delays.SequenceEqual(new[] { 1f }), "终极咏唱完成后也先停顿1秒");
         KillDelay!.SetResult();

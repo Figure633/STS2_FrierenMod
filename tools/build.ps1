@@ -24,8 +24,8 @@ $baseLibDir = & dotnet msbuild "$projectRoot/FrierenMod.csproj" -nologo -getProp
 if ($LASTEXITCODE -ne 0) { throw "无法读取 BaseLibDir。" }
 $releaseInfo = Get-Content -Raw -LiteralPath "$gameDir/release_info.json" | ConvertFrom-Json
 $baseManifest = Get-Content -Raw -LiteralPath "$baseLibDir/BaseLib.json" | ConvertFrom-Json
-if ($releaseInfo.version -ne "v0.111.0" -or $baseManifest.version -ne "v3.4.7") {
-    throw "此实验版验证基线为 StS2 v0.111.0 + BaseLib v3.4.7，请先处理版本升级兼容性。"
+if ($releaseInfo.version -notin @("v0.107.1", "v0.111.0") -or $baseManifest.version -ne "v3.4.7") {
+    throw "验证基线为 StS2 v0.107.1 / v0.111.0 + BaseLib v3.4.7；其他版本需重新核查兼容性。"
 }
 
 Invoke-Checked "dotnet" @(
@@ -49,6 +49,13 @@ if (-not $SkipTests) {
         "run", "--project",
         "$projectRoot/Tests/Integration/IntegrationTests.csproj",
         "-c", "Release"
+    )
+
+    $dataDir = & dotnet msbuild "$projectRoot/FrierenMod.csproj" -nologo -getProperty:Sts2DataDir
+    if ($LASTEXITCODE -ne 0) { throw "无法读取 Sts2DataDir。" }
+    Invoke-Checked "dotnet" @(
+        "run", "--project", "$projectRoot/Tests/Compatibility/CompatibilityTests.csproj", "--",
+        "$projectRoot/artifacts/FrierenMod/FrierenMod.dll", [string]$dataDir, [string]$baseLibDir
     )
 
     Invoke-Checked "python" @(

@@ -64,7 +64,7 @@ public partial class MagicFactorButton : NTopBarButton
         // 此处只借用布局，移除原生脚本后再释放空模板。
         ulong templateId = template.GetInstanceId();
         template.SetScript(default(Variant));
-        GodotObject.InstanceFromId(templateId).Free();
+        GodotObject.InstanceFromId(templateId)?.Free();
 
         var row = root.FindChild("RightAlignedStuff", true, false) as BoxContainer;
         if (row == null) {

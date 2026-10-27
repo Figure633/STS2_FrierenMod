@@ -27,7 +27,39 @@
       "source": "built-in image_gen exec-9a3c0302-e799-4f1b-8011-52e9904db053.png",
       "target": "FrierenMod/images/monsters/Spiegel_node_candidate.png",
       "sha256": "edeb78ea10e1a70d8a33707036824aae3b757778fb59d302277a1e3b2861a428",
-      "status": "preview only; not activated"
+      "status": "approved by author; active via tools/render_spiegel_icon.gd"
+    },
+    {
+      "key": "Spiegel_node",
+      "date": "2026-10-27",
+      "source": "Spiegel_node_candidate.png; author approved",
+      "processing": "tools/render_spiegel_icon.gd; 128px monochrome + native outline",
+      "target": "FrierenMod/images/monsters/Spiegel_node.png",
+      "sha256": "49326cc83d8d6cc75b905a2d83813e5c217e86762959f5f16f8834a4ea1e32fa"
+    },
+    {
+      "key": "Spiegel_node_outline",
+      "date": "2026-10-27",
+      "source": "Spiegel_node_candidate.png; author approved",
+      "processing": "tools/render_spiegel_icon.gd; 128px monochrome + native outline",
+      "target": "FrierenMod/images/monsters/Spiegel_node_outline.png",
+      "sha256": "54ea1062154a278ca3a5764af2f13e2d75818a74f0fa04f7861d0c7061769801"
+    },
+    {
+      "key": "Spiegel_topbar",
+      "date": "2026-10-27",
+      "source": "Spiegel_node_candidate.png; author approved",
+      "processing": "tools/render_spiegel_icon.gd; 128px monochrome + native outline",
+      "target": "FrierenMod/images/monsters/Spiegel_topbar.png",
+      "sha256": "49326cc83d8d6cc75b905a2d83813e5c217e86762959f5f16f8834a4ea1e32fa"
+    },
+    {
+      "key": "Spiegel_topbar_outline",
+      "date": "2026-10-27",
+      "source": "Spiegel_node_candidate.png; author approved",
+      "processing": "tools/render_spiegel_icon.gd; 128px monochrome + native outline",
+      "target": "FrierenMod/images/monsters/Spiegel_topbar_outline.png",
+      "sha256": "54ea1062154a278ca3a5764af2f13e2d75818a74f0fa04f7861d0c7061769801"
     }
   ]
 }

@@ -1,4 +1,5 @@
 using FrierenMod.Scripts.Cards;
+using System.Reflection;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.DevConsole;
@@ -27,16 +28,20 @@ public static class MagicItemAcquisition
         return true;
     }
 
-    [HarmonyPatch(typeof(CardPileCmd), nameof(CardPileCmd.Add), new[] {
-        typeof(IEnumerable<CardModel>), typeof(CardPile), typeof(CardPilePosition), typeof(AbstractModel), typeof(bool), typeof(bool) })]
+    [HarmonyPatch]
     private static class RedirectPileAdd
     {
+        private static readonly MethodInfo NativeAdd = AccessTools.Method(typeof(CardPileCmd), nameof(CardPileCmd.Add),
+            [typeof(IEnumerable<CardModel>),typeof(CardPile),typeof(CardPilePosition),typeof(AbstractModel),typeof(bool),typeof(bool)])
+            ?? AccessTools.Method(typeof(CardPileCmd), nameof(CardPileCmd.Add),
+                [typeof(IEnumerable<CardModel>),typeof(CardPile),typeof(CardPilePosition),typeof(AbstractModel),typeof(bool)]);
+        private static MethodBase TargetMethod() => NativeAdd;
         private static bool Prefix(IEnumerable<CardModel> cards, CardPile newPile, CardPilePosition position,
-            AbstractModel? clonedBy, bool skipVisuals, bool isChangingOwners, ref Task<IReadOnlyList<CardPileAddResult>> __result)
+            AbstractModel? clonedBy, bool skipVisuals, object[] __args, ref Task<IReadOnlyList<CardPileAddResult>> __result)
         {
             var items = cards.ToArray();
             if (!items.Any(IsMagicItem)) return true;
-            __result = Add(items, newPile, position, clonedBy, skipVisuals, isChangingOwners);
+            __result = Add(items, newPile, position, clonedBy, skipVisuals, __args.Length>5 && (bool)__args[5]);
             return false;
         }
 
@@ -45,7 +50,11 @@ public static class MagicItemAcquisition
         {
             var results = new List<CardPileAddResult>();
             foreach (var card in cards) {
-                if (!IsMagicItem(card)) { results.AddRange(await CardPileCmd.Add(new[] { card }, pile, position, clonedBy, skipVisuals, isChangingOwners)); continue; }
+                if (!IsMagicItem(card)) {
+                    object?[] args=[new[] {card},pile,position,clonedBy,skipVisuals,isChangingOwners];
+                    results.AddRange(await (Task<IReadOnlyList<CardPileAddResult>>)NativeAdd.Invoke(null,args[..NativeAdd.GetParameters().Length])!);
+                    continue;
+                }
                 var old = card.Pile;
                 results.Add(new CardPileAddResult { cardAdded = card, oldPile = old, success = Receive(card) });
             }

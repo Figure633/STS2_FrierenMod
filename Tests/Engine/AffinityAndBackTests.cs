@@ -54,7 +54,7 @@ public static class AffinityAndBackTests
         Check(!mana.ShouldRetainThisTurn && dense.ShouldRetainThisTurn, "移除能力自动恢复且保留其他来源的保留");
         Check(player.Character.CardPool.GetUnlockedCards(UnlockState.all, CardMultiplayerConstraint.None).OfType<ManaAffinity>().Any(), "进入芙莉莲普通卡池");
         Check(player.Character.CardPool.GetUnlockedCards(UnlockState.all, CardMultiplayerConstraint.None).OfType<Snuggle>().Any(), "贴贴进入芙莉莲普通卡池");
-        var selector = new TestCardSelector(); using var selections = CardSelectCmd.UseSelector(selector);
+        var selector = new TestCardSelector(); using var selections = CombatTestState.UseSelector(selector);
         Task<Snuggle> PrepareSnuggle(bool upgraded = false) {
             foreach (var pile in player.PlayerCombatState!.AllPiles)
                 foreach (var card in pile.Cards.ToArray()) pile.RemoveInternal(card);

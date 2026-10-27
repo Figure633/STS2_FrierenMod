@@ -21,14 +21,4 @@ func _initialize():
             outline.set_pixel(x,y,Color(1,1,1,edge))
     result.save_png("res://FrierenMod/images/monsters/Aura_node.png")
     outline.save_png("res://FrierenMod/images/monsters/Aura_node_outline.png")
-    var mirror = Image.load_from_file("res://FrierenMod/images/monsters/Spiegel_node.png").get_region(Rect2i(490,430,490,650))
-    mirror.resize(84,112,Image.INTERPOLATE_LANCZOS)
-    var small = Image.create(128,128,false,Image.FORMAT_RGBA8)
-    small.blit_rect(mirror,Rect2i(Vector2i.ZERO,mirror.get_size()),Vector2i(22,8))
-    small.save_png("res://FrierenMod/images/monsters/Spiegel_topbar.png")
-    for y in range(128):
-        for x in range(128):
-            var c=small.get_pixel(x,y)
-            small.set_pixel(x,y,Color(1,1,1,c.a))
-    small.save_png("res://FrierenMod/images/monsters/Spiegel_topbar_outline.png")
     quit()

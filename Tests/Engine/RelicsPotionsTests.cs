@@ -1,3 +1,4 @@
+using FrierenMod.Scripts.Shared.Compatibility;
 using System.Text.Json;
 using FrierenMod.Core;
 using FrierenMod.Scripts.Cards;
@@ -46,11 +47,9 @@ public static class RelicsPotionsTests
         CombatManager.Instance.SetUpCombat(combat);
         CombatTestState.SetInProgress(true);
         var context = new BlockingPlayerChoiceContext();
-        var selector = new TestCardSelector(); using var selection = CardSelectCmd.UseSelector(selector);
+        var selector = new TestCardSelector(); using var selection = CombatTestState.UseSelector(selector);
         T Card<T>() where T : CardModel => combat.CreateCard<T>(player);
-        CardPlay PlayInfo(CardModel card) => new() { Card = card, Player = card.Owner, Target = null, ResultPile = PileType.Discard,
-            Resources = new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 },
-            PlayCount = 1, PlayIndex = 0, IsAutoPlay = false };
+        CardPlay PlayInfo(CardModel card) => CombatTestState.NewPlay(card: card, target: null, resultPile: PileType.Discard, resources: new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 }, playCount: 1, playIndex: 0, isAutoPlay: false);
         async Task Play(CardModel card) {
             await CardPileCmd.Add(card, PileType.Hand);
             await card.OnPlayWrapper(context, null, false, PlayInfo(card).Resources, skipCardPileVisuals: true);
@@ -95,7 +94,7 @@ public static class RelicsPotionsTests
             ModelDb.Relic<HairAccessory>().Rarity == RelicRarity.Starter && ModelDb.Relic<HaitaaWand>().Rarity == RelicRarity.None &&
             !ModelDb.Relic<HaitaaWand>().IsAllowed(run) && !ModelDb.Relic<HaitaaWand>().IsAllowedInShops,
             "事件遗物和未来角色初始遗物保留获取限制");
-        var grabBag = new RelicGrabBag(); grabBag.Populate(player, new MegaCrit.Sts2.Core.Random.Rng(60));
+        var grabBag = new RelicGrabBag(); grabBag.Populate(player, GameApi.CreateRng(60));
         Check(relics.All(r => grabBag.Contains(r) == (r.Rarity is RelicRarity.Common or RelicRarity.Uncommon or RelicRarity.Rare or RelicRarity.Shop)),
             "原生遗物奖励袋收录普通稀有及商店遗物，排除事件与初始遗物");
 

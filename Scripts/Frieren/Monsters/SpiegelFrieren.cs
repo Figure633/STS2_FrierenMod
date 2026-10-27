@@ -1,3 +1,4 @@
+using FrierenMod.Scripts.Shared.Compatibility;
 using BaseLib.Abstracts;
 using FrierenMod.Scripts.Cards;
 using FrierenMod.Scripts.Mechanics;
@@ -121,7 +122,7 @@ public sealed class SpiegelFrieren : CustomMonsterModel
     private async Task PrepareApex(IReadOnlyList<Creature> targets)
     {
         foreach (var power in Creature.Powers.ToArray()) await PowerCmd.Remove(power);
-        await CreatureCmd.LoseBlock(new ThrowingPlayerChoiceContext(), Creature, Creature.Block, Creature);
+        await GameApi.LoseBlock(new ThrowingPlayerChoiceContext(), Creature, Creature.Block, Creature);
     }
     public override async Task AfterDeath(PlayerChoiceContext context, Creature creature, bool prevented, float animLength)
     {

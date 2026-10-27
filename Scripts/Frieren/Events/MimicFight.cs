@@ -1,3 +1,4 @@
+using FrierenMod.Scripts.Shared.Compatibility;
 using FrierenMod.Scripts.Cards;
 using FrierenMod.Scripts.Encounters;
 using MegaCrit.Sts2.Core.Commands;
@@ -26,7 +27,7 @@ public sealed class MimicFight : FrierenStoryEvent
     }
     private async Task Explode()
     {
-        await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), Owner!.Creature, 15, ValueProp.Unblockable | ValueProp.Unpowered, null, null);
+        await GameApi.Damage(new ThrowingPlayerChoiceContext(), Owner!.Creature, 15, ValueProp.Unblockable | ValueProp.Unpowered, null, null);
         if (Owner.Creature.IsDead) return;
         await AddCard<RingletForm>(); Finish("EXPLODE", 2);
     }

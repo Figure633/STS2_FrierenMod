@@ -36,7 +36,7 @@ public static class EventLayoutFixTests
         foreach (string language in new[] { "zhs", "eng" }) {
             LocManager.Instance.SetLanguage(language);
             foreach (var canonical in canonicals) {
-                var model = canonical.ToMutable(); await model.BeginEvent(player, null, false);
+                var model = canonical.ToMutable(); await CombatTestState.BeginEvent(model,player);
                 var host = new Control { Size = new Vector2(1920, 1080) }; root.AddChild(host);
                 var layout = model.CreateScene().Instantiate<NEventLayout>(); host.AddChild(layout); model.SetNode(layout);
                 layout.SetEvent(model); layout.SetTitle(model.Title.GetFormattedText());

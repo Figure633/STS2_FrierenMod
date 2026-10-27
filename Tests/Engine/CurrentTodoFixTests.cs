@@ -35,8 +35,7 @@ public static class CurrentTodoFixTests
         var seal = player.Creature.GetPower<SealPower>()!;
         int updates = 0; seal.DisplayAmountChanged += () => updates++;
         Check(seal.Cards.Count == 1 && seal.DisplayAmount == 0, "封印初始显示零次咏唱，不显示封印卡数");
-        CardPlay MakePlay(CardModel card) => new() { Card = card, Player = card.Owner, Target = null, IsAutoPlay = false, ResultPile = PileType.Discard,
-            Resources = new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 }, PlayCount = 1, PlayIndex = 0 };
+        CardPlay MakePlay(CardModel card) => CombatTestState.NewPlay(card: card, target: null, isAutoPlay: false, resultPile: PileType.Discard, resources: new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 }, playCount: 1, playIndex: 0);
         var ordinary = MakePlay(combat.CreateCard<StrikeFrieren>(player));
         CombatManager.Instance.History.CardPlayStarted(combat, ordinary);
         Check(seal.DisplayAmount == 0, "普通牌不增加咏唱计数");

@@ -57,7 +57,7 @@ public static class RestSiteTests
         await RelicCmd.Remove(pillow);
 
         var selector = new TestCardSelector();
-        using (CardSelectCmd.UseSelector(selector))
+        using (CombatTestState.UseSelector(selector))
         {
             var chant = player.Deck.Cards.OfType<RapidChant>().Single();
             int index = player.Deck.Cards.Where(c => c.IsUpgradable).ToList().IndexOf(chant);

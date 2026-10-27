@@ -1,3 +1,4 @@
+using BaseLib.Utils;
 using FrierenMod.Scripts.Mechanics;
 using FrierenMod.Scripts.Powers;
 using MegaCrit.Sts2.Core.Combat;
@@ -18,9 +19,9 @@ public sealed class OilSpell() : LegendaryCard(2, CardType.Attack, CardRarity.Co
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         var targets = Owner.Creature.CombatState!.Enemies.Where(x => x.IsAlive).ToArray();
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this, play).TargetingAllOpponents(CombatState!).Execute(context);
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardCompatibility(this, play).TargetingAllOpponents(CombatState!).Execute(context);
         if (targets.All(x => x.IsAlive))
-            await DamageCmd.Attack(DynamicVars["SecondDamage"].BaseValue).FromCard(this, play).TargetingAllOpponents(CombatState!).Execute(context);
+            await DamageCmd.Attack(DynamicVars["SecondDamage"].BaseValue).FromCardCompatibility(this, play).TargetingAllOpponents(CombatState!).Execute(context);
     }
     protected override void OnUpgrade() => DynamicVars["SecondDamage"].UpgradeValueBy(4);
 }

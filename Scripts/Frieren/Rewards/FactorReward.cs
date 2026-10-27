@@ -1,3 +1,4 @@
+using FrierenMod.Scripts.Shared.Compatibility;
 using BaseLib.Abstracts;
 using BaseLib.Patches.Content;
 using BaseLib.Utils;
@@ -28,7 +29,7 @@ public sealed class FactorReward(Player player) : CustomReward(player)
     {
         if (IsPopulated) return;
         var deck = MagicDeckStore.Read(Player);
-        var rng = new Rng((uint)Seed);
+        var rng = GameApi.CreateRng((uint)Seed);
         var offer = MagicRewardRules.Offer(deck.RewardRarityOffset, rng.NextInt);
         SavedChoices.Set(this, JsonSerializer.Serialize(offer.Choices));
         deck.RewardRarityOffset = offer.RarityOffset;
@@ -38,7 +39,7 @@ public sealed class FactorReward(Player player) : CustomReward(player)
     // 0.6.4 及以前只保存种子：按旧算法恢复已出现的因子选项，不能重掷成魔具。
     private void PopulateLegacy()
     {
-        var rng = new Rng((uint)Seed);
+        var rng = GameApi.CreateRng((uint)Seed);
         var available = SpellCatalog.All.ToList();
         var result = new List<string>();
         for (int i = 0; i < 3; i++)

@@ -1,3 +1,4 @@
+using FrierenMod.Scripts.Shared.Compatibility;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -20,7 +21,7 @@ public sealed class DissolveClothPotion : FrierenPotion
     protected override async Task OnUse(PlayerChoiceContext context, Creature? target)
     {
         AssertValidForTargetedPotion(target);
-        await CreatureCmd.LoseBlock(context, target, target.Block, Owner.Creature);
+        await GameApi.LoseBlock(context, target, target.Block, Owner.Creature);
         await PowerCmd.Apply<VulnerablePower>(context, target, DynamicVars.Vulnerable.IntValue, Owner.Creature, null);
         await PowerCmd.Apply<WeakPower>(context, target, DynamicVars.Weak.IntValue, Owner.Creature, null);
     }

@@ -1,4 +1,4 @@
-using NExhaustVfx = MegaCrit.Sts2.Core.Nodes.Vfx.Cards.NCardExhaustVfx;
+using FrierenMod.Scripts.Shared.Compatibility;
 using System.Text.Json;
 using FrierenMod.Core;
 using FrierenMod.Scripts.Characters;
@@ -30,7 +30,7 @@ public static class MagicDeckAnimationTests
         __state = TestMode.IsOn;
         TestMode.IsOn = false;
     }
-    private static void RestoreTestMode(bool __state, NExhaustVfx? __result)
+    private static void RestoreTestMode(bool __state, CanvasItem? __result)
     {
         TestMode.IsOn = __state;
         if (__result != null) ExhaustsCreated++;
@@ -48,7 +48,7 @@ public static class MagicDeckAnimationTests
         var visualFactory = new Harmony("frieren.tests.native_magic_flight");
         visualFactory.Patch(AccessTools.Method(typeof(NCardTrailVfx), nameof(NCardTrailVfx.Create)),
             prefix: new HarmonyMethod(typeof(MagicDeckAnimationTests), nameof(CreateTrail)));
-        visualFactory.Patch(AccessTools.Method(typeof(NExhaustVfx), nameof(NExhaustVfx.Create)),
+        visualFactory.Patch(GameApi.ExhaustCreate,
             prefix: new HarmonyMethod(typeof(MagicDeckAnimationTests), nameof(CreateExhaust)),
             postfix: new HarmonyMethod(typeof(MagicDeckAnimationTests), nameof(RestoreTestMode)));
         void Check(bool ok, string name) { if (!ok) throw new Exception(name); GD.Print("PASS 动画：" + name); count++; }
@@ -115,9 +115,9 @@ public static class MagicDeckAnimationTests
         while (elapsed.Elapsed < TimeSpan.FromSeconds(8) && !use.IsCompleted) {
             await Tick();
             seenFly |= layer.GetChildren().OfType<NCardFlyVfx>().Any();
-            if (!seenExhaust && layer.GetChildren().OfType<NExhaustVfx>().Any()) {
+            if (!seenExhaust && layer.GetChildren().Where(GameApi.IsExhaust).Any()) {
                 seenExhaust = true;
-                Check(layer.GetChildren().OfType<NExhaustVfx>().SelectMany(e=>e.FindChildren("*", "", true, false)).OfType<GpuParticles2D>().Any(p=>p.Emitting),
+                Check(layer.GetChildren().Where(GameApi.IsExhaust).SelectMany(e=>e.FindChildren("*", "", true, false)).OfType<GpuParticles2D>().Any(p=>p.Emitting),
                     "魔具原位置运行原版消耗粒子");
                 var settle=layer.CreateTween(); settle.TweenInterval(0.16); await settle.AwaitFinished(layer);
                 await Snapshot("magic-prop-native-exhaust");
@@ -152,7 +152,7 @@ public static class MagicDeckAnimationTests
         var materialUse=MagicPropCmd.UseSelected(player,circle,materialIds);
         int maxExhausts=0; elapsed.Restart();
         while(!materialUse.IsCompleted && elapsed.Elapsed<TimeSpan.FromSeconds(8)) {
-            await Tick(); maxExhausts=Math.Max(maxExhausts,layer.GetChildren().OfType<NExhaustVfx>().Count());
+            await Tick(); maxExhausts=Math.Max(maxExhausts,layer.GetChildren().Where(GameApi.IsExhaust).Count());
         }
         // TestMode 会跳过原生特效尾部等待，统计创建次数而不依赖尾部存活时长。
         Check(await materialUse && ExhaustsCreated-previousExhausts==3 && maxExhausts>0 && materialIds.All(id=>MagicDeckStore.Read(player).Items.All(i=>i.InstanceId!=id)) &&
@@ -162,7 +162,7 @@ public static class MagicDeckAnimationTests
         deck = MagicDeckStore.Read(player); deck.Equip(deck.Items.Last().InstanceId, ManaSlot.Hand);
         MagicDeckStore.Write(player, deck);
         Check(layer.GetChildCount() == 0, "槽位调整不会误播获得动画");
-        var selector = new TestCardSelector(); using var selected = CardSelectCmd.UseSelector(selector);
+        var selector = new TestCardSelector(); using var selected = CombatTestState.UseSelector(selector);
         selector.PrepareToSelect([0]);
         Check(await MagicDeckCmd.ChooseReward(new BlockingPlayerChoiceContext(), player,
             ["AdvancedDefensiveMagic", "BuildUpBody", "HighSpeedMovement"]), "奖励选择成功");

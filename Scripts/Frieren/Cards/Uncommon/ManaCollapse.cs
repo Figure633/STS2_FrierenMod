@@ -1,3 +1,5 @@
+using FrierenMod.Scripts.Compatibility;
+using BaseLib.Utils;
 using FrierenMod.Core;
 using FrierenMod.Scripts.Mechanics;
 using FrierenMod.Scripts.Powers;
@@ -22,10 +24,10 @@ public sealed class ManaCollapse() : FrierenCard(1, CardType.Attack, CardRarity.
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         bool generateMana = CombatManager.Instance.History.CardPlaysStarted.Count(e => e.Actor == Owner.Creature && e.HappenedThisTurn(CombatState)) <= 10;
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this, play).Targeting(play.Target!).Execute(context);
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardCompatibility(this, play).Targeting(play.Target!).Execute(context);
         if (generateMana) await ManaCmd.Generate(Owner, PileType.Hand, 2);
     }
     protected override void OnUpgrade() { DynamicVars.Damage.UpgradeValueBy(3); }
-    public override CardLocation ModifyCardPlayResultLocation(CardModel card, bool isAutoPlay, ResourceInfo resources, CardLocation location) =>
-        card == this && CombatManager.Instance.History.CardPlaysStarted.Count(e => e.Actor == Owner.Creature && e.HappenedThisTurn(CombatState)) < 10 && location.pileType == PileType.Discard ? new CardLocation(location.player,PileType.Draw,CardPilePosition.Random) : location;
+    internal ModelLocation ChangePlayLocation(CardModel card, bool isAutoPlay, ResourceInfo resources, ModelLocation location) =>
+        card == this && CombatManager.Instance.History.CardPlaysStarted.Count(e => e.Actor == Owner.Creature && e.HappenedThisTurn(CombatState)) < 10 && location.pileType == PileType.Discard ? new ModelLocation(location.player,PileType.Draw,CardPilePosition.Random) : location;
 }

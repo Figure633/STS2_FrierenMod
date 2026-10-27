@@ -1,3 +1,4 @@
+using BaseLib.Utils;
 using FrierenMod.Core;
 using FrierenMod.Scripts.Mechanics;
 using FrierenMod.Scripts.Powers;
@@ -22,7 +23,7 @@ public sealed class ButtSlam() : FrierenCard(1, CardType.Attack, CardRarity.Unco
         int hits = Owner.Creature.Block / 10;
         for (int i = 0; i < hits; i++)
         {
-            await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this, play).Targeting(play.Target!).Execute(context);
+            await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardCompatibility(this, play).Targeting(play.Target!).Execute(context);
             await ManaCmd.Generate(Owner, PileType.Draw, 2);
         }
     }

@@ -1,3 +1,4 @@
+using BaseLib.Utils;
 using FrierenMod.Core;
 using FrierenMod.Scripts.Mechanics;
 using FrierenMod.Scripts.Powers;
@@ -33,7 +34,7 @@ public sealed class HellFireSummoning() : FrierenCard(0, CardType.Attack, CardRa
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         int hits = LegendaryCards.ChantsThisTurn(Owner) * 2;
-        if (hits > 0) await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this, play).Targeting(play.Target!).WithHitCount(hits).Execute(context);
+        if (hits > 0) await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardCompatibility(this, play).Targeting(play.Target!).WithHitCount(hits).Execute(context);
         EnergyCost.AddThisTurn(1);
     }
     protected override void OnUpgrade()

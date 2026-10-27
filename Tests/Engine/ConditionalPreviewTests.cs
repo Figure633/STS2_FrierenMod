@@ -37,8 +37,7 @@ public static class ConditionalPreviewTests
             if(upgraded){card.UpgradeInternal();card.FinalizeUpgradeInternal();}
             await CardPileCmd.Add(card,PileType.Hand);return card;
         }
-        CardPlay Play(CardModel card) => new() { Card=card, Player = card.Owner,Target=enemy,ResultPile=PileType.Discard,PlayCount=1,PlayIndex=0,IsAutoPlay=false,
-            Resources=new ResourceInfo {EnergySpent=0,EnergyValue=0,StarsSpent=0,StarValue=0} };
+        CardPlay Play(CardModel card) => CombatTestState.NewPlay(card: card, target: enemy, resultPile: PileType.Discard, playCount: 1, playIndex: 0, isAutoPlay: false, resources: new ResourceInfo {EnergySpent=0,EnergyValue=0,StarsSpent=0,StarValue=0});
         string Text(CardModel card) {
             card.UpdateDynamicVarPreview(CardPreviewMode.Normal,enemy,card.DynamicVars);
             var text=card.GetDescriptionForPile(PileType.Hand,enemy);

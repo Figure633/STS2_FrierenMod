@@ -1,3 +1,4 @@
+using FrierenMod.Scripts.Shared.Compatibility;
 using FrierenMod.Scripts.Cards;
 using FrierenMod.Scripts.Mechanics;
 using MegaCrit.Sts2.Core.Combat;
@@ -20,6 +21,6 @@ public sealed class FlyingMagicPower : FrierenPower
     {
         if (!participants.Contains(Owner)) return;
         foreach (var card in ManaCmd.InPile(Owner.Player!, PileType.Discard).Take(Amount).ToArray())
-            await CardCmd.Exhaust(context, card);
+            await GameApi.Exhaust(context, card);
     }
 }

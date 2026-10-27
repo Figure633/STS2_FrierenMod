@@ -1,3 +1,4 @@
+using BaseLib.Utils;
 using FrierenMod.Core;
 using FrierenMod.Scripts.Mechanics;
 using FrierenMod.Scripts.Powers;
@@ -19,7 +20,7 @@ public sealed class AirSlash() : FrierenCard(1, CardType.Attack, CardRarity.Unco
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(8, ValueProp.Move)];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this, play).Targeting(play.Target!).Execute(context);
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardCompatibility(this, play).Targeting(play.Target!).Execute(context);
         await PowerCmd.Apply<AccelerateFlowPower>(context, Owner.Creature, 1, Owner.Creature, this);
         await PowerCmd.Apply<BanManaGainPower>(context, Owner.Creature, 1, Owner.Creature, this);
     }

@@ -1,4 +1,4 @@
 工具：内置imagegen，透明背景。
 参考：作者最新TODO所附芙莉莲转头头像；已认可的阿乌拉单色图标风格。
 提示：保留三分之四转头角度、完整长耳、双马尾、斜分刘海与垂坠耳饰，空白脸，无眼眉鼻嘴，单一深灰色与透明负空间。完整头发，不裁耳朵，无肩膀和衣物，128像素下可辨识。
-候选：FrierenMod/images/monsters/Spiegel_node_candidate.png；仅供预览，未替换现用地图图标。
+候选：FrierenMod/images/monsters/Spiegel_node_candidate.png；2026-10-27作者认可并实装；由tools/render_spiegel_icon.gd生成地图及顶栏图标。

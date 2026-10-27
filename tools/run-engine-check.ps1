@@ -1,4 +1,5 @@
-param([Parameter(Mandatory)][ValidatePattern('^[a-z0-9-]+$')][string]$Mode, [switch]$Snapshot)
+param([Parameter(Mandatory)][ValidatePattern('^[a-z0-9-]+$')][string]$Mode, [switch]$Snapshot,
+    [string]$RuntimeDataDir = '', [string]$ReleaseInfoPath = '')
 $ErrorActionPreference = 'Stop'
 $checkRoot = Split-Path -Parent $PSScriptRoot
 [xml]$checkConfig = Get-Content -LiteralPath (Join-Path $checkRoot 'local.props') -Raw
@@ -7,6 +8,13 @@ $env:FRIEREN_STS2_DIR = [string]$checkProps.Sts2Dir
 $env:FRIEREN_BASELIB_DIR = [string]$checkProps.BaseLibDir
 $env:APPDATA = Join-Path $checkRoot 'artifacts/test-appdata'
 $env:LOCALAPPDATA = Join-Path $checkRoot 'artifacts/test-localappdata'
+$env:FRIEREN_RELEASE_INFO = if($ReleaseInfoPath) { (Resolve-Path -LiteralPath $ReleaseInfoPath).Path } else { Join-Path $env:FRIEREN_STS2_DIR 'release_info.json' }
+if(!$RuntimeDataDir) { $RuntimeDataDir=Join-Path $env:FRIEREN_STS2_DIR 'data_sts2_windows_x86_64' }
+if($RuntimeDataDir) {
+    if(!(Test-Path -LiteralPath (Join-Path $RuntimeDataDir 'sts2.dll'))) { throw '运行时目录缺少 sts2.dll。' }
+    $checkBin=Join-Path $checkRoot 'Tests/Engine/.godot/mono/temp/bin/Debug'
+    Get-ChildItem -LiteralPath $RuntimeDataDir -Filter '*.dll' | Where-Object { $_.Name -notin @('FrierenMod.dll','EngineTests.dll') } | Copy-Item -Destination $checkBin -Force
+}
 $checkLog = Join-Path $checkRoot 'artifacts/engine-current.log'
 $checkOut = Join-Path $checkRoot 'artifacts/engine-current-output.log'
 $checkErrors = Join-Path $checkRoot 'artifacts/engine-current-errors.log'
@@ -15,7 +23,10 @@ if ($Snapshot) { $checkArgs += @('--position','-4000,-4000') } else { $checkArgs
 $checkArgs += @('--', "--$Mode")
 if ($Snapshot) { $checkArgs += '--ui-snapshot' }
 $checkProcess = Start-Process -FilePath ([string]$checkProps.GodotMonoPath) -ArgumentList $checkArgs -WindowStyle Hidden -PassThru -RedirectStandardOutput $checkOut -RedirectStandardError $checkErrors
-$checkProcess.WaitForExit()
+if(!$checkProcess.WaitForExit(90000)) {
+    $checkProcess.Kill($true)
+    throw '引擎检查超过90秒，已停止本次测试进程。'
+}
 Get-Content -LiteralPath $checkOut -Tail 18
 Get-Content -LiteralPath $checkErrors -Tail 12
 $checkText = Get-Content -LiteralPath $checkLog -Raw

@@ -112,7 +112,7 @@ public static class EndingFlowTests
                 SaveManager.Instance.LoadRunHistory($"{serialized.StartTime}.run").SaveData?.Win == true,
                 $"原生内存进度记录胜利，并创建芙莉莲通关历史：{language}");
             // 测试结算按钮与分数页；新时间线奖励动画依赖完整 NGame，不属于此夹具范围。
-            while (SaveManager.Instance.Progress.GrantNextUnlock() != null) { }
+            CombatTestState.CompleteUnlocks();
             var screen = GD.Load<PackedScene>(NGameOverScreen.AssetPaths.Single())
                 .Instantiate<NGameOverScreen>();
             AccessTools.Field(typeof(NGameOverScreen), "_runState").SetValue(screen, run);

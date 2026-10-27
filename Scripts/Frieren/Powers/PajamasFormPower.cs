@@ -1,3 +1,4 @@
+using FrierenMod.Scripts.Shared.Compatibility;
 using FrierenMod.Scripts.Cards;
 using FrierenMod.Scripts.Mechanics;
 using MegaCrit.Sts2.Core.Combat;
@@ -21,7 +22,7 @@ public sealed class PajamasFormPower : FrierenPower
         var cards = new[] { PileType.Draw, PileType.Hand, PileType.Discard }
             .SelectMany(p => ManaCmd.InPile(Owner.Player!, p)).ToArray();
         if (cards.Length >= 30) Presentation.FrierenAchievements.Unlock(Owner.Player!, "4009");
-        foreach (var card in cards) await CardCmd.Exhaust(context, card);
+        foreach (var card in cards) await GameApi.Exhaust(context, card);
         if (cards.Length > 0)
             await CreatureCmd.Damage(context, Owner.CombatState!.Enemies.Where(c => c.IsAlive), 4 * Amount * cards.Length, ValueProp.Unpowered, Owner);
     }

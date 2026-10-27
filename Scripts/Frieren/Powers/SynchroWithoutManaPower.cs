@@ -1,3 +1,4 @@
+using FrierenMod.Scripts.Compatibility;
 using BaseLib.Abstracts;
 using FrierenMod.Scripts.Cards;
 using FrierenMod.Scripts.Mechanics;
@@ -17,8 +18,8 @@ namespace FrierenMod.Scripts.Powers;
 
 public sealed class SynchroWithoutManaPower : FrierenPower
 {
-    public override CardLocation ModifyCardPlayResultLocation(CardModel card, bool isAutoPlay, ResourceInfo resources, CardLocation location) =>
-        card.Owner == Owner.Player && card is IManaCard ? new CardLocation(location.player,PileType.Hand,location.position) : location;
+    internal ModelLocation ChangePlayLocation(CardModel card, bool isAutoPlay, ResourceInfo resources, ModelLocation location) =>
+        card.Owner == Owner.Player && card is IManaCard ? new ModelLocation(location.player,PileType.Hand,location.position) : location;
     public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay play)
     {
         if (play.Card.Owner != Owner.Player || play.Card is not IManaCard) return;

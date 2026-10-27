@@ -1,3 +1,4 @@
+using FrierenMod.Scripts.Shared.Compatibility;
 using BaseLib.Patches.Content;
 using FrierenMod.Scripts.Cards;
 using FrierenMod.Scripts.Characters;
@@ -76,7 +77,7 @@ public static class SpiegelBossTests
         await CreatureCmd.GainBlock(player.Creature, 7, ValueProp.Unpowered, null);
         Check(boss.Block == 7, "原生格挡钩子复制玩家获得的格挡");
         boss.LoseBlockInternal(boss.Block);
-        await CreatureCmd.Damage(context, boss, 10, ValueProp.Unpowered, player.Creature, null, null);
+        await GameApi.Damage(context, boss, 10, ValueProp.Unpowered, player.Creature, null, null);
         Check(boss.CurrentHp == 490 && boss.HasPower<BarricadePower>() && boss.Block == 10 && boss.GetPower<EnemyManaPower>()!.StoredMana == 0,
             "实际受伤积累魔力，10点自动触发第一种法术且准确支付");
         var caster = boss.GetPower<SpellCasterPower>()!;
@@ -116,7 +117,7 @@ public static class SpiegelBossTests
         Check(repeat == 2 && ((MultiAttackIntent)monster.NextMove.Intents.Single()).Repeats == 3, "后期多重攻击从两次起逐次递增");
         boss.SetCurrentHpInternal(110); boss.LoseBlockInternal(boss.Block);
         foreach(var power in new PowerModel?[] { boss.GetPower<IntangiblePower>(), boss.GetPower<BufferPower>() }) if(power!=null) await PowerCmd.Remove(power);
-        await CreatureCmd.Damage(context, boss, 10, ValueProp.Unpowered, player.Creature, null, null);
+        await GameApi.Damage(context, boss, 10, ValueProp.Unpowered, player.Creature, null, null);
         Check(monster.NextMove.Id == "APEX_PREPARATION", "100生命立即改为全力准备意图");
         await monster.PerformMove(); monster.RollMove([player.Creature]);
         var intent = (MultiAttackIntent)monster.NextMove.Intents.Single();
@@ -126,8 +127,7 @@ public static class SpiegelBossTests
         var draw = combat.CreateCard<StrikeFrieren>(player); var discard = combat.CreateCard<DefendFrieren>(player);
         await CardPileCmd.Add(draw, PileType.Draw); await CardPileCmd.Add(discard, PileType.Discard);
         var hp = player.Creature.CurrentHp;
-        var play = new CardPlay { Card = combat.CreateCard<Mana>(player), Player = player, Target=null, ResultPile=PileType.Discard, IsAutoPlay=false, PlayIndex=0, PlayCount=1,
-            Resources=new ResourceInfo { EnergySpent=0,EnergyValue=0,StarsSpent=0,StarValue=0 } };
+        var play = CombatTestState.NewPlay(card: combat.CreateCard<Mana>(player), target: null, resultPile: PileType.Discard, isAutoPlay: false, playIndex: 0, playCount: 1, resources: new ResourceInfo { EnergySpent=0,EnergyValue=0,StarsSpent=0,StarValue=0 });
         await curse.AfterCardPlayed(context, play);
         Check(draw.Pile?.Type == PileType.Discard && discard.Pile?.Type == PileType.Draw && player.Creature.CurrentHp == hp-2,
             "颠倒在手牌中同调时交换原卡对象并失去2生命");

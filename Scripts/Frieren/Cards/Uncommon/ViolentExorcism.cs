@@ -1,3 +1,4 @@
+using BaseLib.Utils;
 using FrierenMod.Core;
 using FrierenMod.Scripts.Mechanics;
 using FrierenMod.Scripts.Powers;
@@ -24,7 +25,7 @@ public sealed class ViolentExorcism() : FrierenCard(1, CardType.Attack, CardRari
         foreach (var discarded in cards)
         {
             await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, play);
-            await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this, play).Targeting(play.Target!).Execute(context);
+            await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardCompatibility(this, play).Targeting(play.Target!).Execute(context);
         }
     }
     protected override void OnUpgrade() { DynamicVars.Damage.UpgradeValueBy(1); }

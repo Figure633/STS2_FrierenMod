@@ -1,3 +1,4 @@
+using BaseLib.Utils;
 using FrierenMod.Core;
 using FrierenMod.Scripts.Mechanics;
 using FrierenMod.Scripts.Powers;
@@ -20,7 +21,7 @@ public sealed class GrandCross() : FrierenCard(2, CardType.Attack, CardRarity.Co
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(12, ValueProp.Move)];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this, play).Targeting(play.Target!).Execute(context);
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardCompatibility(this, play).Targeting(play.Target!).Execute(context);
     }
     protected override void OnUpgrade() { DynamicVars.Damage.UpgradeValueBy(4); }
     public override bool TryModifyEnergyCostInCombat(CardModel card, decimal cost, out decimal modifiedCost)

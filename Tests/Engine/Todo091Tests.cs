@@ -156,8 +156,7 @@ public static class Todo091Tests
             "原生选牌界面魔力计数可见，不抢占选牌输入");
         counterRoot.QueueFree(); selectionOverlay.Free();
         var context = new ThrowingPlayerChoiceContext();
-        CardPlay Play(CardModel card) => new() { Card = card, Player = card.Owner, Target = player.Creature, ResultPile = PileType.Discard,
-            Resources = new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 }, PlayCount = 1, PlayIndex = 0, IsAutoPlay = false };
+        CardPlay Play(CardModel card) => CombatTestState.NewPlay(card: card, target: player.Creature, resultPile: PileType.Discard, resources: new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 }, playCount: 1, playIndex: 0, isAutoPlay: false);
         var recycle = combat.CreateCard<Recycle>(player); var original = Play(recycle);
         await AccessTools.Method(typeof(Recycle), "OnPlay").Invoke(recycle, [context, original])!.AsTask();
         var power = player.Creature.GetPower<RecyclePower>()!;

@@ -17,6 +17,6 @@ namespace FrierenMod.Scripts.Powers;
 
 public sealed class StrikeUpPower : FrierenPower
 {
-    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource, CardPlay? cardPlay) =>
+    internal decimal DamageBonus(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource, CardPlay? cardPlay) =>
         dealer == Owner && props.HasFlag(ValueProp.Move) && cardSource?.Tags.Contains(CardTag.Strike) == true ? Amount : 0;
 }

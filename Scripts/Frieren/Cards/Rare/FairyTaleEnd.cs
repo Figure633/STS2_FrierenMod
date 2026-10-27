@@ -1,3 +1,4 @@
+using BaseLib.Utils;
 using FrierenMod.Scripts.Mechanics;
 using FrierenMod.Scripts.Powers;
 using MegaCrit.Sts2.Core.Combat;
@@ -20,7 +21,7 @@ public sealed class FairyTaleEnd() : LegendaryCard(1, CardType.Attack, CardRarit
     {
         decimal amount = ((FairyTaleDamageVar)DynamicVars.Damage).Calculate(this);
         Presentation.FrierenAchievements.CheckDamage(this, play.Target, amount, 1000, "4005");
-        await DamageCmd.Attack(amount).FromCard(this, play).Targeting(play.Target!).Execute(context);
+        await DamageCmd.Attack(amount).FromCardCompatibility(this, play).Targeting(play.Target!).Execute(context);
     }
     protected override void OnUpgrade()
     {
