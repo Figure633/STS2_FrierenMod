@@ -26,7 +26,7 @@ public sealed class Frieren : PlaceholderCharacterModel
     public override string CharacterSelectSfx => Audio + "I_am_frieren.mp3";
     public override string CustomAttackSfx => "";
     public override string CustomCastSfx => "";
-    public override string CustomDeathSfx => Audio + "Frieren_DeathStinger.mp3";
+    public override string CustomDeathSfx => Presentation.MusicCatalog.Defeat.Path;
     // 复用二代可在建筑师身上播放的魔法命中特效，伤害分配仍由原生结算计算。
     public override List<string> GetArchitectAttackVfx() =>
         ["vfx/vfx_attack_lightning", "vfx/vfx_starry_impact", "vfx/vfx_attack_lightning"];

@@ -110,18 +110,9 @@ public static class PresentationTests
             var stream = GD.Load<AudioStream>(FrierenMusic.Folder + file);
             Check(stream.GetLength() > 0 && stream.InstantiatePlayback() != null, "音频解码 " + file);
         }
-        var tracks = new HashSet<string>();
-        for (int act = 0; act < 3; act++)
-        {
-            foreach (uint seed in new uint[] { 0, 1 })
-                tracks.Add(FrierenMusic.ResolveTrack(act, RoomType.Monster, true, seed));
-            tracks.Add(FrierenMusic.ResolveTrack(act, RoomType.Boss, true, 0));
-        }
-        tracks.Add(FrierenMusic.ResolveTrack(0, RoomType.Elite, true, 0));
-        tracks.Add(FrierenMusic.ResolveTrack(0, RoomType.Shop, false, 0));
-        tracks.Add(FrierenMusic.ResolveTrack(0, RoomType.RestSite, false, 0));
-        Check(tracks.Count == 12 && tracks.All(p => ResourceLoader.Exists(p)), "三章双曲、首领、精英、商店、营地共 12 条音乐路由");
-        Check(FrierenMusic.ResolveTrack(0, RoomType.Boss, false, 0) == FrierenMusic.ResolveTrack(0, RoomType.Monster, false, 0), "战斗结束恢复章节曲");
+        var tracks = MusicCatalog.All.Select(t=>t.Path).ToHashSet();
+        Check(tracks.Count == 20 && tracks.All(p=>ResourceLoader.Exists(p)), "20首曲目完整，无重复文件路径");
+        Check(FrierenMusic.ResolveTrack(0,RoomType.Boss,false,0)==FrierenMusic.ResolveTrack(2,RoomType.Monster,false,0),"三幕共用常规池");
         var musicRoot = new Node(); container.AddChild(musicRoot);
         var session = new FrierenMusic.MusicSession(musicRoot);
         string first = tracks.First();
@@ -142,8 +133,8 @@ public static class PresentationTests
         Check(players.Count(p => p.Playing) == 1, "音乐淡入淡出后只保留一条播放流");
         session.Stop();
         Check(players.All(p => !p.Playing && p.Stream == null), "离开跑局停止并释放音频");
-        session.Play(FrierenMusic.Folder + "Frieren_DeathStinger.mp3", loop: false);
-        Check(players.Any(p => p.Stream is AudioStreamMP3 { Loop: false } mp3 && mp3.GetLength() > 80)
+        session.Play(MusicCatalog.Defeat.Path, loop: false);
+        Check(players.Any(p => p.Stream is AudioStreamOggVorbis { Loop: false } ogg && ogg.GetLength() > 70)
             && !FrierenDeathSoundPatch.Prefix(player), "死亡长曲按结算音乐单次播放，不走死亡音效");
         session.Stop();
 

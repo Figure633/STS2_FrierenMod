@@ -47,3 +47,14 @@ assert manifest["dependencies"] == [{"id": "BaseLib", "min_version": "3.4.7"}]
 assert not list((ROOT / "FrierenMod").rglob("*.dll"))
 assert not list((ROOT / "FrierenMod").rglob("*.cs"))
 print("PASS manifest and resource boundaries")
+
+# 音乐池是20首曲目，不用已删除的旧混音文件数量充当曲目数。
+music=load(ROOT / "docs/inventory/bgm_audio.json")
+assert len(music["tracks"])==20
+assert len({t["id"] for t in music["tracks"]})==20
+for track in music["tracks"]:
+    path=ROOT / "FrierenMod/audio/bgm" / track["file"]
+    assert hashlib.sha256(path.read_bytes()).hexdigest()==track["sha256"],str(path)
+    assert abs(track["integratedLufs"]-music["targetLufs"])<=1,track["id"]
+    assert track["truePeakDb"]<=-.3,track["id"]
+print("PASS music: 20 unique tracks, file hashes and matched loudness")

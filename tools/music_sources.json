@@ -1,0 +1,147 @@
+{
+  "targetLufs": -18,
+  "truePeakDb": -1.5,
+  "notes": "仅裁剪首尾静音，保留中间全部内容。dangerous_medley使用一代Boss4_v6混剪，未额外加入单曲New and Dangerous Magic。",
+  "tracks": [
+    {
+      "id": "grassy_turtles",
+      "title": "Grassy Turtles and Seed Rats",
+      "pool": "event",
+      "source": "download:Grassy Turtles and Seed Rats.mp4",
+      "file": "grassy_turtles.ogg"
+    },
+    {
+      "id": "time_flows",
+      "title": "Time Flows Ever Onward",
+      "pool": "event",
+      "source": "download:Time Flows Ever Onward.mp4",
+      "file": "time_flows.ogg"
+    },
+    {
+      "id": "odd_clouds",
+      "title": "Odd Clouds",
+      "pool": "event",
+      "source": "download:Odd Clouds.mp4",
+      "file": "odd_clouds.ogg"
+    },
+    {
+      "id": "heroes_return",
+      "title": "The Party of Heroes Returns",
+      "pool": "event",
+      "source": "download:The Party of Heros Returns.mp4",
+      "file": "heroes_return.ogg"
+    },
+    {
+      "id": "grimoires",
+      "title": "Too Many Grimoires",
+      "pool": "event",
+      "source": "download:Too Many Grimoires.mp4",
+      "file": "grimoires.ogg"
+    },
+    {
+      "id": "waltz",
+      "title": "Waltz for Stark and Fern",
+      "pool": "event",
+      "source": "download:Waltz for Stark and Fern.mp4",
+      "file": "waltz.ogg"
+    },
+    {
+      "id": "dragon_smasher",
+      "title": "Dragon Smasher",
+      "pool": "regular",
+      "source": "legacy:STS_Level1_NewMix_v1.mp3",
+      "file": "dragon_smasher.ogg"
+    },
+    {
+      "id": "deep_dungeon",
+      "title": "Deep in the Dungeon",
+      "pool": "regular",
+      "source": "legacy:STS_Level1-2_v2.mp3",
+      "file": "deep_dungeon.ogg"
+    },
+    {
+      "id": "ready_weapon",
+      "title": "Ready Your Weapon",
+      "pool": "regular",
+      "source": "download:ready your weapon.mp4",
+      "file": "ready_weapon.ogg"
+    },
+    {
+      "id": "magic_within",
+      "title": "The Magic Within",
+      "pool": "regular",
+      "source": "legacy:STS_Level3-2_v2.mp3",
+      "file": "magic_within.ogg"
+    },
+    {
+      "id": "knife_throat",
+      "title": "Knife to the Throat",
+      "pool": "regular",
+      "source": "legacy:STS_EliteBoss_NewMix_v1.ogg",
+      "file": "knife_throat.ogg"
+    },
+    {
+      "id": "dangerous_medley",
+      "title": "New and Dangerous Magic (Medley)",
+      "pool": "boss",
+      "source": "legacy:STS_Boss4_v6.mp3",
+      "file": "dangerous_medley.ogg"
+    },
+    {
+      "id": "zoltraak",
+      "title": "Zoltraak",
+      "pool": "boss",
+      "source": "legacy:STS_Boss2_NewMix_v1.mp3",
+      "file": "zoltraak.ogg"
+    },
+    {
+      "id": "divine_revolte",
+      "title": "Divine Revolte",
+      "pool": "boss",
+      "source": "download:divine revolte.mp4",
+      "file": "divine_revolte.ogg"
+    },
+    {
+      "id": "first_class_mage",
+      "title": "First-Class Mage",
+      "pool": "boss",
+      "source": "download:first-class mage.mp4",
+      "file": "first_class_mage.ogg"
+    },
+    {
+      "id": "golden_land",
+      "title": "The Golden Land",
+      "pool": "boss",
+      "source": "download:the golden land.mp4",
+      "file": "golden_land.ogg"
+    },
+    {
+      "id": "south_hero",
+      "title": "Hero of the South",
+      "pool": "boss",
+      "source": "download:Hero of the South.mp4",
+      "file": "south_hero.ogg"
+    },
+    {
+      "id": "frieren_slayer",
+      "title": "Frieren the Slayer",
+      "pool": "spiegel",
+      "source": "legacy:Frieren_The_Slayer.mp3",
+      "file": "frieren_slayer.ogg"
+    },
+    {
+      "id": "sleepy_frieren",
+      "title": "Sleepy Frieren",
+      "pool": "merchant",
+      "source": "legacy:STS_Merchant_NewMix_v2.mp3",
+      "file": "sleepy_frieren.ogg"
+    },
+    {
+      "id": "peace",
+      "title": "In Times of Peace",
+      "pool": "defeat",
+      "source": "legacy:Frieren_DeathStinger.mp3",
+      "file": "peace.ogg"
+    }
+  ]
+}

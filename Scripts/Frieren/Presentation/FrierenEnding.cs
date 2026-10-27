@@ -19,12 +19,12 @@ public static class FrierenEnding
         if (PresentationSettings.OriginalMusic)
         {
             var music = new FrierenMusic.MusicSession(__instance);
-            music.Play(FrierenMusic.Folder + "Frieren_DeathStinger.mp3", loop: false);
+            music.Play(MusicCatalog.Defeat.Path, loop: false);
         }
     }
 }
 
-// 一代 DeathStinger 是 83 秒结算配乐，并非死亡瞬间音效；在结算页按 BGM 音量播放。
+// 一代 DeathStinger 是结算配乐，并非死亡瞬间音效；在结算页按 BGM 音量播放。
 [HarmonyPatch(typeof(SfxCmd), nameof(SfxCmd.PlayDeath), new Type[] { typeof(Player) })]
 public static class FrierenDeathSoundPatch
 {

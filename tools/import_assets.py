@@ -63,11 +63,8 @@ def main():
     for source, target in [("card_orb", "card_icon"), ("small_orb", "text_icon")]:
         copy(RES / f"img/cardStyles/Frieren/orb/{source}.png", ROOT / f"FrierenMod/images/energy/{target}.png")
     # 仅迁入当前芙莉莲玩法有播放入口的音频；不混入菲伦、未实现事件和旧主菜单。
-    tracks = ["STS_Level1_NewMix_v1.mp3", "STS_Level1-2_v2.mp3", "STS_Level2_NewMix_v1.mp3",
-              "STS_Level2-2_v2.mp3", "STS_Level3_v2.mp3", "STS_Level3-2_v2.mp3",
-              "STS_Merchant_NewMix_v1.ogg", "STS_Shrine_NewMix_v1.ogg", "STS_EliteBoss_NewMix_v1.ogg",
-              "STS_Boss1_NewMix_v1.mp3", "STS_Boss2_NewMix_v1.mp3", "STS_Boss3_NewMix_v1.ogg",
-              "I_am_frieren.mp3", "normal_attack.mp3", "Frieren_DeathStinger.mp3", "win.mp3"]
+    # BGM改由prepare_music.py生成，不能重新拷回已去重的旧曲副本。
+    tracks = ["I_am_frieren.mp3", "normal_attack.mp3", "win.mp3"]
     for name in tracks:
         copy(RES / f"audio/sound/{name}", ROOT / f"FrierenMod/audio/{name}")
     converted = bake()

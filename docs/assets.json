@@ -1016,102 +1016,6 @@
     "redistribution_review": "pending; local prototype only"
   },
   {
-    "file": "FrierenMod/audio/STS_Level1_NewMix_v1.mp3",
-    "source": "src/main/resources/FrierenModResources/audio/sound/STS_Level1_NewMix_v1.mp3",
-    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
-    "sha256": "cf233811cf2face2164d98575fc0d6d9bdf165856dc425e93f71c76dafe227d3",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
-  },
-  {
-    "file": "FrierenMod/audio/STS_Level1-2_v2.mp3",
-    "source": "src/main/resources/FrierenModResources/audio/sound/STS_Level1-2_v2.mp3",
-    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
-    "sha256": "25d300c8ae1450244b64b134696aa02286ddad24639a90a996b936aa62674248",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
-  },
-  {
-    "file": "FrierenMod/audio/STS_Level2_NewMix_v1.mp3",
-    "source": "src/main/resources/FrierenModResources/audio/sound/STS_Level2_NewMix_v1.mp3",
-    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
-    "sha256": "bfbe4210dfcdf322f53330b239bd26fa9babcb6c4e864d960c0573c04971ad2e",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
-  },
-  {
-    "file": "FrierenMod/audio/STS_Level2-2_v2.mp3",
-    "source": "src/main/resources/FrierenModResources/audio/sound/STS_Level2-2_v2.mp3",
-    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
-    "sha256": "bfbe4210dfcdf322f53330b239bd26fa9babcb6c4e864d960c0573c04971ad2e",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
-  },
-  {
-    "file": "FrierenMod/audio/STS_Level3_v2.mp3",
-    "source": "src/main/resources/FrierenModResources/audio/sound/STS_Level3_v2.mp3",
-    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
-    "sha256": "388a97c68ddffe7bd52679035e254fdc7b15cc86b5d0860794bc70e8dbc481f4",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
-  },
-  {
-    "file": "FrierenMod/audio/STS_Level3-2_v2.mp3",
-    "source": "src/main/resources/FrierenModResources/audio/sound/STS_Level3-2_v2.mp3",
-    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
-    "sha256": "388a97c68ddffe7bd52679035e254fdc7b15cc86b5d0860794bc70e8dbc481f4",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
-  },
-  {
-    "file": "FrierenMod/audio/STS_Merchant_NewMix_v1.ogg",
-    "source": "src/main/resources/FrierenModResources/audio/sound/STS_Merchant_NewMix_v1.ogg",
-    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
-    "sha256": "2906632a31ff4cd2ad890a0e3b8632221ab236639aa4a88f90daa04177d3efda",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
-  },
-  {
-    "file": "FrierenMod/audio/STS_Shrine_NewMix_v1.ogg",
-    "source": "src/main/resources/FrierenModResources/audio/sound/STS_Shrine_NewMix_v1.ogg",
-    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
-    "sha256": "84e88f830486342740e96448bc12fff9cf37cccab51ceb93c64c13fcd7d48c78",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
-  },
-  {
-    "file": "FrierenMod/audio/STS_EliteBoss_NewMix_v1.ogg",
-    "source": "src/main/resources/FrierenModResources/audio/sound/STS_EliteBoss_NewMix_v1.ogg",
-    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
-    "sha256": "a5aaab5f079dc0f2b45c894ea69b80d155e2615f32c568aa38dde5eeb4edbbf4",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
-  },
-  {
-    "file": "FrierenMod/audio/STS_Boss1_NewMix_v1.mp3",
-    "source": "src/main/resources/FrierenModResources/audio/sound/STS_Boss1_NewMix_v1.mp3",
-    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
-    "sha256": "bfbe4210dfcdf322f53330b239bd26fa9babcb6c4e864d960c0573c04971ad2e",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
-  },
-  {
-    "file": "FrierenMod/audio/STS_Boss2_NewMix_v1.mp3",
-    "source": "src/main/resources/FrierenModResources/audio/sound/STS_Boss2_NewMix_v1.mp3",
-    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
-    "sha256": "a05bb2cb75765e9e5e021417ddc83bc8700ba534d73d10280b0f3ddb9a6b4b2b",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
-  },
-  {
-    "file": "FrierenMod/audio/STS_Boss3_NewMix_v1.ogg",
-    "source": "src/main/resources/FrierenModResources/audio/sound/STS_Boss3_NewMix_v1.ogg",
-    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
-    "sha256": "9e4d24fa2a1ded1ae3157f30dcf7c4e9e83b5eef032ef4625e7f9858c37ddbf1",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
-  },
-  {
     "file": "FrierenMod/audio/I_am_frieren.mp3",
     "source": "src/main/resources/FrierenModResources/audio/sound/I_am_frieren.mp3",
     "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
@@ -1124,14 +1028,6 @@
     "source": "src/main/resources/FrierenModResources/audio/sound/normal_attack.mp3",
     "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
     "sha256": "6c4263e07911f87d5985cc926b63adf8a79981e316088c38d8ce497a70058a8f",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
-  },
-  {
-    "file": "FrierenMod/audio/Frieren_DeathStinger.mp3",
-    "source": "src/main/resources/FrierenModResources/audio/sound/Frieren_DeathStinger.mp3",
-    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
-    "sha256": "4bbf2ec365146997cca29d68bde0cbe7a8efb0c6471e7e628c87024d791b8818",
     "modified": false,
     "redistribution_review": "pending; local prototype only"
   },
@@ -2489,14 +2385,6 @@
     "redistribution_review": "pending; local prototype only"
   },
   {
-    "file": "FrierenMod/audio/Frieren_The_Slayer.mp3",
-    "source": "src/main/resources/FrierenModResources/audio/sound/Frieren_The_Slayer.mp3",
-    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
-    "sha256": "eec41915244d287b842f137d6467211c0ecc8841b1215005fa829c7af44096b3",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
-  },
-  {
     "file": "FrierenMod/images/cards/UpsideDown.png",
     "source": "src/main/resources/FrierenModResources/img/cards/UpsideDown_p.png",
     "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
@@ -3600,5 +3488,194 @@
     "modified": true,
     "modification": "花海原图等比居中裁剪为352x520，对齐原生88x130头像区域并铺满",
     "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/audio/bgm/grassy_turtles.ogg",
+    "source": "user-provided:Grassy Turtles and Seed Rats.mp4",
+    "source_sha256": "550f9572e6664357dd901c046fe162f2c2c50263e5617f46d12e57b50a141c12",
+    "sha256": "0fa5a3671a82538c395a3d63b1e6c35a61d093e513d6d607ad0f92dea71cb403",
+    "modified": true,
+    "conversion": "tools/prepare_music.py; only edge silence trimmed; loudnorm -18 LUFS / -1.5 dBTP; Ogg Vorbis q5 stereo 48kHz",
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/audio/bgm/time_flows.ogg",
+    "source": "user-provided:Time Flows Ever Onward.mp4",
+    "source_sha256": "2b9e68e79056579855b357c1df5cb6f8546dc89893978c3643d5a1f5e60b30f8",
+    "sha256": "b3d19cd4631585567a55b49692cebead387f41cdadd3dcac519982b172c16d91",
+    "modified": true,
+    "conversion": "tools/prepare_music.py; only edge silence trimmed; loudnorm -18 LUFS / -1.5 dBTP; Ogg Vorbis q5 stereo 48kHz",
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/audio/bgm/odd_clouds.ogg",
+    "source": "user-provided:Odd Clouds.mp4",
+    "source_sha256": "50af02bb1e15f597356ced645dede32351eac8b356910a978c8ddfb085019ff9",
+    "sha256": "3552033093d461ee4953adfb1b7b2cc661572580cd5d21eb19b0ad73cd5e7b47",
+    "modified": true,
+    "conversion": "tools/prepare_music.py; only edge silence trimmed; loudnorm -18 LUFS / -1.5 dBTP; Ogg Vorbis q5 stereo 48kHz",
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/audio/bgm/heroes_return.ogg",
+    "source": "user-provided:The Party of Heros Returns.mp4",
+    "source_sha256": "896675e595cf7a3f94e5ab1d7525fb3a50ae8168e69516191485ad95718b6a86",
+    "sha256": "7535c158f25728b78206346c02552818e018bf5dd0335ab8bb765b1ab8f0aece",
+    "modified": true,
+    "conversion": "tools/prepare_music.py; only edge silence trimmed; loudnorm -18 LUFS / -1.5 dBTP; Ogg Vorbis q5 stereo 48kHz",
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/audio/bgm/grimoires.ogg",
+    "source": "user-provided:Too Many Grimoires.mp4",
+    "source_sha256": "3cbdda3d45142b26a26fcd61d1a800a704f27103ce8522aae9cfe49000d5652a",
+    "sha256": "ea306d1e432ae180b7a7312d1afc7d9e979b58308195c0630faaae5cc6718d84",
+    "modified": true,
+    "conversion": "tools/prepare_music.py; only edge silence trimmed; loudnorm -18 LUFS / -1.5 dBTP; Ogg Vorbis q5 stereo 48kHz",
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/audio/bgm/waltz.ogg",
+    "source": "user-provided:Waltz for Stark and Fern.mp4",
+    "source_sha256": "31f151c3e8b9414d48bc6d4b79aa6b276c91e129aa67868d18b337e65f98614e",
+    "sha256": "f6af2de7ed5a4ec40d207a2ab4c1fdb88fe0c19f0cad7e6d0e06daeff83e6d8a",
+    "modified": true,
+    "conversion": "tools/prepare_music.py; only edge silence trimmed; loudnorm -18 LUFS / -1.5 dBTP; Ogg Vorbis q5 stereo 48kHz",
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/audio/bgm/dragon_smasher.ogg",
+    "source": "src/main/resources/FrierenModResources/audio/sound/STS_Level1_NewMix_v1.mp3",
+    "source_sha256": "cf233811cf2face2164d98575fc0d6d9bdf165856dc425e93f71c76dafe227d3",
+    "sha256": "2c6dbbdbf4148d7d56bf6799e42242a3af58612b883fc1b44f93b273c5800c7f",
+    "modified": true,
+    "conversion": "tools/prepare_music.py; only edge silence trimmed; loudnorm -18 LUFS / -1.5 dBTP; Ogg Vorbis q5 stereo 48kHz",
+    "redistribution_review": "pending; local prototype only",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc"
+  },
+  {
+    "file": "FrierenMod/audio/bgm/deep_dungeon.ogg",
+    "source": "src/main/resources/FrierenModResources/audio/sound/STS_Level1-2_v2.mp3",
+    "source_sha256": "25d300c8ae1450244b64b134696aa02286ddad24639a90a996b936aa62674248",
+    "sha256": "15328d1cee1a391d4e8c4f28a4d7b86333d3b22d19476aabbd9fd776e8a87dd9",
+    "modified": true,
+    "conversion": "tools/prepare_music.py; only edge silence trimmed; loudnorm -18 LUFS / -1.5 dBTP; Ogg Vorbis q5 stereo 48kHz",
+    "redistribution_review": "pending; local prototype only",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc"
+  },
+  {
+    "file": "FrierenMod/audio/bgm/ready_weapon.ogg",
+    "source": "user-provided:ready your weapon.mp4",
+    "source_sha256": "d912c1470f30a18a6b60df4d0e93b8ddcc67c61ed830bd5fa440a69d790b0196",
+    "sha256": "7494cb481343d7c2e01015ada2e8a5888ea25722f9731b4df65e939ab415c6f3",
+    "modified": true,
+    "conversion": "tools/prepare_music.py; only edge silence trimmed; loudnorm -18 LUFS / -1.5 dBTP; Ogg Vorbis q5 stereo 48kHz",
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/audio/bgm/magic_within.ogg",
+    "source": "src/main/resources/FrierenModResources/audio/sound/STS_Level3-2_v2.mp3",
+    "source_sha256": "388a97c68ddffe7bd52679035e254fdc7b15cc86b5d0860794bc70e8dbc481f4",
+    "sha256": "18fb45df6c4dc68a00aa56fa1baf6eb6887bd9663fb9238413ca159a736bceb4",
+    "modified": true,
+    "conversion": "tools/prepare_music.py; only edge silence trimmed; loudnorm -18 LUFS / -1.5 dBTP; Ogg Vorbis q5 stereo 48kHz",
+    "redistribution_review": "pending; local prototype only",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc"
+  },
+  {
+    "file": "FrierenMod/audio/bgm/knife_throat.ogg",
+    "source": "src/main/resources/FrierenModResources/audio/sound/STS_EliteBoss_NewMix_v1.ogg",
+    "source_sha256": "a5aaab5f079dc0f2b45c894ea69b80d155e2615f32c568aa38dde5eeb4edbbf4",
+    "sha256": "09ffc4a44cce27fb283de3dc5625fbe9212a8909bafc793ab06cde634c9eaba9",
+    "modified": true,
+    "conversion": "tools/prepare_music.py; only edge silence trimmed; loudnorm -18 LUFS / -1.5 dBTP; Ogg Vorbis q5 stereo 48kHz",
+    "redistribution_review": "pending; local prototype only",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc"
+  },
+  {
+    "file": "FrierenMod/audio/bgm/dangerous_medley.ogg",
+    "source": "src/main/resources/FrierenModResources/audio/sound/STS_Boss4_v6.mp3",
+    "source_sha256": "871a471ae3efd22e09af22273519c6ce5dd9b190f916d1184d7fcea549c946b5",
+    "sha256": "a56c796b319f72e82d81cf2ff1ba5f926bb0a708414c309555332cc5d8749ee7",
+    "modified": true,
+    "conversion": "tools/prepare_music.py; only edge silence trimmed; loudnorm -18 LUFS / -1.5 dBTP; Ogg Vorbis q5 stereo 48kHz",
+    "redistribution_review": "pending; local prototype only",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc"
+  },
+  {
+    "file": "FrierenMod/audio/bgm/zoltraak.ogg",
+    "source": "src/main/resources/FrierenModResources/audio/sound/STS_Boss2_NewMix_v1.mp3",
+    "source_sha256": "a05bb2cb75765e9e5e021417ddc83bc8700ba534d73d10280b0f3ddb9a6b4b2b",
+    "sha256": "c905f5fde55162d8fbe3b4b38397ee710b6bc4efcaf4198cccf6dc5765c4f474",
+    "modified": true,
+    "conversion": "tools/prepare_music.py; only edge silence trimmed; loudnorm -18 LUFS / -1.5 dBTP; Ogg Vorbis q5 stereo 48kHz",
+    "redistribution_review": "pending; local prototype only",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc"
+  },
+  {
+    "file": "FrierenMod/audio/bgm/divine_revolte.ogg",
+    "source": "user-provided:divine revolte.mp4",
+    "source_sha256": "997c5d40a460a96a90af53c38084ded8942179778569dc6a53841c967f0a2d71",
+    "sha256": "499b3f812a7bfef7fb7e4b6fc4cad8931927462a829fe95695b95edd3dba1d0e",
+    "modified": true,
+    "conversion": "tools/prepare_music.py; only edge silence trimmed; loudnorm -18 LUFS / -1.5 dBTP; Ogg Vorbis q5 stereo 48kHz",
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/audio/bgm/first_class_mage.ogg",
+    "source": "user-provided:first-class mage.mp4",
+    "source_sha256": "2ccd667b892692564218f42107f8e162771882091dded2e92128492a1ddb505e",
+    "sha256": "33c689f29eead81047882318e8e30205fde582e05d8bcdf1c8bb99167d06632a",
+    "modified": true,
+    "conversion": "tools/prepare_music.py; only edge silence trimmed; loudnorm -18 LUFS / -1.5 dBTP; Ogg Vorbis q5 stereo 48kHz",
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/audio/bgm/golden_land.ogg",
+    "source": "user-provided:the golden land.mp4",
+    "source_sha256": "93746538180368a5c5b0b74d75e2aef0d3725d722dd6a67015bac18dd1e2983f",
+    "sha256": "30e19c6f84c1110cf0f5d257cbf4a65c48f3019f7d57ccc485b8b65fe3d8dfc8",
+    "modified": true,
+    "conversion": "tools/prepare_music.py; only edge silence trimmed; loudnorm -18 LUFS / -1.5 dBTP; Ogg Vorbis q5 stereo 48kHz",
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/audio/bgm/south_hero.ogg",
+    "source": "user-provided:Hero of the South.mp4",
+    "source_sha256": "1973573bdfbc3000477df3fa01955d051fc9230857fe70c35fde6100e6db0cb8",
+    "sha256": "8972b6ebad1e5f98cbe11f7e5a8e140a2b047168e85b3049388bf4af4311b1e7",
+    "modified": true,
+    "conversion": "tools/prepare_music.py; only edge silence trimmed; loudnorm -18 LUFS / -1.5 dBTP; Ogg Vorbis q5 stereo 48kHz",
+    "redistribution_review": "pending; local prototype only"
+  },
+  {
+    "file": "FrierenMod/audio/bgm/frieren_slayer.ogg",
+    "source": "src/main/resources/FrierenModResources/audio/sound/Frieren_The_Slayer.mp3",
+    "source_sha256": "eec41915244d287b842f137d6467211c0ecc8841b1215005fa829c7af44096b3",
+    "sha256": "440a10e739fdeabcbd8123b8e638789f6e9de63d42f368e22f7d3a5bf95a3b7d",
+    "modified": true,
+    "conversion": "tools/prepare_music.py; only edge silence trimmed; loudnorm -18 LUFS / -1.5 dBTP; Ogg Vorbis q5 stereo 48kHz",
+    "redistribution_review": "pending; local prototype only",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc"
+  },
+  {
+    "file": "FrierenMod/audio/bgm/sleepy_frieren.ogg",
+    "source": "src/main/resources/FrierenModResources/audio/sound/STS_Merchant_NewMix_v2.mp3",
+    "source_sha256": "9b811951e7b5f0ab6f07069afbaafd0c82fdd75f33d4ac4836579de52e48c6f8",
+    "sha256": "66b4987dccd25df2892dfcc235a9261dcbcdebb30de30aca7246824dcd2a42eb",
+    "modified": true,
+    "conversion": "tools/prepare_music.py; only edge silence trimmed; loudnorm -18 LUFS / -1.5 dBTP; Ogg Vorbis q5 stereo 48kHz",
+    "redistribution_review": "pending; local prototype only",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc"
+  },
+  {
+    "file": "FrierenMod/audio/bgm/peace.ogg",
+    "source": "src/main/resources/FrierenModResources/audio/sound/Frieren_DeathStinger.mp3",
+    "source_sha256": "4bbf2ec365146997cca29d68bde0cbe7a8efb0c6471e7e628c87024d791b8818",
+    "sha256": "e077155c337944c2feb4cb3b7b58ebfc276acc45085ff7f54847938018964e0f",
+    "modified": true,
+    "conversion": "tools/prepare_music.py; only edge silence trimmed; loudnorm -18 LUFS / -1.5 dBTP; Ogg Vorbis q5 stereo 48kHz",
+    "redistribution_review": "pending; local prototype only",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc"
   }
 ]

@@ -114,4 +114,17 @@ Test("精准咏唱先按原系数算强度再减费", () => {
 });
 passed += MagicPropTests.Run();
 passed += MagicRewardTests.Run();
+Test("音乐随机不连续重复且能覆盖整个池", () => {
+    foreach (int count in new[]{5,6}) {
+        var playlist=new MusicPlaylist(123);int previous=-1;var seen=new HashSet<int>();
+        for(int i=0;i<1000;i++){int next=playlist.Next("test",count);if(next==previous)throw new Exception("连续重复");seen.Add(next);previous=next;}
+        Equal(count,seen.Count);
+    }
+});
+Test("不同音乐池分别记住上一首", () => {
+    var playlist=new MusicPlaylist(32);int a=playlist.Next("event",6);
+    for(int i=0;i<20;i++)playlist.Next("boss",6);
+    if(a==playlist.Next("event",6))throw new Exception("离开再回来重复上一首");
+    Equal(0,playlist.Next("single",1));Throws<ArgumentOutOfRangeException>(()=>playlist.Next("empty",0));
+});
 Console.WriteLine($"{passed} tests passed.");
