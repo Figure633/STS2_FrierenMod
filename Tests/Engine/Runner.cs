@@ -104,6 +104,10 @@ public partial class Runner : Node
             new Harmony("frieren.tests.hover_host").Patch(
                 AccessTools.Method(typeof(MegaCrit.Sts2.Core.Nodes.Cards.Holders.NCardHolder), "CreateHoverTips"),
                 prefix: new HarmonyMethod(typeof(Runner), nameof(SkipGlobalHoverWindow)));
+            if (OS.GetCmdlineUserArgs().Contains("--todo096-only")) {
+                GD.Print("TODO096_OK: " + await Todo096Tests.Run(this));
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--todo093-only")) {
                 GD.Print("TODO093_OK: " + await Todo093Tests.Run(this));
                 await Finish(); return;
@@ -409,3 +413,4 @@ public partial class Runner : Node
         catch (Exception ex) { GD.PrintErr(ex.ToString()); GetTree().Quit(1); }
     }
 }
+

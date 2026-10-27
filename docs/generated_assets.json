@@ -33,33 +33,33 @@
       "key": "Spiegel_node",
       "date": "2026-10-27",
       "source": "Spiegel_node_candidate.png; author approved",
-      "processing": "tools/render_spiegel_icon.gd; 128px monochrome + native outline",
+      "processing": "tools/render_spiegel_icon.gd; 512px monochrome + native outline",
       "target": "FrierenMod/images/monsters/Spiegel_node.png",
-      "sha256": "49326cc83d8d6cc75b905a2d83813e5c217e86762959f5f16f8834a4ea1e32fa"
+      "sha256": "21616830e35cd397b68c5b6ed5ebbfa7c05002bbbfd9631db268510e12f12e81"
     },
     {
       "key": "Spiegel_node_outline",
       "date": "2026-10-27",
       "source": "Spiegel_node_candidate.png; author approved",
-      "processing": "tools/render_spiegel_icon.gd; 128px monochrome + native outline",
+      "processing": "tools/render_spiegel_icon.gd; 512px monochrome + native outline",
       "target": "FrierenMod/images/monsters/Spiegel_node_outline.png",
-      "sha256": "54ea1062154a278ca3a5764af2f13e2d75818a74f0fa04f7861d0c7061769801"
+      "sha256": "530f6fd94114696bd33fe80aa6a76d57e2077ffc86cf1c13b16bad68b53c930e"
     },
     {
       "key": "Spiegel_topbar",
       "date": "2026-10-27",
       "source": "Spiegel_node_candidate.png; author approved",
-      "processing": "tools/render_spiegel_icon.gd; 128px monochrome + native outline",
+      "processing": "tools/render_spiegel_icon.gd; 512px monochrome + native outline",
       "target": "FrierenMod/images/monsters/Spiegel_topbar.png",
-      "sha256": "49326cc83d8d6cc75b905a2d83813e5c217e86762959f5f16f8834a4ea1e32fa"
+      "sha256": "21616830e35cd397b68c5b6ed5ebbfa7c05002bbbfd9631db268510e12f12e81"
     },
     {
       "key": "Spiegel_topbar_outline",
       "date": "2026-10-27",
       "source": "Spiegel_node_candidate.png; author approved",
-      "processing": "tools/render_spiegel_icon.gd; 128px monochrome + native outline",
+      "processing": "tools/render_spiegel_icon.gd; 512px monochrome + native outline",
       "target": "FrierenMod/images/monsters/Spiegel_topbar_outline.png",
-      "sha256": "54ea1062154a278ca3a5764af2f13e2d75818a74f0fa04f7861d0c7061769801"
+      "sha256": "530f6fd94114696bd33fe80aa6a76d57e2077ffc86cf1c13b16bad68b53c930e"
     }
   ]
 }

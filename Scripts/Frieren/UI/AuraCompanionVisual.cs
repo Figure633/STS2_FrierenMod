@@ -1,4 +1,4 @@
-using FrierenMod.Scripts.Encounters;
+﻿using FrierenMod.Scripts.Encounters;
 using FrierenMod.Scripts.Relics;
 using Godot;
 using HarmonyLib;
@@ -12,24 +12,50 @@ namespace FrierenMod.Scripts.UI;
 
 public static class AuraCompanionVisual
 {
+    private static SpriteFrames? _croppedFrames;
+    private static SpriteFrames Frames()
+    {
+        if(_croppedFrames!=null)return _croppedFrames;
+        var source=GD.Load<SpriteFrames>("res://FrierenMod/images/pets/aura.tres");
+        Rect2I? union=null;
+        var images=new List<Image>();
+        var animation=source.GetAnimationNames()[0];
+        for(int frame=0;frame<source.GetFrameCount(animation);frame++) {
+            var image=source.GetFrameTexture(animation,frame).GetImage();
+            images.Add(image);
+            if(image.IsCompressed())image.Decompress();
+            int left=image.GetWidth(),top=image.GetHeight(),right=0,bottom=0;
+            for(int y=0;y<image.GetHeight();y++)for(int x=0;x<image.GetWidth();x++) {
+                var c=image.GetPixel(x,y);
+                float distance=new Vector3(c.R-.82f,c.G-.773f,c.B-.714f).Length();
+                c.A*=Mathf.SmoothStep(.085f,.13f,distance);
+                if(x>.8f*image.GetWidth() || (y>.88f*image.GetHeight() && c.R>.4f && c.G>.4f && Math.Abs(c.R-c.G)<.08f))c.A=0;
+                image.SetPixel(x,y,c);
+                if(c.A<.1f)continue;
+                left=Math.Min(left,x);right=Math.Max(right,x+1);top=Math.Min(top,y);bottom=Math.Max(bottom,y+1);
+            }
+            if(right>left && bottom>top) {
+                var rect=new Rect2I(left,top,right-left,bottom-top);
+                union=union.HasValue?union.Value.Merge(rect):rect;
+            }
+        }
+        _croppedFrames=new SpriteFrames();_croppedFrames.RemoveAnimation("default");
+        _croppedFrames.AddAnimation(animation);_croppedFrames.SetAnimationLoop(animation,true);
+        _croppedFrames.SetAnimationSpeed(animation,source.GetAnimationSpeed(animation));
+        for(int i=0;i<source.GetFrameCount(animation);i++) {
+            using var image=images[i];
+            using var cropped=image.GetRegion(union??new Rect2I(Vector2I.Zero,image.GetSize()));
+            _croppedFrames.AddFrame(animation,ImageTexture.CreateFromImage(cropped),source.GetFrameDuration(animation,i));
+        }
+        return _croppedFrames;
+    }
+
     public static AnimatedSprite2D Create()
     {
-        // 原 GIF 等比例减速两倍；着色器只去除米色背景，不改动原始帧。
-        var shader = new Shader { Code = """
-            shader_type canvas_item;
-            void fragment() {
-                vec4 c = texture(TEXTURE, UV);
-                float d = distance(c.rgb, vec3(0.82, 0.773, 0.714));
-                c.a *= smoothstep(0.085, 0.13, d);
-                // 去掉原 GIF 的落地道具与米色阴影，只保留角色及她手中的剑。
-                if (UV.x > 0.80 || (UV.y > 0.88 && c.r > 0.40 && c.g > 0.40 && abs(c.r-c.g) < 0.08)) c.a = 0.0;
-                COLOR = c;
-            }
-            """ };
+        // 原始帧逐张去背景后裁切；不使用图集UV，避免UV落在整张图集时误裁角色。
         var sprite = new AnimatedSprite2D {
-            Name = "FrierenAuraCompanion", SpriteFrames = GD.Load<SpriteFrames>("res://FrierenMod/images/pets/aura.tres"),
-            Position = new Vector2(-130, -70), Scale = new Vector2(0.6f, 0.6f),
-            Material = new ShaderMaterial { Shader = shader }
+            Name = "FrierenAuraCompanion", SpriteFrames = Frames(),
+            Position = new Vector2(-135, -85), Scale = new Vector2(0.75f, 0.75f)
         };
         sprite.Play();
         return sprite;
@@ -55,6 +81,9 @@ public static class AuraCompanionVisual
         {
             if (__instance.Entity?.Player == null || __instance.GetNodeOrNull<Node2D>("AuraCompanionHost") is not { } host) return;
             var pet=host.GetChild<AnimatedSprite2D>(0);
+            // 明确使用玩家自己的动画，避免第三方自定义动画缓存选中陪伴节点。
+            var animator=__instance.Visuals?.GetNodeOrNull<AnimationPlayer>("AnimationPlayer");
+            if(animator?.HasAnimation("Dead")==true && animator.CurrentAnimation!="Dead")animator.Play("Dead");
             var corpse=__instance.Visuals?.FindChild("Corpse",true,false) as Sprite2D;
             if(corpse==null) { host.Position=new Vector2(-200,0); return; }
             PlaceBesideCorpse(host,pet,corpse,__instance);
@@ -68,10 +97,18 @@ public static class AuraCompanionVisual
         for(Node? node=corpse;node!=null && node!=creature;node=node.GetParent())
             if(node is CanvasItem canvas) {layer+=canvas.ZIndex;if(!canvas.ZAsRelative)break;}
         host.ZIndex=layer;
-        Rect2 bounds=corpse.GlobalTransform*corpse.GetRect();
+        Rect2 bounds=CorpseBounds(corpse);
         var frame=pet.SpriteFrames.GetFrameTexture(pet.Animation,pet.Frame);
         Vector2 half=frame.GetSize()*pet.GlobalScale.Abs()/2;
-        pet.GlobalPosition=new Vector2(bounds.Position.X-40-half.X,bounds.End.Y-half.Y);
+        pet.GlobalPosition=new Vector2(bounds.Position.X-24-half.X,bounds.End.Y-half.Y);
+        pet.Modulate=Colors.White;pet.Show();pet.Play();
+    }
+
+    public static Rect2 CorpseBounds(Sprite2D corpse)
+    {
+        using var image=corpse.Texture.GetImage();if(image.IsCompressed())image.Decompress();
+        var used=image.GetUsedRect();
+        return corpse.GlobalTransform*new Rect2(corpse.GetRect().Position+(Vector2)used.Position,(Vector2)used.Size);
     }
 
     [HarmonyPatch(typeof(RewardsSet), "GenerateRewardsFor")]

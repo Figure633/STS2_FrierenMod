@@ -2,6 +2,7 @@ using Godot;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Nodes;
+using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using MegaCrit.Sts2.Core.Nodes.HoverTips;
 using MegaCrit.Sts2.Core.Nodes.TopBar;
 using MegaCrit.Sts2.addons.mega_text;
@@ -66,7 +67,9 @@ public partial class MagicFactorButton : NTopBarButton
         template.SetScript(default(Variant));
         GodotObject.InstanceFromId(templateId)?.Free();
 
-        var row = root.FindChild("RightAlignedStuff", true, false) as BoxContainer;
+        // 历史页也有名为 RightAlignedStuff 的日期 VBox，不能把它当作跑局顶栏。
+        // 历史入口直接挂在屏幕根部，避免跟随历史内容滚动或受其裁剪。
+        var row = root is NGlobalUi ? root.FindChild("RightAlignedStuff", true, false) as HBoxContainer : null;
         if (row == null) {
             // 独立界面测试没有整套 GlobalUi，仍使用相同的原生按钮和自动排版。
             row = new HBoxContainer { Name = "FrierenTopBarRow", Alignment = BoxContainer.AlignmentMode.End,

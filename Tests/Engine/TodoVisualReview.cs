@@ -35,14 +35,14 @@ public static class TodoVisualReview
         var petHost=creature.GetNode<Node2D>("AuraCompanionHost");
         var companion=petHost.GetChild<AnimatedSprite2D>(0);
         var corpse=avatar.GetNode<Sprite2D>("Visuals/Corpse");
-        Rect2 corpseRect=corpse.GlobalTransform*corpse.GetRect();
+        Rect2 corpseRect=AuraCompanionVisual.CorpseBounds(corpse);
         float petRight=companion.GlobalPosition.X+companion.SpriteFrames.GetFrameTexture(companion.Animation,companion.Frame).GetWidth()*companion.GlobalScale.X/2;
-        Check(petRight<=corpseRect.Position.X-39 && companion.IsPlaying(),"死亡后宠物与尸体留出40像素间距并继续循环");
+        Check(Math.Abs(petRight-(corpseRect.Position.X-24))<1 && companion.IsPlaying(),"死亡后宠物与尸体留出24像素间距并继续循环");
         var notice=new NowPlayingNotice();root.AddChild(notice);notice.SetTitle("Knife to the Throat");
         Check(notice.Position.Y>=172 && notice.GetChild(0).GetChild(0) is RecordDisc,"曲名提示位于遗物区下方，使用旋转唱片");
         var icon=new TextureRect { Texture=GD.Load<Texture2D>("res://FrierenMod/images/monsters/Aura_node.png"),
             Position=new Vector2(320,280),Size=new Vector2(128,128),ExpandMode=TextureRect.ExpandModeEnum.IgnoreSize };
-        root.AddChild(icon);
+        icon.Size=new Vector2(128,128);root.AddChild(icon);
         var currentIndex=run.CurrentActIndex;
         AccessTools.Property(typeof(RunState),nameof(RunState.CurrentActIndex)).SetValue(run,2);
         run.Act.SetBossEncounter(ModelDb.Encounter<SpiegelFrierenEncounter>());
@@ -66,3 +66,5 @@ public static class TodoVisualReview
         patches.UnpatchAll("frieren.tests.pet_visual");return count;
     }
 }
+
+

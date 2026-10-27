@@ -433,11 +433,12 @@
   },
   {
     "file": "FrierenMod/images/cards/PaperPlaneSpell.png",
-    "source": "src/main/resources/FrierenModResources/img/cards/FinalChant_p.png",
-    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
-    "sha256": "88c29df509c5f2f6b1f40c0e69dc96764bf5c85b858597c65d1afb3a7fadacc5",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
+    "source": "TODOs.docx:word/media/image3.png",
+    "sha256": "5324d8c311d2cb82a2759581450441ad47a7218f2b9de29a8a10d33f23a6005a",
+    "modified": true,
+    "redistribution_review": "pending; local prototype only",
+    "source_sha256": "b25c99aa67de5a7fc2537734bc98def596306897fcc9e362f8ffbc3f4574d834",
+    "conversion": "tools/prepare_paper_plane_art.py; centered 500:380 crop, original colors"
   },
   {
     "file": "FrierenMod/images/cards/RustCleanMagic.png",

@@ -93,7 +93,7 @@ public static class Todo093Tests
         layout.QueueFree();await Tick();
         foreach(string name in new[]{"Aura_node_outline","Spiegel_node_outline"}) {
             var mask=CustomBossMapMask.For(GD.Load<Texture2D>("res://FrierenMod/images/monsters/"+name+".png")).GetImage();
-            Check(mask.GetPixel(64,64).A>.99f && mask.GetPixel(0,0).A==0,"地图背景遮罩填实中心且保留外部透明："+name);mask.Dispose();
+            Check(mask.GetPixel(mask.GetWidth()/2,mask.GetHeight()/2).A>.99f && mask.GetPixel(0,0).A==0,"地图背景遮罩填实中心且保留外部透明："+name);mask.Dispose();
         }
         // 使用真实奖励场景，验证查看魔法书不会被整页奖励覆盖层禁用。
         run.PushRoom(new CombatRoom(combat));
@@ -127,3 +127,4 @@ public static class Todo093Tests
         RunManager.Instance.CleanUp();LocManager.Instance.SetLanguage("eng");return count;
     }
 }
+

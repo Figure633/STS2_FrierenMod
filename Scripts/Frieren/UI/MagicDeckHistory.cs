@@ -7,6 +7,10 @@ using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Helpers;
+using MegaCrit.Sts2.Core.Map;
+using MegaCrit.Sts2.Core.Rooms;
+using FrierenMod.Scripts.Events;
 using MegaCrit.Sts2.Core.Nodes.Screens.RunHistoryScreen;
 using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.Saves;
@@ -17,6 +21,22 @@ namespace FrierenMod.Scripts.UI;
 
 public static class MagicDeckHistory
 {
+    // 开局前置事件和先古共用地图节点，但前置事件本身不是AncientEventModel。
+    // 在第三方图标补丁处理前纠正参数，兼容已有历史，不修改玩家历史文件。
+    [HarmonyPatch]
+    private static class StartingEventIcon
+    {
+        private static IEnumerable<System.Reflection.MethodBase> TargetMethods() {
+            yield return AccessTools.Method(typeof(ImageHelper),nameof(ImageHelper.GetRoomIconPath));
+            yield return AccessTools.Method(typeof(ImageHelper),nameof(ImageHelper.GetRoomIconOutlinePath));
+        }
+        [HarmonyPriority(Priority.First)]
+        private static void Prefix(ref MapPointType mapPointType,ref ModelId? modelId)
+        {
+            if(modelId!=ModelDb.Event<ReadingGrimoireEvent>().Id)return;
+            mapPointType=MapPointType.Unknown;modelId=null;
+        }
+    }
     public static readonly SpireField<RunHistoryPlayer, string> Data = new(() => "");
     [ThreadStatic] private static Dictionary<ulong, string>? _pending;
 
