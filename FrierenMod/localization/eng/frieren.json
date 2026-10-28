@@ -12,7 +12,7 @@
   "SLOT_SHORT.Hand": "Hand",
   "SLOT_SHORT.Discard": "Disc.",
   "BOOK_HINT": "Right-click a tool, then left-click its targets. It activates when all targets are chosen. Right-click again or press Esc to cancel.",
-  "BOOK_LOCKED": "Read only: finish initial factor selection; tool use currently supports solo runs only. Wait for any active selection.",
+  "BOOK_LOCKED": "View only: complete initial factor selection and wait for any pending choice or synchronized action.",
   "UNEQUIPPED": "Unequipped",
   "EMPTY": "Empty factor slot",
   "SLOT.Draw": "Draw Pile",

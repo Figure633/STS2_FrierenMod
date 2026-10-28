@@ -36,7 +36,8 @@ public static class CombatTestState
         IEnumerable<MegaCrit.Sts2.Core.Entities.Creatures.Creature> participants) =>
         (Task)(AccessTools.Method(typeof(MegaCrit.Sts2.Core.Hooks.Hook),"AfterSideTurnEnd") ??
             AccessTools.Method(typeof(MegaCrit.Sts2.Core.Hooks.Hook),"AfterTurnEnd")).Invoke(null,[combat,side,participants])!;
-    public static int RngCounter(object rng) => (int)AccessTools.Field(rng.GetType(),"_counter").GetValue(rng)!;
+    public static int RngCounter(object rng) => (int)(AccessTools.Property(rng.GetType(),"Counter") is {} counter
+        ? counter.GetValue(rng)! : AccessTools.Field(rng.GetType(),"_counter").GetValue(rng)!);
     public static IDisposable UseSelector(MegaCrit.Sts2.Core.TestSupport.ICardSelector selector)
     {
         var method=AccessTools.Method(typeof(MegaCrit.Sts2.Core.Commands.CardSelectCmd),"UseSelector");

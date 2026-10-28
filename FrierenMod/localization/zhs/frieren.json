@@ -12,7 +12,7 @@
   "SLOT_SHORT.Hand": "手",
   "SLOT_SHORT.Discard": "弃",
   "BOOK_HINT": "右键启用魔具，左键选择目标；选满后生效。再次右键魔具或按 Esc 取消。",
-  "BOOK_LOCKED": "当前仅可查看：需要完成初始因子选择，且暂只支持单人；选择操作中请等待。",
+  "BOOK_LOCKED": "当前仅可查看：需要完成初始因子选择；选择或同步结算期间请等待。",
   "UNEQUIPPED": "未装载",
   "EMPTY": "未装载因子",
   "SLOT.Draw": "抽牌堆",

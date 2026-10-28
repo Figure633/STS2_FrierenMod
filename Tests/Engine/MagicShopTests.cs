@@ -127,7 +127,10 @@ public static class MagicShopTests
         for (int i = 0; i < 3; i++) await root.ToSignal(root.GetTree(), SceneTree.SignalName.ProcessFrame);
         Check(Read().Props.Count == 0 && Read().Items.Count == 5 && book.Visible,
             "魔法书右键盲盒立即生效并刷新原生卡牌库存");
+        await MagicDeckAnimations.WhenIdle(player);
+        await root.ToSignal(root.GetTree(), SceneTree.SignalName.ProcessFrame);
         prop = Prepare("CrystalBall");
+        await MagicDeckAnimations.WhenIdle(player);
         ui.GetNode<Godot.Timer>("FrierenManaRefresh").EmitSignal(Godot.Timer.SignalName.Timeout);
         before = Read().ToJson();
         void Click(string name, bool right = false) {
@@ -161,6 +164,7 @@ public static class MagicShopTests
             "同屏选择两个因子完成水晶球交换，只消耗一次且不弹出其他选择界面");
         Check(!await MagicPropCmd.UseSelected(player, prop, ids), "重复提交已经消耗的魔具不会再次生效");
         prop = Prepare("UnbelievableTool", "BePrepared");
+        await MagicDeckAnimations.WhenIdle(player);
         before = Read().ToJson();
         Check(!await MagicPropCmd.UseSelected(player, prop, Read().Items.Take(2).Select(i => i.InstanceId).ToArray()) && Read().ToJson() == before,
             "内联选择两个已装载目标时拒绝错误组合且不消耗");

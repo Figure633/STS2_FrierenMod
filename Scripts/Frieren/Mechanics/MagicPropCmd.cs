@@ -12,26 +12,32 @@ using MegaCrit.Sts2.Core.Nodes.Screens;
 using MegaCrit.Sts2.Core.Nodes.Screens.Overlays;
 using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.Runs;
+using MegaCrit.Sts2.Core.Context;
 
 namespace FrierenMod.Scripts.Mechanics;
 
 public static class MagicPropCmd
 {
     private static readonly HashSet<Player> Busy = [];
-    public static bool IsBusy(Player player) => Busy.Contains(player);
+    private static readonly HashSet<Player> Shopping = [];
+    private static readonly HashSet<Player> ShopPending = [];
+    public static bool IsBusy(Player player) => Busy.Contains(player) || Shopping.Contains(player) || ShopPending.Contains(player);
     // IsComplete 仅表示奖励已领完，界面仍停留在“前进”；该阶段同样可以整理魔法牌组。
     // 选择具体卡牌时顶层会换成独立选牌屏，仍保护其选择任务。
     public static bool AllowsUseOver(IOverlayScreen? screen) => screen is null or NRewardsScreen;
-    private static bool CanAct(Player player)
+    private static bool CanAct(Player player, bool fromInput = true)
     {
         var combat = CombatManager.Instance;
-        return player.Character is Frieren && player.RunState.Players.Count == 1 &&
-            AllowsUseOver(NOverlayStack.Instance?.Peek()) &&
+        return player.Character is Frieren && ReferenceEquals(RunManager.Instance.DebugOnlyGetState(), player.RunState) &&
+            !RunManager.Instance.IsCleaningUp && (!fromInput || !RunManager.Instance.NetService.IsGameLoading) &&
+            (!fromInput || player.RunState.Players.Count == 1 || LocalContext.IsMe(player)) &&
+            (!fromInput || AllowsUseOver(NOverlayStack.Instance?.Peek())) &&
             MagicDeckStore.Read(player).SetupCompleted && !player.Creature.IsDead &&
             !combat.IsStarting && !combat.IsEnding && (!combat.IsInProgress ||
                 (!combat.PlayerActionsDisabled && !combat.IsEnemyTurnStarted &&
                  !combat.EndingPlayerTurnPhaseOne && !combat.EndingPlayerTurnPhaseTwo &&
-                 !RunManager.Instance.ActionExecutor.IsRunning));
+                 (!fromInput || !RunManager.Instance.ActionExecutor.IsRunning) &&
+                 (player.RunState.Players.Count == 1 || player.PlayerCombatState?.Phase == PlayerTurnPhase.Play)));
     }
     public static bool CanUse(Player player, int propId)
     {
@@ -43,13 +49,27 @@ public static class MagicPropCmd
 
     public static async Task<bool> VisitShop(Player player)
     {
-        if (!CanAct(player) || player.RunState.CurrentRoom is not RestSiteRoom || !Busy.Add(player)) return false;
+        if(player.RunState.Players.Count==1)return await VisitShopCore(player,new BlockingPlayerChoiceContext());
+        ShopPending.Add(player);
+        try {
+            return LocalContext.IsMe(player)
+                ? await MagicDeckNetwork.Send(player,new NetMagicDeckAction {Shop=true})
+                : await MagicDeckNetwork.WaitForShop(player);
+        }
+        finally { ShopPending.Remove(player); }
+    }
+
+    internal static async Task<bool> VisitShopCore(Player player,PlayerChoiceContext context)
+    {
+        // 原生营地同步器在各端调用 OnSelect；远端不读取本机覆盖层和输入状态。
+        if (!CanAct(player, fromInput: false) || CombatManager.Instance.IsInProgress ||
+            player.RunState.CurrentRoom is not RestSiteRoom || !Shopping.Add(player)) return false;
         try
         {
             var cards = MagicPropRules.All.Select(p => (CardModel)MagicPropCard.Create(player, p.Id)).ToArray();
             var prefs = new CardSelectorPrefs(new LocString("frieren", "SHOP_SELECT"), 2)
                 { Cancelable = true, RequireManualConfirmation = true };
-            var chosen = (await CardSelectCmd.FromSimpleGrid(new BlockingPlayerChoiceContext(), cards, player, prefs)).ToArray();
+            var chosen = (await CardSelectCmd.FromSimpleGrid(context, cards, player, prefs)).ToArray();
             if (chosen.Length != 2 || chosen.Distinct().Count() != 2 || chosen.Except(cards).Any()) return false;
             var deck = MagicDeckStore.Read(player);
             foreach (var card in chosen.Cast<MagicPropCard>()) deck.AddProp(card.PropId);
@@ -57,20 +77,32 @@ public static class MagicPropCmd
             // 与原生锻造一致，成功后由营地同步器消费此次行动，跑局统一保存。
             return true;
         }
-        finally { Busy.Remove(player); }
+        finally { Shopping.Remove(player); }
     }
 
     // 魔法书内联选择使用唯一结算入口，重新检查当前库存和战斗阶段。
     public static async Task<bool> UseSelected(Player player, int propId, IReadOnlyList<int> targets)
     {
-        if (!CanUse(player, propId) || !Busy.Add(player)) return false;
-        try { return await ApplySelected(player, propId, targets); }
+        if (targets.Count > 3 || !CanUse(player, propId) || !Busy.Add(player)) return false;
+        try {
+            bool success;
+            if (player.RunState.Players.Count > 1) {
+                success = await MagicDeckNetwork.Send(player, new NetMagicDeckAction {
+                    Prop = propId, Targets = targets.ToArray(), Snapshot = MagicDeckNetwork.Snapshot(player),
+                    InCombat = CombatManager.Instance.IsInProgress, Turn = player.PlayerCombatState?.TurnNumber ?? 0
+                });
+            }
+            else success = await ApplySelected(player, propId, targets);
+            // 动画只在本地等待，不进入同步动作，避免各端动画时长影响结算次序。
+            if (success) await UI.MagicDeckAnimations.WhenIdle(player);
+            return success;
+        }
         finally { Busy.Remove(player); }
     }
 
     private static async Task<bool> ApplySelected(Player player, int propId, IReadOnlyList<int> targets)
     {
-        if (!CanAct(player)) return false;
+        if (Shopping.Contains(player) || !CanAct(player, fromInput: false)) return false;
         var result = MagicPropRules.Apply(MagicDeckStore.Read(player), propId, targets,
             CombatManager.Instance.IsInProgress, player.PlayerRng.Rewards.NextInt);
         if (result == null) return false;
@@ -80,9 +112,17 @@ public static class MagicPropCmd
         if (usedProp == "SeinNote") Presentation.FrierenAchievements.Unlock(player, "4013");
         if (result.Heal > 0) await CreatureCmd.Heal(player.Creature, result.Heal);
         if (result.Energy > 0) await PlayerCmd.GainEnergy(result.Energy, player);
-        await UI.MagicDeckAnimations.WhenIdle(player);
         // 与原生休息/锻造保持同一楼层检查点，避免重复领取营地收益。
         return true;
+    }
+
+    internal static Task<bool> ExecuteSynchronized(Player player, NetMagicDeckAction request)
+    {
+        // 旧库存、过期回合、跨战斗和不合法目标均不能消耗库存或随机数。
+        if (request.Targets.Length > 3 || request.InCombat != CombatManager.Instance.IsInProgress ||
+            (request.InCombat && request.Turn != player.PlayerCombatState?.TurnNumber) ||
+            request.Snapshot != MagicDeckNetwork.Snapshot(player)) return Task.FromResult(false);
+        return ApplySelected(player, request.Prop, request.Targets);
     }
 
 }

@@ -104,6 +104,14 @@ public partial class Runner : Node
             new Harmony("frieren.tests.hover_host").Patch(
                 AccessTools.Method(typeof(MegaCrit.Sts2.Core.Nodes.Cards.Holders.NCardHolder), "CreateHoverTips"),
                 prefix: new HarmonyMethod(typeof(Runner), nameof(SkipGlobalHoverWindow)));
+            if (OS.GetCmdlineUserArgs().Contains("--magic-shop-only")) {
+                GD.Print("MAGIC_SHOP_OK: " + await MagicShopTests.Run(this));
+                await Finish(); return;
+            }
+            if (OS.GetCmdlineUserArgs().Any(a=>a is "--mp-host" or "--mp-client")) {
+                GD.Print("MULTIPLAYER_OK: " + await MultiplayerTests.Run(this, OS.GetCmdlineUserArgs().Contains("--mp-host")));
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--cards099-only")) {
                 GD.Print("CARDS099_OK: " + await Cards099Tests.Run(this));
                 await Finish(); return;

@@ -29,6 +29,7 @@ public static class MagicDeckCmd
         public readonly SemaphoreSlim Gate = new(1, 1);
         public readonly CancellationTokenSource Lifetime = new();
         public bool Active;
+        public bool NetworkRequested;
     }
     private static readonly ConditionalWeakTable<Player, SetupSession> SetupSessions = new();
 
@@ -41,17 +42,48 @@ public static class MagicDeckCmd
     public static void TryResumeStartingFactors(Player player)
     {
         if (SetupMustWait || StartingEventActive(player) || RunManager.Instance.IsCleaningUp ||
+            RunManager.Instance.NetService.Type == MegaCrit.Sts2.Core.Multiplayer.Game.NetGameType.Replay ||
             !ReferenceEquals(RunManager.Instance.DebugOnlyGetState(), player.RunState)) return;
         var combat = CombatManager.Instance;
         if (combat.IsInProgress && (combat.IsEnding || combat.PlayerActionsDisabled || combat.IsEnemyTurnStarted)) return;
         var deck = MagicDeckStore.Read(player);
         if (deck.SetupCompleted && deck.StartingPropsGranted && !FrierenTutorial.ShouldAutoShow(player)) return;
         var session = SetupSessions.GetValue(player, _ => new());
-        if (session.Active || session.Lifetime.IsCancellationRequested) return;
+        if (session.Active || session.NetworkRequested || session.Lifetime.IsCancellationRequested) return;
         TaskHelper.RunSafely(ChooseStartingFactors(new BlockingPlayerChoiceContext(), player));
     }
 
-    public static Task ChooseStartingFactors(PlayerChoiceContext context, Player player) => RunStartingSetup(context, player, false);
+    public static async Task ChooseStartingFactors(PlayerChoiceContext context, Player player)
+    {
+        if (player.RunState.Players.Count > 1 && context is not HookPlayerChoiceContext and not GameActionPlayerChoiceContext)
+            await RequestNetworkSetup(player);
+        else await RunStartingSetup(context, player, false);
+    }
+
+    private static async Task RequestNetworkSetup(Player player)
+    {
+        if (!LocalContext.IsMe(player) || SetupMustWait || StartingEventActive(player)) return;
+        var session = SetupSessions.GetValue(player, _ => new());
+        if (session.Active || session.NetworkRequested || session.Lifetime.IsCancellationRequested) return;
+        session.NetworkRequested = true;
+        try {
+            // 教程是本机界面；完成后才提交动作，远端不会因本机弹窗状态跳过选择。
+            if (!await FrierenTutorial.Show(player, cancellation: session.Lifetime.Token)) return;
+            var deck = MagicDeckStore.Read(player);
+            if (!deck.SetupCompleted || !deck.StartingPropsGranted)
+                await MagicDeckNetwork.Send(player, new NetMagicDeckAction { Setup = true });
+        }
+        catch (OperationCanceledException) when (session.Lifetime.IsCancellationRequested) { }
+        finally { session.NetworkRequested = false; }
+    }
+
+    internal static Task<bool> ExecuteNetworkSetup(PlayerChoiceContext context, Player player)
+    {
+        if (player.Character is not FrierenMod.Scripts.Characters.Frieren || player.Creature.IsDead ||
+            !ReferenceEquals(RunManager.Instance.DebugOnlyGetState(), player.RunState) || RunManager.Instance.IsCleaningUp)
+            return Task.FromResult(false);
+        return RunStartingSetup(context, player, false);
+    }
 
     public static Task<bool> ChooseStartingEventFactor(PlayerChoiceContext context, Player player) => RunStartingSetup(context, player, true);
 
@@ -92,7 +124,7 @@ public static class MagicDeckCmd
     private static async Task<bool> ChooseStartingFactorsCore(PlayerChoiceContext context, Player player, CancellationToken cancellation, bool singleFactor)
     {
         var deck = MagicDeckStore.Read(player);
-        if (!await FrierenTutorial.Show(player, cancellation: cancellation)) return false;
+        if (player.RunState.Players.Count == 1 && !await FrierenTutorial.Show(player, cancellation: cancellation)) return false;
         while (!deck.SetupCompleted)
         {
             cancellation.ThrowIfCancellationRequested();
