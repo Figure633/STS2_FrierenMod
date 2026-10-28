@@ -93,7 +93,7 @@ Test("一代77张有效芙莉莲卡牌均有可获得模型", () => {
         count++;
     }
     Equal(77, count);
-    Equal(CardRarity.Token, ModelDb.Card<PaperPlaneSpell>().Rarity);
+    Equal(CardRarity.Rare, ModelDb.Card<PaperPlaneSpell>().Rarity);
 });
 Test("公共卡牌基类不绑定角色卡池", () => {
     var shared = typeof(FrierenMod.Scripts.Shared.Cards.ModCard);

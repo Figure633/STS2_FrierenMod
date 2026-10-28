@@ -78,7 +78,7 @@ public static class Todo091Tests
         var random = CardCreationOptions.ForRoom(player,RoomType.Monster).GetPossibleCards(player).ToArray();
         Check(random.Length > 50 && random.All(FrierenCardAvailability.IsRandomCandidate), "真实奖励入口排除衍生牌，不影响百科解锁池");
         Check(!ModelDb.Card<DiscardChantChoice>().CanBeGeneratedInCombat && !ModelDb.Card<Mana>().CanBeGeneratedByModifiers &&
-            !random.Any(c => c is PaperPlaneSpell), "咏唱选项、魔力衍生牌、弃用纸飞机排除");
+            !random.Any(c => c is ViolentExorcism) && random.Any(c=>c is PaperPlaneSpell), "排除衍生牌和弃用驱魔，恢复纸飞机奖励");
         Check(FrierenMusic.TrackTitle(FrierenMusic.Folder + "STS_Merchant_NewMix_v1.ogg") == "Grassy Turtles and Seed Rats", "商店曲名按原音频元数据核对");
         RunManager.Instance.GenerateRooms();
         var act = run.Acts.OfType<Glory>().Single();

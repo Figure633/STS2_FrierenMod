@@ -80,7 +80,7 @@ public static class MissingCardTests
                 (New<RitesPreparation>(), "Amount", 3, 4),
                 (New<FolkGrimoire>(), "Discount", 1, 2),
                 (New<ShavedIceSpell>(), "Amount", 3, 5),
-                (New<PancakeSpell>(), "Amount", 2, 1),
+                (New<PancakeSpell>(), "Amount", 1, 1),
                 (New<BlueMoonWeed>(), "Cards", 2, 3),
                 (New<MoldSpell>(), "Hits", 5, 6) })
             {
@@ -172,7 +172,7 @@ public static class MissingCardTests
         Pass("领悟抽牌、伤害与条件丢弃");
 
         await Reset(); await ManaCmd.Generate(player, PileType.Draw, 2);
-        await Play(New<TongueTwisterSpell>()); Check(player.Creature.Block == 10, "绕口令按实际魔力逐次格挡");
+        await Play(New<TongueTwisterSpell>()); Check(player.Creature.Block == 6, "绕口令按实际魔力逐次格挡");
         Pass("绕口令逐张抽取结果计算格挡");
 
         await Reset(); await Play(New<ClearMind>(true));
@@ -299,7 +299,7 @@ public static class MissingCardTests
         await Play(New<PancakeSpell>()); Check(selectedCard.Pile?.Type == PileType.Draw, "松饼魔力不足");
         await ManaCmd.Generate(player, PileType.Hand, 2);
         selector.PrepareToSelect(new[] { 0 });
-        await Play(New<PancakeSpell>()); Check(Mana(PileType.Hand) == 0 && player.PlayerCombatState!.Hand.Cards.Count >= 1, "松饼消耗资源并选牌");
+        await Play(New<PancakeSpell>()); Check(Mana(PileType.Hand) == 1 && player.PlayerCombatState!.Hand.Cards.Count >= 1, "松饼消耗资源并选牌");
         Pass("松饼魔力不足不选牌、支付后检索");
 
         await Reset(); await Play(New<BabySleeping>());
@@ -307,7 +307,7 @@ public static class MissingCardTests
         await Play(New<Kiss>(), enemy);
         Check(enemy.GetPowerAmount<WeakPower>() == 99 && enemy.GetPowerAmount<VulnerablePower>() == 99, "飞吻减益");
         await Play(New<RestraintMagic>(), enemy);
-        Check(enemy.GetPowerAmount<StrengthPower>() == -3 && enemy.HasPower<SlowPower>(), "拘束魔法迟缓");
+        Check(enemy.GetPowerAmount<StrengthPower>() == -2 && enemy.HasPower<SlowPower>(), "拘束魔法迟缓");
         Pass("宝宝熟睡、飞吻和拘束魔法的原生能力");
 
         await Reset(); await CardPileCmd.Add(New<StrikeFrieren>(), PileType.Draw); await ManaCmd.Generate(player, PileType.Draw, 2);

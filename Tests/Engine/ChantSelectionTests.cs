@@ -104,7 +104,7 @@ public static class ChantSelectionTests
         AccessTools.Method(typeof(FrierenLibraryFilter), "Apply").Invoke(null, [filters, new Dictionary<CharacterModel, NCardPoolFilter> { [player.Character] = filter }, misc]);
         Check(tokens.All(c => !filters[filter](c) && filters[misc](c)) && filters[filter](Card<HighDensityMana>()) && filters[filter](Card<RapidChant>()),
             "实际百科过滤器排除衍生牌，原生杂项收录；高密度魔力和普通角色卡保留");
-        Check(!ModelDb.Card<PaperPlaneSpell>().ShouldShowInCardLibrary && !ModelDb.Card<TimeConcept>().ShouldShowInCardLibrary &&
+        Check(ModelDb.Card<PaperPlaneSpell>().ShouldShowInCardLibrary && !ModelDb.Card<TimeConcept>().ShouldShowInCardLibrary &&
             ModelDb.CardPool<FrierenCardPool>().AllCards.OfType<FactorCard>().All(c => c.ShouldShowInCardLibrary && !filters[filter](c) && !filters[misc](c)), "兼容旧档的废弃牌继续隐藏，因子由独立分类收录");
         filter.Free(); misc.Free();
 

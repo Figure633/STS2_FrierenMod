@@ -49,9 +49,9 @@ public static class VersionCompatibilityTests
         Check(before-enemy.CurrentHp==9,"打击加成在原生伤害链中生效一次");await Clear();
         await PowerCmd.Apply<PaperPlanePower>(context,player.Creature,1,player.Creature,null);
         var paper=player.Creature.GetPower<PaperPlanePower>()!;
-        for(int i=0;i<4;i++)await paper.AfterCardPlayed(context,CombatTestState.NewPlay(card: combat.CreateCard<Mana>(player), target: null, resultPile: PileType.Exhaust, resources: resources, playCount: 1, playIndex: 0, isAutoPlay: false));
+        for(int i=0;i<4;i++)CombatManager.Instance.History.CardPlayStarted(combat,CombatTestState.NewPlay(card: combat.CreateCard<Mana>(player), target: null, resultPile: PileType.Exhaust, resources: resources, playCount: 1, playIndex: 0, isAutoPlay: false));
         before=enemy.CurrentHp;await Hit(await PreviewStrike(12));
-        Check(before-enemy.CurrentHp==12 && paper.DisplayAmount==0,"纸飞机增伤在预览和结算中不重复叠加，并正确扣次数");await Clear();
+        Check(before-enemy.CurrentHp==12 && paper.DisplayAmount==4,"纸飞机增伤在预览和结算中不重复叠加，并保留本回合最高记录");await Clear();
         var collapse=combat.CreateCard<ManaCollapse>(player);await Hit(collapse);
         Check(collapse.Pile?.Type==PileType.Draw,"魔力崩坏经原生去向钩子返回抽牌堆");
         var mana=combat.CreateCard<HighDensityMana>(player);int energy=player.PlayerCombatState!.Energy;await Hit(mana);

@@ -181,9 +181,9 @@ static class CombatTests
         var reduced = combat.CreateCard<Famehameha>(player); await CardPileCmd.Add(reduced, PileType.Hand);
         await PowerCmd.Apply<FullAheadPower>(context, player.Creature, 1, player.Creature, null);
         selector.PrepareToSelect(new[] { 0 }); await Play(combat.CreateCard<RapidChant>(player));
-        Check(returnCard.Pile?.Type == PileType.Hand && reduced.EnergyCost.GetAmountToSpend() == 3 && Power<DexterityPower>() == 1, "咏唱回调链错误");
+        Check(returnCard.Pile?.Type == PileType.Hand && reduced.EnergyCost.GetAmountToSpend() == 2 && Power<DexterityPower>() == 1, "咏唱回调链错误");
         selector.PrepareToSelect(new[] { 0 }); await Play(combat.CreateCard<RapidChant>(player));
-        Check(reduced.EnergyCost.GetAmountToSpend() == 2 && Power<DexterityPower>() == 1, "咏唱减费或每回合首次逻辑错误");
+        Check(reduced.EnergyCost.GetAmountToSpend() == 1 && Power<DexterityPower>() == 1, "咏唱减费或每回合首次逻辑错误");
         Pass("原生出牌链：咏唱、弃牌回手、减费、每回合首次加成");
 
         await Reset(); CompleteDeck("BuildUpBody", "HighSpeedMovement", "AdvancedDefensiveMagic");

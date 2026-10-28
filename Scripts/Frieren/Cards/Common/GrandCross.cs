@@ -18,12 +18,12 @@ namespace FrierenMod.Scripts.Cards;
 public sealed class GrandCross() : FrierenCard(2, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
 {
     protected override bool ShouldGlowGoldInternal => CombatState != null && LegendaryCards.ChantsThisTurn(Owner) > 0;
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(12, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(13, ValueProp.Move)];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardCompatibility(this, play).Targeting(play.Target!).Execute(context);
     }
-    protected override void OnUpgrade() { DynamicVars.Damage.UpgradeValueBy(4); }
+    protected override void OnUpgrade() { DynamicVars.Damage.UpgradeValueBy(5); }
     public override bool TryModifyEnergyCostInCombat(CardModel card, decimal cost, out decimal modifiedCost)
     {
         modifiedCost = cost;

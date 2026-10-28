@@ -1,4 +1,4 @@
-using FrierenMod.Core;
+﻿using FrierenMod.Core;
 using FrierenMod.Scripts.Mechanics;
 using FrierenMod.Scripts.Powers;
 using MegaCrit.Sts2.Core.Combat;
@@ -14,7 +14,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace FrierenMod.Scripts.Cards;
 
-public sealed class RitesPreparation() : FrierenCard(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
+public sealed class RitesPreparation() : FrierenCard(1, CardType.Power, CardRarity.Common, TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Amount", 3)];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)

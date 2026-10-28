@@ -16,7 +16,8 @@ namespace FrierenMod.Scripts.Cards;
 
 public sealed class PancakeSpell() : FrierenCard(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Amount", 2)];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Amount", 1)];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         if (ManaCmd.InPile(Owner, PileType.Hand).Count() < (int)DynamicVars["Amount"].BaseValue) return;
@@ -26,5 +27,5 @@ public sealed class PancakeSpell() : FrierenCard(0, CardType.Skill, CardRarity.U
         foreach (var card in selected)
             await CardPileCmd.Add(card, PileType.Hand);
     }
-    protected override void OnUpgrade() { DynamicVars["Amount"].UpgradeValueBy(-1); }
+    protected override void OnUpgrade() { RemoveKeyword(CardKeyword.Exhaust); }
 }

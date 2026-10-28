@@ -13,11 +13,11 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace FrierenMod.Scripts.Cards;
 
-public sealed class Famehameha() : LegendaryCard(4, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy), IChantListener
+public sealed class Famehameha() : LegendaryCard(3, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy), IChantListener
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(31, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(22, ValueProp.Move)];
     public Task AfterChant(PlayerChoiceContext context, CardPlay play) { EnergyCost.AddThisTurn(-1); return Task.CompletedTask; }
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play) =>
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardCompatibility(this, play).Targeting(play.Target!).Execute(context);
-    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(10);
+    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(6);
 }

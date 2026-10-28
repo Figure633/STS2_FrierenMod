@@ -14,12 +14,13 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace FrierenMod.Scripts.Cards;
 
-public sealed class PajamasForm() : FrierenCard(3, CardType.Power, CardRarity.Uncommon, TargetType.Self)
+public sealed class PajamasForm() : FrierenCard(2, CardType.Power, CardRarity.Uncommon, TargetType.Self)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Amount", 1)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Amount", 1), new DynamicVar("DamagePerMana",4)];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
-        await PowerCmd.Apply<PajamasFormPower>(context, Owner.Creature, (int)DynamicVars["Amount"].BaseValue, Owner.Creature, this);
+        var power=await PowerCmd.Apply<PajamasFormPower>(context, Owner.Creature, (int)DynamicVars["Amount"].BaseValue, Owner.Creature, this);
+        if(IsUpgraded && power!=null)power.AddUpgradeBonus();
     }
-    protected override void OnUpgrade() { EnergyCost.UpgradeBy(-1); }
+    protected override void OnUpgrade() { DynamicVars["DamagePerMana"].UpgradeValueBy(1); }
 }

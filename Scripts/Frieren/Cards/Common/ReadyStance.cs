@@ -19,7 +19,7 @@ public sealed class ReadyStance() : FrierenCard(1, CardType.Attack, CardRarity.C
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardCompatibility(this, play).Targeting(play.Target!).Execute(context);
-        var chant = Owner.PlayerCombatState!.DrawPile.Cards.FirstOrDefault(c => ChantCmd.IsChant(c));
+        var chant = Owner.PlayerCombatState!.DrawPile.Cards.FirstOrDefault(c => c is RapidChant);
         if (chant == null) return;
         await CardPileCmd.Add(chant, PileType.Draw, CardPilePosition.Top);
         await CardPileCmd.Draw(context, Owner);

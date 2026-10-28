@@ -18,7 +18,7 @@ public static class LegendaryCards
     // 饰品魔法与自定义传奇魔法在一代被标记为不可随机生成。
     public static IReadOnlyList<Type> Pool { get; } = new[] { typeof(ContinualChant), typeof(Famehameha),
         typeof(FairyTaleEnd), typeof(HotTeaSpell), typeof(MoldSpell), typeof(OilSpell),
-        typeof(RustCleanMagic), typeof(LightningMagic) };
+        typeof(RustCleanMagic), typeof(LightningMagic), typeof(PaperPlaneSpell) };
     public static CardModel CreateRandom(Player player)
     {
         var type = Pool[player.RunState.Rng.CombatCardGeneration.NextInt(Pool.Count)];

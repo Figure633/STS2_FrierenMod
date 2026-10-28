@@ -131,7 +131,7 @@ public static class ReviewedCardTests
         await Reset(); await ManaCmd.Generate(player, PileType.Hand, 2); await Play(New<PancakeSpell>());
         Check(ManaCmd.InPile(player, PileType.Hand).Count() == 2, "空抽牌堆不应收取交换魔力");
         var chosen = New<StrikeFrieren>(); await CardPileCmd.Add(chosen, PileType.Draw); await Play(New<PancakeSpell>());
-        Check(chosen.Pile?.Type == PileType.Hand && ManaCmd.InPile(player, PileType.Draw).Count() == 2, "选原有抽牌后交换魔力");
+        Check(chosen.Pile?.Type == PileType.Hand && ManaCmd.InPile(player, PileType.Draw).Count() == 1, "选原有抽牌后交换魔力");
         Pass("松饼交换原有抽牌，空牌堆不收取魔力");
 
         await Reset(); await Play(New<FrierenSuitcase>());

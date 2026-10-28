@@ -14,7 +14,7 @@ namespace FrierenMod.Scripts.Cards;
 
 public sealed class Confrontation() : FrierenCard(1, CardType.Skill, CardRarity.Common, TargetType.Self), IChantListener
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(6, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(7, ValueProp.Move)];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play) => await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, play);
     public Task AfterChant(PlayerChoiceContext context, CardPlay play)
     {

@@ -17,7 +17,7 @@ namespace FrierenMod.Scripts.Cards;
 
 public sealed class SustainedBarrage() : FrierenCard(1, CardType.Attack, CardRarity.Uncommon, TargetType.AllEnemies)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(3, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(4, ValueProp.Move)];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardCompatibility(this, play).TargetingAllOpponents(CombatState!).WithHitCount(3).Execute(context);

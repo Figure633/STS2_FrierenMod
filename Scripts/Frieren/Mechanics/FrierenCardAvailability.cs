@@ -19,7 +19,7 @@ public static class FrierenCardAvailability
 {
     public static bool IsRandomCandidate(CardModel card) =>
         card.Rarity is CardRarity.Common or CardRarity.Uncommon or CardRarity.Rare &&
-        card is not FactorCard and not MagicPropCard and not TimeConcept and not Flow and not IGeneratedOnlyCard;
+        card is not FactorCard and not MagicPropCard and not TimeConcept and not ViolentExorcism and not Flow and not IGeneratedOnlyCard;
 
     public static IEnumerable<CardPoolModel> Pools(IEnumerable<CardPoolModel> pools, Player player) =>
         player.Character is Frieren ? pools : pools.Where(pool => pool is not FrierenCardPool);

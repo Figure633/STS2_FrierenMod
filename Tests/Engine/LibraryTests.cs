@@ -44,7 +44,7 @@ public static class LibraryTests
             !filters[misc](ModelDb.Card<RapidChant>()) && !filters[misc](ModelDb.Card<HighDensityMana>()), "普通角色卡分类不变");
         Check(filters[misc](ModelDb.Card<Mana>()) && !filters[character](ModelDb.Card<Mana>()) &&
             filters[misc](ModelDb.Card<Dazed>()) && filters[misc](ModelDb.Card<Injury>()), "魔力和原生状态诅咒继续收录");
-        Check(!ModelDb.Card<PaperPlaneSpell>().ShouldShowInCardLibrary && !ModelDb.Card<TimeConcept>().ShouldShowInCardLibrary &&
+        Check(ModelDb.Card<PaperPlaneSpell>().ShouldShowInCardLibrary && !ModelDb.Card<TimeConcept>().ShouldShowInCardLibrary &&
             !ModelDb.Card<DrawChantChoice>().ShouldShowInCardLibrary && !ModelDb.Card<LegendaryCraftChoice>().ShouldShowInCardLibrary,
             "废弃牌和选择占位模型继续隐藏");
 
