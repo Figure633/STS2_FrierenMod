@@ -62,6 +62,15 @@ public static class FrierenCardAvailability
         }
     }
 
+    // 商店直接使用百科解锁池，绕过奖励/战斗生成入口；两种CreateForMerchant重载均需过滤。
+    [HarmonyPatch]
+    private static class MerchantCandidates
+    {
+        private static IEnumerable<MethodBase> TargetMethods() => AccessTools.GetDeclaredMethods(typeof(CardFactory))
+            .Where(m=>m.Name==nameof(CardFactory.CreateForMerchant));
+        private static void Prefix(Player player,ref IEnumerable<CardModel> options) => options=Cards(options,player);
+    }
+
     [HarmonyPatch(typeof(CardCreationOptions), nameof(CardCreationOptions.GetPossibleCards))]
     private static class RewardCandidates
     {

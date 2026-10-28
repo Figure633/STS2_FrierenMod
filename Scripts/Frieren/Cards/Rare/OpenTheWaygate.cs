@@ -19,7 +19,9 @@ public sealed class OpenTheWaygate() : FrierenCard(0, CardType.Power, CardRarity
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Amount", 5)];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
-        await PowerCmd.Apply<OpenTheWaygatePower>(context, Owner.Creature, (int)DynamicVars["Amount"].BaseValue, Owner.Creature, this);
+        if(Owner.Creature.GetPower<OpenTheWaygatePower>() is {} existing)
+            existing.AddOpportunity((int)DynamicVars["Amount"].BaseValue);
+        else await PowerCmd.Apply<OpenTheWaygatePower>(context,Owner.Creature,(int)DynamicVars["Amount"].BaseValue,Owner.Creature,this);
     }
     protected override void OnUpgrade() { DynamicVars["Amount"].UpgradeValueBy(-1); }
 }

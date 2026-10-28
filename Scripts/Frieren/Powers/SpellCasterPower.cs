@@ -15,6 +15,7 @@ public sealed class SpellCasterPower : FrierenPower
 {
     public static readonly int[] Costs = [10, 20, 20, 30, 20, 30, 20, 50];
     public int SpellsCast { get; private set; }
+    private bool _intangibleGranted;
     public override int DisplayAmount => SpellsCast;
     private bool Enhanced => Owner?.Monster is SpiegelFrieren { Enhanced: true };
     public override LocString Description
@@ -32,9 +33,12 @@ public sealed class SpellCasterPower : FrierenPower
     }
     public async Task Resolve(PlayerChoiceContext context)
     {
-        while (SpellsCast < 16 && Owner.GetPower<EnemyManaPower>() is { } mana && mana.StoredMana >= Costs[SpellsCast % 8])
+        while (SpellsCast < 16 && Owner.GetPower<EnemyManaPower>() is { } mana)
         {
             int spell = SpellsCast % 8;
+            // 第二轮直接跳过已经施放过的无实体，不再扣除其50魔力。
+            if(spell==7 && _intangibleGranted){SpellsCast++;InvokeDisplayAmountChanged();continue;}
+            if(mana.StoredMana<Costs[spell])break;
             await PowerCmd.ModifyAmount(context, mana, -Costs[spell], Owner, null);
             SpellsCast++; Flash(); InvokeDisplayAmountChanged();
             switch (spell)
@@ -57,7 +61,12 @@ public sealed class SpellCasterPower : FrierenPower
                 case 6:
                     // 召唤使用二代现有邪教徒，模型、动画、仪式和AI均由原版管理。
                     await CreatureCmd.Add<DampCultist>(Owner.CombatState!, SpellsCast < 8 ? "Bird1" : "Bird2"); break;
-                case 7: await PowerCmd.Apply<IntangiblePower>(context, Owner, 1, Owner, null); break;
+                case 7:
+                    if(!_intangibleGranted) {
+                        _intangibleGranted=true;
+                        await PowerCmd.Apply<IntangiblePower>(context, Owner, 1, Owner, null);
+                    }
+                    break;
             }
         }
         if (SpellsCast >= 16) await PowerCmd.Remove(this);

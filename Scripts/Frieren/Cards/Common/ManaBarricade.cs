@@ -14,11 +14,12 @@ namespace FrierenMod.Scripts.Cards;
 
 public sealed class ManaBarricade() : NormalChantCard(1, CardRarity.Common, 2)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [..base.CanonicalVars, new BlockVar(12, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [..base.CanonicalVars, new BlockVar(8, ValueProp.Move), new BlockVar("BonusBlock",6,ValueProp.Move)];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         var option = await ChantCmd.Choose(context, play, Intensity);
-        if (option?.Slot == ManaSlot.Draw) await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, play);
+        await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, play);
+        if (option?.Slot == ManaSlot.Draw) await CreatureCmd.GainBlock(Owner.Creature, (BlockVar)DynamicVars["BonusBlock"], play);
     }
-    protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(3);
+    protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(2);
 }

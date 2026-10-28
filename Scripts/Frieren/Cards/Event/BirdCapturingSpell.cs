@@ -14,8 +14,8 @@ public sealed class BirdCapturingSpell() : FrierenCard(0, CardType.Skill, CardRa
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Amount",2)];
-    // 以实际有翼外形为准；漂浮、旋翼及戴鸟面具的邪教徒不等于有翅膀。
-    public static bool IsBird(MonsterModel? monster) => monster is Byrdpip or Byrdonis or OwlMagistrate or HunterKiller;
+    // 以实际有翼外形为准；额外目标遵循作者在最新TODO中点名的名单。
+    public static bool IsBird(MonsterModel? monster) => monster is Byrdpip or Byrdonis or OwlMagistrate or HunterKiller or ThievingHopper or Ovicopter or Exoskeleton;
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         if (play.Target != null && IsBird(play.Target.Monster)) {

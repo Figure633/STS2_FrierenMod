@@ -39,9 +39,13 @@ public static class FrierenMusic
         PresentationSettings.OriginalMusic && run.CurrentRoom?.IsVictoryRoom!=true &&
         ResourceLoader.Exists(ResolveTrack(run.CurrentActIndex,RoomType.Event,false,GameApi.Seed(run.Rng)));
 
+    public static bool AwaitingOpeningRoom(IRunState run)=>run.CurrentRoom==null ||
+        run.CurrentRoom is MapRoom && run.CurrentActIndex==0 && run.Players.Count==1 &&
+        run is RunState state && state.VisitedMapCoords.Count==0 && !Mechanics.MagicDeckStore.Read(run.Players[0]).SetupCompleted;
+
     public static void Refresh(NRunMusicController controller,IRunState run,bool nativeMayHaveStarted=true)
     {
-        if (!Applies(run)) return;
+        if (!Applies(run) || AwaitingOpeningRoom(run)) return;
         var session=Sessions.GetValue(controller,c=>new MusicSession(c,run));
         // 结算页有独立的单次战败曲，跑局定时器不能再次覆盖它。
         if (run.Players.All(p=>p.Creature.IsDead)) { session.Stop(); return; }
@@ -179,6 +183,11 @@ public static class FrierenMusicPatches
         yield return AccessTools.Method(typeof(NRunMusicController), nameof(NRunMusicController.PlayCustomMusic));
         yield return AccessTools.Method(typeof(NRunMusicController), nameof(NRunMusicController.StopCustomMusic));
     }
+
+    [HarmonyPrefix]
+    public static bool WaitForFirstRoom(System.Reflection.MethodBase __originalMethod,IRunState ____runState)=>
+        __originalMethod.Name is not (nameof(NRunMusicController.UpdateMusic) or nameof(NRunMusicController.UpdateTrack)) ||
+        !FrierenMusic.AwaitingOpeningRoom(____runState) || !FrierenMusic.Applies(____runState) || !PresentationSettings.OriginalMusic;
 
     [HarmonyPostfix]
     public static void Refresh(NRunMusicController __instance, IRunState ____runState) => FrierenMusic.Refresh(__instance, ____runState);

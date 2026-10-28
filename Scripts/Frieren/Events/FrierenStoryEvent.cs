@@ -22,6 +22,13 @@ public abstract class FrierenStoryEvent : CustomEventModel
     public override IEnumerable<string> GetAssetPaths(IRunState runState) => base.GetAssetPaths(runState).Concat(Portraits.Select(PortraitPath));
     protected EventOption Choice(string key, Func<Task> action, bool available = true) =>
         new(this, available ? action : null, $"{Id.Entry}.pages.INITIAL.options.{key}");
+    // 所有未来赠卡选项复用该入口，选中前由原生事件按钮提供卡牌悬停预览。
+    protected EventOption CardChoice<T>(string key,Func<Task> action,bool available=true) where T:CardModel
+    {
+        var preview=ModelDb.Card<T>().ToMutable();preview.Owner=Owner!;
+        return new EventOption(this,available?action:null,$"{Id.Entry}.pages.INITIAL.options.{key}",
+            new MegaCrit.Sts2.Core.HoverTips.CardHoverTip(preview));
+    }
     protected void Finish(string page, int portrait)
     {
         SetEventFinished(PageDescription(page));

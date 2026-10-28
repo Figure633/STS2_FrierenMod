@@ -146,7 +146,7 @@
   "TIP.ACCELERATED_SYNCHRO.title": "Accelerated Synchro",
   "TIP.ACCELERATED_SYNCHRO.description": "Draw 2 cards. [gold]Exhaust[/gold].",
   "TIP.ULTIMATE_SYNCHRO.title": "Ultimate Synchro",
-  "TIP.ULTIMATE_SYNCHRO.description": "Deal 15 damage to a random enemy. [gold]Exhaust[/gold].",
+  "TIP.ULTIMATE_SYNCHRO.description": "Deal 15 damage to a random enemy. [gold]Exhaust[/gold]. (affected by Strength and other modifiers)",
   "TIP.BACKFIRE.title": "Backfire",
   "TIP.BACKFIRE.description": "After this card is played, it costs 1 more Energy this turn.",
   "HISTORY_BOOK_HINT": "Historical Magic Deck · View only",
@@ -436,5 +436,6 @@
   "BACK_CHOOSE_SLOT": "Choose a slot background",
   "AURA.PLAYER": "Your mana",
   "AURA.COUNTDOWN": "Scales of Obedience · Turn {Turn}",
-  "AURA.JUDGMENT": "Scales of Obedience · Judgment"
+  "AURA.JUDGMENT": "Scales of Obedience · Judgment",
+  "WAYGATE_EXTRA_TURN": "Extra turn gained!"
 }

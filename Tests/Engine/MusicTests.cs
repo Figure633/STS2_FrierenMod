@@ -79,9 +79,14 @@ public static class MusicTests
         if(AccessTools.Method(typeof(NRunMusicController), "LoadActBank") is {} bankLoader)
             patch.Patch(bankLoader,prefix:new HarmonyMethod(typeof(MusicTests),
                 bankLoader.ReturnType==typeof(bool)?nameof(BankAvailable):nameof(SkipBankLoad)));
-        run.PushRoom(new RestSiteRoom());
         var controller=new NRunMusicController();var proxy=new Node {Name="Proxy"};proxy.SetScript(GD.Load<Script>("res://music_proxy.gd"));
         controller.AddChild(proxy);controller.SetRunState(run);root.AddChild(controller);
+        controller.UpdateMusic();await Wait(.3);
+        Check(!controller.GetChildren().OfType<AudioStreamPlayer>().Any() && proxy.Get("started").AsInt32()==0,"未进入首房时原生和模组均不抢放常规BGM");
+        FrierenMod.Scripts.Mechanics.MagicDeckStore.Write(player,new FrierenMod.Core.MagicDeckState());run.PushRoom(new MapRoom());
+        controller.UpdateMusic();await Wait(.3);
+        Check(!controller.GetChildren().OfType<AudioStreamPlayer>().Any() && proxy.Get("started").AsInt32()==0,"开局临时地图阶段同样不播放一秒常规曲");
+        run.PopCurrentRoom();run.PushRoom(new RestSiteRoom());
         controller.UpdateMusic();await Wait(.6);
         var table=(ConditionalWeakTable<NRunMusicController,FrierenMusic.MusicSession>)AccessTools.Field(typeof(FrierenMusic),"Sessions").GetValue(null)!;
         table.TryGetValue(controller,out var routed);

@@ -36,6 +36,10 @@ public static class MagicBookUi
         Attach(__instance.GlobalUi, player);
     }
 
+    // 查看魔法书不等于使用魔具；选牌期间允许只读查看，魔具仍由CanUse保护。
+    public static bool AllowsViewOver(IOverlayScreen? screen)=>screen is null or
+        MegaCrit.Sts2.Core.Nodes.Screens.NRewardsScreen or NChooseACardSelectionScreen or NCardGridSelectionScreen;
+
     public static void Attach(Control root, Player player, Func<IOverlayScreen?>? currentOverlay = null,
         Func<bool>? inputBlocked = null)
     {
@@ -129,7 +133,7 @@ public static class MagicBookUi
         };
         void RefreshInput()
         {
-            bool blocked = inputBlocked() || !MagicPropCmd.AllowsUseOver(currentOverlay());
+            bool blocked = inputBlocked() || !AllowsViewOver(currentOverlay());
             toggle.SetEnabled(!blocked);
             foreach (var view in new[] { hud, book, backdrop }) {
                 view.MouseBehaviorRecursive = blocked ? Control.MouseBehaviorRecursiveEnum.Disabled : Control.MouseBehaviorRecursiveEnum.Inherited;

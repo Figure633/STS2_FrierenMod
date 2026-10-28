@@ -69,7 +69,7 @@ public static class Todo093Tests
         Check(!player.Creature.HasPower<BanManaGainPower>() && !player.Creature.HasPower<ArtifactPower>(),"人工制品能阻挡无法生成魔力");
         foreach(var (card,name) in new (CardModel,string)[]{(ModelDb.Card<RedAppleSpell>().ToMutable(),"青苹果"),(ModelDb.Card<FlowerFieldSpell>().ToMutable(),"苍月草"),(ModelDb.Card<FireSpell>().ToMutable(),"小小火花"),(ModelDb.Card<DefensiveMagic>().ToMutable(),"额外的防御魔法")}) {
             Check(card.GetDescriptionForPile(PileType.None).Contains("[gold]"+name+"[/gold]"),"未升级衍生牌金色："+name);
-            card.UpgradeInternal();Check(card.GetDescriptionForPile(PileType.None).Contains("[green]"+name+"+[/green]"),"升级衍生牌整名绿色："+name);
+            card.UpgradeInternal();Check(card.GetDescriptionForPile(PileType.None).Contains("[gold]"+name+"+[/gold]"),"升级衍生牌与加号保持金色："+name);
         }
         CombatTestState.SetInProgress(false);
         var game=new NGame{Size=new Vector2(1920,1080)};var scene=new NSceneContainer();game.AddChild(scene);
@@ -127,4 +127,3 @@ public static class Todo093Tests
         RunManager.Instance.CleanUp();LocManager.Instance.SetLanguage("eng");return count;
     }
 }
-

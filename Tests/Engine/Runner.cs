@@ -104,6 +104,14 @@ public partial class Runner : Node
             new Harmony("frieren.tests.hover_host").Patch(
                 AccessTools.Method(typeof(MegaCrit.Sts2.Core.Nodes.Cards.Holders.NCardHolder), "CreateHoverTips"),
                 prefix: new HarmonyMethod(typeof(Runner), nameof(SkipGlobalHoverWindow)));
+            if (OS.GetCmdlineUserArgs().Contains("--todo098-ui")) {
+                GD.Print("TODO098_UI_OK: " + await Todo098UiTests.Run(this));
+                await Finish(); return;
+            }
+            if (OS.GetCmdlineUserArgs().Contains("--todo098-only")) {
+                GD.Print("TODO098_OK: " + await Todo098Tests.Run(this));
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--excel097-only")) {
                 GD.Print("EXCEL097_OK: " + await Excel097Tests.Run());
                 await Finish(); return;

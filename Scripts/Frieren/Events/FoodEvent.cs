@@ -18,7 +18,7 @@ public sealed class FoodEvent : FrierenStoryEvent
         DynamicVars["FeastHeal"].BaseValue = decimal.Floor(Owner.Creature.MaxHp * 0.50m);
     }
     protected override IReadOnlyList<EventOption> GenerateInitialOptions() => [
-        Choice("FREE", Free), Choice("PACKAGE", Package, Owner!.Gold >= 75),
+        Choice("FREE", Free), CardChoice<EmergencyFood>("PACKAGE", Package, Owner!.Gold >= 75),
         Choice("MEAL", Meal, Owner!.Gold >= 150), Choice("FEAST", Feast, Owner!.Gold >= 250)
     ];
     private async Task Free() { await CreatureCmd.Heal(Owner!.Creature, 8); Finish("FREE", 1); }

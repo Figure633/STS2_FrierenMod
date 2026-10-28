@@ -93,8 +93,8 @@ public static class SpiegelBossTests
                 !boss.GetPower<EnemyManaPower>()!.Description.GetFormattedText().Contains("LOC_ERR"), language + "法术清单与魔力文本可显示");
         }
         await PowerCmd.ModifyAmount(context, boss.GetPower<EnemyManaPower>()!, 200, boss, null); await caster.Resolve(context);
-        Check(caster.SpellsCast == 16 && boss.GetPower<SpellCasterPower>() == null && boss.GetPower<EnemyManaPower>()!.StoredMana == 0 &&
-            combat.Enemies.Count(c => c.Monster is DampCultist) == 2, "只执行两轮共16种法术，准确消耗总计400魔力");
+        Check(caster.SpellsCast == 16 && boss.GetPower<SpellCasterPower>() == null && boss.GetPower<EnemyManaPower>()!.StoredMana == 50 &&
+            boss.GetPowerAmount<IntangiblePower>()==1 && combat.Enemies.Count(c => c.Monster is DampCultist) == 2, "两轮仅施放一次无实体，跳过第二次且不扣其50魔力");
         // 检查随机压制顺序与后续递增攻击，不用等待完整十几个回合。
         monster.ResetStateMachine(); monster.SetUpForCombat(); monster.RollMove([player.Creature]);
         await monster.PerformMove(); monster.RollMove([player.Creature]);

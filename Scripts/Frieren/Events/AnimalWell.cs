@@ -13,7 +13,7 @@ public sealed class AnimalWell : FrierenStoryEvent
     protected override string[] Portraits => ["AnimalWell", "AnimalWell1", "AnimalWell2", "AnimalWell3"];
     protected override IReadOnlyList<EventOption> GenerateInitialOptions() => [
         Choice("FIRECRACKERS", Firecrackers), Choice("FLUTE", Flute, Owner!.Deck.Cards.Any(c => c.IsUpgradable)),
-        Choice("BIRD", Bird)
+        CardChoice<BirdCapturingSpell>("BIRD", Bird)
     ];
     private async Task Firecrackers()
     {
