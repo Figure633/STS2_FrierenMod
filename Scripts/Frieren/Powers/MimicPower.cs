@@ -19,6 +19,8 @@ public sealed class MimicPower : FrierenPower
         foreach (var player in Owner.CombatState!.Players)
         {
             await PowerCmd.Apply<DarkPower>(context, player.Creature, 1, Owner, null);
+            if(Owner.Monster is Monsters.Mimic && player.Creature.HasPower<DarkPower>())
+                Presentation.FrierenAchievements.Unlock(player,"5007");
             var state = player.PlayerCombatState!;
             await CardPileCmd.RemoveFromCombat(state.DrawPile.Cards.Concat(state.Hand.Cards).Concat(state.DiscardPile.Cards).OfType<Mana>().ToArray());
             PlayerCmd.EndTurn(player, canBackOut: false);

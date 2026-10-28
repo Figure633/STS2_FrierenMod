@@ -8,6 +8,7 @@ using FrierenMod.Scripts.Powers;
 using FrierenMod.Scripts.Relics;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Combat.History.Entries;
 using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -33,16 +34,12 @@ public static class FrierenAchievements
     public static void TurnStarted(Player player)
     {
         if (!Applies(player) || player.PlayerCombatState == null) return;
-        if (ManaCmd.Total(player) >= 100) Unlock(player, "5001");
         if (player.Creature.Block == 999) Unlock(player, "5002");
         if (player.Creature.Powers.Count(p => p.Type == PowerType.Buff) >= 5) Unlock(player, "5003");
         if (player.GetRelic<HimmelGravestone>() != null && player.GetRelic<StatueOfHimmel>() != null && player.GetRelic<MirroredLotusRing>() != null) Unlock(player, "5004");
         if (player.PlayerCombatState.DiscardPile.Cards.OfType<Laziness>().Count() >= 4) Unlock(player, "5005");
         if (player.PlayerCombatState.DrawPile.Cards.OfType<Dazed>().Count() >= 8) Unlock(player, "5006");
-        if (MaxHandSizePatch.GetMaxHandSize(player, CardPile.MaxCardsInHand) == 0) Unlock(player, "5007");
         if (player.Creature.GetPowerAmount<StrengthPower>() >= 30) Unlock(player, "5015");
-        var equipped = MagicDeckStore.Read(player).Items.Where(i => i.Slot >= 0).ToArray();
-        if (equipped.Length == 3 && equipped.All(i => i.SpellId == "BluePrint")) Unlock(player, "7001");
     }
 
     public static void CardPlayed(CardPlay play)
@@ -73,7 +70,10 @@ public static class FrierenAchievements
                 Unlock(player, "0007");
                 if (player.PlayerCombatState!.TurnNumber <= 3) Unlock(player, "6002");
             }
-            if (creature.Monster is Monsters.Mimic && CombatManager.Instance.History.CardPlaysStarted.Count() <= 5) Unlock(player, "6001");
+            if (creature.Monster is Aura) Unlock(player, "5001");
+            if (creature.Monster is Monsters.Mimic && player.Creature.IsAlive &&
+                !CombatManager.Instance.History.Entries.OfType<DamageReceivedEntry>()
+                    .Any(e=>e.Receiver==player.Creature && e.Result.UnblockedDamage>0)) Unlock(player, "6001");
         }
     }
 
@@ -92,11 +92,11 @@ public static class FrierenAchievements
         if (player.Deck.Cards.Count >= 40) Unlock(player, "5008");
         if (deck.Items.Count + deck.Props.Count >= 30) Unlock(player, "5009");
         if (equipped.Length == 3) {
-            if (equipped.All(i => SpellCatalog.Get(i.SpellId).Rarity == FactorRarity.Uncommon)) Unlock(player, "5010");
+            if (equipped.All(i => SpellCatalog.Get(i.SpellId).Rarity == FactorRarity.Rare)) Unlock(player, "5010");
             if (equipped.All(i => SpellCatalog.Get(i.SpellId).Rarity == FactorRarity.Common)) Unlock(player, "5011");
             if (equipped.Select(i => i.SpellId).Distinct().Count() == 1) Unlock(player, "5013");
         }
-        if (RunManager.Instance.RunTime >= 7200) Unlock(player, "5012");
+        if (RunManager.Instance.RunTime > 3600) Unlock(player, "5012");
         if (deck.Props.Count(p => p.PropId == "UnbelievableTool") >= 5) Unlock(player, "5014");
         long startTime = (long)AccessTools.Field(typeof(RunManager), "_startTime").GetValue(RunManager.Instance)!;
         SlotBackStore.GrantVictory($"{startTime}:{state.Rng.StringSeed}:{player.NetId}", state.AscensionLevel);

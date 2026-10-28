@@ -19,6 +19,11 @@ public static class PuzzleCmd
         if ((int)option.Slot != stage - 1) { Hint(); return; }
 
         int progress = self.GetPowerAmount<PuzzlePower>();
+        var deck=MagicDeckStore.Read(play.Card.Owner);
+        bool installed=deck.Items.Any(i=>i.Slot==0&&i.SpellId=="Factor100") &&
+            deck.Items.Any(i=>i.Slot==1&&i.SpellId=="Factor010") && deck.Items.Any(i=>i.Slot==2&&i.SpellId=="Factor001");
+        int reverse=self.GetPower<PuzzlePower>()?.ReverseProgress??0;
+        reverse=installed && reverse>=0 && stage==3-reverse ? reverse+1 : -1;
         bool correct = progress == stage - 1;
         // 即使错序也留下各自的文字碎片，让玩家从实际获得的先后判断；本回合不允许重试。
         async Task Clue<T>() where T : PowerModel => await PowerCmd.Apply<T>(context, self, 1, self, play.Card);
@@ -31,5 +36,7 @@ public static class PuzzleCmd
                 await PowerCmd.Apply<PuzzlePower>(context, self, PuzzlePower.BrokenSequence - progress, self, play.Card);
             Hint();
         }
+        if(self.GetPower<PuzzlePower>() is {} sequence)sequence.ReverseProgress=reverse;
+        if(reverse==3)Presentation.FrierenAchievements.Unlock(play.Card.Owner,"7001");
     }
 }

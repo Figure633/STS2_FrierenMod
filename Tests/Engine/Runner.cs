@@ -104,6 +104,10 @@ public partial class Runner : Node
             new Harmony("frieren.tests.hover_host").Patch(
                 AccessTools.Method(typeof(MegaCrit.Sts2.Core.Nodes.Cards.Holders.NCardHolder), "CreateHoverTips"),
                 prefix: new HarmonyMethod(typeof(Runner), nameof(SkipGlobalHoverWindow)));
+            if (OS.GetCmdlineUserArgs().Contains("--achievement101-only")) {
+                GD.Print("ACHIEVEMENT101_OK: " + await Achievement101Tests.Run());
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--magic-shop-only")) {
                 GD.Print("MAGIC_SHOP_OK: " + await MagicShopTests.Run(this));
                 await Finish(); return;

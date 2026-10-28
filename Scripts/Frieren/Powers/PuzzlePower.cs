@@ -16,6 +16,7 @@ using MegaCrit.Sts2.Core.Nodes.GodotExtensions;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
 using MegaCrit.Sts2.Core.Helpers;
+using MegaCrit.Sts2.Core.Saves.Runs;
 
 namespace FrierenMod.Scripts.Powers;
 
@@ -23,6 +24,8 @@ public sealed class PuzzlePower : TurnOnlyPower
 {
     // 保留原模型 ID，作为本回合的隐藏顺序状态；三个线索使用各自的可见能力。
     public const int BrokenSequence = 4;
+    [SavedProperty]
+    public int ReverseProgress { get; set; }
     protected override bool IsVisibleInternal => false;
 
     public override async Task AfterPowerAmountChanged(PlayerChoiceContext context, PowerModel power, decimal amount, Creature? applier, CardModel? source)

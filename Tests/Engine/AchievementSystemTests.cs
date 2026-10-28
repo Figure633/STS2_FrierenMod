@@ -113,7 +113,7 @@ public static class AchievementSystemTests
         await PowerCmd.Apply<ArtifactPower>(context, player.Creature, 1, player.Creature, null);
         await PowerCmd.Apply<MetallicizePower>(context, player.Creature, 1, player.Creature, null);
         await Hook.AfterPlayerTurnStart(combat, context, player);
-        foreach (string id in new[] { "5001", "5002", "5003", "5005", "5006", "5015", "7001" })
+        foreach (string id in new[] { "5002", "5003", "5005", "5006", "5015" })
             Check(SlotBackStore.Read().Unlocked.Contains(id), "原生回合钩子实际解锁 " + id);
         CardPlay Play(CardModel card) => CombatTestState.NewPlay(card: card, resources: new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 }, resultPile: PileType.Discard, target: enemy, isAutoPlay: false, playIndex: 0, playCount: 1);
         await Hook.AfterCardPlayed(combat, context, Play(combat.CreateCard<RapidChant>(player)));
@@ -125,9 +125,10 @@ public static class AchievementSystemTests
         Check(!SlotBackStore.Read().Unlocked.Contains("4008"), "伤害未达到阈值不解锁");
         FrierenAchievements.CheckDamage(damageCard, enemy, 100, 100, "4008");
         Check(SlotBackStore.Read().Unlocked.Contains("4008"), "伤害等于100即可解锁");
-        Equip("BarrierMagic", "Hypnosis", "NatureBeauty");
+        Equip(SpellCatalog.All.Where(f=>f.Rarity==FactorRarity.Rare&&!f.Puzzle).Take(3).Select(f=>f.Id).ToArray());
+        AccessTools.Field(typeof(RunManager),"_prevRunTime").SetValue(RunManager.Instance,3601L);
         RunManager.Instance.OnEnded(true);
-        Check(SlotBackStore.Read().Unlocked.Contains("5010") && SlotBackStore.Read().Unlocked.Contains("5012"), "原生跑局结算按罕见因子和两小时判定");
+        Check(SlotBackStore.Read().Unlocked.Contains("5010") && SlotBackStore.Read().Unlocked.Contains("5012"), "原生跑局结算按稀有因子和超过一小时判定");
         Check(new[] { '1', '2', '3' }.All(g => SlotBackStore.Read().Unlocked.Any(id => id[0] == g)), "进阶10通关实际发放三档卡背");
         int winCount = SlotBackStore.Read().Unlocked.Count;
         RunManager.Instance.OnEnded(true);

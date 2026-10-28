@@ -16,9 +16,8 @@ public sealed class RustCleanMagic() : LegendaryCard(0, CardType.Skill, CardRari
     {
         var debuffs = Owner.Creature.Powers.Where(p=>p.Type==PowerType.Debuff).ToArray();
         if (debuffs.Length==0) { await PlayerCmd.GainEnergy(DynamicVars.Energy.IntValue,Owner); return; }
-        bool hex=debuffs.Any(p=>p is MegaCrit.Sts2.Core.Models.Powers.HexPower);
         foreach(var power in debuffs) await PowerCmd.Remove(power);
-        if(hex && !Owner.Creature.HasPower<MegaCrit.Sts2.Core.Models.Powers.HexPower>())
+        if(debuffs.Count(power=>!Owner.Creature.Powers.Contains(power))>=3)
             Presentation.FrierenAchievements.Unlock(Owner,"4006");
     }
     protected override void OnUpgrade() => DynamicVars.Energy.UpgradeValueBy(1);
