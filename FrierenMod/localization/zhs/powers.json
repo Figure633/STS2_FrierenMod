@@ -115,5 +115,7 @@
   "FRIERENMOD-AURA_SUBMISSION_POWER.title": "服从",
   "FRIERENMOD-AURA_SUBMISSION_POWER.description": "下回合少抽[blue]{Amount}[/blue]张牌。阿乌拉即将使用断头台。",
   "FRIERENMOD-RECYCLE_POWER.title": "再循环",
-  "FRIERENMOD-RECYCLE_POWER.description": "本回合，每打出一张牌，获得{Amount}点格挡。"
+  "FRIERENMOD-RECYCLE_POWER.description": "本回合，每打出一张牌，获得{Amount}点格挡。",
+  "FRIERENMOD-SWAMP_MANA_NEXT_TURN_POWER.title": "沼泽脱困",
+  "FRIERENMOD-SWAMP_MANA_NEXT_TURN_POWER.description": "下个自己的回合开始、正常抽牌后，向手牌生成{Amount}张[gold]魔力[/gold]。"
 }

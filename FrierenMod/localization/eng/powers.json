@@ -115,5 +115,7 @@
   "FRIERENMOD-AURA_SUBMISSION_POWER.title": "Submission",
   "FRIERENMOD-AURA_SUBMISSION_POWER.description": "Draw [blue]{Amount}[/blue] fewer cards next turn. Aura is preparing Guillotine.",
   "FRIERENMOD-RECYCLE_POWER.title": "Recycle",
-  "FRIERENMOD-RECYCLE_POWER.description": "Gain {Amount} Block whenever you play a card this turn."
+  "FRIERENMOD-RECYCLE_POWER.description": "Gain {Amount} Block whenever you play a card this turn.",
+  "FRIERENMOD-SWAMP_MANA_NEXT_TURN_POWER.title": "Out of the Swamp",
+  "FRIERENMOD-SWAMP_MANA_NEXT_TURN_POWER.description": "After your normal draw at the start of your next turn, add {Amount} [gold]Mana[/gold] to your hand."
 }

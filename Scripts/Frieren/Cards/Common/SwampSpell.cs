@@ -19,7 +19,14 @@ public sealed class SwampSpell() : FrierenCard(1, CardType.Skill, CardRarity.Com
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Amount", 3)];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
-        await CardFlowCmd.MoveMana(Owner, PileType.Draw, PileType.Hand, (int)DynamicVars["Amount"].BaseValue);
+        int needed=DynamicVars["Amount"].IntValue,moved=0;
+        var cards=ManaCmd.InPile(Owner,PileType.Draw).Take(needed).ToArray();
+        foreach(var card in cards) {
+            var result=await CardPileCmd.Add(card,PileType.Hand);
+            // 满手牌转入弃牌堆也算已从抽牌堆取出，不再为这一张重复补发。
+            if(result.success && card.Pile?.Type!=PileType.Draw)moved++;
+        }
+        if(moved<needed)await PowerCmd.Apply<SwampManaNextTurnPower>(context,Owner.Creature,needed-moved,Owner.Creature,this);
     }
     protected override void OnUpgrade() { DynamicVars["Amount"].UpgradeValueBy(1); }
 }

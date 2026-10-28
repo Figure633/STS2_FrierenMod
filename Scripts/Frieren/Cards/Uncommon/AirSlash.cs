@@ -17,12 +17,11 @@ namespace FrierenMod.Scripts.Cards;
 
 public sealed class AirSlash() : FrierenCard(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(8, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(2, ValueProp.Move), new DynamicVar("Hits",3)];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardCompatibility(this, play).Targeting(play.Target!).Execute(context);
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardCompatibility(this, play).Targeting(play.Target!).WithHitCount(DynamicVars["Hits"].IntValue).Execute(context);
         await PowerCmd.Apply<AccelerateFlowPower>(context, Owner.Creature, 1, Owner.Creature, this);
-        await PowerCmd.Apply<BanManaGainPower>(context, Owner.Creature, 1, Owner.Creature, this);
     }
-    protected override void OnUpgrade() { DynamicVars.Damage.UpgradeValueBy(3); }
+    protected override void OnUpgrade() { DynamicVars["Hits"].UpgradeValueBy(1); }
 }

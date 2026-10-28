@@ -181,8 +181,8 @@ public static class MissingCardTests
         await SynchroCmd.Play(context, New<Mana>());
         Check(player.PlayerCombatState!.DrawPile.IsEmpty, "加速抽二");
         await Play(New<AirSlash>(), enemy); await ManaCmd.Generate(player, PileType.Draw, 4);
-        Check(Mana(PileType.Draw) == 0 && Pow<BanManaGainPower>() == 1, "风刃禁魔");
-        Pass("加速同调抽二与风刃禁魔");
+        Check(Mana(PileType.Draw) == 4 && Pow<BanManaGainPower>() == 0, "空气斩不再禁止生成魔力");
+        Pass("加速同调抽二与空气斩允许生成魔力");
 
         await Reset(); player.Creature.GainBlockInternal(29); await Play(New<ButtSlam>(), enemy);
         Check(enemy.CurrentHp == 9979 && Mana(PileType.Draw) == 4, "臀击按整十格挡命中");
