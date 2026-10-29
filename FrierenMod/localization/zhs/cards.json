@@ -253,7 +253,7 @@
   "FRIERENMOD-SHAVED_ICE_SPELL.title": "变出刨冰的魔法",
   "FRIERENMOD-SHAVED_ICE_SPELL.description": "将{Amount:diff()}张[gold]魔力[/gold]加入抽牌堆。",
   "FRIERENMOD-SWAMP_SPELL.title": "拔出无底沼泽的魔法",
-  "FRIERENMOD-SWAMP_SPELL.description": "将抽牌堆中至多{Amount:diff()}张[gold]魔力[/gold]移入手牌。每少从抽牌堆取出1张，在下个自己的回合开始、正常抽牌后向手牌生成1张[gold]魔力[/gold]。",
+  "FRIERENMOD-SWAMP_SPELL.description": "抽取抽牌堆中的{Amount:diff()}张[gold]魔力[/gold]。此效果每少抽1张，下个回合在手牌中生成1张。",
   "FRIERENMOD-THUNDER.title": "雷元素",
   "FRIERENMOD-THUNDER.description": "对所有敌人造成{Damage:diff()}点伤害。",
   "FRIERENMOD-TIME_CONCEPT.title": "精灵的时间观念",

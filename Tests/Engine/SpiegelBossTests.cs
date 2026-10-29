@@ -68,7 +68,7 @@ public static class SpiegelBossTests
         CombatManager.Instance.SetUpCombat(combat); CombatTestState.SetInProgress(true);
         monster.RegisterSceneConversions(); var visual = monster.CreateVisuals(); root.AddChild(visual);
         Check(visual.Bounds.Size.IsEqualApprox(new Vector2(275,387.2f)) && encounter.Slots.SequenceEqual(new[] { "Boss","Bird1","Bird2" }), "放大10%后的血条范围和召唤槽位正确"); visual.QueueFree();
-        Check(encounter.MapNodeAssetPaths.All(path => ResourceLoader.Exists(path)) && GD.Load<AudioStream>("res://FrierenMod/audio/Frieren_The_Slayer.mp3").GetLength() > 0,
+        Check(encounter.MapNodeAssetPaths.All(path => ResourceLoader.Exists(path)) && GD.Load<AudioStream>("res://FrierenMod/audio/bgm/frieren_slayer.ogg").GetLength() > 0,
             "一代Boss地图图标、轮廓和专属音乐可加载");
         monster.RollMove([player.Creature]); await monster.AfterAddedToRoom();
         Check(boss.MaxHp == 500 && monster.NextMove.Id == "MANA_SUPPRESSION" && boss.GetPower<EnemyManaPower>()!.StoredMana == 0,
@@ -93,8 +93,8 @@ public static class SpiegelBossTests
                 !boss.GetPower<EnemyManaPower>()!.Description.GetFormattedText().Contains("LOC_ERR"), language + "法术清单与魔力文本可显示");
         }
         await PowerCmd.ModifyAmount(context, boss.GetPower<EnemyManaPower>()!, 200, boss, null); await caster.Resolve(context);
-        Check(caster.SpellsCast == 16 && boss.GetPower<SpellCasterPower>() == null && boss.GetPower<EnemyManaPower>()!.StoredMana == 50 &&
-            boss.GetPowerAmount<IntangiblePower>()==1 && combat.Enemies.Count(c => c.Monster is DampCultist) == 2, "两轮仅施放一次无实体，跳过第二次且不扣其50魔力");
+        Check(caster.SpellsCast == 16 && boss.GetPower<SpellCasterPower>() == null && boss.GetPower<EnemyManaPower>()!.StoredMana == 0 &&
+            boss.GetPowerAmount<IntangiblePower>()==2 && combat.Enemies.Count(c => c.Monster is DampCultist) == 2, "两轮各施放一次无实体并各扣50魔力");
         // 检查随机压制顺序与后续递增攻击，不用等待完整十几个回合。
         monster.ResetStateMachine(); monster.SetUpForCombat(); monster.RollMove([player.Creature]);
         await monster.PerformMove(); monster.RollMove([player.Creature]);

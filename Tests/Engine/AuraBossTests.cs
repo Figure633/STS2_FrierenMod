@@ -131,10 +131,11 @@ public static class AuraBossTests
         foreach (var card in extraMana) await CardPileCmd.Add(card, PileType.Discard);
         await aura.ChangeMana(40 - aura.Mana);
         await Step();
-        Check(aura.Mana == 30 && aura.NextMove.Id == "STAGGER" && aura.ScaleCount == 2, "第6回合先冥想20再因天平失败失去30魔力");
+        Check(aura.Mana == 60 && boss.CurrentHp == 197 && aura.NextMove.Id == "STAGGER" && aura.ScaleCount == 2, "天平失败先眩晕，暂不转化生命");
         foreach (var card in extraMana) await CardPileCmd.RemoveFromCombat(card);
         hp = player.Creature.CurrentHp; await Step();
-        Check(player.Creature.CurrentHp == hp, "失败后空过不攻击");
+        Check(player.Creature.CurrentHp == hp && boss.CurrentHp == 1 && boss.MaxHp == 1 && aura.Mana == 256, "眩晕空过后将196点生命转为魔力，生命上限降至1");
+        Check(player.PlayerCombatState.Hand.Cards.OfType<AuraDispel>().Count()==1, "后续天平不再赠送解除魔法");
         await aura.ChangeMana(100);
         await CreatureCmd.Kill(soldiers[1]);
         Check(aura.NextMove.Id == "SUMMON", "清空士兵后可预判召唤");

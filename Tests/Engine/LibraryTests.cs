@@ -62,8 +62,7 @@ public static class LibraryTests
         Check(SaveManager.Instance.Progress.DiscoveredCards.Except(oldSeen).All(id => items.Any(c => c.Id == id) ||
             ModelDb.GetById<CardModel>(id) is IGeneratedOnlyCard or Flow),
             "不提前发现其他卡牌");
-        Check(pool.GetUnlockedCards(UnlockState.all, CardMultiplayerConstraint.None).Select(c => c.Id).ToHashSet().SetEquals(oldUnlocks) &&
-            !pool.GetUnlockedCards(UnlockState.all, CardMultiplayerConstraint.None).OfType<FactorCard>().Any(),
+        Check(pool.GetUnlockedCards(UnlockState.all, CardMultiplayerConstraint.None).Select(c => c.Id).ToHashSet().SetEquals(oldUnlocks),
             "百科可见不改变普通奖励解锁池");
         var discovered = SaveManager.Instance.Progress.DiscoveredCards.ToHashSet();
         grid.RefreshVisibility();

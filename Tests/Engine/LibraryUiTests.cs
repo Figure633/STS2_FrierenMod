@@ -80,9 +80,24 @@ public static class LibraryUiTests
             var flowRows = (List<List<NGridCardHolder>>)AccessTools.Field(typeof(NCardGrid), "_cardRows").GetValue(grid)!;
             Check(flowRows.SelectMany(r => r).Any(h => h.Visible && h.CardNode is { Visibility: ModelVisibility.Visible, Model: Flow }),
                 "初始专属流转在实际百科中显示完整卡面：" + language);
-            Check(!ModelDb.CardPool<FrierenCardPool>().GetUnlockedCards(UnlockState.all, CardMultiplayerConstraint.None).OfType<Flow>().Any(),
+            Check(!FrierenMod.Scripts.Mechanics.FrierenCardAvailability.IsRandomCandidate(ModelDb.Card<Flow>()),
                 "百科可见不会使流转进入奖励、商店或生成卡池");
             if (OS.GetCmdlineUserArgs().Contains("--ui-snapshot")) root.GetViewport().GetTexture().GetImage().SavePng(ProjectSettings.GlobalizePath("res://../../artifacts/library-flow-" + language + ".png"));
+            grid.FilterCards(c => c.Pool is FrierenCardPool && FrierenLibraryFilter.IsCharacterCard(c)); await Tick();
+            var scrollingRows = (List<List<NGridCardHolder>>)AccessTools.Field(typeof(NCardGrid), "_cardRows").GetValue(grid)!;
+            var orderedCards = (List<CardModel>)AccessTools.Field(typeof(NCardGrid), "_cards").GetValue(grid)!;
+            for (int sweep=0;sweep<2;sweep++) {
+                foreach (var direction in new[] { "ReallocateBelow", "ReallocateAbove" }) {
+                    for(int step=0;step<orderedCards.Count;step++) {
+                        var row=direction=="ReallocateBelow"?scrollingRows[0]:scrollingRows[^1];
+                        AccessTools.Method(typeof(NCardGrid),direction).Invoke(grid,[row]);
+                        int start=(int)AccessTools.Field(typeof(NCardGrid),"_slidingWindowCardIndex").GetValue(grid)!;
+                        var visible=scrollingRows.SelectMany(r=>r).Where(h=>h.Visible).Select(h=>h.CardNode.Model.Id).ToArray();
+                        if(!visible.SequenceEqual(orderedCards.Skip(start).Take(visible.Length).Select(c=>c.Id)))throw new Exception("百科滚动卡面错位："+direction);
+                    }
+                }
+            }
+            Check(true,"全部角色卡往返回收两轮，模板描述无异常且逐张ID与排序一致："+language);
             magic.IsSelected = true; magic.EmitSignal(NCardPoolFilter.SignalName.Toggled, magic); await Tick();
             Check(grid.VisibleCards.Count() == items.Length && grid.VisibleCards.All(FrierenLibraryFilter.IsMagicItem) && filters.Keys.Count(c => c.IsSelected) == 1,
                 "原生切换信号显示全部因子和八种魔具，并取消其他分类");

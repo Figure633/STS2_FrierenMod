@@ -82,7 +82,7 @@ public static class Todo098Tests
         Check(boss.CurrentHp==470&&boss.Block==10&&boss.GetPowerAmount<MegaCrit.Sts2.Core.Models.Powers.RitualPower>()==5,"复制体完整吃到三段10伤后统一施法，格挡不拦截中间段");
         var caster=boss.GetPower<SpellCasterPower>()!;await PowerCmd.ModifyAmount(context,boss.GetPower<EnemyManaPower>()!,170,boss,null);await caster.Resolve(context);Check(caster.SpellsCast==8&&boss.GetPowerAmount<IntangiblePower>()==1,"第一轮正常获得一次无实体");
         await PowerCmd.Remove(boss.GetPower<IntangiblePower>()!);await PowerCmd.ModifyAmount(context,boss.GetPower<EnemyManaPower>()!,200,boss,null);await caster.Resolve(context);
-        Check(!boss.HasPower<IntangiblePower>()&&caster.SpellsCast==16&&boss.GetPower<EnemyManaPower>()!.StoredMana==50,"第二轮不再给予无实体，不扣除被跳过的50魔力");
+        Check(boss.GetPowerAmount<IntangiblePower>()==1&&caster.SpellsCast==16&&boss.GetPower<EnemyManaPower>()!.StoredMana==0,"第二轮再次给予无实体并扣50魔力");
         foreach(var m in new MonsterModel[]{ModelDb.Monster<ThievingHopper>(),ModelDb.Monster<Ovicopter>(),ModelDb.Monster<Exoskeleton>()})Check(BirdCapturingSpell.IsBird(m),"捕鸟新增作者指定目标："+m.GetType().Name);
         foreach(var lang in new[]{"zhs","eng"}) {LocManager.Instance.SetLanguage(lang);foreach(var c in new CardModel[]{New<DefensiveMagic>(true),New<FlowerFieldSpell>(true),New<FireSpell>(true),New<RedAppleSpell>(true)})Check(!c.GetDescriptionForPile(PileType.None).Contains("[green]"+""+"额外")&&!System.Text.RegularExpressions.Regex.IsMatch(c.GetDescriptionForPile(PileType.None),@"\[green\][^\[]*\+\[/green\]"),"升级衍生牌名和+号保持金色："+c.GetType().Name+"/"+lang);}
         CombatTestState.SetInProgress(false);

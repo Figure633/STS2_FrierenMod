@@ -21,8 +21,8 @@ public sealed class PaperPlaneSpell() : LegendaryCard(1, CardType.Power, CardRar
     }
     protected override void AddExtraArgsToDescription(MegaCrit.Sts2.Core.Localization.LocString description) {
         base.AddExtraArgsToDescription(description);
-        description.Add("Current",PaperPlanePower.TurnRecord(Owner));
-        description.Add("Previous",PaperPlanePower.TurnRecord(Owner,true));
+        description.Add("Current",IsMutable ? PaperPlanePower.TurnRecord(Owner) : 0);
+        description.Add("Previous",IsMutable ? PaperPlanePower.TurnRecord(Owner,true) : 0);
     }
     protected override void OnUpgrade() { }
 }

@@ -69,7 +69,7 @@ public sealed class Aura : CustomMonsterModel
     private string ChooseMove()
     {
         if (_verdict != null) return _verdict;
-        if (_tauntPending) return "TAUNT";
+        if (_tauntPending && UpcomingTurn % 3 != 0) return "TAUNT";
         if (Mana >= 40 && _summonedCycle != _actions / 3 && !CombatState.Enemies.Any(c => c.IsAlive && c.Monster is AuraSoldier)) return "SUMMON";
         return _meditateNext ? "MEDITATE" : "BARRAGE";
     }
@@ -85,7 +85,13 @@ public sealed class Aura : CustomMonsterModel
             next.AddState(move, () => ChooseMove() == id);
         }
         Add("GUILLOTINE", async () => { _verdict = null; await Attack(GuillotineDamage, 1); }, new SingleAttackIntent(() => GuillotineDamage));
-        Add("STAGGER", () => { _verdict = null; return Task.CompletedTask; }, new StunIntent());
+        Add("STAGGER", async () => {
+            _verdict = null;
+            int converted = Math.Max(0, Creature.CurrentHp - 1);
+            await CreatureCmd.SetCurrentHp(Creature, 1);
+            await CreatureCmd.SetMaxHp(Creature, 1);
+            await ChangeMana(converted);
+        }, new StunIntent());
         Add("TAUNT", () => {
             _tauntPending = false;
             TalkCmd.Play(new LocString("monsters", "FRIERENMOD-AURA.taunt"), Creature, VfxColor.White, VfxDuration.Long);
@@ -145,9 +151,7 @@ public sealed class Aura : CustomMonsterModel
         else if (Mana < playerMana)
         {
             _verdict = "STAGGER";
-            await ChangeMana(-30);
         }
-        await GiveDispel();
     }
 
     public override async Task AfterDeath(PlayerChoiceContext context, Creature creature, bool prevented, float animLength)
