@@ -1,9 +1,9 @@
 # FrierenMod_STS2
 
-此项目为steam游戏杀戮尖塔芙莉莲模组的二代移植，一代创意工坊地址：
-https://steamcommunity.com/sharedfiles/filedetails/?id=3164722329。
-b站介绍视频：
-https://www.bilibili.com/video/BV1RH4y1c7B5/?spm_id_from=333.1387.upload.video_card.click&vd_source=0969ee823ab634b60df3df6e0ccb8139
+此项目为 Steam 游戏《杀戮尖塔》的芙莉莲模组二代移植。
+
+- [一代 Steam 创意工坊地址](https://steamcommunity.com/sharedfiles/filedetails/?id=3164722329)
+- [一代 B站介绍视频](https://www.bilibili.com/video/BV1RH4y1c7B5/)
 
 二代项目仍在开发中
 
