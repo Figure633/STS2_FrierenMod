@@ -39,3 +39,16 @@ node tools/create-slot-back-previews.mjs inputs.json outputs/slot-back-preview
 `focus` 是原图中期望保留的中心，两个值分别为横向和纵向0～1。成品附带实际原图裁切坐标及模板图层，便于调整。工具只支持这两份模板使用的8位RGB、RAW/RLE和普通混合图层，遇到其他混合方式会停止。
 
 2026-10-29 已用作者新提供的19张截图制作38张预览，位于 `outputs/slot-back-preview-20261029/`。这批只供核对构图，未分配成就ID，也未修改原PSD或游戏内资源。早期生成式试样发生原画重绘，未纳入这批成品。
+
+## 补充旧成品的材质
+
+原PSD没有保存旧成品的倒角、内缘折线和主体浮雕效果。`tools/materialize-slot-backs.mjs` 将内置imagegen生成的中性透明倒角素材合成到原PSD套图，再对原画的已有轮廓作亮度方向差处理。主体构图不变，不使用生成式重画人物。
+
+```powershell
+node tools/materialize-slot-backs.mjs outputs/slot-back-preview-20261029 outputs/slot-backs-final-20261029 --candidates
+node tools/materialize-slot-backs.mjs outputs/slot-back-preview-20261029 outputs/slot-backs-final-20261029
+```
+
+输出目录须先具备 `制作素材/倒角材质-生成原稿.png`。`--candidates` 比较原套图及轻、中、重三种强度；实际成品取适中档，约8px倒角、7.5px内折线及受限的浅浮雕。金色装饰单独降低饱和度并提高轮廓明暗，避免平面贴花感。
+
+最终38张PNG位于 `outputs/slot-backs-final-20261029/`，全部保持301×461，透明轮廓与套图逐像素一致；附前后对照、旧图参考对照、总览和HTML。风格以旧图中的彩色浅浮雕款为目标，具体原作者滤镜参数未能从PNG还原。尚未替换游戏资源。
