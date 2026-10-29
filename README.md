@@ -1,4 +1,7 @@
 # FrierenMod_STS2
+此项目为steam游戏杀戮尖塔芙莉莲模组的二代移植，一代创意工坊地址：https://steamcommunity.com/sharedfiles/filedetails/?id=3164722329。
+b站介绍视频https://www.bilibili.com/video/BV1RH4y1c7B5/?spm_id_from=333.1387.upload.video_card.click&vd_source=0969ee823ab634b60df3df6e0ccb8139
+二代项目仍在开发中
 
 0.9.2：按最新TODO接入20首去重BGM：事件6首、常规5首、Boss/精英6首、复制体/商店/战败各1首。曲池跨三幕共用，事件进入时换曲，曲终自动换下一首且不连续重复；复制体循环专属曲，商店换为Sleepy Frieren。MP4只提取音频并裁首尾静音，中间保留，统一为-18 LUFS；切歌沿用唱片曲名提示。
 
