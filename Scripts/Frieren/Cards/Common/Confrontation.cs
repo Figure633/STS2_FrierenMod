@@ -12,14 +12,14 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace FrierenMod.Scripts.Cards;
 
-public sealed class Confrontation() : FrierenCard(1, CardType.Skill, CardRarity.Common, TargetType.Self), IChantListener
+public sealed class Confrontation() : FrierenCard(1, CardType.Skill, CardRarity.Common, TargetType.Self)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(7, ValueProp.Move)];
-    protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play) => await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, play);
-    public Task AfterChant(PlayerChoiceContext context, CardPlay play)
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(8, ValueProp.Move), new DynamicVar("BonusBlock", 6)];
+    protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
-        if (play.Card.Owner == Owner && Pile?.Type == PileType.Hand) DynamicVars.Block.BaseValue += 3;
-        return Task.CompletedTask;
+        await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, play);
+        if (LegendaryCards.ChantsThisTurn(Owner) > 0)
+            await CreatureCmd.GainBlock(Owner.Creature, DynamicVars["BonusBlock"].BaseValue, ValueProp.Move, play);
     }
-    protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(3);
+    protected override void OnUpgrade() => DynamicVars["BonusBlock"].UpgradeValueBy(2);
 }

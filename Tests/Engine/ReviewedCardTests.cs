@@ -96,11 +96,11 @@ public static class ReviewedCardTests
         var held = New<Confrontation>(); var discarded = New<Confrontation>();
         await CardPileCmd.Add(held, PileType.Hand); await CardPileCmd.Add(discarded, PileType.Discard);
         await ChantCmd.Final(context, MakePlay(New<FinalChant>()));
-        Check(held.DynamicVars.Block.BaseValue == 15 && discarded.DynamicVars.Block.BaseValue == 6, "一次终极咏唱的三个成功槽位应分别触发手牌对峙");
+        Check(held.DynamicVars.Block.BaseValue == 8 && discarded.DynamicVars.Block.BaseValue == 8, "对峙重做后不再随咏唱永久增长");
         var failed = new ChantOption(ManaSlot.Draw, "BuildUpBody", 1, 99, 1);
         await ChantCmd.Resolve(context, MakePlay(New<RapidChant>()), failed);
-        Check(held.DynamicVars.Block.BaseValue == 15, "支付失败不能触发对峙");
-        Pass("对峙按成功咏唱触发，支持终极咏唱，排除失败与弃牌堆");
+        Check(held.DynamicVars.Block.BaseValue == 8, "失败咏唱也不改变对峙基础值");
+        Pass("对峙重做后的基础格挡不随咏唱增长");
 
         await Reset(); var mana = New<Mana>();
         await Play(mana);

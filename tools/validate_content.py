@@ -25,7 +25,7 @@ for table in ["cards", "characters", "relics", "potions", "frieren", "powers", "
             if table == "cards" and key == "FRIERENMOD-MULTIPLE_OFFENSIVE_MAGIC.description":
                 # 作者指定 X 费正文保留 X+4 和升级后的 X+1，其他程序公式仍禁止。
                 text = re.sub(r"X\+(?:4|1)(?!\d)", "X", text)
-            if table == "cards" and key == "FRIERENMOD-KINDLING_SPARK.description":
+            if table == "cards" and key in ("FRIERENMOD-KINDLING_SPARK.description", "FRIERENMOD-TREASURE_VAULT_SPELL.description"):
                 text = re.sub(r"X\+1(?!\d)", "X", text)
             if table == "frieren" and key.startswith("FACTOR."):
                 # 因子保留 X+1、2X 等咏唱费用或效果规则，仍禁止泄漏程序函数。

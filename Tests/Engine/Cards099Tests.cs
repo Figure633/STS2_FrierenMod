@@ -40,7 +40,7 @@ public static class Cards099Tests
   Check(restored.InSlot(ManaSlot.Draw)!.Id=="BloodSpell","旧魔法书ID不变，存读仍识别驭血");
   int hp=player.Creature.CurrentHp;var option=ChantCmd.Options(player,2).Single(o=>o.Slot==ManaSlot.Draw);await ChantCmd.Resolve(context,Play(New<RapidChant>()),option);
   Check(player.Creature.CurrentHp==hp-2&&Mana(PileType.Draw)==2,"改稀有度不改变普通咏唱扣血与生成魔力");
-  await Reset();await Use(New<AirSlash>());Check(enemy.CurrentHp==9993&&player.Creature.HasPower<AccelerateFlowPower>()&&!player.Creature.HasPower<BanManaGainPower>(),"普通空气斩2伤3次，获得加速同调，无新禁魔");await ManaCmd.Generate(player,PileType.Hand,2);Check(Mana(PileType.Hand)==2,"空气斩之后仍可生成魔力");
+  await Reset();await Use(New<AirSlash>());Check(enemy.CurrentHp==9993&&player.Creature.HasPower<AccelerateFlowNextTurnPower>()&&!player.Creature.HasPower<BanManaGainPower>(),"普通空气斩2伤3次，下回合加速同调，无新禁魔");await ManaCmd.Generate(player,PileType.Hand,2);Check(Mana(PileType.Hand)==2,"空气斩之后仍可生成魔力");
   await Reset();await Use(New<AirSlash>(true));Check(enemy.CurrentHp==9991,"升级空气斩2伤4次");
   await Reset();await PowerCmd.Apply<StrengthPower>(context,player.Creature,3,player.Creature,null);await Use(New<AirSlash>(true));Check(enemy.CurrentHp==9979,"空气斩每段正常受力量加成");
   await Reset();await PowerCmd.Apply<BanManaGainPower>(context,player.Creature,1,enemy,null);await Use(New<AirSlash>());Check(player.Creature.HasPower<BanManaGainPower>(),"空气斩不会移除其他来源已有的禁魔");

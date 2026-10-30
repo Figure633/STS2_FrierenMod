@@ -3723,5 +3723,96 @@
     "source": "卡名对照表.xlsx!/xl/media/image1.png（作者确认用于星星之火）",
     "sha256": "4ee54639841cc7c1d4826a2e468020fc31bb761147e3bbbefa4d02af56adc04d",
     "modified": false
+  },
+  {
+    "file": "FrierenMod/images/cards/SleepIn.png",
+    "source": "TODOs.docx:word/media/image1.jpeg",
+    "sha256": "fac035a9504793efa6c13f952e5bfddd8252c6cb8e94c5ffad04a3f437dfa3c1",
+    "modified": true,
+    "processing": "作者原图等比裁切为500x380；无重绘。"
+  },
+  {
+    "file": "FrierenMod/images/cards/WakeUp.png",
+    "source": "TODOs.docx:word/media/image2.jpeg",
+    "sha256": "359d1650ed3055ad54b67fc10e046b199b8ef795a69995136d85c11bed5a34a2",
+    "modified": true,
+    "processing": "作者原图等比裁切为500x380；无重绘。"
+  },
+  {
+    "file": "FrierenMod/images/cards/Crying.png",
+    "source": "TODOs.docx:word/media/image4.jpeg",
+    "sha256": "05e0009a1e4576bd4ccabee6180352ef85a6f7b4ac6a25bc773bbb906d27d6b0",
+    "modified": true,
+    "processing": "作者原图等比裁切为500x380；无重绘。"
+  },
+  {
+    "file": "FrierenMod/images/cards/TreasureVaultSpell.png",
+    "source": "TODOs.docx:word/media/image5.jpeg",
+    "sha256": "d5f20e64ec4ad4f7f84227e6e26cb04bc5f74b578cea72c92d2984a7dcc1a237",
+    "modified": true,
+    "processing": "作者原图等比裁切为500x380；无重绘。"
+  },
+  {
+    "file": "FrierenMod/images/cards/Underestimated.png",
+    "source": "TODOs.docx:word/media/image6.jpeg",
+    "sha256": "db729cbf4b9ad934c4f7f1ac806dc5f0a8b45e0a95458042e83eac6cde36fefa",
+    "modified": true,
+    "processing": "作者原图等比裁切为500x380；无重绘。"
+  },
+  {
+    "file": "FrierenMod/images/cards/StrongerWish.png",
+    "source": "TODOs.docx:word/media/image7.jpeg",
+    "sha256": "ad29021e9208ea89cb67047562d5f3b953f4ca51d61df255f0f0bf3246548ee5",
+    "modified": true,
+    "processing": "作者原图等比裁切为500x380；无重绘。"
+  },
+  {
+    "file": "FrierenMod/images/cards/RewardWish.png",
+    "source": "TODOs.docx:word/media/image8.jpeg",
+    "sha256": "89f59c2a436363bf4d55ba81947bfdef8593dc8b1954a8736170379cbc868b74",
+    "modified": true,
+    "processing": "作者原图等比裁切为500x380；无重绘。"
+  },
+  {
+    "file": "FrierenMod/images/cards/ManaWish.png",
+    "source": "TODOs.docx:word/media/image9.jpeg",
+    "sha256": "2e8eededcfa0292eed50ca09a29959022a1e8732602b3f90ef91e050715e50a4",
+    "modified": true,
+    "processing": "作者原图等比裁切为500x380；无重绘。"
+  },
+  {
+    "file": "FrierenMod/images/cards/DomainExpansion.png",
+    "source": "TODOs.docx:word/media/image12.jpeg",
+    "sha256": "392e1740c8c25ad74602b61338b7bbac4ad3e67e8e7a9d1075580a0c41d248ea",
+    "modified": true,
+    "processing": "作者原图等比裁切为500x380；无重绘。"
+  },
+  {
+    "file": "FrierenMod/images/cards/GoodLuckSpell.png",
+    "source": "TODOs.docx:word/media/image7.jpeg",
+    "sha256": "ad29021e9208ea89cb67047562d5f3b953f4ca51d61df255f0f0bf3246548ee5",
+    "modified": true,
+    "processing": "作者原图等比裁切为500x380；无重绘。"
+  },
+  {
+    "file": "FrierenMod/images/powers/SleepInPower.png",
+    "source": "TODOs.docx:word/media/image3.png",
+    "sha256": "e1cf2635783166f38712e18ab94409b5a63301f0972345ad0b00ed1cb30f4d42",
+    "modified": true,
+    "processing": "作者提供的100x100能力图标，原样复制。"
+  },
+  {
+    "file": "FrierenMod/images/powers/DomainExpansionPower.png",
+    "source": "FrierenMod/images/cards/DomainExpansion.png",
+    "sha256": "cf6a495447f43170bc8cdd275209aa30b6e9bf76154c168e5dc2c46e31678d74",
+    "modified": true,
+    "processing": "作者卡图中心裁切为84x84能力图标。"
+  },
+  {
+    "file": "FrierenMod/images/powers/GoodLuckRewardPower.png",
+    "source": "FrierenMod/images/cards/RewardWish.png",
+    "sha256": "49465276b24e9cc52a4440e807cdb9fb840cd065090f46180ac0fdcc2a883262",
+    "modified": true,
+    "processing": "作者卡图中心裁切为84x84能力图标。"
   }
 ]

@@ -162,10 +162,10 @@ public static class Todo091Tests
         var power = player.Creature.GetPower<RecyclePower>()!;
         await power.AfterCardPlayed(context, original);
         Check(player.Creature.Block == 0 && recycle.Rarity == CardRarity.Uncommon, "蓝卡再循环不由自身首次触发");
-        var next = Play(combat.CreateCard<Mana>(player)); await power.BeforeCardPlayed(next); await power.AfterCardPlayed(context,next);
-        Check(player.Creature.Block == 2, "此后每张牌获得2格挡");
+        var next = combat.CreateCard<Mana>(player); await CardPileCmd.Add(next,PileType.Hand);await CardPileCmd.Add(next,PileType.Discard);
+        Check(player.Creature.Block == 3, "魔力从手牌进入弃牌堆获得3格挡");
         await power.AfterSideTurnEnd(context, CombatSide.Player, [player.Creature]);
-        Check(!player.Creature.HasPower<RecyclePower>(), "再循环回合结束清除");
+        Check(player.Creature.HasPower<RecyclePower>(), "再循环持续能力跨回合保留");
         var room = new CombatRoom(combat);
         await PowerCmd.Apply<GainRelicPower>(context, player.Creature, 1, player.Creature, null);
         var relicPower = player.Creature.GetPower<GainRelicPower>()!;

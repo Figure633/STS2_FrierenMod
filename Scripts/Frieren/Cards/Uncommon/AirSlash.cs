@@ -21,7 +21,7 @@ public sealed class AirSlash() : FrierenCard(1, CardType.Attack, CardRarity.Unco
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardCompatibility(this, play).Targeting(play.Target!).WithHitCount(DynamicVars["Hits"].IntValue).Execute(context);
-        await PowerCmd.Apply<AccelerateFlowPower>(context, Owner.Creature, 1, Owner.Creature, this);
+        await PowerCmd.Apply<AccelerateFlowNextTurnPower>(context, Owner.Creature, 1, Owner.Creature, this);
     }
     protected override void OnUpgrade() { DynamicVars["Hits"].UpgradeValueBy(1); }
 }

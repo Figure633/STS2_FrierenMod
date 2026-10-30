@@ -19,8 +19,7 @@ public sealed class PajamasForm() : FrierenCard(2, CardType.Power, CardRarity.Un
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Amount", 1), new DynamicVar("DamagePerMana",4)];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
-        var power=await PowerCmd.Apply<PajamasFormPower>(context, Owner.Creature, (int)DynamicVars["Amount"].BaseValue, Owner.Creature, this);
-        if(IsUpgraded && power!=null)power.AddUpgradeBonus();
+        await PowerCmd.Apply<PajamasFormPower>(context, Owner.Creature, (int)DynamicVars["Amount"].BaseValue, Owner.Creature, this);
     }
-    protected override void OnUpgrade() { DynamicVars["DamagePerMana"].UpgradeValueBy(1); }
+    protected override void OnUpgrade() => AddKeyword(CardKeyword.Retain);
 }

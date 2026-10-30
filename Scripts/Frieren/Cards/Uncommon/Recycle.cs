@@ -6,12 +6,12 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 
 namespace FrierenMod.Scripts.Cards;
 
-public sealed class Recycle() : FrierenCard(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+public sealed class Recycle() : FrierenCard(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<RecyclePower>(2)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<RecyclePower>(3)];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         await PowerCmd.Apply<RecyclePower>(context, Owner.Creature, DynamicVars["RecyclePower"].BaseValue, Owner.Creature, this);
     }
-    protected override void OnUpgrade() { EnergyCost.UpgradeBy(-1); }
+    protected override void OnUpgrade() => DynamicVars["RecyclePower"].UpgradeValueBy(1);
 }

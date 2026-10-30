@@ -115,9 +115,17 @@
   "FRIERENMOD-AURA_SUBMISSION_POWER.title": "服从",
   "FRIERENMOD-AURA_SUBMISSION_POWER.description": "下回合少抽[blue]{Amount}[/blue]张牌。阿乌拉即将使用断头台。",
   "FRIERENMOD-RECYCLE_POWER.title": "再循环",
-  "FRIERENMOD-RECYCLE_POWER.description": "本回合，每打出一张牌，获得{Amount}点格挡。",
+  "FRIERENMOD-RECYCLE_POWER.description": "每有一张从抽牌堆或手牌流向弃牌堆的[gold]魔力[/gold]，获得{Amount}点格挡。",
   "FRIERENMOD-SWAMP_MANA_NEXT_TURN_POWER.title": "沼泽脱困",
   "FRIERENMOD-SWAMP_MANA_NEXT_TURN_POWER.description": "下个自己的回合开始、正常抽牌后，向手牌生成{Amount}张[gold]魔力[/gold]。",
   "FRIERENMOD-FRIEREN_THE_SLAYER_POWER.title": "葬送的芙莉莲",
-  "FRIERENMOD-FRIEREN_THE_SLAYER_POWER.description": "每回合开始时，从所有中文卡名含“魔法”的卡牌中选择{Amount}张加入手牌，其中{UpgradedChoices}张升级。本回合可免费打出。"
+  "FRIERENMOD-FRIEREN_THE_SLAYER_POWER.description": "每回合开始时，从所有中文卡名含“魔法”的卡牌中选择{Amount}张加入手牌，其中{UpgradedChoices}张升级。本回合可免费打出。",
+  "FRIERENMOD-ACCELERATE_FLOW_NEXT_TURN_POWER.title": "下回合加速同调",
+  "FRIERENMOD-ACCELERATE_FLOW_NEXT_TURN_POWER.description": "下回合，[gold]同调[/gold]变为[gold]加速同调[/gold]。",
+  "FRIERENMOD-DOMAIN_EXPANSION_POWER.title": "领域展开",
+  "FRIERENMOD-DOMAIN_EXPANSION_POWER.description": "每回合开始时，将{Amount}张[gold]高密度魔力[/gold]加入手牌。",
+  "FRIERENMOD-SLEEP_IN_POWER.title": "赖床",
+  "FRIERENMOD-SLEEP_IN_POWER.description": "起床！被打出或消耗之前，你不能打出其他牌。已累计{StoredEnergy}点剩余能量。",
+  "FRIERENMOD-GOOD_LUCK_REWARD_POWER.title": "我要更多奖励！",
+  "FRIERENMOD-GOOD_LUCK_REWARD_POWER.description": "本场战斗胜利后，额外掉落{Amount}次魔法牌组奖励。"
 }

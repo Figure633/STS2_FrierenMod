@@ -12,7 +12,7 @@ public static class DerivedCardPreviews
     private static readonly Type[] Tokens = [typeof(Mana), typeof(HighDensityMana), typeof(SecondDefensiveMagic),
         typeof(BlueMoonWeed), typeof(LittleFire), typeof(Laziness), typeof(GreenApple),
         typeof(Ice), typeof(Fire), typeof(Thunder), typeof(Dark), typeof(Light), typeof(Regret),
-        typeof(Himmel), typeof(Repent), typeof(LongevityPain), typeof(Fatalism)];
+        typeof(Himmel), typeof(Repent), typeof(LongevityPain), typeof(Fatalism), typeof(WakeUp), typeof(StrongerWish), typeof(RewardWish), typeof(ManaWish)];
 
     public static IEnumerable<IHoverTip> For(CardModel source)
     {
@@ -23,6 +23,9 @@ public static class DerivedCardPreviews
             FlowerFieldSpell => [typeof(BlueMoonWeed)],
             FireSpell => [typeof(LittleFire)],
             KindlingSpark => [typeof(LittleFire)],
+            SleepIn => [typeof(WakeUp)],
+            DomainExpansion => [typeof(HighDensityMana)],
+            GoodLuckSpell => [typeof(StrongerWish), typeof(RewardWish), typeof(ManaWish)],
             RedAppleSpell => [typeof(GreenApple)],
             FiveMinutesMore => [typeof(Laziness)],
             ElementsBombing => [typeof(Ice), typeof(Fire), typeof(Thunder), typeof(Dark), typeof(Light)],
@@ -35,7 +38,7 @@ public static class DerivedCardPreviews
             if (!explicitTypes.Contains(type) && !description.Contains(canonical.Title, StringComparison.OrdinalIgnoreCase)) continue;
             var preview = canonical.ToMutable();
             if (readable.Owner is { } owner) preview.Owner = owner;
-            bool upgraded = readable.IsUpgraded && explicitTypes.Contains(type) && source is not FiveMinutesMore and not KindlingSpark;
+            bool upgraded = readable.IsUpgraded && explicitTypes.Contains(type) && source is not FiveMinutesMore and not KindlingSpark and not DomainExpansion;
             if (upgraded && preview.MaxUpgradeLevel > 0) { preview.UpgradeInternal(); preview.FinalizeUpgradeInternal(); }
             previews.Add(preview);
         }

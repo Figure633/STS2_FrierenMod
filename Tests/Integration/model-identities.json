@@ -238,5 +238,20 @@
   "FrierenMod.Scripts.Powers.FrierenTheSlayerPower": "POWER.FRIEREN_THE_SLAYER_POWER",
   "FrierenMod.Scripts.Cards.EndlessFlow": "CARD.ENDLESS_FLOW",
   "FrierenMod.Scripts.Cards.FrierenTheSlayer": "CARD.FRIEREN_THE_SLAYER",
-  "FrierenMod.Scripts.Cards.KindlingSpark": "CARD.KINDLING_SPARK"
+  "FrierenMod.Scripts.Cards.KindlingSpark": "CARD.KINDLING_SPARK",
+  "FrierenMod.Scripts.Cards.Crying": "CARD.CRYING",
+  "FrierenMod.Scripts.Cards.DomainExpansion": "CARD.DOMAIN_EXPANSION",
+  "FrierenMod.Scripts.Cards.EnchantedStrike": "CARD.ENCHANTED_STRIKE",
+  "FrierenMod.Scripts.Cards.GoodLuckSpell": "CARD.GOOD_LUCK_SPELL",
+  "FrierenMod.Scripts.Cards.ManaWish": "CARD.MANA_WISH",
+  "FrierenMod.Scripts.Cards.RewardWish": "CARD.REWARD_WISH",
+  "FrierenMod.Scripts.Cards.SleepIn": "CARD.SLEEP_IN",
+  "FrierenMod.Scripts.Cards.StrongerWish": "CARD.STRONGER_WISH",
+  "FrierenMod.Scripts.Cards.TreasureVaultSpell": "CARD.TREASURE_VAULT_SPELL",
+  "FrierenMod.Scripts.Cards.Underestimated": "CARD.UNDERESTIMATED",
+  "FrierenMod.Scripts.Cards.WakeUp": "CARD.WAKE_UP",
+  "FrierenMod.Scripts.Powers.AccelerateFlowNextTurnPower": "POWER.ACCELERATE_FLOW_NEXT_TURN_POWER",
+  "FrierenMod.Scripts.Powers.DomainExpansionPower": "POWER.DOMAIN_EXPANSION_POWER",
+  "FrierenMod.Scripts.Powers.GoodLuckRewardPower": "POWER.GOOD_LUCK_REWARD_POWER",
+  "FrierenMod.Scripts.Powers.SleepInPower": "POWER.SLEEP_IN_POWER"
 }

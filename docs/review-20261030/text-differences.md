@@ -1,6 +1,6 @@
 # 二代中文增补文本核对清单
 
-核对日期：2026-10-30。当前版本：0.10.4。扫描 1069 条中文本地化，460 条与完整一代原文一致（忽略格式、空白和标点），其余 609 条全部列出。
+核对日期：2026-10-31。当前版本：0.10.5。扫描 1099 条中文本地化，460 条与完整一代原文一致（忽略格式、空白和标点），其余 639 条全部列出。
 
 这是可复核的差异清单，不能仅凭措辞确认是谁写的或是否由 AI 生成。作者已确认的二代规则、新内容、原生界面所需提示和未经确认的扩写都会出现在差异中；本次不自动删除。近似一代文案用于对照，不等于已确认的映射。所有字段保留在同目录 JSON。
 
@@ -315,7 +315,7 @@
 | THE_ARCHITECT.talk.FRIERENMOD-FRIEREN.2-1r.next | 回应 | [免费小吃] #g回复  #g [events.json / FrierenMod:FoodEvent.OPTIONS[0]] | 应 |
 | THE_ARCHITECT.talk.FRIERENMOD-FRIEREN.2-2r.char | 至少，下一次不会白来。 | 未找到近似原文 | 整段新增或需人工对照 |
 | THE_ARCHITECT.talk.FRIERENMOD-FRIEREN.2-endattack | Both | 未找到近似原文 | 整段新增或需人工对照 |
-## cards.json（161 条）
+## cards.json（183 条）
 
 | ID | 二代当前全文 | 一代对照原文 | 归一化新增/替换片段 |
 |---|---|---|---|
@@ -349,18 +349,18 @@
 | FRIERENMOD-FULL_AHEAD.description | 每回合第一次[gold]咏唱[/gold]后，获得 1 力量和 1 敏捷。 | 每回合第一次 frierenmod:咏唱 后，获得 1 力量 和 1 敏捷 。 [cards.json / FrierenMod:FullAhead.DESCRIPTION] | 整段新增或需人工对照 |
 | FRIERENMOD-SIMMERING.description | 每次[gold]咏唱[/gold]时，从抽牌堆抽取 1 张[gold]传说魔法[/gold]。 |  frierenmod:咏唱 后，抽1张 frierenmod:传说魔法 。 [cards.json / FrierenMod:Simmering.DESCRIPTION] | 每次 / 时从 / 牌堆抽取 |
 | FRIERENMOD-ENVY.description | 造成 {Damage:diff()} 点伤害。你每次[gold]咏唱[/gold]时，将本牌从弃牌堆移回手牌。 |  造成!D!点伤害。你每次 frierenmod:咏唱 时， 将这张牌从弃牌堆放回你的手牌。 [cards.json / FrierenMod:HalfTheSky.DESCRIPTION] | { / amagediff} / 本 / 移 |
-| FRIERENMOD-CONFRONTATION.description | 获得 {Block:diff()} 点格挡。本牌在手牌时，每[gold]咏唱[/gold]一次，本牌在本场战斗的基础格挡增加 3。 | 获得 !B! 点 格挡 。这张牌在手中时每 frierenmod:咏唱 一次，它在本场战斗中的基础 格挡 增加3。 [cards.json / FrierenMod:Confrontation.DESCRIPTION] | { / lockdiff} / 本 / 牌 / 本牌 |
+| FRIERENMOD-CONFRONTATION.description | 获得{Block:diff()}点格挡。若本回合[gold]咏唱[/gold]过，额外获得{BonusBlock:diff()}点格挡。 | 未找到近似原文 | 整段新增或需人工对照 |
 | FRIERENMOD-IMAGINATION.description | 本回合，[gold]咏唱[/gold]不[gold]消耗[/gold][gold]魔力[/gold]，无法生成[gold]魔力[/gold]。<br>卡牌改用[gold]魔力[/gold]支付费用。 | 未找到近似原文 | 整段新增或需人工对照 |
 | FRIERENMOD-READY_STANCE.description | 造成{Damage:diff()}点伤害。从抽牌堆或弃牌堆抽取1张[gold]高速咏唱[/gold]（优先抽牌堆）。 | 造成 !D! 点伤害。 NL 将抽牌堆和弃牌堆各一张 *魔力 放入手中。 [cards.json / FrierenMod:Flow.DESCRIPTION] | { / amagediff} / 从 / 或 / 抽取1 / 高速咏唱优先抽牌堆 |
 | FRIERENMOD-FOLK_GRIMOIRE.description | 将随机[gold]咏唱[/gold]牌与随机[gold]传说魔法[/gold]各 1 张加入手牌。本回合它们的费用减少 {Discount:diff()}。 | 未找到近似原文 | 整段新增或需人工对照 |
 | FRIERENMOD-HELL_FIRE_SUMMONING.description | [gold]封印[/gold]。[gold]回火[/gold]。<br>造成 {BaseDamage:diff()} 点伤害，次数为本回合打出[gold]咏唱[/gold]牌数量的两倍。{InCombat:cond:<br>（造成 {Damage:diff()} 点伤害 {Hits} 次）\|} | 未找到近似原文 | 整段新增或需人工对照 |
-| FRIERENMOD-FAMEHAMEHA.description | [gold]传说魔法[/gold]。<br>造成 {Damage:diff()} 点伤害。每次发动因子，使本牌本回合费用减少 1。 | 未找到近似原文 | 整段新增或需人工对照 |
+| FRIERENMOD-FAMEHAMEHA.description | [gold]传说魔法[/gold]。<br>造成{Damage:diff()}点伤害。每次[gold]咏唱[/gold]时，使本牌本回合费用减少1。 | 未找到近似原文 | 整段新增或需人工对照 |
 | FRIERENMOD-FAIRY_TALE_END.description | [gold]传说魔法[/gold]。<br>造成 {BaseDamage:diff()} 点伤害。<br>永久牌组中的每种[gold]传说魔法[/gold]使基础伤害翻倍。<br>（造成 {Damage:diff()} 点伤害） |  frierenmod:传说魔法 。 NL 造成 !D! 点伤害。牌组中每一种 *传说魔法 ，此牌的基础伤害就翻一倍。 NL 消耗 。 [cards.json / FrierenMod:FairyTaleEnd.DESCRIPTION] | {Base / amagediff} / 永久 / 的 / 使 / 造成{Damagediff}点伤害 |
 | FRIERENMOD-HOT_TEA_SPELL.description | [gold]传说魔法[/gold]。<br>获得 {Block:diff()} 点格挡，再获得等于三牌堆[gold]魔力[/gold]总数的格挡。{InCombat:cond:<br>（获得{CalculatedBlock:diff()}点格挡）\|} | 未找到近似原文 | 整段新增或需人工对照 |
 | FRIERENMOD-MOLD_SPELL.description | [gold]传说魔法[/gold]。<br>造成 {Damage:diff()} 点伤害 {Hits:diff()} 次。 |  frierenmod:传说魔法 。 NL 造成 !D! 点伤害 !M! 次。  [cards.json / FrierenMod:MoldSpell.DESCRIPTION] | { / amagediff} / {Hitsdiff} |
 | FRIERENMOD-OIL_SPELL.description | [gold]传说魔法[/gold]。<br>对所有敌人造成{Damage:diff()}点伤害并给予{Vulnerable:diff()}层[gold]易伤[/gold]。若没有击杀，重复一次。 |  frierenmod:传说魔法 。 NL 对所有敌人造成 !D! 点伤害。 如果没有敌人死亡，则再造成 !M! 点。 [cards.json / FrierenMod:OilSpell.DESCRIPTION] | { / amagediff} / 并给予{Vulnerablediff}层易伤若 / 击杀重复一次 |
 | FRIERENMOD-PAPER_PLANE_SPELL.description | [gold]传说魔法[/gold]。<br>本回合最高连续[gold]同调[/gold]次数{Upgraded:cond:大于或等于\|大于}本场战斗此前回合的最高记录时，你的攻击伤害翻倍。<br>（本回合：{Current}，此前最高：{Previous}） | 未找到近似原文 | 整段新增或需人工对照 |
-| FRIERENMOD-RUST_CLEAN_MAGIC.description | [gold]传说魔法[/gold]。<br>若你拥有减益，移除你所有的减益。否则，获得{Energy:energyIcons()}。 | 未找到近似原文 | 整段新增或需人工对照 |
+| FRIERENMOD-RUST_CLEAN_MAGIC.description | [gold]传说魔法[/gold]。<br>移除你的所有减益，每移除一个获得{Gold:diff()}金币。 | 未找到近似原文 | 整段新增或需人工对照 |
 | FRIERENMOD-LIGHTNING_MAGIC.description | [gold]传说魔法[/gold]。<br>将抽牌堆和弃牌堆的所有[gold]魔力[/gold]移入手牌。本场战斗，[gold]同调[/gold]变为[gold]终极同调[/gold]。 |  frierenmod:传说魔法 。 NL 将抽牌堆和弃牌堆中的 *魔力 放入手牌直到上限。本场战斗中 frierenmod:同调 变为 frierenmod:终极同调 。 [cards.json / FrierenMod:LightningMagic.DESCRIPTION] | 所有 / 移 |
 | FRIERENMOD-LITTLE_FIRE.description | [gold]回火[/gold]。造成 {Damage:diff()} 点伤害。本场战斗中现有的小小火花基础伤害增加 2。[gold]同调[/gold]时从弃牌堆返回手牌。 |  frierenmod:回火 。造成 !D! 点伤害。在本场战斗中所有 *小小火花 伤害增加2。 frierenmod:同调 时，将这张牌从弃牌堆放回手牌。 [cards.json / FrierenMod:LittleFire.DESCRIPTION] | { / amagediff} / 现 / 的 / 基础 / 返 |
 | FRIERENMOD-ADVANCED_DEFENSIVE_MAGIC.description | {Context}{Effect} | 未找到近似原文 | 整段新增或需人工对照 |
@@ -401,13 +401,13 @@
 | FRIERENMOD-UNBELIEVABLE_TOOL.description | 选择一张已装载和一张未装载的因子，使它们交换槽位 | 未找到近似原文 | 整段新增或需人工对照 |
 | FRIERENMOD-UNBELIEVABLE_TOOL_BOX.description | 移除两张未装载的因子或其他魔具，获得两件神奇妙妙工具。 | 移除2张 frierenmod:[#ff4e41]未装载 的 *魔法因子 或除自己之外的 *魔具 ，获得2张 *神奇妙妙工具 。 [cards.json / FrierenMod:UnbelievableToolBox.DESCRIPTION] | 两 / 其他 / 两件 |
 | FRIERENMOD-ACCESSORIES_SPELL.description | [gold]传说魔法[/gold]。战斗胜利时额外获得1个随机遗物奖励。 |  固有 。 frierenmod:传说魔法 。 NL 战斗结束时，获得一件随机遗物。 NL  虚无 。 [cards.json / FrierenMod:AccessoriesSpell.DESCRIPTION] | 胜利 / 额外 / 1个 / 奖励 |
-| FRIERENMOD-AIR_SLASH.description | 造成{Damage:diff()}点伤害{Hits:diff()}次。本回合，[gold]同调[/gold]变为[gold]加速同调[/gold]。 | 造成 !D! 点伤害。 NL 本回合中， frierenmod:同调 变为 frierenmod:加速同调 ，但无法从卡牌中获取 *魔力 。 [cards.json / FrierenMod:AirSlash.DESCRIPTION] | { / amagediff} / {Hitsdiff}次 |
+| FRIERENMOD-AIR_SLASH.description | 造成{Damage:diff()}点伤害{Hits:diff()}次。下回合，[gold]同调[/gold]变为[gold]加速同调[/gold]。 | 造成 !D! 点伤害。 NL 本回合中， frierenmod:同调 变为 frierenmod:加速同调 ，但无法从卡牌中获取 *魔力 。 [cards.json / FrierenMod:AirSlash.DESCRIPTION] | { / amagediff} / {Hitsdiff}次下 |
 | FRIERENMOD-APEX_MAGIC.description | 若抽牌堆、手牌和弃牌堆各恰好有4张[gold]魔力[/gold]，消灭所有敌人。 | 若你的手牌、抽牌堆、弃牌堆分别只有4张 *魔力 ，将所有敌人生命值变为0。 [cards.json / FrierenMod:ApexMagic.DESCRIPTION] | 手牌和 / 各恰好 / 消灭 |
 | FRIERENMOD-APPREHEND.description | 造成{Damage:diff()}点伤害。抽{Cards:diff()}张牌，然后丢弃其中的[gold]魔力[/gold]。 | 造成 !D! 点伤害。 NL 抽 !M! 张牌。 NL 丢弃其中的 *魔力 。 [cards.json / FrierenMod:Apprehend.DESCRIPTION] | { / amagediff} / {Cardsdiff} / 然后 |
 | FRIERENMOD-BABY_SLEEPING.description | 获得 {Block:diff()} 点格挡。[gold]保留[/gold]一张手牌，若弃牌堆没有[gold]魔力[/gold]，[gold]保留[/gold]所有手牌。 | 获得 !B! 点格挡。 保留 1张手牌。 NL 若弃牌堆没有 *魔力 ， 保留 所有手牌。 [cards.json / FrierenMod:BabySleeping.DESCRIPTION] | { / lockdiff} / 一 |
 | FRIERENMOD-BACK_FLOW.description | 将弃牌堆的4张[gold]魔力[/gold]移入手牌。 | 在弃牌堆中抽 !M! 张 *魔力 。 [cards.json / FrierenMod:BackFlow.DESCRIPTION] | 将 / 的4 / 移入手牌 |
 | FRIERENMOD-BREAKS_BARRIERS_SPELL.description | 整理抽牌堆：[gold]魔力[/gold]在最上方，其余牌按费用从低到高排列。抽{Cards:diff()}张牌。 | 未找到近似原文 | 整段新增或需人工对照 |
-| FRIERENMOD-BUTT_SLAM.description | 每有10点格挡，造成一次{Damage:diff()}点伤害，并在抽牌堆生成2张[gold]魔力[/gold]。 | 你每有10点 格挡 ，就造成 !D! 点伤害，将2张 *魔力 放入抽牌堆。 [cards.json / FrierenMod:ButtSlam.DESCRIPTION] | 一次{ / amagediff} / 并在抽牌堆生成 |
+| FRIERENMOD-BUTT_SLAM.description | 造成等同于你当前格挡的伤害（{CalculatedDamage:diff()}点）。在弃牌堆生成2张[gold]魔力[/gold]。 | 未找到近似原文 | 整段新增或需人工对照 |
 | FRIERENMOD-CLEAR_MIND.description | 丢弃至多{Amount:diff()}张手牌。在手牌生成{Amount:diff()}张[gold]魔力[/gold]。本回合[gold]同调[/gold]改为[gold]加速同调[/gold]。 | 未找到近似原文 | 整段新增或需人工对照 |
 | FRIERENMOD-SUSTAINED_BARRAGE.description | 对所有敌人造成{Damage:diff()}点伤害3次。出牌时若抽牌堆有[gold]魔力[/gold]，[gold]消耗[/gold]本牌。 | 对所有敌人造成 !D! 点伤害3次。若抽牌堆有 *魔力 ， 消耗 此牌。 [cards.json / FrierenMod:ContinuousShooting.DESCRIPTION] | { / amagediff} / 出牌时 / 本 |
 | FRIERENMOD-CUSTOM_LEGENDARY_SPELL.description | {Effects} | 未找到近似原文 | 整段新增或需人工对照 |
@@ -438,16 +438,16 @@
 | FRIERENMOD-MANA_DETECTION.description | 造成{Damage:diff()}点伤害。此敌人每受到一次攻击，攻击者的弃牌堆生成1张[gold]魔力[/gold]。 | 造成 !D! 点伤害。 NL 每当目标敌人受到攻击时，将 !M! 张 *魔力 放入弃牌堆。 NL  消耗 。 [cards.json / FrierenMod:ManaDetection.DESCRIPTION] | { / amagediff} / 此 / 每 / 一次 / 攻击者的弃牌堆生成1 |
 | FRIERENMOD-MANA_PARCEL.description | 抽到本牌时，[gold]消耗[/gold]自身，在手牌生成{Amount:diff()}张[gold]魔力[/gold]。 | 未找到近似原文 | 整段新增或需人工对照 |
 | FRIERENMOD-MULTIPLE_OFFENSIVE_MAGIC.description | 随机造成X+4点伤害{Upgraded:cond:X+1\|X}次，将X张[gold]魔力[/gold]放入手牌。{InCombat:cond:<br>（造成{Damage:diff()}点伤害{Hits:diff()}次）\|} | 随机造成X+4点伤害X+1次，将X张 *魔力 放入手牌。 [cards.json / FrierenMod:MultipleOffensiveMagic.UPGRADE_DESCRIPTION] | {Upgradedcond / \|X} / {InCombatcond造成{Damagediff}点伤害{Hitsdiff}次\|} |
-| FRIERENMOD-OPEN_THE_WAYGATE.description | 获得一次机会：连续[gold]同调[/gold]{Amount:diff()}次后，在本回合结束后获得一个额外回合。多张此牌分别提供机会，所有机会用完后失去此能力。 | 未找到近似原文 | 整段新增或需人工对照 |
+| FRIERENMOD-OPEN_THE_WAYGATE.description | 连续[gold]同调[/gold]{Amount:diff()}次后，在本回合结束后获得一个额外回合。 | 未找到近似原文 | 整段新增或需人工对照 |
 | FRIERENMOD-ORDINARY_OFFENSIVE_MAGIC.description | 造成[gold]消耗[/gold]牌堆[gold]魔力[/gold]数量两倍的伤害。{InCombat:cond:<br>（造成{CalculatedDamage:diff()}点伤害）\|} | 未找到近似原文 | 整段新增或需人工对照 |
 | FRIERENMOD-OUTPOURING.description | 本回合每次[gold]同调[/gold]，获得1点力量。 | 打出此牌后，你在本回合内每 frierenmod:同调 一张 *魔力，获得 !M! 点 力量 。 NL  消耗 。 [cards.json / FrierenMod:Outpouring.DESCRIPTION] | 次 / 1 |
 | FRIERENMOD-PAJAMAS_FORM.description | 回合结束时[gold]消耗[/gold]你的所有[gold]魔力[/gold]，每张对所有敌人造成{DamagePerMana:diff()}点伤害。 | 在每回合结束时，消耗所有 *魔力 ，对所有敌人造成消耗的 *魔力 数量4倍的伤害。 [cards.json / FrierenMod:PajamasForm.DESCRIPTION] | 你的 / 每张 / {DamagePerManadiff}点 |
 | FRIERENMOD-PANCAKE_SPELL.title | 顺利翻薄饼的魔法 | 翻薄饼时会很顺利的魔法 [cards.json / FrierenMod:PancakeSpell.NAME] | 顺利 |
 | FRIERENMOD-PANCAKE_SPELL.description | 从抽牌堆中选择一张牌和你手牌中的 {Amount:diff()} 张[gold]魔力[/gold]交换。 | 从抽牌堆中选择一张牌和你手牌中的 !M! 张 *魔力 交换。 [cards.json / FrierenMod:PancakeSpell.DESCRIPTION] | {Amountdiff} |
 | FRIERENMOD-RECALL.description | 选择[gold]消耗[/gold]牌堆的{Amount:diff()}张牌移入手牌，本回合[gold]保留[/gold]它们。 | 将消耗牌堆中的 !M! 张牌放入你的手牌，并将其 保留 。 NL 消耗 。 [cards.json / FrierenMod:Recall.DESCRIPTION] | 选择 / {Amountdiff} / 移 / 本回合 / 它们 |
-| FRIERENMOD-RECYCLE.description | 本回合，此后每打出一张牌，获得{RecyclePower}点格挡。 | 未找到近似原文 | 整段新增或需人工对照 |
+| FRIERENMOD-RECYCLE.description | 每有一张从抽牌堆或手牌流向弃牌堆的[gold]魔力[/gold]，获得{RecyclePower:diff()}点格挡。 | 未找到近似原文 | 整段新增或需人工对照 |
 | FRIERENMOD-RED_APPLE_SPELL.description | 本回合交换[gold]力量[/gold]和[gold]敏捷[/gold]。将一张{Upgraded:cond:[gold]青苹果+[/gold]\|[gold]青苹果[/gold]}加入手牌。 | 交换你的的 力量 和 敏捷 层数， 将一张 *青苹果+ 放入手牌。 NL 回合结束时，换回。 [cards.json / FrierenMod:RedAppleSpell.UPGRADE_DESCRIPTION] | 本回合 / {Upgradedcond / \|青苹果}加 |
-| FRIERENMOD-RESTRAINT_MAGIC.description | 敌人失去{StrengthLoss:diff()}点[gold]力量[/gold]，并获得[gold]迟缓[/gold]。 | 未找到近似原文 | 整段新增或需人工对照 |
+| FRIERENMOD-RESTRAINT_MAGIC.description | 敌人本回合失去{StrengthLoss:diff()}点[gold]力量[/gold]，并获得[gold]迟缓[/gold]。 | 未找到近似原文 | 整段新增或需人工对照 |
 | FRIERENMOD-RINGLET_FORM.description | 每[gold]消耗[/gold]一张[gold]魔力[/gold]，获得{Amount:diff()}点格挡。 | 你每 消耗 一张 *魔力 ，获得 !M! 点 格挡 。 [cards.json / FrierenMod:RingletForm.DESCRIPTION] | {Amountdiff} |
 | FRIERENMOD-RITES_PREPARATION.description | 接下来的{Amount:diff()}次[gold]同调[/gold]，对所有敌人造成5点伤害。 | 下 !M! 次 frierenmod:同调 会对所有敌人造成5点伤害。 [cards.json / FrierenMod:RitesPreparation.DESCRIPTION] | 接 / 来的{A / unt / iff}次 |
 | FRIERENMOD-SPEAK_FROM_HEART_SPELL.title | 说出心声的魔法 | 变出刨冰的魔法 [cards.json / FrierenMod:ShavedIceSpell.NAME] | 说 / 心声 |
@@ -468,7 +468,7 @@
 | FRIERENMOD-EMERGENCY_FOOD.description | 回复 [green]{Heal}[/green] 点生命。 |  保留 。 NL 回复 !M! 生命。 NL 消耗 。 [cards.json / FrierenMod:EmergencyFood.DESCRIPTION] | {Heal}点 |
 | FRIERENMOD-BIRD_CAPTURING_SPELL.description | 击晕一个带翅膀的敌人 [blue]{Amount}[/blue] 回合。 |  *击晕 一个鸟类，或者长的像鸟类的敌人3回合。 NL 消耗 。 [cards.json / FrierenMod:BirdCapturingSpell.DESCRIPTION] | 带翅膀 / {Amount} |
 | FRIERENMOD-UPSIDE_DOWN.description | 每[gold]同调[/gold]一次，交换抽牌堆和弃牌堆，并失去 [red]2[/red] 点生命。 |  不能被打出 。 NL 每 frierenmod:同调 一次，交换你的抽牌堆和弃牌堆并失去2点生命。 [cards.json / FrierenMod:UpsideDown.DESCRIPTION] | 整段新增或需人工对照 |
-| FRIERENMOD-MANA_AFFINITY.description | 魔力获得[gold]保留[/gold]。 |  *魔力 拥有 保留 。 [cards.json / FrierenMod:ManaAffinity.DESCRIPTION] | 获得 |
+| FRIERENMOD-MANA_AFFINITY.description | 你的[gold]魔力[/gold]获得[gold]保留[/gold]。 |  *魔力 拥有 保留 。 [cards.json / FrierenMod:ManaAffinity.DESCRIPTION] | 你的 / 获得 |
 | FRIERENMOD-SNUGGLE.description | 选择：<br>弃掉至多{Amount}张牌，每弃掉1张[gold]魔力[/gold]，获得{energyPrefix:energyIcons(1)}。<br>或在手牌生成1张[gold]魔力[/gold]。 | 未找到近似原文 | 整段新增或需人工对照 |
 | FRIERENMOD-SNUGGLE1.description | 弃掉至多{Amount}张牌，每弃掉1张[gold]魔力[/gold]，获得{energyPrefix:energyIcons(1)}。 | 未找到近似原文 | 整段新增或需人工对照 |
 | FRIERENMOD-SNUGGLE2.description | 在手牌生成1张[gold]魔力[/gold]。 | 未找到近似原文 | 整段新增或需人工对照 |
@@ -480,6 +480,28 @@
 | FRIERENMOD-FRIEREN_THE_SLAYER.description | 每回合开始时，从所有中文卡名含“魔法”的{Upgraded:cond:升级\|}卡牌中选择1张加入手牌。本回合可免费打出。 | 未找到近似原文 | 整段新增或需人工对照 |
 | FRIERENMOD-KINDLING_SPARK.title | 星星之火 | 星星 [cards.json / FrierenMod:DrawOption.NAME] | 之火 |
 | FRIERENMOD-KINDLING_SPARK.description | 对所有敌人造成{Damage:diff()}点伤害。将{Upgraded:cond:X+1\|X}张[gold]小小火花[/gold]加入手牌。{InCombat:cond:<br>（加入{ActualSparks}张小小火花）\|} | 未找到近似原文 | 整段新增或需人工对照 |
+| FRIERENMOD-CRYING.title | 嗷嗷哭 | 未找到近似原文 | 整段新增或需人工对照 |
+| FRIERENMOD-CRYING.description | 获得{Block:diff()}点格挡，给予{Weak:diff()}层[gold]虚弱[/gold]。交换此卡的格挡值和虚弱层数。 | 未找到近似原文 | 整段新增或需人工对照 |
+| FRIERENMOD-UNDERESTIMATED.title | 真是被看扁了啊 | 未找到近似原文 | 整段新增或需人工对照 |
+| FRIERENMOD-UNDERESTIMATED.description | 当你没有[gold]缩小[/gold]时，获得1层[gold]缩小[/gold]。下回合获得{Energy:energyIcons()}并多抽1张牌。 |  不能被打出 。 NL 当你抽到这张牌时，获得 !M! 点 frierenmod:专注 并抽1张牌，然后 消耗 。 [cards.json / FrierenMod:Meditation.DESCRIPTION] | 没有缩小 / 1层缩小下回合获得{En / gy / ergyIc / ns} / 多 |
+| FRIERENMOD-ENCHANTED_STRIKE.title | 附魔打击 | 打击 [cards.json / FrierenMod:Strike_Frieren.NAME] | 附魔 |
+| FRIERENMOD-ENCHANTED_STRIKE.description | 造成{CalculationBase}点伤害。你的手牌中每有一张[gold]魔力[/gold]，伤害增加{ExtraDamage:diff()}点。（造成{CalculatedDamage:diff()}点伤害） | 未找到近似原文 | 整段新增或需人工对照 |
+| FRIERENMOD-TREASURE_VAULT_SPELL.title | 拼命守护宝库的魔法 | 干练的魔法使 [cards.json / FrierenMod:SkilledMage.NAME] | 拼命守护宝库 |
+| FRIERENMOD-TREASURE_VAULT_SPELL.description | 获得{Block:diff()}点格挡X次。在抽牌堆生成{Upgraded:cond:X+1\|X}张[gold]魔力[/gold]。{InCombat:cond:<br>（获得{Block:diff()}点格挡{ActualTimes}次，生成{ActualMana}张魔力）\|} | 未找到近似原文 | 整段新增或需人工对照 |
+| FRIERENMOD-DOMAIN_EXPANSION.title | 领域展开 | 未找到近似原文 | 整段新增或需人工对照 |
+| FRIERENMOD-DOMAIN_EXPANSION.description | 每回合开始时，将一张[gold]高密度魔力[/gold]加入手牌。 | 在你的回合开始时，将一张 *魔力隐藏 放入手牌。 [cards.json / FrierenMod:Trick.DESCRIPTION] | 每 / 高密度 / 加 |
+| FRIERENMOD-SLEEP_IN.title | 赖床 | 未找到近似原文 | 整段新增或需人工对照 |
+| FRIERENMOD-SLEEP_IN.description | 获得{Block:diff()}点格挡和1层[gold]堡垒[/gold]。将一张[gold]起床！[/gold]加入抽牌堆。起床！被打出或消耗之前，你不能打出其他牌。 | 未找到近似原文 | 整段新增或需人工对照 |
+| FRIERENMOD-WAKE_UP.title | 起床！ | 未找到近似原文 | 整段新增或需人工对照 |
+| FRIERENMOD-WAKE_UP.description | 失去[gold]堡垒[/gold]，获得赖床期间累计剩余的能量（{StoredEnergy}点能量）。 | 未找到近似原文 | 整段新增或需人工对照 |
+| FRIERENMOD-GOOD_LUCK_SPELL.title | 变好运的魔法 | 变出刨冰的魔法 [cards.json / FrierenMod:ShavedIceSpell.NAME] | 好运 |
+| FRIERENMOD-GOOD_LUCK_SPELL.description | [gold]传说魔法[/gold]。<br>选择：升级牌组中随机一张牌；额外掉落一次魔法牌组奖励；在手牌中添加{Mana:diff()}张[gold]魔力[/gold]。 | 未找到近似原文 | 整段新增或需人工对照 |
+| FRIERENMOD-STRONGER_WISH.title | 我要变得更强！ | 未找到近似原文 | 整段新增或需人工对照 |
+| FRIERENMOD-STRONGER_WISH.description | 升级牌组中随机一张牌。 |  NL （牌组中有 [cards.json / FrierenMod:FairyTaleEnd.EXTENDED_DESCRIPTION[0]] | 升级 / 随机一张牌 |
+| FRIERENMOD-REWARD_WISH.title | 我要更多奖励！ | 未找到近似原文 | 整段新增或需人工对照 |
+| FRIERENMOD-REWARD_WISH.description | 本场战斗胜利后，额外掉落一次魔法牌组奖励。 | 未找到近似原文 | 整段新增或需人工对照 |
+| FRIERENMOD-MANA_WISH.title | 我要更多魔力！ | 魔力 [cards.json / FrierenMod:Mana.NAME] | 我要更多 |
+| FRIERENMOD-MANA_WISH.description | 在手牌中添加{Mana:diff()}张[gold]魔力[/gold]。 | 在弃牌堆中抽 !M! 张 *魔力 。 [cards.json / FrierenMod:BackFlow.DESCRIPTION] | 手 / 添加{ / anadiff} |
 ## characters.json（9 条）
 
 | ID | 二代当前全文 | 一代对照原文 | 归一化新增/替换片段 |
@@ -521,7 +543,7 @@
 | FRIERENMOD-BOTTLED_MANA.description | 将{Cards}张[gold]魔力[/gold]加入手牌。 |  将 #b%d 张 #y魔力 加入手牌。 [potions.json / FrierenMod:BottledMana.DESCRIPTIONS[0]] | {Car / s} |
 | FRIERENMOD-DISSOLVE_CLOTH_POTION.description | 移除目标的所有格挡，给予{VulnerablePower}层[gold]易伤[/gold]和{WeakPower}层[gold]虚弱[/gold]。 | 去除对象的格挡并给予 #b%d 层 #y易伤 和 #y虚弱 。 [potions.json / FrierenMod:DissolveClothPotion.DESCRIPTIONS[0]] | 移 / 目标 / 所有 / {VulnerablePower} / {WeakPower}层 |
 | FRIERENMOD-EMPEROR_WINE.description | 从3张随机稀有牌中选择1张加入手牌，本回合耗能为0。 | 从 #b3 张随机的稀有牌中选择 #b1 张加入你的手牌。这张牌在本回合耗能变为0 。 [potions.json / FrierenMod:EmperorWine.DESCRIPTIONS[0]] | 整段新增或需人工对照 |
-## powers.json（89 条）
+## powers.json（97 条）
 
 | ID | 二代当前全文 | 一代对照原文 | 归一化新增/替换片段 |
 |---|---|---|---|
@@ -609,11 +631,19 @@
 | FRIERENMOD-AURA_SOUL_POWER.description | 死亡时，阿乌拉失去15魔力，在你的弃牌堆生成10张魔力。 | 你的回合结束时， #y消耗 弃牌堆中 #b%d 张 #y魔力 。 [powers.json / FrierenMod:FlyingMagicPower.DESCRIPTIONS[0]] | 死亡时阿乌拉失去15魔力在 / 生成10 |
 | FRIERENMOD-AURA_SUBMISSION_POWER.title | 服从 | 未找到近似原文 | 整段新增或需人工对照 |
 | FRIERENMOD-AURA_SUBMISSION_POWER.description | 下回合少抽[blue]{Amount}[/blue]张牌。阿乌拉即将使用断头台。 | 未找到近似原文 | 整段新增或需人工对照 |
-| FRIERENMOD-RECYCLE_POWER.description | 本回合，每打出一张牌，获得{Amount}点格挡。 | 你每 #y消耗 一张 #y魔力，获得 #b%d 点 #y格挡 。 [powers.json / FrierenMod:RingletFormPower.DESCRIPTIONS[0]] | 本回合 / 打出 / 牌 / {Amount} |
+| FRIERENMOD-RECYCLE_POWER.description | 每有一张从抽牌堆或手牌流向弃牌堆的[gold]魔力[/gold]，获得{Amount}点格挡。 | 你每 #y消耗 一张 #y魔力，获得 #b%d 点 #y格挡 。 [powers.json / FrierenMod:RingletFormPower.DESCRIPTIONS[0]] | 有 / 从抽牌堆或手牌流向弃牌堆的 / {Amount} |
 | FRIERENMOD-SWAMP_MANA_NEXT_TURN_POWER.title | 沼泽脱困 | 未找到近似原文 | 整段新增或需人工对照 |
 | FRIERENMOD-SWAMP_MANA_NEXT_TURN_POWER.description | 下个自己的回合开始、正常抽牌后，向手牌生成{Amount}张[gold]魔力[/gold]。 | 未找到近似原文 | 整段新增或需人工对照 |
 | FRIERENMOD-FRIEREN_THE_SLAYER_POWER.title | 葬送的芙莉莲 | ...芙莉莲... [powers.json / FrierenMod:Factor100Power.DESCRIPTIONS[0]] | 葬送的 |
 | FRIERENMOD-FRIEREN_THE_SLAYER_POWER.description | 每回合开始时，从所有中文卡名含“魔法”的卡牌中选择{Amount}张加入手牌，其中{UpgradedChoices}张升级。本回合可免费打出。 | 未找到近似原文 | 整段新增或需人工对照 |
+| FRIERENMOD-ACCELERATE_FLOW_NEXT_TURN_POWER.title | 下回合加速同调 | 本回合中你的 #y同调 变为 #y加速同调 。 [powers.json / FrierenMod:AccelerateFlowPower.DESCRIPTIONS[0]] | 下 |
+| FRIERENMOD-ACCELERATE_FLOW_NEXT_TURN_POWER.description | 下回合，[gold]同调[/gold]变为[gold]加速同调[/gold]。 | 本回合中你的 #y同调 变为 #y加速同调 。 [powers.json / FrierenMod:AccelerateFlowPower.DESCRIPTIONS[0]] | 下 |
+| FRIERENMOD-DOMAIN_EXPANSION_POWER.title | 领域展开 | 未找到近似原文 | 整段新增或需人工对照 |
+| FRIERENMOD-DOMAIN_EXPANSION_POWER.description | 每回合开始时，将{Amount}张[gold]高密度魔力[/gold]加入手牌。 | 在你的回合开始时，将一张 #y魔力隐藏 置入手牌。 [powers.json / FrierenMod:TrickPower.DESCRIPTIONS[0]] | 每 / {Amount} / 高密度 / 加 |
+| FRIERENMOD-SLEEP_IN_POWER.title | 赖床 | 未找到近似原文 | 整段新增或需人工对照 |
+| FRIERENMOD-SLEEP_IN_POWER.description | 起床！被打出或消耗之前，你不能打出其他牌。已累计{StoredEnergy}点剩余能量。 | 未找到近似原文 | 整段新增或需人工对照 |
+| FRIERENMOD-GOOD_LUCK_REWARD_POWER.title | 我要更多奖励！ | 未找到近似原文 | 整段新增或需人工对照 |
+| FRIERENMOD-GOOD_LUCK_REWARD_POWER.description | 本场战斗胜利后，额外掉落{Amount}次魔法牌组奖励。 | 未找到近似原文 | 整段新增或需人工对照 |
 ## relics.json（28 条）
 
 | ID | 二代当前全文 | 一代对照原文 | 归一化新增/替换片段 |

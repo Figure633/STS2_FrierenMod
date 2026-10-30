@@ -54,10 +54,10 @@ public static class Todo093Tests
         CardPlay Play(CardModel c)=>CombatTestState.NewPlay(card: c, target: player.Creature, resultPile: PileType.Exhaust, resources: new ResourceInfo{EnergySpent=0,EnergyValue=0,StarsSpent=0,StarValue=0}, playCount: 1, playIndex: 0, isAutoPlay: false);
         async Task Use(CardModel c)=>await (Task)AccessTools.Method(typeof(RustCleanMagic),"OnPlay").Invoke(c,[context,Play(c)])!;
         var rust=combat.CreateCard<RustCleanMagic>(player);
-        Check(rust.Rarity==CardRarity.Uncommon && rust.Type==CardType.Skill && rust.TargetType==TargetType.Self && rust.EnergyCost.Canonical==0 && rust.Keywords.Contains(CardKeyword.Exhaust),"清洁铜像：0费罕见技能，自身目标且消耗");
-        int energy=player.PlayerCombatState!.Energy;await Use(rust);Check(player.PlayerCombatState.Energy==energy+2,"无减益获得2能量");
+        Check(rust.Rarity==CardRarity.Rare && rust.Type==CardType.Skill && rust.TargetType==TargetType.Self && rust.EnergyCost.Canonical==1 && rust.Keywords.Contains(CardKeyword.Exhaust),"清洁铜像：1费稀有技能，自身目标且消耗");
+        int energy=player.PlayerCombatState!.Energy;await Use(rust);Check(player.PlayerCombatState.Energy==energy,"无减益不获得能量");
         var upgraded=combat.CreateCard<RustCleanMagic>(player);upgraded.UpgradeInternal();energy=player.PlayerCombatState.Energy;await Use(upgraded);
-        Check(upgraded.EnergyCost.Canonical==0 && player.PlayerCombatState.Energy==energy+3,"升级仍0费，无减益获得3能量");
+        Check(upgraded.EnergyCost.Canonical==1 && player.PlayerCombatState.Energy==energy,"升级仍1费，无减益不返能量");
         await PowerCmd.Apply<BanManaGainPower>(context,player.Creature,1,enemy,null);
         await PowerCmd.Apply<WeakPower>(context,player.Creature,2,enemy,null);
         await PowerCmd.Apply<StrengthPower>(context,player.Creature,3,player.Creature,null);

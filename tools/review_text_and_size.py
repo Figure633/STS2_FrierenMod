@@ -2,8 +2,10 @@
 from pathlib import Path
 from collections import Counter,defaultdict
 import json,re,difflib
+from datetime import datetime, timezone, timedelta
 ROOT=Path(__file__).resolve().parents[1]
 VERSION=json.loads((ROOT/'FrierenMod.json').read_text('utf-8-sig'))['version']
+DATE=datetime.now(timezone(timedelta(hours=8))).strftime('%Y-%m-%d')
 OLD=ROOT.parent/'FrierenMod_STS1_source code/src/main/resources/FrierenModResources/localization/ZHS'
 OUT=ROOT/'docs/review-20261030'
 OUT.mkdir(exist_ok=True)
@@ -40,7 +42,7 @@ for p in sorted((ROOT/'FrierenMod/localization/zhs').glob('*.json')):
   rows.append({'table':p.name,'key':key,'current':text,'legacy':candidate if score>=.35 else None,'similarity':round(score,3),'extraFragments':added,'status':'改写或增补待审' if score>=.35 else '未找到近似一代原文'})
 (OUT/'text-differences.json').write_text(json.dumps({'total':total,'unchangedIgnoringFormat':unchanged,'differences':rows},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 def cell(s):return s.replace('|','\\|').replace('\n','<br>')
-lines=['# 二代中文增补文本核对清单','',f'核对日期：2026-10-30。当前版本：{VERSION}。扫描 {total} 条中文本地化，{unchanged} 条与完整一代原文一致（忽略格式、空白和标点），其余 {len(rows)} 条全部列出。','',
+lines=['# 二代中文增补文本核对清单','',f'核对日期：{DATE}。当前版本：{VERSION}。扫描 {total} 条中文本地化，{unchanged} 条与完整一代原文一致（忽略格式、空白和标点），其余 {len(rows)} 条全部列出。','',
 '这是可复核的差异清单，不能仅凭措辞确认是谁写的或是否由 AI 生成。作者已确认的二代规则、新内容、原生界面所需提示和未经确认的扩写都会出现在差异中；本次不自动删除。近似一代文案用于对照，不等于已确认的映射。所有字段保留在同目录 JSON。','',
 '优先检查事件、教程、按钮的补充限制说明，再检查卡牌数值或玩法变化。用户点名的“需要可以升级的牌”见事件中的禁用条件提示。','']
 for table in ['events.json','frieren.json']+[p for p in sorted(set(v['table'] for v in rows)) if p not in ['events.json','frieren.json']]:
@@ -84,7 +86,7 @@ for p in files:
  elif rel.startswith('FrierenMod/fonts/'):group='原字体'
  else:group='本地化、场景和其他资源'
  groups[group]+=size;sizes[group].append((size,rel))
-size_lines=['# 模组体积核对','', f'2026-10-30，{VERSION}。MiB = 1,048,576 字节。仅统计发行内容，不把工作区、原始资料、Git历史和测试输出当成安装大小。','', '| 发行文件 | MiB |','|---|---:|']
+size_lines=['# 模组体积核对','', f'{DATE}，{VERSION}。MiB = 1,048,576 字节。仅统计发行内容，不把工作区、原始资料、Git历史和测试输出当成安装大小。','', '| 发行文件 | MiB |','|---|---:|']
 release=ROOT/'artifacts/FrierenMod'
 for p in sorted(release.iterdir()):
  if p.is_file():size_lines.append(f'| {p.name} | {p.stat().st_size/1048576:.2f} |')

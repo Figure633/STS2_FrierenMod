@@ -153,7 +153,7 @@ public static class MissingCardTests
 
         await Reset(); await Play(New<Disperse>());
         Check(Mana(PileType.Draw) == 1 && Mana(PileType.Hand) == 2 && Mana(PileType.Discard) == 3, "分散生成");
-        await Play(New<Recycle>()); Check(Mana(PileType.Draw) == 4 && Mana(PileType.Discard) == 3, "回收复制而非搬移");
+        await Play(New<Recycle>()); Check(Mana(PileType.Draw) == 1 && Mana(PileType.Discard) == 3 && player.Creature.HasPower<RecyclePower>(), "再循环提供持续能力而不生成魔力");
         await Play(New<BackFlow>()); Check(Mana(PileType.Hand) == 5 && Mana(PileType.Discard) == 0, "逆流搬移");
         Pass("分散、回收、逆流的牌堆资源流转");
 
@@ -185,8 +185,8 @@ public static class MissingCardTests
         Pass("加速同调抽二与空气斩允许生成魔力");
 
         await Reset(); player.Creature.GainBlockInternal(29); await Play(New<ButtSlam>(), enemy);
-        Check(enemy.CurrentHp == 9979 && Mana(PileType.Draw) == 4, "臀击按整十格挡命中");
-        Pass("臀击固定次数与每次生成魔力");
+        Check(enemy.CurrentHp == 9970 && Mana(PileType.Discard) == 2, "全身撞姬按当前格挡单次命中");
+        Pass("全身撞姬按当前格挡攻击并固定生成两魔力");
 
         await Reset(); await CardPileCmd.Add(New<StrikeFrieren>(), PileType.Hand); await CardPileCmd.Add(New<DefendFrieren>(), PileType.Hand);
         await ManaCmd.Generate(player, PileType.Hand, 1); await Play(New<ViolentExorcism>(), enemy);
@@ -307,7 +307,7 @@ public static class MissingCardTests
         await Play(New<Kiss>(), enemy);
         Check(enemy.GetPowerAmount<WeakPower>() == 99 && enemy.GetPowerAmount<VulnerablePower>() == 99, "飞吻减益");
         await Play(New<RestraintMagic>(), enemy);
-        Check(enemy.GetPowerAmount<StrengthPower>() == -2 && enemy.HasPower<SlowPower>(), "拘束魔法迟缓");
+        Check(enemy.GetPowerAmount<StrengthPower>() == -10 && enemy.HasPower<SlowPower>(), "拘束魔法临时减力量并迟缓");
         Pass("宝宝熟睡、飞吻和拘束魔法的原生能力");
 
         await Reset(); await CardPileCmd.Add(New<StrikeFrieren>(), PileType.Draw); await ManaCmd.Generate(player, PileType.Draw, 2);

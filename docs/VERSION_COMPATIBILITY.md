@@ -32,3 +32,5 @@ dotnet run --project Tests/Compatibility/CompatibilityTests.csproj -- <FrierenMo
 `Tests/Engine` 以正式版公共API编译，使用反射处理测试夹具本身的版本差异。运行 `version-compat-only` 检查神格、打击加成、纸飞机、魔力崩坏、高密度魔力、节俭、格挡和种子；运行 `combat-api-only` 复核完整核心战斗链。
 
 `tools/run-engine-check.ps1` 可通过 `-RuntimeDataDir` 和 `-ReleaseInfoPath` 指定另一版本的本地运行时，每次运行都显式复制所选依赖，避免上次测试版程序集污染下一次正式版检查。完整UI验证还需对应版本的游戏PCK。编译和自动检查通过不等同于长局验收。
+
+使用另一版本前，先以 `dotnet build Tests/Engine/EngineTests.csproj -p:TestRuntimeDataDir=运行时目录` 构建测试夹具，将该版本的 Sentry 等附属程序集纳入 .NET 依赖清单；仅复制 DLL 不能保证运行时解析。生产模组仍按正式版接口编译。

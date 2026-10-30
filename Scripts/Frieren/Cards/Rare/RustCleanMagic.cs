@@ -8,17 +8,18 @@ using MegaCrit.Sts2.Core.Models;
 
 namespace FrierenMod.Scripts.Cards;
 
-public sealed class RustCleanMagic() : LegendaryCard(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+public sealed class RustCleanMagic() : LegendaryCard(1, CardType.Skill, CardRarity.Rare, TargetType.Self)
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new EnergyVar(2)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Gold",40)];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         var debuffs = Owner.Creature.Powers.Where(p=>p.Type==PowerType.Debuff).ToArray();
-        if (debuffs.Length==0) { await PlayerCmd.GainEnergy(DynamicVars.Energy.IntValue,Owner); return; }
         foreach(var power in debuffs) await PowerCmd.Remove(power);
-        if(debuffs.Count(power=>!Owner.Creature.Powers.Contains(power))>=3)
+        int removed = debuffs.Count(power=>!Owner.Creature.Powers.Contains(power));
+        if (removed > 0) await PlayerCmd.GainGold(removed * DynamicVars["Gold"].IntValue, Owner);
+        if(removed>=3)
             Presentation.FrierenAchievements.Unlock(Owner,"4006");
     }
-    protected override void OnUpgrade() => DynamicVars.Energy.UpgradeValueBy(1);
+    protected override void OnUpgrade() => DynamicVars["Gold"].UpgradeValueBy(10);
 }

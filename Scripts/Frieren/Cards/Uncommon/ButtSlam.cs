@@ -17,15 +17,12 @@ namespace FrierenMod.Scripts.Cards;
 
 public sealed class ButtSlam() : FrierenCard(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(10, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new CalculationBaseVar(0), new ExtraDamageVar(1),
+        new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) => card.IsMutable && card.Owner?.Creature != null ? card.Owner.Creature.Block : 0)];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
-        int hits = Owner.Creature.Block / 10;
-        for (int i = 0; i < hits; i++)
-        {
-            await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardCompatibility(this, play).Targeting(play.Target!).Execute(context);
-            await ManaCmd.Generate(Owner, PileType.Draw, 2);
-        }
+        await DamageCmd.Attack(DynamicVars.CalculatedDamage).FromCardCompatibility(this, play).Targeting(play.Target!).Execute(context);
+        await ManaCmd.Generate(Owner, PileType.Discard, 2);
     }
     protected override void OnUpgrade() { EnergyCost.UpgradeBy(-1); }
 }

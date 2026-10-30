@@ -1,5 +1,5 @@
 {
-  "total": 1069,
+  "total": 1099,
   "unchangedIgnoringFormat": 460,
   "differences": [
     {
@@ -661,22 +661,11 @@
     {
       "table": "cards.json",
       "key": "FRIERENMOD-CONFRONTATION.description",
-      "current": "获得 {Block:diff()} 点格挡。本牌在手牌时，每[gold]咏唱[/gold]一次，本牌在本场战斗的基础格挡增加 3。",
-      "legacy": {
-        "source": "cards.json",
-        "key": "FrierenMod:Confrontation.DESCRIPTION",
-        "text": "获得 !B! 点 格挡 。这张牌在手中时每 frierenmod:咏唱 一次，它在本场战斗中的基础 格挡 增加3。",
-        "norm": "获得B点格挡这张牌在手中时每frierenmod咏唱一次它在本场战斗中的基础格挡增加3"
-      },
-      "similarity": 0.659,
-      "extraFragments": [
-        "{",
-        "lockdiff}",
-        "本",
-        "牌",
-        "本牌"
-      ],
-      "status": "改写或增补待审"
+      "current": "获得{Block:diff()}点格挡。若本回合[gold]咏唱[/gold]过，额外获得{BonusBlock:diff()}点格挡。",
+      "legacy": null,
+      "similarity": 0.225,
+      "extraFragments": [],
+      "status": "未找到近似一代原文"
     },
     {
       "table": "cards.json",
@@ -729,9 +718,9 @@
     {
       "table": "cards.json",
       "key": "FRIERENMOD-FAMEHAMEHA.description",
-      "current": "[gold]传说魔法[/gold]。\n造成 {Damage:diff()} 点伤害。每次发动因子，使本牌本回合费用减少 1。",
+      "current": "[gold]传说魔法[/gold]。\n造成{Damage:diff()}点伤害。每次[gold]咏唱[/gold]时，使本牌本回合费用减少1。",
       "legacy": null,
-      "similarity": 0.235,
+      "similarity": 0.238,
       "extraFragments": [],
       "status": "未找到近似一代原文"
     },
@@ -814,9 +803,9 @@
     {
       "table": "cards.json",
       "key": "FRIERENMOD-RUST_CLEAN_MAGIC.description",
-      "current": "[gold]传说魔法[/gold]。\n若你拥有减益，移除你所有的减益。否则，获得{Energy:energyIcons()}。",
+      "current": "[gold]传说魔法[/gold]。\n移除你的所有减益，每移除一个获得{Gold:diff()}金币。",
       "legacy": null,
-      "similarity": 0.186,
+      "similarity": 0.237,
       "extraFragments": [],
       "status": "未找到近似一代原文"
     },
@@ -1264,18 +1253,18 @@
     {
       "table": "cards.json",
       "key": "FRIERENMOD-AIR_SLASH.description",
-      "current": "造成{Damage:diff()}点伤害{Hits:diff()}次。本回合，[gold]同调[/gold]变为[gold]加速同调[/gold]。",
+      "current": "造成{Damage:diff()}点伤害{Hits:diff()}次。下回合，[gold]同调[/gold]变为[gold]加速同调[/gold]。",
       "legacy": {
         "source": "cards.json",
         "key": "FrierenMod:AirSlash.DESCRIPTION",
         "text": "造成 !D! 点伤害。 NL 本回合中， frierenmod:同调 变为 frierenmod:加速同调 ，但无法从卡牌中获取 *魔力 。",
         "norm": "造成D点伤害本回合中frierenmod同调变为frierenmod加速同调但无法从卡牌中获取魔力"
       },
-      "similarity": 0.386,
+      "similarity": 0.364,
       "extraFragments": [
         "{",
         "amagediff}",
-        "{Hitsdiff}次"
+        "{Hitsdiff}次下"
       ],
       "status": "改写或增补待审"
     },
@@ -1364,20 +1353,11 @@
     {
       "table": "cards.json",
       "key": "FRIERENMOD-BUTT_SLAM.description",
-      "current": "每有10点格挡，造成一次{Damage:diff()}点伤害，并在抽牌堆生成2张[gold]魔力[/gold]。",
-      "legacy": {
-        "source": "cards.json",
-        "key": "FrierenMod:ButtSlam.DESCRIPTION",
-        "text": "你每有10点 格挡 ，就造成 !D! 点伤害，将2张 *魔力 放入抽牌堆。",
-        "norm": "你每有10点格挡就造成D点伤害将2张魔力放入抽牌堆"
-      },
-      "similarity": 0.548,
-      "extraFragments": [
-        "一次{",
-        "amagediff}",
-        "并在抽牌堆生成"
-      ],
-      "status": "改写或增补待审"
+      "current": "造成等同于你当前格挡的伤害（{CalculatedDamage:diff()}点）。在弃牌堆生成2张[gold]魔力[/gold]。",
+      "legacy": null,
+      "similarity": 0.225,
+      "extraFragments": [],
+      "status": "未找到近似一代原文"
     },
     {
       "table": "cards.json",
@@ -1849,9 +1829,9 @@
     {
       "table": "cards.json",
       "key": "FRIERENMOD-OPEN_THE_WAYGATE.description",
-      "current": "获得一次机会：连续[gold]同调[/gold]{Amount:diff()}次后，在本回合结束后获得一个额外回合。多张此牌分别提供机会，所有机会用完后失去此能力。",
+      "current": "连续[gold]同调[/gold]{Amount:diff()}次后，在本回合结束后获得一个额外回合。",
       "legacy": null,
-      "similarity": 0.189,
+      "similarity": 0.328,
       "extraFragments": [],
       "status": "未找到近似一代原文"
     },
@@ -1954,9 +1934,9 @@
     {
       "table": "cards.json",
       "key": "FRIERENMOD-RECYCLE.description",
-      "current": "本回合，此后每打出一张牌，获得{RecyclePower}点格挡。",
+      "current": "每有一张从抽牌堆或手牌流向弃牌堆的[gold]魔力[/gold]，获得{RecyclePower:diff()}点格挡。",
       "legacy": null,
-      "similarity": 0.042,
+      "similarity": 0.1,
       "extraFragments": [],
       "status": "未找到近似一代原文"
     },
@@ -1981,9 +1961,9 @@
     {
       "table": "cards.json",
       "key": "FRIERENMOD-RESTRAINT_MAGIC.description",
-      "current": "敌人失去{StrengthLoss:diff()}点[gold]力量[/gold]，并获得[gold]迟缓[/gold]。",
+      "current": "敌人本回合失去{StrengthLoss:diff()}点[gold]力量[/gold]，并获得[gold]迟缓[/gold]。",
       "legacy": null,
-      "similarity": 0.291,
+      "similarity": 0.276,
       "extraFragments": [],
       "status": "未找到近似一代原文"
     },
@@ -2304,15 +2284,16 @@
     {
       "table": "cards.json",
       "key": "FRIERENMOD-MANA_AFFINITY.description",
-      "current": "魔力获得[gold]保留[/gold]。",
+      "current": "你的[gold]魔力[/gold]获得[gold]保留[/gold]。",
       "legacy": {
         "source": "cards.json",
         "key": "FrierenMod:ManaAffinity.DESCRIPTION",
         "text": " *魔力 拥有 保留 。",
         "norm": "魔力拥有保留"
       },
-      "similarity": 0.667,
+      "similarity": 0.571,
       "extraFragments": [
+        "你的",
         "获得"
       ],
       "status": "改写或增补待审"
@@ -2452,6 +2433,270 @@
       "similarity": 0.236,
       "extraFragments": [],
       "status": "未找到近似一代原文"
+    },
+    {
+      "table": "cards.json",
+      "key": "FRIERENMOD-CRYING.title",
+      "current": "嗷嗷哭",
+      "legacy": null,
+      "similarity": 0.0,
+      "extraFragments": [],
+      "status": "未找到近似一代原文"
+    },
+    {
+      "table": "cards.json",
+      "key": "FRIERENMOD-CRYING.description",
+      "current": "获得{Block:diff()}点格挡，给予{Weak:diff()}层[gold]虚弱[/gold]。交换此卡的格挡值和虚弱层数。",
+      "legacy": null,
+      "similarity": 0.282,
+      "extraFragments": [],
+      "status": "未找到近似一代原文"
+    },
+    {
+      "table": "cards.json",
+      "key": "FRIERENMOD-UNDERESTIMATED.title",
+      "current": "真是被看扁了啊",
+      "legacy": null,
+      "similarity": 0.2,
+      "extraFragments": [],
+      "status": "未找到近似一代原文"
+    },
+    {
+      "table": "cards.json",
+      "key": "FRIERENMOD-UNDERESTIMATED.description",
+      "current": "当你没有[gold]缩小[/gold]时，获得1层[gold]缩小[/gold]。下回合获得{Energy:energyIcons()}并多抽1张牌。",
+      "legacy": {
+        "source": "cards.json",
+        "key": "FrierenMod:Meditation.DESCRIPTION",
+        "text": " 不能被打出 。 NL 当你抽到这张牌时，获得 !M! 点 frierenmod:专注 并抽1张牌，然后 消耗 。",
+        "norm": "不能被打出当你抽到这张牌时获得M点frierenmod专注并抽1张牌然后消耗"
+      },
+      "similarity": 0.37,
+      "extraFragments": [
+        "没有缩小",
+        "1层缩小下回合获得{En",
+        "gy",
+        "ergyIc",
+        "ns}",
+        "多"
+      ],
+      "status": "改写或增补待审"
+    },
+    {
+      "table": "cards.json",
+      "key": "FRIERENMOD-ENCHANTED_STRIKE.title",
+      "current": "附魔打击",
+      "legacy": {
+        "source": "cards.json",
+        "key": "FrierenMod:Strike_Frieren.NAME",
+        "text": "打击",
+        "norm": "打击"
+      },
+      "similarity": 0.667,
+      "extraFragments": [
+        "附魔"
+      ],
+      "status": "改写或增补待审"
+    },
+    {
+      "table": "cards.json",
+      "key": "FRIERENMOD-ENCHANTED_STRIKE.description",
+      "current": "造成{CalculationBase}点伤害。你的手牌中每有一张[gold]魔力[/gold]，伤害增加{ExtraDamage:diff()}点。（造成{CalculatedDamage:diff()}点伤害）",
+      "legacy": null,
+      "similarity": 0.235,
+      "extraFragments": [],
+      "status": "未找到近似一代原文"
+    },
+    {
+      "table": "cards.json",
+      "key": "FRIERENMOD-TREASURE_VAULT_SPELL.title",
+      "current": "拼命守护宝库的魔法",
+      "legacy": {
+        "source": "cards.json",
+        "key": "FrierenMod:SkilledMage.NAME",
+        "text": "干练的魔法使",
+        "norm": "干练的魔法使"
+      },
+      "similarity": 0.4,
+      "extraFragments": [
+        "拼命守护宝库"
+      ],
+      "status": "改写或增补待审"
+    },
+    {
+      "table": "cards.json",
+      "key": "FRIERENMOD-TREASURE_VAULT_SPELL.description",
+      "current": "获得{Block:diff()}点格挡X次。在抽牌堆生成{Upgraded:cond:X+1|X}张[gold]魔力[/gold]。{InCombat:cond:\n（获得{Block:diff()}点格挡{ActualTimes}次，生成{ActualMana}张魔力）|}",
+      "legacy": null,
+      "similarity": 0.192,
+      "extraFragments": [],
+      "status": "未找到近似一代原文"
+    },
+    {
+      "table": "cards.json",
+      "key": "FRIERENMOD-DOMAIN_EXPANSION.title",
+      "current": "领域展开",
+      "legacy": null,
+      "similarity": 0.2,
+      "extraFragments": [],
+      "status": "未找到近似一代原文"
+    },
+    {
+      "table": "cards.json",
+      "key": "FRIERENMOD-DOMAIN_EXPANSION.description",
+      "current": "每回合开始时，将一张[gold]高密度魔力[/gold]加入手牌。",
+      "legacy": {
+        "source": "cards.json",
+        "key": "FrierenMod:Trick.DESCRIPTION",
+        "text": "在你的回合开始时，将一张 *魔力隐藏 放入手牌。",
+        "norm": "在你的回合开始时将一张魔力隐藏放入手牌"
+      },
+      "similarity": 0.703,
+      "extraFragments": [
+        "每",
+        "高密度",
+        "加"
+      ],
+      "status": "改写或增补待审"
+    },
+    {
+      "table": "cards.json",
+      "key": "FRIERENMOD-SLEEP_IN.title",
+      "current": "赖床",
+      "legacy": null,
+      "similarity": 0.0,
+      "extraFragments": [],
+      "status": "未找到近似一代原文"
+    },
+    {
+      "table": "cards.json",
+      "key": "FRIERENMOD-SLEEP_IN.description",
+      "current": "获得{Block:diff()}点格挡和1层[gold]堡垒[/gold]。将一张[gold]起床！[/gold]加入抽牌堆。起床！被打出或消耗之前，你不能打出其他牌。",
+      "legacy": null,
+      "similarity": 0.333,
+      "extraFragments": [],
+      "status": "未找到近似一代原文"
+    },
+    {
+      "table": "cards.json",
+      "key": "FRIERENMOD-WAKE_UP.title",
+      "current": "起床！",
+      "legacy": null,
+      "similarity": 0.25,
+      "extraFragments": [],
+      "status": "未找到近似一代原文"
+    },
+    {
+      "table": "cards.json",
+      "key": "FRIERENMOD-WAKE_UP.description",
+      "current": "失去[gold]堡垒[/gold]，获得赖床期间累计剩余的能量（{StoredEnergy}点能量）。",
+      "legacy": null,
+      "similarity": 0.229,
+      "extraFragments": [],
+      "status": "未找到近似一代原文"
+    },
+    {
+      "table": "cards.json",
+      "key": "FRIERENMOD-GOOD_LUCK_SPELL.title",
+      "current": "变好运的魔法",
+      "legacy": {
+        "source": "cards.json",
+        "key": "FrierenMod:ShavedIceSpell.NAME",
+        "text": "变出刨冰的魔法",
+        "norm": "变出刨冰的魔法"
+      },
+      "similarity": 0.615,
+      "extraFragments": [
+        "好运"
+      ],
+      "status": "改写或增补待审"
+    },
+    {
+      "table": "cards.json",
+      "key": "FRIERENMOD-GOOD_LUCK_SPELL.description",
+      "current": "[gold]传说魔法[/gold]。\n选择：升级牌组中随机一张牌；额外掉落一次魔法牌组奖励；在手牌中添加{Mana:diff()}张[gold]魔力[/gold]。",
+      "legacy": null,
+      "similarity": 0.348,
+      "extraFragments": [],
+      "status": "未找到近似一代原文"
+    },
+    {
+      "table": "cards.json",
+      "key": "FRIERENMOD-STRONGER_WISH.title",
+      "current": "我要变得更强！",
+      "legacy": null,
+      "similarity": 0.222,
+      "extraFragments": [],
+      "status": "未找到近似一代原文"
+    },
+    {
+      "table": "cards.json",
+      "key": "FRIERENMOD-STRONGER_WISH.description",
+      "current": "升级牌组中随机一张牌。",
+      "legacy": {
+        "source": "cards.json",
+        "key": "FrierenMod:FairyTaleEnd.EXTENDED_DESCRIPTION[0]",
+        "text": " NL （牌组中有",
+        "norm": "牌组中有"
+      },
+      "similarity": 0.429,
+      "extraFragments": [
+        "升级",
+        "随机一张牌"
+      ],
+      "status": "改写或增补待审"
+    },
+    {
+      "table": "cards.json",
+      "key": "FRIERENMOD-REWARD_WISH.title",
+      "current": "我要更多奖励！",
+      "legacy": null,
+      "similarity": 0.222,
+      "extraFragments": [],
+      "status": "未找到近似一代原文"
+    },
+    {
+      "table": "cards.json",
+      "key": "FRIERENMOD-REWARD_WISH.description",
+      "current": "本场战斗胜利后，额外掉落一次魔法牌组奖励。",
+      "legacy": null,
+      "similarity": 0.34,
+      "extraFragments": [],
+      "status": "未找到近似一代原文"
+    },
+    {
+      "table": "cards.json",
+      "key": "FRIERENMOD-MANA_WISH.title",
+      "current": "我要更多魔力！",
+      "legacy": {
+        "source": "cards.json",
+        "key": "FrierenMod:Mana.NAME",
+        "text": "魔力",
+        "norm": "魔力"
+      },
+      "similarity": 0.5,
+      "extraFragments": [
+        "我要更多"
+      ],
+      "status": "改写或增补待审"
+    },
+    {
+      "table": "cards.json",
+      "key": "FRIERENMOD-MANA_WISH.description",
+      "current": "在手牌中添加{Mana:diff()}张[gold]魔力[/gold]。",
+      "legacy": {
+        "source": "cards.json",
+        "key": "FrierenMod:BackFlow.DESCRIPTION",
+        "text": "在弃牌堆中抽 !M! 张 *魔力 。",
+        "norm": "在弃牌堆中抽M张魔力"
+      },
+      "similarity": 0.483,
+      "extraFragments": [
+        "手",
+        "添加{",
+        "anadiff}"
+      ],
+      "status": "改写或增补待审"
     },
     {
       "table": "characters.json",
@@ -8109,18 +8354,17 @@
     {
       "table": "powers.json",
       "key": "FRIERENMOD-RECYCLE_POWER.description",
-      "current": "本回合，每打出一张牌，获得{Amount}点格挡。",
+      "current": "每有一张从抽牌堆或手牌流向弃牌堆的[gold]魔力[/gold]，获得{Amount}点格挡。",
       "legacy": {
         "source": "powers.json",
         "key": "FrierenMod:RingletFormPower.DESCRIPTIONS[0]",
         "text": "你每 #y消耗 一张 #y魔力，获得 #b%d 点 #y格挡 。",
         "norm": "你每消耗一张魔力获得%d点格挡"
       },
-      "similarity": 0.432,
+      "similarity": 0.426,
       "extraFragments": [
-        "本回合",
-        "打出",
-        "牌",
+        "有",
+        "从抽牌堆或手牌流向弃牌堆的",
         "{Amount}"
       ],
       "status": "改写或增补待审"
@@ -8165,6 +8409,102 @@
       "current": "每回合开始时，从所有中文卡名含“魔法”的卡牌中选择{Amount}张加入手牌，其中{UpgradedChoices}张升级。本回合可免费打出。",
       "legacy": null,
       "similarity": 0.214,
+      "extraFragments": [],
+      "status": "未找到近似一代原文"
+    },
+    {
+      "table": "powers.json",
+      "key": "FRIERENMOD-ACCELERATE_FLOW_NEXT_TURN_POWER.title",
+      "current": "下回合加速同调",
+      "legacy": {
+        "source": "powers.json",
+        "key": "FrierenMod:AccelerateFlowPower.DESCRIPTIONS[0]",
+        "text": "本回合中你的 #y同调 变为 #y加速同调 。",
+        "norm": "本回合中你的同调变为加速同调"
+      },
+      "similarity": 0.571,
+      "extraFragments": [
+        "下"
+      ],
+      "status": "改写或增补待审"
+    },
+    {
+      "table": "powers.json",
+      "key": "FRIERENMOD-ACCELERATE_FLOW_NEXT_TURN_POWER.description",
+      "current": "下回合，[gold]同调[/gold]变为[gold]加速同调[/gold]。",
+      "legacy": {
+        "source": "powers.json",
+        "key": "FrierenMod:AccelerateFlowPower.DESCRIPTIONS[0]",
+        "text": "本回合中你的 #y同调 变为 #y加速同调 。",
+        "norm": "本回合中你的同调变为加速同调"
+      },
+      "similarity": 0.8,
+      "extraFragments": [
+        "下"
+      ],
+      "status": "改写或增补待审"
+    },
+    {
+      "table": "powers.json",
+      "key": "FRIERENMOD-DOMAIN_EXPANSION_POWER.title",
+      "current": "领域展开",
+      "legacy": null,
+      "similarity": 0.2,
+      "extraFragments": [],
+      "status": "未找到近似一代原文"
+    },
+    {
+      "table": "powers.json",
+      "key": "FRIERENMOD-DOMAIN_EXPANSION_POWER.description",
+      "current": "每回合开始时，将{Amount}张[gold]高密度魔力[/gold]加入手牌。",
+      "legacy": {
+        "source": "powers.json",
+        "key": "FrierenMod:TrickPower.DESCRIPTIONS[0]",
+        "text": "在你的回合开始时，将一张 #y魔力隐藏 置入手牌。",
+        "norm": "在你的回合开始时将一张魔力隐藏置入手牌"
+      },
+      "similarity": 0.545,
+      "extraFragments": [
+        "每",
+        "{Amount}",
+        "高密度",
+        "加"
+      ],
+      "status": "改写或增补待审"
+    },
+    {
+      "table": "powers.json",
+      "key": "FRIERENMOD-SLEEP_IN_POWER.title",
+      "current": "赖床",
+      "legacy": null,
+      "similarity": 0.0,
+      "extraFragments": [],
+      "status": "未找到近似一代原文"
+    },
+    {
+      "table": "powers.json",
+      "key": "FRIERENMOD-SLEEP_IN_POWER.description",
+      "current": "起床！被打出或消耗之前，你不能打出其他牌。已累计{StoredEnergy}点剩余能量。",
+      "legacy": null,
+      "similarity": 0.152,
+      "extraFragments": [],
+      "status": "未找到近似一代原文"
+    },
+    {
+      "table": "powers.json",
+      "key": "FRIERENMOD-GOOD_LUCK_REWARD_POWER.title",
+      "current": "我要更多奖励！",
+      "legacy": null,
+      "similarity": 0.0,
+      "extraFragments": [],
+      "status": "未找到近似一代原文"
+    },
+    {
+      "table": "powers.json",
+      "key": "FRIERENMOD-GOOD_LUCK_REWARD_POWER.description",
+      "current": "本场战斗胜利后，额外掉落{Amount}次魔法牌组奖励。",
+      "legacy": null,
+      "similarity": 0.256,
       "extraFragments": [],
       "status": "未找到近似一代原文"
     },

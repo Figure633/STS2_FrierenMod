@@ -16,11 +16,7 @@ namespace FrierenMod.Scripts.Powers;
 
 public sealed class PajamasFormPower : FrierenPower
 {
-    // 旧模型Amount仍代表能力张数；新增升级加成默认0，保留已有战斗状态语义。
-    [MegaCrit.Sts2.Core.Saves.Runs.SavedProperty]
-    public int UpgradeBonus { get; set; }
-    public int DamagePerMana => 4*Amount+UpgradeBonus;
-    public void AddUpgradeBonus(){UpgradeBonus++;InvokeDisplayAmountChanged();}
+    public int DamagePerMana => 4 * Amount;
     public override MegaCrit.Sts2.Core.Localization.LocString Description { get {var text=base.Description;text.Add("DamagePerMana",DamagePerMana);return text;} }
     public override async Task BeforeSideTurnEnd(PlayerChoiceContext context, CombatSide side, IEnumerable<Creature> participants)
     {

@@ -13,6 +13,16 @@ namespace FrierenMod.Scripts.Rewards;
 public sealed class MagicItemRewardHooks() : CustomSingletonModel(HookType.Run)
 {
     private readonly ConditionalWeakTable<CombatRoom, HashSet<Player>> _resolved = new();
+    private readonly ConditionalWeakTable<CombatRoom, Dictionary<Player, int>> _bonusRewards = new();
+
+    public override Task AfterCombatEnd(CombatRoom room)
+    {
+        // 胜利钩子之前原版会清空能力，先保存本场奖励次数。
+        var pending = _bonusRewards.GetOrCreateValue(room);
+        foreach (var player in room.CombatState.RunState.Players)
+            pending.TryAdd(player, player.Creature.GetPowerAmount<Powers.GoodLuckRewardPower>());
+        return Task.CompletedTask;
+    }
 
     public override Task AfterCombatVictory(CombatRoom room)
     {
@@ -21,6 +31,12 @@ public sealed class MagicItemRewardHooks() : CustomSingletonModel(HookType.Run)
             if (!_resolved.GetOrCreateValue(room).Add(player)) continue;
             if (room.ExtraRewards.TryGetValue(player, out var rewards) && rewards.OfType<FactorReward>().Any()) continue;
             AddReward(player, room);
+            // 额外奖励在正常掉落判定之后追加，避免被既有奖励去重逻辑吞掉。
+            int bonusCount = _bonusRewards.TryGetValue(room, out var pending) ? pending.GetValueOrDefault(player) : 0;
+            for (int i = 0; i < bonusCount; i++) {
+                var bonus = new FactorReward(player) { Seed = player.PlayerRng.Rewards.NextInt() };
+                bonus.Populate(); room.AddExtraReward(player, bonus);
+            }
         }
         return Task.CompletedTask;
     }
