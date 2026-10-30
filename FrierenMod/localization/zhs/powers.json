@@ -34,7 +34,7 @@
   "FRIERENMOD-SIMMERING_POWER.title": "蓄势待发",
   "FRIERENMOD-SIMMERING_POWER.description": "每次[gold]咏唱[/gold]时，从抽牌堆抽取 {Amount} 张[gold]传说魔法[/gold]。",
   "FRIERENMOD-PAPER_PLANE_POWER.title": "纸飞机",
-  "FRIERENMOD-PAPER_PLANE_POWER.description": "本回合最高连续[gold]同调[/gold]次数{AllowEqual:cond:大于或等于|大于}上回合记录时，攻击伤害翻倍。\n本回合：{Current}；上回合：{Previous}。",
+  "FRIERENMOD-PAPER_PLANE_POWER.description": "本回合最高连续[gold]同调[/gold]次数{AllowEqual:cond:大于或等于|大于}本场战斗此前回合的最高记录时，攻击伤害翻倍。\n本回合：{Current}；此前最高：{Previous}。",
   "FRIERENMOD-SEAL_POWER.title": "封印",
   "FRIERENMOD-SEAL_POWER.description": "单回合打出 5 张[gold]咏唱[/gold]牌后，将[gold]封印[/gold]的卡牌加入手牌。",
   "FRIERENMOD-PUZZLE_POWER.1.title": "！？？",
@@ -117,5 +117,7 @@
   "FRIERENMOD-RECYCLE_POWER.title": "再循环",
   "FRIERENMOD-RECYCLE_POWER.description": "本回合，每打出一张牌，获得{Amount}点格挡。",
   "FRIERENMOD-SWAMP_MANA_NEXT_TURN_POWER.title": "沼泽脱困",
-  "FRIERENMOD-SWAMP_MANA_NEXT_TURN_POWER.description": "下个自己的回合开始、正常抽牌后，向手牌生成{Amount}张[gold]魔力[/gold]。"
+  "FRIERENMOD-SWAMP_MANA_NEXT_TURN_POWER.description": "下个自己的回合开始、正常抽牌后，向手牌生成{Amount}张[gold]魔力[/gold]。",
+  "FRIERENMOD-FRIEREN_THE_SLAYER_POWER.title": "葬送的芙莉莲",
+  "FRIERENMOD-FRIEREN_THE_SLAYER_POWER.description": "每回合开始时，从所有中文卡名含“魔法”的卡牌中选择{Amount}张加入手牌，其中{UpgradedChoices}张升级。本回合可免费打出。"
 }

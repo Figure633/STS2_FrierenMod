@@ -234,5 +234,8 @@
   "FrierenMod.Scripts.Cards.Snuggle": "CARD.SNUGGLE",
   "FrierenMod.Scripts.Powers.RecyclePower": "POWER.RECYCLE_POWER",
   "FrierenMod.Scripts.Relics.AuraCompanion": "RELIC.AURA_COMPANION",
-  "FrierenMod.Scripts.Powers.SwampManaNextTurnPower": "POWER.SWAMP_MANA_NEXT_TURN_POWER"
+  "FrierenMod.Scripts.Powers.SwampManaNextTurnPower": "POWER.SWAMP_MANA_NEXT_TURN_POWER",
+  "FrierenMod.Scripts.Powers.FrierenTheSlayerPower": "POWER.FRIEREN_THE_SLAYER_POWER",
+  "FrierenMod.Scripts.Cards.EndlessFlow": "CARD.ENDLESS_FLOW",
+  "FrierenMod.Scripts.Cards.FrierenTheSlayer": "CARD.FRIEREN_THE_SLAYER"
 }

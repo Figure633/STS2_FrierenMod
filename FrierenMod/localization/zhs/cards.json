@@ -69,7 +69,7 @@
   "FRIERENMOD-OIL_SPELL.title": "清除顽固油渍的魔法",
   "FRIERENMOD-OIL_SPELL.description": "[gold]传说魔法[/gold]。\n对所有敌人造成{Damage:diff()}点伤害并给予{Vulnerable:diff()}层[gold]易伤[/gold]。若没有击杀，重复一次。",
   "FRIERENMOD-PAPER_PLANE_SPELL.title": "让纸飞机飞得很远的魔法",
-  "FRIERENMOD-PAPER_PLANE_SPELL.description": "[gold]传说魔法[/gold]。\n每回合最高连续[gold]同调[/gold]次数{Upgraded:cond:大于或等于|大于}上回合记录时，你的攻击伤害翻倍。\n（本回合：{Current}，上回合：{Previous}）",
+  "FRIERENMOD-PAPER_PLANE_SPELL.description": "[gold]传说魔法[/gold]。\n本回合最高连续[gold]同调[/gold]次数{Upgraded:cond:大于或等于|大于}本场战斗此前回合的最高记录时，你的攻击伤害翻倍。\n（本回合：{Current}，此前最高：{Previous}）",
   "FRIERENMOD-RUST_CLEAN_MAGIC.title": "清洁铜像生锈的魔法",
   "FRIERENMOD-RUST_CLEAN_MAGIC.description": "[gold]传说魔法[/gold]。\n若你拥有减益，移除你所有的减益。否则，获得{Energy:energyIcons()}。",
   "FRIERENMOD-LIGHTNING_MAGIC.title": "破灭之雷魔法",
@@ -285,5 +285,9 @@
   "FRIERENMOD-SNUGGLE2.title": "和修塔尔克贴贴",
   "FRIERENMOD-SNUGGLE2.description": "在手牌生成1张[gold]魔力[/gold]。",
   "FRIERENMOD-AURA_DISPEL.title": "解除魔法",
-  "FRIERENMOD-AURA_DISPEL.description": "消灭一个被操纵的士兵，触发其[gold]灵魂解放[/gold]。"
+  "FRIERENMOD-AURA_DISPEL.description": "消灭一个被操纵的士兵，触发其[gold]灵魂解放[/gold]。",
+  "FRIERENMOD-ENDLESS_FLOW.title": "生生流转",
+  "FRIERENMOD-ENDLESS_FLOW.description": "向抽牌堆、手牌和弃牌堆各加入1张[gold]魔力[/gold]。对所有敌人造成等同于你的魔力总数的伤害。",
+  "FRIERENMOD-FRIEREN_THE_SLAYER.title": "葬送的芙莉莲",
+  "FRIERENMOD-FRIEREN_THE_SLAYER.description": "每回合开始时，从所有中文卡名含“魔法”的{Upgraded:cond:升级|}卡牌中选择1张加入手牌。本回合可免费打出。"
 }

@@ -9,8 +9,9 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace FrierenMod.Scripts.Cards;
 
-public sealed class Flow() : FrierenCard(0, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
+public sealed class Flow() : FrierenCard(0, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy), BaseLib.Abstracts.ITranscendenceCard
 {
+    public CardModel GetTranscendenceTransformedCard() => ModelDb.Card<EndlessFlow>();
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(3, ValueProp.Move)];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {

@@ -56,22 +56,6 @@
     "redistribution_review": "pending; local prototype only"
   },
   {
-    "file": "FrierenMod/images/cards/FullAhead.png",
-    "source": "src/main/resources/FrierenModResources/img/cards/FullAhead_p.png",
-    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
-    "sha256": "5fe009687e14f6f78496d6429893599aa77d001f613bf408a8b6bade4cdad559",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
-  },
-  {
-    "file": "FrierenMod/images/cards/Simmering.png",
-    "source": "src/main/resources/FrierenModResources/img/cards/Simmering_p.png",
-    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
-    "sha256": "bf87be2d37eb3e3b98bf400b0aaa24ecc49638ade035deb06dac66ec3de88c27",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
-  },
-  {
     "file": "FrierenMod/images/cards/Envy.png",
     "source": "src/main/resources/FrierenModResources/img/cards/HalfTheSky_p.png",
     "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
@@ -1073,14 +1057,6 @@
     "redistribution_review": "pending; local prototype only"
   },
   {
-    "file": "FrierenMod/images/cards/BackFlow.png",
-    "source": "src/main/resources/FrierenModResources/img/cards/BackFlow_p.png",
-    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
-    "sha256": "19666d243c44dc05211fe1fbd0557e84becc3f0f8b12ce4e8d8d8afa3db7e020",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
-  },
-  {
     "file": "FrierenMod/images/cards/Disperse.png",
     "source": "src/main/resources/FrierenModResources/img/cards/Disperse_p.png",
     "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
@@ -1153,14 +1129,6 @@
     "redistribution_review": "pending; local prototype only"
   },
   {
-    "file": "FrierenMod/images/cards/AccessoriesSpell.png",
-    "source": "src/main/resources/FrierenModResources/img/cards/AccessoriesSpell_p.png",
-    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
-    "sha256": "c39d213fa15204b34b5579ec987216a25001a2e7636c64da2c00a49d3f05ea66",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
-  },
-  {
     "file": "FrierenMod/images/cards/ApexMagic.png",
     "source": "src/main/resources/FrierenModResources/img/cards/ApexMagic_p.png",
     "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
@@ -1177,34 +1145,10 @@
     "redistribution_review": "pending; local prototype only"
   },
   {
-    "file": "FrierenMod/images/cards/FlyingMagic.png",
-    "source": "src/main/resources/FrierenModResources/img/cards/FlyingMagic_p.png",
-    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
-    "sha256": "c726265c80723892fde8a06670679c17393e3e375b3c236e043aa20359cb3da1",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
-  },
-  {
-    "file": "FrierenMod/images/cards/OpenTheWaygate.png",
-    "source": "src/main/resources/FrierenModResources/img/cards/OpenTheWaygate_p.png",
-    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
-    "sha256": "ef480e47842f6040ac3f9a4a6e4d27e555e8a0794be511e21a29ca125cadc05b",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
-  },
-  {
     "file": "FrierenMod/images/cards/Recall.png",
     "source": "src/main/resources/FrierenModResources/img/cards/Recall_p.png",
     "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
     "sha256": "5e11785cb8b188adada73871a9fa5a235a06ca75cba864a4ae72015c9ec96b49",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
-  },
-  {
-    "file": "FrierenMod/images/cards/RingletForm.png",
-    "source": "src/main/resources/FrierenModResources/img/cards/RingletForm_p.png",
-    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
-    "sha256": "c845c1df9da58939b96f23caafa455375eb0aa6b15f1d61e7377fc540f4c67fb",
     "modified": false,
     "redistribution_review": "pending; local prototype only"
   },
@@ -1369,14 +1313,6 @@
     "redistribution_review": "pending; local prototype only"
   },
   {
-    "file": "FrierenMod/images/cards/FrierenSuitcase.png",
-    "source": "src/main/resources/FrierenModResources/img/cards/FrierenSuitcase_p.png",
-    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
-    "sha256": "f871d0a4fced35812078b0948cdf7023ada7b237d0b2ed4c428c70dfadb2776e",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
-  },
-  {
     "file": "FrierenMod/images/cards/GrapeSpell.png",
     "source": "src/main/resources/FrierenModResources/img/cards/GrapeSpell_p.png",
     "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
@@ -1449,26 +1385,10 @@
     "redistribution_review": "pending; local prototype only"
   },
   {
-    "file": "FrierenMod/images/cards/PajamasForm.png",
-    "source": "src/main/resources/FrierenModResources/img/cards/PajamasForm_p.png",
-    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
-    "sha256": "e2e5e4fcbf2c9523ee1b18aa7e99c11bc02ff240e28da08551aa19f3b5d7a39a",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
-  },
-  {
     "file": "FrierenMod/images/cards/PancakeSpell.png",
     "source": "src/main/resources/FrierenModResources/img/cards/PancakeSpell_p.png",
     "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
     "sha256": "fbf8d04b12ba2285ade93f47a4c0861d343e203226665ded2979ffb82543ceb3",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
-  },
-  {
-    "file": "FrierenMod/images/cards/Perpetual.png",
-    "source": "src/main/resources/FrierenModResources/img/cards/Perpetual_p.png",
-    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
-    "sha256": "05d92fb401f452573526096eda754a13fac42f5f0c987718d5a04d584828adb8",
     "modified": false,
     "redistribution_review": "pending; local prototype only"
   },
@@ -1489,26 +1409,10 @@
     "redistribution_review": "pending; local prototype only"
   },
   {
-    "file": "FrierenMod/images/cards/RitesPreparation.png",
-    "source": "src/main/resources/FrierenModResources/img/cards/RitesPreparation_p.png",
-    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
-    "sha256": "e2ba65ea882508f4d36d0a96ebff12f3236ab02b744465b451270f59370f22b1",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
-  },
-  {
     "file": "FrierenMod/images/cards/SpeakFromHeartSpell.png",
     "source": "src/main/resources/FrierenModResources/img/cards/SayThinkingSpell_p.png",
     "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
     "sha256": "8669b4747f5cd5b09bd3770d8c9d0cf9500cd0b904f1477af4b35d82f8e37657",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
-  },
-  {
-    "file": "FrierenMod/images/cards/Trick.png",
-    "source": "src/main/resources/FrierenModResources/img/cards/Trick_p.png",
-    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
-    "sha256": "42aa8504fa1a3ed4b7f63cf3ad5fad0502bd7b41ee17c74eb93d7cdf90b5eef4",
     "modified": false,
     "redistribution_review": "pending; local prototype only"
   },
@@ -2502,14 +2406,6 @@
     "source": "src/main/resources/FrierenModResources/img/cards/Snuggle2.png",
     "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
     "sha256": "18b005990e21c861cd96504cb08f5dbf7758d52142819e09319e66c6ec475e90",
-    "modified": false,
-    "redistribution_review": "Original mod assets; see LICENSE.STS1"
-  },
-  {
-    "file": "FrierenMod/images/cards/ManaAffinity.png",
-    "source": "src/main/resources/FrierenModResources/img/cards/ManaAffinity.png",
-    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
-    "sha256": "67f673096f52858878466b0b0f3b75c62cff4ccfa25f08766ffd39b5ffc252c6",
     "modified": false,
     "redistribution_review": "Original mod assets; see LICENSE.STS1"
   },
@@ -3662,5 +3558,164 @@
     "conversion": "tools/prepare_music.py; only edge silence trimmed; matched loudness -18 LUFS / -1.5 dBTP; Ogg Vorbis q5 stereo 48kHz",
     "redistribution_review": "pending; local prototype only",
     "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc"
+  },
+  {
+    "file": "FrierenMod/images/cards/EndlessFlow.png",
+    "source": "TODOs.docx:word/media/image1.png",
+    "sha256": "b888f172097508a75c3ecc0dcb16bc363661e633b90f4c7e5474814dd1e167a3",
+    "modified": true,
+    "processing": "作者原图，去截图边缘后按500x380等比中心裁切；不生成或重绘。",
+    "crop": null
+  },
+  {
+    "file": "FrierenMod/images/cards/FrierenTheSlayer.png",
+    "source": "TODOs.docx:word/media/image2.jpeg",
+    "sha256": "c642258650bd81a8c4d062012b808838df0c3ad1030f51e0f634e40b45990487",
+    "modified": true,
+    "processing": "作者原图，去截图边缘后按500x380等比中心裁切；不生成或重绘。",
+    "crop": null
+  },
+  {
+    "file": "FrierenMod/images/cards/RingletForm.png",
+    "source": "TODOs.docx:word/media/image3.png",
+    "sha256": "fb35cd51e8b41410a7d9a12ad60467c9b8986d07d799b1eb02fca4a808a4c358",
+    "modified": true,
+    "processing": "作者原图，去截图边缘后按500x380等比中心裁切；不生成或重绘。",
+    "crop": [
+      0,
+      40,
+      2560,
+      1470
+    ]
+  },
+  {
+    "file": "FrierenMod/images/cards/PajamasForm.png",
+    "source": "TODOs.docx:word/media/image4.png",
+    "sha256": "2efee241ab9fb25afd2c81ba8b0cecd7e23353c642929fbe9c260c93a5ff66ff",
+    "modified": true,
+    "processing": "作者原图，去截图边缘后按500x380等比中心裁切；不生成或重绘。",
+    "crop": null
+  },
+  {
+    "file": "FrierenMod/images/cards/OpenTheWaygate.png",
+    "source": "TODOs.docx:word/media/image5.png",
+    "sha256": "2fad29bf58a80a69d72001684d9942042c6de9a9965acb5cebf76c6e5dbe31af",
+    "modified": true,
+    "processing": "作者原图，去截图边缘后按500x380等比中心裁切；不生成或重绘。",
+    "crop": [
+      0,
+      75,
+      2560,
+      1410
+    ]
+  },
+  {
+    "file": "FrierenMod/images/cards/FrierenSuitcase.png",
+    "source": "TODOs.docx:word/media/image6.png",
+    "sha256": "7ef2035cc109d51d68c797df64e74665bb37fc7c9837a1aef5389a268b845fa8",
+    "modified": true,
+    "processing": "作者原图，去截图边缘后按500x380等比中心裁切；不生成或重绘。",
+    "crop": [
+      0,
+      80,
+      2560,
+      1520
+    ]
+  },
+  {
+    "file": "FrierenMod/images/cards/Simmering.png",
+    "source": "TODOs.docx:word/media/image7.png",
+    "sha256": "147fc42e32e8a758c8b0cd6db8edc1d0581ace577e0fb0c4c79da9faddb3d4cb",
+    "modified": true,
+    "processing": "作者原图，去截图边缘后按500x380等比中心裁切；不生成或重绘。",
+    "crop": [
+      0,
+      80,
+      2560,
+      1520
+    ]
+  },
+  {
+    "file": "FrierenMod/images/cards/Perpetual.png",
+    "source": "TODOs.docx:word/media/image8.png",
+    "sha256": "a987913bca52cc5dbb3c43d8241ef550ce5cca8d7d15ea600e44dfa4c62831c1",
+    "modified": true,
+    "processing": "作者原图，去截图边缘后按500x380等比中心裁切；不生成或重绘。",
+    "crop": [
+      0,
+      80,
+      2560,
+      1520
+    ]
+  },
+  {
+    "file": "FrierenMod/images/powers/FrierenTheSlayerPower.png",
+    "source": "TODOs.docx:word/media/image2.jpeg",
+    "sha256": "f5acd0909752664d17525ddcd6fccee49cbe73c6ba3aaa6c601a3171790b11a7",
+    "modified": true,
+    "processing": "卡面原图中心裁切为84x84能力图标。"
+  },
+  {
+    "file": "FrierenMod/images/cards/AccessoriesSpell.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/AccessoriesSpell_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "99bd22bfa95e855062d554d81ca21c062ced13bacec2089f545df10ad2771ac8",
+    "modified": true,
+    "redistribution_review": "pending; local prototype only",
+    "processing": "去完整黑边与椭圆黑角（True），逆流另去顶端播放器提示；保持尺寸500x380，无重绘。"
+  },
+  {
+    "file": "FrierenMod/images/cards/BackFlow.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/BackFlow_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "48049f2e8e021291a09efbcf7a7e759de8d1420fefb73fadc933282bb9a99b4f",
+    "modified": true,
+    "redistribution_review": "pending; local prototype only",
+    "processing": "去完整黑边与椭圆黑角（True），逆流另去顶端播放器提示；保持尺寸500x380，无重绘。"
+  },
+  {
+    "file": "FrierenMod/images/cards/FlyingMagic.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/FlyingMagic_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "839d5dc6b2ea940dcc42325dfca0d337ca18770ff7856fe28cde37abd8e49ded",
+    "modified": true,
+    "redistribution_review": "pending; local prototype only",
+    "processing": "去完整黑边与椭圆黑角（True），逆流另去顶端播放器提示；保持尺寸500x380，无重绘。"
+  },
+  {
+    "file": "FrierenMod/images/cards/FullAhead.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/FullAhead_p.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "e2d13293cd8945402c383324b5a3d1b56c08222b98f37b4a61e902e72bb29b6c",
+    "modified": true,
+    "redistribution_review": "pending; local prototype only",
+    "processing": "去完整黑边与椭圆黑角（True），逆流另去顶端播放器提示；保持尺寸500x380，无重绘。"
+  },
+  {
+    "file": "FrierenMod/images/cards/ManaAffinity.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/ManaAffinity.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "cfa393a6b57f239455c39be8c966ee080664eb0f8d047734a555648d85d72311",
+    "modified": true,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1",
+    "processing": "去完整黑边与椭圆黑角（True），逆流另去顶端播放器提示；保持尺寸250x190，无重绘。"
+  },
+  {
+    "file": "FrierenMod/images/cards/RitesPreparation.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/RitesPreparation_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "dc5b1a2b115b1a1cede0cdad3facc6c507252aab78875bec39129bbf469f12f4",
+    "modified": true,
+    "redistribution_review": "pending; local prototype only",
+    "processing": "去完整黑边与椭圆黑角（True），逆流另去顶端播放器提示；保持尺寸500x380，无重绘。"
+  },
+  {
+    "file": "FrierenMod/images/cards/Trick.png",
+    "source": "src/main/resources/FrierenModResources/img/cards/Trick_p.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "8157c218f53c72b636924d04fe70d9193e0ea484c452afbd47182122168974bc",
+    "modified": true,
+    "redistribution_review": "pending; local prototype only",
+    "processing": "去完整黑边与椭圆黑角（True），逆流另去顶端播放器提示；保持尺寸500x380，无重绘。"
   }
 ]

@@ -69,7 +69,7 @@
   "FRIERENMOD-OIL_SPELL.title": "Oil-Cleaning Spell",
   "FRIERENMOD-OIL_SPELL.description": "[gold]Legendary Magic[/gold].\nDeal {Damage:diff()} damage and apply {Vulnerable:diff()} [gold]Vulnerable[/gold] to ALL enemies. If none are killed, repeat once.",
   "FRIERENMOD-PAPER_PLANE_SPELL.title": "Paper Plane Spell",
-  "FRIERENMOD-PAPER_PLANE_SPELL.description": "[gold]Legendary Magic[/gold].\nYour attacks deal double damage while this turn's longest [gold]Synchro[/gold] streak is {Upgraded:cond:at least|greater than} last turn's record.\n(This turn: {Current}. Last turn: {Previous}.)",
+  "FRIERENMOD-PAPER_PLANE_SPELL.description": "[gold]Legendary Magic[/gold].\nYour attacks deal double damage while this turn's longest [gold]Synchro[/gold] streak is {Upgraded:cond:at least|greater than} the highest record from earlier turns this combat.\n(This turn: {Current}. Previous best: {Previous}.)",
   "FRIERENMOD-RUST_CLEAN_MAGIC.title": "Rust Removal Spell",
   "FRIERENMOD-RUST_CLEAN_MAGIC.description": "[gold]Legendary Spell[/gold].\nIf you have any Debuffs, remove all your Debuffs. Otherwise, gain {Energy:energyIcons()}.",
   "FRIERENMOD-LIGHTNING_MAGIC.title": "Destructive Lightning",
@@ -285,5 +285,9 @@
   "FRIERENMOD-SNUGGLE2.title": "Snuggle with Stark",
   "FRIERENMOD-SNUGGLE2.description": "Add 1 [gold]Mana[/gold] to your Hand.",
   "FRIERENMOD-AURA_DISPEL.title": "Dispel Magic",
-  "FRIERENMOD-AURA_DISPEL.description": "Destroy a Controlled Soldier, triggering [gold]Soul Release[/gold]."
+  "FRIERENMOD-AURA_DISPEL.description": "Destroy a Controlled Soldier, triggering [gold]Soul Release[/gold].",
+  "FRIERENMOD-ENDLESS_FLOW.title": "Endless Flow",
+  "FRIERENMOD-ENDLESS_FLOW.description": "Add 1 [gold]Mana[/gold] to each of your draw pile, hand, and discard pile. Deal damage to ALL enemies equal to your total Mana.",
+  "FRIERENMOD-FRIEREN_THE_SLAYER.title": "Frieren the Slayer",
+  "FRIERENMOD-FRIEREN_THE_SLAYER.description": "At the start of each turn, choose 1 {Upgraded:cond:upgraded |}card whose Chinese name contains “魔法” and add it to your hand. It is free to play this turn."
 }

@@ -12,8 +12,8 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace FrierenMod.Scripts.Cards;
 
-// 作者新设计：记录每个玩家回合最高连续同调，原生历史提供上回合数据。
-public sealed class PaperPlaneSpell() : LegendaryCard(1, CardType.Power, CardRarity.Rare, TargetType.Self)
+// 比较本回合最高连续同调与此前回合的战斗最高记录。
+public sealed class PaperPlaneSpell() : LegendaryCard(2, CardType.Power, CardRarity.Rare, TargetType.Self)
 {
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play) {
         var power=Owner.Creature.GetPower<PaperPlanePower>() ?? await PowerCmd.Apply<PaperPlanePower>(context,Owner.Creature,1,Owner.Creature,this);
@@ -22,7 +22,7 @@ public sealed class PaperPlaneSpell() : LegendaryCard(1, CardType.Power, CardRar
     protected override void AddExtraArgsToDescription(MegaCrit.Sts2.Core.Localization.LocString description) {
         base.AddExtraArgsToDescription(description);
         description.Add("Current",IsMutable ? PaperPlanePower.TurnRecord(Owner) : 0);
-        description.Add("Previous",IsMutable ? PaperPlanePower.TurnRecord(Owner,true) : 0);
+        description.Add("Previous",IsMutable ? PaperPlanePower.BattleRecord(Owner) : 0);
     }
     protected override void OnUpgrade() { }
 }
