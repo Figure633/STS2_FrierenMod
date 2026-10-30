@@ -22,6 +22,7 @@ public static class DerivedCardPreviews
             DefensiveMagic => new[] { typeof(SecondDefensiveMagic) },
             FlowerFieldSpell => [typeof(BlueMoonWeed)],
             FireSpell => [typeof(LittleFire)],
+            KindlingSpark => [typeof(LittleFire)],
             RedAppleSpell => [typeof(GreenApple)],
             FiveMinutesMore => [typeof(Laziness)],
             ElementsBombing => [typeof(Ice), typeof(Fire), typeof(Thunder), typeof(Dark), typeof(Light)],
@@ -34,7 +35,7 @@ public static class DerivedCardPreviews
             if (!explicitTypes.Contains(type) && !description.Contains(canonical.Title, StringComparison.OrdinalIgnoreCase)) continue;
             var preview = canonical.ToMutable();
             if (readable.Owner is { } owner) preview.Owner = owner;
-            bool upgraded = readable.IsUpgraded && explicitTypes.Contains(type) && source is not FiveMinutesMore;
+            bool upgraded = readable.IsUpgraded && explicitTypes.Contains(type) && source is not FiveMinutesMore and not KindlingSpark;
             if (upgraded && preview.MaxUpgradeLevel > 0) { preview.UpgradeInternal(); preview.FinalizeUpgradeInternal(); }
             previews.Add(preview);
         }

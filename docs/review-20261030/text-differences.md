@@ -1,6 +1,6 @@
 # 二代中文增补文本核对清单
 
-核对日期：2026-10-30。当前版本：0.10.3。扫描 1067 条中文本地化，460 条与完整一代原文一致（忽略格式、空白和标点），其余 607 条全部列出。
+核对日期：2026-10-30。当前版本：0.10.4。扫描 1069 条中文本地化，460 条与完整一代原文一致（忽略格式、空白和标点），其余 609 条全部列出。
 
 这是可复核的差异清单，不能仅凭措辞确认是谁写的或是否由 AI 生成。作者已确认的二代规则、新内容、原生界面所需提示和未经确认的扩写都会出现在差异中；本次不自动删除。近似一代文案用于对照，不等于已确认的映射。所有字段保留在同目录 JSON。
 
@@ -315,7 +315,7 @@
 | THE_ARCHITECT.talk.FRIERENMOD-FRIEREN.2-1r.next | 回应 | [免费小吃] #g回复  #g [events.json / FrierenMod:FoodEvent.OPTIONS[0]] | 应 |
 | THE_ARCHITECT.talk.FRIERENMOD-FRIEREN.2-2r.char | 至少，下一次不会白来。 | 未找到近似原文 | 整段新增或需人工对照 |
 | THE_ARCHITECT.talk.FRIERENMOD-FRIEREN.2-endattack | Both | 未找到近似原文 | 整段新增或需人工对照 |
-## cards.json（159 条）
+## cards.json（161 条）
 
 | ID | 二代当前全文 | 一代对照原文 | 归一化新增/替换片段 |
 |---|---|---|---|
@@ -478,6 +478,8 @@
 | FRIERENMOD-ENDLESS_FLOW.description | 向抽牌堆、手牌和弃牌堆各加入1张[gold]魔力[/gold]。对所有敌人造成等同于你的魔力总数的伤害。 | 在每回合结束时，消耗所有 *魔力 ，对所有敌人造成消耗的 *魔力 数量4倍的伤害。 [cards.json / FrierenMod:PajamasForm.DESCRIPTION] | 向抽牌堆手牌和弃牌堆各加入1张 / 等同于你 / 总 |
 | FRIERENMOD-FRIEREN_THE_SLAYER.title | 葬送的芙莉莲 | 蓝图芙莉莲 [cards.json / FrierenMod:BluePrint.NAME] | 葬送的 |
 | FRIERENMOD-FRIEREN_THE_SLAYER.description | 每回合开始时，从所有中文卡名含“魔法”的{Upgraded:cond:升级\|}卡牌中选择1张加入手牌。本回合可免费打出。 | 未找到近似原文 | 整段新增或需人工对照 |
+| FRIERENMOD-KINDLING_SPARK.title | 星星之火 | 星星 [cards.json / FrierenMod:DrawOption.NAME] | 之火 |
+| FRIERENMOD-KINDLING_SPARK.description | 对所有敌人造成{Damage:diff()}点伤害。将{Upgraded:cond:X+1\|X}张[gold]小小火花[/gold]加入手牌。{InCombat:cond:<br>（加入{ActualSparks}张小小火花）\|} | 未找到近似原文 | 整段新增或需人工对照 |
 ## characters.json（9 条）
 
 | ID | 二代当前全文 | 一代对照原文 | 归一化新增/替换片段 |
@@ -673,7 +675,7 @@
 | Scripts/Frieren/Mechanics/ChantCmd.cs:47 | Frieren: 没有可用咏唱槽位；检查装载与各牌堆魔力。 |
 | Scripts/Frieren/Mechanics/ChantCmd.cs:81 | Frieren: {option.Slot} {option.SpellId} X={option.Intensity} 支付={option.Cost} |
 | Scripts/Frieren/Mechanics/FactorEffects.cs:75 | 因子未结算：{option.SpellId} |
-| Scripts/Frieren/Mechanics/FrierenCardAvailability.cs:61 | 跨角色卡池接口发生变化： |
+| Scripts/Frieren/Mechanics/FrierenCardAvailability.cs:62 | 跨角色卡池接口发生变化： |
 | Scripts/Frieren/Mechanics/MagicDeckCmd.cs:148 | Frieren: 初始槽位 {deck.DraftSlot} 装载 {factor.FactorId} |
 | Scripts/Frieren/Mechanics/ManaPayment.cs:25 | 用于代付能量的魔力不足。 |
 | Scripts/Frieren/Presentation/ManaAnimationSpeed.cs:103 | 正式版牌堆补间接口改变，需核查咏唱速度 |

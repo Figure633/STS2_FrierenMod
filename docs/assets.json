@@ -3717,5 +3717,11 @@
     "modified": true,
     "redistribution_review": "pending; local prototype only",
     "processing": "去完整黑边与椭圆黑角（True），逆流另去顶端播放器提示；保持尺寸500x380，无重绘。"
+  },
+  {
+    "file": "FrierenMod/images/cards/KindlingSpark.png",
+    "source": "卡名对照表.xlsx!/xl/media/image1.png（作者确认用于星星之火）",
+    "sha256": "4ee54639841cc7c1d4826a2e468020fc31bb761147e3bbbefa4d02af56adc04d",
+    "modified": false
   }
 ]

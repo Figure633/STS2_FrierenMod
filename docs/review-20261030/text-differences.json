@@ -1,5 +1,5 @@
 {
-  "total": 1067,
+  "total": 1069,
   "unchangedIgnoringFormat": 460,
   "differences": [
     {
@@ -2425,6 +2425,31 @@
       "current": "每回合开始时，从所有中文卡名含“魔法”的{Upgraded:cond:升级|}卡牌中选择1张加入手牌。本回合可免费打出。",
       "legacy": null,
       "similarity": 0.34,
+      "extraFragments": [],
+      "status": "未找到近似一代原文"
+    },
+    {
+      "table": "cards.json",
+      "key": "FRIERENMOD-KINDLING_SPARK.title",
+      "current": "星星之火",
+      "legacy": {
+        "source": "cards.json",
+        "key": "FrierenMod:DrawOption.NAME",
+        "text": "星星",
+        "norm": "星星"
+      },
+      "similarity": 0.667,
+      "extraFragments": [
+        "之火"
+      ],
+      "status": "改写或增补待审"
+    },
+    {
+      "table": "cards.json",
+      "key": "FRIERENMOD-KINDLING_SPARK.description",
+      "current": "对所有敌人造成{Damage:diff()}点伤害。将{Upgraded:cond:X+1|X}张[gold]小小火花[/gold]加入手牌。{InCombat:cond:\n（加入{ActualSparks}张小小火花）|}",
+      "legacy": null,
+      "similarity": 0.236,
       "extraFragments": [],
       "status": "未找到近似一代原文"
     },

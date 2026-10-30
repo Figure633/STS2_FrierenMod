@@ -1,38 +1,34 @@
 # 模组体积核对
 
-2026-10-30，0.10.3。MiB = 1,048,576 字节。仅统计发行内容，不把工作区、原始资料、Git历史和测试输出当成安装大小。
+2026-10-30，0.10.4。MiB = 1,048,576 字节。仅统计发行内容，不把工作区、原始资料、Git历史和测试输出当成安装大小。
 
 | 发行文件 | MiB |
 |---|---:|
 | FrierenMod.dll | 0.60 |
 | FrierenMod.json | 0.00 |
-| FrierenMod.pck | 304.89 |
+| FrierenMod.pck | 231.16 |
 | LICENSE.STS1 | 0.00 |
 | LICENSE.WATCHER | 0.00 |
 | README.md | 0.03 |
 
 | 打包资源分类 | MiB |
 |---|---:|
-| 其余原图片和图层 | 73.65 |
-| 纹理及其他Godot导入副本 | 49.60 |
+| 其余原图片和图层 | 73.99 |
+| 纹理及其他Godot导入副本 | 49.76 |
 | 音频导入副本 | 43.75 |
 | 20首BGM原音频 | 42.35 |
-| 原字体 | 39.29 |
-| 字体导入副本 | 34.95 |
 | 卡槽背景原图 | 19.03 |
 | 本地化、场景和其他资源 | 1.73 |
 | 其他原音频 | 0.34 |
 
-当前导出脚本将 `FrierenMod/` 全目录原文件，以及 `.import` 指向的 Godot 导入副本一起打包。图片原 PNG 与导入纹理、音频原文件与导入流会同时占体积。PCK 是打包容器，不会自动把所有文件再做一次通用压缩。
+0.10.4起成就悬停直接复用二代字体。四份一代字体仅保留为仓库资料，原字体约39.29MiB及导入副本约34.95MiB均不再打入发行包。
+
+其余 `FrierenMod/` 资源原文件和 `.import` 指向的 Godot 导入副本仍一起打包。图片原 PNG 与导入纹理、音频原文件与导入流会同时占体积。PCK 是打包容器，不会自动把所有文件再做一次通用压缩。
 
 可以进一步按引用排除未使用资源、停止重复装入可省略的原文件，但要同时验证 Godot 导入路径、直接 FileAccess 读取和纹理/音频运行时加载；本批先统计，不擅自删原图、音频或作者资料。
 
 | 最大单项（含导入副本） | MiB |
 |---|---:|
-| FrierenMod/fonts/SourceHanSerifSC-Bold.otf | 23.54 |
-| .godot/imported/SourceHanSerifSC-Bold.otf-4004d77402818824da8fb8da43c5b69f.fontdata | 21.04 |
-| FrierenMod/fonts/NotoSansMonoCJKsc-Regular.otf | 15.65 |
-| .godot/imported/NotoSansMonoCJKsc-Regular.otf-72334ed58cf01eeeef70cfae5a20c7ba.fontdata | 13.85 |
 | .godot/imported/south_hero.ogg-0d464658e5279b0e0067ffc710e791b1.oggvorbisstr | 3.49 |
 | FrierenMod/audio/bgm/south_hero.ogg | 3.42 |
 | .godot/imported/divine_revolte.ogg-42be1bba43ec22a9711a471cd59d4bae.oggvorbisstr | 3.29 |
@@ -59,3 +55,7 @@
 | FrierenMod/audio/bgm/odd_clouds.ogg | 2.07 |
 | .godot/imported/sleepy_frieren.ogg-8c19d40ec8f47a4efba8a724197d1e7a.oggvorbisstr | 2.00 |
 | .godot/imported/waltz.ogg-ef8320ecd3c05da345d61d3e0c10e93c.oggvorbisstr | 1.99 |
+| FrierenMod/audio/bgm/sleepy_frieren.ogg | 1.96 |
+| FrierenMod/audio/bgm/waltz.ogg | 1.95 |
+| .godot/imported/grassy_turtles.ogg-af22bc113d354d47d2d9926e7b002c3d.oggvorbisstr | 1.93 |
+| .godot/imported/deep_dungeon.ogg-ce33dca69c706efbfb04827b9653baaa.oggvorbisstr | 1.89 |

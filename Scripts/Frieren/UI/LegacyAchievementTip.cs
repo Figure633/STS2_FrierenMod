@@ -1,5 +1,6 @@
 using Godot;
 using MegaCrit.Sts2.Core.Localization;
+using MegaCrit.Sts2.Core.Localization.Fonts;
 
 namespace FrierenMod.Scripts.UI;
 
@@ -18,11 +19,9 @@ public partial class LegacyAchievementTip : PanelContainer
 
     public static void ApplyFont(Label label, bool title)
     {
-        bool chinese = LocManager.Instance.Language == "zhs";
-        string file = chinese ? (title ? "SourceHanSerifSC-Bold.otf" : "NotoSansMonoCJKsc-Regular.otf")
-            : (title ? "Kreon-Bold.ttf" : "Kreon-Regular.ttf");
         int size = title ? 23 : 22;
-        var font = GD.Load<Font>($"res://FrierenMod/fonts/{file}");
+        var font = FontManager.GetSubstituteFont(LocManager.Instance.Language, title ? FontType.Bold : FontType.Regular)
+            ?? GD.Load<Font>(title ? "res://themes/kreon_bold_shared.tres" : "res://themes/kreon_regular_shared.tres");
         int trim = (title ? 32 : 26) - (int)Mathf.Ceil(font.GetHeight(size));
         var variation = new FontVariation { BaseFont = font, SpacingTop = trim / 2, SpacingBottom = trim - trim / 2 };
         label.AddThemeFontOverride("font", variation);

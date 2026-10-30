@@ -11,6 +11,16 @@ func _initialize():
 		push_error("Cannot mount PCK")
 		quit(1)
 		return
+	for font in ["SourceHanSerifSC-Bold.otf", "NotoSansMonoCJKsc-Regular.otf", "Kreon-Regular.ttf", "Kreon-Bold.ttf"]:
+		if FileAccess.file_exists("res://FrierenMod/fonts/" + font):
+			push_error("Duplicate game font packed: " + font)
+			quit(1)
+			return
+	for font in ["res://themes/fonts/zhs/noto_sans_mono_cjksc_regular_shared.tres", "res://themes/fonts/zhs/source_han_serif_sc_bold_shared.tres", "res://themes/kreon_regular_shared.tres", "res://themes/kreon_bold_shared.tres"]:
+		if not load(font) is Font:
+			push_error("Missing native font: " + font)
+			quit(1)
+			return
 	for script in ["MagicFactorButton", "MagicBookPointerInput", "MagicBookView", "AuraScalesHud", "NowPlayingNotice", "RecordDisc"]:
 		if not FileAccess.file_exists("res://Scripts/Frieren/UI/" + script + ".cs"):
 			push_error("Missing UI script: " + script)

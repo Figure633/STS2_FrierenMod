@@ -289,5 +289,7 @@
   "FRIERENMOD-ENDLESS_FLOW.title": "生生流转",
   "FRIERENMOD-ENDLESS_FLOW.description": "向抽牌堆、手牌和弃牌堆各加入1张[gold]魔力[/gold]。对所有敌人造成等同于你的魔力总数的伤害。",
   "FRIERENMOD-FRIEREN_THE_SLAYER.title": "葬送的芙莉莲",
-  "FRIERENMOD-FRIEREN_THE_SLAYER.description": "每回合开始时，从所有中文卡名含“魔法”的{Upgraded:cond:升级|}卡牌中选择1张加入手牌。本回合可免费打出。"
+  "FRIERENMOD-FRIEREN_THE_SLAYER.description": "每回合开始时，从所有中文卡名含“魔法”的{Upgraded:cond:升级|}卡牌中选择1张加入手牌。本回合可免费打出。",
+  "FRIERENMOD-KINDLING_SPARK.title": "星星之火",
+  "FRIERENMOD-KINDLING_SPARK.description": "对所有敌人造成{Damage:diff()}点伤害。将{Upgraded:cond:X+1|X}张[gold]小小火花[/gold]加入手牌。{InCombat:cond:\n（加入{ActualSparks}张小小火花）|}"
 }

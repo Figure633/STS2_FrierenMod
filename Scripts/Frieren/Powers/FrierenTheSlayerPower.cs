@@ -32,7 +32,7 @@ public sealed class FrierenTheSlayerPower : FrierenPower
             _spellIds = names.Where(p => p.Key.EndsWith(".title") && p.Value.Contains("魔法"))
                 .Select(p => p.Key[..^6]).ToHashSet(StringComparer.Ordinal);
         }
-        return ModelDb.AllCards.Where(c => _spellIds.Contains(c.Id.Entry) && c is not FactorCard and not MagicPropCard)
+        return ModelDb.AllCards.Where(c => _spellIds.Contains(c.Id.Entry) && !Mechanics.FrierenCardAvailability.IsRetired(c) && c is not FactorCard and not MagicPropCard)
             .OrderBy(c => c.Id.ToString(), StringComparer.Ordinal);
     }
 

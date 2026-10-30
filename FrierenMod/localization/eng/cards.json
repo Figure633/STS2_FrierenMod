@@ -289,5 +289,7 @@
   "FRIERENMOD-ENDLESS_FLOW.title": "Endless Flow",
   "FRIERENMOD-ENDLESS_FLOW.description": "Add 1 [gold]Mana[/gold] to each of your draw pile, hand, and discard pile. Deal damage to ALL enemies equal to your total Mana.",
   "FRIERENMOD-FRIEREN_THE_SLAYER.title": "Frieren the Slayer",
-  "FRIERENMOD-FRIEREN_THE_SLAYER.description": "At the start of each turn, choose 1 {Upgraded:cond:upgraded |}card whose Chinese name contains “魔法” and add it to your hand. It is free to play this turn."
+  "FRIERENMOD-FRIEREN_THE_SLAYER.description": "At the start of each turn, choose 1 {Upgraded:cond:upgraded |}card whose Chinese name contains “魔法” and add it to your hand. It is free to play this turn.",
+  "FRIERENMOD-KINDLING_SPARK.title": "A Single Spark",
+  "FRIERENMOD-KINDLING_SPARK.description": "Deal {Damage:diff()} damage to ALL enemies. Add {Upgraded:cond:X+1|X} [gold]Little Sparks[/gold] to your hand.{InCombat:cond:\n(Add {ActualSparks} Little Sparks.)|}"
 }

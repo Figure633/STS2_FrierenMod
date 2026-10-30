@@ -45,6 +45,9 @@ func _initialize():
 	quit(0)
 
 func collect(path: String, files: Array[String]):
+	# 成就悬停复用二代自带字体；一代原字体保留为资料，不重复分发。
+	if path == "res://FrierenMod/fonts":
+		return
 	var dir = DirAccess.open(path)
 	for file in dir.get_files():
 		files.append(path.path_join(file))

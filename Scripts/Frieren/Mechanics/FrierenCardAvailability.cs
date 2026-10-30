@@ -17,9 +17,10 @@ namespace FrierenMod.Scripts.Mechanics;
 // 统一限制随机获取；模型注册、百科、旧档和芙莉莲本人的卡池不受影响。
 public static class FrierenCardAvailability
 {
+    public static bool IsRetired(CardModel card) => card is TimeConcept or ViolentExorcism or BackFlow or BreaksBarriersSpell or FireSpell;
     public static bool IsRandomCandidate(CardModel card) =>
         card.Rarity is CardRarity.Common or CardRarity.Uncommon or CardRarity.Rare &&
-        card is not FactorCard and not MagicPropCard and not TimeConcept and not ViolentExorcism and not Flow and not IGeneratedOnlyCard;
+        !IsRetired(card) && card is not FactorCard and not MagicPropCard and not Flow and not IGeneratedOnlyCard;
 
     public static IEnumerable<CardPoolModel> Pools(IEnumerable<CardPoolModel> pools, Player player) =>
         player.Character is Frieren ? pools : pools.Where(pool => pool is not FrierenCardPool);
