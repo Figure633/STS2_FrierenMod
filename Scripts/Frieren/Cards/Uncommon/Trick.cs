@@ -14,7 +14,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace FrierenMod.Scripts.Cards;
 
-public sealed class Trick() : FrierenCard(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
+public sealed class Trick() : FrierenCard(1, CardType.Power, CardRarity.Uncommon, TargetType.Self, showInLibrary: false)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Amount", 1)];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)

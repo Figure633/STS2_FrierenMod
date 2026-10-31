@@ -44,7 +44,8 @@ public static class CardPresentationFixTests
         Check(player.Creature.GetPowerAmount<ShrinkPower>()==1,"看扁仅获得1回合缩小");
         await player.Creature.GetPower<ShrinkPower>()!.AfterSideTurnEnd(context,CombatSide.Player,[player.Creature]);
         Check(!player.Creature.HasPower<ShrinkPower>(),"缩小在本回合结束消失");
-        foreach(var model in new CardModel[]{ModelDb.Card<Trick>(),ModelDb.Card<ManaConcealment>()}) {
+        foreach(var model in new CardModel[]{ModelDb.Card<Trick>(),ModelDb.Card<ManaConcealment>(),ModelDb.Card<FireSpell>()}) {
+            if(model is Trick or FireSpell) Check(!model.ShouldShowInCardLibrary,model.Id+"不显示在百科");
             Check(FrierenCardAvailability.IsRetired(model),model.Id+"已弃用");
             Check(!model.CanBeGeneratedInCombat&&!model.CanBeGeneratedByModifiers,model.Id+"不再生成");
             Check(!FrierenCardAvailability.Cards([model],player).Any(),model.Id+"不在商店/奖励候选");

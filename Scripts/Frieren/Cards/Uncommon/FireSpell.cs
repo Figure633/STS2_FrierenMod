@@ -14,7 +14,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace FrierenMod.Scripts.Cards;
 
-public sealed class FireSpell() : FrierenCard(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+public sealed class FireSpell() : FrierenCard(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self, showInLibrary: false)
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
