@@ -22,6 +22,11 @@ using MegaCrit.Sts2.Core.Unlocks;
 public static class AchievementPresentationTests
 {
     private static bool SkipStartup() => false;
+    private static Vector2? _pointer;
+    private static bool Pointer(ref Vector2 __result) {
+        if (_pointer is not {} point) return true;
+        __result=point; return false;
+    }
     private static NOverlayStack? _stack;
     private static bool Stack(ref NOverlayStack? __result) { __result = _stack; return false; }
 
@@ -86,6 +91,19 @@ public static class AchievementPresentationTests
         await Snapshot("achievement-in-run");
         var tip = library.GetNode<Control>("LibraryCanvas/BackTooltip");
         var grid = library.GetNode<Control>("LibraryCanvas/BackScroll/BackGrid");
+        // 只模拟静止指针的位置；触发真实滚动条、延迟回调及提示计时器，不补发MouseEntered。
+        patch.Patch(AccessTools.Method(typeof(CanvasItem),nameof(CanvasItem.GetGlobalMousePosition)),prefix:new HarmonyMethod(typeof(AchievementPresentationTests),nameof(Pointer)));
+        var scroll = library.GetNode<ScrollContainer>("LibraryCanvas/BackScroll");
+        scroll.ScrollVertical=0;await Tick();
+        _pointer=grid.GetChildren().OfType<Control>().First().GetNode<TextureButton>("SelectBack_0001").GetGlobalRect().GetCenter();
+        scroll.ScrollVertical=400;await Tick();
+        var underPointer=grid.GetChildren().OfType<Control>().SelectMany(c=>c.GetChildren().OfType<TextureButton>()).Single(c=>c.GetGlobalRect().HasPoint(_pointer.Value));
+        library.GetNode<Godot.Timer>("LibraryCanvas/HoverDelay").EmitSignal(Godot.Timer.SignalName.Timeout);await Tick();
+        Check(tip.Visible&&tip.GetNode<Label>("Contents/Title").Text==SlotBackLibrary.Text("BACK."+underPointer.Name.ToString()[11..]+".title"),"滚轮移入新卡背且鼠标不动时仍显示新成就说明");
+        _pointer=scroll.GetGlobalRect().End+new Vector2(10,10);scroll.ScrollVertical+=1;await Tick();
+        library.GetNode<Godot.Timer>("LibraryCanvas/HoverDelay").EmitSignal(Godot.Timer.SignalName.Timeout);await Tick();
+        Check(!tip.Visible,"指针在滚动区外时不显示过期成就信息");
+        _pointer=null;
         foreach (string id in new[] { "1001", "4015" }) {
             var card = grid.GetNode<TextureButton>($"Back_{id}/SelectBack_{id}");
             library.GetNode<ScrollContainer>("LibraryCanvas/BackScroll").EnsureControlVisible(card); await Tick();

@@ -1,3 +1,3 @@
 namespace FrierenMod.Scripts.Cards;
 
-public sealed class TransferToAlchemist : FactorCard;
+public sealed class TransferToAlchemist() : FactorCard(showInLibrary: false);

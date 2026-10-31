@@ -11,6 +11,7 @@ namespace FrierenMod.Scripts.Powers;
 
 public sealed class SleepInPower : FrierenPower
 {
+    public override PowerType Type => PowerType.Debuff;
     public int StoredEnergy { get; private set; }
     public override PowerStackType StackType => PowerStackType.Single;
     public override LocString Description { get { var text = base.Description; text.Add("StoredEnergy", StoredEnergy); return text; } }

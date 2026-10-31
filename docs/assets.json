@@ -241,11 +241,12 @@
   },
   {
     "file": "FrierenMod/images/cards/GrossedOutLook.png",
-    "source": "src/main/resources/FrierenModResources/img/cards/GrossedOutLook_p.png",
+    "source": "../png/嫌弃脸.png",
     "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
-    "sha256": "ba8c73cf5609e05f06e145b85c935e184a30171f0f70dbe57424813ad76cc7a1",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
+    "sha256": "9e76671262e8ad078a2c7f26150e2982533f9d12df251d397b5a52ebac694953",
+    "modified": true,
+    "redistribution_review": "pending; local prototype only",
+    "processing": "保留作者构图与原图像素；按原生卡框等比显示。"
   },
   {
     "file": "FrierenMod/images/cards/HighSpeedMovement.png",
@@ -3766,12 +3767,12 @@
   },
   {
     "file": "FrierenMod/images/cards/FullAhead.png",
-    "source": "src/main/resources/FrierenModResources/img/cards/FullAhead_p.png",
+    "source": "作者工作区原图",
     "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
-    "sha256": "e2d13293cd8945402c383324b5a3d1b56c08222b98f37b4a61e902e72bb29b6c",
+    "sha256": "4ea958e5c7c924ccd7e8c62b5d1161e34fc6596a899b8a855cf092d193ba169e",
     "modified": true,
     "redistribution_review": "pending; local prototype only",
-    "processing": "去完整黑边与椭圆黑角（True），逆流另去顶端播放器提示；保持尺寸500x380，无重绘。"
+    "processing": "保留作者构图与原图像素；按原生卡框等比显示。"
   },
   {
     "file": "FrierenMod/images/cards/ManaAffinity.png",
@@ -5091,5 +5092,12 @@
     "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
     "redistribution_review": "source provenance retained; pending in-game author review",
     "sha256": "b0f9188583b228d97fe41ccf4e4874fb22a23ad4a6b1441b358667bff64facfa"
+  },
+  {
+    "file": "FrierenMod/images/cards/EnchantedStrike.png",
+    "source": "../png/EnchantedStrike.png",
+    "modified": true,
+    "sha256": "4c0942b203c9f3344f240b3f68b219602f8ef7d1fd5e03cbab9b2b7e9a7a4d50",
+    "processing": "保留作者构图与原图像素；按原生卡框等比显示。"
   }
 ]

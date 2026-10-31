@@ -48,7 +48,7 @@ public static class MagicPropRules
         var deck = MagicDeckState.FromJson(original.ToJson());
         string RandomFactor(FactorRarity? rarity = null)
         {
-            var pool = SpellCatalog.All.Where(f => !f.Puzzle && (rarity == null || f.Rarity == rarity)).ToArray();
+            var pool = SpellCatalog.Available.Where(f => !f.Puzzle && (rarity == null || f.Rarity == rarity)).ToArray();
             return pool[next(pool.Length)].Id;
         }
         int heal = 0, energy = 0;

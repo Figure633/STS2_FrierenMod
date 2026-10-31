@@ -10,6 +10,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using FrierenMod.Scripts.Powers;
 using MegaCrit.Sts2.Core.Logging;
+using MegaCrit.Sts2.Core.Models.Relics;
 
 namespace FrierenMod.Scripts.Mechanics;
 
@@ -44,6 +45,9 @@ public static class ChantCmd
         var player = play.Card.Owner;
         await MagicDeckCmd.ChooseStartingFactors(context, player);
         var options = Choices(player, intensity);
+        // 低语耳环的原生选择器总是取第一项；不把无法支付的展示项交给它。
+        // 手动咏唱仍显示全部槽位，保留灰显与费用预览。
+        if (CardSelectCmd.Selector is VakuuCardSelector) options = options.Where(choice => choice.CanSelect).ToArray();
         if (!options.Any(option => option.CanSelect)) { Log.Info("Frieren: 没有可用咏唱槽位；检查装载与各牌堆魔力。"); return null; }
         var free = player.Creature.GetPower<ChantWithoutManaPower>() == null ? player.Creature.GetPower<ChantWithoutManaTimesPower>() : null;
         var cards = options.Select(choice => FactorCard.Create(player, choice.Option.SpellId,

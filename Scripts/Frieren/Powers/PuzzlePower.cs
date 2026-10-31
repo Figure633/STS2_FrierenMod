@@ -22,6 +22,7 @@ namespace FrierenMod.Scripts.Powers;
 
 public sealed class PuzzlePower : TurnOnlyPower
 {
+    public override PowerType Type => PowerType.None;
     // 保留原模型 ID，作为本回合的隐藏顺序状态；三个线索使用各自的可见能力。
     public const int BrokenSequence = 4;
     [SavedProperty]

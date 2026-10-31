@@ -27,8 +27,7 @@ public sealed class Underestimated() : FrierenCard(1, CardType.Skill, CardRarity
     protected override IEnumerable<DynamicVar> CanonicalVars => [new EnergyVar(2)];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
-        if (!Owner.Creature.HasPower<ShrinkPower>())
-            await PowerCmd.Apply<ShrinkPower>(context, Owner.Creature, ShrinkTurns, Owner.Creature, this);
+        await PowerCmd.Apply<ShrinkPower>(context, Owner.Creature, ShrinkTurns, Owner.Creature, this);
         await PowerCmd.Apply<EnergyNextTurnPower>(context, Owner.Creature, DynamicVars.Energy.BaseValue, Owner.Creature, this);
         await PowerCmd.Apply<DrawCardsNextTurnPower>(context, Owner.Creature, 1, Owner.Creature, this);
     }

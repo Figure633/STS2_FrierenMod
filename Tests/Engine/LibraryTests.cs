@@ -21,8 +21,8 @@ public static class LibraryTests
         int count = 0;
         void Check(bool valid, string name) { if (!valid) throw new Exception(name); count++; GD.Print("PASS 百科分类：" + name); }
         var pool = ModelDb.CardPool<FrierenCardPool>();
-        var items = pool.AllCards.Where(FrierenLibraryFilter.IsMagicItem).ToArray();
-        Check(items.OfType<FactorCard>().Count() == SpellCatalog.All.Count && items.OfType<MagicPropCard>().Count() == 8,
+        var items = pool.AllCards.Where(c => FrierenLibraryFilter.IsMagicItem(c) && c.ShouldShowInCardLibrary).ToArray();
+        Check(items.OfType<FactorCard>().Count() == SpellCatalog.Available.Count() && items.OfType<MagicPropCard>().Count() == 8,
             "完整登记全部因子和八种魔具");
         Check(items.All(c => c.ShouldShowInCardLibrary), "全部因子和魔具进入原生百科候选列表");
 

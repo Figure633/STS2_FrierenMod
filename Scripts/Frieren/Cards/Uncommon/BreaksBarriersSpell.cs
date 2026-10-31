@@ -14,7 +14,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace FrierenMod.Scripts.Cards;
 
-public sealed class BreaksBarriersSpell() : FrierenCard(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+public sealed class BreaksBarriersSpell() : FrierenCard(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self, showInLibrary: false)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [new CardsVar(2)];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)

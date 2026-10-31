@@ -13,7 +13,7 @@ public static class SpellCatalog
     public static IReadOnlyList<FactorDefinition> All { get; } = Array.AsReadOnly(new[]
     {
         F("AdvancedDefensiveMagic"), F("BePrepared", rewardOffset: 3), F("BuildUpBody"),
-        F("GrossedOutLook", rewardOffset: 2), F("IceArrows", reward: 4),
+        F("GrossedOutLook"), F("IceArrows", reward: 4),
         F("MeleeMage", rewardOffset: 1), F("MetalPetalSpell"), F("Sleeeep"),
         F("TransferToAlchemist", reward: 2), F("Factor100", offset: 1, puzzle: true),
         F("BarrierMagic", FactorRarity.Uncommon, offset: 1),
@@ -41,9 +41,12 @@ public static class SpellCatalog
     public static FactorDefinition Get(string id) => All.FirstOrDefault(x => x.Id == id)
         ?? throw new ArgumentException($"未知魔法因子：{id}", nameof(id));
 
+    // 旧档仍可解析弃用因子，新的抽选与变换统一使用可获取目录。
+    public static IEnumerable<FactorDefinition> Available => All.Where(x => x.Id != "TransferToAlchemist");
+
     public static string[] Offer(FactorRarity rarity, Func<int, int> next, bool starting = false)
     {
-        var pool = All.Where(x => x.Rarity == rarity && (!starting || !x.Puzzle)).ToList();
+        var pool = Available.Where(x => x.Rarity == rarity && (!starting || !x.Puzzle)).ToList();
         var result = new List<string>();
         while (result.Count < 3 && pool.Count > 0)
         {

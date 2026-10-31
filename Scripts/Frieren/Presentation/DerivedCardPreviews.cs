@@ -35,7 +35,14 @@ public static class DerivedCardPreviews
         foreach (var type in Tokens) {
             if (source.GetType() == type) continue;
             var canonical = ModelDb.GetById<CardModel>(ModelDb.GetId(type));
-            if (!explicitTypes.Contains(type) && !description.Contains(canonical.Title, StringComparison.OrdinalIgnoreCase)) continue;
+            if (!explicitTypes.Contains(type)) {
+                // 优先匹配完整衍生牌名；“高密度魔力”不能同时被识别为普通“魔力”。
+                string remaining = description;
+                foreach (var longer in Tokens.Where(t => t != type).Select(t => ModelDb.GetById<CardModel>(ModelDb.GetId(t)).Title)
+                    .Where(title => title.Length > canonical.Title.Length && title.Contains(canonical.Title, StringComparison.OrdinalIgnoreCase)))
+                    remaining = remaining.Replace(longer, "", StringComparison.OrdinalIgnoreCase);
+                if (!remaining.Contains(canonical.Title, StringComparison.OrdinalIgnoreCase)) continue;
+            }
             var preview = canonical.ToMutable();
             if (readable.Owner is { } owner) preview.Owner = owner;
             bool upgraded = readable.IsUpgraded && explicitTypes.Contains(type) && source is not FiveMinutesMore and not KindlingSpark and not DomainExpansion;

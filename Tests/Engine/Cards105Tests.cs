@@ -49,7 +49,7 @@ public static class Cards105Tests
         async Task Reset(){selector.Cleanup();foreach(var creature in combat.Creatures){foreach(var p in creature.Powers.ToArray())await PowerCmd.Remove(p);creature.LoseBlockInternal(creature.Block);creature.SetCurrentHpInternal(creature.MaxHp);}foreach(var p in new[]{player,other})foreach(var pile in p.PlayerCombatState!.AllPiles)foreach(var c in pile.Cards.ToArray())pile.RemoveInternal(c);player.PlayerCombatState!.Energy=3;CombatManager.Instance.History.Clear();}
         int Mana(PileType pile)=>ManaCmd.InPile(player,pile).Count();
         await Use(New<AirSlash>());
-        Check(enemy.CurrentHp==9993&&!player.Creature.HasPower<AccelerateFlowPower>()&&player.Creature.HasPower<AccelerateFlowNextTurnPower>(),"空气斩2伤3次，本回合不加速");
+        Check(enemy.CurrentHp==9995&&!player.Creature.HasPower<AccelerateFlowPower>()&&player.Creature.HasPower<AccelerateFlowNextTurnPower>(),"空气斩2伤2次，本回合不加速");
         var delayed=player.Creature.GetPower<AccelerateFlowNextTurnPower>()!;await delayed.AfterPlayerTurnStart(context,other);Check(!player.Creature.HasPower<AccelerateFlowPower>(),"空气斩等待本人下回合");
         await delayed.AfterPlayerTurnStart(context,player);Check(player.Creature.HasPower<AccelerateFlowPower>()&&!player.Creature.HasPower<AccelerateFlowNextTurnPower>(),"下回合获得加速同调并移除等待状态");
         await Reset();player.Creature.GainBlockInternal(17);await Use(New<ButtSlam>(true));Check(enemy.CurrentHp==9982&&Mana(PileType.Discard)==2&&Mana(PileType.Draw)==0,"全身撞姬按17格挡单次攻击，弃牌堆生成2魔力");
@@ -71,8 +71,8 @@ public static class Cards105Tests
         await Use(cry);Check(player.Creature.Block==9&&enemy.GetPowerAmount<WeakPower>()==8&&cry.CurrentBlock==7&&cry.CurrentWeak==2,"嗷嗷哭第二次2格挡7虚弱后继续交换");
         var restored=(Crying)CardModel.FromSerializable(cry.ToSerializable());Check(restored.CurrentBlock==7&&restored.CurrentWeak==2,"嗷嗷哭当前互换数值可序列化");
         await Reset();cry=New<Crying>(true);await PowerCmd.Apply<FrailPower>(context,player.Creature,1,enemy,null);await Use(cry);Check(player.Creature.Block==6&&cry.CurrentWeak==6,"嗷嗷哭交换脆弱修正后的格挡值");
-        await Reset();await Use(New<Underestimated>(true));await Use(New<Underestimated>());Check(player.Creature.GetPowerAmount<ShrinkPower>()==1&&player.Creature.GetPowerAmount<EnergyNextTurnPower>()==5&&player.Creature.GetPowerAmount<DrawCardsNextTurnPower>()==2,"真是被看扁了啊不重复叠缩小，次回合奖励叠加");
-        await player.Creature.GetPower<ShrinkPower>()!.AfterSideTurnEnd(context,CombatSide.Player,[player.Creature]);Check(!player.Creature.HasPower<ShrinkPower>(),"缩小使用原生一回合期限");
+        await Reset();await Use(New<Underestimated>(true));await Use(New<Underestimated>());Check(player.Creature.GetPowerAmount<ShrinkPower>()==2&&player.Creature.GetPowerAmount<EnergyNextTurnPower>()==5&&player.Creature.GetPowerAmount<DrawCardsNextTurnPower>()==2,"真是被看扁了啊叠加缩小期限，次回合奖励叠加");
+        await player.Creature.GetPower<ShrinkPower>()!.AfterSideTurnEnd(context,CombatSide.Player,[player.Creature]);Check(player.Creature.GetPowerAmount<ShrinkPower>()==1,"缩小每回合递减一次");
         await Reset();await ManaCmd.Generate(player,PileType.Hand,2);await Use(New<EnchantedStrike>(true));Check(enemy.CurrentHp==9983&&New<EnchantedStrike>().Rarity==CardRarity.Common,"附魔打击普通卡，升级8加4乘2魔力造成16伤");
         foreach(bool up in new[]{false,true})foreach(int x in new[]{0,2}){await Reset();await PowerCmd.Apply<DexterityPower>(context,player.Creature,1,player.Creature,null);await Use(New<TreasureVaultSpell>(up),x);Check(player.Creature.Block==9*x&&Mana(PileType.Draw)==x+(up?1:0),"X格挡逐次受敏捷影响，升级只多1魔力："+up+"/"+x);}
         await Reset();await RelicCmd.Obtain<ChemicalX>(player);await Use(New<TreasureVaultSpell>(true),0);Check(player.Creature.Block==16&&Mana(PileType.Draw)==3,"化学物X：0能量2次格挡及3魔力");await RelicCmd.Remove(player.GetRelic<ChemicalX>()!);

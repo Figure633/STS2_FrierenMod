@@ -1,4 +1,6 @@
 using BaseLib.Config.UI;
+using FrierenMod.Core;
+using FrierenMod.Scripts.Presentation;
 using FrierenMod.Scripts.Cards;
 using Godot;
 using MegaCrit.Sts2.addons.mega_text;
@@ -25,6 +27,7 @@ public partial class FrierenTutorial : NCombatRulesFtue
     public const string TutorialId = "frieren_magic_deck_ftue";
     private readonly TaskCompletionSource<bool> _completion = new();
     private readonly List<NCard> _illustrations = [];
+    private readonly List<Control> _diagrams = [];
     private Player _player = null!;
     private NButton _previous = null!, _next = null!;
     private NConfigButton _finish = null!;
@@ -108,8 +111,9 @@ public partial class FrierenTutorial : NCombatRulesFtue
         }
         CardModel[] models = _page switch {
             0 => [Card<Mana>()],
-            1 => [Card<RapidChant>(), FactorCard.Create(_player, "BuildUpBody")],
-            _ => [FactorCard.Create(_player, "AdvancedDefensiveMagic"), MagicPropCard.Create(_player, "UnbelievableTool"), MagicPropCard.Create(_player, "MysteryBox")]
+            1 => [FactorCard.Create(_player, "BuildUpBody", ManaSlot.Draw), FactorCard.Create(_player, "BigFire", ManaSlot.Hand),
+                FactorCard.Create(_player, "ImpeccableIntangible", ManaSlot.Discard)],
+            _ => [MagicPropCard.Create(_player, "UnbelievableTool"), MagicPropCard.Create(_player, "ShadowDragonHorn")]
         };
         for (int i = 0; i < models.Length; i++) {
             var card = MagicBookScreen.CreateCard(models[i]);
@@ -117,9 +121,40 @@ public partial class FrierenTutorial : NCombatRulesFtue
             card.FocusBehaviorRecursive = FocusBehaviorRecursiveEnum.Disabled;
             _image.AddChild(card); _illustrations.Add(card);
             card.Position = new Vector2(_image.Size.X * (i + 0.5f) / models.Length, _image.Size.Y / 2);
-            card.Scale = Vector2.One * (models.Length == 1 ? 1f : models.Length == 2 ? 0.9f : 0.65f);
+            card.Scale = Vector2.One * (_page == 0 ? .85f : models.Length == 2 ? .8f : .55f);
+            if (_page == 0) card.Position -= new Vector2(_image.Size.X * .17f, 0);
+            if (_page == 1) {
+                var slot = ChantSelectionPresentation.CreateSlotVisual((ManaSlot)i);
+                _image.AddChild(slot); _image.MoveChild(slot, 0); _diagrams.Add(slot);
+                slot.Position = card.Position; slot.Scale = card.Scale;
+            }
             card.UpdateVisuals(PileType.None, CardPreviewMode.Normal);
             card.CardHighlight.AnimHideInstantly();
+        }
+        if (_page == 0) AddManaCounter();
+        if (_page == 2) {
+            var icon = new TextureRect { Name = "TutorialMagicDeckIcon", Texture = GD.Load<Texture2D>("res://FrierenMod/images/ui/magic_deck.png"),
+                Position = new(_image.Size.X / 2 - 40, 4), Size = new(80, 80),
+                ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered,
+                MouseFilter = MouseFilterEnum.Ignore };
+            _image.AddChild(icon); _diagrams.Add(icon);
+        }
+    }
+
+    private void AddManaCounter()
+    {
+        var counter = new Control { Name = "TutorialManaCounter", Position = new(_image.Size.X * .72f, _image.Size.Y / 2 - 132),
+            Size = new(108, 264), MouseFilter = MouseFilterEnum.Ignore };
+        _image.AddChild(counter); _diagrams.Add(counter);
+        foreach (string layer in new[] { "MPLayer0", "MPWrap" }) counter.AddChild(new TextureRect {
+            Texture = new AtlasTexture { Atlas = GD.Load<Texture2D>($"res://FrierenMod/images/ui/{layer}.png"), Region = new(88, 0, 80, 256) },
+            Size = new(68, 264), ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, MouseFilter = MouseFilterEnum.Ignore });
+        for (int i = 0; i < 3; i++) {
+            var number = new Label { Text = "3", Position = new(0, 20 + 88 * i), Size = new(68, 36), HorizontalAlignment = HorizontalAlignment.Center };
+            number.AddThemeFontSizeOverride("font_size", 27); number.AddThemeConstantOverride("outline_size", 7);
+            number.AddThemeColorOverride("font_outline_color", Colors.Black); counter.AddChild(number);
+            var label = new Label { Text = Text("SLOT_SHORT." + (ManaSlot)i), Position = new(70, 28 + 88 * i) };
+            label.AddThemeFontSizeOverride("font_size", 16); counter.AddChild(label);
         }
     }
 
@@ -136,6 +171,8 @@ public partial class FrierenTutorial : NCombatRulesFtue
     {
         foreach (var card in _illustrations) card.QueueFreeSafely();
         _illustrations.Clear();
+        foreach (var diagram in _diagrams) diagram.QueueFreeSafely();
+        _diagrams.Clear();
     }
 
     public override void _ExitTree()

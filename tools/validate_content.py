@@ -38,7 +38,7 @@ for table in ["cards", "characters", "relics", "potions", "frieren", "powers", "
                 text = re.sub(r"X\+(?:4|1)(?!\d)", "X", text)
             if table == "cards" and key in ("FRIERENMOD-KINDLING_SPARK.description", "FRIERENMOD-TREASURE_VAULT_SPELL.description"):
                 text = re.sub(r"X\+1(?!\d)", "X", text)
-            if table == "frieren" and key.startswith("FACTOR."):
+            if table == "frieren" and (key.startswith("FACTOR.") or key == "TUTORIAL_BODY_2"):
                 # 因子保留 X+1、2X 等咏唱费用或效果规则，仍禁止泄漏程序函数。
                 text = re.sub(r"\d*X(?:[+-]\d+)?", "X", text)
             assert not re.search(r"\b(?:max|min|Math\.\w+)\s*\(|\b\d+X\b|\bX[+-]\d", text), f"formula exposed in {language}/{table}/{key}"

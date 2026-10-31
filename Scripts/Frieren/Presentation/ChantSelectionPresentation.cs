@@ -52,11 +52,17 @@ public static class ChantSelectionPresentation
         holder.Scale = holder.SmallScale;
         card.Scale = Vector2.One;
         card.Modulate = new Color(1, 1, 1, factor.CanSelectForChant ? 1f : .35f);
+        var slotVisual = CreateSlotVisual(factor.Slot!.Value);
+        holder.AddChild(slotVisual); holder.MoveChild(slotVisual, 0);
+    }
+
+    // 教程与战斗选择共用实际卡背及槽位标题。
+    public static Control CreateSlotVisual(Core.ManaSlot slot)
+    {
         var slotVisual = new Control { Name = "ChantSlotVisual", MouseFilter = Control.MouseFilterEnum.Ignore,
             ShowBehindParent = true };
-        holder.AddChild(slotVisual); holder.MoveChild(slotVisual, 0);
         var background = new TextureRect {
-            Name = "ChantSlotBackground", Texture = UI.SlotBackLibrary.Texture(SlotBackStore.Selected((int)factor.Slot!.Value)),
+            Name = "ChantSlotBackground", Texture = UI.SlotBackLibrary.Texture(SlotBackStore.Selected((int)slot)),
             Position = new(-200, -307), Size = new(400, 614),
             ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered,
             MouseFilter = Control.MouseFilterEnum.Ignore, ShowBehindParent = true
@@ -64,7 +70,7 @@ public static class ChantSelectionPresentation
         slotVisual.AddChild(background);
         var header = new Label {
             Name = "ChantSlotHeader",
-            Text = new LocString("frieren", $"CHANT_SLOT.{factor.Slot}").GetFormattedText(),
+            Text = new LocString("frieren", $"CHANT_SLOT.{slot}").GetFormattedText(),
             Position = new Vector2(-190, -298), Size = new Vector2(380, 50),
             HorizontalAlignment = HorizontalAlignment.Center,
             VerticalAlignment = VerticalAlignment.Center,
@@ -75,6 +81,7 @@ public static class ChantSelectionPresentation
         header.AddThemeColorOverride("font_shadow_color", Colors.Black);
         header.AddThemeConstantOverride("shadow_offset_y", 3);
         slotVisual.AddChild(header);
+        return slotVisual;
     }
 
     private static void Clear(NGridCardHolder holder)

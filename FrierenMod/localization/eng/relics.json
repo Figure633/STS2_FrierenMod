@@ -39,7 +39,7 @@
   "FRIERENMOD-MIRRORED_LOTUS_RING.description": "At the start of turn 4, add [gold]Himmel[/gold] to your hand.",
   "FRIERENMOD-MIRRORED_LOTUS_RING.flavor": "The ring Himmel put on Frieren which is casually chosen by her, after Himmel's death did she realize that the language of mirrored-lotus is Eternal Love.",
   "FRIERENMOD-OLD_HAIR_ACCESSORY.title": "Fern's Hair Ornament",
-  "FRIERENMOD-OLD_HAIR_ACCESSORY.description": "Every 4 times you [gold]Synchro[/gold], draw 1 card. Resets each combat.",
+  "FRIERENMOD-OLD_HAIR_ACCESSORY.description": "Every 4 times you [gold]Synchro[/gold], draw 1 card.",
   "FRIERENMOD-OLD_HAIR_ACCESSORY.flavor": "It is the 16 years old Birthday present Frieren give to Fern, her apprentice.",
   "FRIERENMOD-SCALE_OF_OBEDIENCE.title": "Scale Of Obedience",
   "FRIERENMOD-SCALE_OF_OBEDIENCE.description": "During normal combats, gain {energyPrefix:energyIcons(1)} and draw 1 card at the start of your turn.",
@@ -63,6 +63,6 @@
   "FRIERENMOD-KRAFT_SERPENT_RING.description": "Draw [blue]1[/blue] additional card each turn.",
   "FRIERENMOD-KRAFT_SERPENT_RING.flavor": "A parting gift from Kraft.",
   "FRIERENMOD-AURA_COMPANION.title": "Aura’s Company",
-  "FRIERENMOD-AURA_COMPANION.description": "Aura accompanies you in combat.",
+  "FRIERENMOD-AURA_COMPANION.description": "Aura accompanies you in combat.\nOriginal animation by 肯Kenenk on Bilibili.",
   "FRIERENMOD-AURA_COMPANION.flavor": "Aura, keep up."
 }

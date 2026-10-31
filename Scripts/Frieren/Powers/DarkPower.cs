@@ -6,6 +6,7 @@ namespace FrierenMod.Scripts.Powers;
 
 public sealed class DarkPower : FrierenPower
 {
+    public override MegaCrit.Sts2.Core.Entities.Powers.PowerType Type => MegaCrit.Sts2.Core.Entities.Powers.PowerType.Debuff;
     // Amount 使用 1..5 表示一代的适应阶段 0..4，避免原生移除零层能力。
     public int Adaptation => Amount - 1;
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext context, Player player)

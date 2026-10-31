@@ -69,10 +69,13 @@ public static class TutorialTests
             Check(Current().GetNode<TextureRect>("Image").GetChildren().OfType<NCard>().Count() == 1, "第一页使用真实魔力卡面");
             Check(Current().GetNode<MegaRichTextLabel>("%Description").Text.Contains("Mana"), "英文教程正文从本地化读取");
             await Snapshot("eng-1"); Next(); await Tick();
-            Check(Current().GetNode<TextureRect>("Image").GetChildren().OfType<NCard>().Count() == 2, "第二页显示咏唱牌和因子");
+            var examples = Current().GetNode<TextureRect>("Image").GetChildren().OfType<NCard>().Select(n => n.Model).OfType<FrierenMod.Scripts.Cards.FactorCard>().ToArray();
+            Check(examples.Length == 3 && examples.Select(f=>f.Slot).SequenceEqual(new FrierenMod.Core.ManaSlot?[]{FrierenMod.Core.ManaSlot.Draw,FrierenMod.Core.ManaSlot.Hand,FrierenMod.Core.ManaSlot.Discard}), "第二页三因子显示正确的装载槽位");
+            Check(examples.Select(f=>FrierenMod.Core.SpellCatalog.Get(f.FactorId).Rules.CostMultiplier).SequenceEqual(new[]{1,2,6}),"教程因子真实费用为X、2X、6X");
+            await Snapshot("eng-2");
             Next(); await Tick();
             Check(Current().GetNode<MegaLabel>("PageCount").Text == "3 / 3", "翻页更新原版页码");
-            Check(Current().GetNode<TextureRect>("Image").GetChildren().OfType<NCard>().Count() == 3, "第三页显示因子和魔具");
+            Check(Current().GetNode<TextureRect>("Image").GetChildren().OfType<NCard>().Count() == 2 && Current().GetNodeOrNull<TextureRect>("Image/TutorialMagicDeckIcon") != null, "第三页显示工具、暗黑龙的角与实际魔法牌组图标");
             await Snapshot("eng-3"); Next(); await Tick();
             Check(pending.IsCompletedSuccessfully && await pending && modal.OpenModal == null && blockers.Count == initialBlockers, "完成后关闭界面并释放原版输入锁");
             Check(MagicDeckStore.Read(player).ToJson() == before && player.Deck.Cards.Count == deckCards, "教程示例牌不进入魔法牌组或主牌组");

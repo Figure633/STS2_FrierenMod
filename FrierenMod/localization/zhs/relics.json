@@ -39,7 +39,7 @@
   "FRIERENMOD-MIRRORED_LOTUS_RING.description": "每场战斗的第4回合开始时，将一张[gold]辛美尔[/gold]加入手牌。",
   "FRIERENMOD-MIRRORED_LOTUS_RING.flavor": "芙莉莲随意挑的礼物，辛美尔送给了她并亲自为她戴上，直至辛美尔逝世后芙莉莲才意识到镜莲花的花语是永远的爱情。",
   "FRIERENMOD-OLD_HAIR_ACCESSORY.title": "菲伦的发饰",
-  "FRIERENMOD-OLD_HAIR_ACCESSORY.description": "每[gold]同调[/gold]4次，抽1张牌。计数每场战斗重置。",
+  "FRIERENMOD-OLD_HAIR_ACCESSORY.description": "每[gold]同调[/gold]4次，抽1张牌。",
   "FRIERENMOD-OLD_HAIR_ACCESSORY.flavor": "芙莉莲送给徒弟菲伦的16岁生日礼物。",
   "FRIERENMOD-SCALE_OF_OBEDIENCE.title": "服从的天平",
   "FRIERENMOD-SCALE_OF_OBEDIENCE.description": "在普通战斗中，每回合开始时获得{energyPrefix:energyIcons(1)}，抽1张牌。",
@@ -63,6 +63,6 @@
   "FRIERENMOD-KRAFT_SERPENT_RING.description": "每回合抽牌阶段额外抽 [blue]1[/blue] 张牌。",
   "FRIERENMOD-KRAFT_SERPENT_RING.flavor": "克拉伏特送给你的饯别礼。",
   "FRIERENMOD-AURA_COMPANION.title": "阿乌拉的陪伴",
-  "FRIERENMOD-AURA_COMPANION.description": "阿乌拉会在战斗中陪伴你。",
+  "FRIERENMOD-AURA_COMPANION.description": "阿乌拉会在战斗中陪伴你。\n动图原作者b站肯Kenenk",
   "FRIERENMOD-AURA_COMPANION.flavor": "阿乌拉，跟上。"
 }

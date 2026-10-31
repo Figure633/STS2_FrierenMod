@@ -69,7 +69,12 @@ public sealed class SlotBackLibrary
         _grid = new Control { Name = "BackGrid", CustomMinimumSize = new(1710, 26 * 400 + 70), MouseFilter = Control.MouseFilterEnum.Pass };
         _scroll.AddChild(_grid);
         _grid.GuiInput += Drag; _scroll.GuiInput += Drag;
-        _scroll.GetVScrollBar().ValueChanged += _ => HideTip();
+        _scroll.GetVScrollBar().ValueChanged += _ => {
+            HideTip();
+            // 滚动时鼠标可保持不动，Godot未必重新发出MouseEntered。
+            // 等布局更新后按实际指针位置重新确定悬停项。
+            Callable.From(RefreshPointerHover).CallDeferred();
+        };
         Picture(_canvas, "Foreground", Art("SlotLibraryBgBoard"), new(0, 0), new(1920, 1100));
         var bar = new ColorRect { Position = new(576, 36), Size = new(768, 14), Color = Colors.White,
             MouseFilter = Control.MouseFilterEnum.Ignore };
@@ -293,6 +298,16 @@ public sealed class SlotBackLibrary
     }
 
     private void HideTip() { _hovered = null; _hoverTimer?.Stop(); _tip?.Hide(); }
+
+    private void RefreshPointerHover()
+    {
+        if (_closing || _dragging || !_canvas.IsVisibleInTree() || _selector?.Visible == true) return;
+        var pointer = View.GetGlobalMousePosition();
+        string? id = _scroll.GetGlobalRect().HasPoint(pointer)
+            ? _cards.FirstOrDefault(pair => pair.Value.GetNode<TextureButton>("SelectBack_" + pair.Key).GetGlobalRect().HasPoint(pointer)).Key
+            : null;
+        if (id != null) Hover(id, true);
+    }
 
     private void Drag(InputEvent input)
     {

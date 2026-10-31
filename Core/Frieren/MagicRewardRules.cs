@@ -34,7 +34,7 @@ public static class MagicRewardRules
 
     public static MagicRewardOffer Offer(int offset, Func<int, int> next)
     {
-        var factors = SpellCatalog.All.GroupBy(f => f.Rarity).ToDictionary(g => g.Key, g => g.Select(f => f.Id).ToList());
+        var factors = SpellCatalog.Available.GroupBy(f => f.Rarity).ToDictionary(g => g.Key, g => g.Select(f => f.Id).ToList());
         var props = MagicPropRules.All.Select(p => p.Id).ToList();
         var choices = new List<string>();
         for (int i = 0; i < 3; i++) {
