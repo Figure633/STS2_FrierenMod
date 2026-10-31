@@ -8,7 +8,6 @@ namespace FrierenMod.Scripts.Powers;
 
 public sealed class SwampManaNextTurnPower : FrierenPower
 {
-    public override string CustomPackedIconPath=>"res://FrierenMod/images/powers/PerpetualPower.png";
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext context,Player player)
     {
         if(player!=Owner.Player)return;

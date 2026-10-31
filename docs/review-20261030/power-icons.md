@@ -1,11 +1,14 @@
 # 能力图标使用情况
 
-2026-10-31，0.10.6。实际加载57个能力模型的小图与大图：缺失文件0个，无法加载0个。共引用53个图片路径；未自动删除共用图标。
+2026-10-31，0.10.7。实际加载57个已注册能力模型的小图与大图：缺失文件0个，无法加载0个。共引用54个图片路径。其中小把戏、柔韧为保留的旧模型，不列入待补图标清单。
 
 ## 本次替换
 
 | 能力 | 图片来源 |
 |---|---|
+| 纸飞机 | image_gen 新绘浅蓝纸飞机 |
+| 再循环 | image_gen 新绘绿色循环盾牌 |
+| 沼泽脱困 | image_gen 新绘从泥沼中伸出的手 |
 | 领域展开 | 作者第1张蓝色旋涡 |
 | 自大的魔族 | 作者第2张紫色魔族 |
 | 灵魂解放（AuraSoulPower） | 作者第3张粉色灵魂 |
@@ -16,16 +19,18 @@
 
 原图及透明度保留；战斗小图标、爆闪与悬停图标通过原生显示颜色统一轻微提亮。重复刷新不会累积亮度，原版其他能力图标保持原样。
 
+三个新图标的原稿与提示保存在 `assets/power_sources/`，通过 `tools/prepare_generated_power_icons.gd` 等比缩至76×76以内，居中放入84×84透明画布。原生能力节点检查232项通过，已核对小图显示；待作者游戏实测。
+
 ## 仍共用图案的能力
 
 | 共用图案 | 能力 |
 |---|---|
-| AccelerateFlowPower.png | 下回合加速同调（AccelerateFlowNextTurnPower）、加速同调（AccelerateFlowPower）、纸飞机（PaperPlanePower）、再循环（RecyclePower） |
+| AccelerateFlowPower.png | 下回合加速同调（AccelerateFlowNextTurnPower）、加速同调（AccelerateFlowPower） |
 | SwallowedPower.png | 捕鸟魔法（BirdCapturedPower）、被吞噬（SwallowedPower） |
-| CopyPower.png | 复制体（CopyPower）、柔韧（SpiegelMalleablePower） |
-| PerpetualPower.png | 永续（PerpetualPower）、沼泽脱困（SwampManaNextTurnPower） |
 
-当前没有硬性缺图；若要继续补专属图，可补纸飞机、再循环、柔韧、捕鸟魔法及沼泽脱困。下回合加速同调沿用加速同调图案，是否另画由作者决定。已弃用的小把戏不列为待补项。
+当前没有硬性缺图；若继续补专属图，仅捕鸟魔法仍与另一个不同能力共用图案。下回合加速同调沿用加速同调图案。
+
+柔韧（SpiegelMalleablePower）只保留旧模型ID，图标继续指向 CopyPower.png；当前复制体普通与高进阶均不获得，已有两种难度的测试断言。此前把柔韧列为待补图标是清单错误，现已纠正；本次不改变战斗逻辑。
 
 ## 未被当前能力路径引用的图片
 

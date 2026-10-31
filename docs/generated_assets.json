@@ -60,6 +60,42 @@
       "processing": "tools/render_spiegel_icon.gd; 512px monochrome + native outline",
       "target": "FrierenMod/images/monsters/Spiegel_topbar_outline.png",
       "sha256": "530f6fd94114696bd33fe80aa6a76d57e2077ffc86cf1c13b16bad68b53c930e"
+    },
+    {
+      "key": "PaperPlanePower",
+      "date": "2026-10-31",
+      "prompt_file": "assets/power_sources/prompts-20261031.json",
+      "prompt_key": "paper_plane",
+      "transparent_background": true,
+      "source": "built-in image_gen exec-927026b3-cb9c-4a0d-8269-28bed252d87d.png; original retained at assets/power_sources/PaperPlanePower.png",
+      "target": "FrierenMod/images/powers/PaperPlanePower.png",
+      "sha256": "2d7c5e06f2ae7eb274ee66cc6fb6674e6a9606f94a7825c64d0e160c45bec0e8",
+      "processing": "tools/prepare_generated_power_icons.gd",
+      "status": "implemented; pending in-game author review"
+    },
+    {
+      "key": "RecyclePower",
+      "date": "2026-10-31",
+      "prompt_file": "assets/power_sources/prompts-20261031.json",
+      "prompt_key": "recycle_shield",
+      "transparent_background": true,
+      "source": "built-in image_gen exec-69327338-73ab-424c-ac84-44bfac1d1716.png; original retained at assets/power_sources/RecyclePower.png",
+      "target": "FrierenMod/images/powers/RecyclePower.png",
+      "sha256": "71408fdcb6fc465e03288aa9dbc909e14e43c2b6d843dcd3471bc1ff7f54568d",
+      "processing": "tools/prepare_generated_power_icons.gd",
+      "status": "implemented; pending in-game author review"
+    },
+    {
+      "key": "SwampManaNextTurnPower",
+      "date": "2026-10-31",
+      "prompt_file": "assets/power_sources/prompts-20261031.json",
+      "prompt_key": "swamp_escape",
+      "transparent_background": true,
+      "source": "built-in image_gen exec-eab93fc0-3072-4013-a8b7-352962c078b4.png; original retained at assets/power_sources/SwampManaNextTurnPower.png",
+      "target": "FrierenMod/images/powers/SwampManaNextTurnPower.png",
+      "sha256": "1b908cd7a26bdf16d60b2770997235b6e97ccecdf8c57e3d00a702ebfd2d8257",
+      "processing": "tools/prepare_generated_power_icons.gd",
+      "status": "implemented; pending in-game author review"
     }
   ]
 }

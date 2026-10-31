@@ -27,7 +27,7 @@ public static class PowerIconTests
             Check(ResourceLoader.Exists(power.CustomPackedIconPath)&&ResourceLoader.Exists(power.CustomBigIconPath),"图标文件缺失："+power.Id);
             Check(power.Icon.GetWidth()>0&&power.BigIcon.GetHeight()>0,"图标不能加载："+power.Id);
             records.Add(new{model=power.GetType().Name,name=power.Title.GetFormattedText(),icon=power.CustomPackedIconPath,bigIcon=power.CustomBigIconPath,
-                width=power.Icon.GetWidth(),height=power.Icon.GetHeight(),retired=power is TrickPower});
+                width=power.Icon.GetWidth(),height=power.Icon.GetHeight(),retired=power is TrickPower or SpiegelMalleablePower});
         }
         Check(ModelDb.Power<FrierenTheSlayerPower>().Icon.GetSize()==new Vector2(84,84),"无五官头像按84x84导入");
         var scene=GD.Load<PackedScene>("res://scenes/combat/power.tscn");
@@ -67,7 +67,7 @@ public static class PowerIconTests
             root.GetViewport().GetTexture().GetImage().SavePng(ProjectSettings.GlobalizePath("res://../../artifacts/power-icon-review/native-all-icons.png"));
             int shown=0;
             for(int i=0;i<powers.Length;i++) {
-                bool selected=powers[i] is DomainExpansionPower or AuraArrogancePower or AuraSoulPower or GoodLuckRewardPower or AuraSubmissionPower or AuraElegancePower or FrierenTheSlayerPower;
+                bool selected=powers[i] is PaperPlanePower or RecyclePower or SwampManaNextTurnPower;
                 liveIcons[i].Visible=originals[i].Visible=labels[i].Visible=selected;
                 if(!selected)continue;
                 var origin=new Vector2(70+shown%4*470,190+shown/4*390);

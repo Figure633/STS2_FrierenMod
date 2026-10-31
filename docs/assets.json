@@ -776,13 +776,14 @@
   },
   {
     "file": "FrierenMod/images/powers/PaperPlanePower.png",
-    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/powers/AccelerateFlowPower_84.png",
+    "source": "assets/power_sources/PaperPlanePower.png",
     "source_commit": null,
-    "sha256": "9d5a1452c26f24a13f41e9ca9e84d1f03aa6cb1e8cd2349744c6c2486d1b2f15",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only",
-    "source_kind": "local_author_assets",
-    "selection_reason": "一代 PaperPlaneSpellPower 无专用图片，按 AbstractBasePower.getImgTexture 和 PublicRes.DEV_POWER_IMG_84 的原有回退使用 AccelerateFlowPower 图标"
+    "sha256": "2d7c5e06f2ae7eb274ee66cc6fb6674e6a9606f94a7825c64d0e160c45bec0e8",
+    "modified": true,
+    "redistribution_review": "original built-in image_gen artwork; pending author visual review",
+    "source_kind": "generated_artwork",
+    "selection_reason": "作者要求按原版能力图标风格绘制专用图案；2026-10-31",
+    "processing": "tools/prepare_generated_power_icons.gd; alpha bounds, proportional Lanczos resize within 76x76, centered on transparent 84x84"
   },
   {
     "file": "FrierenMod/images/relics/HolyEmblem.png",
@@ -3878,5 +3879,27 @@
     "processing": "原图原样使用；显示层RGB乘1.08轻微提亮，透明度不变。",
     "modified": false,
     "sha256": "776c5374f14bc8ac56a3371d9df08f926d31e4afdb3ca1ce8a31fcc63b97226e"
+  },
+  {
+    "file": "FrierenMod/images/powers/RecyclePower.png",
+    "source": "assets/power_sources/RecyclePower.png",
+    "source_commit": null,
+    "sha256": "71408fdcb6fc465e03288aa9dbc909e14e43c2b6d843dcd3471bc1ff7f54568d",
+    "modified": true,
+    "processing": "tools/prepare_generated_power_icons.gd; alpha bounds, proportional Lanczos resize within 76x76, centered on transparent 84x84",
+    "redistribution_review": "original built-in image_gen artwork; pending author visual review",
+    "source_kind": "generated_artwork",
+    "selection_reason": "作者要求按原版能力图标风格绘制专用图案；2026-10-31"
+  },
+  {
+    "file": "FrierenMod/images/powers/SwampManaNextTurnPower.png",
+    "source": "assets/power_sources/SwampManaNextTurnPower.png",
+    "source_commit": null,
+    "sha256": "1b908cd7a26bdf16d60b2770997235b6e97ccecdf8c57e3d00a702ebfd2d8257",
+    "modified": true,
+    "processing": "tools/prepare_generated_power_icons.gd; alpha bounds, proportional Lanczos resize within 76x76, centered on transparent 84x84",
+    "redistribution_review": "original built-in image_gen artwork; pending author visual review",
+    "source_kind": "generated_artwork",
+    "selection_reason": "作者要求按原版能力图标风格绘制专用图案；2026-10-31"
   }
 ]
