@@ -10,7 +10,6 @@ namespace FrierenMod.Scripts.Powers;
 public sealed class BirdCapturedPower : FrierenPower
 {
     public override PowerType Type => PowerType.Debuff;
-    public override string CustomPackedIconPath => "res://FrierenMod/images/powers/SwallowedPower.png";
     public override Task AfterApplied(Creature? applier, CardModel? cardSource) => Stun();
     private Task Stun() => Owner.Monster?.NextMove.Id is { } move && move != "STUNNED"
         ? CreatureCmd.Stun(Owner, move) : Task.CompletedTask;

@@ -24,6 +24,6 @@ public abstract class FrierenPower : CustomPowerModel
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
     public override string CustomPackedIconPath => $"res://FrierenMod/images/powers/{GetType().Name}.png";
-    public override string CustomBigIconPath => CustomPackedIconPath;
+    public override string CustomBigIconPath => CustomPackedIconPath.Replace("/powers/", "/powers/big/", StringComparison.Ordinal);
     protected override IEnumerable<IHoverTip> ExtraHoverTips => FrierenHoverTips.ForText(Description.GetRawText());
 }

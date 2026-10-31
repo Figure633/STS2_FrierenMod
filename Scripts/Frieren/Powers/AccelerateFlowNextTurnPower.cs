@@ -8,7 +8,6 @@ namespace FrierenMod.Scripts.Powers;
 public sealed class AccelerateFlowNextTurnPower : FrierenPower
 {
     public override PowerStackType StackType => PowerStackType.None;
-    public override string CustomPackedIconPath => "res://FrierenMod/images/powers/AccelerateFlowPower.png";
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext context, Player player)
     {
         if (player != Owner.Player) return;

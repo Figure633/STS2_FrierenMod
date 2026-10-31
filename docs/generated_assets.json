@@ -69,9 +69,9 @@
       "transparent_background": true,
       "source": "built-in image_gen exec-927026b3-cb9c-4a0d-8269-28bed252d87d.png; original retained at assets/power_sources/PaperPlanePower.png",
       "target": "FrierenMod/images/powers/PaperPlanePower.png",
-      "sha256": "2d7c5e06f2ae7eb274ee66cc6fb6674e6a9606f94a7825c64d0e160c45bec0e8",
-      "processing": "tools/prepare_generated_power_icons.gd",
-      "status": "implemented; pending in-game author review"
+      "sha256": "d5148575b6cfdf1ec2f10b8ea83883baa423cd080c58b789948a1c9445e058c5",
+      "processing": "tools/prepare_power_icons.gd; original generated airplane, 64px small / 256px big",
+      "status": "author selected; implemented"
     },
     {
       "key": "RecyclePower",
@@ -80,10 +80,10 @@
       "prompt_key": "recycle_shield",
       "transparent_background": true,
       "source": "built-in image_gen exec-69327338-73ab-424c-ac84-44bfac1d1716.png; original retained at assets/power_sources/RecyclePower.png",
-      "target": "FrierenMod/images/powers/RecyclePower.png",
-      "sha256": "71408fdcb6fc465e03288aa9dbc909e14e43c2b6d843dcd3471bc1ff7f54568d",
-      "processing": "tools/prepare_generated_power_icons.gd",
-      "status": "implemented; pending in-game author review"
+      "target": "assets/power_sources/RecyclePower.png",
+      "sha256": "729e122f07a5d39e041a2b8d7de56a397e3afffc5f9caac1dc60204d0a6d2fc1",
+      "processing": "original image_gen output retained unchanged outside game pack",
+      "status": "replaced by author artwork in 0.10.8; original retained"
     },
     {
       "key": "SwampManaNextTurnPower",
@@ -92,10 +92,10 @@
       "prompt_key": "swamp_escape",
       "transparent_background": true,
       "source": "built-in image_gen exec-eab93fc0-3072-4013-a8b7-352962c078b4.png; original retained at assets/power_sources/SwampManaNextTurnPower.png",
-      "target": "FrierenMod/images/powers/SwampManaNextTurnPower.png",
-      "sha256": "1b908cd7a26bdf16d60b2770997235b6e97ccecdf8c57e3d00a702ebfd2d8257",
-      "processing": "tools/prepare_generated_power_icons.gd",
-      "status": "implemented; pending in-game author review"
+      "target": "assets/power_sources/SwampManaNextTurnPower.png",
+      "sha256": "86938df3ae9d052a7b55b7fafe6660ff9caa0649f8c52f39c53fa80a9c10b3a3",
+      "processing": "original image_gen output retained unchanged outside game pack",
+      "status": "replaced by author artwork in 0.10.8; original retained"
     }
   ]
 }

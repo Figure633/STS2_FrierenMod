@@ -1,0 +1,231 @@
+{
+  "small": 64,
+  "big": 256,
+  "content_fraction": 0.9375,
+  "icons": [
+    {
+      "name": "AccelerateFlowPower",
+      "source": "assets/power_sources/originals/AccelerateFlowPower.png"
+    },
+    {
+      "name": "AuraArrogancePower",
+      "source": "assets/power_sources/originals/AuraArrogancePower.png"
+    },
+    {
+      "name": "AuraElegancePower",
+      "source": "assets/power_sources/originals/AuraElegancePower.png"
+    },
+    {
+      "name": "AuraScalesPower",
+      "source": "assets/power_sources/originals/AuraScalesPower.png"
+    },
+    {
+      "name": "AuraSoulPower",
+      "source": "assets/power_sources/originals/AuraSoulPower.png"
+    },
+    {
+      "name": "AuraSubmissionPower",
+      "source": "assets/power_sources/originals/AuraSubmissionPower.png"
+    },
+    {
+      "name": "BanManaGainPower",
+      "source": "assets/power_sources/originals/BanManaGainPower.png"
+    },
+    {
+      "name": "ChantWithoutManaPower",
+      "source": "assets/power_sources/originals/ChantWithoutManaPower.png"
+    },
+    {
+      "name": "ChantWithoutManaTimesPower",
+      "source": "assets/power_sources/originals/ChantWithoutManaTimesPower.png"
+    },
+    {
+      "name": "ConcentrationPower",
+      "source": "assets/power_sources/originals/ConcentrationPower.png"
+    },
+    {
+      "name": "CopyPower",
+      "source": "assets/power_sources/originals/CopyPower.png"
+    },
+    {
+      "name": "DarkPower",
+      "source": "assets/power_sources/originals/DarkPower.png"
+    },
+    {
+      "name": "DivinityPower",
+      "source": "assets/power_sources/originals/DivinityPower.png"
+    },
+    {
+      "name": "DomainExpansionPower",
+      "source": "assets/power_sources/originals/DomainExpansionPower.png"
+    },
+    {
+      "name": "EnemyManaPower",
+      "source": "assets/power_sources/originals/EnemyManaPower.png"
+    },
+    {
+      "name": "Factor001Power",
+      "source": "assets/power_sources/originals/Factor001Power.png"
+    },
+    {
+      "name": "Factor010Power",
+      "source": "assets/power_sources/originals/Factor010Power.png"
+    },
+    {
+      "name": "Factor100Power",
+      "source": "assets/power_sources/originals/Factor100Power.png"
+    },
+    {
+      "name": "FlyingMagicPower",
+      "source": "assets/power_sources/originals/FlyingMagicPower.png"
+    },
+    {
+      "name": "FrierenSuitcasePower",
+      "source": "assets/power_sources/originals/FrierenSuitcasePower.png"
+    },
+    {
+      "name": "FrierenTheSlayerPower",
+      "source": "assets/power_sources/originals/FrierenTheSlayerPower.png"
+    },
+    {
+      "name": "FullAheadPower",
+      "source": "assets/power_sources/originals/FullAheadPower.png"
+    },
+    {
+      "name": "GainRelicPower",
+      "source": "assets/power_sources/originals/GainRelicPower.png"
+    },
+    {
+      "name": "GoodLuckRewardPower",
+      "source": "assets/power_sources/originals/GoodLuckRewardPower.png"
+    },
+    {
+      "name": "ManaAffinityPower",
+      "source": "assets/power_sources/originals/ManaAffinityPower.png"
+    },
+    {
+      "name": "ManaInsteadOfEnergyPower",
+      "source": "assets/power_sources/originals/ManaInsteadOfEnergyPower.png"
+    },
+    {
+      "name": "ManaReturnPower",
+      "source": "assets/power_sources/originals/ManaReturnPower.png"
+    },
+    {
+      "name": "MantraPower",
+      "source": "assets/power_sources/originals/MantraPower.png"
+    },
+    {
+      "name": "MetallicizePower",
+      "source": "assets/power_sources/originals/MetallicizePower.png"
+    },
+    {
+      "name": "MimicPower",
+      "source": "assets/power_sources/originals/MimicPower.png"
+    },
+    {
+      "name": "OpenTheWaygatePower",
+      "source": "assets/power_sources/originals/OpenTheWaygatePower.png"
+    },
+    {
+      "name": "OutpouringPower",
+      "source": "assets/power_sources/originals/OutpouringPower.png"
+    },
+    {
+      "name": "PajamasFormPower",
+      "source": "assets/power_sources/originals/PajamasFormPower.png"
+    },
+    {
+      "name": "PaperPlanePower",
+      "source": "assets/power_sources/PaperPlanePower.png"
+    },
+    {
+      "name": "PerpetualPower",
+      "source": "assets/power_sources/originals/PerpetualPower.png"
+    },
+    {
+      "name": "PhantasmalPower",
+      "source": "assets/power_sources/originals/PhantasmalPower.png"
+    },
+    {
+      "name": "PuzzlePower",
+      "source": "assets/power_sources/originals/PuzzlePower.png"
+    },
+    {
+      "name": "RecyclePower",
+      "source": "assets/author_adjusted/20261031/RecyclePower.png"
+    },
+    {
+      "name": "RestoreStrengthPower",
+      "source": "assets/power_sources/originals/RestoreStrengthPower.png"
+    },
+    {
+      "name": "RingletFormPower",
+      "source": "assets/power_sources/originals/RingletFormPower.png"
+    },
+    {
+      "name": "RitesPreparationPower",
+      "source": "assets/power_sources/originals/RitesPreparationPower.png"
+    },
+    {
+      "name": "SealPower",
+      "source": "assets/power_sources/originals/SealPower.png"
+    },
+    {
+      "name": "SimmeringPower",
+      "source": "assets/power_sources/originals/SimmeringPower.png"
+    },
+    {
+      "name": "SleepInPower",
+      "source": "assets/power_sources/originals/SleepInPower.png"
+    },
+    {
+      "name": "SpellCasterPower",
+      "source": "assets/power_sources/originals/SpellCasterPower.png"
+    },
+    {
+      "name": "StrikeUpPower",
+      "source": "assets/power_sources/originals/StrikeUpPower.png"
+    },
+    {
+      "name": "SwallowedPower",
+      "source": "assets/power_sources/originals/SwallowedPower.png"
+    },
+    {
+      "name": "SwampManaNextTurnPower",
+      "source": "assets/author_adjusted/20261031/SwampManaNextTurnPower.png"
+    },
+    {
+      "name": "SwitchStrengthAndDexterityPower",
+      "source": "assets/power_sources/originals/SwitchStrengthAndDexterityPower.png"
+    },
+    {
+      "name": "SynchroWithoutManaPower",
+      "source": "assets/power_sources/originals/SynchroWithoutManaPower.png"
+    },
+    {
+      "name": "ThunderPower",
+      "source": "assets/power_sources/originals/ThunderPower.png"
+    },
+    {
+      "name": "TimeTravelPower",
+      "source": "assets/power_sources/originals/TimeTravelPower.png"
+    },
+    {
+      "name": "TrickPower",
+      "source": "assets/power_sources/originals/TrickPower.png"
+    },
+    {
+      "name": "WeakenedChantPower",
+      "source": "assets/power_sources/originals/WeakenedChantPower.png"
+    },
+    {
+      "name": "AccelerateFlowNextTurnPower",
+      "source": "assets/author_adjusted/20261031/AccelerateFlowNextTurnPower.png"
+    },
+    {
+      "name": "BirdCapturedPower",
+      "source": "assets/power_sources/native_stun.png"
+    }
+  ]
+}

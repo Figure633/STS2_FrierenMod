@@ -570,76 +570,92 @@
   },
   {
     "file": "FrierenMod/images/powers/ConcentrationPower.png",
-    "source": "src/main/resources/FrierenModResources/img/powers/ConcentrationPower_84.png",
+    "source": "assets/power_sources/originals/ConcentrationPower.png",
     "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
-    "sha256": "a5a3ab97e8bfb36801a0636d79ec333fb0d64415325978e1d1fd04fc3d89273a",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
+    "sha256": "b3d4d54f872ac2341ed8a941d759b5796116bdf00f58de905ae225ddd299875e",
+    "modified": true,
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "source_kind": "derived_power_icon",
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw"
   },
   {
     "file": "FrierenMod/images/powers/WeakenedChantPower.png",
-    "source": "src/main/resources/FrierenModResources/img/powers/WeakenedChantPower_84.png",
+    "source": "assets/power_sources/originals/WeakenedChantPower.png",
     "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
-    "sha256": "2f20e96411f580630cffdca1527a9e05892aebef20a2e518486422972b86697d",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
+    "sha256": "9713f8f958221ef4bd4a43cf369d887260702f8d1e80b81fab303a641738083d",
+    "modified": true,
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "source_kind": "derived_power_icon",
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw"
   },
   {
     "file": "FrierenMod/images/powers/ChantWithoutManaPower.png",
-    "source": "src/main/resources/FrierenModResources/img/powers/ChantWithoutManaPower_84.png",
+    "source": "assets/power_sources/originals/ChantWithoutManaPower.png",
     "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
-    "sha256": "c3c1a962fb52457ceeee340b30742d617043444bc18bdb5e12cf029cbbc55382",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
+    "sha256": "4cd8a8acef7023b5872fc383678adda623ddef67694f617b1661f98ca2a1cc6d",
+    "modified": true,
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "source_kind": "derived_power_icon",
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw"
   },
   {
     "file": "FrierenMod/images/powers/ChantWithoutManaTimesPower.png",
-    "source": "src/main/resources/FrierenModResources/img/powers/ChantWithoutManaTimesPower_84.png",
+    "source": "assets/power_sources/originals/ChantWithoutManaTimesPower.png",
     "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
-    "sha256": "8f7a39cd93ec858d017b75aaddd11fe889c15e768f4a4cda2ad56fc28dc5cfc4",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
+    "sha256": "cdf824e2d5aeafc06e2d3214c64c00d4c289518d2f030d68a9706c67ee0524c1",
+    "modified": true,
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "source_kind": "derived_power_icon",
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw"
   },
   {
     "file": "FrierenMod/images/powers/BanManaGainPower.png",
-    "source": "src/main/resources/FrierenModResources/img/powers/BanManaGainPower_84.png",
+    "source": "assets/power_sources/originals/BanManaGainPower.png",
     "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
-    "sha256": "1c3c30bcdce4b0f067b8a147cb247c6609a324c96749ce78a79a3aeae1ce6ca8",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
+    "sha256": "59291066779d1d0d4a078697949c696963d2b0c4b6754feb48fff889b625136b",
+    "modified": true,
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "source_kind": "derived_power_icon",
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw"
   },
   {
     "file": "FrierenMod/images/powers/ManaInsteadOfEnergyPower.png",
-    "source": "src/main/resources/FrierenModResources/img/powers/ManaInsteadOfEnergyPower_84.png",
+    "source": "assets/power_sources/originals/ManaInsteadOfEnergyPower.png",
     "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
-    "sha256": "bccd639c82301aa06ea050f867bc1e3a4f768c1970dc9d849acdeb552033a43c",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
+    "sha256": "4c13fd9c346d1a3e26676b19ed96d080488868c37cf3f7fbdc537d73736c89b5",
+    "modified": true,
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "source_kind": "derived_power_icon",
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw"
   },
   {
     "file": "FrierenMod/images/powers/SealPower.png",
-    "source": "src/main/resources/FrierenModResources/img/powers/SealPower_84.png",
+    "source": "assets/power_sources/originals/SealPower.png",
     "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
-    "sha256": "c55e97f3296bc7eafb05ee28c9d49b6527489ffcf66ee5452ca64e41bca5dd67",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
+    "sha256": "2bfd4aac12ef48c09c4cedd82cf97950f20dc3b7c8dc11328641d3c4e9f1451a",
+    "modified": true,
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "source_kind": "derived_power_icon",
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw"
   },
   {
     "file": "FrierenMod/images/powers/SynchroWithoutManaPower.png",
-    "source": "src/main/resources/FrierenModResources/img/powers/SynchroWithoutManaPower_84.png",
+    "source": "assets/power_sources/originals/SynchroWithoutManaPower.png",
     "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
-    "sha256": "811767c0a8d430293a14958e5eb397216423d860f4e974514f6ac40fbb11029a",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
+    "sha256": "74f46b521f3a2b9f5acd7cef88375912df3e8d2dd512de08c7a814127f0d845e",
+    "modified": true,
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "source_kind": "derived_power_icon",
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw"
   },
   {
     "file": "FrierenMod/images/powers/StrikeUpPower.png",
-    "source": "D:/Steam/steamapps/common/SlayTheSpire/desktop-1.0.jar!/powers/powers.png",
+    "source": "assets/power_sources/originals/StrikeUpPower.png",
     "source_commit": null,
-    "sha256": "46142356c2707f52718af89189b4998328b8be5deb4df848d041f38cadee64df",
+    "sha256": "14993e1b6fb063af07c0ef3b7d14308bc5da72776c7f665a4484413007d6c72a",
     "modified": true,
-    "redistribution_review": "pending; local prototype only",
-    "source_kind": "local_sts1_game_atlas",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "source_kind": "derived_power_icon",
     "source_atlas": "powers/powers.atlas",
     "source_region": "128/accuracy",
     "source_rect": [
@@ -652,16 +668,17 @@
       "ded8ae04ee98facddef5c27fbd7174ab099438bb1dbb67336f78f317d3134fe4",
       "c19562475e2cefb65a2fd8d033c2113ff27e04954218f132865cb7786d3203e0"
     ],
-    "conversion": "导出一代原版能力图集区域，保留原像素"
+    "conversion": "导出一代原版能力图集区域，保留原像素",
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw"
   },
   {
     "file": "FrierenMod/images/powers/MetallicizePower.png",
-    "source": "D:/Steam/steamapps/common/SlayTheSpire/desktop-1.0.jar!/powers/powers.png",
+    "source": "assets/power_sources/originals/MetallicizePower.png",
     "source_commit": null,
-    "sha256": "fffefea2a545595cf84b95af1fe354b1a4d03ce34367782e45208d27c5364927",
+    "sha256": "a220f8417474c79ae0088f4e97614bf7b37aedefd1a84c4522db7389d255dd26",
     "modified": true,
-    "redistribution_review": "pending; local prototype only",
-    "source_kind": "local_sts1_game_atlas",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "source_kind": "derived_power_icon",
     "source_atlas": "powers/powers.atlas",
     "source_region": "128/armor",
     "source_rect": [
@@ -674,16 +691,17 @@
       "ded8ae04ee98facddef5c27fbd7174ab099438bb1dbb67336f78f317d3134fe4",
       "c19562475e2cefb65a2fd8d033c2113ff27e04954218f132865cb7786d3203e0"
     ],
-    "conversion": "导出一代原版能力图集区域，保留原像素"
+    "conversion": "导出一代原版能力图集区域，保留原像素",
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw"
   },
   {
     "file": "FrierenMod/images/powers/PhantasmalPower.png",
-    "source": "D:/Steam/steamapps/common/SlayTheSpire/desktop-1.0.jar!/powers/powers.png",
+    "source": "assets/power_sources/originals/PhantasmalPower.png",
     "source_commit": null,
-    "sha256": "f46fcca89137e174a9c52f05322eb3e3e53063b3dec569e2c243fe18f9b71c54",
+    "sha256": "8a548aba80cd62ba98f9c5b1bf114e732ca6f4e05025bfec5f01824471a7badb",
     "modified": true,
-    "redistribution_review": "pending; local prototype only",
-    "source_kind": "local_sts1_game_atlas",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "source_kind": "derived_power_icon",
     "source_atlas": "powers/powers.atlas",
     "source_region": "128/phantasmal",
     "source_rect": [
@@ -696,16 +714,17 @@
       "ded8ae04ee98facddef5c27fbd7174ab099438bb1dbb67336f78f317d3134fe4",
       "c19562475e2cefb65a2fd8d033c2113ff27e04954218f132865cb7786d3203e0"
     ],
-    "conversion": "导出一代原版能力图集区域，保留原像素"
+    "conversion": "导出一代原版能力图集区域，保留原像素",
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw"
   },
   {
     "file": "FrierenMod/images/powers/RestoreStrengthPower.png",
-    "source": "D:/Steam/steamapps/common/SlayTheSpire/desktop-1.0.jar!/powers/powers.png",
+    "source": "assets/power_sources/originals/RestoreStrengthPower.png",
     "source_commit": null,
-    "sha256": "9c6b486175d250a90a832a507bb73d15330a039e701032e0a9507cb20114fdec",
+    "sha256": "a25fb56068e818bbd12cb5b4e9e3b18f5eda470200e77bc20e950ac9d130432b",
     "modified": true,
-    "redistribution_review": "pending; local prototype only",
-    "source_kind": "local_sts1_game_atlas",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "source_kind": "derived_power_icon",
     "source_atlas": "powers/powers.atlas",
     "source_region": "128/shackle",
     "source_rect": [
@@ -718,16 +737,17 @@
       "ded8ae04ee98facddef5c27fbd7174ab099438bb1dbb67336f78f317d3134fe4",
       "c19562475e2cefb65a2fd8d033c2113ff27e04954218f132865cb7786d3203e0"
     ],
-    "conversion": "导出一代原版能力图集区域，保留原像素"
+    "conversion": "导出一代原版能力图集区域，保留原像素",
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw"
   },
   {
     "file": "FrierenMod/images/powers/MantraPower.png",
-    "source": "D:/Steam/steamapps/common/SlayTheSpire/desktop-1.0.jar!/powers/powers.png",
+    "source": "assets/power_sources/originals/MantraPower.png",
     "source_commit": null,
-    "sha256": "152cc8c9e8d40e42848847fec00883b6a4425e6c4cea24fa2f77d0c63538d9bb",
+    "sha256": "2b20b2e66f53734db8dba91f01ddd7cfd1dde75ef8a4f258d3a7134f19edc6a9",
     "modified": true,
-    "redistribution_review": "pending; local prototype only",
-    "source_kind": "local_sts1_game_atlas",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "source_kind": "derived_power_icon",
     "source_atlas": "powers/powers.atlas",
     "source_region": "128/mantra",
     "source_rect": [
@@ -740,50 +760,58 @@
       "ded8ae04ee98facddef5c27fbd7174ab099438bb1dbb67336f78f317d3134fe4",
       "c19562475e2cefb65a2fd8d033c2113ff27e04954218f132865cb7786d3203e0"
     ],
-    "conversion": "导出一代原版能力图集区域，保留原像素"
+    "conversion": "导出一代原版能力图集区域，保留原像素",
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw"
   },
   {
     "file": "FrierenMod/images/powers/PuzzlePower.png",
-    "source": "src/main/resources/FrierenModResources/img/relics/HolyEmblem.png",
+    "source": "assets/power_sources/originals/PuzzlePower.png",
     "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
-    "sha256": "8db6c4db31c02fd2fb319007f9ccad0f46e318eb7f2639bef5bd2175eb814ea9",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
+    "sha256": "30687496b1e4f75e744b04b07e1b1b3fcecf01fbb8adaa665e18f662585a8913",
+    "modified": true,
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "source_kind": "derived_power_icon",
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw"
   },
   {
     "file": "FrierenMod/images/powers/FullAheadPower.png",
-    "source": "src/main/resources/FrierenModResources/img/powers/FullAheadPower_84.png",
+    "source": "assets/power_sources/originals/FullAheadPower.png",
     "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
-    "sha256": "4cf93f13f951c591d0ab5981b8b25661a50a15a273abef5bf2ae24eb4bbbd198",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
+    "sha256": "7e05d5b68aa007c23e135981f84e34af8a859fd394338b9318b1d3d726a979c2",
+    "modified": true,
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "source_kind": "derived_power_icon",
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw"
   },
   {
     "file": "FrierenMod/images/powers/ThunderPower.png",
-    "source": "src/main/resources/FrierenModResources/img/powers/ThunderPower_84.png",
+    "source": "assets/power_sources/originals/ThunderPower.png",
     "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
-    "sha256": "0b333fd6ea3c7957a8d20f0a7ff3bf37007b264d7ea81117f07d49c70f3f5e43",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
+    "sha256": "f27600c35468ea35ec3c0165c15025b48987263959aaa62daf81ff4a7373f4ce",
+    "modified": true,
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "source_kind": "derived_power_icon",
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw"
   },
   {
     "file": "FrierenMod/images/powers/SimmeringPower.png",
-    "source": "src/main/resources/FrierenModResources/img/powers/SimmeringPower_84.png",
+    "source": "assets/power_sources/originals/SimmeringPower.png",
     "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
-    "sha256": "547e4f2e18f301d83cd9c01710dc66439f910a18362fb322352ffc9cf820ba20",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
+    "sha256": "05b60a00e87db9b1449efaaa95b93c8f50c60648114912d8342cde9d2e3120e7",
+    "modified": true,
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "source_kind": "derived_power_icon",
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw"
   },
   {
     "file": "FrierenMod/images/powers/PaperPlanePower.png",
     "source": "assets/power_sources/PaperPlanePower.png",
     "source_commit": null,
-    "sha256": "2d7c5e06f2ae7eb274ee66cc6fb6674e6a9606f94a7825c64d0e160c45bec0e8",
+    "sha256": "d5148575b6cfdf1ec2f10b8ea83883baa423cd080c58b789948a1c9445e058c5",
     "modified": true,
-    "redistribution_review": "original built-in image_gen artwork; pending author visual review",
-    "source_kind": "generated_artwork",
-    "selection_reason": "作者要求按原版能力图标风格绘制专用图案；2026-10-31",
-    "processing": "tools/prepare_generated_power_icons.gd; alpha bounds, proportional Lanczos resize within 76x76, centered on transparent 84x84"
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "source_kind": "derived_power_icon",
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw"
   },
   {
     "file": "FrierenMod/images/relics/HolyEmblem.png",
@@ -1419,115 +1447,143 @@
   },
   {
     "file": "FrierenMod/images/powers/AccelerateFlowPower.png",
-    "source": "src/main/resources/FrierenModResources/img/powers/AccelerateFlowPower_84.png",
+    "source": "assets/power_sources/originals/AccelerateFlowPower.png",
     "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
-    "sha256": "9d5a1452c26f24a13f41e9ca9e84d1f03aa6cb1e8cd2349744c6c2486d1b2f15",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
+    "sha256": "f4f89381898a507d8f38a4928d447626858d97ae617f2dfe83d676a4d6f387d3",
+    "modified": true,
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "source_kind": "derived_power_icon",
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw"
   },
   {
     "file": "FrierenMod/images/powers/FlyingMagicPower.png",
-    "source": "src/main/resources/FrierenModResources/img/powers/FlyingMagicPower_84.png",
+    "source": "assets/power_sources/originals/FlyingMagicPower.png",
     "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
-    "sha256": "1aec9d7f3ae0d4e21d1155190ef0e0fe5f389437b48bf4e95d4d9190457c1e46",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
+    "sha256": "b0afd5b53bc0d3809fae34049ccc44d7f3f3c64d7b6f9ce119abb6cd6fd6fbdf",
+    "modified": true,
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "source_kind": "derived_power_icon",
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw"
   },
   {
     "file": "FrierenMod/images/powers/FrierenSuitcasePower.png",
-    "source": "src/main/resources/FrierenModResources/img/powers/FrierenSuitcasePower_84.png",
+    "source": "assets/power_sources/originals/FrierenSuitcasePower.png",
     "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
-    "sha256": "a9e31d93e31353a3fe5243c8cd2226b033f2b3766d5ee7a4ffea41c9581edb92",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
+    "sha256": "c12af26a82fadd9bbdfb44acbf1d729db4311f876df63268ac2e7eded587bc2d",
+    "modified": true,
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "source_kind": "derived_power_icon",
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw"
   },
   {
     "file": "FrierenMod/images/powers/GainRelicPower.png",
-    "source": "src/main/resources/FrierenModResources/img/powers/GainRelicPower_84.png",
+    "source": "assets/power_sources/originals/GainRelicPower.png",
     "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
-    "sha256": "98a7679831decdcef4973c8f0adedc7cbe2093ecfb47d6d7dfac026067148ea2",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
+    "sha256": "bd2b37f3edf3e587ff6abfcef8c94e3341be398bea69f9197cdcb2cf5c4953b0",
+    "modified": true,
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "source_kind": "derived_power_icon",
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw"
   },
   {
     "file": "FrierenMod/images/powers/ManaReturnPower.png",
-    "source": "src/main/resources/FrierenModResources/img/powers/ManaReturnPower_84.png",
+    "source": "assets/power_sources/originals/ManaReturnPower.png",
     "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
-    "sha256": "609430c6b55fbc0def6e7aa2a5c614a6291382d0dc4188e06f09bce1b468fd86",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
+    "sha256": "0b1bbe550e390f9d510b7dc5b79fe1bc326806f39ce3e5d5103ded2450307a09",
+    "modified": true,
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "source_kind": "derived_power_icon",
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw"
   },
   {
     "file": "FrierenMod/images/powers/OpenTheWaygatePower.png",
-    "source": "src/main/resources/FrierenModResources/img/powers/OpenTheWaygatePower_84.png",
+    "source": "assets/power_sources/originals/OpenTheWaygatePower.png",
     "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
-    "sha256": "9aaf5b6c655da8fbe70db2ac84bdbcf7f1c6f346bf63834a6af48d6e6fe1a2bd",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
+    "sha256": "e4f80c61e746d367e9c27de98d6139c25de7dcc42120d175e3e14e9893a90a6d",
+    "modified": true,
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "source_kind": "derived_power_icon",
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw"
   },
   {
     "file": "FrierenMod/images/powers/OutpouringPower.png",
-    "source": "src/main/resources/FrierenModResources/img/powers/OutpouringPower_84.png",
+    "source": "assets/power_sources/originals/OutpouringPower.png",
     "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
-    "sha256": "ba8cade484789154e756c078e1586f3a44640395e702d8c58a896e5a1c2d84c6",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
+    "sha256": "e1309d6456e6a1686fc2d04d9204bc6d5a4de659b52be2874c962a66ddf492dc",
+    "modified": true,
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "source_kind": "derived_power_icon",
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw"
   },
   {
     "file": "FrierenMod/images/powers/PajamasFormPower.png",
-    "source": "src/main/resources/FrierenModResources/img/powers/PajamasFormPower_84.png",
+    "source": "assets/power_sources/originals/PajamasFormPower.png",
     "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
-    "sha256": "e5b87c8276998d6306210f6bf582016c2fba38c6701718b2dbd885b0c17beb33",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
+    "sha256": "71dc7f33b0c694147957ef8127ddab4eb91d6bb317ccc7c66d3d04244760cb2a",
+    "modified": true,
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "source_kind": "derived_power_icon",
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw"
   },
   {
     "file": "FrierenMod/images/powers/PerpetualPower.png",
-    "source": "src/main/resources/FrierenModResources/img/powers/PerpetualPower_84.png",
+    "source": "assets/power_sources/originals/PerpetualPower.png",
     "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
-    "sha256": "82379ff33933d46595e8db64e29aea7fbaee6c154d5265d36fc34e77f2e4b938",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
+    "sha256": "bd855cb8379d926258bee2a1aa861c5ef8bdbdb8d5ab6271e60965f12410bbec",
+    "modified": true,
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "source_kind": "derived_power_icon",
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw"
   },
   {
     "file": "FrierenMod/images/powers/RingletFormPower.png",
-    "source": "src/main/resources/FrierenModResources/img/powers/RingletFormPower_84.png",
+    "source": "assets/power_sources/originals/RingletFormPower.png",
     "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
-    "sha256": "c1cc0fd83810db4c8b4c59054d322ac5fe4fd1596cf263eca58fe1cbf9b92444",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
+    "sha256": "daf017eb9213eaa7d145ab4d114a9da25a1062dca414c1d7cdf9928289675ace",
+    "modified": true,
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "source_kind": "derived_power_icon",
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw"
   },
   {
     "file": "FrierenMod/images/powers/RitesPreparationPower.png",
-    "source": "src/main/resources/FrierenModResources/img/powers/RitesPreparationPower_84.png",
+    "source": "assets/power_sources/originals/RitesPreparationPower.png",
     "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
-    "sha256": "4229bea4b354a3bc38bc7727a76bcc1a94d5f66fbeb1500070ab945ac976b0f4",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
+    "sha256": "aaae85edac9e201cf9357839e3585cc18dc56da86eb99fef5c3890facf66c45a",
+    "modified": true,
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "source_kind": "derived_power_icon",
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw"
   },
   {
     "file": "FrierenMod/images/powers/SwitchStrengthAndDexterityPower.png",
-    "source": "src/main/resources/FrierenModResources/img/powers/SwitchStrengthAndDexterityPower_84.png",
+    "source": "assets/power_sources/originals/SwitchStrengthAndDexterityPower.png",
     "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
-    "sha256": "e4cfb21ed43512b85b332881ec7ea1bfd69140b0c1fd83987d699371da8cb59c",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
+    "sha256": "f6f52a4ec90d309c0b40050c5c3fdfc479cd7ad60b20f6d1ba0e34e5600c5f6d",
+    "modified": true,
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "source_kind": "derived_power_icon",
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw"
   },
   {
     "file": "FrierenMod/images/powers/TimeTravelPower.png",
-    "source": "src/main/resources/FrierenModResources/img/powers/TimeTravelPower_84.png",
+    "source": "assets/power_sources/originals/TimeTravelPower.png",
     "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
-    "sha256": "6842715420c10fb57584693eefaf382e7b25466da045e2d1c8acd045b89893b3",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
+    "sha256": "a72d1a75216297e5fbf8ad52c81b28431d9d2023e16dcc0410d236a342164e6a",
+    "modified": true,
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "source_kind": "derived_power_icon",
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw"
   },
   {
     "file": "FrierenMod/images/powers/TrickPower.png",
-    "source": "src/main/resources/FrierenModResources/img/powers/TrickPower_84.png",
+    "source": "assets/power_sources/originals/TrickPower.png",
     "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
-    "sha256": "c3872aa1f87fe25db4dc9e55ddd68e2fb623d1dde8fbfda176ac69a50d9994b8",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
+    "sha256": "9f004a6b344c16c23fd01496dc0179bf77e894afe5f3b38f72f02db657627ccc",
+    "modified": true,
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "source_kind": "derived_power_icon",
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw"
   },
   {
     "file": "FrierenMod/images/card_frames/frieren_attack.png",
@@ -1931,27 +1987,33 @@
   },
   {
     "file": "FrierenMod/images/powers/Factor100Power.png",
-    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/powers/Factor100Power_84.png",
+    "source": "assets/power_sources/originals/Factor100Power.png",
     "source_commit": null,
-    "source_kind": "local_author_assets",
-    "sha256": "97c5b000aa34cacf5c807b6e1c6afc8138d44cebae58ee44b9a2fed0f6604d1a",
-    "modified": false
+    "source_kind": "derived_power_icon",
+    "sha256": "8472af094d7a8e11bcbde0017f461e60aa1880f0d6ae0119a1750b3771b445d9",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review"
   },
   {
     "file": "FrierenMod/images/powers/Factor010Power.png",
-    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/powers/Factor010Power_84.png",
+    "source": "assets/power_sources/originals/Factor010Power.png",
     "source_commit": null,
-    "source_kind": "local_author_assets",
-    "sha256": "82136849cb9dcebe5de8ee5cd22b3d7c44eeb9aec265a6b70d822d9e79aa734a",
-    "modified": false
+    "source_kind": "derived_power_icon",
+    "sha256": "d581b8e42936a7024743e97f55d1e7d1a91befd37269ffee561e586b9b91a825",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review"
   },
   {
     "file": "FrierenMod/images/powers/Factor001Power.png",
-    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/powers/Factor001Power_84.png",
+    "source": "assets/power_sources/originals/Factor001Power.png",
     "source_commit": null,
-    "source_kind": "local_author_assets",
-    "sha256": "db3ae6fd3dcd477538e71d0f7688aadc2b42e350d0b79d0b963504e392374c63",
-    "modified": false
+    "source_kind": "derived_power_icon",
+    "sha256": "64504f29faccd26a0704526877c84d5911f918f0754ec0a00a1d936d35ae8345",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review"
   },
   {
     "file": "FrierenMod/images/potions/BottledMana.png",
@@ -2236,27 +2298,33 @@
   },
   {
     "file": "FrierenMod/images/powers/MimicPower.png",
-    "source": "src/main/resources/FrierenModResources/img/powers/MimicPower_84.png",
+    "source": "assets/power_sources/originals/MimicPower.png",
     "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
-    "sha256": "c943304d5932e216746f31237bbfbc462f540de713e374fa1d60996fd3e23587",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
+    "sha256": "c05f129eebccbef55de177cc93614b3acecb18f93aaf701882ff61838576b59f",
+    "modified": true,
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "source_kind": "derived_power_icon",
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw"
   },
   {
     "file": "FrierenMod/images/powers/DarkPower.png",
-    "source": "src/main/resources/FrierenModResources/img/powers/DarkPower_84.png",
+    "source": "assets/power_sources/originals/DarkPower.png",
     "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
-    "sha256": "1e0c88e16cfea59595df147daf459aac9a203c56829b40d836441dcb5d606bb4",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
+    "sha256": "7d14e777d88910cc1c0ff37affe6230ed2793d4a66de708865f3b7fc481d1008",
+    "modified": true,
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "source_kind": "derived_power_icon",
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw"
   },
   {
     "file": "FrierenMod/images/powers/SwallowedPower.png",
-    "source": "src/main/resources/FrierenModResources/img/powers/SwallowedPower_84.png",
+    "source": "assets/power_sources/originals/SwallowedPower.png",
     "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
-    "sha256": "9b5490330a380bd60ca2d342482aa488d5fb15bdfd53d1fbbee9ebafc33b8701",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
+    "sha256": "0a3fad874f6986849348dc337f1e16b8bb30124172f73d1e2e27c4c3ae4a6b86",
+    "modified": true,
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "source_kind": "derived_power_icon",
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw"
   },
   {
     "file": "FrierenMod/images/monsters/Mimic.png",
@@ -2284,37 +2352,44 @@
   },
   {
     "file": "FrierenMod/images/powers/CopyPower.png",
-    "source": "src/main/resources/FrierenModResources/img/powers/CopyPower_84.png",
+    "source": "assets/power_sources/originals/CopyPower.png",
     "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
-    "sha256": "0c7194dd7c9b6b09b9ea1dbf0c0f546d280708014de8715009c280389cdd444a",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
+    "sha256": "225d82d20678d07e8c71fbda29164ec7be577fa03ad50cad9d68ffc83f6b4fa7",
+    "modified": true,
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "source_kind": "derived_power_icon",
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw"
   },
   {
     "file": "FrierenMod/images/powers/SpellCasterPower.png",
-    "source": "src/main/resources/FrierenModResources/img/powers/SpellCasterPower_84.png",
+    "source": "assets/power_sources/originals/SpellCasterPower.png",
     "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
-    "sha256": "2e762a92590894546e6a56abee23f33c48af1dd3bdc524e53aa1c7d4303d156c",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
+    "sha256": "0402c3067bd9e67b45a5ee34484ac30bb502bae557f8739ff6ddcb005218bbe3",
+    "modified": true,
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "source_kind": "derived_power_icon",
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw"
   },
   {
     "file": "FrierenMod/images/powers/EnemyManaPower.png",
-    "source": "src/main/resources/FrierenModResources/img/powers/EnemyManaPower_84.png",
+    "source": "assets/power_sources/originals/EnemyManaPower.png",
     "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
-    "sha256": "667a3e7f518e6ba32950c79f105fd0bf3c4f090660f7c84c55df60a7ab73b623",
-    "modified": false,
-    "redistribution_review": "pending; local prototype only"
+    "sha256": "c3e216472f5f4c03c38874a5692005e429948a5a3a240c567ac6b139ca95e1f9",
+    "modified": true,
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "source_kind": "derived_power_icon",
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw"
   },
   {
     "file": "FrierenMod/images/powers/DivinityPower.png",
-    "source": "Watcher/images/powers/divinity_stance.png",
+    "source": "assets/power_sources/originals/DivinityPower.png",
     "source_repository": "https://github.com/lamali292/WatcherMod",
     "source_commit": "d5637b7b04b59cdb7c630739ffbbd84fc74deb0d",
-    "source_kind": "local_watcher_mod_reference",
-    "sha256": "523a32d14abb0a8272472adcccbf5908fb91afdcea44ab84dd25d9051b095a81",
-    "modified": false,
-    "redistribution_review": "Mixed license; see LICENSE.WATCHER; local non-commercial prototype"
+    "source_kind": "derived_power_icon",
+    "sha256": "46329a4547ca2519a1b3c6b8995796f156fe1d10627329db97a3c408508b1bfd",
+    "modified": true,
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw"
   },
   {
     "file": "FrierenMod/images/vfx/eye_anim.png",
@@ -2412,11 +2487,13 @@
   },
   {
     "file": "FrierenMod/images/powers/ManaAffinityPower.png",
-    "source": "src/main/resources/FrierenModResources/img/powers/ManaAffinityPower_84.png",
+    "source": "assets/power_sources/originals/ManaAffinityPower.png",
     "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
-    "sha256": "111cd21a36167c613f8c25195edf803e822d94e359ee15a45366845c9f5c16a1",
-    "modified": false,
-    "redistribution_review": "Original mod assets; see LICENSE.STS1"
+    "sha256": "df87c951d2b08db0cadbdc53b3447e0a81f6a39682e89e2a011fe8d3aeae6aa8",
+    "modified": true,
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "source_kind": "derived_power_icon",
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw"
   },
   {
     "file": "FrierenMod/images/slot_backs/0001.png",
@@ -3562,17 +3639,19 @@
   },
   {
     "file": "FrierenMod/images/cards/EndlessFlow.png",
-    "source": "assets/card_sources/EndlessFlow.png",
-    "sha256": "64de1552bdc27399387b9bbb9503e00bcb9acbb9c15956f78904d34bd806c2c6",
-    "modified": true,
-    "processing": "原图完整等比缩至上半幅598x430内居中，保留上下左右对称构图与中央人物；左右仅镜像延展花草边缘；下方以原图底部花草铺底，留给原生正文遮挡。无主体拉伸或重绘。"
+    "source": "assets/author_adjusted/20261031/EndlessFlow.png",
+    "sha256": "a739e9fe55885fd1cfffd99437b8a0ec921cf83b707e08e36bd503291def73ff",
+    "modified": false,
+    "processing": "作者已按500×380普通卡或598×842先古卡尺寸完成构图；逐字节原样采用，无额外裁剪或位移",
+    "source_kind": "author_adjusted_artwork"
   },
   {
     "file": "FrierenMod/images/cards/FrierenTheSlayer.png",
-    "source": "assets/card_sources/FrierenTheSlayer.png",
-    "sha256": "ac74a7330b77676d908f29171eef4bfc28baf86a56d63676336adeb6eebdc58d",
-    "modified": true,
-    "processing": "原图等比缩放为598px宽，上移80px；脸部位于上半幅约y125至365，避开类型牌和正文。仅正文遮挡区内把原衣服/花草背景接续铺底，不改人物像素或五官。"
+    "source": "assets/author_adjusted/20261031/FrierenTheSlayer.png",
+    "sha256": "acff72c2e41e28034f29e3b1b1c2dff4b919da00d85a18bbc5f9e7efdd7b76ac",
+    "modified": false,
+    "processing": "作者已按500×380普通卡或598×842先古卡尺寸完成构图；逐字节原样采用，无额外裁剪或位移",
+    "source_kind": "author_adjusted_artwork"
   },
   {
     "file": "FrierenMod/images/cards/RingletForm.png",
@@ -3649,25 +3728,22 @@
   },
   {
     "file": "FrierenMod/images/powers/FrierenTheSlayerPower.png",
-    "source": "FrierenMod/images/monsters/Spiegel_node.png",
-    "sha256": "21616830e35cd397b68c5b6ed5ebbfa7c05002bbbfd9631db268510e12f12e81",
-    "modified": false,
-    "processing": "复制体地图/顶栏无五官头像原样复用；Godot导入上限84像素，等比缩为能力图标；显示层RGB乘1.08，透明度不变。"
+    "source": "assets/power_sources/originals/FrierenTheSlayerPower.png",
+    "sha256": "4a3a6ca4122d356b8dd896b897cbff74fceb4f4262071b2fe577d91a4063e1d6",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "source_kind": "derived_power_icon",
+    "redistribution_review": "source provenance retained; pending in-game author review"
   },
   {
     "file": "FrierenMod/images/cards/AccessoriesSpell.png",
-    "source": "src/main/resources/FrierenModResources/img/cards/AccessoriesSpell_p.png",
+    "source": "assets/author_adjusted/20261031/AccessoriesSpell.png",
     "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
-    "sha256": "eda90da4f28b15e503111ac6f6b0e5412df6ff47f1fd44b756d08609f6ea85ac",
-    "modified": true,
+    "sha256": "aa6206785690bd6631112170b09e90a72e0b786d1aa9983014d1df28dcc59179",
+    "modified": false,
     "redistribution_review": "pending; local prototype only",
-    "processing": "按主体单独等比裁剪为500x380；保留人物与原场景相对位置；仅透明边角延展最近原背景像素，避免转RGB形成黑角，无重绘。",
-    "crop": [
-      150,
-      35,
-      500,
-      301
-    ]
+    "processing": "作者已按500×380普通卡或598×842先古卡尺寸完成构图；逐字节原样采用，无额外裁剪或位移",
+    "source_kind": "author_adjusted_artwork"
   },
   {
     "file": "FrierenMod/images/cards/BackFlow.png",
@@ -3680,18 +3756,13 @@
   },
   {
     "file": "FrierenMod/images/cards/FlyingMagic.png",
-    "source": "src/main/resources/FrierenModResources/img/cards/FlyingMagic_p.png",
+    "source": "assets/author_adjusted/20261031/FlyingMagic.png",
     "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
-    "sha256": "93636afcb5cefadd29c975e1dc122c08e108a46351d9282bc802516b2b15787c",
-    "modified": true,
+    "sha256": "0700a6fb8d27d7cdc39b09dfcb35d46c2e7d40dffecd33b48ef6fa1da3a30fc2",
+    "modified": false,
     "redistribution_review": "pending; local prototype only",
-    "processing": "按主体单独等比裁剪为500x380；保留人物与原场景相对位置；仅透明边角延展最近原背景像素，避免转RGB形成黑角，无重绘。",
-    "crop": [
-      35,
-      20,
-      485,
-      362
-    ]
+    "processing": "作者已按500×380普通卡或598×842先古卡尺寸完成构图；逐字节原样采用，无额外裁剪或位移",
+    "source_kind": "author_adjusted_artwork"
   },
   {
     "file": "FrierenMod/images/cards/FullAhead.png",
@@ -3819,24 +3890,30 @@
   },
   {
     "file": "FrierenMod/images/powers/SleepInPower.png",
-    "source": "TODOs.docx@2d48708:word/media/image3.png",
-    "sha256": "e1cf2635783166f38712e18ab94409b5a63301f0972345ad0b00ed1cb30f4d42",
+    "source": "assets/power_sources/originals/SleepInPower.png",
+    "sha256": "4cdf8775c3d239d9da46cb5b72f3347fa5d4fda97827217bb246f8339f511a75",
     "modified": true,
-    "processing": "作者提供的100x100能力图标，原样复制。"
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "source_kind": "derived_power_icon",
+    "redistribution_review": "source provenance retained; pending in-game author review"
   },
   {
     "file": "FrierenMod/images/powers/DomainExpansionPower.png",
-    "source": "作者2026-10-31上传：codex-clipboard-e1e9dc05-8710-49c0-addc-0284d1710e19.png",
-    "sha256": "509c05dbbf53d08c4932dbd86fd59d150dc77f11800e6855dd873e9f4ced4712",
-    "modified": false,
-    "processing": "原图原样使用；显示层RGB乘1.08轻微提亮，透明度不变。"
+    "source": "assets/power_sources/originals/DomainExpansionPower.png",
+    "sha256": "1ffb38b59dca20c99ba2a55ec628f8989e879baa605dfa007c6563136391748a",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "source_kind": "derived_power_icon",
+    "redistribution_review": "source provenance retained; pending in-game author review"
   },
   {
     "file": "FrierenMod/images/powers/GoodLuckRewardPower.png",
-    "source": "作者2026-10-31上传：codex-clipboard-c2f33b8f-a0a8-4eb7-aff3-9cf05c0a2ec4.png",
-    "sha256": "a43569247c4b8d55990f5bfdbc2b5a2f8ebf5b2f102a99e97a4795a4f8307b6e",
-    "modified": false,
-    "processing": "原图原样使用；显示层RGB乘1.08轻微提亮，透明度不变。"
+    "source": "assets/power_sources/originals/GoodLuckRewardPower.png",
+    "sha256": "cbac1fb00867034ad6eb036f22d90e3c25aef270a3ba2582df8505267d50a96f",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "source_kind": "derived_power_icon",
+    "redistribution_review": "source provenance retained; pending in-game author review"
   },
   {
     "file": "assets/card_sources/EndlessFlow.png",
@@ -3854,52 +3931,1165 @@
   },
   {
     "file": "FrierenMod/images/powers/AuraArrogancePower.png",
+    "source": "assets/power_sources/originals/AuraArrogancePower.png",
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "modified": true,
+    "sha256": "8f21bf3df7cb1e93249d02b18128149eee7944b496df40baafe33df96972e949",
+    "source_kind": "derived_power_icon",
+    "redistribution_review": "source provenance retained; pending in-game author review"
+  },
+  {
+    "file": "FrierenMod/images/powers/AuraSoulPower.png",
+    "source": "assets/power_sources/originals/AuraSoulPower.png",
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "modified": true,
+    "sha256": "4f545f7507de96efbd9dae677819f6ff8edeac9ef264bfccd4ae5bf1154f70dc",
+    "source_kind": "derived_power_icon",
+    "redistribution_review": "source provenance retained; pending in-game author review"
+  },
+  {
+    "file": "FrierenMod/images/powers/AuraSubmissionPower.png",
+    "source": "assets/power_sources/originals/AuraSubmissionPower.png",
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "modified": true,
+    "sha256": "ce2397ba002469cf71edfbcc67c7c90368f4aead1aa95cb143fd8ea96070323a",
+    "source_kind": "derived_power_icon",
+    "redistribution_review": "source provenance retained; pending in-game author review"
+  },
+  {
+    "file": "FrierenMod/images/powers/AuraElegancePower.png",
+    "source": "assets/power_sources/originals/AuraElegancePower.png",
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "modified": true,
+    "sha256": "37ab9af0995a68b55f6a15a8a01724442a006ddb9694560d9a6889bc6fc9fd24",
+    "source_kind": "derived_power_icon",
+    "redistribution_review": "source provenance retained; pending in-game author review"
+  },
+  {
+    "file": "FrierenMod/images/powers/RecyclePower.png",
+    "source": "assets/author_adjusted/20261031/RecyclePower.png",
+    "source_commit": null,
+    "sha256": "13e4e72dacbfbabb993e2daeeb7d1a1332631732a4922d5bb15c7363b72a30b7",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "source_kind": "derived_power_icon"
+  },
+  {
+    "file": "FrierenMod/images/powers/SwampManaNextTurnPower.png",
+    "source": "assets/author_adjusted/20261031/SwampManaNextTurnPower.png",
+    "source_commit": null,
+    "sha256": "de96fc57a5934a30d5a3d6df4f5478e250442c348226911615dfd36ef97c965a",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "source_kind": "derived_power_icon"
+  },
+  {
+    "file": "assets/power_sources/originals/AccelerateFlowPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/AccelerateFlowPower_84.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "9d5a1452c26f24a13f41e9ca9e84d1f03aa6cb1e8cd2349744c6c2486d1b2f15",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only",
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外"
+  },
+  {
+    "file": "assets/power_sources/originals/AuraArrogancePower.png",
     "source": "作者2026-10-31上传：codex-clipboard-7f319af1-3457-4eca-9272-1c6c5f71dcff.png",
-    "processing": "原图原样使用；显示层RGB乘1.08轻微提亮，透明度不变。",
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外",
     "modified": false,
     "sha256": "42d2a2c848f7d6dcccbac9cedfa1110cda0075fa2cc703f4492a6e42b14c45c9"
   },
   {
-    "file": "FrierenMod/images/powers/AuraSoulPower.png",
-    "source": "作者2026-10-31上传：codex-clipboard-d095b4d2-b23f-4ba7-8012-72802b190a82.png",
-    "processing": "原图原样使用；显示层RGB乘1.08轻微提亮，透明度不变。",
-    "modified": false,
-    "sha256": "cbef9cf1ca2c2020d69133be332c7e8277175c2e5839e3d21cd602ea2548d31c"
-  },
-  {
-    "file": "FrierenMod/images/powers/AuraSubmissionPower.png",
-    "source": "作者2026-10-31上传：codex-clipboard-bcef05b7-1dda-42af-9129-12eaa823b6e6.png",
-    "processing": "原图原样使用；显示层RGB乘1.08轻微提亮，透明度不变。",
-    "modified": false,
-    "sha256": "fb77b092c73e5968a94803308d8749c67dc7f3e612ae63d15b88affadb0ccd82"
-  },
-  {
-    "file": "FrierenMod/images/powers/AuraElegancePower.png",
+    "file": "assets/power_sources/originals/AuraElegancePower.png",
     "source": "作者2026-10-31上传：codex-clipboard-1688268c-a447-442b-b7bb-194c333416a9.png",
-    "processing": "原图原样使用；显示层RGB乘1.08轻微提亮，透明度不变。",
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外",
     "modified": false,
     "sha256": "776c5374f14bc8ac56a3371d9df08f926d31e4afdb3ca1ce8a31fcc63b97226e"
   },
   {
-    "file": "FrierenMod/images/powers/RecyclePower.png",
-    "source": "assets/power_sources/RecyclePower.png",
-    "source_commit": null,
-    "sha256": "71408fdcb6fc465e03288aa9dbc909e14e43c2b6d843dcd3471bc1ff7f54568d",
-    "modified": true,
-    "processing": "tools/prepare_generated_power_icons.gd; alpha bounds, proportional Lanczos resize within 76x76, centered on transparent 84x84",
-    "redistribution_review": "original built-in image_gen artwork; pending author visual review",
-    "source_kind": "generated_artwork",
-    "selection_reason": "作者要求按原版能力图标风格绘制专用图案；2026-10-31"
+    "file": "assets/power_sources/originals/AuraScalesPower.png",
+    "sha256": "978849ffc70bf064db11f347f3cfc6e804081958e418b84fc0286645c472da59",
+    "source": "0.10.7原有能力图标，原样保留",
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外"
   },
   {
-    "file": "FrierenMod/images/powers/SwampManaNextTurnPower.png",
-    "source": "assets/power_sources/SwampManaNextTurnPower.png",
+    "file": "assets/power_sources/originals/AuraSoulPower.png",
+    "source": "作者2026-10-31上传：codex-clipboard-d095b4d2-b23f-4ba7-8012-72802b190a82.png",
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外",
+    "modified": false,
+    "sha256": "cbef9cf1ca2c2020d69133be332c7e8277175c2e5839e3d21cd602ea2548d31c"
+  },
+  {
+    "file": "assets/power_sources/originals/AuraSubmissionPower.png",
+    "source": "作者2026-10-31上传：codex-clipboard-bcef05b7-1dda-42af-9129-12eaa823b6e6.png",
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外",
+    "modified": false,
+    "sha256": "fb77b092c73e5968a94803308d8749c67dc7f3e612ae63d15b88affadb0ccd82"
+  },
+  {
+    "file": "assets/power_sources/originals/BanManaGainPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/BanManaGainPower_84.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "1c3c30bcdce4b0f067b8a147cb247c6609a324c96749ce78a79a3aeae1ce6ca8",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only",
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外"
+  },
+  {
+    "file": "assets/power_sources/originals/ChantWithoutManaPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/ChantWithoutManaPower_84.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "c3c1a962fb52457ceeee340b30742d617043444bc18bdb5e12cf029cbbc55382",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only",
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外"
+  },
+  {
+    "file": "assets/power_sources/originals/ChantWithoutManaTimesPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/ChantWithoutManaTimesPower_84.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "8f7a39cd93ec858d017b75aaddd11fe889c15e768f4a4cda2ad56fc28dc5cfc4",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only",
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外"
+  },
+  {
+    "file": "assets/power_sources/originals/ConcentrationPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/ConcentrationPower_84.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "a5a3ab97e8bfb36801a0636d79ec333fb0d64415325978e1d1fd04fc3d89273a",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only",
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外"
+  },
+  {
+    "file": "assets/power_sources/originals/CopyPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/CopyPower_84.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "0c7194dd7c9b6b09b9ea1dbf0c0f546d280708014de8715009c280389cdd444a",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only",
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外"
+  },
+  {
+    "file": "assets/power_sources/originals/DarkPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/DarkPower_84.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "1e0c88e16cfea59595df147daf459aac9a203c56829b40d836441dcb5d606bb4",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only",
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外"
+  },
+  {
+    "file": "assets/power_sources/originals/DivinityPower.png",
+    "source": "Watcher/images/powers/divinity_stance.png",
+    "source_repository": "https://github.com/lamali292/WatcherMod",
+    "source_commit": "d5637b7b04b59cdb7c630739ffbbd84fc74deb0d",
+    "source_kind": "local_watcher_mod_reference",
+    "sha256": "523a32d14abb0a8272472adcccbf5908fb91afdcea44ab84dd25d9051b095a81",
+    "modified": false,
+    "redistribution_review": "Mixed license; see LICENSE.WATCHER; local non-commercial prototype",
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外"
+  },
+  {
+    "file": "assets/power_sources/originals/DomainExpansionPower.png",
+    "source": "作者2026-10-31上传：codex-clipboard-e1e9dc05-8710-49c0-addc-0284d1710e19.png",
+    "sha256": "509c05dbbf53d08c4932dbd86fd59d150dc77f11800e6855dd873e9f4ced4712",
+    "modified": false,
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外"
+  },
+  {
+    "file": "assets/power_sources/originals/EnemyManaPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/EnemyManaPower_84.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "667a3e7f518e6ba32950c79f105fd0bf3c4f090660f7c84c55df60a7ab73b623",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only",
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外"
+  },
+  {
+    "file": "assets/power_sources/originals/Factor001Power.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/powers/Factor001Power_84.png",
     "source_commit": null,
-    "sha256": "1b908cd7a26bdf16d60b2770997235b6e97ccecdf8c57e3d00a702ebfd2d8257",
+    "source_kind": "local_author_assets",
+    "sha256": "db3ae6fd3dcd477538e71d0f7688aadc2b42e350d0b79d0b963504e392374c63",
+    "modified": false,
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外"
+  },
+  {
+    "file": "assets/power_sources/originals/Factor010Power.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/powers/Factor010Power_84.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "82136849cb9dcebe5de8ee5cd22b3d7c44eeb9aec265a6b70d822d9e79aa734a",
+    "modified": false,
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外"
+  },
+  {
+    "file": "assets/power_sources/originals/Factor100Power.png",
+    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/powers/Factor100Power_84.png",
+    "source_commit": null,
+    "source_kind": "local_author_assets",
+    "sha256": "97c5b000aa34cacf5c807b6e1c6afc8138d44cebae58ee44b9a2fed0f6604d1a",
+    "modified": false,
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外"
+  },
+  {
+    "file": "assets/power_sources/originals/FlyingMagicPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/FlyingMagicPower_84.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "1aec9d7f3ae0d4e21d1155190ef0e0fe5f389437b48bf4e95d4d9190457c1e46",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only",
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外"
+  },
+  {
+    "file": "assets/power_sources/originals/FrierenSuitcasePower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/FrierenSuitcasePower_84.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "a9e31d93e31353a3fe5243c8cd2226b033f2b3766d5ee7a4ffea41c9581edb92",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only",
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外"
+  },
+  {
+    "file": "assets/power_sources/originals/FrierenTheSlayerPower.png",
+    "source": "FrierenMod/images/monsters/Spiegel_node.png",
+    "sha256": "21616830e35cd397b68c5b6ed5ebbfa7c05002bbbfd9631db268510e12f12e81",
+    "modified": false,
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外"
+  },
+  {
+    "file": "assets/power_sources/originals/FullAheadPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/FullAheadPower_84.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "4cf93f13f951c591d0ab5981b8b25661a50a15a273abef5bf2ae24eb4bbbd198",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only",
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外"
+  },
+  {
+    "file": "assets/power_sources/originals/GainRelicPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/GainRelicPower_84.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "98a7679831decdcef4973c8f0adedc7cbe2093ecfb47d6d7dfac026067148ea2",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only",
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外"
+  },
+  {
+    "file": "assets/power_sources/originals/GoodLuckRewardPower.png",
+    "source": "作者2026-10-31上传：codex-clipboard-c2f33b8f-a0a8-4eb7-aff3-9cf05c0a2ec4.png",
+    "sha256": "a43569247c4b8d55990f5bfdbc2b5a2f8ebf5b2f102a99e97a4795a4f8307b6e",
+    "modified": false,
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外"
+  },
+  {
+    "file": "assets/power_sources/originals/ManaAffinityPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/ManaAffinityPower_84.png",
+    "source_collection": "作者2026年10月24日提供的完整一代源码与资源",
+    "sha256": "111cd21a36167c613f8c25195edf803e822d94e359ee15a45366845c9f5c16a1",
+    "modified": false,
+    "redistribution_review": "Original mod assets; see LICENSE.STS1",
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外"
+  },
+  {
+    "file": "assets/power_sources/originals/ManaInsteadOfEnergyPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/ManaInsteadOfEnergyPower_84.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "bccd639c82301aa06ea050f867bc1e3a4f768c1970dc9d849acdeb552033a43c",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only",
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外"
+  },
+  {
+    "file": "assets/power_sources/originals/ManaReturnPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/ManaReturnPower_84.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "609430c6b55fbc0def6e7aa2a5c614a6291382d0dc4188e06f09bce1b468fd86",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only",
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外"
+  },
+  {
+    "file": "assets/power_sources/originals/MantraPower.png",
+    "source": "D:/Steam/steamapps/common/SlayTheSpire/desktop-1.0.jar!/powers/powers.png",
+    "source_commit": null,
+    "sha256": "152cc8c9e8d40e42848847fec00883b6a4425e6c4cea24fa2f77d0c63538d9bb",
     "modified": true,
-    "processing": "tools/prepare_generated_power_icons.gd; alpha bounds, proportional Lanczos resize within 76x76, centered on transparent 84x84",
-    "redistribution_review": "original built-in image_gen artwork; pending author visual review",
-    "source_kind": "generated_artwork",
-    "selection_reason": "作者要求按原版能力图标风格绘制专用图案；2026-10-31"
+    "redistribution_review": "pending; local prototype only",
+    "source_kind": "local_sts1_game_atlas",
+    "source_atlas": "powers/powers.atlas",
+    "source_region": "128/mantra",
+    "source_rect": [
+      350,
+      257,
+      87,
+      83
+    ],
+    "source_sha256": [
+      "ded8ae04ee98facddef5c27fbd7174ab099438bb1dbb67336f78f317d3134fe4",
+      "c19562475e2cefb65a2fd8d033c2113ff27e04954218f132865cb7786d3203e0"
+    ],
+    "conversion": "导出一代原版能力图集区域，保留原像素",
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外"
+  },
+  {
+    "file": "assets/power_sources/originals/MetallicizePower.png",
+    "source": "D:/Steam/steamapps/common/SlayTheSpire/desktop-1.0.jar!/powers/powers.png",
+    "source_commit": null,
+    "sha256": "fffefea2a545595cf84b95af1fe354b1a4d03ce34367782e45208d27c5364927",
+    "modified": true,
+    "redistribution_review": "pending; local prototype only",
+    "source_kind": "local_sts1_game_atlas",
+    "source_atlas": "powers/powers.atlas",
+    "source_region": "128/armor",
+    "source_rect": [
+      611,
+      936,
+      91,
+      86
+    ],
+    "source_sha256": [
+      "ded8ae04ee98facddef5c27fbd7174ab099438bb1dbb67336f78f317d3134fe4",
+      "c19562475e2cefb65a2fd8d033c2113ff27e04954218f132865cb7786d3203e0"
+    ],
+    "conversion": "导出一代原版能力图集区域，保留原像素",
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外"
+  },
+  {
+    "file": "assets/power_sources/originals/MimicPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/MimicPower_84.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "c943304d5932e216746f31237bbfbc462f540de713e374fa1d60996fd3e23587",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only",
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外"
+  },
+  {
+    "file": "assets/power_sources/originals/OpenTheWaygatePower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/OpenTheWaygatePower_84.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "9aaf5b6c655da8fbe70db2ac84bdbcf7f1c6f346bf63834a6af48d6e6fe1a2bd",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only",
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外"
+  },
+  {
+    "file": "assets/power_sources/originals/OutpouringPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/OutpouringPower_84.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "ba8cade484789154e756c078e1586f3a44640395e702d8c58a896e5a1c2d84c6",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only",
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外"
+  },
+  {
+    "file": "assets/power_sources/originals/PajamasFormPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/PajamasFormPower_84.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "e5b87c8276998d6306210f6bf582016c2fba38c6701718b2dbd885b0c17beb33",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only",
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外"
+  },
+  {
+    "file": "assets/power_sources/originals/PerpetualPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/PerpetualPower_84.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "82379ff33933d46595e8db64e29aea7fbaee6c154d5265d36fc34e77f2e4b938",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only",
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外"
+  },
+  {
+    "file": "assets/power_sources/originals/PhantasmalPower.png",
+    "source": "D:/Steam/steamapps/common/SlayTheSpire/desktop-1.0.jar!/powers/powers.png",
+    "source_commit": null,
+    "sha256": "f46fcca89137e174a9c52f05322eb3e3e53063b3dec569e2c243fe18f9b71c54",
+    "modified": true,
+    "redistribution_review": "pending; local prototype only",
+    "source_kind": "local_sts1_game_atlas",
+    "source_atlas": "powers/powers.atlas",
+    "source_region": "128/phantasmal",
+    "source_rect": [
+      342,
+      810,
+      87,
+      86
+    ],
+    "source_sha256": [
+      "ded8ae04ee98facddef5c27fbd7174ab099438bb1dbb67336f78f317d3134fe4",
+      "c19562475e2cefb65a2fd8d033c2113ff27e04954218f132865cb7786d3203e0"
+    ],
+    "conversion": "导出一代原版能力图集区域，保留原像素",
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外"
+  },
+  {
+    "file": "assets/power_sources/originals/PuzzlePower.png",
+    "source": "src/main/resources/FrierenModResources/img/relics/HolyEmblem.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "8db6c4db31c02fd2fb319007f9ccad0f46e318eb7f2639bef5bd2175eb814ea9",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only",
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外"
+  },
+  {
+    "file": "assets/power_sources/originals/RestoreStrengthPower.png",
+    "source": "D:/Steam/steamapps/common/SlayTheSpire/desktop-1.0.jar!/powers/powers.png",
+    "source_commit": null,
+    "sha256": "9c6b486175d250a90a832a507bb73d15330a039e701032e0a9507cb20114fdec",
+    "modified": true,
+    "redistribution_review": "pending; local prototype only",
+    "source_kind": "local_sts1_game_atlas",
+    "source_atlas": "powers/powers.atlas",
+    "source_region": "128/shackle",
+    "source_rect": [
+      1342,
+      934,
+      89,
+      88
+    ],
+    "source_sha256": [
+      "ded8ae04ee98facddef5c27fbd7174ab099438bb1dbb67336f78f317d3134fe4",
+      "c19562475e2cefb65a2fd8d033c2113ff27e04954218f132865cb7786d3203e0"
+    ],
+    "conversion": "导出一代原版能力图集区域，保留原像素",
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外"
+  },
+  {
+    "file": "assets/power_sources/originals/RingletFormPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/RingletFormPower_84.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "c1cc0fd83810db4c8b4c59054d322ac5fe4fd1596cf263eca58fe1cbf9b92444",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only",
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外"
+  },
+  {
+    "file": "assets/power_sources/originals/RitesPreparationPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/RitesPreparationPower_84.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "4229bea4b354a3bc38bc7727a76bcc1a94d5f66fbeb1500070ab945ac976b0f4",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only",
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外"
+  },
+  {
+    "file": "assets/power_sources/originals/SealPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/SealPower_84.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "c55e97f3296bc7eafb05ee28c9d49b6527489ffcf66ee5452ca64e41bca5dd67",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only",
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外"
+  },
+  {
+    "file": "assets/power_sources/originals/SimmeringPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/SimmeringPower_84.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "547e4f2e18f301d83cd9c01710dc66439f910a18362fb322352ffc9cf820ba20",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only",
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外"
+  },
+  {
+    "file": "assets/power_sources/originals/SleepInPower.png",
+    "source": "TODOs.docx@2d48708:word/media/image3.png",
+    "sha256": "e1cf2635783166f38712e18ab94409b5a63301f0972345ad0b00ed1cb30f4d42",
+    "modified": true,
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外"
+  },
+  {
+    "file": "assets/power_sources/originals/SpellCasterPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/SpellCasterPower_84.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "2e762a92590894546e6a56abee23f33c48af1dd3bdc524e53aa1c7d4303d156c",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only",
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外"
+  },
+  {
+    "file": "assets/power_sources/originals/StrikeUpPower.png",
+    "source": "D:/Steam/steamapps/common/SlayTheSpire/desktop-1.0.jar!/powers/powers.png",
+    "source_commit": null,
+    "sha256": "46142356c2707f52718af89189b4998328b8be5deb4df848d041f38cadee64df",
+    "modified": true,
+    "redistribution_review": "pending; local prototype only",
+    "source_kind": "local_sts1_game_atlas",
+    "source_atlas": "powers/powers.atlas",
+    "source_region": "128/accuracy",
+    "source_rect": [
+      771,
+      846,
+      88,
+      86
+    ],
+    "source_sha256": [
+      "ded8ae04ee98facddef5c27fbd7174ab099438bb1dbb67336f78f317d3134fe4",
+      "c19562475e2cefb65a2fd8d033c2113ff27e04954218f132865cb7786d3203e0"
+    ],
+    "conversion": "导出一代原版能力图集区域，保留原像素",
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外"
+  },
+  {
+    "file": "assets/power_sources/originals/SwallowedPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/SwallowedPower_84.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "9b5490330a380bd60ca2d342482aa488d5fb15bdfd53d1fbbee9ebafc33b8701",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only",
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外"
+  },
+  {
+    "file": "assets/power_sources/originals/SwitchStrengthAndDexterityPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/SwitchStrengthAndDexterityPower_84.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "e4cfb21ed43512b85b332881ec7ea1bfd69140b0c1fd83987d699371da8cb59c",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only",
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外"
+  },
+  {
+    "file": "assets/power_sources/originals/SynchroWithoutManaPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/SynchroWithoutManaPower_84.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "811767c0a8d430293a14958e5eb397216423d860f4e974514f6ac40fbb11029a",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only",
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外"
+  },
+  {
+    "file": "assets/power_sources/originals/ThunderPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/ThunderPower_84.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "0b333fd6ea3c7957a8d20f0a7ff3bf37007b264d7ea81117f07d49c70f3f5e43",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only",
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外"
+  },
+  {
+    "file": "assets/power_sources/originals/TimeTravelPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/TimeTravelPower_84.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "6842715420c10fb57584693eefaf382e7b25466da045e2d1c8acd045b89893b3",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only",
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外"
+  },
+  {
+    "file": "assets/power_sources/originals/TrickPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/TrickPower_84.png",
+    "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
+    "sha256": "c3872aa1f87fe25db4dc9e55ddd68e2fb623d1dde8fbfda176ac69a50d9994b8",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only",
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外"
+  },
+  {
+    "file": "assets/power_sources/originals/WeakenedChantPower.png",
+    "source": "src/main/resources/FrierenModResources/img/powers/WeakenedChantPower_84.png",
+    "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
+    "sha256": "2f20e96411f580630cffdca1527a9e05892aebef20a2e518486422972b86697d",
+    "modified": false,
+    "redistribution_review": "pending; local prototype only",
+    "processing": "0.10.8规格调整前的原稿，原样保留于运行资源之外"
+  },
+  {
+    "file": "assets/author_adjusted/20261031/FlyingMagic.png",
+    "source": "../png/飞行魔法.png",
+    "source_kind": "author_adjusted_artwork",
+    "modified": false,
+    "processing": "作者2026-10-31制作的PNG原样保留，不装入PCK",
+    "sha256": "0700a6fb8d27d7cdc39b09dfcb35d46c2e7d40dffecd33b48ef6fa1da3a30fc2"
+  },
+  {
+    "file": "assets/author_adjusted/20261031/EndlessFlow.png",
+    "source": "../png/生生流转.png",
+    "source_kind": "author_adjusted_artwork",
+    "modified": false,
+    "processing": "作者2026-10-31制作的PNG原样保留，不装入PCK",
+    "sha256": "a739e9fe55885fd1cfffd99437b8a0ec921cf83b707e08e36bd503291def73ff"
+  },
+  {
+    "file": "assets/author_adjusted/20261031/AccessoriesSpell.png",
+    "source": "../png/饰品魔法.png",
+    "source_kind": "author_adjusted_artwork",
+    "modified": false,
+    "processing": "作者2026-10-31制作的PNG原样保留，不装入PCK",
+    "sha256": "aa6206785690bd6631112170b09e90a72e0b786d1aa9983014d1df28dcc59179"
+  },
+  {
+    "file": "assets/author_adjusted/20261031/FrierenTheSlayer.png",
+    "source": "../png/葬送的芙莉莲.png",
+    "source_kind": "author_adjusted_artwork",
+    "modified": false,
+    "processing": "作者2026-10-31制作的PNG原样保留，不装入PCK",
+    "sha256": "acff72c2e41e28034f29e3b1b1c2dff4b919da00d85a18bbc5f9e7efdd7b76ac"
+  },
+  {
+    "file": "assets/author_adjusted/20261031/AccelerateFlowNextTurnPower.png",
+    "source": "../png/下回合加速Power.png",
+    "source_kind": "author_adjusted_artwork",
+    "modified": false,
+    "processing": "作者2026-10-31制作的PNG原样保留，不装入PCK",
+    "sha256": "feb76c6053bd3895da7a34f343759419498ed9e43b6ced38d0e6b8ec4532fdf5"
+  },
+  {
+    "file": "assets/author_adjusted/20261031/RecyclePower.png",
+    "source": "../png/再循环 能力.png",
+    "source_kind": "author_adjusted_artwork",
+    "modified": false,
+    "processing": "作者2026-10-31制作的PNG原样保留，不装入PCK",
+    "sha256": "a4cc929d20df949ff5a00fa3dab0cd779ef33cc6b8d34f25fd3b031a7dce7630"
+  },
+  {
+    "file": "assets/author_adjusted/20261031/SwampManaNextTurnPower.png",
+    "source": "../png/沼泽能力.png",
+    "source_kind": "author_adjusted_artwork",
+    "modified": false,
+    "processing": "作者2026-10-31制作的PNG原样保留，不装入PCK",
+    "sha256": "1ba9076b279d8f0b518c52e069892c74eae2c7973054ef00bd594d242aa931e0"
+  },
+  {
+    "file": "assets/power_sources/native_stun.png",
+    "source": "StS2 v0.111.0: images/atlases/intent_atlas.tpsheet -> intent_stun.png",
+    "source_kind": "native_game_artwork",
+    "modified": true,
+    "processing": "tools/extract_stun_icon.gd; restore native atlas region and transparent margin, no redraw",
+    "sha256": "85e0334b1982d9db168ce663de7a46f8f6873d799c0bc079bb5f7e8d42f33d95"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/AccelerateFlowPower.png",
+    "source": "assets/power_sources/originals/AccelerateFlowPower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "ff60749e79d1574f26262738419d6fde93050c716fd75b96c78fefe8f48c9f31"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/AuraArrogancePower.png",
+    "source": "assets/power_sources/originals/AuraArrogancePower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "b4da56d304891d91ebfa868dde72a1039564b7ffa7215ae6bf2f041ba20fe7a4"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/AuraElegancePower.png",
+    "source": "assets/power_sources/originals/AuraElegancePower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "68ce48206490fa14b1c3b799830005ef89f1bd2293a98abbdfb821a7e421048c"
+  },
+  {
+    "file": "FrierenMod/images/powers/AuraScalesPower.png",
+    "source": "assets/power_sources/originals/AuraScalesPower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "a2374722f61c34187b77d8e6ae61c2b583c9c8e8f1bc8b9f2483b7eb744e1e7d"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/AuraScalesPower.png",
+    "source": "assets/power_sources/originals/AuraScalesPower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "83358f8e9015134fb907f02192d85f5950d36e62508594fce94c02959ea74120"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/AuraSoulPower.png",
+    "source": "assets/power_sources/originals/AuraSoulPower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "96be82bbdd029ec78a38a954562bb077755036798af4555efe0b45f5d001ca86"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/AuraSubmissionPower.png",
+    "source": "assets/power_sources/originals/AuraSubmissionPower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "f715e647a282174e05ecc24ef187c0177bca58fa49645417b2dcdf49fdc3faa0"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/BanManaGainPower.png",
+    "source": "assets/power_sources/originals/BanManaGainPower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "0220c076d9d7a9252451b778e0ba4625567ba058f0e60408d8c36f3cc0d266a0"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/ChantWithoutManaPower.png",
+    "source": "assets/power_sources/originals/ChantWithoutManaPower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "27f56a52bfc3114c5ad37d6864026a49dce1ec5687ba38b7b11cc8aff4cd1bde"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/ChantWithoutManaTimesPower.png",
+    "source": "assets/power_sources/originals/ChantWithoutManaTimesPower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "690bfd2659477fe4384e886180067a0c0f207f28dac5d1dcfccd73b756199f03"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/ConcentrationPower.png",
+    "source": "assets/power_sources/originals/ConcentrationPower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "3d100589e5c83c63eee9635010a25f46c603b05631f683979cdb32b15ba79ef7"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/CopyPower.png",
+    "source": "assets/power_sources/originals/CopyPower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "cd73603feacfb4a364339257fea16c51fd0d7adfdbb4b57d5841b54eaf4ba29e"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/DarkPower.png",
+    "source": "assets/power_sources/originals/DarkPower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "9015123e55a0512aa54eeb4dd7919f9562325af02eb5dd2066bf0da8d876c936"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/DivinityPower.png",
+    "source": "assets/power_sources/originals/DivinityPower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "4b8eb6d624a139215abe83faa61577c39edb49711a1857c601a2f7c076ff4bbb"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/DomainExpansionPower.png",
+    "source": "assets/power_sources/originals/DomainExpansionPower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "8f8bb63c3c94981978385b66553d0020e4cec8f6bd79f93fa2478060ecdad447"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/EnemyManaPower.png",
+    "source": "assets/power_sources/originals/EnemyManaPower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "4687a0f294b377c54d8b1a81ef716255c8930bb909932c667a42a3de6d9b5593"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/Factor001Power.png",
+    "source": "assets/power_sources/originals/Factor001Power.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "b6161eb91ded2c69c3fb2039f6ddddb01fb8434f2d8b49dc5781d7a1e378c029"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/Factor010Power.png",
+    "source": "assets/power_sources/originals/Factor010Power.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "4b662ea1b40c3445c9b8f102cedf1d4234211bcf43f3f659ff3d8a579b8b8410"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/Factor100Power.png",
+    "source": "assets/power_sources/originals/Factor100Power.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "4050321a7033a7651ada6254c17ab5f15b1712c4ba41726baf7e436c58408f36"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/FlyingMagicPower.png",
+    "source": "assets/power_sources/originals/FlyingMagicPower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "661a6ba8ecc29a5ef5569a60bf59af9b3a1aa2ef63a530c439a771bcc5fdfe7d"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/FrierenSuitcasePower.png",
+    "source": "assets/power_sources/originals/FrierenSuitcasePower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "6331b8278c0c55d34346e1586f47a67dea43edea96aecbfbb20a66f8480739ea"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/FrierenTheSlayerPower.png",
+    "source": "assets/power_sources/originals/FrierenTheSlayerPower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "ed1d3a98de122d78caf340e48c6b6ccca8d1aa98a12065b42b43efbf108bef40"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/FullAheadPower.png",
+    "source": "assets/power_sources/originals/FullAheadPower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "a20c2813ce01322d89bfd023731b2a6c3d41af4a979279c94c566314d127e050"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/GainRelicPower.png",
+    "source": "assets/power_sources/originals/GainRelicPower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "7f5b21b023323d2dff7aad4fa3646eb491850d5ae6e0484dee50385b170c6f04"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/GoodLuckRewardPower.png",
+    "source": "assets/power_sources/originals/GoodLuckRewardPower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "99b6b2128839f375376deb8250ad532e27c564386d1455c707d2f421d9da40c1"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/ManaAffinityPower.png",
+    "source": "assets/power_sources/originals/ManaAffinityPower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "2e9e454af22d13f25d96fc29d2ffa717df740888dc2dc11207e3353a2a8d88e5"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/ManaInsteadOfEnergyPower.png",
+    "source": "assets/power_sources/originals/ManaInsteadOfEnergyPower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "eb57ce7c913d77418d459d7da05acd72cfd939ab4155b2c652503168dd4b9279"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/ManaReturnPower.png",
+    "source": "assets/power_sources/originals/ManaReturnPower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "274afc0867269d9768aef563ef002066606a6db516649889d4b894e30ef98d58"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/MantraPower.png",
+    "source": "assets/power_sources/originals/MantraPower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "0d5ea8cbf35eb7965962d22784eedca8ee5acf5c5393d30cbaf8e389e0354a42"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/MetallicizePower.png",
+    "source": "assets/power_sources/originals/MetallicizePower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "cdba077902875a9fb4911da6e13688fe5a7dea49d23368390c52b9444edf6c3c"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/MimicPower.png",
+    "source": "assets/power_sources/originals/MimicPower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "e4ca8205e10aa300ce28c481e1979e008787ef85f1abf78ae462192d2745bde5"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/OpenTheWaygatePower.png",
+    "source": "assets/power_sources/originals/OpenTheWaygatePower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "7dcbf976824c88533a2d32ed4c1106ca4656d15b28a33de2d7d0e1c9222ddf14"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/OutpouringPower.png",
+    "source": "assets/power_sources/originals/OutpouringPower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "66c337810de0345710c562e0844d7ee338854b91005639ec3567241c167f091e"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/PajamasFormPower.png",
+    "source": "assets/power_sources/originals/PajamasFormPower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "6ba7a7d7be3c8f5868e07cff7afeaeb651e00f0e33633e9b6bde0b3b5b243d24"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/PaperPlanePower.png",
+    "source": "assets/power_sources/PaperPlanePower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "a2ce4709b423cc0b50a6f06e8f5fe704f5f61338fb90c04430e125257ed1ffb2"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/PerpetualPower.png",
+    "source": "assets/power_sources/originals/PerpetualPower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "43c9371a40af413f5fc5629886322ecd13cfa2e2ce3a917d804ccdb2a2369be1"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/PhantasmalPower.png",
+    "source": "assets/power_sources/originals/PhantasmalPower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "4b49b7455bd9d299d17d2bcdb1a155c741bfe08cce5ccf184fab932fb6492697"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/PuzzlePower.png",
+    "source": "assets/power_sources/originals/PuzzlePower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "cda505c37afbc14bcf37390329030979f219bd4e56def6a3e23c2a9956d6fb5b"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/RecyclePower.png",
+    "source": "assets/author_adjusted/20261031/RecyclePower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "1330e0f45910d5aee63b74e7442baf7fdcaca564fe90d96679f1b8f3bef29740"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/RestoreStrengthPower.png",
+    "source": "assets/power_sources/originals/RestoreStrengthPower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "dd6a0299235f7c2fdfd47266f9086accdb26f63504621aea75337d2b6436081f"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/RingletFormPower.png",
+    "source": "assets/power_sources/originals/RingletFormPower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "7abdee55e4b756a154b4f95b122365d6bf30308223ef3cd0281257dbab4ce9c2"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/RitesPreparationPower.png",
+    "source": "assets/power_sources/originals/RitesPreparationPower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "c9a4373b97790e06405b92d8f867af0558adba009c9dfc78a52455413242629b"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/SealPower.png",
+    "source": "assets/power_sources/originals/SealPower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "2e78742f46b77ebeeeb35b29fb02a074ae8b59c8c047830fdd2f923a49e5b2b0"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/SimmeringPower.png",
+    "source": "assets/power_sources/originals/SimmeringPower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "70258946cfd7371750bdd8dcd62cf9251905a3d2bdacc8e03fc266cae7a6fbbd"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/SleepInPower.png",
+    "source": "assets/power_sources/originals/SleepInPower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "43c242abaff74af6a40a99ef7179b01169311e07ff8b099ddc149d0806a91336"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/SpellCasterPower.png",
+    "source": "assets/power_sources/originals/SpellCasterPower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "c6d7f4c110cc51a6a42f7885ce0a64433726a9a2268af7093944d59e37eb2fd4"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/StrikeUpPower.png",
+    "source": "assets/power_sources/originals/StrikeUpPower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "e165d10f2f57e37c66faafa62f17e61a7895f7ffa51efe795f2819649e2965ec"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/SwallowedPower.png",
+    "source": "assets/power_sources/originals/SwallowedPower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "cc1e8732ccd9b641539f01449894d1b7bae853afc9372759b33eea78b59de7e8"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/SwampManaNextTurnPower.png",
+    "source": "assets/author_adjusted/20261031/SwampManaNextTurnPower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "b87e077787add89e19a6879352d91eb7e588855b7e6a4968894b5d2b45739cf7"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/SwitchStrengthAndDexterityPower.png",
+    "source": "assets/power_sources/originals/SwitchStrengthAndDexterityPower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "57850b2c66afc9f8c87b63d6fe037787750622e4a5fb97b9f5520d52c9254960"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/SynchroWithoutManaPower.png",
+    "source": "assets/power_sources/originals/SynchroWithoutManaPower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "dbcdf8e0914aa5926662f0a060bd4f1b3da34bf16acae2249b59f1fbcb209551"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/ThunderPower.png",
+    "source": "assets/power_sources/originals/ThunderPower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "a71dc518aa0c5c3766d9b478264a669f53b1cff024c20bef4f844ef7e635fcac"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/TimeTravelPower.png",
+    "source": "assets/power_sources/originals/TimeTravelPower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "9149885b2864d60cf9a97aa56074a805dfb82f70be5f6e300ac4ecf97847d610"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/TrickPower.png",
+    "source": "assets/power_sources/originals/TrickPower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "eb2df4b6eca673de189ce296f18282eb70dc748d03a6c2248b8d333a465d038b"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/WeakenedChantPower.png",
+    "source": "assets/power_sources/originals/WeakenedChantPower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "ec39041d05334ccb28cf9f90b6f1229d16113f4ca4ca912a33a474728d6c6695"
+  },
+  {
+    "file": "FrierenMod/images/powers/AccelerateFlowNextTurnPower.png",
+    "source": "assets/author_adjusted/20261031/AccelerateFlowNextTurnPower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "b0f88bcf4b18db166602a26559972075c7e5ced1c5e7d1875c86bc1330d032df"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/AccelerateFlowNextTurnPower.png",
+    "source": "assets/author_adjusted/20261031/AccelerateFlowNextTurnPower.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "765bf3691852e079f36bdc08542ed55b0eecf17be9aed1000846069b040eda3d"
+  },
+  {
+    "file": "FrierenMod/images/powers/BirdCapturedPower.png",
+    "source": "assets/power_sources/native_stun.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "7807367c9e8ce523fc90e82840a187638a0f7f0862f4ae9480395bf2caea32a1"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/BirdCapturedPower.png",
+    "source": "assets/power_sources/native_stun.png",
+    "source_kind": "derived_power_icon",
+    "modified": true,
+    "processing": "tools/prepare_power_icons.gd; alpha bounds, proportional Lanczos, centered 60px content within 64px / 240px within 256px; no redraw",
+    "redistribution_review": "source provenance retained; pending in-game author review",
+    "sha256": "b0f9188583b228d97fe41ccf4e4874fb22a23ad4a6b1441b358667bff64facfa"
   }
 ]

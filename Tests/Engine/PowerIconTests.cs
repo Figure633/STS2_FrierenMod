@@ -26,10 +26,10 @@ public static class PowerIconTests
         foreach(var power in powers){
             Check(ResourceLoader.Exists(power.CustomPackedIconPath)&&ResourceLoader.Exists(power.CustomBigIconPath),"图标文件缺失："+power.Id);
             Check(power.Icon.GetWidth()>0&&power.BigIcon.GetHeight()>0,"图标不能加载："+power.Id);
+            Check(power.Icon.GetSize()==new Vector2(64,64)&&power.BigIcon.GetSize()==new Vector2(256,256),"大小图符合二代64/256规格："+power.Id);
             records.Add(new{model=power.GetType().Name,name=power.Title.GetFormattedText(),icon=power.CustomPackedIconPath,bigIcon=power.CustomBigIconPath,
-                width=power.Icon.GetWidth(),height=power.Icon.GetHeight(),retired=power is TrickPower or SpiegelMalleablePower});
+                width=power.Icon.GetWidth(),height=power.Icon.GetHeight(),bigWidth=power.BigIcon.GetWidth(),bigHeight=power.BigIcon.GetHeight(),retired=power is TrickPower or SpiegelMalleablePower});
         }
-        Check(ModelDb.Power<FrierenTheSlayerPower>().Icon.GetSize()==new Vector2(84,84),"无五官头像按84x84导入");
         var scene=GD.Load<PackedScene>("res://scenes/combat/power.tscn");
         var canvas=new Control();root.AddChild(canvas);
         canvas.AddChild(new ColorRect{Size=new(1920,1080),Color=new("17202c")});
@@ -67,7 +67,7 @@ public static class PowerIconTests
             root.GetViewport().GetTexture().GetImage().SavePng(ProjectSettings.GlobalizePath("res://../../artifacts/power-icon-review/native-all-icons.png"));
             int shown=0;
             for(int i=0;i<powers.Length;i++) {
-                bool selected=powers[i] is PaperPlanePower or RecyclePower or SwampManaNextTurnPower;
+                bool selected=powers[i] is AccelerateFlowNextTurnPower or BirdCapturedPower or PaperPlanePower or RecyclePower or SwampManaNextTurnPower;
                 liveIcons[i].Visible=originals[i].Visible=labels[i].Visible=selected;
                 if(!selected)continue;
                 var origin=new Vector2(70+shown%4*470,190+shown/4*390);
