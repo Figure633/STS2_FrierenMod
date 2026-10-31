@@ -6,15 +6,15 @@
 |---|---:|
 | FrierenMod.dll | 0.62 |
 | FrierenMod.json | 0.00 |
-| FrierenMod.pck | 235.22 |
+| FrierenMod.pck | 235.81 |
 | LICENSE.STS1 | 0.00 |
 | LICENSE.WATCHER | 0.00 |
 | README.md | 0.03 |
 
 | 打包资源分类 | MiB |
 |---|---:|
-| 其余原图片和图层 | 76.37 |
-| 纹理及其他Godot导入副本 | 51.44 |
+| 其余原图片和图层 | 76.83 |
+| 纹理及其他Godot导入副本 | 51.56 |
 | 音频导入副本 | 43.75 |
 | 20首BGM原音频 | 42.35 |
 | 卡槽背景原图 | 19.03 |

@@ -417,7 +417,7 @@
   },
   {
     "file": "FrierenMod/images/cards/PaperPlaneSpell.png",
-    "source": "TODOs.docx:word/media/image3.png",
+    "source": "TODOs.docx@af59100:word/media/image3.png",
     "sha256": "5324d8c311d2cb82a2759581450441ad47a7218f2b9de29a8a10d33f23a6005a",
     "modified": true,
     "redistribution_review": "pending; local prototype only",
@@ -3561,7 +3561,7 @@
   },
   {
     "file": "FrierenMod/images/cards/EndlessFlow.png",
-    "source": "TODOs.docx:word/media/image1.png",
+    "source": "TODOs.docx@af59100:word/media/image1.png",
     "sha256": "b888f172097508a75c3ecc0dcb16bc363661e633b90f4c7e5474814dd1e167a3",
     "modified": true,
     "processing": "作者原图，去截图边缘后按500x380等比中心裁切；不生成或重绘。",
@@ -3569,7 +3569,7 @@
   },
   {
     "file": "FrierenMod/images/cards/FrierenTheSlayer.png",
-    "source": "TODOs.docx:word/media/image2.jpeg",
+    "source": "TODOs.docx@af59100:word/media/image2.jpeg",
     "sha256": "c642258650bd81a8c4d062012b808838df0c3ad1030f51e0f634e40b45990487",
     "modified": true,
     "processing": "作者原图，去截图边缘后按500x380等比中心裁切；不生成或重绘。",
@@ -3577,7 +3577,7 @@
   },
   {
     "file": "FrierenMod/images/cards/RingletForm.png",
-    "source": "TODOs.docx:word/media/image3.png",
+    "source": "TODOs.docx@af59100:word/media/image3.png",
     "sha256": "fb35cd51e8b41410a7d9a12ad60467c9b8986d07d799b1eb02fca4a808a4c358",
     "modified": true,
     "processing": "作者原图，去截图边缘后按500x380等比中心裁切；不生成或重绘。",
@@ -3590,7 +3590,7 @@
   },
   {
     "file": "FrierenMod/images/cards/PajamasForm.png",
-    "source": "TODOs.docx:word/media/image4.png",
+    "source": "TODOs.docx@af59100:word/media/image4.png",
     "sha256": "2efee241ab9fb25afd2c81ba8b0cecd7e23353c642929fbe9c260c93a5ff66ff",
     "modified": true,
     "processing": "作者原图，去截图边缘后按500x380等比中心裁切；不生成或重绘。",
@@ -3598,7 +3598,7 @@
   },
   {
     "file": "FrierenMod/images/cards/OpenTheWaygate.png",
-    "source": "TODOs.docx:word/media/image5.png",
+    "source": "TODOs.docx@af59100:word/media/image5.png",
     "sha256": "2fad29bf58a80a69d72001684d9942042c6de9a9965acb5cebf76c6e5dbe31af",
     "modified": true,
     "processing": "作者原图，去截图边缘后按500x380等比中心裁切；不生成或重绘。",
@@ -3611,7 +3611,7 @@
   },
   {
     "file": "FrierenMod/images/cards/FrierenSuitcase.png",
-    "source": "TODOs.docx:word/media/image6.png",
+    "source": "TODOs.docx@af59100:word/media/image6.png",
     "sha256": "7ef2035cc109d51d68c797df64e74665bb37fc7c9837a1aef5389a268b845fa8",
     "modified": true,
     "processing": "作者原图，去截图边缘后按500x380等比中心裁切；不生成或重绘。",
@@ -3624,7 +3624,7 @@
   },
   {
     "file": "FrierenMod/images/cards/Simmering.png",
-    "source": "TODOs.docx:word/media/image7.png",
+    "source": "TODOs.docx@af59100:word/media/image7.png",
     "sha256": "147fc42e32e8a758c8b0cd6db8edc1d0581ace577e0fb0c4c79da9faddb3d4cb",
     "modified": true,
     "processing": "作者原图，去截图边缘后按500x380等比中心裁切；不生成或重绘。",
@@ -3637,7 +3637,7 @@
   },
   {
     "file": "FrierenMod/images/cards/Perpetual.png",
-    "source": "TODOs.docx:word/media/image8.png",
+    "source": "TODOs.docx@af59100:word/media/image8.png",
     "sha256": "a987913bca52cc5dbb3c43d8241ef550ce5cca8d7d15ea600e44dfa4c62831c1",
     "modified": true,
     "processing": "作者原图，去截图边缘后按500x380等比中心裁切；不生成或重绘。",
@@ -3650,7 +3650,7 @@
   },
   {
     "file": "FrierenMod/images/powers/FrierenTheSlayerPower.png",
-    "source": "TODOs.docx:word/media/image2.jpeg",
+    "source": "TODOs.docx@af59100:word/media/image2.jpeg",
     "sha256": "f5acd0909752664d17525ddcd6fccee49cbe73c6ba3aaa6c601a3171790b11a7",
     "modified": true,
     "processing": "卡面原图中心裁切为84x84能力图标。"
@@ -3726,77 +3726,77 @@
   },
   {
     "file": "FrierenMod/images/cards/SleepIn.png",
-    "source": "TODOs.docx:word/media/image1.jpeg",
+    "source": "TODOs.docx@2d48708:word/media/image1.jpeg",
     "sha256": "fac035a9504793efa6c13f952e5bfddd8252c6cb8e94c5ffad04a3f437dfa3c1",
     "modified": true,
     "processing": "作者原图等比裁切为500x380；无重绘。"
   },
   {
     "file": "FrierenMod/images/cards/WakeUp.png",
-    "source": "TODOs.docx:word/media/image2.jpeg",
+    "source": "TODOs.docx@2d48708:word/media/image2.jpeg",
     "sha256": "359d1650ed3055ad54b67fc10e046b199b8ef795a69995136d85c11bed5a34a2",
     "modified": true,
     "processing": "作者原图等比裁切为500x380；无重绘。"
   },
   {
     "file": "FrierenMod/images/cards/Crying.png",
-    "source": "TODOs.docx:word/media/image4.jpeg",
+    "source": "TODOs.docx@2d48708:word/media/image4.jpeg",
     "sha256": "05e0009a1e4576bd4ccabee6180352ef85a6f7b4ac6a25bc773bbb906d27d6b0",
     "modified": true,
     "processing": "作者原图等比裁切为500x380；无重绘。"
   },
   {
     "file": "FrierenMod/images/cards/TreasureVaultSpell.png",
-    "source": "TODOs.docx:word/media/image5.jpeg",
+    "source": "TODOs.docx@2d48708:word/media/image5.jpeg",
     "sha256": "d5f20e64ec4ad4f7f84227e6e26cb04bc5f74b578cea72c92d2984a7dcc1a237",
     "modified": true,
     "processing": "作者原图等比裁切为500x380；无重绘。"
   },
   {
     "file": "FrierenMod/images/cards/Underestimated.png",
-    "source": "TODOs.docx:word/media/image6.jpeg",
+    "source": "TODOs.docx@2d48708:word/media/image6.jpeg",
     "sha256": "db729cbf4b9ad934c4f7f1ac806dc5f0a8b45e0a95458042e83eac6cde36fefa",
     "modified": true,
     "processing": "作者原图等比裁切为500x380；无重绘。"
   },
   {
     "file": "FrierenMod/images/cards/StrongerWish.png",
-    "source": "TODOs.docx:word/media/image7.jpeg",
+    "source": "TODOs.docx@2d48708:word/media/image7.jpeg",
     "sha256": "ad29021e9208ea89cb67047562d5f3b953f4ca51d61df255f0f0bf3246548ee5",
     "modified": true,
     "processing": "作者原图等比裁切为500x380；无重绘。"
   },
   {
     "file": "FrierenMod/images/cards/RewardWish.png",
-    "source": "TODOs.docx:word/media/image8.jpeg",
+    "source": "TODOs.docx@2d48708:word/media/image8.jpeg",
     "sha256": "89f59c2a436363bf4d55ba81947bfdef8593dc8b1954a8736170379cbc868b74",
     "modified": true,
     "processing": "作者原图等比裁切为500x380；无重绘。"
   },
   {
     "file": "FrierenMod/images/cards/ManaWish.png",
-    "source": "TODOs.docx:word/media/image9.jpeg",
+    "source": "TODOs.docx@2d48708:word/media/image9.jpeg",
     "sha256": "2e8eededcfa0292eed50ca09a29959022a1e8732602b3f90ef91e050715e50a4",
     "modified": true,
     "processing": "作者原图等比裁切为500x380；无重绘。"
   },
   {
     "file": "FrierenMod/images/cards/DomainExpansion.png",
-    "source": "TODOs.docx:word/media/image12.jpeg",
+    "source": "TODOs.docx@2d48708:word/media/image12.jpeg",
     "sha256": "392e1740c8c25ad74602b61338b7bbac4ad3e67e8e7a9d1075580a0c41d248ea",
     "modified": true,
     "processing": "作者原图等比裁切为500x380；无重绘。"
   },
   {
     "file": "FrierenMod/images/cards/GoodLuckSpell.png",
-    "source": "TODOs.docx:word/media/image7.jpeg",
-    "sha256": "ad29021e9208ea89cb67047562d5f3b953f4ca51d61df255f0f0bf3246548ee5",
-    "modified": true,
-    "processing": "作者原图等比裁切为500x380；无重绘。"
+    "source": "作者2026-10-31上传的好运魔法PNG原图（同图已嵌入TODO）",
+    "sha256": "59a2c5b8561516c993c6a71e228b51b3077f6d530c802946253cc93d5ae86725",
+    "modified": false,
+    "processing": "865x487原图直接复制；无裁切、缩放或重绘。"
   },
   {
     "file": "FrierenMod/images/powers/SleepInPower.png",
-    "source": "TODOs.docx:word/media/image3.png",
+    "source": "TODOs.docx@2d48708:word/media/image3.png",
     "sha256": "e1cf2635783166f38712e18ab94409b5a63301f0972345ad0b00ed1cb30f4d42",
     "modified": true,
     "processing": "作者提供的100x100能力图标，原样复制。"
