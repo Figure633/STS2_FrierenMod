@@ -44,8 +44,6 @@ def extend_transparent_background(image):
 # 用固定Git快照保留作者原始图及Word裁剪，不依赖后续文档的图片编号。
 with ZipFile(BytesIO(subprocess.check_output(['git', 'show', 'af59100:TODOs.docx'], cwd=ROOT))) as word:
     for name, media, word_crop, size in [
-        ('EndlessFlow', 'image1.png', (0, 0, 0, 0), ANCIENT),
-        ('FrierenTheSlayer', 'image2.jpeg', (.18820, 0, .15909, 0), ANCIENT),
         ('RingletForm', 'image3.png', (.21572, .03226, 0, .07103), NORMAL),
     ]:
         image = Image.open(BytesIO(word.read('word/media/' + media))).convert('RGB')
@@ -75,3 +73,4 @@ image = ImageOps.fit(image, NORMAL, method=Image.Resampling.LANCZOS, centering=(
 save('GoodLuckSpell', image, '作者2026-10-31上传PNG原图@' + source,
      '原图等比裁剪为500x380，优先保留两张脸；与普通画框比例一致，不留横向黑边。', (112, 0, 753, 487))
 assets_path.write_text(json.dumps(assets, ensure_ascii=False, indent=2) + '\n', 'utf-8')
+subprocess.run([__import__('sys').executable, str(ROOT / 'tools/prepare_ancient_art.py')], check=True)

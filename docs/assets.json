@@ -3561,29 +3561,17 @@
   },
   {
     "file": "FrierenMod/images/cards/EndlessFlow.png",
-    "source": "TODOs.docx@af59100:word/media/image1.png",
-    "sha256": "e861d28cbd522183cd6b3e6458f376418fa4c351085f99387a6b95e819ee2256",
+    "source": "assets/card_sources/EndlessFlow.png",
+    "sha256": "64de1552bdc27399387b9bbb9503e00bcb9acbb9c15956f78904d34bd806c2c6",
     "modified": true,
-    "processing": "先应用作者Word裁剪(0, 0, 0, 0)，再等比裁剪为598x842；保留脸部完整，无拉伸。",
-    "crop": [
-      0,
-      0,
-      1507,
-      1005
-    ]
+    "processing": "原图完整等比缩至上半幅598x430内居中，保留上下左右对称构图与中央人物；左右仅镜像延展花草边缘；下方以原图底部花草铺底，留给原生正文遮挡。无主体拉伸或重绘。"
   },
   {
     "file": "FrierenMod/images/cards/FrierenTheSlayer.png",
-    "source": "TODOs.docx@af59100:word/media/image2.jpeg",
-    "sha256": "1ef7df4a227bef62b57870f9d4f2af913d0d8e1ff384d4b1254a64dfc34f0032",
+    "source": "assets/card_sources/FrierenTheSlayer.png",
+    "sha256": "ac74a7330b77676d908f29171eef4bfc28baf86a56d63676336adeb6eebdc58d",
     "modified": true,
-    "processing": "先应用作者Word裁剪(0.1882, 0, 0.15909, 0)，再等比裁剪为598x842；保留脸部完整，无拉伸。",
-    "crop": [
-      239,
-      0,
-      1066,
-      714
-    ]
+    "processing": "原图等比缩放为598px宽，上移80px；脸部位于上半幅约y125至365，避开类型牌和正文。仅正文遮挡区内把原衣服/花草背景接续铺底，不改人物像素或五官。"
   },
   {
     "file": "FrierenMod/images/cards/RingletForm.png",
@@ -3848,5 +3836,19 @@
     "sha256": "49465276b24e9cc52a4440e807cdb9fb840cd065090f46180ac0fdcc2a883262",
     "modified": true,
     "processing": "作者卡图中心裁切为84x84能力图标。"
+  },
+  {
+    "file": "assets/card_sources/EndlessFlow.png",
+    "source": "作者2026-10-31上传：codex-clipboard-9d611e36-7e7e-4550-a9f9-5593674ed368.png",
+    "processing": "作者原图，原样保存，不装入游戏资源包。",
+    "modified": false,
+    "sha256": "d754754605e0fa5011861d4ac712e7d13ae8bf042ec6447eec1c93fda853e8e9"
+  },
+  {
+    "file": "assets/card_sources/FrierenTheSlayer.png",
+    "source": "作者2026-10-31上传：codex-clipboard-2a4b9a06-da24-498e-8d0c-b7891ea885a2.png",
+    "processing": "作者原图，原样保存，不装入游戏资源包。",
+    "modified": false,
+    "sha256": "f659dae27b7ab4aae259fa7ee53698ee35009733bbcaa22d4290763faf7a9fb8"
   }
 ]

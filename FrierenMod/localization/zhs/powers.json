@@ -119,7 +119,7 @@
   "FRIERENMOD-SWAMP_MANA_NEXT_TURN_POWER.title": "沼泽脱困",
   "FRIERENMOD-SWAMP_MANA_NEXT_TURN_POWER.description": "下个自己的回合开始、正常抽牌后，向手牌生成{Amount}张[gold]魔力[/gold]。",
   "FRIERENMOD-FRIEREN_THE_SLAYER_POWER.title": "葬送的芙莉莲",
-  "FRIERENMOD-FRIEREN_THE_SLAYER_POWER.description": "每回合开始时，从所有中文卡名含“魔法”的卡牌中选择{Amount}张加入手牌，其中{UpgradedChoices}张升级。本回合可免费打出。",
+  "FRIERENMOD-FRIEREN_THE_SLAYER_POWER.description": "每回合从所有“魔法”中选择{Amount}张加入[gold]手牌[/gold]。{UpgradedChoices:cond:>0?其中{}张升级。|}",
   "FRIERENMOD-ACCELERATE_FLOW_NEXT_TURN_POWER.title": "下回合加速同调",
   "FRIERENMOD-ACCELERATE_FLOW_NEXT_TURN_POWER.description": "下回合，[gold]同调[/gold]变为[gold]加速同调[/gold]。",
   "FRIERENMOD-DOMAIN_EXPANSION_POWER.title": "领域展开",

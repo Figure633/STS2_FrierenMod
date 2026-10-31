@@ -13,6 +13,8 @@ public static class CardCatalogAudit
 {
     public static int Run()
     {
+        LocManager.Instance.SetLanguage("eng");
+        var englishNames = ModelDb.AllCards.ToDictionary(c => c.Id.Entry, c => c.Title);
         LocManager.Instance.SetLanguage("zhs");
         var player = Player.CreateForNewRun<Frieren>(UnlockState.all, 1);
         var rows = new List<object>();
@@ -24,7 +26,9 @@ public static class CardCatalogAudit
                 if (card.MaxUpgradeLevel == 0) continue;
                 card.UpgradeInternal(); card.FinalizeUpgradeInternal();
             }
-            rows.Add(new { model = type.Name, id = card.Id.Entry, name = card.Title, upgraded,
+            rows.Add(new { model = type.Name, id = card.Id.Entry, name = card.Title, englishName = englishNames[card.Id.Entry], upgraded,
+                kind = card is FactorCard ? "因子" : card is MagicPropCard ? "魔具" : card.Type.ToString(),
+                retired = FrierenMod.Scripts.Mechanics.FrierenCardAvailability.IsRetired(card),
                 cost = card.EnergyCost.CostsX ? "X" : card.EnergyCost.GetWithModifiers(CostModifiers.Local).ToString(),
                 type = card.Type.ToString(), rarity = card.Rarity.ToString(), text = card.GetDescriptionForPile(PileType.None) });
         }

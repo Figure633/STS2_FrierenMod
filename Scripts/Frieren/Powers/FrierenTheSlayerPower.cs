@@ -45,7 +45,6 @@ public sealed class FrierenTheSlayerPower : FrierenPower
             var choices = SpellPool().Select(model => {
                 var card = combat.CreateCard(model, player);
                 if (i < UpgradedChoices && card.IsUpgradable) CardCmd.Upgrade(card);
-                card.SetToFreeThisTurn();
                 return card;
             }).ToArray();
             if (choices.Length == 0) continue;

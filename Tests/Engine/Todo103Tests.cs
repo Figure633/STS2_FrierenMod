@@ -67,8 +67,9 @@ public static class Todo103Tests
         var power=player.Creature.GetPower<FrierenTheSlayerPower>()!;
         selector.PrepareToSelect(new[]{spellIndex});await power.AfterPlayerTurnStart(context,player);
         var chosen=player.PlayerCombatState!.Hand.Cards.Single();
-        Check(chosen is FlyingMagic && chosen.IsUpgraded && chosen.EnergyCost.GetWithModifiers(CostModifiers.All)==0,"升级能力从完整网格获得免费升级魔法");
-        chosen.EnergyCost.EndOfTurnCleanup();Check(chosen.EnergyCost.GetWithModifiers(CostModifiers.All)>0,"选中的魔法下一回合恢复正常费用");
+        Check(chosen is FlyingMagic && chosen.IsUpgraded && chosen.EnergyCost.GetWithModifiers(CostModifiers.All)==3,"升级能力从完整网格获得原费用升级魔法");
+        chosen.EnergyCost.EndOfTurnCleanup();Check(chosen.EnergyCost.GetWithModifiers(CostModifiers.All)==3,"选中的魔法本回合和下回合均保留原费用");
+        Check(source.Keywords.Contains(CardKeyword.Innate)&&New<FrierenTheSlayer>().Keywords.Contains(CardKeyword.Innate),"普通和升级葬送的芙莉莲均固有");
         Check(power.UpgradedChoices==1,"升级来源记录一次升级选牌");
         selector.Cleanup();await power.AfterPlayerTurnStart(context,Player.CreateForNewRun<Frieren>(UnlockState.all,2));Check(player.PlayerCombatState.Hand.Cards.Count==1,"其他玩家回合不触发选牌");
         foreach(var lang in new[]{"zhs","eng"}){LocManager.Instance.SetLanguage(lang);Check(!power.Description.GetFormattedText().Contains("{"),"能力描述格式完整："+lang);foreach(var card in new CardModel[]{baseCard,source})Check(!card.GetDescriptionForPile(PileType.None).Contains("{"),"先古升级描述完整："+lang+card.Id);}

@@ -27,7 +27,7 @@ using System.Text.RegularExpressions;
 
 public static class CardPresentationFixTests
 {
-    public static async Task<int> Run(Node root)
+    public static async Task<int> Run(Node root, bool ancientOnly = false)
     {
         int checks=0;
         void Check(bool ok,string message) { if(!ok)throw new Exception(message);checks++; }
@@ -84,12 +84,16 @@ public static class CardPresentationFixTests
         using var atlasLoader=new MegaCrit.Sts2.Core.Assets.AtlasResourceLoader();
         ResourceLoader.AddResourceFormatLoader(atlasLoader,true);
         var scene=GD.Load<PackedScene>("res://scenes/cards/card.tscn");
-        CardModel[] cards=[ModelDb.Card<EndlessFlow>(),ModelDb.Card<FrierenTheSlayer>(),ModelDb.Card<RingletForm>(),ModelDb.Card<AccessoriesSpell>(),ModelDb.Card<FlyingMagic>(),ModelDb.Card<RitesPreparation>(),ModelDb.Card<GoodLuckSpell>(),ModelDb.Card<Underestimated>()];
+        CardModel[] cards=ancientOnly
+            ? [ModelDb.Card<EndlessFlow>(),ModelDb.Card<FrierenTheSlayer>(),ModelDb.Card<EndlessFlow>(),ModelDb.Card<FrierenTheSlayer>()]
+            : [ModelDb.Card<EndlessFlow>(),ModelDb.Card<FrierenTheSlayer>(),ModelDb.Card<RingletForm>(),ModelDb.Card<AccessoriesSpell>(),ModelDb.Card<FlyingMagic>(),ModelDb.Card<RitesPreparation>(),ModelDb.Card<GoodLuckSpell>(),ModelDb.Card<Underestimated>()];
         var nodes=new List<NCard>();
         for(int i=0;i<cards.Length;i++) {
             var model=(CardModel)cards[i].ToMutable();model.Owner=player;
+            if(ancientOnly&&i>=2)model.UpgradeInternal();
             var node=scene.Instantiate<NCard>();AccessTools.Property(typeof(NCard),nameof(NCard.Model)).SetValue(node,model);
-            canvas.AddChild(node);node.Position=new Vector2(270+i%4*455,280+i/4*520);
+            canvas.AddChild(node);node.Position=new Vector2(270+i%4*455,ancientOnly?550:280+i/4*520);
+            if(ancientOnly)node.Scale=Vector2.One*1.25f;
             node.UpdateVisuals(PileType.None,CardPreviewMode.Normal);nodes.Add(node);
             var portrait=node.GetNode<TextureRect>(model.Rarity==CardRarity.Ancient?"%AncientPortrait":"%Portrait");
             var expected=model.Rarity==CardRarity.Ancient?new Vector2(598,842):new Vector2(500,380);
@@ -100,7 +104,7 @@ public static class CardPresentationFixTests
             var label=node.GetNode<RichTextLabel>("%DescriptionLabel");
             Check(label.GetContentHeight()<=label.Size.Y+2,node.Model!.Id+"正文无溢出");
         }
-        if(OS.GetCmdlineUserArgs().Contains("--ui-snapshot"))root.GetViewport().GetTexture().GetImage().SavePng(ProjectSettings.GlobalizePath("res://../../artifacts/card-art-fix/native-cards.png"));
+        if(OS.GetCmdlineUserArgs().Contains("--ui-snapshot"))root.GetViewport().GetTexture().GetImage().SavePng(ProjectSettings.GlobalizePath(ancientOnly?"res://../../artifacts/ancient-review/native-cards.png":"res://../../artifacts/card-art-fix/native-cards.png"));
         canvas.QueueFree();
         await root.ToSignal(root.GetTree(),SceneTree.SignalName.ProcessFrame);
         ResourceLoader.RemoveResourceFormatLoader(atlasLoader);

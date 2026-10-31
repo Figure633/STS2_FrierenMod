@@ -119,7 +119,7 @@
   "FRIERENMOD-SWAMP_MANA_NEXT_TURN_POWER.title": "Out of the Swamp",
   "FRIERENMOD-SWAMP_MANA_NEXT_TURN_POWER.description": "After your normal draw at the start of your next turn, add {Amount} [gold]Mana[/gold] to your hand.",
   "FRIERENMOD-FRIEREN_THE_SLAYER_POWER.title": "Frieren the Slayer",
-  "FRIERENMOD-FRIEREN_THE_SLAYER_POWER.description": "At the start of each turn, choose {Amount} cards whose Chinese names contain “魔法” and add them to your hand; {UpgradedChoices} of these cards are upgraded. They are free to play this turn.",
+  "FRIERENMOD-FRIEREN_THE_SLAYER_POWER.description": "Each turn, choose {Amount} Spells from all Spells and add them to your [gold]hand[/gold].{UpgradedChoices:cond:>0? {} of them are upgraded.|}",
   "FRIERENMOD-ACCELERATE_FLOW_NEXT_TURN_POWER.title": "Accelerated Synchro Next Turn",
   "FRIERENMOD-ACCELERATE_FLOW_NEXT_TURN_POWER.description": "Next turn, [gold]Synchro[/gold] becomes [gold]Accelerated Synchro[/gold].",
   "FRIERENMOD-DOMAIN_EXPANSION_POWER.title": "Domain Expansion",
