@@ -20,6 +20,17 @@ for table in ["cards", "characters", "relics", "potions", "frieren", "powers", "
     zhs = load(ROOT / f"FrierenMod/localization/zhs/{table}.json")
     assert eng.keys() == zhs.keys(), f"localization key mismatch: {table}"
     assert all(eng.values()) and all(zhs.values()), f"empty localization: {table}"
+    if table in ('cards', 'frieren'):
+        for key, text in zhs.items():
+            if not (table == 'cards' and key.endswith('.description') or
+                    table == 'frieren' and key.startswith(('CRAFT.', 'FACTOR.', 'EFFECT.'))):
+                continue
+            gold_depth = 0
+            for part in re.split(r'(\[[^\]]+\])', text):
+                if part == '[gold]': gold_depth += 1
+                elif part == '[/gold]': gold_depth -= 1
+                elif re.search('抽牌堆|手牌|弃牌堆', part):
+                    assert gold_depth > 0, f"pile name must be gold: {key}: {part}"
     for language, texts in [("eng", eng), ("zhs", zhs)]:
         for key, text in texts.items():
             if table == "cards" and key == "FRIERENMOD-MULTIPLE_OFFENSIVE_MAGIC.description":

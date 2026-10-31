@@ -116,6 +116,10 @@ public partial class Runner : Node
                 GD.Print("TODO104_OK: " + await Todo104Tests.Run(this));
                 await Finish(); return;
             }
+            if (OS.GetCmdlineUserArgs().Contains("--card-fixes-only")) {
+                GD.Print("CARD_FIXES_OK: " + await CardPresentationFixTests.Run(this));
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--cards105-only")) {
                 GD.Print("CARDS105_OK: " + await Cards105Tests.Run(this));
                 await Finish(); return;

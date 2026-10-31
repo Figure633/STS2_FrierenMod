@@ -437,5 +437,6 @@
   "AURA.PLAYER": "Your mana",
   "AURA.COUNTDOWN": "Scales of Obedience · Turn {Turn}",
   "AURA.JUDGMENT": "Scales of Obedience · Judgment",
-  "WAYGATE_EXTRA_TURN": "Extra turn gained!"
+  "WAYGATE_EXTRA_TURN": "Extra turn gained!",
+  "TIP.SHRINK_ONE_TURN.description": "This creature's Attacks deal [blue]{DamageDecrease}%[/blue] less damage for {Amount} turn."
 }

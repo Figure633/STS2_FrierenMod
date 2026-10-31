@@ -110,20 +110,20 @@
   },
   {
     "character": "FRIERENMOD-FRIEREN",
-    "total": 80,
+    "total": 79,
     "rarities": {
       "Common": 21,
       "Rare": 21,
-      "Uncommon": 38
+      "Uncommon": 37
     },
     "types": {
       "Skill": 39,
       "Attack": 23,
-      "Power": 17,
+      "Power": 16,
       "Status": 1
     },
     "costs": {
-      "1": 37,
+      "1": 36,
       "0": 15,
       "2": 17,
       "X": 3,

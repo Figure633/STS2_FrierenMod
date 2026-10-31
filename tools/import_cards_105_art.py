@@ -2,7 +2,7 @@
 from pathlib import Path
 from zipfile import ZipFile
 from io import BytesIO
-import hashlib, json, argparse, shutil
+import hashlib, json, argparse
 from PIL import Image, ImageOps
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -40,9 +40,9 @@ with ZipFile(ROOT/'TODOs.docx') as z:
  record(target,'TODOs.docx:'+source,'作者提供的100x100能力图标，原样复制。')
 if args.good_luck_image:
  if Image.open(args.good_luck_image).format!='PNG':raise ValueError('好运魔法请提供PNG原图')
- target=ROOT/'FrierenMod/images/cards/GoodLuckSpell.png';shutil.copyfile(args.good_luck_image,target)
- record(target,'作者2026-10-31上传的好运魔法PNG原图（同图已嵌入TODO）','865x487原图直接复制；无裁切、缩放或重绘。')
- next(a for a in assets if a['file']==target.relative_to(ROOT).as_posix())['modified']=False
+ target=ROOT/'FrierenMod/images/cards/GoodLuckSpell.png'
+ ImageOps.fit(Image.open(args.good_luck_image).convert('RGB'),(500,380),method=Image.Resampling.LANCZOS,centering=(.5,.35)).save(target)
+ record(target,'作者2026-10-31上传的好运魔法PNG原图（同图已嵌入TODO）','等比裁剪为500x380，保留两张脸并铺满原生250:190画框；无重绘。')
 for name,source in [('DomainExpansionPower','DomainExpansion'),('GoodLuckRewardPower','RewardWish')]:
  target=ROOT/f'FrierenMod/images/powers/{name}.png';ImageOps.fit(Image.open(ROOT/f'FrierenMod/images/cards/{source}.png'),(84,84)).save(target)
  record(target,f'FrierenMod/images/cards/{source}.png','作者卡图中心裁切为84x84能力图标。')

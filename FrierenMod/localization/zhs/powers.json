@@ -54,7 +54,7 @@
   "FRIERENMOD-RITES_PREPARATION_POWER.title": "仪式准备",
   "FRIERENMOD-RITES_PREPARATION_POWER.description": "接下来{Amount}次[gold]同调[/gold]对所有敌人造成5点伤害。",
   "FRIERENMOD-TRICK_POWER.title": "小伎俩",
-  "FRIERENMOD-TRICK_POWER.description": "回合开始时在手牌生成一张[gold]魔力[/gold]抑制。",
+  "FRIERENMOD-TRICK_POWER.description": "已弃用，不再产生效果。",
   "FRIERENMOD-PAJAMAS_FORM_POWER.title": "睡衣形态",
   "FRIERENMOD-PAJAMAS_FORM_POWER.description": "回合结束时[gold]消耗[/gold]三个牌堆的所有[gold]魔力[/gold]，每张对所有敌人造成{DamagePerMana}点伤害。",
   "FRIERENMOD-FLYING_MAGIC_POWER.title": "飞行魔法",

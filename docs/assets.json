@@ -3562,30 +3562,40 @@
   {
     "file": "FrierenMod/images/cards/EndlessFlow.png",
     "source": "TODOs.docx@af59100:word/media/image1.png",
-    "sha256": "b888f172097508a75c3ecc0dcb16bc363661e633b90f4c7e5474814dd1e167a3",
+    "sha256": "e861d28cbd522183cd6b3e6458f376418fa4c351085f99387a6b95e819ee2256",
     "modified": true,
-    "processing": "作者原图，去截图边缘后按500x380等比中心裁切；不生成或重绘。",
-    "crop": null
+    "processing": "先应用作者Word裁剪(0, 0, 0, 0)，再等比裁剪为598x842；保留脸部完整，无拉伸。",
+    "crop": [
+      0,
+      0,
+      1507,
+      1005
+    ]
   },
   {
     "file": "FrierenMod/images/cards/FrierenTheSlayer.png",
     "source": "TODOs.docx@af59100:word/media/image2.jpeg",
-    "sha256": "c642258650bd81a8c4d062012b808838df0c3ad1030f51e0f634e40b45990487",
+    "sha256": "1ef7df4a227bef62b57870f9d4f2af913d0d8e1ff384d4b1254a64dfc34f0032",
     "modified": true,
-    "processing": "作者原图，去截图边缘后按500x380等比中心裁切；不生成或重绘。",
-    "crop": null
+    "processing": "先应用作者Word裁剪(0.1882, 0, 0.15909, 0)，再等比裁剪为598x842；保留脸部完整，无拉伸。",
+    "crop": [
+      239,
+      0,
+      1066,
+      714
+    ]
   },
   {
     "file": "FrierenMod/images/cards/RingletForm.png",
     "source": "TODOs.docx@af59100:word/media/image3.png",
-    "sha256": "fb35cd51e8b41410a7d9a12ad60467c9b8986d07d799b1eb02fca4a808a4c358",
+    "sha256": "1f4addd442f97ab7d6cbda8f952e236d390e6840363066f811d19b98255108da",
     "modified": true,
-    "processing": "作者原图，去截图边缘后按500x380等比中心裁切；不生成或重绘。",
+    "processing": "先应用作者Word裁剪(0.21572, 0.03226, 0, 0.07103)，再等比裁剪为500x380；保留脸部完整，无拉伸。",
     "crop": [
-      0,
-      40,
+      552,
+      52,
       2560,
-      1470
+      1486
     ]
   },
   {
@@ -3659,10 +3669,16 @@
     "file": "FrierenMod/images/cards/AccessoriesSpell.png",
     "source": "src/main/resources/FrierenModResources/img/cards/AccessoriesSpell_p.png",
     "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
-    "sha256": "99bd22bfa95e855062d554d81ca21c062ced13bacec2089f545df10ad2771ac8",
+    "sha256": "eda90da4f28b15e503111ac6f6b0e5412df6ff47f1fd44b756d08609f6ea85ac",
     "modified": true,
     "redistribution_review": "pending; local prototype only",
-    "processing": "去完整黑边与椭圆黑角（True），逆流另去顶端播放器提示；保持尺寸500x380，无重绘。"
+    "processing": "按主体单独等比裁剪为500x380；保留人物与原场景相对位置；仅透明边角延展最近原背景像素，避免转RGB形成黑角，无重绘。",
+    "crop": [
+      150,
+      35,
+      500,
+      301
+    ]
   },
   {
     "file": "FrierenMod/images/cards/BackFlow.png",
@@ -3677,10 +3693,16 @@
     "file": "FrierenMod/images/cards/FlyingMagic.png",
     "source": "src/main/resources/FrierenModResources/img/cards/FlyingMagic_p.png",
     "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
-    "sha256": "839d5dc6b2ea940dcc42325dfca0d337ca18770ff7856fe28cde37abd8e49ded",
+    "sha256": "93636afcb5cefadd29c975e1dc122c08e108a46351d9282bc802516b2b15787c",
     "modified": true,
     "redistribution_review": "pending; local prototype only",
-    "processing": "去完整黑边与椭圆黑角（True），逆流另去顶端播放器提示；保持尺寸500x380，无重绘。"
+    "processing": "按主体单独等比裁剪为500x380；保留人物与原场景相对位置；仅透明边角延展最近原背景像素，避免转RGB形成黑角，无重绘。",
+    "crop": [
+      35,
+      20,
+      485,
+      362
+    ]
   },
   {
     "file": "FrierenMod/images/cards/FullAhead.png",
@@ -3704,10 +3726,16 @@
     "file": "FrierenMod/images/cards/RitesPreparation.png",
     "source": "src/main/resources/FrierenModResources/img/cards/RitesPreparation_p.png",
     "source_collection": "用户提供的 STS1_素材/FrierenMod_STS1_source code",
-    "sha256": "dc5b1a2b115b1a1cede0cdad3facc6c507252aab78875bec39129bbf469f12f4",
+    "sha256": "0e96cc0fa167a52ddd9723253e8c0ef82ff7ece54fadc8af3c1407402ef639c0",
     "modified": true,
     "redistribution_review": "pending; local prototype only",
-    "processing": "去完整黑边与椭圆黑角（True），逆流另去顶端播放器提示；保持尺寸500x380，无重绘。"
+    "processing": "按主体单独等比裁剪为500x380；保留人物与原场景相对位置；仅透明边角延展最近原背景像素，避免转RGB形成黑角，无重绘。",
+    "crop": [
+      110,
+      5,
+      500,
+      301
+    ]
   },
   {
     "file": "FrierenMod/images/cards/Trick.png",
@@ -3789,10 +3817,16 @@
   },
   {
     "file": "FrierenMod/images/cards/GoodLuckSpell.png",
-    "source": "作者2026-10-31上传的好运魔法PNG原图（同图已嵌入TODO）",
-    "sha256": "59a2c5b8561516c993c6a71e228b51b3077f6d530c802946253cc93d5ae86725",
-    "modified": false,
-    "processing": "865x487原图直接复制；无裁切、缩放或重绘。"
+    "source": "作者2026-10-31上传PNG原图@0b0af3f:FrierenMod/images/cards/GoodLuckSpell.png",
+    "sha256": "5e10f259b6cb91d411fcc1ab82c029bbac0c0a87bae2e506ecdb3e03e469c75f",
+    "modified": true,
+    "processing": "原图等比裁剪为500x380，优先保留两张脸；与普通画框比例一致，不留横向黑边。",
+    "crop": [
+      112,
+      0,
+      753,
+      487
+    ]
   },
   {
     "file": "FrierenMod/images/powers/SleepInPower.png",
