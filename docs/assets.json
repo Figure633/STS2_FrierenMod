@@ -3648,10 +3648,10 @@
   },
   {
     "file": "FrierenMod/images/powers/FrierenTheSlayerPower.png",
-    "source": "TODOs.docx@af59100:word/media/image2.jpeg",
-    "sha256": "f5acd0909752664d17525ddcd6fccee49cbe73c6ba3aaa6c601a3171790b11a7",
-    "modified": true,
-    "processing": "卡面原图中心裁切为84x84能力图标。"
+    "source": "FrierenMod/images/monsters/Spiegel_node.png",
+    "sha256": "21616830e35cd397b68c5b6ed5ebbfa7c05002bbbfd9631db268510e12f12e81",
+    "modified": false,
+    "processing": "复制体地图/顶栏无五官头像原样复用；Godot导入上限84像素，等比缩为能力图标；显示层RGB乘1.08，透明度不变。"
   },
   {
     "file": "FrierenMod/images/cards/AccessoriesSpell.png",
@@ -3825,17 +3825,17 @@
   },
   {
     "file": "FrierenMod/images/powers/DomainExpansionPower.png",
-    "source": "FrierenMod/images/cards/DomainExpansion.png",
-    "sha256": "cf6a495447f43170bc8cdd275209aa30b6e9bf76154c168e5dc2c46e31678d74",
-    "modified": true,
-    "processing": "作者卡图中心裁切为84x84能力图标。"
+    "source": "作者2026-10-31上传：codex-clipboard-e1e9dc05-8710-49c0-addc-0284d1710e19.png",
+    "sha256": "509c05dbbf53d08c4932dbd86fd59d150dc77f11800e6855dd873e9f4ced4712",
+    "modified": false,
+    "processing": "原图原样使用；显示层RGB乘1.08轻微提亮，透明度不变。"
   },
   {
     "file": "FrierenMod/images/powers/GoodLuckRewardPower.png",
-    "source": "FrierenMod/images/cards/RewardWish.png",
-    "sha256": "49465276b24e9cc52a4440e807cdb9fb840cd065090f46180ac0fdcc2a883262",
-    "modified": true,
-    "processing": "作者卡图中心裁切为84x84能力图标。"
+    "source": "作者2026-10-31上传：codex-clipboard-c2f33b8f-a0a8-4eb7-aff3-9cf05c0a2ec4.png",
+    "sha256": "a43569247c4b8d55990f5bfdbc2b5a2f8ebf5b2f102a99e97a4795a4f8307b6e",
+    "modified": false,
+    "processing": "原图原样使用；显示层RGB乘1.08轻微提亮，透明度不变。"
   },
   {
     "file": "assets/card_sources/EndlessFlow.png",
@@ -3850,5 +3850,33 @@
     "processing": "作者原图，原样保存，不装入游戏资源包。",
     "modified": false,
     "sha256": "f659dae27b7ab4aae259fa7ee53698ee35009733bbcaa22d4290763faf7a9fb8"
+  },
+  {
+    "file": "FrierenMod/images/powers/AuraArrogancePower.png",
+    "source": "作者2026-10-31上传：codex-clipboard-7f319af1-3457-4eca-9272-1c6c5f71dcff.png",
+    "processing": "原图原样使用；显示层RGB乘1.08轻微提亮，透明度不变。",
+    "modified": false,
+    "sha256": "42d2a2c848f7d6dcccbac9cedfa1110cda0075fa2cc703f4492a6e42b14c45c9"
+  },
+  {
+    "file": "FrierenMod/images/powers/AuraSoulPower.png",
+    "source": "作者2026-10-31上传：codex-clipboard-d095b4d2-b23f-4ba7-8012-72802b190a82.png",
+    "processing": "原图原样使用；显示层RGB乘1.08轻微提亮，透明度不变。",
+    "modified": false,
+    "sha256": "cbef9cf1ca2c2020d69133be332c7e8277175c2e5839e3d21cd602ea2548d31c"
+  },
+  {
+    "file": "FrierenMod/images/powers/AuraSubmissionPower.png",
+    "source": "作者2026-10-31上传：codex-clipboard-bcef05b7-1dda-42af-9129-12eaa823b6e6.png",
+    "processing": "原图原样使用；显示层RGB乘1.08轻微提亮，透明度不变。",
+    "modified": false,
+    "sha256": "fb77b092c73e5968a94803308d8749c67dc7f3e612ae63d15b88affadb0ccd82"
+  },
+  {
+    "file": "FrierenMod/images/powers/AuraElegancePower.png",
+    "source": "作者2026-10-31上传：codex-clipboard-1688268c-a447-442b-b7bb-194c333416a9.png",
+    "processing": "原图原样使用；显示层RGB乘1.08轻微提亮，透明度不变。",
+    "modified": false,
+    "sha256": "776c5374f14bc8ac56a3371d9df08f926d31e4afdb3ca1ce8a31fcc63b97226e"
   }
 ]
