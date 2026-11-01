@@ -114,6 +114,7 @@ Test("精准咏唱先按原系数算强度再减费", () => {
 });
 passed += MagicPropTests.Run();
 passed += MagicRewardTests.Run();
+passed += CommissionTests.Run();
 Test("音乐随机不连续重复且能覆盖整个池", () => {
     foreach (int count in new[]{5,6}) {
         var playlist=new MusicPlaylist(123);int previous=-1;var seen=new HashSet<int>();

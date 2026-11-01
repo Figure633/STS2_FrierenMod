@@ -184,6 +184,7 @@ public static class MagicBookUi
         hud.ZIndex = 100; hud.ZAsRelative = false;
         // Reparent 会触发 TreeExiting；必须在层级确定后绑定，避免初始化即被退出清理解绑。
         MagicDeckAnimations.Bind(player, animations, toggle, screen);
+        CommissionScreen.Attach(root, player, currentOverlay);
         RefreshInput();
     }
 }

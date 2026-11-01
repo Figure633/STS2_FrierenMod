@@ -5,6 +5,8 @@ using HarmonyLib;
 using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Runs;
+using MegaCrit.Sts2.Core.GameActions;
+using MegaCrit.Sts2.Core.Combat;
 
 namespace FrierenMod.Scripts.Mechanics;
 
@@ -38,25 +40,32 @@ public static class MagicDeckNetwork
     }
     public static string Snapshot(Player player) => Convert.ToHexString(SHA256.HashData(
         Encoding.UTF8.GetBytes(MagicDeckStore.Read(player).ToJson())));
-    public static async Task<bool> Send(Player player, NetMagicDeckAction data)
+    public static Task<bool> Send(Player player, NetMagicDeckAction data) => SendAction(player, request => {
+        data.Request = request; return new MagicDeckAction(player, data);
+    });
+    public static Task<bool> SendCommission(Player player, NetCommissionAction data) => SendAction(player, request => {
+        data.Request = request; data.InCombat = CombatManager.Instance.IsInProgress; data.Floor = player.RunState.TotalFloor;
+        return new CommissionAction(player, data);
+    });
+    private static async Task<bool> SendAction(Player player, Func<uint, GameAction> create)
     {
         var manager = RunManager.Instance;
         if (!LocalContext.IsMe(player) || !ReferenceEquals(manager.DebugOnlyGetState(), player.RunState) ||
             manager.IsCleaningUp || !manager.NetService.IsConnected ||
             manager.NetService.Type == MegaCrit.Sts2.Core.Multiplayer.Game.NetGameType.Replay) return false;
         var pending = PendingByPlayer.GetOrCreateValue(player);
-        data.Request = ++pending.Next;
+        uint request = ++pending.Next;
         var completion = new TaskCompletionSource<bool>();
-        pending.Requests.Add(data.Request, completion);
+        pending.Requests.Add(request, completion);
         void Disconnected(MegaCrit.Sts2.Core.Entities.Multiplayer.NetErrorInfo _) => completion.TrySetResult(false);
         manager.NetService.Disconnected += Disconnected;
         try {
-            manager.ActionQueueSynchronizer.RequestEnqueue(new MagicDeckAction(player, data));
+            manager.ActionQueueSynchronizer.RequestEnqueue(create(request));
             return await completion.Task;
         }
         finally {
             manager.NetService.Disconnected -= Disconnected;
-            pending.Requests.Remove(data.Request);
+            pending.Requests.Remove(request);
         }
     }
     public static void Complete(Player player, uint request, bool result)

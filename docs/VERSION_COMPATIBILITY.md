@@ -33,4 +33,4 @@ dotnet run --project Tests/Compatibility/CompatibilityTests.csproj -- <FrierenMo
 
 `tools/run-engine-check.ps1` 可通过 `-RuntimeDataDir` 和 `-ReleaseInfoPath` 指定另一版本的本地运行时，每次运行都显式复制所选依赖，避免上次测试版程序集污染下一次正式版检查。完整UI验证还需对应版本的游戏PCK。编译和自动检查通过不等同于长局验收。
 
-使用另一版本前，先以 `dotnet build Tests/Engine/EngineTests.csproj -p:TestRuntimeDataDir=运行时目录` 构建测试夹具，将该版本的 Sentry 等附属程序集纳入 .NET 依赖清单；仅复制 DLL 不能保证运行时解析。生产模组仍按正式版接口编译。
+使用另一版本前，先以 `dotnet build Tests/Engine/EngineTests.csproj -t:Rebuild -p:TestRuntimeDataDir=运行时目录` 重建测试夹具，将该版本的 Sentry 等附属程序集纳入 .NET 依赖清单；仅复制 DLL 或沿用增量构建缓存不能保证运行时解析。切回正式版时同样重建并复制正式版依赖。生产模组仍按正式版接口编译。

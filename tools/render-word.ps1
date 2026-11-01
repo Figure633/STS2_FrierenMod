@@ -11,8 +11,9 @@ try {
     $renderWord.Visible = $false; $renderWord.DisplayAlerts = 0
     $renderDoc = $renderWord.Documents.Open($renderInput, $false, $true)
     $renderDoc.Repaginate()
+    $renderPages = $renderDoc.ComputeStatistics(2)
     $renderDoc.ExportAsFixedFormat($renderPdf, 17)
-    Write-Output ("WORD_RENDER_OK pages=" + $renderDoc.ComputeStatistics(2) + " pdf=" + $renderPdf)
+    Write-Output ("WORD_RENDER_OK pages=" + $renderPages + " pdf=" + $renderPdf)
 } finally {
     if ($renderDoc) { $renderDoc.Close(0); [void][Runtime.InteropServices.Marshal]::ReleaseComObject($renderDoc) }
     if ($renderWord) { $renderWord.Quit(); [void][Runtime.InteropServices.Marshal]::ReleaseComObject($renderWord) }

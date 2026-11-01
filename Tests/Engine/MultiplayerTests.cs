@@ -121,7 +121,7 @@ public static class MultiplayerTests
             if(ready!=null)await Wait(ready,name);
             await Barrier(name+"-done");
             // 阶段完成后再比较两端全部玩家数据，而非只核对本机角色。
-            string snapshot=JsonSerializer.Serialize(run.Players.Select(p=>new {p.NetId,deck=MagicDeckStore.Read(p).ToJson(),
+            string snapshot=JsonSerializer.Serialize(run.Players.Select(p=>new {p.NetId,deck=MagicDeckStore.Read(p).ToJson(),commissions=CommissionCmd.Read(p).ToJson(),gold=p.Gold,
                 rng=CombatTestState.RngCounter(p.PlayerRng.Rewards),hp=p.Creature.CurrentHp,energy=p.PlayerCombatState?.Energy,
                 piles=p.PlayerCombatState?.AllPiles.Select(pile=>new {pile.Type,cards=pile.Cards.Select(c=>c.Id.ToString()).ToArray()}).ToArray(),
                 powers=p.Creature.Powers.Select(power=>new{power.Id,power.Amount,gate=power is OpenTheWaygatePower g?g.Opportunities+"/"+g.PendingTurns+"/"+g.Consecutive:null}).ToArray()}));
@@ -137,6 +137,22 @@ public static class MultiplayerTests
         await Barrier("run-ready");
         if(me.Character is Frieren)await MagicDeckCmd.ChooseStartingFactors(new BlockingPlayerChoiceContext(),me);
         await Same("initial",()=>frierens.All(p=>MagicDeckStore.Read(p).StartingPropsGranted));
+        run.ActFloor=9;CommissionCmd.Ensure(run);
+        Check(ActionTypes.TryGetActionType(ActionTypes.TypeToId<NetCommissionAction>(),out var questAction)&&questAction==typeof(NetCommissionAction),"原生动作类型表发现委托类型");
+        if(me.Character is Frieren) {
+            Check(await CommissionCmd.Send(me,1,CommissionOperation.Accept),"通过ENet接取本人委托");
+            Check(!await CommissionCmd.Send(me,1,CommissionOperation.Accept),"重复接取被拒绝");
+            Check(!await CommissionCmd.Send(run.Players.First(p=>p!=me),1,CommissionOperation.Accept),"客户端不能操作其他玩家委托");
+        }
+        await Same("commission-accepted",()=>frierens.All(p=>CommissionCmd.Read(p).Quests.Any(q=>q.Id==1&&q.Status==CommissionStatus.Accepted)));
+        foreach(var p in frierens){var q=CommissionCmd.Read(p);q.Record("mp-original-enemies",CommissionGoal.Monsters,3);CommissionCmd.Write(p,q);}
+        await Barrier("commission-ready");
+        if(me.Character is Frieren) {
+            int oldGold=me.Gold;
+            Check(await CommissionCmd.Send(me,1,CommissionOperation.Claim)&&me.Gold==oldGold+40,"通过ENet提交本人委托并获得固定金币");
+            Check(!await CommissionCmd.Send(me,1,CommissionOperation.Claim)&&me.Gold==oldGold+40,"重复提交不重复领奖");
+        }
+        await Same("commission-claimed",()=>frierens.All(p=>CommissionCmd.Read(p).Quests.Single(q=>q.Id==1).Status==CommissionStatus.Claimed));
         Check(frierens.All(p=>MagicDeckStore.Read(p).Items.Count==3&&MagicDeckStore.Read(p).Props.Count==2),"每位芙莉莲独立选三因子、各得两个工具");
         Check(!mixed||MagicDeckStore.Read(p2).Items.Count==0,"混合队伍其他角色不获得魔法书物品");
         var originals=frierens.ToDictionary(p=>p,p=>MagicDeckStore.Read(p).ToJson());
@@ -246,6 +262,7 @@ public static class MultiplayerTests
         var save=RunManager.Instance.ToSave(null);var writer=new PacketWriter();save.Serialize(writer);var reader=new PacketReader();reader.Reset(writer.Buffer);var packet=new SerializableRun();packet.Deserialize(reader);
         var restored=RunState.FromSerializable(packet);
         Check(restored.Players.Select(p=>MagicDeckStore.Read(p).ToJson()).SequenceEqual(run.Players.Select(p=>MagicDeckStore.Read(p).ToJson())),"原生完整跑局网络存档保留各玩家魔法书及赠品标记");
+        Check(restored.Players.Select(p=>CommissionCmd.Read(p).ToJson()).SequenceEqual(run.Players.Select(p=>CommissionCmd.Read(p).ToJson())),"原生完整网络存档保留委托与已领奖状态");
         await Barrier("before-reconnect");
         timer.Stop();RunManager.Instance.CleanUp();timer.QueueFree();
         await Barrier("disconnected");
@@ -274,6 +291,7 @@ public static class MultiplayerTests
         await Same("restored");
         if(me.Character is Frieren) {
             string old=MagicDeckStore.Read(me).ToJson();int counter=CombatTestState.RngCounter(me.PlayerRng.Rewards);
+            Check(!await CommissionCmd.Send(me,1,CommissionOperation.Claim),"断线载入后不能重复领取委托报酬");
             await MagicDeckCmd.ChooseStartingFactors(new BlockingPlayerChoiceContext(),me);
             Check(MagicDeckStore.Read(me).ToJson()==old&&CombatTestState.RngCounter(me.PlayerRng.Rewards)==counter,"读档不重复选择、赠品或推进随机数");
             int id=MagicDeckStore.Read(me).Props.First(p=>p.PropId=="MysteryBox").InstanceId;

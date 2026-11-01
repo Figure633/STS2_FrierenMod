@@ -136,6 +136,10 @@ public partial class Runner : Node
                 GD.Print("TODO110_OK: " + await Todo110Tests.Run(this));
                 await Finish(); return;
             }
+            if (OS.GetCmdlineUserArgs().Contains("--commissions-only")) {
+                GD.Print("COMMISSIONS_OK: " + await CommissionTests.Run(this));
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--magic-shop-only")) {
                 GD.Print("MAGIC_SHOP_OK: " + await MagicShopTests.Run(this));
                 await Finish(); return;
