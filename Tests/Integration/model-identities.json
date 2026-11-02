@@ -253,5 +253,10 @@
   "FrierenMod.Scripts.Powers.AccelerateFlowNextTurnPower": "POWER.ACCELERATE_FLOW_NEXT_TURN_POWER",
   "FrierenMod.Scripts.Powers.DomainExpansionPower": "POWER.DOMAIN_EXPANSION_POWER",
   "FrierenMod.Scripts.Powers.GoodLuckRewardPower": "POWER.GOOD_LUCK_REWARD_POWER",
-  "FrierenMod.Scripts.Powers.SleepInPower": "POWER.SLEEP_IN_POWER"
+  "FrierenMod.Scripts.Powers.SleepInPower": "POWER.SLEEP_IN_POWER",
+  "FrierenMod.Scripts.Cards.ElvenHourglass": "CARD.ELVEN_HOURGLASS",
+  "FrierenMod.Scripts.Cards.PhoenixQuill": "CARD.PHOENIX_QUILL",
+  "FrierenMod.Scripts.Cards.RoyalGrimoire": "CARD.ROYAL_GRIMOIRE",
+  "FrierenMod.Scripts.Cards.ValuableCargo": "CARD.VALUABLE_CARGO",
+  "FrierenMod.Scripts.Powers.CommissionElitePower": "POWER.COMMISSION_ELITE_POWER"
 }

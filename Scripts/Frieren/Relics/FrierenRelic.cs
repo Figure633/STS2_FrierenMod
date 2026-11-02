@@ -40,9 +40,9 @@ public abstract class CountingFrierenRelic : FrierenRelic
     public override int DisplayAmount => Counter;
 }
 
-// 一代 Boss 遗物暂按作者决定进入稀有池，使用原生能量上限钩子。
+// 一代Boss遗物仅由第二、三幕三星委托奖励提供，使用原生能量上限钩子。
 public abstract class EnergyFrierenRelic : FrierenRelic
 {
-    public override RelicRarity Rarity => RelicRarity.Rare;
+    public override RelicRarity Rarity => RelicRarity.Event;
     public override decimal ModifyMaxEnergy(Player player, decimal amount) => player == Owner ? amount + 1 : amount;
 }

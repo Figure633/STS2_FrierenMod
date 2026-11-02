@@ -90,6 +90,23 @@ static class MagicPropTests
             catch (JsonException) { return; }
             throw new Exception("重复编号未拒绝");
         });
+        Test("委托独占魔具不进入八种普通魔具池",()=>{
+            Check(MagicPropRules.All.Count==8&&MagicPropRules.CommissionOnly.Count==3&&MagicPropRules.CommissionOnly.All(p=>!MagicPropRules.All.Contains(p)));
+        });
+        Test("王室秘典生成三种稀有因子并装入三槽，保留旧因子",()=>{
+            var deck=Deck();int old=deck.Items.Count;var result=Use(deck,"RoyalGrimoire",[]);
+            Check(result.Deck.Items.Count==old+3&&result.Deck.Items.Where(i=>i.Slot>=0).All(i=>SpellCatalog.Get(i.SpellId).Rarity==FactorRarity.Rare)&&result.Deck.Items.TakeLast(3).Select(i=>i.SpellId).Distinct().Count()==3);
+        });
+        Test("时砂漏只在战斗中给予3能量与3抽牌",()=>{
+            var deck=Deck();int id=deck.AddProp("ElvenHourglass").InstanceId;
+            Check(MagicPropRules.Apply(deck,id,[],false,_=>0)==null);
+            var result=MagicPropRules.Apply(deck,id,[],true,_=>0)!;Check(result.Energy==3&&result.Draw==3&&result.Deck.Props.Count==0);
+        });
+        Test("羽笔保持槽位换成稀有因子并给两个工具",()=>{
+            var deck=Deck();var result=Use(deck,"PhoenixQuill",[1]);
+            Check(result.Deck.InSlot(ManaSlot.Draw)!=null&&SpellCatalog.Get(result.Deck.InSlot(ManaSlot.Draw)!.Id).Rarity==FactorRarity.Rare&&result.Deck.Props.Count(p=>p.PropId=="UnbelievableTool")==2);
+            Check(MagicDeckState.FromJson(result.Deck.ToJson()).ToJson()==result.Deck.ToJson());
+        });
         return count;
     }
 }

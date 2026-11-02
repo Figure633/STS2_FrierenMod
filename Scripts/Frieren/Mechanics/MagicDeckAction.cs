@@ -18,7 +18,7 @@ public sealed class MagicDeckAction(Player player, NetMagicDeckAction data) : Ga
             var context = new GameActionPlayerChoiceContext(this);
             success = data.Setup
                 ? await MagicDeckCmd.ExecuteNetworkSetup(context, player)
-                : data.Shop ? await MagicPropCmd.VisitShopCore(player, context) : await MagicPropCmd.ExecuteSynchronized(player, data);
+                : data.Shop ? await MagicPropCmd.VisitShopCore(player, context) : await MagicPropCmd.ExecuteSynchronized(player, data, context);
         }
         finally { Complete(success); }
     }

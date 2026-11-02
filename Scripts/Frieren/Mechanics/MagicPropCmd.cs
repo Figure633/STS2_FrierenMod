@@ -92,7 +92,7 @@ public static class MagicPropCmd
                     InCombat = CombatManager.Instance.IsInProgress, Turn = player.PlayerCombatState?.TurnNumber ?? 0
                 });
             }
-            else success = await ApplySelected(player, propId, targets);
+            else success = await ApplySelected(player, propId, targets, new BlockingPlayerChoiceContext());
             // 动画只在本地等待，不进入同步动作，避免各端动画时长影响结算次序。
             if (success) await UI.MagicDeckAnimations.WhenIdle(player);
             return success;
@@ -100,7 +100,7 @@ public static class MagicPropCmd
         finally { Busy.Remove(player); }
     }
 
-    private static async Task<bool> ApplySelected(Player player, int propId, IReadOnlyList<int> targets)
+    private static async Task<bool> ApplySelected(Player player, int propId, IReadOnlyList<int> targets, PlayerChoiceContext context)
     {
         if (Shopping.Contains(player) || !CanAct(player, fromInput: false)) return false;
         var result = MagicPropRules.Apply(MagicDeckStore.Read(player), propId, targets,
@@ -112,17 +112,18 @@ public static class MagicPropCmd
         if (usedProp == "SeinNote") Presentation.FrierenAchievements.Unlock(player, "4013");
         if (result.Heal > 0) await CreatureCmd.Heal(player.Creature, result.Heal);
         if (result.Energy > 0) await PlayerCmd.GainEnergy(result.Energy, player);
+        if (result.Draw > 0) await CardPileCmd.Draw(context,result.Draw,player);
         // 与原生休息/锻造保持同一楼层检查点，避免重复领取营地收益。
         return true;
     }
 
-    internal static Task<bool> ExecuteSynchronized(Player player, NetMagicDeckAction request)
+    internal static Task<bool> ExecuteSynchronized(Player player, NetMagicDeckAction request, PlayerChoiceContext? context = null)
     {
         // 旧库存、过期回合、跨战斗和不合法目标均不能消耗库存或随机数。
         if (request.Targets.Length > 3 || request.InCombat != CombatManager.Instance.IsInProgress ||
             (request.InCombat && request.Turn != player.PlayerCombatState?.TurnNumber) ||
             request.Snapshot != MagicDeckNetwork.Snapshot(player)) return Task.FromResult(false);
-        return ApplySelected(player, request.Prop, request.Targets);
+        return ApplySelected(player, request.Prop, request.Targets, context ?? new ThrowingPlayerChoiceContext());
     }
 
 }

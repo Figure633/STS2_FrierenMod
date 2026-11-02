@@ -63,7 +63,7 @@ public static class MultiplayerTests
     {
         __result=new NSimpleCardSelectScreen(); Screens.Add(__result);
         ((TaskCompletionSource<IEnumerable<CardModel>>)AccessTools.Field(typeof(NCardGridSelectionScreen),"_completionSource").GetValue(__result))
-            .SetResult(CancelShop?[]:new[]{cards[1],cards[6]});
+            .SetResult(cards.Count==3?new[]{cards[(int)(LocalContext.NetId!.Value-1)%3]}:CancelShop?[]:new[]{cards[1],cards[6]});
         return false;
     }
 
@@ -88,6 +88,8 @@ public static class MultiplayerTests
             Publish(name+"-"+role+".ready","ready");
             await Wait(()=>File.Exists(Path.Combine(dir,name+"-"+peer+".ready")),name);
         }
+        async Task<bool> QuestSend(int id,CommissionOperation operation){await Wait(()=>CommissionCmd.CanAct(runPlayer()),"等待委托操作阶段");return await CommissionCmd.Send(runPlayer(),id,operation);}
+        Player runPlayer()=>RunManager.Instance.DebugOnlyGetState()!.Players.Single(p=>p.NetId==(host?1ul:2ul));
         MessageTypes.Initialize();ActionTypes.Initialize();
         Check(ActionTypes.TryGetActionType(ActionTypes.TypeToId<NetMagicDeckAction>(),out var actionType)&&actionType==typeof(NetMagicDeckAction),"原生动作类型表发现模组类型");
         var p1=Player.CreateForNewRun<Frieren>(UnlockState.all,1);
@@ -122,6 +124,7 @@ public static class MultiplayerTests
             await Barrier(name+"-done");
             // 阶段完成后再比较两端全部玩家数据，而非只核对本机角色。
             string snapshot=JsonSerializer.Serialize(run.Players.Select(p=>new {p.NetId,deck=MagicDeckStore.Read(p).ToJson(),commissions=CommissionCmd.Read(p).ToJson(),gold=p.Gold,
+                deckCards=p.Deck.Cards.Select(c=>new{Id=c.Id.ToString(),c.CurrentUpgradeLevel,fare=c is ValuableCargo v?v.Fare:-1,stop=c is ValuableCargo cargo?cargo.LastStop:""}),
                 rng=CombatTestState.RngCounter(p.PlayerRng.Rewards),hp=p.Creature.CurrentHp,energy=p.PlayerCombatState?.Energy,
                 piles=p.PlayerCombatState?.AllPiles.Select(pile=>new {pile.Type,cards=pile.Cards.Select(c=>c.Id.ToString()).ToArray()}).ToArray(),
                 powers=p.Creature.Powers.Select(power=>new{power.Id,power.Amount,gate=power is OpenTheWaygatePower g?g.Opportunities+"/"+g.PendingTurns+"/"+g.Consecutive:null}).ToArray()}));
@@ -137,22 +140,17 @@ public static class MultiplayerTests
         await Barrier("run-ready");
         if(me.Character is Frieren)await MagicDeckCmd.ChooseStartingFactors(new BlockingPlayerChoiceContext(),me);
         await Same("initial",()=>frierens.All(p=>MagicDeckStore.Read(p).StartingPropsGranted));
-        run.ActFloor=9;CommissionCmd.Ensure(run);
+        run.ActFloor=9;CommissionCmd.Ensure(run);int villageId=CommissionState.QuestId(0,2);
+        foreach(var p in frierens){var q=CommissionCmd.State(p);q.Quests[1]=new(){Id=villageId,Act=0,Template="GRAPES",Goal=CommissionGoal.Deck,Spell="GrapeSpell",Reward=new(CommissionRewardKind.Gold,"",80)};CommissionCmd.Write(p,q);await CardPileCmd.Add(run.CreateCard<GrapeSpell>(p),PileType.Deck);}
         Check(ActionTypes.TryGetActionType(ActionTypes.TypeToId<NetCommissionAction>(),out var questAction)&&questAction==typeof(NetCommissionAction),"原生动作类型表发现委托类型");
-        if(me.Character is Frieren) {
-            Check(await CommissionCmd.Send(me,1,CommissionOperation.Accept),"通过ENet接取本人委托");
-            Check(!await CommissionCmd.Send(me,1,CommissionOperation.Accept),"重复接取被拒绝");
-            Check(!await CommissionCmd.Send(run.Players.First(p=>p!=me),1,CommissionOperation.Accept),"客户端不能操作其他玩家委托");
+        if(me.Character is Frieren){
+            Check(await QuestSend(villageId,CommissionOperation.Accept),"通过ENet接取本人村民委托");
+            Check(!await CommissionCmd.Send(me,CommissionState.QuestId(0,1),CommissionOperation.Accept),"已经接一项后不能再接第二项");
+            Check(!await CommissionCmd.Send(run.Players.First(p=>p!=me),villageId,CommissionOperation.Accept),"客户端不能操作其他玩家委托");
         }
-        await Same("commission-accepted",()=>frierens.All(p=>CommissionCmd.Read(p).Quests.Any(q=>q.Id==1&&q.Status==CommissionStatus.Accepted)));
-        foreach(var p in frierens){var q=CommissionCmd.Read(p);q.Record("mp-original-enemies",CommissionGoal.Monsters,3);CommissionCmd.Write(p,q);}
-        await Barrier("commission-ready");
-        if(me.Character is Frieren) {
-            int oldGold=me.Gold;
-            Check(await CommissionCmd.Send(me,1,CommissionOperation.Claim)&&me.Gold==oldGold+90,"通过ENet提交本人委托并获得固定金币");
-            Check(!await CommissionCmd.Send(me,1,CommissionOperation.Claim)&&me.Gold==oldGold+90,"重复提交不重复领奖");
-        }
-        await Same("commission-claimed",()=>frierens.All(p=>CommissionCmd.Read(p).Quests.Single(q=>q.Id==1).Status==CommissionStatus.Claimed));
+        await Same("commission-accepted",()=>frierens.All(p=>CommissionCmd.Read(p).Active?.Id==villageId));
+        if(me.Character is Frieren){int oldGold=me.Gold;Check(await QuestSend(villageId,CommissionOperation.Claim)&&me.Gold==oldGold+80,"通过ENet提交村民委托并获得80金币");Check(!await CommissionCmd.Send(me,villageId,CommissionOperation.Claim)&&me.Gold==oldGold+80,"重复提交不重复领奖");}
+        await Same("commission-claimed",()=>frierens.All(p=>CommissionCmd.Read(p).Quests.Single(q=>q.Id==villageId).Status==CommissionStatus.Claimed));
         Check(frierens.All(p=>MagicDeckStore.Read(p).Items.Count==3&&MagicDeckStore.Read(p).Props.Count==2),"每位芙莉莲独立选三因子、各得两个工具");
         Check(!mixed||MagicDeckStore.Read(p2).Items.Count==0,"混合队伍其他角色不获得魔法书物品");
         var originals=frierens.ToDictionary(p=>p,p=>MagicDeckStore.Read(p).ToJson());
@@ -208,11 +206,12 @@ public static class MultiplayerTests
         AccessTools.Property(typeof(CombatManager),nameof(CombatManager.IsStarting)).SetValue(CombatManager.Instance,false);
         AccessTools.Property(typeof(CombatManager),nameof(CombatManager.PlayerActionsDisabled)).SetValue(CombatManager.Instance,false);
         foreach(var p in run.Players)p.PlayerCombatState!.Phase=PlayerTurnPhase.Play;
-        RunManager.Instance.ActionQueueSynchronizer.SetCombatState(ActionSynchronizerCombatState.PlayPhase);
+        RunManager.Instance.ActionQueueSynchronizer.SetCombatState(Enum.Parse<ActionSynchronizerCombatState>("PlayPhase"));
         foreach(var p in frierens){var d=MagicDeckStore.Read(p);d.AddProp("ShadowDragonHorn");MagicDeckStore.Write(p,d);}
         await Barrier("combat-ready");
         if(me.Character is Frieren) {
             var d=MagicDeckStore.Read(me);var horn=d.Props.Single(x=>x.PropId=="ShadowDragonHorn");
+            await Wait(()=>MagicPropCmd.CanUse(me,horn.InstanceId),"等待黑龙角输入阶段");
             Check(await MagicPropCmd.UseSelected(me,horn.InstanceId,MagicPropRules.Eligible(d,horn).Take(2).ToArray()),"战斗中黑龙角同步销毁两目标并获得能量");
         }
         await Same("combat-horn",()=>frierens.All(p=>!MagicDeckStore.Read(p).Props.Any(x=>x.PropId=="ShadowDragonHorn")));
@@ -291,29 +290,56 @@ public static class MultiplayerTests
         await Same("restored");
         if(me.Character is Frieren) {
             string old=MagicDeckStore.Read(me).ToJson();int counter=CombatTestState.RngCounter(me.PlayerRng.Rewards);
-            Check(!await CommissionCmd.Send(me,1,CommissionOperation.Claim),"断线载入后不能重复领取委托报酬");
+            Check(!await CommissionCmd.Send(me,villageId,CommissionOperation.Claim),"断线载入后不能重复领取委托报酬");
             await MagicDeckCmd.ChooseStartingFactors(new BlockingPlayerChoiceContext(),me);
             Check(MagicDeckStore.Read(me).ToJson()==old&&CombatTestState.RngCounter(me.PlayerRng.Rewards)==counter,"读档不重复选择、赠品或推进随机数");
             int id=MagicDeckStore.Read(me).Props.First(p=>p.PropId=="MysteryBox").InstanceId;
             Check(await MagicPropCmd.UseSelected(me,id,[]),"载入重连后继续使用同步魔具");
         }
         await Same("restored-used",()=>run.Players.Where(p=>p.Character is Frieren).All(p=>MagicDeckStore.Read(p).Props.Count(x=>x.PropId=="MysteryBox")==1));
-        run.ActFloor=9;CommissionCmd.Ensure(run);
-        if(me.Character is Frieren)Check(await CommissionCmd.Send(me,3,CommissionOperation.Accept),"重连后通过ENet接取挑战委托");
-        await Same("challenge-accepted",()=>run.Players.Where(p=>p.Character is Frieren).All(p=>CommissionCmd.Read(p).Quests.Single(q=>q.Id==3).Status==CommissionStatus.Accepted));
-        foreach(var p in run.Players.Where(p=>p.Character is Frieren)){var q=CommissionCmd.State(p);q.Record("mp-swift",CommissionGoal.FirstTurnBattle);CommissionCmd.Write(p,q);}
-        await Barrier("challenge-ready");
-        if(me.Character is Frieren){
-            int oldCount=MagicDeckStore.Read(me).Props.Count;int oldGold=me.Gold;
-            Check(await CommissionCmd.Send(me,3,CommissionOperation.Claim)&&MagicDeckStore.Read(me).Props.Count==oldCount+1&&me.Gold==oldGold+100,"ENet挑战报酬同步魔具和额外金币");
+        run.ActFloor=9;CommissionCmd.Ensure(run);int huntId=CommissionState.QuestId(0,1),cargoId=CommissionState.QuestId(0,3);
+        var rareChoices=ModelDb.CardPool<FrierenCardPool>().AllCards.Where(c=>c.Rarity==CardRarity.Rare&&FrierenCardAvailability.IsRandomCandidate(c)).Take(3).Select(c=>c.GetType().Name).ToArray();
+        foreach(var p in run.Players.Where(p=>p.Character is Frieren)){
+            var q=CommissionCmd.State(p);q.Quests[0]=new(){Id=huntId,Act=0,Template="HUNT",Stars=3,Goal=CommissionGoal.EmpoweredElite,Affix=0,Reward=new(CommissionRewardKind.RareChoice,"",1,Choices:rareChoices)};
+            q.Quests[2]=new(){Id=cargoId,Act=0,Template="CARGO",Stars=2,Goal=CommissionGoal.Cargo,Reward=new(CommissionRewardKind.Freight,"",1)};q.Revision++;CommissionCmd.Write(p,q);
         }
-        await Same("challenge-claimed",()=>run.Players.Where(p=>p.Character is Frieren).All(p=>CommissionCmd.Read(p).Quests.Single(q=>q.Id==3).Status==CommissionStatus.Claimed));
-        if(me.Character is Frieren)Check(await CommissionCmd.Send(me,5,CommissionOperation.Accept),"ENet接取无伤精英委托");
-        await Same("expiry-ready",()=>run.Players.Where(p=>p.Character is Frieren).All(p=>CommissionCmd.Read(p).Quests.Single(q=>q.Id==5).Status==CommissionStatus.Accepted));
-        foreach(var p in run.Players.Where(p=>p.Character is Frieren)){var q=CommissionCmd.State(p);q.Record("mp-flawless",CommissionGoal.FlawlessElite);CommissionCmd.Write(p,q);}
-        run.CurrentActIndex=1;run.ActFloor=1;CommissionCmd.Ensure(run);await Barrier("next-act");
-        if(me.Character is Frieren)Check(!await CommissionCmd.Send(me,5,CommissionOperation.Claim),"ENet进入新幕后拒绝旧幕已达标领奖");
-        await Same("expired",()=>run.Players.Where(p=>p.Character is Frieren).All(p=>CommissionCmd.Read(p).ActiveCount==0&&CommissionCmd.Read(p).Quests.Single(q=>q.Id==5).Status==CommissionStatus.Abandoned));
+        await Barrier("new-contracts");
+        if(me.Character is Frieren)Check(await QuestSend(huntId,CommissionOperation.Accept),"重连后ENet接取三星强化精英");
+        await Same("hunt-accepted",()=>run.Players.Where(p=>p.Character is Frieren).All(p=>CommissionCmd.Read(p).Active?.Id==huntId));
+        var eliteModel=ModelDb.AllEncounters.First(e=>e.RoomType==RoomType.Elite).ToMutable();eliteModel.GenerateMonstersWithSlots(run);
+        var eliteRoom=new CombatRoom(eliteModel,run);run.PushRoom(eliteRoom);var eliteCombat=eliteRoom.CombatState;foreach(var p in run.Players)eliteCombat.AddPlayer(p);
+        var originalEnemy=eliteModel.MonstersWithSlots[0];var eliteEnemy=eliteCombat.CreateCreature(originalEnemy.Item1,CombatSide.Enemy,originalEnemy.Item2);eliteCombat.AddCreature(eliteEnemy);int originalHp=eliteEnemy.MaxHp;
+        CombatManager.Instance.SetUpCombat(eliteCombat);CombatTestState.SetInProgress(true);
+        AccessTools.Property(typeof(CombatManager),nameof(CombatManager.IsStarting)).SetValue(CombatManager.Instance,false);
+        AccessTools.Property(typeof(CombatManager),nameof(CombatManager.PlayerActionsDisabled)).SetValue(CombatManager.Instance,false);
+        foreach(var p in run.Players)p.PlayerCombatState!.Phase=PlayerTurnPhase.Play;
+        RunManager.Instance.ActionExecutor.Unpause();RunManager.Instance.ActionQueueSynchronizer.SetCombatState(Enum.Parse<ActionSynchronizerCombatState>("PlayPhase"));
+        await CommissionCmd.Empower(eliteCombat);await CommissionCmd.Empower(eliteCombat);
+        Check(eliteEnemy.MaxHp==originalHp+(int)Math.Ceiling(originalHp*.25)&&eliteEnemy.GetPower<CommissionElitePower>()?.Amount==1,"双端精英强化一次，多人接取不叠加");
+        CommissionCmd.Victory(run,eliteRoom);await Same("hunt-ready",()=>run.Players.Where(p=>p.Character is Frieren).All(p=>CommissionCmd.Read(p).Active?.Progress==1));
+        if(me.Character is Frieren){int oldCards=me.Deck.Cards.Count;Check(await QuestSend(huntId,CommissionOperation.Claim)&&me.Deck.Cards.Count==oldCards+1&&me.Deck.Cards.Last().GetType().Name==rareChoices[(int)me.NetId-1],"原生选择同步器完成金卡三选一");}
+        await Same("hunt-claimed",()=>run.Players.Where(p=>p.Character is Frieren).All(p=>CommissionCmd.Read(p).Quests.Single(q=>q.Id==huntId).Status==CommissionStatus.Claimed));
+        CombatManager.Instance.Reset(true);run.PushRoom(new RestSiteRoom());RunManager.Instance.ActionExecutor.Unpause();
+        if(me.Character is Frieren)Check(await QuestSend(cargoId,CommissionOperation.Accept),"ENet接取护送并加入货物");
+        await Same("cargo-accepted",()=>run.Players.Where(p=>p.Character is Frieren).All(p=>CommissionCargo.Goods(p).Length==1));
+        run.AppendToMapPointHistory(MegaCrit.Sts2.Core.Map.MapPointType.RestSite,RoomType.RestSite,null);await CommissionCmd.Entered(run);
+        foreach(var p in run.Players.Where(p=>p.Character is Frieren)){
+            CommissionCargo.Damaged(p.Creature,new DamageResult(p.Creature,MegaCrit.Sts2.Core.ValueProps.ValueProp.Move){UnblockedDamage=1});
+            await CardPileCmd.Add(run.CloneCard(CommissionCargo.Goods(p).Single()),PileType.Deck);
+        }
+        await Same("cargo-copied",()=>run.Players.Where(p=>p.Character is Frieren).All(p=>CommissionCargo.Goods(p).Length==2&&CommissionCargo.Freight(p)==36));
+        var shop=new MerchantRoom();run.PushRoom(shop);run.AppendToMapPointHistory(MegaCrit.Sts2.Core.Map.MapPointType.Shop,RoomType.Shop,null);int beforeDelivery=me.Gold;
+        await CommissionCmd.Entered(run,shop);await CommissionCmd.Entered(run,shop);
+        Check(me.Character is not Frieren||me.Gold==beforeDelivery+76,"双份复制货物各结算38运费，重复商人通知不重付");
+        await Same("cargo-sold",()=>run.Players.Where(p=>p.Character is Frieren).All(p=>CommissionCargo.Goods(p).Length==0&&CommissionCmd.Read(p).Active==null));
+        // 再建立一项独立过幕夹具，复核在途货物的自动归还和过期输入。
+        foreach(var p in run.Players.Where(p=>p.Character is Frieren)){var q=CommissionCmd.State(p);q.Quests[2]=new(){Id=cargoId,Act=0,Template="CARGO",Stars=2,Goal=CommissionGoal.Cargo,Reward=new(CommissionRewardKind.Freight,"",1)};q.Revision++;CommissionCmd.Write(p,q);}
+        await Barrier("cargo-expiry-fixture");
+        if(me.Character is Frieren)Check(await QuestSend(cargoId,CommissionOperation.Accept),"ENet接取在途护送夹具");
+        await Same("cargo-in-transit",()=>run.Players.Where(p=>p.Character is Frieren).All(p=>CommissionCargo.Goods(p).Length==1));
+        run.CurrentActIndex=1;run.ActFloor=1;run.PushRoom(new RestSiteRoom());await CommissionCmd.Entered(run);await Barrier("next-act");
+        if(me.Character is Frieren)Check(!await CommissionCmd.Send(me,cargoId,CommissionOperation.Claim),"跨幕拒绝旧护送任务提交");
+        await Same("expired",()=>run.Players.Where(p=>p.Character is Frieren).All(p=>CommissionCargo.Goods(p).Length==0&&CommissionCmd.Read(p).ActiveCount==0&&CommissionCmd.Read(p).Quests.Single(q=>q.Id==cargoId).Status==CommissionStatus.Abandoned));
         File.WriteAllText(Path.Combine(dir,role+"-result.json"),JsonSerializer.Serialize(new{checks,mixed}));
         await Barrier("finished");
         newTimer.Stop();harmony.UnpatchAll(harmony.Id);foreach(var screen in Screens)screen.Free();Overlay.Free();

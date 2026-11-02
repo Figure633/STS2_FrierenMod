@@ -19,7 +19,7 @@ namespace FrierenMod.Scripts.Relics;
 
 public sealed class ScaleOfObedience : FrierenRelic
 {
-    public override RelicRarity Rarity => RelicRarity.Rare;
+    public override RelicRarity Rarity => RelicRarity.Event;
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext context, Player player)
     {
         if (player != Owner || Owner.Creature.CombatState?.Encounter?.RoomType != RoomType.Monster) return;

@@ -33,7 +33,7 @@ public sealed class CommissionAction(Player player, NetCommissionAction data) : 
         bool success = false;
         try {
             if (data.InCombat == CombatManager.Instance.IsInProgress && data.Floor == player.RunState.TotalFloor)
-                success = await CommissionCmd.Execute(player, data.Quest, data.Operation, data.Revision);
+                success = await CommissionCmd.Execute(player, data.Quest, data.Operation, data.Revision, new GameActionPlayerChoiceContext(this));
         } finally { MagicDeckNetwork.Complete(player, data.Request, success); }
     }
     protected override void CancelAction() => MagicDeckNetwork.Complete(player, data.Request, false);

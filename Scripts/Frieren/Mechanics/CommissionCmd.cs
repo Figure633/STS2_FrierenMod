@@ -2,17 +2,24 @@ using BaseLib.Utils;
 using FrierenMod.Core;
 using FrierenMod.Scripts.Cards;
 using FrierenMod.Scripts.Characters;
+using FrierenMod.Scripts.Relics;
+using FrierenMod.Scripts.Powers;
 using FrierenMod.Scripts.Shared.Compatibility;
 using HarmonyLib;
+using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Context;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Hooks;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Potions;
-using MegaCrit.Sts2.Core.Models.Relics;
+using MegaCrit.Sts2.Core.Models.RelicPools;
 using MegaCrit.Sts2.Core.Nodes.Screens.Overlays;
 using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.Runs;
@@ -23,187 +30,134 @@ namespace FrierenMod.Scripts.Mechanics;
 
 public static class CommissionCmd
 {
-    public static readonly SavedSpireField<Player, string> Data = new(() => "", "FrierenCommissions");
-    private static readonly Type[] Spells = [typeof(DefensiveMagic), typeof(MoldSpell), typeof(OilSpell), typeof(FlowerFieldSpell)];
-    private static readonly Type[] Potions = [typeof(FirePotion), typeof(BlockPotion), typeof(StrengthPotion), typeof(EnergyPotion)];
-    private static readonly Type[] Relics = [typeof(Anchor), typeof(BagOfPreparation), typeof(Lantern), typeof(Vajra), typeof(OddlySmoothStone)];
-    private static readonly HashSet<Player> Pending = [];
-    public static bool IsBusy(Player player) => Pending.Contains(player);
-    public static CommissionState Read(Player player)
-    {
-        var json = Data.Get(player);
-        return string.IsNullOrEmpty(json) ? new() : CommissionState.FromJson(json);
-    }
-    public static void Write(Player player, CommissionState state) => Data.Set(player, state.ToJson());
-    public static CommissionState State(Player player)
-    {
-        var state = Read(player);
-        if (player.Character is not Frieren) return state;
-        int act = player.RunState.CurrentActIndex;
-        if (state.CurrentAct == act && state.GeneratedActs.Contains(act) && !state.Quests.Any(q => q.Act != act && q.Status is CommissionStatus.Available or CommissionStatus.Accepted)) return state;
-        byte[] hash = SHA256.HashData(Encoding.UTF8.GetBytes($"frieren-commissions-v1/{player.RunState.Rng.StringSeed}/{player.NetId}/{act}"));
-        var rng = GameApi.CreateRng(BitConverter.ToUInt32(hash, 0));
-        // 不依赖生成时的瞬时库存；旧局两端首次查看的时机不同也必须生成相同委托。
-        if (state.EnsureAct(act, rng.NextInt, Spells.Select(t => t.Name).ToArray(), MagicPropRules.All.Select(p => p.Id).ToArray(),
-                Potions.Select(t => t.Name).ToArray(), Relics.Select(t => t.Name).ToArray())) Write(player, state);
+    public static readonly SavedSpireField<Player,string> Data=new(()=>"","FrierenCommissions");
+    private static readonly Type[] Potions=[typeof(FirePotion),typeof(BlockPotion),typeof(StrengthPotion),typeof(EnergyPotion)];
+    public static readonly Type[] BossRelics=[typeof(ComfortableBed),typeof(HimmelGravestone),typeof(IcicleCherryBlossom),typeof(ScaleOfObedience)];
+    private static readonly HashSet<Player> Pending=[];
+    private static readonly HashSet<string> ManaMakers=["MultipleOffensiveMagic","ManaDetection","DomainExpansion","ContinualChant","ClearMind","ButtSlam","TreasureVaultSpell","EndlessFlow","Snuggle","ManaCollapse","Disperse","ManaParcel","RapidChant","GrapeSpell","ShavedIceSpell","GoodLuckSpell","ManaExpansion","TrueColours"];
+    public static bool IsBusy(Player p)=>Pending.Contains(p);
+    public static CommissionState Read(Player p){var json=Data.Get(p);return string.IsNullOrEmpty(json)?new():CommissionState.FromJson(json);}
+    public static void Write(Player p,CommissionState state)=>Data.Set(p,state.ToJson());
+    private static uint Seed(string text)=>BitConverter.ToUInt32(SHA256.HashData(Encoding.UTF8.GetBytes(text)),0);
+    public static CommissionState State(Player p){
+        var state=Read(p);if(p.Character is not Frieren)return state;int act=p.RunState.CurrentActIndex;
+        if(state.CurrentAct==act&&state.GeneratedActs.Contains(act)&&!state.Quests.Any(q=>q.Act!=act&&q.Status is CommissionStatus.Available or CommissionStatus.Accepted))return state;
+        var rng=GameApi.CreateRng(Seed($"frieren-commissions-v3/{p.RunState.Rng.StringSeed}/{p.NetId}/{act}"));
+        int affix=(int)(Seed($"frieren-elite/{p.RunState.Rng.StringSeed}/{act}")%4);
+        var common=ModelDb.RelicPool<SharedRelicPool>().AllRelics.Concat(p.Character.RelicPool.AllRelics).Where(r=>r.Rarity==RelicRarity.Common).DistinctBy(r=>r.Id).OrderBy(r=>r.Id.ToString()).Select(r=>r.GetType().Name).ToArray();
+        var rares=ModelDb.CardPool<FrierenCardPool>().AllCards.Where(c=>c.Rarity==CardRarity.Rare&&FrierenCardAvailability.IsRandomCandidate(c)).OrderBy(c=>c.Id.ToString()).Select(c=>c.GetType().Name).ToArray();
+        if(state.EnsureAct(act,rng.NextInt,rares,MagicPropRules.All.Select(x=>x.Id).ToArray(),Potions.Select(t=>t.Name).ToArray(),common,rares,BossRelics.Select(t=>t.Name).ToArray(),affix))Write(p,state);
         return state;
     }
-    public static CardModel Spell(string id) => ModelDb.GetById<CardModel>(ModelDb.GetId(Spells.Single(t => t.Name == id)));
-    public static RelicModel Relic(string id) => ModelDb.GetById<RelicModel>(ModelDb.GetId(Relics.Single(t => t.Name == id)));
-    public static PotionModel Potion(string id) => ModelDb.GetById<PotionModel>(ModelDb.GetId(Potions.Single(t => t.Name == id)));
-    public static bool OwnsSpell(Player player, string id) => player.Deck.Cards.Any(c => c.Id == Spell(id).Id);
-    public static int Floor(Player player) => Math.Max(1, player.RunState is RunState state ? state.ActFloor : player.RunState.MapPointHistory.ElementAtOrDefault(player.RunState.CurrentActIndex)?.Count ?? 1);
-    public static bool CanAct(Player player, bool input = true)
-    {
-        var manager = RunManager.Instance; var combat = CombatManager.Instance;
-        return player.Character is Frieren && ReferenceEquals(manager.DebugOnlyGetState(), player.RunState) && !manager.IsCleaningUp &&
-            !player.Creature.IsDead && !combat.IsStarting && !combat.IsEnding && (!input || !MagicPropCmd.IsBusy(player)) &&
-            (!input || (!Pending.Contains(player) && !manager.NetService.IsGameLoading && LocalContext.IsMe(player) &&
-                !manager.ActionExecutor.IsRunning && MagicBookUiAllowsInput())) &&
-            (!combat.IsInProgress || (!combat.PlayerActionsDisabled && !combat.IsEnemyTurnStarted &&
-                !combat.EndingPlayerTurnPhaseOne && !combat.EndingPlayerTurnPhaseTwo &&
-                (player.RunState.Players.Count == 1 || player.PlayerCombatState?.Phase == PlayerTurnPhase.Play)));
+    public static CardModel Spell(string id)=>ModelDb.AllCards.First(c=>c.GetType().Name==id);
+    public static RelicModel Relic(string id)=>ModelDb.AllRelics.First(r=>r.GetType().Name==id);
+    public static PotionModel Potion(string id)=>ModelDb.GetById<PotionModel>(ModelDb.GetId(Potions.Single(t=>t.Name==id)));
+    public static bool IsManaMaker(CardModel c)=>ManaMakers.Contains(c.GetType().Name)||c is CustomLegendarySpell spell&&spell.Effects.Any(e=>e.Kind.StartsWith("Mana",StringComparison.Ordinal));
+    public static (int Mana,int Chants) TutorCounts(Player p)=>(p.Deck.Cards.Where(IsManaMaker).Select(c=>c.Id).Distinct().Count(),p.Deck.Cards.Count(ChantCmd.IsChant));
+    public static bool OwnsSpell(Player p,string requirement){
+        var cards=p.Deck.Cards;
+        return requirement switch {
+            "tutor"=>TutorCounts(p) is var n&&(n.Mana>=3||n.Chants>=4),
+            "rare-pair"=>cards.Where(c=>c.Rarity==CardRarity.Rare).Select(c=>c.Id).Distinct().Count()>=2,
+            "legendary-three"=>cards.Where(c=>c is ILegendaryCard).Select(c=>c.Id).Distinct().Count()>=3,
+            "upgraded-five"=>cards.Count(c=>c.IsUpgraded)>=5,
+            "zero-three"=>cards.Where(c=>c.EnergyCost.Canonical==0&&!c.EnergyCost.CostsX&&c is not IManaCard).Select(c=>c.Id).Distinct().Count()>=3,
+            "power-three"=>cards.Where(c=>c.Type==CardType.Power).Select(c=>c.Id).Distinct().Count()>=3,
+            "distinct-twelve"=>cards.Select(c=>c.Id).Distinct().Count()>=12,
+            _=>cards.Any(c=>c.GetType().Name==requirement)
+        };
     }
-    private static bool MagicBookUiAllowsInput() => MagicPropCmd.AllowsUseOver(NOverlayStack.Instance?.Peek());
-    public static bool CanReceive(Player player, CommissionReward reward) => reward.Kind != CommissionRewardKind.Potion ||
-        player.HasOpenPotionSlots && Hook.ShouldProcurePotion(player.RunState, player.Creature.CombatState, Potion(reward.Item).ToMutable(), player);
-    public static async Task<bool> Send(Player player, int id, CommissionOperation operation)
-    {
-        if (!CanAct(player) || !Pending.Add(player)) return false;
-        try {
-            int revision = State(player).Revision;
-            bool success = await MagicDeckNetwork.SendCommission(player, new() { Quest = id, Operation = operation, Revision = revision });
-            // 表现等待放在本机输入外层，不把各端不同的动画时长带入同步动作。
-            if (success && operation == CommissionOperation.Claim) await UI.MagicDeckAnimations.WhenIdle(player);
-            return success;
-        } finally { Pending.Remove(player); }
+    public static int Floor(Player p)=>Math.Max(1,p.RunState is RunState r?r.ActFloor:1);
+    public static bool CanAct(Player p,bool input=true){
+        var m=RunManager.Instance;var c=CombatManager.Instance;
+        return p.Character is Frieren&&ReferenceEquals(m.DebugOnlyGetState(),p.RunState)&&!m.IsCleaningUp&&!p.Creature.IsDead&&!c.IsStarting&&!c.IsEnding&&
+            (!input||!MagicPropCmd.IsBusy(p))&&(!input||!Pending.Contains(p)&&!m.NetService.IsGameLoading&&LocalContext.IsMe(p)&&!m.ActionExecutor.IsRunning&&MagicPropCmd.AllowsUseOver(NOverlayStack.Instance?.Peek()))&&
+            (!c.IsInProgress||!c.PlayerActionsDisabled&&!c.IsEnemyTurnStarted&&!c.EndingPlayerTurnPhaseOne&&!c.EndingPlayerTurnPhaseTwo&&(p.RunState.Players.Count==1||p.PlayerCombatState?.Phase==PlayerTurnPhase.Play));
     }
-    public static async Task<bool> Execute(Player player, int id, CommissionOperation operation, int revision)
-    {
-        if (!CanAct(player, false) || !Enum.IsDefined(operation)) return false;
-        var state = State(player);
-        if (revision != state.Revision) return false;
-        if (operation == CommissionOperation.Accept) {
-            if (!state.Accept(id, player.RunState.CurrentActIndex, Floor(player))) return false;
-            Write(player, state); return true;
+    public static bool CanReceive(Player p,CommissionReward r)=>r.Kind!=CommissionRewardKind.Potion||p.HasOpenPotionSlots&&Hook.ShouldProcurePotion(p.RunState,p.Creature.CombatState,Potion(r.Item).ToMutable(),p);
+    public static async Task<bool> Send(Player p,int id,CommissionOperation op){
+        if(!CanAct(p)||!Pending.Add(p))return false;
+        try{bool ok=await MagicDeckNetwork.SendCommission(p,new(){Quest=id,Operation=op,Revision=State(p).Revision});if(ok&&op==CommissionOperation.Claim)await UI.MagicDeckAnimations.WhenIdle(p);return ok;}
+        finally{Pending.Remove(p);}
+    }
+    public static async Task<bool> Execute(Player p,int id,CommissionOperation op,int revision,PlayerChoiceContext? context=null){
+        if(!CanAct(p,false)||!Enum.IsDefined(op))return false;var state=State(p);if(state.Revision!=revision)return false;
+        var q=state.Quests.SingleOrDefault(q=>q.Id==id);if(q==null||q.Legacy||q.Act!=p.RunState.CurrentActIndex)return false;
+        if(op==CommissionOperation.Accept){
+            if(!state.Accept(id,p.RunState.CurrentActIndex,Floor(p)))return false;Write(p,state);
+            if(q.Goal==CommissionGoal.Cargo)await CommissionCargo.Add(p,id);return true;
         }
-        if (operation == CommissionOperation.Abandon) {
-            if (!state.Abandon(id)) return false;
-            Write(player, state); return true;
-        }
-        var quest = state.Quests.SingleOrDefault(q => q.Id == id);
-        if (quest == null || quest.Act != player.RunState.CurrentActIndex || !CommissionState.Ready(quest, spell => OwnsSpell(player, spell))) return false;
-        var reward = quest.Reward;
-        PotionModel? potion = reward.Kind == CommissionRewardKind.Potion ? Potion(reward.Item).ToMutable() : null;
-        if (!CanReceive(player, reward)) return false;
-        // 原生动作串行执行，先锁定领取状态；状态与奖励归属同一玩家及原生存档检查点。
-        if (!state.Claim(id, spell => OwnsSpell(player, spell))) return false;
-        Write(player, state);
-        switch (reward.Kind) {
-            case CommissionRewardKind.Gold: await PlayerCmd.GainGold(reward.Amount, player); break;
-            case CommissionRewardKind.Prop:
-                var deck = MagicDeckStore.Read(player);
-                for (int i = 0; i < reward.Amount; i++) deck.AddProp(reward.Item);
-                MagicDeckStore.Write(player, deck); break;
+        if(op==CommissionOperation.Abandon){if(!state.Abandon(id))return false;Write(p,state);if(q.Goal==CommissionGoal.Cargo)await CommissionCargo.Remove(p,id);return true;}
+        if(!CommissionState.Ready(q,s=>OwnsSpell(p,s))||!CanReceive(p,q.Reward)||!state.Claim(id,s=>OwnsSpell(p,s)))return false;
+        Write(p,state);var reward=q.Reward;context??=new BlockingPlayerChoiceContext();
+        switch(reward.Kind){
+            case CommissionRewardKind.Gold:await PlayerCmd.GainGold(reward.Amount,p);break;
+            case CommissionRewardKind.Prop:GiveProp(p,reward.Item,reward.Amount);break;
             case CommissionRewardKind.Relic:
-                var relic = Relic(reward.Item);
-                if (player.Relics.Any(r => r.Id == relic.Id)) await PlayerCmd.GainGold(reward.Amount, player);
-                else await RelicCmd.Obtain(relic.ToMutable(), player);
-                break;
+                var relic=Relic(reward.Item);
+                if(p.Relics.Any(r=>r.Id==relic.Id)){if(reward.FallbackProp.Length>0)GiveProp(p,reward.FallbackProp,1);else await PlayerCmd.GainGold(reward.Amount,p);}
+                else await RelicCmd.Obtain(relic.ToMutable(),p);break;
             case CommissionRewardKind.Potion:
-                var result = await PotionCmd.TryToProcure(potion!, player);
-                if (!result.success) { state.Quests.Single(q => q.Id == id).Status = CommissionStatus.Accepted; state.Revision++; Write(player, state); return false; }
-                break;
+                if(!(await PotionCmd.TryToProcure(Potion(reward.Item).ToMutable(),p)).success)return Restore();break;
+            case CommissionRewardKind.Card:
+                for(int i=0;i<reward.Amount;i++)await AddCard(p,Spell(reward.Item),true);break;
+            case CommissionRewardKind.RareChoice:
+                var options=(reward.Choices??[]).Select(id=>{var c=Spell(id).ToMutable();c.Owner=p;return c;}).ToArray();
+                if(options.Length!=3)return Restore();
+                var chosen=(await CardSelectCmd.FromSimpleGrid(context,options,p,new CardSelectorPrefs(new LocString("frieren","COMMISSION.RARE_SELECT"),1){Cancelable=false,RequireManualConfirmation=true})).ToArray();
+                if(chosen.Length!=1||!options.Contains(chosen[0]))return Restore();
+                await AddCard(p,chosen[0],false);break;
         }
-        if (reward.BonusGold > 0) await PlayerCmd.GainGold(reward.BonusGold, player);
-        return true;
+        if(reward.BonusGold>0)await PlayerCmd.GainGold(reward.BonusGold,p);return true;
+        bool Restore(){q.Status=CommissionStatus.Accepted;state.Revision++;Write(p,state);return false;}
     }
-
-    public static void MonsterDied(ICombatState? combat, Creature creature, bool prevented)
-    {
-        if (combat == null || prevented || creature.IsAlive || creature.Side != CombatSide.Enemy ||
-            combat.RunState.CurrentRoom is not CombatRoom { RoomType: RoomType.Monster } room ||
-            !room.Encounter.HaveMonstersBeenGenerated) return;
-        int originalIndex = room.Encounter.MonstersWithSlots.ToList().FindIndex(pair =>
-            ReferenceEquals(pair.Item1, creature.Monster) || pair.Item2 != null && pair.Item2 == creature.SlotName && pair.Item1.Id == creature.Monster?.Id);
-        if (originalIndex < 0) return;
-        foreach (var player in combat.Players.Where(p => p.Character is Frieren && p.Creature.IsAlive)) {
-            var state = State(player);
-            if (state.Record($"{player.RunState.CurrentActIndex}/{player.RunState.TotalFloor}/{room.ModelId}/original-{originalIndex}", CommissionGoal.Monsters)) Write(player, state);
-        }
-    }
-    private static string BattleKey(IRunState run, CombatRoom room) => $"{run.CurrentActIndex}/{run.TotalFloor}/{room.ModelId}";
-    public static void BeginCombat(ICombatState? combat)
-    {
-        if (combat?.RunState.CurrentRoom is not CombatRoom room) return;
-        foreach (var player in combat.Players.Where(p => p.Character is Frieren)) {
-            var state = State(player);
-            if (state.BeginCombat(BattleKey(combat.RunState, room))) Write(player, state);
-        }
-    }
-    public static void HpChanged(ICombatState? combat, Creature creature, decimal delta)
-    {
-        if (delta >= 0 || creature.Player is not { Character: Frieren } player || combat == null ||
-            !combat.Players.Contains(player) || combat.RunState.CurrentRoom is not CombatRoom room) return;
-        var state = State(player);
-        if (state.LoseHp(BattleKey(combat.RunState, room))) Write(player, state);
-    }
-    public static void Victory(IRunState run, CombatRoom room)
-    {
-        if (room.RoomType is not (RoomType.Elite or RoomType.Monster)) return;
-        foreach (var player in room.CombatState.Players.Where(p => p.Character is Frieren && p.Creature.IsAlive)) {
-            var state = State(player);
-            string key = BattleKey(run, room);
-            bool flawless = state.CombatKey == key && !state.LostHp;
-            bool changed;
-            if (room.RoomType == RoomType.Elite) {
-                changed = state.Record("elite/" + key, CommissionGoal.Elites);
-                if (flawless) changed |= state.Record("flawless-elite/" + key, CommissionGoal.FlawlessElite);
-            } else {
-                changed = state.Record("battle/" + key, CommissionGoal.Battles);
-                if (room.CombatState.RoundNumber == 1 && player.PlayerCombatState?.TurnNumber <= 1)
-                    changed |= state.Record("swift/" + key, CommissionGoal.FirstTurnBattle);
-                if (flawless) changed |= state.Record("flawless/" + key, CommissionGoal.FlawlessBattle);
-            }
-            if (changed) Write(player, state);
+    private static void GiveProp(Player p,string id,int count){var deck=MagicDeckStore.Read(p);for(int i=0;i<count;i++)deck.AddProp(id);MagicDeckStore.Write(p,deck);}
+    private static async Task AddCard(Player p,CardModel model,bool upgraded){var card=p.RunState.CreateCard(ModelDb.GetById<CardModel>(model.Id),p);if(upgraded)CardCmd.Upgrade(card);var result=await CardPileCmd.Add(card,PileType.Deck);CardCmd.PreviewCardPileAdd(result);}
+    public static string BattleKey(IRunState r,CombatRoom room)=>$"{r.CurrentActIndex}/{r.TotalFloor}/{room.ModelId}";
+    public static string AffixText(int affix,int act,int players=1){var text=new LocString("frieren","COMMISSION.AFFIX."+affix);text.Add("Strength",3+act);text.Add("Armor",10+act*2);text.Add("Heal",6+act*2);text.Add("Artifact",1+players);return text.GetFormattedText();}
+    public static async Task Empower(ICombatState? combat){
+        if(combat?.RunState.CurrentRoom is not CombatRoom {RoomType:RoomType.Elite} room)return;
+        var contracts=combat.Players.Where(p=>p.Character is Frieren&&p.Creature.IsAlive).Select(p=>(Player:p,State:State(p))).Where(x=>x.State.Active?.Goal==CommissionGoal.EmpoweredElite&&x.State.Active.Progress==0).ToArray();
+        if(contracts.Length==0)return;string key=BattleKey(combat.RunState,room);
+        foreach(var (p,state) in contracts)if(state.BindElite(key))Write(p,state);
+        if(!contracts.Any(x=>x.State.Active?.EliteBattle==key))return;
+        int affix=contracts[0].State.Active!.Affix;
+        foreach(var enemy in combat.Enemies.Where(e=>e.IsAlive).ToArray()){
+            if(enemy.GetPower<CommissionElitePower>()!=null)continue;
+            var power=(CommissionElitePower)ModelDb.Power<CommissionElitePower>().ToMutable();power.Affix=affix;
+            var context=new ThrowingPlayerChoiceContext();await PowerCmd.Apply(context,power,enemy,combat.RunState.CurrentActIndex+1,enemy,null);
+            if(enemy.GetPower<CommissionElitePower>()==power)await power.Empower(context);
         }
     }
-    public static void Ensure(IRunState run) { foreach (var player in run.Players.Where(p => p.Character is Frieren)) State(player); }
+    public static void Victory(IRunState run,CombatRoom room){
+        if(room.RoomType!=RoomType.Elite)return;string key=BattleKey(run,room);
+        // 战后原生可能已经清空能力；是否强化过由绑定的开战记录判定。
+        foreach(var p in room.CombatState.Players.Where(p=>p.Character is Frieren&&p.Creature.IsAlive)){var state=State(p);if(state.WinElite(key))Write(p,state);}
+    }
+    public static void Ensure(IRunState run){foreach(var p in run.Players.Where(p=>p.Character is Frieren))State(p);}
+    public static async Task Entered(IRunState run,AbstractRoom? room=null){Ensure(run);var current=room??run.CurrentRoom;if(current==null)return;foreach(var p in run.Players.Where(p=>p.Character is Frieren))await CommissionCargo.Visit(p,current);}
 }
-
-[HarmonyPatch(typeof(Hook), nameof(Hook.BeforeCombatStart))]
-internal static class CommissionCombatHook
-{
-    // 在遗物等开战效果前建立基线，开战扣血同样使本场失去“无伤”资格。
-    private static void Prefix(ICombatState? combatState) => CommissionCmd.BeginCombat(combatState);
+[HarmonyPatch(typeof(Hook),nameof(Hook.BeforeCombatStart))]
+internal static class CommissionCombatHook{
+    private static void Postfix(ICombatState? combatState,ref Task __result)=>__result=After(__result,combatState);
+    private static async Task After(Task original,ICombatState? combat){await original;await CommissionCmd.Empower(combat);}
 }
-[HarmonyPatch(typeof(Hook), nameof(Hook.AfterCurrentHpChanged))]
-internal static class CommissionHpHook
-{
-    private static void Prefix(ICombatState? combatState, Creature creature, decimal delta) => CommissionCmd.HpChanged(combatState, creature, delta);
+[HarmonyPatch(typeof(Hook),nameof(Hook.AfterDamageReceived))]
+internal static class CommissionDamageHook{
+    private static void Prefix(Creature target,DamageResult result)=>CommissionCargo.Damaged(target,result);
 }
-
-[HarmonyPatch(typeof(Hook), nameof(Hook.AfterDeath))]
-internal static class CommissionDeathHook
-{
-    private static void Postfix(ICombatState? combatState, Creature creature, bool wasRemovalPrevented, ref Task __result) => __result = After(__result, combatState, creature, wasRemovalPrevented);
-    private static async Task After(Task original, ICombatState? combat, Creature creature, bool prevented) { await original; CommissionCmd.MonsterDied(combat, creature, prevented); }
+[HarmonyPatch(typeof(Hook),nameof(Hook.AfterCombatVictory))]
+internal static class CommissionVictoryHook{
+    private static void Postfix(IRunState runState,CombatRoom room,ref Task __result)=>__result=After(__result,runState,room);
+    private static async Task After(Task original,IRunState run,CombatRoom room){await original;CommissionCmd.Victory(run,room);}
 }
-[HarmonyPatch(typeof(Hook), nameof(Hook.AfterCombatVictory))]
-internal static class CommissionVictoryHook
-{
-    private static void Postfix(IRunState runState, CombatRoom room, ref Task __result) => __result = After(__result, runState, room);
-    private static async Task After(Task original, IRunState run, CombatRoom room) { await original; CommissionCmd.Victory(run, room); }
+[HarmonyPatch(typeof(Hook),nameof(Hook.AfterRoomEntered))]
+internal static class CommissionRoomHook{
+    private static void Postfix(IRunState runState,AbstractRoom room,ref Task __result)=>__result=After(__result,runState,room);
+    private static async Task After(Task original,IRunState run,AbstractRoom room){await original;await CommissionCmd.Entered(run,room);}
 }
-[HarmonyPatch(typeof(Hook), nameof(Hook.AfterRoomEntered))]
-internal static class CommissionRoomHook
-{
-    private static void Postfix(IRunState runState, ref Task __result) => __result = After(__result, runState);
-    private static async Task After(Task original, IRunState run) { await original; CommissionCmd.Ensure(run); }
-}
-[HarmonyPatch(typeof(Hook), nameof(Hook.AfterActEntered))]
-internal static class CommissionActHook
-{
-    private static void Postfix(IRunState runState, ref Task __result) => __result = After(__result, runState);
-    private static async Task After(Task original, IRunState run) { await original; CommissionCmd.Ensure(run); }
+[HarmonyPatch(typeof(Hook),nameof(Hook.AfterActEntered))]
+internal static class CommissionActHook{
+    private static void Postfix(IRunState runState,ref Task __result)=>__result=After(__result,runState);
+    private static async Task After(Task original,IRunState run){await original;await CommissionCmd.Entered(run);}
 }

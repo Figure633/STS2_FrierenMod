@@ -127,5 +127,7 @@
   "FRIERENMOD-SLEEP_IN_POWER.title": "Sleeping In",
   "FRIERENMOD-SLEEP_IN_POWER.description": "You cannot play other cards until Wake Up! is played or Exhausted. Unspent Energy stored: {StoredEnergy}.",
   "FRIERENMOD-GOOD_LUCK_REWARD_POWER.title": "I Want More Rewards!",
-  "FRIERENMOD-GOOD_LUCK_REWARD_POWER.description": "After winning this combat, gain {Amount} extra Magic Deck rewards."
+  "FRIERENMOD-GOOD_LUCK_REWARD_POWER.description": "After winning this combat, gain {Amount} extra Magic Deck rewards.",
+  "FRIERENMOD-COMMISSION_ELITE_POWER.title": "Commission Empowerment",
+  "FRIERENMOD-COMMISSION_ELITE_POWER.description": "{Effect}"
 }

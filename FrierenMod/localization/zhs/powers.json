@@ -127,5 +127,7 @@
   "FRIERENMOD-SLEEP_IN_POWER.title": "赖床",
   "FRIERENMOD-SLEEP_IN_POWER.description": "起床！被打出或消耗之前，你不能打出其他牌。已累计{StoredEnergy}点剩余能量。",
   "FRIERENMOD-GOOD_LUCK_REWARD_POWER.title": "我要更多奖励！",
-  "FRIERENMOD-GOOD_LUCK_REWARD_POWER.description": "本场战斗胜利后，额外掉落{Amount}次魔法牌组奖励。"
+  "FRIERENMOD-GOOD_LUCK_REWARD_POWER.description": "本场战斗胜利后，额外掉落{Amount}次魔法牌组奖励。",
+  "FRIERENMOD-COMMISSION_ELITE_POWER.title": "委托强化",
+  "FRIERENMOD-COMMISSION_ELITE_POWER.description": "{Effect}"
 }

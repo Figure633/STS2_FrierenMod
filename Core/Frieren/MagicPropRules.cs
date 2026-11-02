@@ -1,7 +1,7 @@
 namespace FrierenMod.Core;
 
 public sealed record PropDefinition(string Id, int Targets, bool CombatOnly = false);
-public sealed record PropResult(MagicDeckState Deck, int Heal = 0, int Energy = 0);
+public sealed record PropResult(MagicDeckState Deck, int Heal = 0, int Energy = 0, int Draw = 0);
 
 // 一代八种可获得魔具。Tutorial 标记 NEVER_DROP，不进入营地选择池。
 public static class MagicPropRules
@@ -11,7 +11,10 @@ public static class MagicPropRules
         new("SeinNote", 2), new("ShadowDragonHorn", 2, true), new("TransmutationCircle", 2),
         new("UnbelievableTool", 2), new("UnbelievableToolBox", 2)
     });
-    public static PropDefinition Get(string id) => All.SingleOrDefault(p => p.Id == id)
+    public static IReadOnlyList<PropDefinition> CommissionOnly { get; } = Array.AsReadOnly(new[] {
+        new PropDefinition("RoyalGrimoire",0), new("ElvenHourglass",0,true), new("PhoenixQuill",1)
+    });
+    public static PropDefinition Get(string id) => All.Concat(CommissionOnly).SingleOrDefault(p => p.Id == id)
         ?? throw new ArgumentException("未知魔具：" + id);
 
     public static int[] Eligible(MagicDeckState deck, MagicProp prop)
@@ -19,7 +22,7 @@ public static class MagicPropRules
         var factors = deck.Items.Where(i => prop.PropId switch {
             "CrystalBall" => i.Slot >= 0,
             "MysticBox" or "SeinNote" or "ShadowDragonHorn" or "UnbelievableToolBox" => i.Slot < 0,
-            "MysteryBox" => false,
+            "MysteryBox" or "RoyalGrimoire" or "ElvenHourglass" => false,
             _ => true
         }).Select(i => i.InstanceId);
         return prop.PropId is "SeinNote" or "ShadowDragonHorn" or "UnbelievableToolBox"
@@ -51,7 +54,7 @@ public static class MagicPropRules
             var pool = SpellCatalog.Available.Where(f => !f.Puzzle && (rarity == null || f.Rarity == rarity)).ToArray();
             return pool[next(pool.Length)].Id;
         }
-        int heal = 0, energy = 0;
+        int heal = 0, energy = 0, draw = 0;
         switch (prop.PropId)
         {
             case "CrystalBall":
@@ -64,6 +67,17 @@ public static class MagicPropRules
                 break;
             case "MysteryBox":
                 for (int i = 0; i < 2; i++) deck.Add(RandomFactor());
+                break;
+            case "RoyalGrimoire":
+                var rare = SpellCatalog.Available.Where(f=>!f.Puzzle&&f.Rarity==FactorRarity.Rare).ToList();
+                for(int i=0;i<3;i++){int index=next(rare.Count);deck.Equip(deck.Add(rare[index].Id).InstanceId,(ManaSlot)i);rare.RemoveAt(index);}
+                break;
+            case "ElvenHourglass": energy=3;draw=3;break;
+            case "PhoenixQuill":
+                var source=chosen.Single();deck.Remove(source.InstanceId);
+                var reborn=deck.Add(RandomFactor(FactorRarity.Rare));
+                if(source.Slot>=0)deck.Equip(reborn.InstanceId,(ManaSlot)source.Slot);
+                deck.AddProp("UnbelievableTool");deck.AddProp("UnbelievableTool");
                 break;
             case "MysticBox":
                 var slots = new List<ManaSlot> { ManaSlot.Draw, ManaSlot.Hand, ManaSlot.Discard };
@@ -89,6 +103,6 @@ public static class MagicPropRules
                 break;
         }
         deck.Remove(prop.InstanceId);
-        return new(deck, heal, energy);
+        return new(deck, heal, energy, draw);
     }
 }
