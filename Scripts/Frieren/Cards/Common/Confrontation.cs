@@ -14,6 +14,7 @@ namespace FrierenMod.Scripts.Cards;
 
 public sealed class Confrontation() : FrierenCard(1, CardType.Skill, CardRarity.Common, TargetType.Self)
 {
+    protected override bool ShouldGlowGoldInternal => CombatState != null && LegendaryCards.ChantsThisTurn(Owner) > 0;
     protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(8, ValueProp.Move), new DynamicVar("BonusBlock", 6)];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {

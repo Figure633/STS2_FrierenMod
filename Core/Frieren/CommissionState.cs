@@ -23,6 +23,7 @@ public sealed class Commission
     public int Affix { get; init; }
     public string EliteBattle { get; set; } = "";
     public bool Legacy { get; set; }
+    public bool Completed { get; set; }
     public int Progress { get; set; }
     public int PaidFreight { get; set; }
     public CommissionStatus Status { get; set; }
@@ -40,7 +41,7 @@ public sealed class CommissionState
     public List<int> GeneratedActs { get; set; } = [];
     public List<Commission> Quests { get; set; } = [];
     public HashSet<string> CountedEvents { get; set; } = [];
-    public int ActiveCount => Quests.Count(q => !q.Legacy && q.Status == CommissionStatus.Accepted);
+    public int ActiveCount => Quests.Count(q => !q.Legacy && q.Act == CurrentAct && q.Status == CommissionStatus.Accepted);
     public Commission? Active => Quests.SingleOrDefault(q => !q.Legacy && q.Act == CurrentAct && q.Status == CommissionStatus.Accepted);
     public static int QuestId(int act, int slot) => 10000 + act * 100 + slot;
     public static readonly VillageCommission[] Villagers = [
@@ -53,11 +54,16 @@ public sealed class CommissionState
     ];
     public bool EnsureAct(int act, Func<int,int> next, IReadOnlyList<string> spells, IReadOnlyList<string> props,
         IReadOnlyList<string> potions, IReadOnlyList<string> relics, IReadOnlyList<string>? rareCards = null,
-        IReadOnlyList<string>? bossRelics = null, int affix = 0)
+        IReadOnlyList<string>? bossRelics = null, int affix = 0, Func<string,bool>? meets = null)
     {
         if (act < 0) return false;
-        bool changed = CurrentAct != act; CurrentAct = act;
-        foreach(var q in Quests.Where(q=>q.Act!=act && q.Status is CommissionStatus.Available or CommissionStatus.Accepted)) {q.Status=CommissionStatus.Abandoned;changed=true;}
+        bool changed = CurrentAct != act;
+        foreach(var q in Quests.Where(q=>q.Act!=act && q.Status is CommissionStatus.Available or CommissionStatus.Accepted)) {
+            if (q.Status == CommissionStatus.Accepted && Ready(q, meets ?? (_ => false))) q.Completed = true;
+            else q.Status=CommissionStatus.Abandoned;
+            changed=true;
+        }
+        CurrentAct = act;
         if(GeneratedActs.Contains(act)){if(changed)Revision++;return changed;}
         string Pick(IReadOnlyList<string> pool) => pool.Count>0 ? pool[next(pool.Count)] : throw new ArgumentException("委托报酬池不能为空");
         CommissionReward Prize(int stars){
@@ -94,9 +100,9 @@ public sealed class CommissionState
         foreach(var q in Quests.Where(q=>!q.Legacy&&q.Act==CurrentAct&&q.Status==CommissionStatus.Accepted&&q.Goal==goal&&q.Progress<q.Target))q.Progress=Math.Min(q.Target,q.Progress+count);
         Revision++;return true;
     }
-    public static int ProgressOf(Commission q,Func<string,bool> meets) => q.Goal is CommissionGoal.Spell or CommissionGoal.Deck ? (meets(q.Spell)?1:0):q.Progress;
+    public static int ProgressOf(Commission q,Func<string,bool> meets) => q.Completed ? q.Target : q.Goal is CommissionGoal.Spell or CommissionGoal.Deck ? (meets(q.Spell)?1:0):q.Progress;
     public static bool Ready(Commission q,Func<string,bool> meets)=>!q.Legacy&&q.Status==CommissionStatus.Accepted&&q.Goal!=CommissionGoal.Cargo&&ProgressOf(q,meets)>=q.Target;
-    public bool Claim(int id,Func<string,bool> meets){var q=Quests.SingleOrDefault(q=>q.Id==id);if(q==null||q.Act!=CurrentAct||!Ready(q,meets))return false;q.Status=CommissionStatus.Claimed;Revision++;return true;}
+    public bool Claim(int id,Func<string,bool> meets){var q=Quests.SingleOrDefault(q=>q.Id==id);if(q==null||q.Act!=CurrentAct&&!q.Completed||!Ready(q,meets))return false;q.Status=CommissionStatus.Claimed;Revision++;return true;}
     public bool BindElite(string key){var q=Active;if(q?.Goal!=CommissionGoal.EmpoweredElite||q.EliteBattle.Length>0||q.Progress>0)return false;q.EliteBattle=key;Revision++;return true;}
     public bool WinElite(string key){var q=Active;if(q?.Goal!=CommissionGoal.EmpoweredElite||q.EliteBattle!=key)return false;return Record("empowered/"+key,CommissionGoal.EmpoweredElite);}
     public bool BeginCombat(string key){if(CombatKey==key)return false;CombatKey=key;LostHp=false;Revision++;return true;}

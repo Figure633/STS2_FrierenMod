@@ -3,21 +3,18 @@ using FrierenMod.Scripts.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 
 namespace FrierenMod.Scripts.Cards;
 
-public sealed class GoodLuckSpell() : LegendaryCard(2, CardType.Power, CardRarity.Rare, TargetType.Self)
+public sealed class GoodLuckSpell() : LegendaryCard(3, CardType.Power, CardRarity.Rare, TargetType.Self)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Mana", 6)];
     public CardModel[] CreateChoices() => new CardModel[] {
         CombatState!.CreateCard<StrongerWish>(Owner), CombatState.CreateCard<RewardWish>(Owner), CombatState.CreateCard<ManaWish>(Owner)
     };
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         var choices = CreateChoices();
-        if (IsUpgraded) foreach (var card in choices.Where(c => c.IsUpgradable)) CardCmd.Upgrade(card);
         var selected = await CardSelectCmd.FromChooseACardScreen(context, choices, Owner);
         if (selected != null) await ResolveChoice(context, selected);
         foreach (var card in choices) card.RemoveFromState();
@@ -30,8 +27,9 @@ public sealed class GoodLuckSpell() : LegendaryCard(2, CardType.Power, CardRarit
         } else if (choice is RewardWish) {
             await PowerCmd.Apply<GoodLuckRewardPower>(context, Owner.Creature, 1, Owner.Creature, this);
         } else if (choice is ManaWish) {
-            await ManaCmd.Generate(Owner, PileType.Hand, DynamicVars["Mana"].IntValue);
+            int limit = BaseLib.Patches.Hooks.MaxHandSizePatch.GetMaxHandSize(Owner, CardPile.MaxCardsInHand);
+            await ManaCmd.Generate(Owner, PileType.Hand, Math.Max(0, limit - Owner.PlayerCombatState!.Hand.Cards.Count));
         }
     }
-    protected override void OnUpgrade() => DynamicVars["Mana"].UpgradeValueBy(2);
+    protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
 }

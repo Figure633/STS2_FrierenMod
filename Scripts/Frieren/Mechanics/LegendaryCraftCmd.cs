@@ -102,7 +102,7 @@ public static class LegendaryCraftCmd
                     break;
                 case "UpgradeHand": case "UpgradeAll":
                     var cards = effect.Kind == "UpgradeHand" ? owner.PlayerCombatState!.Hand.Cards : owner.PlayerCombatState!.AllCards;
-                    foreach (var upgrade in cards.Where(c => c.IsUpgradable && c.Pile?.Type != PileType.Exhaust).ToArray()) CardCmd.Upgrade(upgrade);
+                    foreach (var upgrade in cards.Where(c => c.IsUpgradable).ToArray()) CardCmd.Upgrade(upgrade);
                     break;
                 default: throw new InvalidOperationException($"Unknown legendary effect: {effect.Kind}");
             }

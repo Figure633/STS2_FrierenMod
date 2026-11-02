@@ -3,6 +3,7 @@ using FrierenMod.Core;
 using FrierenMod.Scripts.Mechanics;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Saves.Runs;
@@ -48,7 +49,8 @@ public sealed class CustomLegendarySpell() : LegendaryCard(0, CardType.Skill, Ca
         description.Add("Effects", string.Join("\n", Effects.Select(e => {
             var text = new LocString("frieren", "CRAFT." + e.Kind);
             // 与原版 diff() 使用同一格式化入口：显示实际整数，并保留增减益颜色。
-            text.Add("Amount", e.Kind switch {
+            if (e.Kind == "Energy") text.Add(new EnergyVar("Amount", e.Amount) { ColorPrefix = EnergyIconHelper.GetPrefix(this) });
+            else text.Add("Amount", e.Kind switch {
                 "Damage" or "DamageAll" or "DamageTriple" => DynamicVars.Damage.ToHighlightedString(inverse: false),
                 "Block" => DynamicVars.Block.ToHighlightedString(inverse: false),
                 _ => e.Amount.ToString(System.Globalization.CultureInfo.InvariantCulture)

@@ -117,7 +117,13 @@ public static class MultiplayerTests
         foreach(var method in new[]{"Push","Remove"})harmony.Patch(AccessTools.Method(typeof(NOverlayStack),method),prefix:new HarmonyMethod(typeof(MultiplayerTests),nameof(SkipOverlay)));
         harmony.Patch(AccessTools.Method(typeof(NChooseACardSelectionScreen),"ShowScreen"),prefix:new HarmonyMethod(typeof(MultiplayerTests),nameof(Choose)));
         harmony.Patch(AccessTools.Method(typeof(NSimpleCardSelectScreen),"Create",[typeof(IReadOnlyList<CardModel>),typeof(CardSelectorPrefs)]),prefix:new HarmonyMethod(typeof(MultiplayerTests),nameof(Grid)));
-        run.PushRoom(new RestSiteRoom());CombatTestState.SetInProgress(false);
+        run.PushRoom(new RestSiteRoom());run.AppendToMapPointHistory(MegaCrit.Sts2.Core.Map.MapPointType.RestSite,RoomType.RestSite,null);CombatTestState.SetInProgress(false);
+        MegaCrit.Sts2.Core.Rewards.RewardsSet.testSelector=async set=>{
+            var rewardSelector=new MegaCrit.Sts2.Core.TestSupport.TestCardSelector();
+            rewardSelector.PrepareToSelectCardRewardAtIndex((int)LocalContext.NetId!.Value-1);
+            using var selection=CombatTestState.UseSelector(rewardSelector);
+            foreach(var reward in set.Rewards)await RunManager.Instance.RewardsSetSynchronizer.SelectLocalReward(reward);
+        };
         var me=host?p1:p2;var frierens=run.Players.Where(p=>p.Character is Frieren).ToArray();
         async Task Same(string name,Func<bool>? ready=null) {
             if(ready!=null)await Wait(ready,name);
@@ -286,7 +292,8 @@ public static class MultiplayerTests
         // 独立测试不保存至磁盘，载入路径其余初始化保持原生。
         AccessTools.Property(typeof(RunManager),nameof(RunManager.ShouldSave)).SetValue(RunManager.Instance,false);
         run=restored;me=run.Players.Single(p=>p.NetId==(host?1ul:2ul));
-        run.PushRoom(new RestSiteRoom());CombatTestState.SetInProgress(false);
+        run.PushRoom(new RestSiteRoom());run.AppendToMapPointHistory(MegaCrit.Sts2.Core.Map.MapPointType.RestSite,RoomType.RestSite,null);CombatTestState.SetInProgress(false);
+
         await Same("restored");
         if(me.Character is Frieren) {
             string old=MagicDeckStore.Read(me).ToJson();int counter=CombatTestState.RngCounter(me.PlayerRng.Rewards);
@@ -315,7 +322,7 @@ public static class MultiplayerTests
         foreach(var p in run.Players)p.PlayerCombatState!.Phase=PlayerTurnPhase.Play;
         RunManager.Instance.ActionExecutor.Unpause();RunManager.Instance.ActionQueueSynchronizer.SetCombatState(Enum.Parse<ActionSynchronizerCombatState>("PlayPhase"));
         await CommissionCmd.Empower(eliteCombat);await CommissionCmd.Empower(eliteCombat);
-        Check(eliteEnemy.MaxHp==originalHp+(int)Math.Ceiling(originalHp*.25)&&eliteEnemy.GetPower<CommissionElitePower>()?.Amount==1,"双端精英强化一次，多人接取不叠加");
+        Check(eliteEnemy.MaxHp==originalHp&&eliteEnemy.GetPower<CommissionElitePower>()?.Amount==1,"双端精英强化一次，多人接取不叠加");
         CommissionCmd.Victory(run,eliteRoom);await Same("hunt-ready",()=>run.Players.Where(p=>p.Character is Frieren).All(p=>CommissionCmd.Read(p).Active?.Progress==1));
         if(me.Character is Frieren){int oldCards=me.Deck.Cards.Count;Check(await QuestSend(huntId,CommissionOperation.Claim)&&me.Deck.Cards.Count==oldCards+1&&me.Deck.Cards.Last().GetType().Name==rareChoices[(int)me.NetId-1],"原生选择同步器完成金卡三选一");}
         await Same("hunt-claimed",()=>run.Players.Where(p=>p.Character is Frieren).All(p=>CommissionCmd.Read(p).Quests.Single(q=>q.Id==huntId).Status==CommissionStatus.Claimed));

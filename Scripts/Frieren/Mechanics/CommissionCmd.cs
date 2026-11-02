@@ -13,6 +13,7 @@ using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Entities.Multiplayer;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Hooks;
@@ -23,6 +24,7 @@ using MegaCrit.Sts2.Core.Models.RelicPools;
 using MegaCrit.Sts2.Core.Nodes.Screens.Overlays;
 using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.Runs;
+using MegaCrit.Sts2.Core.Rewards;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -41,12 +43,12 @@ public static class CommissionCmd
     private static uint Seed(string text)=>BitConverter.ToUInt32(SHA256.HashData(Encoding.UTF8.GetBytes(text)),0);
     public static CommissionState State(Player p){
         var state=Read(p);if(p.Character is not Frieren)return state;int act=p.RunState.CurrentActIndex;
-        if(state.CurrentAct==act&&state.GeneratedActs.Contains(act)&&!state.Quests.Any(q=>q.Act!=act&&q.Status is CommissionStatus.Available or CommissionStatus.Accepted))return state;
+        if(state.CurrentAct==act&&state.GeneratedActs.Contains(act))return state;
         var rng=GameApi.CreateRng(Seed($"frieren-commissions-v3/{p.RunState.Rng.StringSeed}/{p.NetId}/{act}"));
         int affix=(int)(Seed($"frieren-elite/{p.RunState.Rng.StringSeed}/{act}")%4);
         var common=ModelDb.RelicPool<SharedRelicPool>().AllRelics.Concat(p.Character.RelicPool.AllRelics).Where(r=>r.Rarity==RelicRarity.Common).DistinctBy(r=>r.Id).OrderBy(r=>r.Id.ToString()).Select(r=>r.GetType().Name).ToArray();
         var rares=ModelDb.CardPool<FrierenCardPool>().AllCards.Where(c=>c.Rarity==CardRarity.Rare&&FrierenCardAvailability.IsRandomCandidate(c)).OrderBy(c=>c.Id.ToString()).Select(c=>c.GetType().Name).ToArray();
-        if(state.EnsureAct(act,rng.NextInt,rares,MagicPropRules.All.Select(x=>x.Id).ToArray(),Potions.Select(t=>t.Name).ToArray(),common,rares,BossRelics.Select(t=>t.Name).ToArray(),affix))Write(p,state);
+        if(state.EnsureAct(act,rng.NextInt,rares,MagicPropRules.All.Select(x=>x.Id).ToArray(),Potions.Select(t=>t.Name).ToArray(),common,rares,BossRelics.Select(t=>t.Name).ToArray(),affix,s=>OwnsSpell(p,s)))Write(p,state);
         return state;
     }
     public static CardModel Spell(string id)=>ModelDb.AllCards.First(c=>c.GetType().Name==id);
@@ -82,7 +84,7 @@ public static class CommissionCmd
     }
     public static async Task<bool> Execute(Player p,int id,CommissionOperation op,int revision,PlayerChoiceContext? context=null){
         if(!CanAct(p,false)||!Enum.IsDefined(op))return false;var state=State(p);if(state.Revision!=revision)return false;
-        var q=state.Quests.SingleOrDefault(q=>q.Id==id);if(q==null||q.Legacy||q.Act!=p.RunState.CurrentActIndex)return false;
+        var q=state.Quests.SingleOrDefault(q=>q.Id==id);if(q==null||q.Legacy||q.Act!=p.RunState.CurrentActIndex&&!(op==CommissionOperation.Claim&&q.Completed))return false;
         if(op==CommissionOperation.Accept){
             if(!state.Accept(id,p.RunState.CurrentActIndex,Floor(p)))return false;Write(p,state);
             if(q.Goal==CommissionGoal.Cargo)await CommissionCargo.Add(p,id);return true;
@@ -100,21 +102,29 @@ public static class CommissionCmd
             case CommissionRewardKind.Potion:
                 if(!(await PotionCmd.TryToProcure(Potion(reward.Item).ToMutable(),p)).success)return Restore();break;
             case CommissionRewardKind.Card:
-                for(int i=0;i<reward.Amount;i++)await AddCard(p,Spell(reward.Item),true);break;
             case CommissionRewardKind.RareChoice:
-                var options=(reward.Choices??[]).Select(id=>{var c=Spell(id).ToMutable();c.Owner=p;return c;}).ToArray();
-                if(options.Length!=3)return Restore();
-                var chosen=(await CardSelectCmd.FromSimpleGrid(context,options,p,new CardSelectorPrefs(new LocString("frieren","COMMISSION.RARE_SELECT"),1){Cancelable=false,RequireManualConfirmation=true})).ToArray();
-                if(chosen.Length!=1||!options.Contains(chosen[0]))return Restore();
-                await AddCard(p,chosen[0],false);break;
+                var rewards = new List<Reward>();
+                for (int i=0;i<reward.Amount;i++) {
+                    var ids = reward.Kind==CommissionRewardKind.Card ? new[]{reward.Item} : reward.Choices??[];
+                    if (ids.Length==0) return Restore();
+                    var cards=ids.Select(id=>{
+                        var card=p.RunState.CreateCard(Spell(id),p);
+                        if(reward.Kind==CommissionRewardKind.Card)CardCmd.Upgrade(card);
+                        return card;
+                    }).ToArray();
+                    rewards.Add(new CardReward(cards,CardCreationSource.Other,p,CardCreationOptions.ForRoom(p,RoomType.Monster)){CanReroll=false,CanSkip=true});
+                }
+                await GameApi.BeginPlayerChoice(context,p,PlayerChoiceOptions.None);
+                try { await RewardsCmd.OfferCustom(p,rewards); }
+                finally { await context.SignalPlayerChoiceEnded(); }
+                break;
         }
         if(reward.BonusGold>0)await PlayerCmd.GainGold(reward.BonusGold,p);return true;
         bool Restore(){q.Status=CommissionStatus.Accepted;state.Revision++;Write(p,state);return false;}
     }
     private static void GiveProp(Player p,string id,int count){var deck=MagicDeckStore.Read(p);for(int i=0;i<count;i++)deck.AddProp(id);MagicDeckStore.Write(p,deck);}
-    private static async Task AddCard(Player p,CardModel model,bool upgraded){var card=p.RunState.CreateCard(ModelDb.GetById<CardModel>(model.Id),p);if(upgraded)CardCmd.Upgrade(card);var result=await CardPileCmd.Add(card,PileType.Deck);CardCmd.PreviewCardPileAdd(result);}
     public static string BattleKey(IRunState r,CombatRoom room)=>$"{r.CurrentActIndex}/{r.TotalFloor}/{room.ModelId}";
-    public static string AffixText(int affix,int act,int players=1){var text=new LocString("frieren","COMMISSION.AFFIX."+affix);text.Add("Strength",3+act);text.Add("Armor",10+act*2);text.Add("Heal",6+act*2);text.Add("Artifact",1+players);return text.GetFormattedText();}
+    public static string AffixText(int affix,int act,int players=1){var text=new LocString("frieren","COMMISSION.AFFIX."+affix);text.Add("Strength",2+act);text.Add("Armor",4+act*2);text.Add("Heal",3+act*2);return text.GetFormattedText();}
     public static async Task Empower(ICombatState? combat){
         if(combat?.RunState.CurrentRoom is not CombatRoom {RoomType:RoomType.Elite} room)return;
         var contracts=combat.Players.Where(p=>p.Character is Frieren&&p.Creature.IsAlive).Select(p=>(Player:p,State:State(p))).Where(x=>x.State.Active?.Goal==CommissionGoal.EmpoweredElite&&x.State.Active.Progress==0).ToArray();

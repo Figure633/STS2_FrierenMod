@@ -73,7 +73,7 @@ public static class MagicDeckAnimations
             await previous;
             if (Closed) return;
             var cards = new List<NCard>();
-            var exhausts = new List<Task>();
+            var fades = new List<Task>();
             screen.BeginInventoryAnimation();
             try {
                 foreach (var item in removed) {
@@ -85,7 +85,7 @@ public static class MagicDeckAnimations
                         card.CardHighlight.Modulate = new Color("65ef85");
                         card.CardHighlight.AnimFlash();
                         // 单次绿光完成后，物品才淡出，接着展示新因子。
-                        var flash = layer.CreateTween(); flash.TweenInterval(0.48);
+                        var flash = layer.CreateTween(); flash.TweenInterval(0.25);
                         if (!await flash.AwaitFinished(layer)) return;
                     }
                     // 与原生 CardPileCmd 消耗牌相同：粒子与音效由原版提供，卡面变灰后释放。
@@ -94,16 +94,13 @@ public static class MagicDeckAnimations
                     if (exhaust != null) {
                         exhaust.Set("scale",effectScale);
                         layer.AddChild(exhaust);
-                        exhausts.Add(WaitForExit(exhaust));
                         GameApi.PlayExhaust(exhaust);
                         // 原生消耗特效持有并释放卡牌；交还所有权后不再手动回收。
                         if(GameApi.ExhaustOwnsCard) cards.Remove(card);
                     }
-                    var fade = layer.CreateTween();
-                    fade.TweenProperty(card, "modulate", StsColors.exhaustGray, 0.3);
-                    if (!await fade.AwaitFinished(layer)) return;
-                    if (exhaust == null || !GameApi.ExhaustOwnsCard) { Release(card); cards.Remove(card); }
+                    fades.Add(Fade(card, exhaust == null || !GameApi.ExhaustOwnsCard));
                 }
+                await Task.WhenAll(fades);
                 // 魔法书已经打开时，直接展示库存中的新条目，不再从书内飞回右上角图标。
                 if (screen.View.IsVisibleInTree()) {
                     screen.RevealInventoryChanges();
@@ -118,7 +115,7 @@ public static class MagicDeckAnimations
                     await layer.ToSignal(layer.GetTree(), SceneTree.SignalName.ProcessFrame);
                     if (Closed) return;
                     screen.FlashAcquiredItem(item.Id);
-                    var reveal = layer.CreateTween(); reveal.TweenInterval(0.5);
+                    var reveal = layer.CreateTween(); reveal.TweenInterval(0.22);
                     if (!await reveal.AwaitFinished(layer)) return;
                     screen.ClearAcquiredItemFlash(item.Id);
                 }
@@ -133,22 +130,25 @@ public static class MagicDeckAnimations
                     }
                     var flights = new List<Task>();
                     for (int i = 0; i < cards.Count; i++) {
-                        flights.Add(Fly(cards[i], (usedProp.HasValue ? 1.2 : 0.28) + i * 0.12));
+                        flights.Add(Fly(cards[i], (usedProp.HasValue ? 0.45 : 0.28) + i * 0.1));
                     }
                     await Task.WhenAll(flights);
                     // 原生飞入特效自行释放卡牌；不能再次归还对象池。
                     cards.Clear();
                 }
-                await Task.WhenAll(exhausts);
+                // 原生消耗粒子独立收尾，不继续占用魔具操作锁。
             }
             catch (Exception error) { GD.PushWarning("魔法牌组动画未完成：" + error); }
             finally {
                 foreach (var card in cards) Release(card);
                 screen.EndInventoryAnimation();
             }
+            async Task Fade(NCard card, bool release) {
+                var fade = layer.CreateTween();
+                fade.TweenProperty(card,"modulate",StsColors.exhaustGray,0.2);
+                if(await fade.AwaitFinished(layer) && release){Release(card);cards.Remove(card);}
+            }
         }
-
-        private static async Task WaitForExit(Node effect) => await effect.ToSignal(effect, Node.SignalName.TreeExiting);
 
         private async Task Fly(NCard card, double delay)
         {

@@ -21,6 +21,13 @@ public static class CommissionTests
         var saved=CommissionState.FromJson(s.ToJson());Check(saved.ToJson()==s.ToJson(),"存读档保留星级、奖励和目标战斗");
         s.EnsureAct(1,_=>0,["a","b","c"],["MysteryBox"],["potion"],["common"],["a","b","c"],["boss"]);
         Check(s.ActiveCount==0&&!s.Claim(id+2,_=>true)&&s.Quests.Single(q=>q.Id==id+2).Status==CommissionStatus.Abandoned,"过幕自动放弃并拒绝旧幕提交");
+        var carry=New();var hunt=carry.Quests[0];carry.Accept(hunt.Id,0,1);carry.BindElite("done");carry.WinElite("done");
+        carry.EnsureAct(1,_=>0,["a","b","c"],["MysteryBox"],["potion"],["common"]);
+        Check(carry.ActiveCount==0&&hunt.Completed&&carry.Accept(CommissionState.QuestId(1,1),1,1),"已完成旧幕委托保留且不占新幕接取名额");
+        carry=CommissionState.FromJson(carry.ToJson());Check(carry.Claim(hunt.Id,_=>false)&&!carry.Claim(hunt.Id,_=>true),"旧幕完成资格存档后仍可领取且只能领取一次");
+        var deck=new CommissionState{CurrentAct=0,GeneratedActs=[0],Quests=[new(){Id=10001,Act=0,Goal=CommissionGoal.Deck,Spell="owned",Status=CommissionStatus.Accepted}]};
+        deck.EnsureAct(1,_=>0,["a","b","c"],["MysteryBox"],["potion"],["common"],meets:x=>x=="owned");
+        Check(deck.Claim(10001,_=>false),"跨幕锁定已满足的持有条件，之后丢失卡牌仍可领奖");
         var allTemplates=new HashSet<string>();var grapeRewards=new HashSet<string>();bool bossSeen=false,rareSeen=false;
         for(int seed=0;seed<1500;seed++){
             var a=New(seed);var b=New(seed,1);var c=New(seed,2);

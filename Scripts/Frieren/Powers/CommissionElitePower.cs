@@ -19,16 +19,13 @@ public sealed class CommissionElitePower : FrierenPower
     public override LocString Description {get{var text=base.Description;text.Add("Effect",Mechanics.CommissionCmd.AffixText(Affix,(int)Amount-1,Owner?.CombatState?.Players.Count??1));return text;}}
     public override async Task AfterSideTurnEnd(PlayerChoiceContext context,CombatSide side,IEnumerable<Creature> participants){
         if(!participants.Contains(Owner)||Owner.IsDead)return;
-        if(Affix==1){Flash();await CreatureCmd.GainBlock(Owner,8+Amount*2,ValueProp.Unpowered,null);}
-        if(Affix==2){Flash();await CreatureCmd.Heal(Owner,4+Amount*2);}
+        if(Affix==1){Flash();await CreatureCmd.GainBlock(Owner,Amount*2+2,ValueProp.Unpowered,null);}
+        if(Affix==2){Flash();await CreatureCmd.Heal(Owner,Amount*2+1);}
     }
     public async Task Empower(PlayerChoiceContext context){
-        // 与一代带火精英类似的四种强化；复用原生生命、力量、人工制品及格挡命令。
-        int extra=(int)Math.Ceiling(Owner.MaxHp*(Affix == 3 ? .5 : .25));
-        await CreatureCmd.GainMaxHp(Owner,extra);
-        if(Affix==0)await PowerCmd.Apply<StrengthPower>(context,Owner,2+Amount,Owner,null);
-        if(Affix==1)await CreatureCmd.GainBlock(Owner,8+Amount*2,ValueProp.Unpowered,null);
-        if(Affix==3)await PowerCmd.Apply<ArtifactPower>(context,Owner,2,Owner,null);
+        // 一代带火精英四选一；生命强化不与其他词缀叠加。
+        if(Affix==0)await PowerCmd.Apply<StrengthPower>(context,Owner,Amount+1,Owner,null);
+        if(Affix==3)await CreatureCmd.GainMaxHp(Owner,(int)Math.Ceiling(Owner.MaxHp*.25));
         Flash();
     }
 }

@@ -140,6 +140,10 @@ public partial class Runner : Node
                 GD.Print("COMMISSIONS_OK: " + await CommissionTests.Run(this));
                 await Finish(); return;
             }
+            if (OS.GetCmdlineUserArgs().Contains("--commission-feedback-ui")) {
+                GD.Print("COMMISSION_FEEDBACK_UI_OK: " + await CommissionFeedbackUiTests.Run(this));
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--magic-shop-only")) {
                 GD.Print("MAGIC_SHOP_OK: " + await MagicShopTests.Run(this));
                 await Finish(); return;

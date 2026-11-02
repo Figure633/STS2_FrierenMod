@@ -140,7 +140,7 @@ public static class MagicDeckAnimationTests
         Check(addedIds.All(id => ui.FindChild("Factor_"+id,true,false) is NGridCardHolder holder &&
             (float)AccessTools.Method(typeof(NCardHighlight), "GetShaderParameter").Invoke(holder.CardNode!.CardHighlight, null)! < .001f),
             "两个因子完成队列并重新排版后均无残留蓝光");
-        Check(layer.GetChildCount() == 0 && !MagicPropCmd.IsBusy(player), "动画结束释放卡牌节点和忙碌状态");
+        Check(layer.GetChildren().All(GameApi.IsExhaust) && !MagicPropCmd.IsBusy(player) && elapsed.Elapsed<TimeSpan.FromSeconds(1.6), "获得闪光结束即释放操作锁，原生粒子尾部独立收尾且盲盒等待少于1.6秒");
         await RightClick(circle);
         circleHolder = (NGridCardHolder)ui.FindChild("Prop_" + circle, true, false);
         Check(circleHolder.CardNode!.CardHighlight.Modulate.A > 0 &&
@@ -156,8 +156,10 @@ public static class MagicDeckAnimationTests
         }
         // TestMode 会跳过原生特效尾部等待，统计创建次数而不依赖尾部存活时长。
         Check(await materialUse && ExhaustsCreated-previousExhausts==3 && maxExhausts>0 && materialIds.All(id=>MagicDeckStore.Read(player).Items.All(i=>i.InstanceId!=id)) &&
-            layer.GetChildCount()==0, "炼成为魔具和两个材料分别播放原生消耗，结算及回收各一次");
+            layer.GetChildren().All(GameApi.IsExhaust), "上次粒子未结束仍可使用炼成，三个消耗并行结算及回收各一次");
         toggle.EmitSignal(NClickableControl.SignalName.Released, toggle);
+        elapsed.Restart();while(layer.GetChildCount()>0&&elapsed.Elapsed<TimeSpan.FromSeconds(5))await Tick();
+        Check(layer.GetChildCount()==0,"原生消耗尾部自然结束并释放全部节点");
         Check(!player.Deck.Cards.OfType<FrierenMod.Scripts.Cards.FactorCard>().Any(), "表现卡不进入普通牌组");
         deck = MagicDeckStore.Read(player); deck.Equip(deck.Items.Last().InstanceId, ManaSlot.Hand);
         MagicDeckStore.Write(player, deck);

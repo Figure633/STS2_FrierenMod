@@ -44,9 +44,10 @@ public static class CommissionTests
         int checks=0;void Check(bool ok,string label){if(!ok)throw new Exception(label);checks++;GD.Print("PASS 委托："+label);}
         async Task Tick(){for(int i=0;i<8;i++)await root.ToSignal(root.GetTree(),SceneTree.SignalName.ProcessFrame);}
         var context=new ThrowingPlayerChoiceContext();SaveManager.Instance.InitPrefsDataForTest();
+        var selector=new TestCardSelector();using var selections=CombatTestState.UseSelector(selector);
         var p=Player.CreateForNewRun<Frieren>(UnlockState.all,1);var other=Player.CreateForNewRun<Frieren>(UnlockState.all,2);
         var run=RunState.CreateForTest([p,other],seed:"VILLAGE-COMMISSIONS");RunManager.Instance.SetUpTest(run,new NetSingleplayerGameService());LocalContext.NetId=1;
-        run.ActFloor=1;run.PushRoom(new RestSiteRoom());CombatTestState.SetInProgress(false);RunManager.Instance.ActionExecutor.Unpause();
+        run.ActFloor=1;run.PushRoom(new RestSiteRoom());run.AppendToMapPointHistory(MapPointType.RestSite,RoomType.RestSite,null);CombatTestState.SetInProgress(false);RunManager.Instance.ActionExecutor.Unpause();
         int Id(int slot)=>CommissionState.QuestId(run.CurrentActIndex,slot);
         Commission Make(int slot,string template,CommissionGoal goal,string requirement="",CommissionReward? reward=null,int affix=0)=>new(){Id=Id(slot),Act=run.CurrentActIndex,Template=template,Stars=slot==1?3:template=="CARGO"||template=="TUTOR"?2:1,Goal=goal,Spell=requirement,Reward=reward??new(CommissionRewardKind.Gold,"",80),Affix=affix};
         CommissionState Fixture(Player player,Commission? first=null,Commission? second=null,Commission? third=null){var s=new CommissionState{CurrentAct=run.CurrentActIndex,GeneratedActs=[run.CurrentActIndex],Quests=[first??Make(1,"HUNT",CommissionGoal.EmpoweredElite,reward:new(CommissionRewardKind.Prop,"RoyalGrimoire",1)),second??Make(2,"GRAPES",CommissionGoal.Deck,"GrapeSpell"),third??Make(3,"CARGO",CommissionGoal.Cargo,reward:new(CommissionRewardKind.Freight,"",1))]};CommissionCmd.Write(player,s);return s;}
@@ -75,7 +76,17 @@ public static class CommissionTests
         await PotionCmd.Discard(p.Potions.First());Check(await CommissionCmd.Execute(p,Id(2),CommissionOperation.Claim,CommissionCmd.State(p).Revision)&&p.Gold==gold+30,"空出栏位后领取药水及金币");
         var rares=ModelDb.CardPool<FrierenCardPool>().AllCards.Where(c=>c.Rarity==CardRarity.Rare&&FrierenCardAvailability.IsRandomCandidate(c)).Take(3).Select(c=>c.GetType().Name).ToArray();
         state=Fixture(p,second:Make(2,"GRAPES",CommissionGoal.Deck,"GrapeSpell",new(CommissionRewardKind.RareChoice,"",1,Choices:rares)));state.Accept(Id(2),0,1);CommissionCmd.Write(p,state);
-        var selector=new TestCardSelector();using(CombatTestState.UseSelector(selector)){selector.PrepareToSelect([1]);Check(await CommissionCmd.Execute(p,Id(2),CommissionOperation.Claim,state.Revision)&&p.Deck.Cards.Any(c=>c.GetType().Name==rares[1]),"固定金卡三选一实际选牌并加入主牌组");}
+        {selector.PrepareToSelectCardRewardAtIndex(1);Check(await CommissionCmd.Execute(p,Id(2),CommissionOperation.Claim,state.Revision)&&p.Deck.Cards.Any(c=>c.GetType().Name==rares[1]),"固定金卡三选一实际选牌并加入主牌组");}
+        state=Fixture(p,second:Make(2,"GRAPES",CommissionGoal.Deck,"GrapeSpell",new(CommissionRewardKind.RareChoice,"",1,Choices:rares)));state.Accept(Id(2),0,1);CommissionCmd.Write(p,state);
+        int deckBeforeSkip=p.Deck.Cards.Count;
+        selector.PrepareToSelectCardReward((_,_)=>new());
+        MegaCrit.Sts2.Core.Rewards.RewardsSet.testSelector=async set=>{
+            Check(set.Rewards.Single() is MegaCrit.Sts2.Core.Rewards.CardReward {CanSkip:true},"委托卡牌奖励使用可跳过的原生战利品模型");
+            Check(!await RunManager.Instance.RewardsSetSynchronizer.SelectLocalReward(set.Rewards.Single()),"不选卡即可返回战利品列表，无需先取消另一张");
+            RunManager.Instance.RewardsSetSynchronizer.SkipLocalRewardsSet();
+        };
+        try{Check(await CommissionCmd.Send(p,Id(2),CommissionOperation.Claim)&&p.Deck.Cards.Count==deckBeforeSkip,"原生跳过整份卡牌奖励不强制获得卡牌，动作队列正常恢复");}
+        finally{MegaCrit.Sts2.Core.Rewards.RewardsSet.testSelector=null;selector.PrepareToSelectCardRewardAtIndex(0);}
         await CardPileCmd.RemoveFromDeck(other.Deck.Cards.ToArray(),false);
         for(int i=0;i<3;i++)await Add(other,ModelDb.Card<DefensiveMagic>());
         Check(!CommissionCmd.OwnsSpell(other,"tutor"),"三张咏唱牌还不足以应聘家教");
@@ -92,12 +103,12 @@ public static class CommissionTests
             var initial=encounter.MonstersWithSlots[0];var enemy=combat.CreateCreature(initial.Item1,CombatSide.Enemy,initial.Item2);combat.AddCreature(enemy);int hp=enemy.MaxHp;
             CombatManager.Instance.SetUpCombat(combat);CombatTestState.SetInProgress(true);
             await Hook.BeforeCombatStart(run,combat);int boosted=enemy.MaxHp;await CommissionCmd.Empower(combat);
-            Check(boosted==hp+(int)Math.Ceiling(hp*(affix == 3 ? .5 : .25))&&enemy.MaxHp==boosted&&enemy.GetPower<CommissionElitePower>()?.Amount==1,"精英生命强化正确，多人及重复通知不叠加："+affix);
+            Check(boosted==hp+(affix==3?(int)Math.Ceiling(hp*.25):0)&&enemy.MaxHp==boosted&&enemy.GetPower<CommissionElitePower>()?.Amount==1,"精英生命强化正确，多人及重复通知不叠加："+affix);
             Check(CommissionCmd.Read(p).Active!.EliteBattle==CommissionCmd.BattleKey(run,room)&&CommissionCmd.Read(other).Active!.EliteBattle==CommissionCmd.Read(p).Active!.EliteBattle,"目标在开战时绑定给各自已接任务："+affix);
-            if(affix==0)Check(enemy.GetPowerAmount<StrengthPower>()==3,"狂暴精英增加3力量");
-            if(affix==1){enemy.LoseBlockInternal(enemy.Block);await enemy.GetPower<CommissionElitePower>()!.AfterSideTurnEnd(context,CombatSide.Enemy,[enemy]);Check(enemy.Block==10,"护甲精英回合结束获得格挡");}
-            if(affix==2){enemy.SetCurrentHpInternal(enemy.MaxHp-12);await enemy.GetPower<CommissionElitePower>()!.AfterSideTurnEnd(context,CombatSide.Enemy,[enemy]);Check(enemy.CurrentHp==enemy.MaxHp-6,"再生精英每回合回复生命");}
-            if(affix==3)Check(enemy.GetPowerAmount<ArtifactPower>()==combat.Players.Count+1,"护佑精英获得人工制品");
+            if(affix==0)Check(enemy.GetPowerAmount<StrengthPower>()==2,"力量精英仅增加2力量");
+            if(affix==1){enemy.LoseBlockInternal(enemy.Block);await enemy.GetPower<CommissionElitePower>()!.AfterSideTurnEnd(context,CombatSide.Enemy,[enemy]);Check(enemy.Block==4,"护甲精英回合结束获得格挡");}
+            if(affix==2){enemy.SetCurrentHpInternal(enemy.MaxHp-12);await enemy.GetPower<CommissionElitePower>()!.AfterSideTurnEnd(context,CombatSide.Enemy,[enemy]);Check(enemy.CurrentHp==enemy.MaxHp-9,"再生精英每回合回复生命");}
+            if(affix==3)Check(enemy.GetPowerAmount<ArtifactPower>()==0,"生命精英不叠加人工制品");
             other.Creature.SetCurrentHpInternal(0);CommissionCmd.Victory(run,room);CommissionCmd.Victory(run,room);
             Check(CommissionCmd.Read(p).Active!.Progress==1&&CommissionCmd.Read(other).Active!.Progress==0,"强化胜利只给存活参与者计一次："+affix);other.Creature.SetCurrentHpInternal(other.Creature.MaxHp);
             if(affix==0){
@@ -146,6 +157,12 @@ public static class CommissionTests
         state=Fixture(p);state.Accept(Id(3),0,1);CommissionCmd.Write(p,state);await CommissionCargo.Add(p,Id(3));CommissionCargo.Goods(p).Single().Fare=99;
         int previous=Id(3);run.CurrentActIndex=1;run.ActFloor=1;gold=p.Gold;await CommissionCmd.Entered(run,new RestSiteRoom());
         Check(CommissionCargo.Goods(p).Length==0&&p.Gold==gold&&CommissionCmd.Read(p).Quests.Single(q=>q.Id==previous).Status==CommissionStatus.Abandoned,"过幕自动放弃并清理商品，不支付未交付运费");
+        state=Fixture(p,second:Make(2,"GRAPES",CommissionGoal.Deck,"GrapeSpell"));state.Accept(Id(2),1,1);CommissionCmd.Write(p,state);
+        int carriedQuest=Id(2);run.CurrentActIndex=2;run.ActFloor=1;state=CommissionCmd.State(p);
+        Check(state.Quests.Single(q=>q.Id==carriedQuest).Completed&&state.ActiveCount==0&&CommissionScreen.NeedsAttention(p),"跨幕保留已完成任务资格并提示领奖，不占新幕名额");
+        await CardPileCmd.RemoveFromDeck(p.Deck.Cards.OfType<GrapeSpell>().ToArray(),false);gold=p.Gold;
+        Check(await CommissionCmd.Send(p,carriedQuest,CommissionOperation.Claim)&&p.Gold==gold+80,"跨幕后失去条件牌仍可领取已完成报酬");
+        run.CurrentActIndex=1;
         Check(CommissionCmd.BossRelics.All(t=>CommissionCmd.Relic(t.Name).Rarity==RelicRarity.Event),"一代Boss遗物不在普通掉落池");
         state=Fixture(p,first:Make(1,"HUNT",CommissionGoal.EmpoweredElite,reward:new(CommissionRewardKind.Relic,"ComfortableBed",1,FallbackProp:"PhoenixQuill")));state.Accept(Id(1),1,1);state.Active!.Progress=1;CommissionCmd.Write(p,state);
         int maxEnergy=p.MaxEnergy;Check(await CommissionCmd.Execute(p,Id(1),CommissionOperation.Claim,state.Revision)&&p.Relics.OfType<ComfortableBed>().Any()&&p.GetRelic<ComfortableBed>()!.ModifyMaxEnergy(p,maxEnergy)==maxEnergy+1,"第二幕一代Boss遗物实际获得并保留能量加成");

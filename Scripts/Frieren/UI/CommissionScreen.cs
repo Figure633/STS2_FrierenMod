@@ -83,11 +83,11 @@ public sealed class CommissionScreen
     }
     public void Open() { _act = _player.RunState.CurrentActIndex; Refresh(true); if (_capstone != null) _capstone.Open(View); else View.Show(); }
     public void Close() { if (_capstone?.CurrentCapstoneScreen == View) _capstone.Close(); else View.Hide(); }
-    private void ClearHover() { foreach (var control in _hoverHosts) if (GodotObject.IsInstanceValid(control)) NHoverTipSet.Remove(control); _hoverHosts.Clear(); }
+    private void ClearHover() { foreach (var control in _hoverHosts) if (GodotObject.IsInstanceValid(control)) CommissionHoverTips.Remove(control); _hoverHosts.Clear(); }
     private void Hover(Control control, Func<IEnumerable<IHoverTip>> tips) {
         control.MouseFilter = Control.MouseFilterEnum.Pass; _hoverHosts.Add(control);
-        control.MouseEntered += () => { if (MegaCrit.Sts2.Core.Nodes.NGame.Instance != null) NHoverTipSet.CreateAndShow(control, tips()); };
-        control.MouseExited += () => NHoverTipSet.Remove(control);
+        control.MouseEntered += () => { if (MegaCrit.Sts2.Core.Nodes.NGame.Instance != null) CommissionHoverTips.Show(control, tips()); };
+        control.MouseExited += () => CommissionHoverTips.Remove(control);
     }
     public void Refresh(bool force = false)
     {
@@ -97,7 +97,7 @@ public sealed class CommissionScreen
         if (!force && signature == _signature) return; _signature = signature;
         _heading.Text = Format("TITLE", ("Act", _act + 1));
         _previous.GetNode<Label>("Label").Text = Text("PREVIOUS"); _next.GetNode<Label>("Label").Text = Text("NEXT"); _close.GetNode<Label>("Label").Text = Text("CLOSE");
-        _summary.Text = Format("SUMMARY", ("Count", state.ActiveCount), ("Limit", CommissionState.ActiveLimit)) + "\n" + (_notice.Length > 0 ? _notice : Text(canAct ? "RULES" : "BUSY"));
+        _summary.Text = Format("SUMMARY", ("Count", state.ActiveCount), ("Limit", CommissionState.ActiveLimit)) + "\n" + (_notice.Length > 0 ? _notice : Text(canAct ? state.Quests.Any(q=>q.Completed&&q.Status==CommissionStatus.Accepted)?"CARRY_NOTICE":"RULES" : "BUSY"));
         if (_act > 0) _previous.Enable(); else _previous.Disable();
         if (_act < _player.RunState.CurrentActIndex) _next.Enable(); else _next.Disable();
         _previous.Modulate = _act > 0 ? Colors.White : new Color(1, 1, 1, .45f);
@@ -107,6 +107,7 @@ public sealed class CommissionScreen
     }
     public static string GoalText(Player player, Commission q)
     {
+        if(q.Completed&&q.Status==CommissionStatus.Accepted)return Text("CARRY_READY");
         if(q.Goal==CommissionGoal.Cargo&&q.Status==CommissionStatus.Claimed)return Format("DELIVERED",("Gold",q.PaidFreight));
         var tutor=CommissionCmd.TutorCounts(player);
         int current=q.Spell switch {
@@ -146,17 +147,17 @@ public sealed class CommissionScreen
     }
     public static string CurrentSummary(Player player)
     {
-        var state=CommissionCmd.State(player);var q=state.Active;
+        var state=CommissionCmd.State(player);var q=state.Active??state.Quests.FirstOrDefault(q=>q.Completed&&q.Status==CommissionStatus.Accepted);
         return q==null?Text("NO_ACTIVE"):
             Text("NAME."+q.Template)+" "+new string('★',q.Stars)+"\n"+GoalText(player,q)+"\n"+RewardText(player,q)+"\n"+Text(CommissionState.Ready(q,id=>CommissionCmd.OwnsSpell(player,id))?"READY":"IN_PROGRESS");
     }
     public static bool NeedsAttention(Player player)=>CommissionCmd.State(player) is var state&&
-        (state.Active is {} active?CommissionState.Ready(active,id=>CommissionCmd.OwnsSpell(player,id)):
-            state.Quests.Any(q=>!q.Legacy&&q.Act==state.CurrentAct&&q.Status==CommissionStatus.Available));
+        (state.Quests.Any(q=>CommissionState.Ready(q,id=>CommissionCmd.OwnsSpell(player,id))) ||
+            state.Active==null&&state.Quests.Any(q=>!q.Legacy&&q.Act==state.CurrentAct&&q.Status==CommissionStatus.Available));
     private void AddRow(Commission q,CommissionState state,bool canAct)
     {
         bool current=q.Act==_player.RunState.CurrentActIndex;
-        bool ready=current&&CommissionState.Ready(q,id=>CommissionCmd.OwnsSpell(_player,id));
+        bool ready=CommissionState.Ready(q,id=>CommissionCmd.OwnsSpell(_player,id));
         var panel=new PanelContainer{Name="Quest"+q.Id,CustomMinimumSize=new(1500,285)};
         panel.AddThemeStyleboxOverride("panel",new StyleBoxFlat{BgColor=ready?new("263d35"):new("202c3a"),BorderColor=q.Stars==3?new("bf9654"):new("68715e"),
             BorderWidthLeft=2,BorderWidthRight=2,BorderWidthTop=2,BorderWidthBottom=2,CornerRadiusTopLeft=12,CornerRadiusTopRight=12,CornerRadiusBottomLeft=12,CornerRadiusBottomRight=12,
@@ -174,17 +175,26 @@ public sealed class CommissionScreen
         var goal=Label("Goal",GoalText(_player,q),21,new("e8e1d4"));content.AddChild(goal);
         if(MegaCrit.Sts2.Core.Models.ModelDb.AllCards.Any(c=>c.GetType().Name==q.Spell))Hover(goal,()=>{var c=CommissionCmd.Spell(q.Spell).ToMutable();c.Owner=_player;return [new CardHoverTip(c)];});
         if(q.Goal==CommissionGoal.Cargo)Hover(goal,()=>{var c=CommissionCargo.Goods(_player).FirstOrDefault();if(c==null){c=(ValuableCargo)MegaCrit.Sts2.Core.Models.ModelDb.Card<ValuableCargo>().ToMutable();c.Owner=_player;}return [new CardHoverTip(c)];});
-        var reward=Label("Reward",RewardText(_player,q),21,new("b6d7bc"));content.AddChild(reward);Hover(reward,()=>RewardTips(_player,q));
-        string status=!current&&q.Status!=CommissionStatus.Claimed?Text("EXPIRED"):q.Status switch {
+        var reward=Label("Reward",RewardText(_player,q),21,new("b6d7bc"));content.AddChild(reward);
+        if(q.Reward.Kind==CommissionRewardKind.RareChoice){
+            var choices=new HBoxContainer{Name="CardChoices"};choices.AddThemeConstantOverride("separation",20);content.AddChild(choices);
+            foreach(var id in q.Reward.Choices??[]){
+                var card=CommissionCmd.Spell(id).ToMutable();card.Owner=_player;
+                var name=Label("CardChoice",card.Title,19,new("f4d69a"));name.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;choices.AddChild(name);
+                Hover(name,()=>[new CardHoverTip(card)]);
+            }
+            Hover(reward,()=>[new HoverTip(new LocString("frieren","COMMISSION.RARE_SELECT"),string.Join("\n",(q.Reward.Choices??[]).Select(id=>CommissionCmd.Spell(id).Title)))]);
+        }else Hover(reward,()=>RewardTips(_player,q));
+        string status=!current&&!ready&&q.Status!=CommissionStatus.Claimed?Text("EXPIRED"):q.Status switch {
             CommissionStatus.Available=>Text("AVAILABLE"),CommissionStatus.Claimed=>Text("CLAIMED"),CommissionStatus.Abandoned=>Text("ABANDONED"),
             _=>ready?Text("READY"):q.Goal==CommissionGoal.Cargo?Text("AUTO_DELIVERY"):q.Goal==CommissionGoal.EmpoweredElite?Text(q.EliteBattle.Length>0?"HUNT_BOUND":"HUNT_WAIT"):Text("IN_PROGRESS")};
         content.AddChild(Label("Status",status,21,ready?new("a7f2bd"):new("a9baca")));
         var actions=new VBoxContainer{CustomMinimumSize=new(235,0),Alignment=BoxContainer.AlignmentMode.Center};columns.AddChild(actions);
         void Action(string name,string text,CommissionOperation op,bool enabled){var b=Button(name,text,()=>{_=TaskHelper.RunSafely(Act(q.Id,op));},new(235,64));actions.AddChild(b);if(!enabled){b.Disable();b.Modulate=new(1,1,1,.45f);}}
         if(q.Status==CommissionStatus.Available)Action("Accept",Text("ACCEPT"),CommissionOperation.Accept,current&&canAct&&state.ActiveCount==0);
-        else if(current&&q.Status==CommissionStatus.Accepted){
+        else if((current||ready)&&q.Status==CommissionStatus.Accepted){
             if(q.Goal!=CommissionGoal.Cargo)Action("Claim",Text(ready&&!CommissionCmd.CanReceive(_player,q.Reward)?"POTION_FULL":"CLAIM"),CommissionOperation.Claim,canAct&&ready&&CommissionCmd.CanReceive(_player,q.Reward));
-            Action("Abandon",Text("ABANDON"),CommissionOperation.Abandon,canAct);
+            if(current)Action("Abandon",Text("ABANDON"),CommissionOperation.Abandon,canAct);
         }
     }
     private async Task Act(int id, CommissionOperation operation) {
@@ -200,7 +210,7 @@ public sealed class CommissionScreen
     {
         var screen=new CommissionScreen(root,player);var seen=new HashSet<int>();bool hovered=false;string hoverText="";
         var button=Button("FrierenCommissionButton",Text("ENTRY"),()=>{if(screen.View.Visible)screen.Close();else screen.Open();},new(120,64));
-        button.MouseEntered+=()=>{hovered=true;hoverText="";};button.MouseExited+=()=>{hovered=false;NHoverTipSet.Remove(button);};
+        button.MouseEntered+=()=>{hovered=true;hoverText="";};button.MouseExited+=()=>{hovered=false;CommissionHoverTips.Remove(button);};
         var row=root.FindChild("RightAlignedStuff",true,false) as HBoxContainer??root.GetNodeOrNull<HBoxContainer>("FrierenTopBarRow");
         if(row!=null){row.AddChild(button);row.MoveChild(button,0);}else{root.AddChild(button);button.SetAnchorsPreset(Control.LayoutPreset.TopRight);button.Position=new(root.Size.X-350,8);}
         var timer=new Godot.Timer{WaitTime=.1,Autostart=true};root.AddChild(timer);
@@ -213,8 +223,8 @@ public sealed class CommissionScreen
             bool blocked=NModalContainer.Instance?.OpenModal!=null||!MagicBookUi.AllowsViewOver(overlay())||root is NGlobalUi global&&global.CapstoneContainer.InUse&&global.CapstoneContainer.CurrentCapstoneScreen!=screen.View;
             if(blocked)button.Disable();else button.Enable();
             float pulse=(float)(.5+.5*Math.Sin(Time.GetTicksMsec()/260d));button.Modulate=attention?new Color(1,.75f+.25f*pulse,.45f+.55f*pulse):Colors.White;
-            if(hovered&&MegaCrit.Sts2.Core.Nodes.NGame.Instance!=null){var text=CurrentSummary(player);if(text!=hoverText){hoverText=text;NHoverTipSet.Remove(button);NHoverTipSet.CreateAndShow(button,[new HoverTip(new LocString("frieren","COMMISSION.CURRENT"),text)]);}}
+            if(hovered&&MegaCrit.Sts2.Core.Nodes.NGame.Instance!=null){var text=CurrentSummary(player);if(text!=hoverText){hoverText=text;CommissionHoverTips.Remove(button);CommissionHoverTips.Show(button,[new HoverTip(new LocString("frieren","COMMISSION.CURRENT"),text)]);}}
         };
-        button.TreeExiting+=()=>NHoverTipSet.Remove(button);
+        button.TreeExiting+=()=>CommissionHoverTips.Remove(button);
     }
 }

@@ -4,6 +4,8 @@ using HarmonyLib;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Entities.Multiplayer;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Cards;
@@ -16,6 +18,12 @@ namespace FrierenMod.Scripts.Shared.Compatibility;
 // 以正式版公共类型编译；只在这里解析两版不同的命令签名。
 public static class GameApi
 {
+    private static readonly VariableMethod BeginChoiceMethod = new(
+        (typeof(PlayerChoiceContext), "SignalPlayerChoiceBegun", [typeof(Player), typeof(PlayerChoiceOptions)], [0,1]),
+        (typeof(PlayerChoiceContext), "SignalPlayerChoiceBegun", [typeof(PlayerChoiceOptions)], [1]));
+    public static Task BeginPlayerChoice(PlayerChoiceContext context, Player player, PlayerChoiceOptions options) =>
+        BeginChoiceMethod.Invoke<Task>(context, player, options)!;
+
     private static readonly VariableMethod DamageOne = DamageMethod(typeof(Creature));
     private static readonly VariableMethod DamageMany = DamageMethod(typeof(IEnumerable<Creature>));
     private static VariableMethod DamageMethod(Type target) => new(

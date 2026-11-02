@@ -56,6 +56,8 @@ public static class CustomSpellDisplayTests
                 Check(hp - enemy.CurrentHp == (kind == "DamageTriple" ? 21 : 7), language + kind + "实际伤害与预览一致");
                 await PowerCmd.Remove(weak!);
             }
+            var energy=combat.CreateCard<CustomLegendarySpell>(player);energy.Configure(2,[new("Energy",2)]);
+            Check(!Text(energy).Contains('{') && Text(energy).Contains("[img"),language+"回费渲染为原生能量图标，无格式化占位符");
             var block = combat.CreateCard<CustomLegendarySpell>(player);
             block.Configure(2, [new LegendaryEffect("Block", 5), new LegendaryEffect("Vulnerable", 3)]);
             await CardPileCmd.Add(block, PileType.Hand);
@@ -79,6 +81,14 @@ public static class CustomSpellDisplayTests
                 Check(Text(choice).Contains("4"), language + kind + "构筑选项文案仍正常");
             }
         }
+        foreach(var pile in player.PlayerCombatState!.AllPiles)foreach(var c in pile.Cards.ToArray())pile.RemoveInternal(c);
+        var upgrades=new List<CardModel>();
+        foreach(var pile in new[]{PileType.Hand,PileType.Draw,PileType.Discard,PileType.Exhaust}){
+            var c=combat.CreateCard<StrikeFrieren>(player);await CardPileCmd.Add(c,pile);upgrades.Add(c);
+        }
+        var all=combat.CreateCard<CustomLegendarySpell>(player);all.Configure(3,[new("UpgradeAll",1)]);
+        await CardPileCmd.Add(all,PileType.Hand);await all.OnPlayWrapper(context,null,false,resources,skipCardPileVisuals:true);
+        Check(upgrades.All(c=>c.IsUpgraded),"升级本场战斗所有牌包含消耗堆，保留原牌堆与卡牌对象");
         return count;
     }
 }

@@ -112,7 +112,7 @@ public static class AuraBossTests
         aura.NoticeDispel(); Check(aura.NextMove.Id == "MEDITATE", "重复解除魔法不改普通意图");
         int mana = aura.Mana; await Step();
         Check(aura.Mana == mana + 20 && boss.GetPowerAmount<StrengthPower>() == 2 && aura.ScaleCount == 1 &&
-            aura.NextMove.Id == "GUILLOTINE", "第3回合冥想20魔力2力量后额外判定天平");
+            aura.NextMove.Id == "GUILLOTINE", "第3回合先判定天平，再冥想20魔力2力量");
         await aura.AfterSideTurnEnd(context, CombatSide.Enemy, combat.Enemies);
         Check(aura.ScaleCount == 1, "同一回合末不会重复判定");
         var submission = player.Creature.GetPower<AuraSubmissionPower>()!;
@@ -152,8 +152,16 @@ public static class AuraBossTests
         await Step();
         await aura.ChangeMana(ManaCmd.Total(player) - aura.Mana);
         await Step();
-        Check(aura.NextMove.Id is not "GUILLOTINE" and not "STAGGER", "天平平局无惩罚、无眩晕");
+        Check(aura.NextMove.Id is not "GUILLOTINE" and not "STAGGER", "冥想回合先按加魔力前的数值判平局，之后增加魔力不改变裁决");
 
+        AccessTools.Field(typeof(Aura),"_actions").SetValue(aura,2);
+        AccessTools.Field(typeof(Aura),"_meditateNext").SetValue(aura,true);
+        AccessTools.Field(typeof(Aura),"_verdict").SetValue(aura,null);
+        await aura.ChangeMana(ManaCmd.Total(player)-aura.Mana);aura.RefreshOrdinaryIntent();
+        int beforeScale=aura.ScaleCount;int beforeMeditation=aura.Mana;
+        Check(aura.NextMove.Id=="MEDITATE","构造天平回合双方魔力相同的冥想情形");
+        await Step();
+        Check(aura.ScaleCount==beforeScale+1&&aura.Mana==beforeMeditation+20&&aura.NextMove.Id is not "GUILLOTINE" and not "STAGGER","天平先按冥想前的魔力判平局，再加20魔力且不重复结算");
         foreach (var lang in new[] { "zhs", "eng" }) {
             LocManager.Instance.SetLanguage(lang);
             Check(!elegance.Description.GetFormattedText().Contains("LOC_ERR") && !boss.Name.Contains("FRIERENMOD"), lang + "名称和魔力文案可格式化");

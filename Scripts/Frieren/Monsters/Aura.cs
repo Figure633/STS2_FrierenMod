@@ -108,7 +108,15 @@ public sealed class Aura : CustomMonsterModel
             await CreatureCmd.Add(guard, CombatState, CombatSide.Enemy, "Soldier2");
         }, new SummonIntent());
         Add("BARRAGE", async () => { _meditateNext = true; await Attack(6, 3); }, new MultiAttackIntent(6, 3));
-        Add("MEDITATE", async () => { _meditateNext = false; await ChangeMana(20); await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), Creature, 2, Creature, null); }, new BuffIntent());
+        Add("MEDITATE", async () => {
+            _meditateNext = false;
+            if (UpcomingTurn % 3 == 0 && _lastWeighedAction != UpcomingTurn) {
+                _lastWeighedAction = UpcomingTurn;
+                await Weigh();
+            }
+            await ChangeMana(20);
+            await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), Creature, 2, Creature, null);
+        }, new BuffIntent());
         return new MonsterMoveStateMachine(_moves.Values.Cast<MonsterState>().Append(next), next);
     }
 
