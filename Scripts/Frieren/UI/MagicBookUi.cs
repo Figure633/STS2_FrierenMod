@@ -110,7 +110,7 @@ public static class MagicBookUi
         hud.MouseExited += preview.Hide;
         var screen = new MagicBookScreen(root, player, currentOverlay);
         var book = screen.View;
-        var animations = new Control { Name = "FrierenMagicDeckAnimations", ZIndex = 101,
+        var animations = new Control { Name = "FrierenMagicDeckAnimations", ZIndex = 2000, ZAsRelative = false,
             MouseFilter = Control.MouseFilterEnum.Ignore,
             MouseBehaviorRecursive = Control.MouseBehaviorRecursiveEnum.Disabled,
             FocusBehaviorRecursive = Control.FocusBehaviorRecursiveEnum.Disabled };

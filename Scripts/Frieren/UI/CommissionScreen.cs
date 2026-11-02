@@ -103,20 +103,30 @@ public sealed class CommissionScreen
         _previous.Modulate = _act > 0 ? Colors.White : new Color(1, 1, 1, .45f);
         _next.Modulate = _act < _player.RunState.CurrentActIndex ? Colors.White : new Color(1, 1, 1, .45f);
         ClearHover(); foreach (var child in _list.GetChildren()) { _list.RemoveChild(child); child.QueueFree(); }
-        foreach (var quest in state.Quests.Where(q => q.Act == _act)) AddRow(quest, state, canAct);
+        foreach (var quest in state.Quests.Where(q => q.Act == _act).OrderBy(q => q.OpensAt).ThenBy(q => q.Id)) AddRow(quest, state, canAct);
     }
     private void AddRow(Commission quest, CommissionState state, bool canAct)
     {
         bool unlocked = quest.OpensAt <= CommissionCmd.Floor(_player) && quest.Act == _player.RunState.CurrentActIndex;
-        bool ready = CommissionState.Ready(quest, id => CommissionCmd.OwnsSpell(_player, id));
-        var panel = new PanelContainer { Name = "Quest" + quest.Id, CustomMinimumSize = new(1500, 205) };
+        bool current = quest.Act == _player.RunState.CurrentActIndex;
+        bool ready = current && CommissionState.Ready(quest, id => CommissionCmd.OwnsSpell(_player, id));
+        var panel = new PanelContainer { Name = "Quest" + quest.Id, CustomMinimumSize = new(1500, 265) };
         panel.AddThemeStyleboxOverride("panel", new StyleBoxFlat { BgColor = ready ? new("263d35") : new("202c3a"), BorderColor = new("68715e"),
             BorderWidthLeft = 2, BorderWidthRight = 2, BorderWidthTop = 2, BorderWidthBottom = 2, CornerRadiusTopLeft = 12, CornerRadiusTopRight = 12,
             CornerRadiusBottomLeft = 12, CornerRadiusBottomRight = 12, ContentMarginLeft = 24, ContentMarginRight = 24, ContentMarginTop = 18, ContentMarginBottom = 18 });
         _list.AddChild(panel);
         var columns = new HBoxContainer(); columns.AddThemeConstantOverride("separation", 24); panel.AddChild(columns);
+        string art = quest.Template switch {
+            "RESEARCH" => "events/ReadingGrimoire", "SWIFT" => "cards/RapidChant", "FLAWLESS" => "cards/PerfectDefensiveMagic",
+            "ELITE" => "cards/ManaBarricade", "SUPPLIES" => "events/Package", "TEACHING" => "cards/FlowerFieldSpell",
+            "CAREFUL" => "cards/DefensiveMagic", "ESCORT" or "ROAD" => "events/Kraft1", _ => "cards/MultipleOffensiveMagic" };
+        columns.AddChild(new TextureRect { Name = "Illustration", Texture = ResourceLoader.Load<Texture2D>("res://FrierenMod/images/" + art + ".png"),
+            CustomMinimumSize = new(260, 198), ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize,
+            StretchMode = TextureRect.StretchModeEnum.KeepAspectCovered, SizeFlagsVertical = Control.SizeFlags.ShrinkCenter,
+            ClipContents = true, MouseFilter = Control.MouseFilterEnum.Ignore });
         var content = new VBoxContainer { SizeFlagsHorizontal = Control.SizeFlags.ExpandFill }; content.AddThemeConstantOverride("separation", 9); columns.AddChild(content);
         content.AddChild(Label("Title", Text("NAME." + quest.Template), 28, new("f4d69a")));
+        content.AddChild(Label("Request", Text("REQUEST." + quest.Template), 18, new("bdb3a0")));
         string required = quest.Goal == CommissionGoal.Spell ? CommissionCmd.Spell(quest.Spell).Title : "";
         var goal = Label("Goal", Format("GOAL." + quest.Goal, ("Count", quest.Target), ("Spell", required)), 23, new("e8e1d4")); content.AddChild(goal);
         if (quest.Goal == CommissionGoal.Spell) Hover(goal, () => {
@@ -126,12 +136,15 @@ public sealed class CommissionScreen
             CommissionRewardKind.Prop => MagicPropCard.Create(_player, quest.Reward.Item).Title,
             CommissionRewardKind.Potion => CommissionCmd.Potion(quest.Reward.Item).Title.GetFormattedText(),
             CommissionRewardKind.Relic => CommissionCmd.Relic(quest.Reward.Item).Title.GetFormattedText(), _ => "" };
-        var reward = Label("Reward", Format("REWARD." + quest.Reward.Kind, ("Amount", quest.Reward.Amount), ("Item", rewardItem)), 22, new("b6d7bc")); content.AddChild(reward);
+        string rewardText = Format("REWARD." + quest.Reward.Kind, ("Amount", quest.Reward.Amount), ("Item", rewardItem));
+        if (quest.Reward.BonusGold > 0) rewardText += Format("BONUS_GOLD", ("Gold", quest.Reward.BonusGold));
+        var reward = Label("Reward", rewardText, 21, new("b6d7bc")); content.AddChild(reward);
         Hover(reward, () => quest.Reward.Kind switch {
             CommissionRewardKind.Prop => [new CardHoverTip(MagicPropCard.Create(_player, quest.Reward.Item))],
             CommissionRewardKind.Relic => CommissionCmd.Relic(quest.Reward.Item).HoverTips,
             CommissionRewardKind.Potion => CommissionCmd.Potion(quest.Reward.Item).HoverTips, _ => [] });
-        string status = quest.Status == CommissionStatus.Available ? (unlocked ? Text("AVAILABLE") : quest.Act < _player.RunState.CurrentActIndex ? Text("EXPIRED") : Format("LOCKED", ("Floor", quest.OpensAt))) :
+        string status = !current && quest.Status != CommissionStatus.Claimed ? Text("EXPIRED") :
+            quest.Status == CommissionStatus.Available ? (unlocked ? Text("AVAILABLE") : Format("LOCKED", ("Floor", quest.OpensAt))) :
             quest.Status == CommissionStatus.Claimed ? Text("CLAIMED") : quest.Status == CommissionStatus.Abandoned ? Text("ABANDONED") :
             ready ? Text("READY") : Format("PROGRESS", ("Current", CommissionState.ProgressOf(quest, id => CommissionCmd.OwnsSpell(_player, id))), ("Target", quest.Target));
         content.AddChild(Label("Status", status, 21, ready ? new("a7f2bd") : new("a9baca")));
@@ -141,7 +154,7 @@ public sealed class CommissionScreen
             actions.AddChild(button); if (!enabled) { button.Disable(); button.Modulate = new Color(1, 1, 1, .45f); }
         }
         if (quest.Status == CommissionStatus.Available) ActionButton("Accept", Text("ACCEPT"), CommissionOperation.Accept, canAct && unlocked && state.ActiveCount < CommissionState.ActiveLimit);
-        else if (quest.Status == CommissionStatus.Accepted) {
+        else if (current && quest.Status == CommissionStatus.Accepted) {
             bool fullPotion = quest.Reward.Kind == CommissionRewardKind.Potion && !_player.HasOpenPotionSlots;
             bool canReceive = CommissionCmd.CanReceive(_player, quest.Reward);
             ActionButton("Claim", Text(ready && !canReceive ? fullPotion ? "POTION_FULL" : "POTION_BLOCKED" : "CLAIM"), CommissionOperation.Claim, canAct && ready && canReceive);

@@ -149,8 +149,8 @@ public static class MultiplayerTests
         await Barrier("commission-ready");
         if(me.Character is Frieren) {
             int oldGold=me.Gold;
-            Check(await CommissionCmd.Send(me,1,CommissionOperation.Claim)&&me.Gold==oldGold+40,"通过ENet提交本人委托并获得固定金币");
-            Check(!await CommissionCmd.Send(me,1,CommissionOperation.Claim)&&me.Gold==oldGold+40,"重复提交不重复领奖");
+            Check(await CommissionCmd.Send(me,1,CommissionOperation.Claim)&&me.Gold==oldGold+90,"通过ENet提交本人委托并获得固定金币");
+            Check(!await CommissionCmd.Send(me,1,CommissionOperation.Claim)&&me.Gold==oldGold+90,"重复提交不重复领奖");
         }
         await Same("commission-claimed",()=>frierens.All(p=>CommissionCmd.Read(p).Quests.Single(q=>q.Id==1).Status==CommissionStatus.Claimed));
         Check(frierens.All(p=>MagicDeckStore.Read(p).Items.Count==3&&MagicDeckStore.Read(p).Props.Count==2),"每位芙莉莲独立选三因子、各得两个工具");
@@ -298,6 +298,22 @@ public static class MultiplayerTests
             Check(await MagicPropCmd.UseSelected(me,id,[]),"载入重连后继续使用同步魔具");
         }
         await Same("restored-used",()=>run.Players.Where(p=>p.Character is Frieren).All(p=>MagicDeckStore.Read(p).Props.Count(x=>x.PropId=="MysteryBox")==1));
+        run.ActFloor=9;CommissionCmd.Ensure(run);
+        if(me.Character is Frieren)Check(await CommissionCmd.Send(me,3,CommissionOperation.Accept),"重连后通过ENet接取挑战委托");
+        await Same("challenge-accepted",()=>run.Players.Where(p=>p.Character is Frieren).All(p=>CommissionCmd.Read(p).Quests.Single(q=>q.Id==3).Status==CommissionStatus.Accepted));
+        foreach(var p in run.Players.Where(p=>p.Character is Frieren)){var q=CommissionCmd.State(p);q.Record("mp-swift",CommissionGoal.FirstTurnBattle);CommissionCmd.Write(p,q);}
+        await Barrier("challenge-ready");
+        if(me.Character is Frieren){
+            int oldCount=MagicDeckStore.Read(me).Props.Count;int oldGold=me.Gold;
+            Check(await CommissionCmd.Send(me,3,CommissionOperation.Claim)&&MagicDeckStore.Read(me).Props.Count==oldCount+1&&me.Gold==oldGold+100,"ENet挑战报酬同步魔具和额外金币");
+        }
+        await Same("challenge-claimed",()=>run.Players.Where(p=>p.Character is Frieren).All(p=>CommissionCmd.Read(p).Quests.Single(q=>q.Id==3).Status==CommissionStatus.Claimed));
+        if(me.Character is Frieren)Check(await CommissionCmd.Send(me,5,CommissionOperation.Accept),"ENet接取无伤精英委托");
+        await Same("expiry-ready",()=>run.Players.Where(p=>p.Character is Frieren).All(p=>CommissionCmd.Read(p).Quests.Single(q=>q.Id==5).Status==CommissionStatus.Accepted));
+        foreach(var p in run.Players.Where(p=>p.Character is Frieren)){var q=CommissionCmd.State(p);q.Record("mp-flawless",CommissionGoal.FlawlessElite);CommissionCmd.Write(p,q);}
+        run.CurrentActIndex=1;run.ActFloor=1;CommissionCmd.Ensure(run);await Barrier("next-act");
+        if(me.Character is Frieren)Check(!await CommissionCmd.Send(me,5,CommissionOperation.Claim),"ENet进入新幕后拒绝旧幕已达标领奖");
+        await Same("expired",()=>run.Players.Where(p=>p.Character is Frieren).All(p=>CommissionCmd.Read(p).ActiveCount==0&&CommissionCmd.Read(p).Quests.Single(q=>q.Id==5).Status==CommissionStatus.Abandoned));
         File.WriteAllText(Path.Combine(dir,role+"-result.json"),JsonSerializer.Serialize(new{checks,mixed}));
         await Barrier("finished");
         newTimer.Stop();harmony.UnpatchAll(harmony.Id);foreach(var screen in Screens)screen.Free();Overlay.Free();

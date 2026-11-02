@@ -40,7 +40,7 @@ public static class CommissionCmd
         var state = Read(player);
         if (player.Character is not Frieren) return state;
         int act = player.RunState.CurrentActIndex;
-        if (state.GeneratedActs.Contains(act)) return state;
+        if (state.CurrentAct == act && state.GeneratedActs.Contains(act) && !state.Quests.Any(q => q.Act != act && q.Status is CommissionStatus.Available or CommissionStatus.Accepted)) return state;
         byte[] hash = SHA256.HashData(Encoding.UTF8.GetBytes($"frieren-commissions-v1/{player.RunState.Rng.StringSeed}/{player.NetId}/{act}"));
         var rng = GameApi.CreateRng(BitConverter.ToUInt32(hash, 0));
         // 不依赖生成时的瞬时库存；旧局两端首次查看的时机不同也必须生成相同委托。
@@ -72,7 +72,10 @@ public static class CommissionCmd
         if (!CanAct(player) || !Pending.Add(player)) return false;
         try {
             int revision = State(player).Revision;
-            return await MagicDeckNetwork.SendCommission(player, new() { Quest = id, Operation = operation, Revision = revision });
+            bool success = await MagicDeckNetwork.SendCommission(player, new() { Quest = id, Operation = operation, Revision = revision });
+            // 表现等待放在本机输入外层，不把各端不同的动画时长带入同步动作。
+            if (success && operation == CommissionOperation.Claim) await UI.MagicDeckAnimations.WhenIdle(player);
+            return success;
         } finally { Pending.Remove(player); }
     }
     public static async Task<bool> Execute(Player player, int id, CommissionOperation operation, int revision)
@@ -89,7 +92,7 @@ public static class CommissionCmd
             Write(player, state); return true;
         }
         var quest = state.Quests.SingleOrDefault(q => q.Id == id);
-        if (quest == null || !CommissionState.Ready(quest, spell => OwnsSpell(player, spell))) return false;
+        if (quest == null || quest.Act != player.RunState.CurrentActIndex || !CommissionState.Ready(quest, spell => OwnsSpell(player, spell))) return false;
         var reward = quest.Reward;
         PotionModel? potion = reward.Kind == CommissionRewardKind.Potion ? Potion(reward.Item).ToMutable() : null;
         if (!CanReceive(player, reward)) return false;
@@ -99,7 +102,9 @@ public static class CommissionCmd
         switch (reward.Kind) {
             case CommissionRewardKind.Gold: await PlayerCmd.GainGold(reward.Amount, player); break;
             case CommissionRewardKind.Prop:
-                var deck = MagicDeckStore.Read(player); deck.AddProp(reward.Item); MagicDeckStore.Write(player, deck); break;
+                var deck = MagicDeckStore.Read(player);
+                for (int i = 0; i < reward.Amount; i++) deck.AddProp(reward.Item);
+                MagicDeckStore.Write(player, deck); break;
             case CommissionRewardKind.Relic:
                 var relic = Relic(reward.Item);
                 if (player.Relics.Any(r => r.Id == relic.Id)) await PlayerCmd.GainGold(reward.Amount, player);
@@ -110,6 +115,7 @@ public static class CommissionCmd
                 if (!result.success) { state.Quests.Single(q => q.Id == id).Status = CommissionStatus.Accepted; state.Revision++; Write(player, state); return false; }
                 break;
         }
+        if (reward.BonusGold > 0) await PlayerCmd.GainGold(reward.BonusGold, player);
         return true;
     }
 
@@ -126,15 +132,55 @@ public static class CommissionCmd
             if (state.Record($"{player.RunState.CurrentActIndex}/{player.RunState.TotalFloor}/{room.ModelId}/original-{originalIndex}", CommissionGoal.Monsters)) Write(player, state);
         }
     }
+    private static string BattleKey(IRunState run, CombatRoom room) => $"{run.CurrentActIndex}/{run.TotalFloor}/{room.ModelId}";
+    public static void BeginCombat(ICombatState? combat)
+    {
+        if (combat?.RunState.CurrentRoom is not CombatRoom room) return;
+        foreach (var player in combat.Players.Where(p => p.Character is Frieren)) {
+            var state = State(player);
+            if (state.BeginCombat(BattleKey(combat.RunState, room))) Write(player, state);
+        }
+    }
+    public static void HpChanged(ICombatState? combat, Creature creature, decimal delta)
+    {
+        if (delta >= 0 || creature.Player is not { Character: Frieren } player || combat == null ||
+            !combat.Players.Contains(player) || combat.RunState.CurrentRoom is not CombatRoom room) return;
+        var state = State(player);
+        if (state.LoseHp(BattleKey(combat.RunState, room))) Write(player, state);
+    }
     public static void Victory(IRunState run, CombatRoom room)
     {
-        if (room.RoomType != RoomType.Elite) return;
+        if (room.RoomType is not (RoomType.Elite or RoomType.Monster)) return;
         foreach (var player in room.CombatState.Players.Where(p => p.Character is Frieren && p.Creature.IsAlive)) {
             var state = State(player);
-            if (state.Record($"elite/{run.CurrentActIndex}/{run.TotalFloor}/{room.ModelId}", CommissionGoal.Elites)) Write(player, state);
+            string key = BattleKey(run, room);
+            bool flawless = state.CombatKey == key && !state.LostHp;
+            bool changed;
+            if (room.RoomType == RoomType.Elite) {
+                changed = state.Record("elite/" + key, CommissionGoal.Elites);
+                if (flawless) changed |= state.Record("flawless-elite/" + key, CommissionGoal.FlawlessElite);
+            } else {
+                changed = state.Record("battle/" + key, CommissionGoal.Battles);
+                if (room.CombatState.RoundNumber == 1 && player.PlayerCombatState?.TurnNumber <= 1)
+                    changed |= state.Record("swift/" + key, CommissionGoal.FirstTurnBattle);
+                if (flawless) changed |= state.Record("flawless/" + key, CommissionGoal.FlawlessBattle);
+            }
+            if (changed) Write(player, state);
         }
     }
     public static void Ensure(IRunState run) { foreach (var player in run.Players.Where(p => p.Character is Frieren)) State(player); }
+}
+
+[HarmonyPatch(typeof(Hook), nameof(Hook.BeforeCombatStart))]
+internal static class CommissionCombatHook
+{
+    // 在遗物等开战效果前建立基线，开战扣血同样使本场失去“无伤”资格。
+    private static void Prefix(ICombatState? combatState) => CommissionCmd.BeginCombat(combatState);
+}
+[HarmonyPatch(typeof(Hook), nameof(Hook.AfterCurrentHpChanged))]
+internal static class CommissionHpHook
+{
+    private static void Prefix(ICombatState? combatState, Creature creature, decimal delta) => CommissionCmd.HpChanged(combatState, creature, delta);
 }
 
 [HarmonyPatch(typeof(Hook), nameof(Hook.AfterDeath))]
