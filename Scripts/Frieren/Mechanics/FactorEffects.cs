@@ -1,4 +1,5 @@
 using FrierenMod.Scripts.Shared.Compatibility;
+using BaseLib.Utils;
 using FrierenMod.Core;
 using FrierenMod.Scripts.Cards;
 using FrierenMod.Scripts.Powers;
@@ -25,6 +26,10 @@ public static class FactorEffects
         {
             case "AdvancedDefensiveMagic":
                 for (int i = 0; i < 2; i++) await CreatureCmd.GainBlock(self, reward, ValueProp.Move, play);
+                break;
+            case "BlackGoldWings":
+                await DamageCmd.Attack(reward).FromCardCompatibility(play.Card, play).TargetingAllOpponents(self.CombatState!).Execute(context);
+                await CreatureCmd.GainBlock(self, reward, ValueProp.Move, play);
                 break;
             case "BarrierMagic":
                 await CreatureCmd.GainBlock(self, reward, ValueProp.Move, play);

@@ -7,18 +7,18 @@ public static class LegendaryCraft
 {
     public static IReadOnlyList<LegendaryEffect> Options(int cost, int layer) => (cost, layer) switch
     {
-        (0, 0) => [new("Chant",2), new("ManaDiscard",2), new("ManaDraw",2), new("Scry",2)],
+        (0, 0) => [new("Chant",2), new("ManaDiscard",3), new("ManaDraw",2), new("Scry",2)],
         (1, 0) => [new("Chant",3), new("ManaDiscard",4), new("ManaHand",3), new("ManaDraw",4), new("Scry",3)],
-        (2, 0) => [new("Chant",4), new("ManaDiscard",6), new("RandomCard",1), new("Retain",1), new("ManaHand",4), new("Scry",4), new("ZeroCost",1)],
-        (3, 0) => [new("ManaDiscard",8), new("RandomCard",2), new("Retain",2), new("ManaHand",5), new("ZeroCost",2)],
-        (0, 1) => [new("Block",4), new("Damage",6), new("DamageAll",4)],
-        (1, 1) => [new("Block",8), new("Damage",10), new("Energy",1), new("DamageAll",8)],
-        (2, 1) => [new("Block",12), new("Energy",2), new("DamageTriple",5), new("DamageAll",12), new("Execute",30)],
-        (3, 1) => [new("Block",16), new("Energy",3), new("DamageTriple",7), new("DamageAll",16), new("Execute",40)],
-        (0, 2) => [new("Draw",1), new("Dexterity",2), new("Vulnerable",1)],
-        (1, 2) => [new("Draw",2), new("Dexterity",3), new("Vulnerable",2)],
-        (2, 2) => [new("Draw",3), new("Dexterity",4), new("Vulnerable",3), new("Intangible",1), new("UpgradeHand",1)],
-        (3, 2) => [new("Draw",5), new("Intangible",2), new("DoubleStrength",1), new("RemoveDebuffs",1), new("UpgradeAll",1)],
+        (2, 0) => [new("Chant",4), new("RandomCard",1), new("RetainAll",1), new("ManaHand",4), new("Scry",4), new("ZeroCost",1)],
+        (3, 0) => [new("RandomCard",2), new("RetainAll",2), new("ManaHand",8), new("ZeroCost",2)],
+        (0, 1) => [new("Block",8), new("Damage",8), new("DamageAll",6)],
+        (1, 1) => [new("Block",14), new("Damage",16), new("Energy",1), new("DamageAll",12)],
+        (2, 1) => [new("Block",20), new("Damage",25), new("Energy",2), new("DamageQuad",4), new("DamageAll",18), new("Execute",30)],
+        (3, 1) => [new("Block",28), new("Energy",3), new("DamageSeven",4), new("DamageAll",24), new("Execute",40)],
+        (0, 2) => [new("Draw",1), new("Dexterity",2)],
+        (1, 2) => [new("Draw",2), new("Dexterity",3), new("ReduceStrength",2)],
+        (2, 2) => [new("Draw",3), new("Dexterity",4), new("ReduceStrength",4), new("Intangible",1), new("UpgradeHand",1)],
+        (3, 2) => [new("Draw",5), new("Intangible",2), new("DoubleStats",1), new("RemoveDebuffs",1), new("UpgradeAll",1)],
         _ => throw new ArgumentOutOfRangeException()
     };
 }

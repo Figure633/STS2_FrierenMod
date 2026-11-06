@@ -45,7 +45,7 @@
   "EFFECT.BuildUpBody": "Gain {Reward} Strength.",
   "FACTOR.BuildUpBody": "[gold]Chant[/gold] X: consume X [gold]Mana[/gold].\nGain X Strength.",
   "EFFECT.GrossedOutLook": "All enemies lose {Reward} Strength this turn.",
-  "FACTOR.GrossedOutLook": "[gold]Chant[/gold] X: ALL enemies lose X Strength this turn.",
+  "FACTOR.GrossedOutLook": "[gold]Chant[/gold] X: ALL enemies lose X+1 Strength this turn.",
   "EFFECT.IceArrows": "ALL enemies lose {Reward} HP.",
   "FACTOR.IceArrows": "[gold]Chant[/gold] X: consume X [gold]Mana[/gold].\nALL enemies lose HP equal to 4 times the [gold]Chant[/gold] intensity.",
   "EFFECT.MeleeMage": "Strikes deal {Reward} additional damage this combat.",
@@ -124,7 +124,7 @@
   "CRAFT.ManaHand": "Add {Amount} [gold]Mana[/gold] to your hand.",
   "CRAFT.ManaDiscard": "Add {Amount} [gold]Mana[/gold] to your discard pile.",
   "CRAFT.Scry": "Scry {Amount}.",
-  "CRAFT.RandomCard": "Add {Amount} random Common cards to your hand. They cost 0 this turn.",
+  "CRAFT.RandomCard": "Add {Amount} random Frieren cards to your [gold]hand[/gold]. They cost 0 this turn.",
   "CRAFT.Retain": "Choose {Amount} cards in your hand to [gold]Retain[/gold].",
   "CRAFT.ZeroCost": "Reduce the cost of {Amount} random cards in your hand to 0 this turn.",
   "CRAFT.Block": "Gain {Amount} Block.",
@@ -567,5 +567,14 @@
   "PROP.PhoenixQuill": "Replace 1 factor with a random Rare factor, keeping its slot. Gain 2 Unbelievable Tools.\nCommission-exclusive magic tool. Consumed on use.",
   "COMMISSION.DELIVERED": "Cargo delivered to the merchant. Total freight: {Gold} gold.",
   "COMMISSION.CARRY_READY": "Completed. This reward remains claimable across acts.",
-  "COMMISSION.CARRY_NOTICE": "Completed requests from earlier acts await rewards. Switch to their act to claim them."
+  "COMMISSION.CARRY_NOTICE": "Completed requests from earlier acts await rewards. Switch to their act to claim them.",
+  "CRAFT.RetainAll": "Retain your entire hand for {Amount} turns.",
+  "CRAFT.DamageQuad": "Deal {Amount} damage 4 times.",
+  "CRAFT.DamageSeven": "Deal {Amount} damage 7 times.",
+  "CRAFT.DoubleStats": "Double your Strength and Dexterity. [gold]Exhaust[/gold].",
+  "CRAFT.ReduceStrength": "ALL enemies lose {Amount} Strength. [gold]Exhaust[/gold].",
+  "FACTOR.BlackGoldWings": "[gold]Chant[/gold] 2X: Deal 6X damage to ALL enemies. Gain 6X Block.",
+  "EFFECT.BlackGoldWings": "Deal {Damage:diff()} damage to ALL enemies. Gain {Block:diff()} Block.",
+  "SEALING_ORE.REMOVE": "Choose a card to remove.",
+  "SEALING_ORE.MERCHANT": "Ho ho, finally some anti-magic stone! Priced at 1,000 Gold!"
 }

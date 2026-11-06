@@ -103,11 +103,25 @@ public static class MagicPropCmd
     private static async Task<bool> ApplySelected(Player player, int propId, IReadOnlyList<int> targets, PlayerChoiceContext context)
     {
         if (Shopping.Contains(player) || !CanAct(player, fromInput: false)) return false;
+        var original = MagicDeckStore.Read(player);
+        var prop = original.Props.SingleOrDefault(p => p.InstanceId == propId);
+        if (prop == null) return false;
+        string? chosenFactor = null;
+        if (prop.PropId == "RoyalGrimoire") {
+            var choices = SpellCatalog.Available.OrderBy(f => f.Id, StringComparer.Ordinal)
+                .Select(f => (CardModel)FactorCard.Create(player, f.Id)).ToArray();
+            var selected = (await CardSelectCmd.FromSimpleGrid(context, choices, player,
+                new CardSelectorPrefs(new LocString("frieren", "CARD_SELECT"), 1))).SingleOrDefault();
+            if (selected is not FactorCard factor) return false;
+            chosenFactor = factor.FactorId;
+        }
         var result = MagicPropRules.Apply(MagicDeckStore.Read(player), propId, targets,
             CombatManager.Instance.IsInProgress, player.PlayerRng.Rewards.NextInt);
         if (result == null) return false;
+        if (chosenFactor != null) result.Deck.Add(chosenFactor);
         string usedProp = MagicDeckStore.Read(player).Props.Single(p => p.InstanceId == propId).PropId;
         MagicDeckStore.Write(player, result.Deck, propId);
+        if (usedProp == "SealingOre") await SealingOreCmd.Refresh(player);
         if (usedProp == "UnbelievableTool") Presentation.FrierenAchievements.Unlock(player, "0006");
         if (usedProp == "SeinNote") Presentation.FrierenAchievements.Unlock(player, "4013");
         if (result.Heal > 0) await CreatureCmd.Heal(player.Creature, result.Heal);

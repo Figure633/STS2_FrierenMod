@@ -116,14 +116,10 @@ public static class AuraBossTests
         await aura.AfterSideTurnEnd(context, CombatSide.Enemy, combat.Enemies);
         Check(aura.ScaleCount == 1, "同一回合末不会重复判定");
         var submission = player.Creature.GetPower<AuraSubmissionPower>()!;
-        submission.AmountOnTurnStart = submission.Amount;
-        Check(submission.ModifyHandDraw(player, 5) == 3, "服从实际减少开场抽牌");
-        await submission.AfterSideTurnStart(CombatSide.Player, [player.Creature], combat);
-        Check(player.Creature.HasPower<AuraSubmissionPower>(), "选牌暂停抽牌时不能提前移除服从");
-        await submission.AfterModifyingHandDraw();
-        Check(submission.ModifyHandDraw(player, 5) == 5, "同回合不重复减少抽牌");
-        await submission.AfterSideTurnEnd(context, CombatSide.Player, [player.Creature]);
-        Check(!player.Creature.HasPower<AuraSubmissionPower>(), "抽牌后回合结束移除服从");
+        player.PlayerCombatState.Energy = 3;
+        Check(submission.ModifyHandDraw(player, 5) == 5, "服从不再减少抽牌");
+        await submission.AfterEnergyReset(player);
+        Check(player.PlayerCombatState.Energy == 2 && !player.Creature.HasPower<AuraSubmissionPower>(), "服从扣除1能量后立即移除");
         hp = player.Creature.CurrentHp; await Step();
         Check(player.Creature.CurrentHp == hp - 27, "断头台25加2力量");
         await Step();
@@ -140,15 +136,15 @@ public static class AuraBossTests
         await CreatureCmd.Kill(soldiers[1]);
         Check(aura.NextMove.Id == "SUMMON", "清空士兵后可预判召唤");
         mana = aura.Mana; await Step();
-        Check(aura.Mana == mana - 40 && combat.Enemies.Count(c => c.IsAlive && c.Monster is AuraSoldier) == 2,
-            "召唤扣40，补两名士兵");
+        Check(aura.Mana == mana && combat.Enemies.Count(c => c.IsAlive && c.Monster is AuraSoldier) == 2,
+            "召唤不扣魔力，补两名士兵");
         hp = player.Creature.CurrentHp; await Step();
         Check(player.Creature.CurrentHp == hp - 30 && aura.ScaleCount == 3 && aura.NextMove.Id == "GUILLOTINE",
             "第9回合连击正常造成10×3后额外判定第三次天平");
-        Check(((SingleAttackIntent)aura.NextMove.Intents.Single()).GetTotalDamage([player.Creature], boss) == 44,
-            "第三次断头台意图40加4力量");
+        Check(((SingleAttackIntent)aura.NextMove.Intents.Single()).GetTotalDamage([player.Creature], boss) == 29,
+            "第三次断头台意图仍25加4力量");
         hp = player.Creature.CurrentHp; await Step();
-        Check(player.Creature.CurrentHp == hp - 44, "第三次断头台结算44伤害");
+        Check(player.Creature.CurrentHp == hp - 29, "第三次断头台结算29伤害");
         await Step();
         await aura.ChangeMana(ManaCmd.Total(player) - aura.Mana);
         await Step();

@@ -9,7 +9,8 @@ namespace FrierenMod.Scripts.Events;
 public sealed class KraftGift : FrierenStoryEvent
 {
     protected override string[] Portraits => ["Kraft1", "Kraft2"];
-    public override bool IsAllowed(IRunState runState) => base.IsAllowed(runState) && runState.CurrentActIndex is 1 or 2;
+    public override bool IsAllowed(IRunState runState) => base.IsAllowed(runState) &&
+        runState.Players.All(p => p.Creature.MaxHp >= 80 || p.Gold >= 300 || p.Deck.Cards.Count >= 30);
     protected override IReadOnlyList<EventOption> GenerateInitialOptions() => [
         Choice("MEAT", Meat, Owner!.Creature.MaxHp >= 80), Choice("MEMBERSHIP", Membership, Owner!.Gold >= 300),
         Choice("RING", Ring, Owner!.Deck.Cards.Count >= 30), Choice("LEAVE", Leave)

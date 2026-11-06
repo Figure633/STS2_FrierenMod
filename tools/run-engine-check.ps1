@@ -1,5 +1,5 @@
 param([Parameter(Mandatory)][ValidatePattern('^[a-z0-9-]+$')][string]$Mode, [switch]$Snapshot,
-    [string]$RuntimeDataDir = '', [string]$ReleaseInfoPath = '')
+    [string]$RuntimeDataDir = '', [string]$ReleaseInfoPath = '', [string]$GodotMonoPath = '')
 $ErrorActionPreference = 'Stop'
 $checkRoot = Split-Path -Parent $PSScriptRoot
 [xml]$checkConfig = Get-Content -LiteralPath (Join-Path $checkRoot 'local.props') -Raw
@@ -22,7 +22,8 @@ $checkArgs = @('--path', (Join-Path $checkRoot 'Tests/Engine'), '--log-file', $c
 if ($Snapshot) { $checkArgs += @('--position','-4000,-4000') } else { $checkArgs += '--headless' }
 $checkArgs += @('--', "--$Mode")
 if ($Snapshot) { $checkArgs += '--ui-snapshot' }
-$checkProcess = Start-Process -FilePath ([string]$checkProps.GodotMonoPath) -ArgumentList $checkArgs -WindowStyle Hidden -PassThru -RedirectStandardOutput $checkOut -RedirectStandardError $checkErrors
+if(!$GodotMonoPath) { $GodotMonoPath=[string]$checkProps.GodotMonoPath }
+$checkProcess = Start-Process -FilePath $GodotMonoPath -ArgumentList $checkArgs -WindowStyle Hidden -PassThru -RedirectStandardOutput $checkOut -RedirectStandardError $checkErrors
 if(!$checkProcess.WaitForExit(90000)) {
     $checkProcess.Kill($true)
     throw '引擎检查超过90秒，已停止本次测试进程。'

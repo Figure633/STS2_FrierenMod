@@ -13,6 +13,8 @@ using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
+using MegaCrit.Sts2.Core.Entities.Ascension;
+using MegaCrit.Sts2.Core.Helpers;
 
 namespace FrierenMod.Scripts.Monsters;
 
@@ -27,7 +29,10 @@ public sealed class Aura : CustomMonsterModel
     public int ScaleCount { get; private set; }
     public int UpcomingTurn => _actions + 1;
     public int Mana => Creature.GetPower<AuraElegancePower>()?.StoredMana ?? 0;
-    public int GuillotineDamage => ScaleCount >= 3 ? 40 : 25;
+    public bool Enhanced => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 1, 0) == 1;
+    public int BarrageDamage => Enhanced ? 7 : 6;
+    public int GuillotineDamage => Enhanced ? 28 : 25;
+    public int SubmissionEnergy => Enhanced ? 2 : 1;
     public override int MinInitialHp => 200;
     public override int MaxInitialHp => 200;
     public override string CustomVisualPath => "res://FrierenMod/scenes/aura_combat.tscn";
@@ -98,16 +103,15 @@ public sealed class Aura : CustomMonsterModel
             return Task.CompletedTask;
         }, new UnknownIntent());
         Add("SUMMON", async () => {
-            // 意图公布后魔力可能已被打空；资源不足则召唤失败，不产生负魔力或免费士兵。
+            // 仍需40魔力才能召唤，但召唤不再扣除魔力。
             if (Mana < 40 || CombatState.Enemies.Any(c => c.IsAlive && c.Monster is AuraSoldier)) return;
             _summonedCycle = _actions / 3;
-            await ChangeMana(-40);
             await CreatureCmd.Add<AuraSoldier>(CombatState, "Soldier1");
             var guard = (AuraSoldier)ModelDb.Monster<AuraSoldier>().ToMutable();
             guard.GuardFirst = true;
             await CreatureCmd.Add(guard, CombatState, CombatSide.Enemy, "Soldier2");
         }, new SummonIntent());
-        Add("BARRAGE", async () => { _meditateNext = true; await Attack(6, 3); }, new MultiAttackIntent(6, 3));
+        Add("BARRAGE", async () => { _meditateNext = true; await Attack(BarrageDamage, 3); }, new MultiAttackIntent(BarrageDamage, 3));
         Add("MEDITATE", async () => {
             _meditateNext = false;
             if (UpcomingTurn % 3 == 0 && _lastWeighedAction != UpcomingTurn) {
@@ -154,7 +158,7 @@ public sealed class Aura : CustomMonsterModel
         {
             _verdict = "GUILLOTINE";
             foreach (var player in players)
-                await PowerCmd.Apply<AuraSubmissionPower>(new ThrowingPlayerChoiceContext(), player.Creature, 2, Creature, null);
+                await PowerCmd.Apply<AuraSubmissionPower>(new ThrowingPlayerChoiceContext(), player.Creature, SubmissionEnergy, Creature, null);
         }
         else if (Mana < playerMana)
         {

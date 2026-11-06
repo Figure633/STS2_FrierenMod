@@ -13,7 +13,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace FrierenMod.Scripts.Cards;
 
 // 比较本回合最高连续同调与此前回合的战斗最高记录。
-public sealed class PaperPlaneSpell() : LegendaryCard(2, CardType.Power, CardRarity.Rare, TargetType.Self)
+public sealed class PaperPlaneSpell() : LegendaryCard(3, CardType.Power, CardRarity.Rare, TargetType.Self)
 {
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play) {
         var power=Owner.Creature.GetPower<PaperPlanePower>() ?? await PowerCmd.Apply<PaperPlanePower>(context,Owner.Creature,1,Owner.Creature,this);

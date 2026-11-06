@@ -289,7 +289,7 @@
   "FRIERENMOD-ENDLESS_FLOW.title": "Endless Flow",
   "FRIERENMOD-ENDLESS_FLOW.description": "Add 1 [gold]Mana[/gold] to each of your draw pile, hand, and discard pile. Deal damage to ALL enemies equal to your total Mana.",
   "FRIERENMOD-FRIEREN_THE_SLAYER.title": "Frieren the Slayer",
-  "FRIERENMOD-FRIEREN_THE_SLAYER.description": "Each turn, choose 1 {Upgraded:cond:upgraded |}Spell from all Spells and add it to your [gold]hand[/gold].",
+  "FRIERENMOD-FRIEREN_THE_SLAYER.description": "At the start of each turn, choose 1 {Upgraded:cond:upgraded |}spell you have not chosen this combat and add it to your [gold]hand[/gold].",
   "FRIERENMOD-KINDLING_SPARK.title": "A Single Spark",
   "FRIERENMOD-KINDLING_SPARK.description": "Deal {Damage:diff()} damage to ALL enemies. Add {Upgraded:cond:X+1|X} [gold]Little Sparks[/gold] to your hand.{InCombat:cond:\n(Add {ActualSparks} Little Sparks.)|}",
   "FRIERENMOD-CRYING.title": "Waaah!",
@@ -317,9 +317,13 @@
   "FRIERENMOD-VALUABLE_CARGO.title": "Precious Cargo",
   "FRIERENMOD-VALUABLE_CARGO.description": "Each unblocked damage event: -2 freight.\nEach new location: +20 freight (minimum 0).\nAt the next merchant, remove all copies from your deck and receive each copy’s freight.\n(Current freight: {Fare} Gold)",
   "FRIERENMOD-ROYAL_GRIMOIRE.title": "Royal Grimoire",
-  "FRIERENMOD-ROYAL_GRIMOIRE.description": "Gain 3 different random Rare factors and equip one in each slot. Keep your previous factors in the collection.\nCommission-exclusive magic tool. Consumed on use.",
+  "FRIERENMOD-ROYAL_GRIMOIRE.description": "Choose 1 obtainable factor to add to your magic deck.\nCommission-exclusive magic tool. Consumed on use.",
   "FRIERENMOD-ELVEN_HOURGLASS.title": "Elven Hourglass",
   "FRIERENMOD-ELVEN_HOURGLASS.description": "Combat only: Gain {energyPrefix:energyIcons(3)} and draw 3 cards.\nCommission-exclusive magic tool. Consumed on use.",
   "FRIERENMOD-PHOENIX_QUILL.title": "Phoenix Quill",
-  "FRIERENMOD-PHOENIX_QUILL.description": "Replace 1 factor with a random Rare factor, keeping its slot. Gain 2 Unbelievable Tools.\nCommission-exclusive magic tool. Consumed on use."
+  "FRIERENMOD-PHOENIX_QUILL.description": "Replace 1 factor with a random Rare factor, keeping its slot. Gain 2 Unbelievable Tools.\nCommission-exclusive magic tool. Consumed on use.",
+  "FRIERENMOD-BLACK_GOLD_WINGS.title": "Black-and-Gold Wings",
+  "FRIERENMOD-BLACK_GOLD_WINGS.description": "{Context}{Effect}",
+  "FRIERENMOD-SEALING_ORE.title": "Anti-Magic Ore",
+  "FRIERENMOD-SEALING_ORE.description": "Consumed on use.\nYou cannot [gold]Chant[/gold] while carrying this.\nAutomatically sold for 300 Gold upon reaching a merchant."
 }

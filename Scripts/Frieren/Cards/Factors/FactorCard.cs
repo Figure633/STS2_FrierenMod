@@ -69,12 +69,18 @@ public abstract class FactorCard(bool showInLibrary = true) : FrierenCard(-1, Ca
         effect.Add("energyPrefix", EnergyIconHelper.GetPrefix(this));
         if (FactorId is nameof(Strategizing) or nameof(NatureBeauty))
             effect.Add(new EnergyVar("Reward", Option?.Reward ?? 0) { ColorPrefix = EnergyIconHelper.GetPrefix(this) });
-        if (Option.HasValue && FactorId is nameof(AdvancedDefensiveMagic) or nameof(BarrierMagic)) {
+        if (Option.HasValue && FactorId is nameof(AdvancedDefensiveMagic) or nameof(BarrierMagic) or nameof(BlackGoldWings)) {
             // 格挡与残影等基础奖励分开；沿用实际咏唱牌的原生修正，包含附魔。
             var block = new BlockVar(Option.Value.Reward, ValueProp.Move);
             if (Owner?.Creature.CombatState is { } combat)
                 block.PreviewValue = Hook.ModifyBlock(combat, Owner.Creature, block.BaseValue, ValueProp.Move, _chantSource ?? this, null, out _);
             effect.Add(block);
+        }
+        if (Option.HasValue && FactorId == nameof(BlackGoldWings)) {
+            var damage = new DamageVar(Option.Value.Reward, ValueProp.Move);
+            if (Owner?.Creature.CombatState != null)
+                damage.UpdateCardPreview(_chantSource ?? this, CardPreviewMode.Normal, null, runGlobalHooks: true);
+            effect.Add(damage);
         }
         effect.Add("Cost", Option?.Cost ?? 0);
         description.Add("Effect", effect.GetFormattedText());

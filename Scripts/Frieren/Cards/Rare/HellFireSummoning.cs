@@ -29,6 +29,7 @@ public sealed class HellFireSummoning() : FrierenCard(0, CardType.Attack, CardRa
         if (power == null)
             power = await PowerCmd.Apply<SealPower>(new ThrowingPlayerChoiceContext(), Owner.Creature, 1, Owner.Creature, this);
         power!.Cards.Add(this);
+        Presentation.SealPresentation.Play(this, Owner);
         Pile.RemoveInternal(this);
     }
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)

@@ -258,5 +258,9 @@
   "FrierenMod.Scripts.Cards.PhoenixQuill": "CARD.PHOENIX_QUILL",
   "FrierenMod.Scripts.Cards.RoyalGrimoire": "CARD.ROYAL_GRIMOIRE",
   "FrierenMod.Scripts.Cards.ValuableCargo": "CARD.VALUABLE_CARGO",
-  "FrierenMod.Scripts.Powers.CommissionElitePower": "POWER.COMMISSION_ELITE_POWER"
+  "FrierenMod.Scripts.Powers.CommissionElitePower": "POWER.COMMISSION_ELITE_POWER",
+  "FrierenMod.Scripts.Powers.SealingOrePower": "POWER.SEALING_ORE_POWER",
+  "FrierenMod.Scripts.Events.SealingOreMine": "EVENT.SEALING_ORE_MINE",
+  "FrierenMod.Scripts.Cards.BlackGoldWings": "CARD.BLACK_GOLD_WINGS",
+  "FrierenMod.Scripts.Cards.SealingOre": "CARD.SEALING_ORE"
 }

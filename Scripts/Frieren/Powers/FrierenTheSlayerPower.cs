@@ -17,6 +17,13 @@ public sealed class FrierenTheSlayerPower : FrierenPower
     public int UpgradedChoices { get; set; }
     public override LocString Description { get { var text = base.Description; text.Add("Amount", Amount); text.Add("UpgradedChoices", UpgradedChoices); return text; } }
     private static HashSet<string>? _spellIds;
+    private HashSet<string>? _chosen;
+    public IReadOnlySet<string> ChosenSpellIds => _chosen ??= new(StringComparer.Ordinal);
+    protected override void DeepCloneFields()
+    {
+        base.DeepCloneFields();
+        if (_chosen != null) _chosen = new(_chosen, StringComparer.Ordinal);
+    }
 
     // 固定读取中文名，英文客户端与联机客户端不会因显示语言不同得到不同选牌池。
     public static IEnumerable<CardModel> SpellPool()
@@ -42,7 +49,7 @@ public sealed class FrierenTheSlayerPower : FrierenPower
     {
         if (player != Owner.Player || player.Creature.CombatState is not {} combat) return;
         for (int i = 0; i < Amount; i++) {
-            var choices = SpellPool().Select(model => {
+            var choices = SpellPool().Where(model => !ChosenSpellIds.Contains(model.Id.Entry)).Select(model => {
                 var card = combat.CreateCard(model, player);
                 if (i < UpgradedChoices && card.IsUpgradable) CardCmd.Upgrade(card);
                 return card;
@@ -50,7 +57,10 @@ public sealed class FrierenTheSlayerPower : FrierenPower
             if (choices.Length == 0) continue;
             var selected = (await CardSelectCmd.FromSimpleGrid(context, choices, player,
                 new CardSelectorPrefs(new LocString("frieren", "CARD_SELECT"), 1))).SingleOrDefault();
-            if (selected != null) await CardPileCmd.AddGeneratedCardToCombat(selected, PileType.Hand, player);
+            if (selected != null) {
+                (_chosen ??= new(StringComparer.Ordinal)).Add(selected.Id.Entry);
+                await CardPileCmd.AddGeneratedCardToCombat(selected, PileType.Hand, player);
+            }
             foreach (var card in choices.Where(c => c != selected)) card.RemoveFromState();
         }
     }

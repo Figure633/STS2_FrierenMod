@@ -39,7 +39,7 @@ public static class LegendaryCraftCmd
         {
             var pool = LegendaryCraft.Options(cost, layer).ToList();
             var choices = new List<LegendaryEffect>();
-            for (int i = 0; i < (source.IsUpgraded ? 3 : 2); i++)
+            for (int i = 0, count = Math.Min(pool.Count, source.IsUpgraded ? 3 : 2); i < count; i++)
             {
                 int index = source.Owner.RunState.Rng.CombatCardGeneration.NextInt(pool.Count);
                 choices.Add(pool[index]);
@@ -70,6 +70,7 @@ public static class LegendaryCraftCmd
                 case "Retain":
                     foreach (var selected in await CardFlowCmd.Choose(context, card, PileType.Hand, n)) selected.GiveSingleTurnRetain();
                     break;
+                case "RetainAll": await PowerCmd.Apply<RetainHandPower>(context, owner.Creature, n, owner.Creature, card); break;
                 case "ZeroCost":
                     for (int i = 0; i < n; i++)
                     {
@@ -78,7 +79,8 @@ public static class LegendaryCraftCmd
                     }
                     break;
                 case "RandomCard":
-                    var pool = ModelDb.CardPool<FrierenMod.Scripts.Characters.FrierenCardPool>().AllCards.Where(c => c.Rarity == CardRarity.Common && c.CanBeGeneratedInCombat).OrderBy(c => c.Id.Entry).ToArray();
+                    var pool = ModelDb.CardPool<FrierenMod.Scripts.Characters.FrierenCardPool>().AllCards
+                        .Where(c => FrierenCardAvailability.IsRandomCandidate(c) && c.CanBeGeneratedInCombat).OrderBy(c => c.Id.Entry).ToArray();
                     for (int i = 0; i < n; i++)
                     {
                         var generated = owner.Creature.CombatState!.CreateCard(pool[owner.RunState.Rng.CombatCardGeneration.NextInt(pool.Length)], owner);
@@ -87,8 +89,8 @@ public static class LegendaryCraftCmd
                     }
                     break;
                 case "Block": await CreatureCmd.GainBlock(owner.Creature, card.DynamicVars.Block, play); break;
-                case "Damage": case "DamageTriple":
-                    await DamageCmd.Attack(n).FromCardCompatibility(card, play).Targeting(play.Target!).WithHitCount(effect.Kind == "DamageTriple" ? 3 : 1).Execute(context); break;
+                case "Damage": case "DamageTriple": case "DamageQuad": case "DamageSeven":
+                    await DamageCmd.Attack(n).FromCardCompatibility(card, play).Targeting(play.Target!).WithHitCount(effect.Kind == "DamageSeven" ? 7 : effect.Kind == "DamageQuad" ? 4 : effect.Kind == "DamageTriple" ? 3 : 1).Execute(context); break;
                 case "DamageAll": await DamageCmd.Attack(n).FromCardCompatibility(card, play).TargetingAllOpponents(owner.Creature.CombatState!).Execute(context); break;
                 case "Energy": await PlayerCmd.GainEnergy(n, owner); break;
                 case "Execute": if (play.Target!.CurrentHp <= n) await CreatureCmd.Kill(play.Target); break;
@@ -97,6 +99,11 @@ public static class LegendaryCraftCmd
                 case "Vulnerable": await PowerCmd.Apply<VulnerablePower>(context, owner.Creature.CombatState!.Enemies.Where(e => e.IsAlive), n, owner.Creature, card); break;
                 case "Intangible": await PowerCmd.Apply<IntangiblePower>(context, owner.Creature, n, owner.Creature, card); break;
                 case "DoubleStrength": await PowerCmd.Apply<StrengthPower>(context, owner.Creature, owner.Creature.GetPowerAmount<StrengthPower>(), owner.Creature, card); break;
+                case "DoubleStats":
+                    await PowerCmd.Apply<StrengthPower>(context, owner.Creature, owner.Creature.GetPowerAmount<StrengthPower>(), owner.Creature, card);
+                    await PowerCmd.Apply<DexterityPower>(context, owner.Creature, owner.Creature.GetPowerAmount<DexterityPower>(), owner.Creature, card); break;
+                case "ReduceStrength":
+                    await PowerCmd.Apply<StrengthPower>(context, owner.Creature.CombatState!.Enemies.Where(e => e.IsAlive), -n, owner.Creature, card); break;
                 case "RemoveDebuffs":
                     foreach (var power in owner.Creature.Powers.Where(p => p.TypeForCurrentAmount == PowerType.Debuff).ToArray()) await PowerCmd.Remove(power);
                     break;

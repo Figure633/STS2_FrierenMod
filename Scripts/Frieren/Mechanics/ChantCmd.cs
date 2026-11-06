@@ -23,7 +23,7 @@ public static class ChantCmd
 
     public static IReadOnlyList<(ChantOption Option, bool CanSelect)> Choices(Player player, int? intensity)
     {
-        if (player.Creature.CombatState == null) return [];
+        if (player.Creature.CombatState == null || SealingOreCmd.BlocksChant(player)) return [];
         var deck = MagicDeckStore.Read(player);
         var result = new List<(ChantOption Option, bool CanSelect)>();
         foreach (var slot in Enum.GetValues<ManaSlot>())
@@ -76,6 +76,7 @@ public static class ChantCmd
     public static async Task Resolve(PlayerChoiceContext context, CardPlay play, ChantOption option, bool fastAnimation = false)
     {
         var player = play.Card.Owner;
+        if (SealingOreCmd.BlocksChant(player)) return;
         if (!await ManaCmd.Spend(context, player, option.Slot, option.Cost, fastAnimation || option.Cost > 5)) return;
         await FactorEffects.Apply(context, play, option);
         if (player.Creature.IsDead) return;

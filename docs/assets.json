@@ -5100,5 +5100,29 @@
     "modified": true,
     "sha256": "4c0942b203c9f3344f240b3f68b219602f8ef7d1fd5e03cbab9b2b7e9a7a4d50",
     "processing": "保留作者构图与原图像素；按原生卡框等比显示。"
+  },
+  {
+    "file": "FrierenMod/images/cards/BlackGoldWings.png",
+    "source": "assets/author_adjusted/20261106/黑金之翼.png",
+    "source_kind": "author_provided",
+    "modified": true,
+    "processing": "作者原图；卡图按500×380原生画框等比处理，事件保留完整原图。",
+    "sha256": "a9118a5819ea0ca6561898aebf432a2f14e95c68dfd430b45b40e0928ef3cd80"
+  },
+  {
+    "file": "FrierenMod/images/cards/SealingOre.png",
+    "source": "assets/author_adjusted/20261106/封魔石.png",
+    "source_kind": "author_provided",
+    "modified": true,
+    "processing": "作者原图；卡图按500×380原生画框等比处理，事件保留完整原图。",
+    "sha256": "215cecd49b47104ed33124bd6cdc92971035ee10e0b41a9c072625a5b9969f8f"
+  },
+  {
+    "file": "FrierenMod/images/events/SealingOreMine.png",
+    "source": "assets/author_adjusted/20261106/封魔石.png",
+    "source_kind": "author_provided",
+    "modified": false,
+    "processing": "作者原图；卡图按500×380原生画框等比处理，事件保留完整原图。",
+    "sha256": "f8cc39f113da476e1666e50345443b3adf4d1dad543b2e90ff71b3902b9e6025"
   }
 ]

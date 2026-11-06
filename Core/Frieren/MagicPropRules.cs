@@ -14,7 +14,8 @@ public static class MagicPropRules
     public static IReadOnlyList<PropDefinition> CommissionOnly { get; } = Array.AsReadOnly(new[] {
         new PropDefinition("RoyalGrimoire",0), new("ElvenHourglass",0,true), new("PhoenixQuill",1)
     });
-    public static PropDefinition Get(string id) => All.Concat(CommissionOnly).SingleOrDefault(p => p.Id == id)
+    public static IReadOnlyList<PropDefinition> EventOnly { get; } = Array.AsReadOnly(new[] { new PropDefinition("SealingOre", 0) });
+    public static PropDefinition Get(string id) => All.Concat(CommissionOnly).Concat(EventOnly).SingleOrDefault(p => p.Id == id)
         ?? throw new ArgumentException("未知魔具：" + id);
 
     public static int[] Eligible(MagicDeckState deck, MagicProp prop)
@@ -69,8 +70,7 @@ public static class MagicPropRules
                 for (int i = 0; i < 2; i++) deck.Add(RandomFactor());
                 break;
             case "RoyalGrimoire":
-                var rare = SpellCatalog.Available.Where(f=>!f.Puzzle&&f.Rarity==FactorRarity.Rare).ToList();
-                for(int i=0;i<3;i++){int index=next(rare.Count);deck.Equip(deck.Add(rare[index].Id).InstanceId,(ManaSlot)i);rare.RemoveAt(index);}
+                // 具体因子由原生同步选牌流程选择，纯规则层只负责消费魔具。
                 break;
             case "ElvenHourglass": energy=3;draw=3;break;
             case "PhoenixQuill":

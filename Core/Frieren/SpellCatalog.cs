@@ -13,11 +13,12 @@ public static class SpellCatalog
     public static IReadOnlyList<FactorDefinition> All { get; } = Array.AsReadOnly(new[]
     {
         F("AdvancedDefensiveMagic"), F("BePrepared", rewardOffset: 3), F("BuildUpBody"),
-        F("GrossedOutLook"), F("IceArrows", reward: 4),
+        F("GrossedOutLook", rewardOffset: 1), F("IceArrows", reward: 4),
         F("MeleeMage", rewardOffset: 1), F("MetalPetalSpell"), F("Sleeeep"),
         F("TransferToAlchemist", reward: 2), F("Factor100", offset: 1, puzzle: true),
         F("BarrierMagic", FactorRarity.Uncommon, offset: 1),
         F("BigFire", FactorRarity.Uncommon, cost: 2),
+        F("BlackGoldWings", FactorRarity.Uncommon, cost: 2, reward: 6),
         F("BloodSpell", FactorRarity.Rare),
         F("BluePrint", FactorRarity.Uncommon), F("HighSpeedMovement", FactorRarity.Uncommon),
         F("Hypnosis", FactorRarity.Uncommon, cost: 2),

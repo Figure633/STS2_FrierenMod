@@ -1,8 +1,9 @@
-param([switch]$Mixed)
+param([switch]$Mixed, [string]$GodotMonoPath = '')
 $ErrorActionPreference='Stop'
 $mpRoot=Split-Path -Parent $PSScriptRoot
 [xml]$mpConfig=Get-Content -LiteralPath (Join-Path $mpRoot 'local.props') -Raw
 $mpProps=$mpConfig.Project.PropertyGroup
+if(!$GodotMonoPath){$GodotMonoPath=[string]$mpProps.GodotMonoPath}
 $mpDir=Join-Path $mpRoot ('artifacts/multiplayer/live-'+[guid]::NewGuid().ToString('N'))
 New-Item -ItemType Directory -Path $mpDir | Out-Null
 $env:FRIEREN_STS2_DIR=[string]$mpProps.Sts2Dir
@@ -20,7 +21,7 @@ try {
   $env:LOCALAPPDATA=Join-Path $mpDir ($mpRole+'-localappdata')
   $mpArgs=@('--headless','--path',(Join-Path $mpRoot 'Tests/Engine'),'--log-file',(Join-Path $mpDir ($mpRole+'.log')),'--',('--mp-'+$mpRole))
   if($Mixed){$mpArgs+='--mp-mixed'}
-  $mpProcesses+=Start-Process -FilePath ([string]$mpProps.GodotMonoPath) -ArgumentList $mpArgs -WindowStyle Hidden -PassThru -RedirectStandardOutput (Join-Path $mpDir ($mpRole+'-stdout.log')) -RedirectStandardError (Join-Path $mpDir ($mpRole+'-stderr.log'))
+  $mpProcesses+=Start-Process -FilePath $GodotMonoPath -ArgumentList $mpArgs -WindowStyle Hidden -PassThru -RedirectStandardOutput (Join-Path $mpDir ($mpRole+'-stdout.log')) -RedirectStandardError (Join-Path $mpDir ($mpRole+'-stderr.log'))
  }
  $mpDeadline=[DateTime]::UtcNow.AddSeconds(100)
  while(@($mpProcesses | Where-Object {!$_.HasExited}).Count -gt 0) {

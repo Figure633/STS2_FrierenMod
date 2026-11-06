@@ -93,9 +93,9 @@ static class MagicPropTests
         Test("委托独占魔具不进入八种普通魔具池",()=>{
             Check(MagicPropRules.All.Count==8&&MagicPropRules.CommissionOnly.Count==3&&MagicPropRules.CommissionOnly.All(p=>!MagicPropRules.All.Contains(p)));
         });
-        Test("王室秘典生成三种稀有因子并装入三槽，保留旧因子",()=>{
+        Test("王室秘典不随机生成或覆盖槽位，留给同步选牌流程",()=>{
             var deck=Deck();int old=deck.Items.Count;var result=Use(deck,"RoyalGrimoire",[]);
-            Check(result.Deck.Items.Count==old+3&&result.Deck.Items.Where(i=>i.Slot>=0).All(i=>SpellCatalog.Get(i.SpellId).Rarity==FactorRarity.Rare)&&result.Deck.Items.TakeLast(3).Select(i=>i.SpellId).Distinct().Count()==3);
+            Check(result.Deck.Items.Count==old&&result.Deck.Items.SequenceEqual(deck.Items)&&result.Deck.Props.All(p=>p.PropId!="RoyalGrimoire"));
         });
         Test("时砂漏只在战斗中给予3能量与3抽牌",()=>{
             var deck=Deck();int id=deck.AddProp("ElvenHourglass").InstanceId;

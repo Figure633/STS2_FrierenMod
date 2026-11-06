@@ -62,8 +62,11 @@ public static class MultiplayerTests
     private static bool Grid(IReadOnlyList<CardModel> cards, ref NSimpleCardSelectScreen __result)
     {
         __result=new NSimpleCardSelectScreen(); Screens.Add(__result);
+        bool factors=cards.All(c=>c is FactorCard);
+        if(factors && (cards.Count!=SpellCatalog.Available.Count() || !cards.OfType<FactorCard>().Any(c=>c.FactorId=="HighSpeedMovement")))
+            throw new Exception("王室魔导书必须展示全部可获得因子及谜题");
         ((TaskCompletionSource<IEnumerable<CardModel>>)AccessTools.Field(typeof(NCardGridSelectionScreen),"_completionSource").GetValue(__result))
-            .SetResult(cards.Count==3?new[]{cards[(int)(LocalContext.NetId!.Value-1)%3]}:CancelShop?[]:new[]{cards[1],cards[6]});
+            .SetResult(factors||cards.Count==3?new[]{cards[(int)(LocalContext.NetId!.Value-1)%cards.Count]}:CancelShop?[]:new[]{cards[1],cards[6]});
         return false;
     }
 
@@ -180,7 +183,7 @@ public static class MultiplayerTests
             Check(await use&&await visit,"魔具请求未结束时进入商店，两项按原生动作队列顺序完成");
         }
         await Same("shop-race",()=>frierens.All(p=>sync.GetOptionsForPlayer(p).Count==0));
-        foreach(var prop in MagicPropRules.All.Where(x=>!x.CombatOnly)) {
+        foreach(var prop in MagicPropRules.All.Concat(MagicPropRules.CommissionOnly).Where(x=>!x.CombatOnly).Append(MagicPropRules.Get("SealingOre"))) {
             foreach(var p in frierens) {
                 var d=MagicDeckState.FromJson(originals[p]);foreach(var x in d.Props.ToArray())d.Remove(x.InstanceId);
                 foreach(string id in new[]{"BePrepared","BuildUpBody","HighSpeedMovement"})d.Add(id);

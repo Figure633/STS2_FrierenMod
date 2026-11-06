@@ -150,7 +150,7 @@ public static class CommissionCmd
 [HarmonyPatch(typeof(Hook),nameof(Hook.BeforeCombatStart))]
 internal static class CommissionCombatHook{
     private static void Postfix(ICombatState? combatState,ref Task __result)=>__result=After(__result,combatState);
-    private static async Task After(Task original,ICombatState? combat){await original;await CommissionCmd.Empower(combat);}
+    private static async Task After(Task original,ICombatState? combat){await original;await CommissionCmd.Empower(combat);if(combat!=null)foreach(var p in combat.Players.Where(p=>p.Character is Frieren))await SealingOreCmd.Refresh(p);}
 }
 [HarmonyPatch(typeof(Hook),nameof(Hook.AfterDamageReceived))]
 internal static class CommissionDamageHook{
@@ -164,7 +164,7 @@ internal static class CommissionVictoryHook{
 [HarmonyPatch(typeof(Hook),nameof(Hook.AfterRoomEntered))]
 internal static class CommissionRoomHook{
     private static void Postfix(IRunState runState,AbstractRoom room,ref Task __result)=>__result=After(__result,runState,room);
-    private static async Task After(Task original,IRunState run,AbstractRoom room){await original;await CommissionCmd.Entered(run,room);}
+    private static async Task After(Task original,IRunState run,AbstractRoom room){await original;await CommissionCmd.Entered(run,room);foreach(var p in run.Players.Where(p=>p.Character is Frieren))await SealingOreCmd.Visit(p,room);}
 }
 [HarmonyPatch(typeof(Hook),nameof(Hook.AfterActEntered))]
 internal static class CommissionActHook{

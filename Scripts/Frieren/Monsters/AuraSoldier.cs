@@ -8,6 +8,8 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 using MegaCrit.Sts2.Core.ValueProps;
+using MegaCrit.Sts2.Core.Entities.Ascension;
+using MegaCrit.Sts2.Core.Helpers;
 
 namespace FrierenMod.Scripts.Monsters;
 
@@ -15,16 +17,19 @@ public sealed class AuraSoldier : CustomMonsterModel
 {
     private bool _released;
     public bool GuardFirst { get; set; }
+    public bool Enhanced => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 1, 0) == 1;
+    public int AttackDamage => Enhanced ? 10 : 8;
+    public int GuardAmount => Enhanced ? 12 : 10;
     public override int MinInitialHp => 40;
     public override int MaxInitialHp => 40;
     public override string CustomVisualPath => "res://FrierenMod/scenes/aura_soldier_combat.tscn";
     public override Task AfterAddedToRoom() => PowerCmd.Apply<AuraSoulPower>(new ThrowingPlayerChoiceContext(), Creature, 1, Creature, null);
     protected override MonsterMoveStateMachine GenerateMoveStateMachine()
     {
-        var strike = new MoveState("STRIKE", _ => DamageCmd.Attack(8).FromMonster(this).WithHitFx("vfx/vfx_attack_slash").Execute(null), new SingleAttackIntent(8));
+        var strike = new MoveState("STRIKE", _ => DamageCmd.Attack(AttackDamage).FromMonster(this).WithHitFx("vfx/vfx_attack_slash").Execute(null), new SingleAttackIntent(() => AttackDamage));
         var guard = new MoveState("GUARD", async _ => {
             if (CombatState.Enemies.FirstOrDefault(c => c.IsAlive && c.Monster is Aura) is { } aura)
-                await CreatureCmd.GainBlock(aura, 10, ValueProp.Unpowered, null);
+                await CreatureCmd.GainBlock(aura, GuardAmount, ValueProp.Unpowered, null);
         }, new DefendIntent());
         strike.FollowUpState = guard; guard.FollowUpState = strike;
         return new MonsterMoveStateMachine([strike, guard], GuardFirst ? guard : strike);
