@@ -53,7 +53,7 @@
   "FRIERENMOD-IMAGINATION.title": "Magic & Imagination",
   "FRIERENMOD-IMAGINATION.description": "This turn, [gold]Chants[/gold] are free and you cannot generate [gold]Mana[/gold].\nPay normal card costs with [gold]Mana[/gold].",
   "FRIERENMOD-READY_STANCE.title": "Ready Stance",
-  "FRIERENMOD-READY_STANCE.description": "Deal {Damage:diff()} damage. Draw a [gold]Rapid Chant[/gold] from your draw pile or discard pile, preferring the draw pile.",
+  "FRIERENMOD-READY_STANCE.description": "Deal {Damage:diff()} damage. Draw 1 [gold]Rapid Chant[/gold].",
   "FRIERENMOD-FOLK_GRIMOIRE.title": "Folk Grimoire",
   "FRIERENMOD-FOLK_GRIMOIRE.description": "Add a random [gold]Chant[/gold] card and a random Legendary Spell to your Hand. They cost {Discount:diff()} less this turn.",
   "FRIERENMOD-HELL_FIRE_SUMMONING.title": "Hellfire Summoning",

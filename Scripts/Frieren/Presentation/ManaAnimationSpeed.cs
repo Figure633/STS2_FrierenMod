@@ -15,47 +15,58 @@ namespace FrierenMod.Scripts.Presentation;
 // 仅标记本次生成或支付的卡牌；移动、飞入、消耗及玩法钩子继续由原版执行。
 public static class ManaAnimationSpeed
 {
-    private sealed class Counter { public int Depth; }
+    private sealed class Counter { public List<float> Speeds = []; }
     private static readonly ConditionalWeakTable<CardModel, Counter> Accelerated = new();
 
-    public static IDisposable Begin(IEnumerable<CardModel> cards) => new Scope(cards.Distinct().ToArray());
+    public static IDisposable Begin(IEnumerable<CardModel> cards, float speed = 2)
+    {
+        if (!float.IsFinite(speed) || speed <= 0) throw new ArgumentOutOfRangeException(nameof(speed));
+        return new Scope(cards.Distinct().ToArray(), speed);
+    }
 
     private sealed class Scope : IDisposable
     {
         private readonly CardModel[] _cards;
+        private readonly float _speed;
         private bool _disposed;
-        public Scope(CardModel[] cards)
+        public Scope(CardModel[] cards, float speed)
         {
             _cards = cards;
-            foreach (var card in cards) Accelerated.GetOrCreateValue(card).Depth++;
+            _speed = speed;
+            foreach (var card in cards) Accelerated.GetOrCreateValue(card).Speeds.Add(speed);
         }
         public void Dispose()
         {
             if (_disposed) return;
             _disposed = true;
-            foreach (var card in _cards)
-                if (--Accelerated.GetOrCreateValue(card).Depth == 0) Accelerated.Remove(card);
+            foreach (var card in _cards) {
+                var speeds = Accelerated.GetOrCreateValue(card).Speeds;
+                speeds.Remove(_speed);
+                if (speeds.Count == 0) Accelerated.Remove(card);
+            }
         }
     }
 
     public static Tween ApplySpeed(Tween tween, IEnumerable<CardModel> cards)
     {
         bool any = false;
+        float speed = float.PositiveInfinity;
         foreach (var card in cards)
         {
-            if (!Accelerated.TryGetValue(card, out var counter) || counter.Depth == 0) return tween;
+            if (!Accelerated.TryGetValue(card, out var counter) || counter.Speeds.Count == 0) return tween;
             any = true;
+            speed = Math.Min(speed, counter.Speeds.Max());
         }
-        return any ? tween.SetSpeedScale(2) : tween;
+        return any ? tween.SetSpeedScale(speed) : tween;
     }
 
     public static void ApplyFlightSpeed(NCardFlyVfx flight)
     {
         if (flight.Get(NCardFlyVfx.PropertyName._card).AsGodotObject() is not NCard { Model: { } card } ||
-            !Accelerated.TryGetValue(card, out var counter) || counter.Depth == 0) return;
-        // 原版飞行积分 v += a*dt；二倍速对应初速度乘2、加速度乘4。
-        flight.Set(NCardFlyVfx.PropertyName._speed, flight.Get(NCardFlyVfx.PropertyName._speed).AsSingle() * 2);
-        flight.Set(NCardFlyVfx.PropertyName._accel, flight.Get(NCardFlyVfx.PropertyName._accel).AsSingle() * 4);
+            !Accelerated.TryGetValue(card, out var counter) || counter.Speeds.Count == 0) return;
+        float speed = counter.Speeds.Max();
+        flight.Set(NCardFlyVfx.PropertyName._speed, flight.Get(NCardFlyVfx.PropertyName._speed).AsSingle() * speed);
+        flight.Set(NCardFlyVfx.PropertyName._accel, flight.Get(NCardFlyVfx.PropertyName._accel).AsSingle() * speed * speed);
     }
 
     [HarmonyPatch(typeof(NCardFlyVfx), nameof(NCardFlyVfx._Ready))]

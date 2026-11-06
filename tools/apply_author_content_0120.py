@@ -104,6 +104,7 @@ for table in ['powers','events','frieren']:
  p=ROOT/f'FrierenMod/localization/zhs/{table}.json';data=json.loads(p.read_text(encoding='utf-8'))
  for key,value in data.items():
   if key.endswith('.title'):continue
+  if table=='frieren' and not key.startswith(('FACTOR.','EFFECT.','CRAFT.','TIP.')):continue
   for term in ['抽牌堆','手牌','弃牌堆']:
    value=re.sub(r'(?<!\[gold\])'+term+r'(?!\[/gold\])','[gold]'+term+'[/gold]',value)
   data[key]=value

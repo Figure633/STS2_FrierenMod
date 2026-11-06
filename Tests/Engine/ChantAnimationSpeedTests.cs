@@ -104,7 +104,7 @@ public static class ChantAnimationSpeedTests
             Check(shortfall.All(c => Math.Abs(Step(c) - 0.1) < 0.0001), "失败支付不改变后续动画");
             Reset(); var interrupted = await Mana(PileType.Draw, 6); ThrowOn = interrupted[1];
             try { await ManaCmd.Spend(context, player, ManaSlot.Draw, 6, fastAnimation: true); throw new Exception("未模拟中断"); }
-            catch (InvalidOperationException e) when (e.Message == "模拟消耗中断") { }
+            catch (Exception e) when (e.GetBaseException() is InvalidOperationException { Message: "模拟消耗中断" }) { }
             finally { ThrowOn = null; }
             Check(interrupted.All(c => Math.Abs(Step(c) - 0.1) < 0.0001), "异常中断也清理所有倍速标记");
             var unrelated = combat.CreateCard<Mana>(player);
@@ -113,6 +113,13 @@ public static class ChantAnimationSpeedTests
                 Check(Math.Abs(Step(interrupted[0]) - 0.2) < 0.0001 && Math.Abs(Step(unrelated) - 0.1) < 0.0001,
                     "嵌套退出保留外层标记，无关卡牌保持原速");
             }
+            Reset();var sleepMana=await Mana(PileType.Draw,30);
+            var pajamas=await PowerCmd.Apply<PajamasFormPower>(context,player.Creature,1,player.Creature,null);
+            var sleepEnemy=combat.Enemies.Single();sleepEnemy.SetMaxHpInternal(1000);sleepEnemy.SetCurrentHpInternal(1000);
+            await pajamas!.BeforeSideTurnEnd(context,CombatSide.Player,[player.Creature]);
+            Check(Exhausts.Count==30&&AtRate(0.8)&&sleepEnemy.CurrentHp==880&&sleepMana.All(c=>c.Pile?.Type==PileType.Exhaust),"睡衣形态30张魔力逐张8倍速消耗，保留每张钩子和120伤害");
+            Check(sleepMana.All(c=>Math.Abs(Step(c)-0.1)<0.0001),"睡衣结算后清理全部加速标记");
+            await PowerCmd.Remove(pajamas);
             Reset(); var ear = await RelicCmd.Obtain<EarAccessory>(player);
             await ear.BeforeHandDraw(player, context, combat);
             Check(Generated.Count == 2 && Generated.All(e => Math.Abs(e.Step - 0.1) < 0.0001) && ManaCmd.InPile(player, PileType.Hand).Count() == 2,

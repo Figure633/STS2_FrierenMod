@@ -21,7 +21,7 @@ public sealed class SealingOreMine : FrierenStoryEvent
     private async Task Play()
     {
         var selected = (await CardSelectCmd.FromDeckForRemoval(Owner!,
-            new CardSelectorPrefs(new LocString("frieren", "SEALING_ORE.REMOVE"), 1))).SingleOrDefault();
+            new CardSelectorPrefs(CardSelectorPrefs.RemoveSelectionPrompt, 1))).SingleOrDefault();
         if (selected == null) return;
         int count = ManaForRemoved(selected);
         await CardPileCmd.RemoveFromDeck(selected);

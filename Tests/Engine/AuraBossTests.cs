@@ -88,8 +88,8 @@ public static class AuraBossTests
         await GameApi.Damage(context, boss, 8, ValueProp.Unpowered, player.Creature, null, null);
         Check(aura.Mana == 0 && boss.CurrentHp == 197 && boss.HasPower<AuraElegancePower>(), "魔力不足溢出3点生命伤害，零魔力能力保留");
         await aura.ChangeMana(200);
-        await aura.AfterSideTurnStart(CombatSide.Player, [player.Creature], combat);
-        await aura.AfterSideTurnStart(CombatSide.Player, [player.Creature], combat);
+        await aura.BeforeHandDraw(player, context, combat);
+        await aura.BeforeHandDraw(player, context, combat);
         var dispel = player.PlayerCombatState!.Hand.Cards.OfType<AuraDispel>().Single();
         Check(dispel.IsValidTarget(soldiers[0]) && !dispel.IsValidTarget(boss) && dispel.Keywords.Contains(CardKeyword.Retain) && dispel.Keywords.Contains(CardKeyword.Exhaust),
             "开场只赠一次解除魔法，仅可选士兵，保留消耗");
@@ -132,12 +132,14 @@ public static class AuraBossTests
         hp = player.Creature.CurrentHp; await Step();
         Check(player.Creature.CurrentHp == hp && boss.CurrentHp == 1 && boss.MaxHp == 1 && aura.Mana == 256, "眩晕空过后将196点生命转为魔力，生命上限降至1");
         Check(player.PlayerCombatState.Hand.Cards.OfType<AuraDispel>().Count()==1, "后续天平不再赠送解除魔法");
-        await aura.ChangeMana(100);
+        int manaBeforeZeroSummon = aura.Mana + 100;
+        await aura.ChangeMana(-aura.Mana);
         await CreatureCmd.Kill(soldiers[1]);
         Check(aura.NextMove.Id == "SUMMON", "清空士兵后可预判召唤");
         mana = aura.Mana; await Step();
         Check(aura.Mana == mana && combat.Enemies.Count(c => c.IsAlive && c.Monster is AuraSoldier) == 2,
-            "召唤不扣魔力，补两名士兵");
+            "零魔力仍召唤两名士兵且不扣魔力");
+        await aura.ChangeMana(manaBeforeZeroSummon);
         hp = player.Creature.CurrentHp; await Step();
         Check(player.Creature.CurrentHp == hp - 30 && aura.ScaleCount == 3 && aura.NextMove.Id == "GUILLOTINE",
             "第9回合连击正常造成10×3后额外判定第三次天平");

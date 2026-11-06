@@ -96,14 +96,17 @@
       "sha256": "86938df3ae9d052a7b55b7fafe6660ff9caa0649f8c52f39c53fa80a9c10b3a3",
       "processing": "original image_gen output retained unchanged outside game pack",
       "status": "replaced by author artwork in 0.10.8; original retained"
-    },
+    }
+  ],
+  "retired_assets": [
     {
       "target": "FrierenMod/images/relics/AuraCompanion.png",
       "sha256": "e9b3f4897dd6903895e65bfc409f548ab063c2a31e256d79dd3833ae52ecf70d",
       "source": "FrierenMod/images/pets/aura/00.png",
       "tool": "built-in image_gen",
       "prompt": "Use case: background-extraction\nAsset type: Slay the Spire 2 mod relic inventory icon, transparent cutout of provided original animation frame.\nPrimary request: Remove the entire beige background and ground shadow. Remove the small disembodied yellow object at the bottom right. Keep only the complete chibi purple-haired horned character, her entire sword extending left, horns, outfit, shoes and hands. Preserve the original line art, exact character pose, expression, proportions, flat colors and details. No redrawing, no restyling, no added content or text. Center the full character and entire sword with modest transparent padding. Output genuinely transparent alpha PNG. This is the inventory still icon only; preserve original artwork.",
-      "processing": "生成透明抠图后等比缩至256x256，原动图帧不变。"
+      "processing": "生成透明抠图后等比缩至256x256，原动图帧不变。",
+      "status": "0.12.3已撤换；旧版本可从Git历史查阅"
     }
   ]
 }

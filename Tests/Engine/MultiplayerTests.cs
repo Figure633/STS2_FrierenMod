@@ -70,6 +70,11 @@ public static class MultiplayerTests
         return false;
     }
 
+    private static readonly List<string> CombatDiagnostics=[];
+    private static void InspectCompletion(Player player, uint request, bool result)
+    {
+        if(CombatManager.Instance.IsInProgress)CombatDiagnostics.Add($"local={LocalContext.NetId} player={player.NetId} request={request} result={result} phase={player.PlayerCombatState?.Phase} deck={MagicDeckStore.Read(player).ToJson()}");
+    }
     public static async Task<int> Run(Node root, bool host)
     {
         int checks=0;
@@ -85,7 +90,7 @@ public static class MultiplayerTests
         async Task Tick(){await root.ToSignal(root.GetTree(),SceneTree.SignalName.ProcessFrame);}
         async Task Wait(Func<bool> ready,string reason) {
             ulong start=Time.GetTicksMsec();
-            while(!ready()){if(Time.GetTicksMsec()-start>20000)throw new Exception("联机等待超时："+reason);await Tick();}
+            while(!ready()){if(Time.GetTicksMsec()-start>20000)throw new Exception("联机等待超时："+reason+" 诊断："+string.Join(";",CombatDiagnostics));await Tick();}
         }
         async Task Barrier(string name) {
             Publish(name+"-"+role+".ready","ready");
@@ -116,6 +121,7 @@ public static class MultiplayerTests
         // 不模拟 Steam 会话，不读写作者存档。选择屏替身只生成本地选择结果。
         Overlay=new NOverlayStack();
         var harmony=new Harmony("frieren.tests.multiplayer");
+        harmony.Patch(AccessTools.Method(typeof(MagicDeckNetwork),nameof(MagicDeckNetwork.Complete)),prefix:new HarmonyMethod(typeof(MultiplayerTests),nameof(InspectCompletion)));
         harmony.Patch(AccessTools.PropertyGetter(typeof(NOverlayStack),nameof(NOverlayStack.Instance)),prefix:new HarmonyMethod(typeof(MultiplayerTests),nameof(GetOverlay)));
         foreach(var method in new[]{"Push","Remove"})harmony.Patch(AccessTools.Method(typeof(NOverlayStack),method),prefix:new HarmonyMethod(typeof(MultiplayerTests),nameof(SkipOverlay)));
         harmony.Patch(AccessTools.Method(typeof(NChooseACardSelectionScreen),"ShowScreen"),prefix:new HarmonyMethod(typeof(MultiplayerTests),nameof(Choose)));

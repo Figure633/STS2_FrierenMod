@@ -56,7 +56,7 @@ public sealed class FrierenTheSlayerPower : FrierenPower
             }).ToArray();
             if (choices.Length == 0) continue;
             var selected = (await CardSelectCmd.FromSimpleGrid(context, choices, player,
-                new CardSelectorPrefs(new LocString("frieren", "CARD_SELECT"), 1))).SingleOrDefault();
+                new CardSelectorPrefs(new LocString("cards", "DREDGE.selectionScreenPrompt"), 1))).SingleOrDefault();
             if (selected != null) {
                 (_chosen ??= new(StringComparer.Ordinal)).Add(selected.Id.Entry);
                 await CardPileCmd.AddGeneratedCardToCombat(selected, PileType.Hand, player);

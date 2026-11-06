@@ -53,7 +53,7 @@
   "FRIERENMOD-IMAGINATION.title": "魔法&想象力",
   "FRIERENMOD-IMAGINATION.description": "本回合，[gold]咏唱[/gold]不[gold]消耗[/gold][gold]魔力[/gold]，无法生成[gold]魔力[/gold]。\n卡牌改用[gold]魔力[/gold]支付费用。",
   "FRIERENMOD-READY_STANCE.title": "准备架势",
-  "FRIERENMOD-READY_STANCE.description": "造成{Damage:diff()}点伤害。从[gold]抽牌堆[/gold]或[gold]弃牌堆[/gold]抽取1张[gold]高速咏唱[/gold]（优先[gold]抽牌堆[/gold]）。",
+  "FRIERENMOD-READY_STANCE.description": "造成{Damage:diff()}点伤害。抽取1张[gold]高速咏唱[/gold]。",
   "FRIERENMOD-FOLK_GRIMOIRE.title": "民间的魔导书",
   "FRIERENMOD-FOLK_GRIMOIRE.description": "将随机[gold]咏唱[/gold]牌与随机[gold]传说魔法[/gold]各 1 张加入[gold]手牌[/gold]。本回合它们的费用减少 {Discount:diff()}。",
   "FRIERENMOD-HELL_FIRE_SUMMONING.title": "地狱业火魔法",

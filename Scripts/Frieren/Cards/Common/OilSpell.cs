@@ -22,5 +22,5 @@ public sealed class OilSpell() : LegendaryCard(2, CardType.Attack, CardRarity.Co
         await DamageCmd.Attack(DynamicVars["SecondDamage"].BaseValue).FromCardCompatibility(this,play).TargetingAllOpponents(CombatState).Execute(context);
         await PowerCmd.Apply<VulnerablePower>(context,CombatState.Enemies.Where(c=>c.IsAlive).ToArray(),2,Owner.Creature,this);
     }
-    protected override void OnUpgrade()=>DynamicVars["SecondDamage"].UpgradeValueBy(2);
+    protected override void OnUpgrade(){DynamicVars.Damage.UpgradeValueBy(2);DynamicVars["SecondDamage"].UpgradeValueBy(2);}
 }

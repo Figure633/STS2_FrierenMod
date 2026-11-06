@@ -45,9 +45,9 @@ public sealed class Aura : CustomMonsterModel
         await PowerCmd.Apply<AuraArrogancePower>(context, Creature, 1, Creature, null);
     }
 
-    public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
+    public override async Task BeforeHandDraw(MegaCrit.Sts2.Core.Entities.Players.Player player, PlayerChoiceContext choiceContext, ICombatState combatState)
     {
-        if (side != CombatSide.Player || _openingGranted) return;
+        if (_openingGranted) return;
         _openingGranted = true;
         await GiveDispel();
     }
@@ -75,7 +75,7 @@ public sealed class Aura : CustomMonsterModel
     {
         if (_verdict != null) return _verdict;
         if (_tauntPending && UpcomingTurn % 3 != 0) return "TAUNT";
-        if (Mana >= 40 && _summonedCycle != _actions / 3 && !CombatState.Enemies.Any(c => c.IsAlive && c.Monster is AuraSoldier)) return "SUMMON";
+        if (_summonedCycle != _actions / 3 && !CombatState.Enemies.Any(c => c.IsAlive && c.Monster is AuraSoldier)) return "SUMMON";
         return _meditateNext ? "MEDITATE" : "BARRAGE";
     }
 
@@ -103,8 +103,7 @@ public sealed class Aura : CustomMonsterModel
             return Task.CompletedTask;
         }, new UnknownIntent());
         Add("SUMMON", async () => {
-            // 仍需40魔力才能召唤，但召唤不再扣除魔力。
-            if (Mana < 40 || CombatState.Enemies.Any(c => c.IsAlive && c.Monster is AuraSoldier)) return;
+            if (CombatState.Enemies.Any(c => c.IsAlive && c.Monster is AuraSoldier)) return;
             _summonedCycle = _actions / 3;
             await CreatureCmd.Add<AuraSoldier>(CombatState, "Soldier1");
             var guard = (AuraSoldier)ModelDb.Monster<AuraSoldier>().ToMutable();
@@ -130,7 +129,7 @@ public sealed class Aura : CustomMonsterModel
     private async Task GiveDispel()
     {
         foreach (var player in CombatState.Players.Where(p => p.Creature.IsAlive))
-            await CardFlowCmd.Generate<AuraDispel>(player, PileType.Hand);
+            await CardPileCmd.AddGeneratedCardToCombat(CombatState.CreateCard<AuraDispel>(player), PileType.Hand, player, CardPilePosition.Top);
     }
 
     public override async Task AfterSideTurnEnd(PlayerChoiceContext context, CombatSide side, IEnumerable<Creature> participants)

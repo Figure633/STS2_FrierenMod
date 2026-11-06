@@ -49,7 +49,8 @@ public sealed class SpiegelFrieren : CustomMonsterModel
         var invert = new MoveState("UPSIDE_DOWN", Invert, new StatusIntent(1));
         var weaken = new MoveState("CHANT_SUPPRESSION", Weaken, new DebuffIntent());
         var multi = new MoveState("MULTIPLE_OFFENSIVE_MAGIC", MultiAttack, new MultiAttackIntent(MultiAttackDamage, () => MultiAttackHits));
-        _apex = new MoveState("APEX_MAGIC", PrepareApex, new MultiAttackIntent(999, 999));
+        _apex = new MoveState("APEX_MAGIC", PrepareApex, new UnknownIntent());
+        var apexAttack = new MoveState("APEX_ATTACK", _ => Attack(999, 999), new MultiAttackIntent(999, 999));
         var next = new ConditionalBranchState("NEXT_DEBUFF");
         next.AddState(pollute, () => NextDebuff() == 0);
         next.AddState(invert, () => NextDebuff() == 1);
@@ -57,8 +58,8 @@ public sealed class SpiegelFrieren : CustomMonsterModel
         next.AddState(multi, () => true);
         suppress.FollowUpState = strike; strike.FollowUpState = next;
         pollute.FollowUpState = strike; invert.FollowUpState = strike; weaken.FollowUpState = strike;
-        multi.FollowUpState = multi; _apex.FollowUpState = multi;
-        return new MonsterMoveStateMachine([suppress, strike, pollute, invert, weaken, multi, _apex, next], suppress);
+        multi.FollowUpState = multi; _apex.FollowUpState = apexAttack; apexAttack.FollowUpState = multi;
+        return new MonsterMoveStateMachine([suppress, strike, pollute, invert, weaken, multi, _apex, apexAttack, next], suppress);
     }
     private int NextDebuff()
     {
@@ -124,7 +125,6 @@ public sealed class SpiegelFrieren : CustomMonsterModel
     {
         foreach (var power in Creature.Powers.ToArray()) await PowerCmd.Remove(power);
         await GameApi.LoseBlock(new ThrowingPlayerChoiceContext(), Creature, Creature.Block, Creature);
-        await Attack(999, 999);
     }
     public override async Task AfterDeath(PlayerChoiceContext context, Creature creature, bool prevented, float animLength)
     {

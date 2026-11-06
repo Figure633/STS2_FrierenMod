@@ -5132,5 +5132,21 @@
     "modified": false,
     "processing": "从作者Word事件条目提取完整原图，沿用原生事件左侧等比铺满。",
     "sha256": "78177fd15a53d7f674cf13d287162a787b4be438f4cef433bfd68f2ee410067e"
+  },
+  {
+    "file": "FrierenMod/images/relics/AuraCompanion.png",
+    "source": "FrierenMod/images/pets/aura/00.png",
+    "source_kind": "original_animation_frame_alpha_only",
+    "modified": true,
+    "processing": "tools/restore_aura_companion_icon.py；原帧270×249，只处理连通背景Alpha；主体RGB逐像素不变，无缩放、锐化或重绘。Outline为同一Alpha轮廓。",
+    "sha256": "67be4adb4f994b21acdbd3a56d4c394ca85d0b14b67f12388542c4b13854970c"
+  },
+  {
+    "file": "FrierenMod/images/relics/AuraCompanionOutline.png",
+    "source": "FrierenMod/images/pets/aura/00.png",
+    "source_kind": "original_animation_frame_alpha_only",
+    "modified": true,
+    "processing": "tools/restore_aura_companion_icon.py；原帧270×249，只处理连通背景Alpha；主体RGB逐像素不变，无缩放、锐化或重绘。Outline为同一Alpha轮廓。",
+    "sha256": "0ea64eecaace49cc045eea0e8ed63929de8d80a84562d48fdaaa9504c1f15cd3"
   }
 ]

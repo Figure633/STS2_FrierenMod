@@ -44,13 +44,16 @@ public static class CardFlowCmd
             CardCmd.PreviewCardPileAdd(result, previewTime);
     }
 
-    public static async Task<IEnumerable<CardModel>> Choose(PlayerChoiceContext context, CardModel source, PileType pile, int count)
+    public static async Task<IEnumerable<CardModel>> Choose(PlayerChoiceContext context, CardModel source, PileType pile, int count, LocString? prompt = null)
     {
         var cards = CardPile.Get(pile, source.Owner)!.Cards.Where(c => c != source).ToArray();
         count = Math.Min(count, cards.Length);
         if (count == 0) return [];
         if (count == cards.Length) return cards;
-        var prefs = new CardSelectorPrefs(new LocString("frieren", "CARD_SELECT"), count);
+        prompt ??= pile == PileType.Hand
+            ? new LocString("powers", "WELL_LAID_PLANS_POWER.selectionScreenPrompt")
+            : new LocString("cards", "DREDGE.selectionScreenPrompt");
+        var prefs = new CardSelectorPrefs(prompt, count);
         if (pile == PileType.Hand)
             return await CardSelectCmd.FromHand(context, source.Owner, prefs, c => c != source, source);
         return await CardSelectCmd.FromSimpleGrid(context, cards, source.Owner,

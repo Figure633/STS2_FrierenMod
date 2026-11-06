@@ -24,7 +24,8 @@ public sealed class PajamasFormPower : FrierenPower
         var cards = new[] { PileType.Draw, PileType.Hand, PileType.Discard }
             .SelectMany(p => ManaCmd.InPile(Owner.Player!, p)).ToArray();
         if (cards.Length >= 30) Presentation.FrierenAchievements.Unlock(Owner.Player!, "4009");
-        foreach (var card in cards) await GameApi.Exhaust(context, card);
+        using (Presentation.ManaAnimationSpeed.Begin(cards, 8))
+            foreach (var card in cards) await GameApi.Exhaust(context, card);
         if (cards.Length > 0)
             await CreatureCmd.Damage(context, Owner.CombatState!.Enemies.Where(c => c.IsAlive), DamagePerMana * cards.Length, ValueProp.Unpowered, Owner);
     }

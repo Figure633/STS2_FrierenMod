@@ -91,8 +91,9 @@ public static class ChantSelectionTests
         var pileCounts = player.PlayerCombatState!.AllPiles.Select(p => p.Cards.Count).ToArray();
 
         // 衍生牌现包含保留稀有品质的 IGeneratedOnlyCard；贴贴的内部选项不属于百科卡。
-        var tokens = ModelDb.CardPool<FrierenCardPool>().AllCards.Where(c => (c.Rarity == CardRarity.Token || c is IGeneratedOnlyCard) &&
-            c is not FactorCard and not MagicPropCard and not ChantChoice and not LegendaryCraftChoice and not PaperPlaneSpell and not Snuggle1 and not Snuggle2).ToArray();
+        var tokens = ModelDb.CardPool<FrierenCardPool>().AllCards.Where(c => (c.Rarity == CardRarity.Token || c is IGeneratedOnlyCard) && !FrierenCardAvailability.IsRetired(c) &&
+            c is not FactorCard and not MagicPropCard and not ChantChoice and not LegendaryCraftChoice and not PaperPlaneSpell and not Snuggle1 and not Snuggle2 and not AuraDispel and not StrongerWish and not RewardWish and not ManaWish).ToArray();
+        Check(!ModelDb.Card<AuraDispel>().ShouldShowInCardLibrary && !FrierenCardAvailability.IsRandomCandidate(ModelDb.Card<AuraDispel>()),"解除魔法保留战斗专属身份，金边不使其进入百科或随机池");
         Check(tokens.Length >= 12 && tokens.All(c => c.ShouldShowInCardLibrary && !FrierenLibraryFilter.IsCharacterCard(c)),
             "所有启用的衍生牌包含魔力、苍月草和额外防御，均可见且排除芙莉莲分类");
         var filter = new NCardPoolFilter();
@@ -105,7 +106,7 @@ public static class ChantSelectionTests
         Check(tokens.All(c => !filters[filter](c) && filters[misc](c)) && filters[filter](Card<HighDensityMana>()) && filters[filter](Card<RapidChant>()),
             "实际百科过滤器排除衍生牌，原生杂项收录；高密度魔力和普通角色卡保留");
         Check(ModelDb.Card<PaperPlaneSpell>().ShouldShowInCardLibrary && !ModelDb.Card<TimeConcept>().ShouldShowInCardLibrary &&
-            ModelDb.CardPool<FrierenCardPool>().AllCards.OfType<FactorCard>().All(c => c.ShouldShowInCardLibrary && !filters[filter](c) && !filters[misc](c)), "兼容旧档的废弃牌继续隐藏，因子由独立分类收录");
+            ModelDb.CardPool<FrierenCardPool>().AllCards.OfType<FactorCard>().Where(c => !FrierenCardAvailability.IsRetired(c)).All(c => c.ShouldShowInCardLibrary && !filters[filter](c) && !filters[misc](c)), "兼容旧档的废弃牌继续隐藏，启用因子由独立分类收录");
         filter.Free(); misc.Free();
 
         // 使用真实原生卡牌、悬停场景与宿主；只跳过独立测试不需要的游戏启动。

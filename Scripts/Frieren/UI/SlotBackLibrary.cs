@@ -35,7 +35,7 @@ public sealed class SlotBackLibrary
     private bool _closing, _dragging;
     private Vector2 _dragStart;
     private int _dragScroll;
-    public static string Text(string key) => new LocString("frieren", key).GetFormattedText();
+    public static string Text(string key) => new LocString("frieren", key).GetFormattedText().Replace("[gold]", "").Replace("[/gold]", "");
     public static Texture2D Texture(string id) => GD.Load<Texture2D>($"res://FrierenMod/images/slot_backs/{id}.png");
     private static Texture2D Art(string name) => GD.Load<Texture2D>($"res://FrierenMod/images/achievement/{name}.png");
 

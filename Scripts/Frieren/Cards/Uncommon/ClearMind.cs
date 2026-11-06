@@ -21,8 +21,8 @@ public sealed class ClearMind() : FrierenCard(2, CardType.Skill, CardRarity.Unco
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Amount", 2)];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
-        var prefs=new CardSelectorPrefs(new LocString("frieren","CARD_SELECT"),0,(int)DynamicVars["Amount"].BaseValue);
-        var selected=await CardSelectCmd.FromHand(context,Owner,prefs,c=>c!=this,this);
+        var prefs=new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt,0,(int)DynamicVars["Amount"].BaseValue);
+        var selected=await CardSelectCmd.FromHandForDiscard(context,Owner,prefs,c=>c!=this,this);
         await CardCmd.Discard(context,selected);
         await ManaCmd.Generate(Owner, PileType.Hand, (int)DynamicVars["Amount"].BaseValue);
         await PowerCmd.Apply<AccelerateFlowPower>(context, Owner.Creature, 1, Owner.Creature, this);

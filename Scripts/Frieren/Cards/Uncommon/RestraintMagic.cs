@@ -14,13 +14,13 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace FrierenMod.Scripts.Cards;
 
-public sealed class RestraintMagic() : FrierenCard(2, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy)
+public sealed class RestraintMagic() : FrierenCard(3, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy)
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("StrengthLoss",10)];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
-        await PowerCmd.Apply<PiercingWailPower>(context, play.Target!, DynamicVars["StrengthLoss"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<BindingStrengthDownPower>(context, play.Target!, DynamicVars["StrengthLoss"].BaseValue, Owner.Creature, this);
         await PowerCmd.Apply<SlowPower>(context, play.Target!, 1, Owner.Creature, this);
     }
     protected override void OnUpgrade() => DynamicVars["StrengthLoss"].UpgradeValueBy(5);

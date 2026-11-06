@@ -20,6 +20,7 @@ namespace FrierenMod.Scripts.Relics;
 public sealed class MimicHead : FrierenRelic
 {
     public override RelicRarity Rarity => RelicRarity.Event;
+    protected override string BigIconPath => PackedIconPath;
     public override bool TryModifyRewards(Player player, List<Reward> rewards, AbstractRoom? room)
     {
         if (player != Owner || room is not TreasureRoom) return false;

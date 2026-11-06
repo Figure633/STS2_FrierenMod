@@ -13,6 +13,7 @@ namespace FrierenMod.Scripts.Powers;
 public sealed class CommissionElitePower : FrierenPower
 {
     private int _affix;
+    public override MegaCrit.Sts2.Core.Entities.Powers.PowerStackType StackType => MegaCrit.Sts2.Core.Entities.Powers.PowerStackType.None;
     [SavedProperty] public int Affix {get=>_affix;set{AssertMutable();_affix=value;}}
     public override string CustomPackedIconPath=>"res://FrierenMod/images/powers/EnemyManaPower.png";
     public override string CustomBigIconPath=>"res://FrierenMod/images/powers/big/EnemyManaPower.png";

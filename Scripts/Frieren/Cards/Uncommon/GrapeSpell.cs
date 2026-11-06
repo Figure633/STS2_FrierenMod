@@ -20,7 +20,7 @@ public sealed class GrapeSpell() : FrierenCard(1, CardType.Skill, CardRarity.Unc
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
-        foreach (var card in await CardFlowCmd.Choose(context, this, PileType.Hand, 2))
+        foreach (var card in await CardFlowCmd.Choose(context, this, PileType.Hand, 2, MegaCrit.Sts2.Core.CardSelection.CardSelectorPrefs.ExhaustSelectionPrompt))
             await GameApi.Exhaust(context, card);
         await ManaCmd.Generate(Owner, PileType.Hand, 2);
     }

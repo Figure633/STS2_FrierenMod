@@ -17,7 +17,7 @@ public sealed class MimicFight : FrierenStoryEvent
     protected override IReadOnlyList<EventOption> GenerateInitialOptions() => [Choice("IMPULSE", Open), Choice("REASON", Open)];
     private Task Open()
     {
-        SetEventState(PageDescription("CAUGHT"), [Choice("FIGHT", Fight), CardChoice<RingletForm>("EXPLODE", Explode).ThatDoesDamage(15), Choice("RESCUE", Rescue)]);
+        SetEventState(PageDescription("CAUGHT"), [Choice("FIGHT", Fight), CardChoice<RingletForm>("EXPLODE", Explode).ThatDoesDamage(10), Choice("RESCUE", Rescue)]);
         ShowPortrait(1); return Task.CompletedTask;
     }
     private Task Fight()
@@ -27,7 +27,7 @@ public sealed class MimicFight : FrierenStoryEvent
     }
     private async Task Explode()
     {
-        await GameApi.Damage(new ThrowingPlayerChoiceContext(), Owner!.Creature, 15, ValueProp.Unblockable | ValueProp.Unpowered, null, null);
+        await GameApi.Damage(new ThrowingPlayerChoiceContext(), Owner!.Creature, 10, ValueProp.Unblockable | ValueProp.Unpowered, null, null);
         if (Owner.Creature.IsDead) return;
         await AddCard<RingletForm>(); Finish("EXPLODE", 2);
     }
