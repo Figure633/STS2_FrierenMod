@@ -23,7 +23,7 @@ public sealed class SpellCasterPower : FrierenPower
             var text = base.Description;
             text.Add("Spells", string.Join("\n", Enumerable.Range(0, 8).Select(i => {
                 var line = new LocString("powers", Id.Entry + ".spells." + i + (i == 5 && Enhanced ? ".enhanced" : ""));
-                line.Add("Cost", Costs[i]); line.Add("Block", Enhanced ? 15 : 10); line.Add("Ritual", Enhanced ? 8 : 5);
+                line.Add("Cost", Costs[i]); line.Add("Block", Enhanced ? 15 : 10); line.Add("Ritual", Enhanced ? 5 : 3);
                 line.Add("Burns", Enhanced ? 3 : 2); line.Add("Buffer", Enhanced ? 2 : 1);
                 return (SpellsCast % 8 > i ? "[green]" : "[gold]") + line.GetFormattedText() + (SpellsCast % 8 > i ? "[/green]" : "[/gold]");
             })));
@@ -43,7 +43,7 @@ public sealed class SpellCasterPower : FrierenPower
                 case 0:
                     await PowerCmd.Apply<BarricadePower>(context, Owner, 1, Owner, null);
                     await CreatureCmd.GainBlock(Owner, Enhanced ? 15 : 10, ValueProp.Unpowered, null); break;
-                case 1: await PowerCmd.Apply<RitualPower>(context, Owner, Enhanced ? 8 : 5, Owner, null); break;
+                case 1: await PowerCmd.Apply<RitualPower>(context, Owner, Enhanced ? 5 : 3, Owner, null); break;
                 case 2: await PowerCmd.Apply<ArtifactPower>(context, Owner, 1, Owner, null); break;
                 case 3:
                     foreach (var player in Owner.CombatState!.Players)

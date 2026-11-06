@@ -79,7 +79,7 @@ public static class Todo098Tests
         var a=(OpenTheWaygatePower)ModelDb.Power<OpenTheWaygatePower>().ToMutable();var b=(OpenTheWaygatePower)ModelDb.Power<OpenTheWaygatePower>().ToMutable();a.AddOpportunity(5);Check(b.RemainingOpportunities==0,"不同玩家/实例的时空门队列相互独立");
         await Reset();var model=ModelDb.Monster<SpiegelFrieren>().ToMutable();var boss=combat.CreateCreature(model,CombatSide.Enemy,null);combat.AddCreature(boss);model.SetUpForCombat();await model.AfterAddedToRoom();
         var strike=New<StrikeFrieren>();await DamageCmd.Attack(10).FromCardCompatibility(strike,Play(strike)).Targeting(boss).WithHitCount(3).Execute(context);
-        Check(boss.CurrentHp==470&&boss.Block==10&&boss.GetPowerAmount<MegaCrit.Sts2.Core.Models.Powers.RitualPower>()==5,"复制体完整吃到三段10伤后统一施法，格挡不拦截中间段");
+        Check(boss.CurrentHp==470&&boss.Block==10&&boss.GetPowerAmount<MegaCrit.Sts2.Core.Models.Powers.RitualPower>()==3,"复制体完整吃到三段10伤后统一施法，格挡不拦截中间段");
         var caster=boss.GetPower<SpellCasterPower>()!;await PowerCmd.ModifyAmount(context,boss.GetPower<EnemyManaPower>()!,170,boss,null);await caster.Resolve(context);Check(caster.SpellsCast==8&&boss.GetPowerAmount<IntangiblePower>()==1,"第一轮正常获得一次无实体");
         await PowerCmd.Remove(boss.GetPower<IntangiblePower>()!);await PowerCmd.ModifyAmount(context,boss.GetPower<EnemyManaPower>()!,200,boss,null);await caster.Resolve(context);
         Check(boss.GetPowerAmount<IntangiblePower>()==1&&caster.SpellsCast==16&&boss.GetPower<EnemyManaPower>()!.StoredMana==0,"第二轮再次给予无实体并扣50魔力");

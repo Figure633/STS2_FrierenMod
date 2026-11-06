@@ -172,7 +172,7 @@ public static class MissingCardTests
         Pass("领悟抽牌、伤害与条件丢弃");
 
         await Reset(); await ManaCmd.Generate(player, PileType.Draw, 2);
-        await Play(New<TongueTwisterSpell>()); Check(player.Creature.Block == 6, "绕口令按实际魔力逐次格挡");
+        await Play(New<TongueTwisterSpell>()); Check(player.Creature.Block == 4, "绕口令按实际魔力逐次格挡");
         Pass("绕口令逐张抽取结果计算格挡");
 
         await Reset(); await Play(New<ClearMind>(true));

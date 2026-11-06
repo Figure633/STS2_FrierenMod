@@ -82,7 +82,7 @@ public static class SpiegelBossTests
             "实际受伤积累魔力，10点自动触发第一种法术且准确支付");
         var caster = boss.GetPower<SpellCasterPower>()!;
         await PowerCmd.ModifyAmount(context, boss.GetPower<EnemyManaPower>()!, 190, boss, null); await caster.Resolve(context);
-        Check(caster.SpellsCast == 8 && boss.GetPower<EnemyManaPower>()!.StoredMana == 0 && boss.GetPower<RitualPower>()!.Amount == 5 && boss.HasPower<ArtifactPower>(),
+        Check(caster.SpellsCast == 8 && boss.GetPower<EnemyManaPower>()!.StoredMana == 0 && boss.GetPower<RitualPower>()!.Amount == 3 && boss.HasPower<ArtifactPower>(),
             "连续足量魔力按顺序结算第一轮八种法术，余量保留");
         Check(player.PlayerCombatState!.DrawPile.Cards.OfType<Burn>().Count() == 2 && player.Creature.GetPowerAmount<WeakPower>() == 2 &&
             boss.GetPowerAmount<BufferPower>() == 1 && !boss.HasPower<MetallicizePower>() && !boss.HasPower<SpiegelMalleablePower>() && boss.HasPower<IntangiblePower>() && combat.Enemies.Count(c => c.Monster is DampCultist) == 1,
@@ -99,22 +99,30 @@ public static class SpiegelBossTests
         monster.ResetStateMachine(); monster.SetUpForCombat(); monster.RollMove([player.Creature]);
         await monster.PerformMove(); monster.RollMove([player.Creature]);
         Check(player.Creature.HasPower<BanManaGainPower>() && monster.NextMove.Id == "OFFENSIVE_MAGIC", "首回合压制后接普通攻击");
+        foreach(var power in player.Creature.Powers.ToArray())await PowerCmd.Remove(power);
+        player.Creature.LoseBlockInternal(player.Creature.Block);
+        Check(((SingleAttackIntent)monster.NextMove.Intents.Single()).GetTotalDamage([player.Creature],boss)==18,"低进阶普通攻击意图18伤害");
         for(int i=0;i<3;i++) await CardPileCmd.Add(combat.CreateCard<Mana>(player), PileType.Draw);
         for(int i=0;i<4;i++) await CardPileCmd.Add(combat.CreateCard<Mana>(player), PileType.Discard);
         for(int i=0;i<2;i++) await CardPileCmd.Add(combat.CreateCard<Mana>(player), PileType.Hand);
         var seen = new HashSet<string>();
         for (int i=0;i<3;i++) {
-            await monster.PerformMove(); monster.RollMove([player.Creature]); seen.Add(monster.NextMove.Id);
+            int before=player.Creature.CurrentHp;await monster.PerformMove(); monster.RollMove([player.Creature]); seen.Add(monster.NextMove.Id);
+            Check(player.Creature.CurrentHp==before-18,"低进阶普通攻击实际18伤害");
             await monster.PerformMove(); monster.RollMove([player.Creature]);
         }
         Check(seen.SetEquals(["MANA_POLLUTION","UPSIDE_DOWN","CHANT_SUPPRESSION"]) && monster.NextMove.Id == "OFFENSIVE_MAGIC",
             "三种压制随机不重复，各穿插一次攻击");
-        Check(ManaCmd.InPile(player,PileType.Draw).Count()==0 && ManaCmd.InPile(player,PileType.Discard).Count()==2 && ManaCmd.InPile(player,PileType.Hand).Count()==2,
-            "魔力污染先抽牌堆后弃牌堆，只替换五张，保留手牌魔力");
+        Check(ManaCmd.InPile(player,PileType.Draw).Count()==0 && ManaCmd.InPile(player,PileType.Discard).Count()==4 && ManaCmd.InPile(player,PileType.Hand).Count()==2,
+            "低进阶魔力污染最多替换三张，保留手牌魔力");
         await monster.PerformMove(); monster.RollMove([player.Creature]);
-        int repeat = ((MultiAttackIntent)monster.NextMove.Intents.Single()).Repeats;
-        await monster.PerformMove(); monster.RollMove([player.Creature]);
-        Check(repeat == 2 && ((MultiAttackIntent)monster.NextMove.Intents.Single()).Repeats == 3, "后期多重攻击从两次起逐次递增");
+        foreach(var power in player.Creature.Powers.ToArray())await PowerCmd.Remove(power);
+        for(int i=0;i<6;i++) {
+            var multi=(MultiAttackIntent)monster.NextMove.Intents.Single();int hits=2+i/2;
+            Check(multi.Repeats==hits&&multi.GetTotalDamage([player.Creature],boss)==10*hits,"低进阶第"+(i+1)+"次多重意图");
+            int before=player.Creature.CurrentHp;await monster.PerformMove();monster.RollMove([player.Creature]);
+            Check(player.Creature.CurrentHp==before-10*hits,"低进阶多重实际结算第"+(i+1)+"次");
+        }
         boss.SetCurrentHpInternal(110); boss.LoseBlockInternal(boss.Block);
         foreach(var power in new PowerModel?[] { boss.GetPower<IntangiblePower>(), boss.GetPower<BufferPower>() }) if(power!=null) await PowerCmd.Remove(power);
         await GameApi.Damage(context, boss, 10, ValueProp.Unpowered, player.Creature, null, null);
@@ -146,8 +154,40 @@ public static class SpiegelBossTests
         CombatManager.Instance.SetUpCombat(hardCombat);CombatTestState.SetInProgress(true);
         await hardMonster.AfterAddedToRoom();
         await PowerCmd.ModifyAmount(context,hardBoss.GetPower<EnemyManaPower>()!,130,hardBoss,null);await hardBoss.GetPower<SpellCasterPower>()!.Resolve(context);
-        Check(hardMonster.Enhanced && hardBoss.GetPowerAmount<RitualPower>()==8 && hardBoss.GetPowerAmount<BufferPower>()==2 && !hardBoss.HasPower<SpiegelMalleablePower>() && !hardBoss.HasPower<MetallicizePower>(),
+        Check(hardMonster.Enhanced && hardBoss.GetPowerAmount<RitualPower>()==5 && hardBoss.GetPowerAmount<BufferPower>()==2 && !hardBoss.HasPower<SpiegelMalleablePower>() && !hardBoss.HasPower<MetallicizePower>(),
             "高进阶SP只获得2层缓冲，不获得柔韧或金属化");
+        hardPlayer.Creature.SetMaxHpInternal(5000);hardPlayer.Creature.SetCurrentHpInternal(5000);
+        foreach(var power in hardPlayer.Creature.Powers.ToArray())await PowerCmd.Remove(power);
+        hardMonster.RollMove([hardPlayer.Creature]);await hardMonster.PerformMove();hardMonster.RollMove([hardPlayer.Creature]);
+        Check(((SingleAttackIntent)hardMonster.NextMove.Intents.Single()).GetTotalDamage([hardPlayer.Creature],hardBoss)==25,"高进阶普通攻击保持25伤害");
+        for(int i=0;i<3;i++)await CardPileCmd.Add(hardCombat.CreateCard<Mana>(hardPlayer),PileType.Draw);
+        for(int i=0;i<4;i++)await CardPileCmd.Add(hardCombat.CreateCard<Mana>(hardPlayer),PileType.Discard);
+        for(int i=0;i<2;i++)await CardPileCmd.Add(hardCombat.CreateCard<Mana>(hardPlayer),PileType.Hand);
+        for(int i=0;i<3;i++){
+            int before=hardPlayer.Creature.CurrentHp;await hardMonster.PerformMove();hardMonster.RollMove([hardPlayer.Creature]);
+            Check(hardPlayer.Creature.CurrentHp==before-25,"高进阶普通攻击实际25伤害");
+            await hardMonster.PerformMove();hardMonster.RollMove([hardPlayer.Creature]);
+        }
+        Check(ManaCmd.InPile(hardPlayer,PileType.Draw).Count()==0&&ManaCmd.InPile(hardPlayer,PileType.Discard).Count()==2&&ManaCmd.InPile(hardPlayer,PileType.Hand).Count()==2,"高进阶污染最多5张并保留手牌");
+        await hardMonster.PerformMove();hardMonster.RollMove([hardPlayer.Creature]);
+        foreach(var power in hardPlayer.Creature.Powers.ToArray())await PowerCmd.Remove(power);
+        for(int i=0;i<6;i++){
+            var multi=(MultiAttackIntent)hardMonster.NextMove.Intents.Single();int hits=2+i/2;
+            Check(multi.Repeats==hits&&multi.GetTotalDamage([hardPlayer.Creature],hardBoss)==12*hits,"高进阶第"+(i+1)+"次多重意图");
+            int before=hardPlayer.Creature.CurrentHp;await hardMonster.PerformMove();hardMonster.RollMove([hardPlayer.Creature]);
+            Check(hardPlayer.Creature.CurrentHp==before-12*hits,"高进阶多重实际结算第"+(i+1)+"次");
+        }
+        foreach(bool upgraded in new[]{false,true}){
+            foreach(var pile in new[]{PileType.Draw,PileType.Hand,PileType.Discard})foreach(var card in CardPile.Get(pile,hardPlayer).Cards.ToArray())await CardPileCmd.RemoveFromCombat(card);
+            hardPlayer.Creature.LoseBlockInternal(hardPlayer.Creature.Block);
+            if(upgraded)await PowerCmd.Apply<DexterityPower>(context,hardPlayer.Creature,1,hardPlayer.Creature,null);
+            for(int i=0;i<2;i++)await CardPileCmd.Add(hardCombat.CreateCard<Mana>(hardPlayer),PileType.Hand);
+            for(int i=0;i<(upgraded?3:2);i++)await CardPileCmd.Add(hardCombat.CreateCard<Mana>(hardPlayer),PileType.Draw);
+            var tongue=hardCombat.CreateCard<TongueTwisterSpell>(hardPlayer);if(upgraded)CardCmd.Upgrade(tongue);
+            await tongue.OnPlayWrapper(context,null,false,new ResourceInfo{EnergySpent=1,EnergyValue=1,StarsSpent=0,StarValue=0},true);
+            Check(tongue.DynamicVars.Block.BaseValue==(upgraded?3:2)&&tongue.DynamicVars.Cards.BaseValue==(upgraded?3:2),"绕口令仅削格挡，保持抽牌："+upgraded);
+            Check(hardPlayer.Creature.Block==(upgraded?20:8),"绕口令逐张受敏捷修正："+upgraded);
+        }
         LocManager.Instance.SetLanguage("eng"); RunManager.Instance.CleanUp(); return count;
     }
 }

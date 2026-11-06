@@ -24,13 +24,15 @@ namespace FrierenMod.Scripts.Monsters;
 public sealed class SpiegelFrieren : CustomMonsterModel
 {
     private Queue<int>? _debuffs;
-    private int _attackTimes = 2;
+    private int _multiAttackUses;
+    private int MultiAttackHits => 2 + _multiAttackUses / 2;
     private bool _apexTriggered;
     private MoveState? _apex;
     public bool Enhanced => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 1, 0) == 1;
     public override int MinInitialHp => 500;
     public override int MaxInitialHp => 500;
-    private int Damage => Enhanced ? 25 : 15;
+    private int Damage => Enhanced ? 25 : 18;
+    private int MultiAttackDamage => Enhanced ? 12 : 10;
     public override string CustomVisualPath => "res://FrierenMod/scenes/spiegel_combat.tscn";
     public override async Task AfterAddedToRoom()
     {
@@ -46,7 +48,7 @@ public sealed class SpiegelFrieren : CustomMonsterModel
         var pollute = new MoveState("MANA_POLLUTION", Pollute, new DebuffIntent());
         var invert = new MoveState("UPSIDE_DOWN", Invert, new StatusIntent(1));
         var weaken = new MoveState("CHANT_SUPPRESSION", Weaken, new DebuffIntent());
-        var multi = new MoveState("MULTIPLE_OFFENSIVE_MAGIC", MultiAttack, new MultiAttackIntent(Damage, () => _attackTimes));
+        var multi = new MoveState("MULTIPLE_OFFENSIVE_MAGIC", MultiAttack, new MultiAttackIntent(MultiAttackDamage, () => MultiAttackHits));
         _apex = new MoveState("APEX_MAGIC", PrepareApex, new MultiAttackIntent(999, 999));
         var next = new ConditionalBranchState("NEXT_DEBUFF");
         next.AddState(pollute, () => NextDebuff() == 0);
@@ -80,7 +82,7 @@ public sealed class SpiegelFrieren : CustomMonsterModel
         await DamageCmd.Attack(damage ?? Damage).WithHitCount(hits).FromMonster(this)
             .WithHitFx("vfx/vfx_attack_blunt").OnlyPlayAnimOnce().Execute(null);
     }
-    private async Task MultiAttack(IReadOnlyList<Creature> targets) { await Attack(_attackTimes); _attackTimes += Enhanced ? 2 : 1; }
+    private async Task MultiAttack(IReadOnlyList<Creature> targets) { await Attack(MultiAttackHits, MultiAttackDamage); _multiAttackUses++; }
     private Task Suppress(IReadOnlyList<Creature> targets) => PowerCmd.Apply<BanManaGainPower>(new ThrowingPlayerChoiceContext(), targets, 1, Creature, null);
     private async Task Weaken(IReadOnlyList<Creature> targets)
     {
@@ -97,7 +99,7 @@ public sealed class SpiegelFrieren : CustomMonsterModel
         ConsumeDebuff();
         foreach (var player in CombatState.Players)
         {
-            var mana = ManaCmd.InPile(player, PileType.Draw).Concat(ManaCmd.InPile(player, PileType.Discard)).Take(5).ToArray();
+            var mana = ManaCmd.InPile(player, PileType.Draw).Concat(ManaCmd.InPile(player, PileType.Discard)).Take(Enhanced ? 5 : 3).ToArray();
             foreach (var card in mana)
             {
                 var pile = card.Pile!.Type;

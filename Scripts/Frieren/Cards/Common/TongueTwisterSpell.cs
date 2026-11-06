@@ -16,7 +16,7 @@ namespace FrierenMod.Scripts.Cards;
 
 public sealed class TongueTwisterSpell() : FrierenCard(1, CardType.Skill, CardRarity.Common, TargetType.Self)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new CardsVar(2), new BlockVar(3, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new CardsVar(2), new BlockVar(2, ValueProp.Move)];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         await CardPileCmd.Draw(context, DynamicVars.Cards.BaseValue, Owner);
