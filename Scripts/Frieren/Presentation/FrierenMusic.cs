@@ -56,10 +56,12 @@ public static class FrierenMusic
             }
             return;
         }
-        var pool=MusicCatalog.Resolve(run.CurrentRoom?.RoomType??RoomType.Unassigned,
+        var roomType=run.CurrentRoom?.RoomType??RoomType.Unassigned;
+        if(run.CurrentRoom is CombatRoom army && Mechanics.DemonArmyAttackCombat.IsEventBattle(army)) roomType=army.Encounter.RoomType;
+        var pool=MusicCatalog.Resolve(roomType,
             CombatManager.Instance.IsInProgress,run.CurrentRoom is CombatRoom {Encounter: SpiegelFrierenEncounter});
         // Boss胜利后的奖励与地图查看仍留在同一战斗房间，不立即切回常规曲。
-        if (!CombatManager.Instance.IsInProgress && run.CurrentRoom is CombatRoom {RoomType:RoomType.Boss} &&
+        if (!CombatManager.Instance.IsInProgress && roomType==RoomType.Boss &&
             session.CurrentPool is MusicPool.Boss or MusicPool.Spiegel)
             pool=session.CurrentPool.Value;
         bool wasStopped=session.CurrentTrack==null;

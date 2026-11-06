@@ -350,6 +350,29 @@ public static class MultiplayerTests
         run.CurrentActIndex=1;run.ActFloor=1;run.PushRoom(new RestSiteRoom());await CommissionCmd.Entered(run);await Barrier("next-act");
         if(me.Character is Frieren)Check(!await CommissionCmd.Send(me,cargoId,CommissionOperation.Claim),"跨幕拒绝旧护送任务提交");
         await Same("expired",()=>run.Players.Where(p=>p.Character is Frieren).All(p=>CommissionCargo.Goods(p).Length==0&&CommissionCmd.Read(p).ActiveCount==0&&CommissionCmd.Read(p).Quests.Single(q=>q.Id==cargoId).Status==CommissionStatus.Abandoned));
+        run.CurrentActIndex=2;
+        var army=ModelDb.Event<FrierenMod.Scripts.Events.DemonArmyAttack>();
+        Check(army.IsAllowed(run)==!mixed,"魔王军事件只对全芙莉莲第三幕开放");
+        if(!mixed){
+            harmony.Patch(AccessTools.Method(typeof(RunManager),nameof(RunManager.EnterRoomWithoutExitingCurrentRoom)),prefix:new HarmonyMethod(typeof(DemonArmyAttackTests),nameof(DemonArmyAttackTests.CaptureEnterRoom)));
+            for(int branch=0;branch<3;branch++){
+                run.PushRoom(new EventRoom(army));
+                var events=RunManager.Instance.EventSynchronizer;events.BeginEvent(army);
+                await Wait(()=>events.Events.Count==2&&events.Events.All(e=>e.CurrentOptions.Count==3),"魔王军共享事件开始");
+                var local=(FrierenMod.Scripts.Events.DemonArmyAttack)events.GetLocalEvent();
+                Check(events.IsShared&&events.Events.Cast<FrierenMod.Scripts.Events.DemonArmyAttack>().All(e=>e.SelectedBoss.Id==local.SelectedBoss.Id),"各玩家显示相同随机Boss："+branch);
+                DemonArmyAttackTests.CapturedRoom=null;await Barrier("army-vote-ready-"+branch);
+                events.ChooseLocalOption(branch);
+                await Wait(()=>DemonArmyAttackTests.CapturedRoom!=null,"ENet共享投票进入事件战斗");
+                await events.AwaitPendingOptionTasks();
+                var selectedRoom=DemonArmyAttackTests.CapturedRoom!;
+                Check(selectedRoom.ParentEventId==army.Id&&selectedRoom.RoomType!=RoomType.Boss,"共享战斗保留父事件且不触发终局："+branch);
+                string detail=JsonSerializer.Serialize(new{boss=local.SelectedBoss.Id.ToString(),actual=selectedRoom.Encounter.Id.ToString(),type=selectedRoom.RoomType.ToString(),reward=DemonArmyAttackCombat.Rewards(me,selectedRoom).Select(r=>r.GetType().Name).ToArray()});
+                string key="army-selected-"+branch;Publish(key+"-"+role+".json",detail);await Barrier(key);
+                Check(File.ReadAllText(Path.Combine(dir,key+"-"+peer+".json"))==detail,"ENet两端选择同一遭遇及悬赏："+branch);
+                await Same("army-event-"+branch);
+            }
+        }
         File.WriteAllText(Path.Combine(dir,role+"-result.json"),JsonSerializer.Serialize(new{checks,mixed}));
         await Barrier("finished");
         newTimer.Stop();harmony.UnpatchAll(harmony.Id);foreach(var screen in Screens)screen.Free();Overlay.Free();

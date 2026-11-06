@@ -5124,5 +5124,13 @@
     "modified": false,
     "processing": "作者原图；卡图按500×380原生画框等比处理，事件保留完整原图。",
     "sha256": "f8cc39f113da476e1666e50345443b3adf4d1dad543b2e90ff71b3902b9e6025"
+  },
+  {
+    "file": "FrierenMod/images/events/DemonArmyAttack.png",
+    "source": "assets/author_adjusted/20261106/DemonArmyAttack.png",
+    "source_kind": "author_provided",
+    "modified": false,
+    "processing": "从作者Word事件条目提取完整原图，沿用原生事件左侧等比铺满。",
+    "sha256": "78177fd15a53d7f674cf13d287162a787b4be438f4cef433bfd68f2ee410067e"
   }
 ]

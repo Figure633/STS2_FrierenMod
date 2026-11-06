@@ -81,5 +81,13 @@
   "FRIERENMOD-SEALING_ORE_MINE.pages.INITIAL.options.GREED.title": "贪！",
   "FRIERENMOD-SEALING_ORE_MINE.pages.INITIAL.options.GREED.description": "获得魔具[green]封魔矿[/green]。",
   "FRIERENMOD-SEALING_ORE_MINE.pages.PLAY.description": "你拿起一块封魔石试了试。身上的一页魔法悄然消失，化作了纯粹的魔力。",
-  "FRIERENMOD-SEALING_ORE_MINE.pages.GREED.description": "你挑了一块最漂亮的封魔石放进行李。\n\n[gold]下一个商人一定会喜欢它。[/gold]"
+  "FRIERENMOD-SEALING_ORE_MINE.pages.GREED.description": "你挑了一块最漂亮的封魔石放进行李。\n\n[gold]下一个商人一定会喜欢它。[/gold]",
+  "FRIERENMOD-DEMON_ARMY_ATTACK.title": "魔王军来袭",
+  "FRIERENMOD-DEMON_ARMY_ATTACK.pages.INITIAL.description": "击杀阿乌拉之后，附近的魔物们突然开始了暴乱。芙莉莲小队收到了当地贵族的紧急委托，你需要前往战场支援友军，根据悬赏难度获得奖励。\n\n[gold]“别担心，我们有的是前卫！”[/gold]",
+  "FRIERENMOD-DEMON_ARMY_ATTACK.pages.INITIAL.options.TRIUMPH.title": "我必凯旋",
+  "FRIERENMOD-DEMON_ARMY_ATTACK.pages.INITIAL.options.TRIUMPH.description": "对战[red]{Boss}[/red]。开战时获得[gold]壁垒[/gold]和[green]8[/green]层[gold]覆甲[/gold]。胜利后获得[gold]稀有遗物[/gold]、[green]2[/green]瓶药水和[gold]150金币[/gold]。",
+  "FRIERENMOD-DEMON_ARMY_ATTACK.pages.INITIAL.options.AWAKEN.title": "我已觉醒",
+  "FRIERENMOD-DEMON_ARMY_ATTACK.pages.INITIAL.options.AWAKEN.description": "对战[red]感染棱柱[/red]。开战时获得[green]1[/green]层[gold]余像[/gold]。胜利后获得[gold]随机遗物[/gold]、[green]1[/green]瓶药水和[gold]50金币[/gold]。",
+  "FRIERENMOD-DEMON_ARMY_ATTACK.pages.INITIAL.options.UNHURT.title": "我无伤痛",
+  "FRIERENMOD-DEMON_ARMY_ATTACK.pages.INITIAL.options.UNHURT.description": "对战[red]猎人杀手[/red]。开战时获得[green]1[/green]层[gold]人工制品[/gold]。胜利后获得[gold]普通遗物[/gold]和[gold]50金币[/gold]。"
 }

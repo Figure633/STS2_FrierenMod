@@ -81,5 +81,13 @@
   "FRIERENMOD-SEALING_ORE_MINE.pages.INITIAL.options.GREED.title": "Greed!",
   "FRIERENMOD-SEALING_ORE_MINE.pages.INITIAL.options.GREED.description": "Gain [green]Anti-Magic Ore[/green].",
   "FRIERENMOD-SEALING_ORE_MINE.pages.PLAY.description": "A page of magic fades away, leaving pure Mana behind.",
-  "FRIERENMOD-SEALING_ORE_MINE.pages.GREED.description": "You pack a beautiful stone into your luggage.\n\nThe next merchant will surely love it."
+  "FRIERENMOD-SEALING_ORE_MINE.pages.GREED.description": "You pack a beautiful stone into your luggage.\n\nThe next merchant will surely love it.",
+  "FRIERENMOD-DEMON_ARMY_ATTACK.title": "The Demon Army Attacks",
+  "FRIERENMOD-DEMON_ARMY_ATTACK.pages.INITIAL.description": "After Aura's defeat, nearby monsters suddenly run rampant. A local noble sends Frieren's party an urgent request: support the troops on the battlefield and earn a bounty matching the danger.\n\n[gold]“Don't worry. We have plenty of vanguards!”[/gold]",
+  "FRIERENMOD-DEMON_ARMY_ATTACK.pages.INITIAL.options.TRIUMPH.title": "I Shall Triumph",
+  "FRIERENMOD-DEMON_ARMY_ATTACK.pages.INITIAL.options.TRIUMPH.description": "Fight [red]{Boss}[/red]. Start combat with [gold]Barricade[/gold] and [green]8[/green] [gold]Plating[/gold]. Win a [gold]Rare Relic[/gold], [green]2[/green] Potions, and [gold]150 Gold[/gold].",
+  "FRIERENMOD-DEMON_ARMY_ATTACK.pages.INITIAL.options.AWAKEN.title": "I Have Awakened",
+  "FRIERENMOD-DEMON_ARMY_ATTACK.pages.INITIAL.options.AWAKEN.description": "Fight an [red]Infested Prism[/red]. Start combat with [green]1[/green] [gold]Afterimage[/gold]. Win a [gold]Random Relic[/gold], [green]1[/green] Potion, and [gold]50 Gold[/gold].",
+  "FRIERENMOD-DEMON_ARMY_ATTACK.pages.INITIAL.options.UNHURT.title": "I Feel No Pain",
+  "FRIERENMOD-DEMON_ARMY_ATTACK.pages.INITIAL.options.UNHURT.description": "Fight a [red]Hunter Killer[/red]. Start combat with [green]1[/green] [gold]Artifact[/gold]. Win a [gold]Common Relic[/gold] and [gold]50 Gold[/gold]."
 }

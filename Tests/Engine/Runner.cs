@@ -108,6 +108,10 @@ public partial class Runner : Node
                 GD.Print("ACHIEVEMENT101_OK: " + await Achievement101Tests.Run());
                 await Finish(); return;
             }
+            if (OS.GetCmdlineUserArgs().Contains("--demon-army-event-only")) {
+                GD.Print("DEMON_ARMY_EVENT_OK: " + await DemonArmyAttackTests.Run(this));
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--author-0120-only")) {
                 GD.Print("AUTHOR0120_OK: " + await Author0120Tests.Run(this));
                 await Finish(); return;
