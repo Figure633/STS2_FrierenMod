@@ -39,7 +39,7 @@ public static class LegendaryCraftCmd
         {
             var pool = LegendaryCraft.Options(cost, layer).ToList();
             var choices = new List<LegendaryEffect>();
-            for (int i = 0, count = Math.Min(pool.Count, source.IsUpgraded ? 3 : 2); i < count; i++)
+            for (int i = 0, count = Math.Min(pool.Count, source.DynamicVars["Options"].IntValue); i < count; i++)
             {
                 int index = source.Owner.RunState.Rng.CombatCardGeneration.NextInt(pool.Count);
                 choices.Add(pool[index]);
@@ -89,8 +89,9 @@ public static class LegendaryCraftCmd
                     }
                     break;
                 case "Block": await CreatureCmd.GainBlock(owner.Creature, card.DynamicVars.Block, play); break;
-                case "Damage": case "DamageTriple": case "DamageQuad": case "DamageSeven":
-                    await DamageCmd.Attack(n).FromCardCompatibility(card, play).Targeting(play.Target!).WithHitCount(effect.Kind == "DamageSeven" ? 7 : effect.Kind == "DamageQuad" ? 4 : effect.Kind == "DamageTriple" ? 3 : 1).Execute(context); break;
+                case "Damage": case "DamageTriple": case "DamageQuad": case "DamageFive": case "DamageSeven":
+                    // DamageSeven 是旧档配方名；同样使用作者本次调整后的五段。
+                    await DamageCmd.Attack(n).FromCardCompatibility(card, play).Targeting(play.Target!).WithHitCount(effect.Kind is "DamageFive" or "DamageSeven" ? 5 : effect.Kind == "DamageQuad" ? 4 : effect.Kind == "DamageTriple" ? 3 : 1).Execute(context); break;
                 case "DamageAll": await DamageCmd.Attack(n).FromCardCompatibility(card, play).TargetingAllOpponents(owner.Creature.CombatState!).Execute(context); break;
                 case "Energy": await PlayerCmd.GainEnergy(n, owner); break;
                 case "Execute": if (play.Target!.CurrentHp <= n) await CreatureCmd.Kill(play.Target); break;

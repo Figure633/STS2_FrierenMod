@@ -20,6 +20,10 @@ public static class ChantSelectionPresentation
     [HarmonyPostfix]
     private static void Ready(NChooseACardSelectionScreen __instance, IReadOnlyList<CardModel> ____cards, ref Tween? ____cardTween)
     {
+        if (____cards.Count == 3 && ____cards.All(card => card is ChantChoice { GenerationAmount: > 0 })) {
+            __instance.GetNode<NCommonBanner>("Banner").label.SetTextAutoSize(new LocString("frieren", "MANA_PILE_CHOOSE").GetFormattedText());
+            return;
+        }
         if (____cards.Count == 0 || ____cards.Any(card => card is not FactorCard { Option: not null })) return;
         __instance.GetNode<NCommonBanner>("Banner").label.SetTextAutoSize(
             new LocString("frieren", "CHANT_CHOOSE").GetFormattedText());

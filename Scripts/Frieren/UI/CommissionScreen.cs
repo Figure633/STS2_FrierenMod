@@ -28,6 +28,7 @@ public sealed class CommissionScreen
     private string _signature = "";
     private int _act;
     private bool _applying;
+    private bool _previousHasReward;
     private string _notice = "";
     private static string Text(string key) => new LocString("frieren", "COMMISSION." + key).GetFormattedText();
     private static string Format(string key, params (string Key, object Value)[] args) {
@@ -74,7 +75,7 @@ public sealed class CommissionScreen
         View.VisibilityChanged += () => { if (View.Visible) NHotkeyManager.Instance?.AddBlockingScreen(View); else { NHotkeyManager.Instance?.RemoveBlockingScreen(View); ClearHover(); } };
         root.Resized += Resize;
         View.TreeExiting += () => { root.Resized -= Resize; NHotkeyManager.Instance?.RemoveBlockingScreen(View); ClearHover(); };
-        var timer = new Godot.Timer { WaitTime = .2, Autostart = true }; timer.Timeout += () => { if (View.Visible) Refresh(); }; View.AddChild(timer);
+        var timer = new Godot.Timer { WaitTime = .2, Autostart = true }; timer.Timeout += () => { if (View.Visible) { Refresh(); RefreshPreviousAttention(); } }; View.AddChild(timer);
         Resize();
     }
     private void Resize() {
@@ -96,14 +97,21 @@ public sealed class CommissionScreen
             string.Join(',', _player.Deck.Cards.Select(c => c.Id+"/"+c.CurrentUpgradeLevel))+"/"+CommissionCargo.Freight(_player) + string.Join(',', _player.Relics.Select(r => r.Id));
         if (!force && signature == _signature) return; _signature = signature;
         _heading.Text = Format("TITLE", ("Act", _act + 1));
-        _previous.GetNode<Label>("Label").Text = Text("PREVIOUS"); _next.GetNode<Label>("Label").Text = Text("NEXT"); _close.GetNode<Label>("Label").Text = Text("CLOSE");
+        _previousHasReward = state.Quests.Any(q => !q.Legacy && q.Act < _act && CommissionState.Ready(q, id => CommissionCmd.OwnsSpell(_player, id)));
+        _previous.GetNode<Label>("Label").Text = Text("PREVIOUS") + (_previousHasReward ? " !" : ""); _next.GetNode<Label>("Label").Text = Text("NEXT"); _close.GetNode<Label>("Label").Text = Text("CLOSE");
         _summary.Text = Format("SUMMARY", ("Count", state.ActiveCount), ("Limit", CommissionState.ActiveLimit)) + "\n" + (_notice.Length > 0 ? _notice : Text(canAct ? state.Quests.Any(q=>q.Completed&&q.Status==CommissionStatus.Accepted)?"CARRY_NOTICE":"RULES" : "BUSY"));
         if (_act > 0) _previous.Enable(); else _previous.Disable();
         if (_act < _player.RunState.CurrentActIndex) _next.Enable(); else _next.Disable();
-        _previous.Modulate = _act > 0 ? Colors.White : new Color(1, 1, 1, .45f);
+        RefreshPreviousAttention();
         _next.Modulate = _act < _player.RunState.CurrentActIndex ? Colors.White : new Color(1, 1, 1, .45f);
         ClearHover(); foreach (var child in _list.GetChildren()) { _list.RemoveChild(child); child.QueueFree(); }
         foreach (var quest in state.Quests.Where(q => q.Act == _act && !q.Legacy).OrderBy(q => q.OpensAt).ThenBy(q => q.Id)) AddRow(quest, state, canAct);
+    }
+    private void RefreshPreviousAttention()
+    {
+        float pulse = (float)(.5 + .5 * Math.Sin(Time.GetTicksMsec() / 260d));
+        _previous.Modulate = _previousHasReward ? new Color(1, .75f + .25f * pulse, .45f + .55f * pulse) :
+            _act > 0 ? Colors.White : new Color(1, 1, 1, .45f);
     }
     public static string GoalText(Player player, Commission q)
     {

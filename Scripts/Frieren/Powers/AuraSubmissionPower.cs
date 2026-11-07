@@ -9,6 +9,15 @@ namespace FrierenMod.Scripts.Powers;
 
 public sealed class AuraSubmissionPower : FrierenPower
 {
+    public override MegaCrit.Sts2.Core.Localization.LocString Description {
+        get {
+            var text = base.Description;
+            text.Add(new MegaCrit.Sts2.Core.Localization.DynamicVars.EnergyVar("EnergyLoss", Amount) {
+                ColorPrefix = MegaCrit.Sts2.Core.Helpers.EnergyIconHelper.GetPrefix(this)
+            });
+            return text;
+        }
+    }
     public override PowerType Type => PowerType.Debuff;
     public override async Task AfterEnergyReset(Player player)
     {

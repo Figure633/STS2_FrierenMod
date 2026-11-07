@@ -22,7 +22,7 @@ public sealed class LegendaryCraftChoice() : FrierenCard(0, CardType.Skill, Card
         "ZeroCost" => "CostZeroOption",
         "Block" => "BlockOption",
         "Damage" => "DamageOption",
-        "DamageTriple" or "DamageQuad" or "DamageSeven" => "DamageThirdOption",
+        "DamageTriple" or "DamageQuad" or "DamageFive" or "DamageSeven" => "DamageThirdOption",
         "DamageAll" => "DamageAllOption",
         "Energy" => "EnergyOption",
         "Execute" => "ExtinguishOption",

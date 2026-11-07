@@ -24,7 +24,7 @@ public sealed class CustomLegendarySpell() : LegendaryCard(0, CardType.Skill, Ca
             _recipe = value;
             DynamicVars.Damage.BaseValue = Effects.FirstOrDefault(e => e.Kind.StartsWith("Damage")).Amount;
             DynamicVars.Block.BaseValue = Effects.FirstOrDefault(e => e.Kind == "Block").Amount;
-            if (Effects.Any(e => e.Kind is "Dexterity" or "Intangible" or "DoubleStrength" or "DoubleStats" or "ReduceStrength" or "UpgradeAll")) AddKeyword(CardKeyword.Exhaust);
+            if (Effects.Any(e => e.Kind is "Dexterity" or "Intangible" or "DoubleStrength" or "DoubleStats" or "ReduceStrength" or "RemoveDebuffs" or "UpgradeAll")) AddKeyword(CardKeyword.Exhaust);
             else RemoveKeyword(CardKeyword.Exhaust);
         }
     }
@@ -37,7 +37,7 @@ public sealed class CustomLegendarySpell() : LegendaryCard(0, CardType.Skill, Ca
     public override bool CanBeGeneratedByModifiers => false;
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(0, ValueProp.Move), new BlockVar(0, ValueProp.Move)];
     public override CardType Type => Effects.Any(e => e.Kind.StartsWith("Damage")) ? CardType.Attack : CardType.Skill;
-    public override TargetType TargetType => Effects.Any(e => e.Kind is "Damage" or "DamageTriple" or "DamageQuad" or "DamageSeven" or "Execute")
+    public override TargetType TargetType => Effects.Any(e => e.Kind is "Damage" or "DamageTriple" or "DamageQuad" or "DamageFive" or "DamageSeven" or "Execute")
         ? TargetType.AnyEnemy : Effects.Any(e => e.Kind == "DamageAll") ? TargetType.AllEnemies : TargetType.Self;
     public void Configure(int cost, IEnumerable<LegendaryEffect> effects)
     {
@@ -51,7 +51,7 @@ public sealed class CustomLegendarySpell() : LegendaryCard(0, CardType.Skill, Ca
             // 与原版 diff() 使用同一格式化入口：显示实际整数，并保留增减益颜色。
             if (e.Kind == "Energy") text.Add(new EnergyVar("Amount", e.Amount) { ColorPrefix = EnergyIconHelper.GetPrefix(this) });
             else text.Add("Amount", e.Kind switch {
-                "Damage" or "DamageAll" or "DamageTriple" or "DamageQuad" or "DamageSeven" => DynamicVars.Damage.ToHighlightedString(inverse: false),
+                "Damage" or "DamageAll" or "DamageTriple" or "DamageQuad" or "DamageFive" or "DamageSeven" => DynamicVars.Damage.ToHighlightedString(inverse: false),
                 "Block" => DynamicVars.Block.ToHighlightedString(inverse: false),
                 _ => e.Amount.ToString(System.Globalization.CultureInfo.InvariantCulture)
             });

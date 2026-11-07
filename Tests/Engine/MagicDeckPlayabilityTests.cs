@@ -47,9 +47,11 @@ public static class MagicDeckPlayabilityTests
             var holder = NHandCardHolder.Create(node, hand);
             holder.Position = new(400 + holders.Count * 350, 500); root.AddChild(holder); holders.Add(holder);
         }
-        bool Blocked() => holders.All(h => !h.CardModel!.CanPlay() && h.CardNode!.GetNode<Control>("%UnplayableEnergyIcon").Visible);
+        bool Blocked() => holders.All(h => h.CardModel is PreciseChant
+            ? h.CardModel.CanPlay() && !h.CardNode!.GetNode<Control>("%UnplayableEnergyIcon").Visible
+            : !h.CardModel!.CanPlay() && h.CardNode!.GetNode<Control>("%UnplayableEnergyIcon").Visible);
         bool Ready() => holders.All(h => h.CardModel!.CanPlay() && !h.CardNode!.GetNode<Control>("%UnplayableEnergyIcon").Visible);
-        Check(Blocked(), "初始高费因子下三种咏唱牌均显示不可用");
+        Check(Blocked(), "高费因子阻止普通咏唱；精准咏唱可先生成魔力");
         void OnChanged(CombatState state) {
             if (state != combat) throw new Exception("刷新了其他战斗");
             notifications++;

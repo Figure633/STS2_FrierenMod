@@ -13,6 +13,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using FrierenMod.Scripts.Presentation;
 using MegaCrit.Sts2.Core.Localization;
+using MegaCrit.Sts2.Core.Helpers;
 
 namespace FrierenMod.Scripts.Cards;
 
@@ -21,9 +22,10 @@ public sealed class HighDensityMana() : FrierenCard(0, CardType.Status, CardRari
     protected override void AddExtraArgsToDescription(LocString description)
     {
         base.AddExtraArgsToDescription(description);
+        ((EnergyVar)DynamicVars["Amount"]).ColorPrefix = EnergyIconHelper.GetPrefix(this);
         description.Add("Synchro", new LocString("frieren", $"TIP.{SynchroPresentation.Key(this)}.title").GetFormattedText());
     }
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Amount", 1)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new EnergyVar("Amount", 1)];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         await SynchroCmd.Play(context, this, play);

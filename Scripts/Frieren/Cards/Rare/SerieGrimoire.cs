@@ -16,9 +16,11 @@ namespace FrierenMod.Scripts.Cards;
 
 public sealed class SerieGrimoire() : FrierenCard(0, CardType.Skill, CardRarity.Rare, TargetType.Self)
 {
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Options", 2)];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         await LegendaryCraftCmd.Create(context, this);
     }
+    protected override void OnUpgrade() => DynamicVars["Options"].UpgradeValueBy(1);
 }

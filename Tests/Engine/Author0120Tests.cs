@@ -58,11 +58,11 @@ public static class Author0120Tests
         Check(enemy.GetPowerAmount<StrengthPower>()==-3,"嫌弃脸X+1减力量");
         await enemy.GetPower<RestoreStrengthPower>()!.AfterSideTurnEnd(context,CombatSide.Enemy,[enemy]);
         Check(enemy.GetPowerAmount<StrengthPower>()==0,"嫌弃脸回合结束精确归还力量");
-        foreach(var item in new (int cost,string kind,int amount)[]{(0,"Damage",8),(1,"Damage",16),(2,"Damage",25),(2,"DamageQuad",4),(3,"DamageSeven",4),(3,"Block",28)})
+        foreach(var item in new (int cost,string kind,int amount)[]{(0,"Damage",6),(1,"Damage",12),(2,"Damage",18),(2,"DamageQuad",4),(3,"DamageFive",4),(3,"Block",22)})
             Check(LegendaryCraft.Options(item.cost,1).Contains(new(item.kind,item.amount)),"自定义数值："+item);
         Check(!LegendaryCraft.Options(2,0).Any(e=>e.Kind=="ManaDiscard")&&!LegendaryCraft.Options(3,0).Any(e=>e.Kind=="ManaDiscard"),"月亮不进入2／3费池");
         var custom=Card<CustomLegendarySpell>();custom.Configure(3,[new("DamageSeven",4)]);hp=enemy.CurrentHp;await Use(custom);
-        Check(enemy.CurrentHp==hp-28&&custom.Type==CardType.Attack,"恶魔3费4伤7次实际结算");
+        Check(enemy.CurrentHp==hp-20&&custom.Type==CardType.Attack,"恶魔旧存档3费配方兼容为4伤5次");
         custom=Card<CustomLegendarySpell>();custom.Configure(2,[new("RetainAll",2)]);await Use(custom);
         var retain=player.Creature.GetPower<RetainHandPower>()!;
         Check(retain.Amount==2&&!retain.ShouldFlush(player)&&retain.ShouldFlush(other),"节制保留全部手牌，仅作用于本人");

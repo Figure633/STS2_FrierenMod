@@ -50,7 +50,7 @@ public static class Todo104Tests
         await Reset();await Use(New<KindlingSpark>(),2);
         Check(enemies.All(e=>e.CurrentHp==9986)&&player.PlayerCombatState!.Hand.Cards.OfType<LittleFire>().Count()==2,"2能量固定13群伤并生成2张火花");
         await Reset();await Use(New<KindlingSpark>(true),2);
-        Check(player.PlayerCombatState!.Hand.Cards.OfType<LittleFire>().Count()==3&&player.PlayerCombatState.Hand.Cards.OfType<LittleFire>().All(c=>!c.IsUpgraded),"升级仅增加数量，2能量生成3张普通火花");
+        Check(enemies.All(e=>e.CurrentHp==9983)&&player.PlayerCombatState!.Hand.Cards.OfType<LittleFire>().Count()==3&&player.PlayerCombatState.Hand.Cards.OfType<LittleFire>().All(c=>!c.IsUpgraded),"升级16群伤，2能量生成3张普通火花");
         Check(DerivedCardPreviews.For(New<KindlingSpark>(true)).OfType<CardHoverTip>().Single().Card is LittleFire {IsUpgraded:false},"升级来源的悬停预览保持普通火花");
         await Reset();await PowerCmd.Apply<StrengthPower>(context,player.Creature,2,player.Creature,null);await Use(New<KindlingSpark>(),1);
         Check(enemies.All(e=>e.CurrentHp==9984),"固定群伤受原生力量加成");
@@ -62,7 +62,7 @@ public static class Todo104Tests
         await Reset();var multi=New<MultipleOffensiveMagic>();await Use(multi,2);
         Check(enemies.Sum(e=>9999-e.CurrentHp)==12&&ManaCmd.InPile(player,PileType.Hand).Count()==2&&multi.Rarity==CardRarity.Common,"多重攻击维持原X+4伤、生成魔力与白卡稀有度");
         await Reset();await RelicCmd.Obtain<ChemicalX>(player);await Use(New<KindlingSpark>(true),0);
-        Check(enemies.All(e=>e.CurrentHp==9986)&&player.PlayerCombatState!.Hand.Cards.OfType<LittleFire>().Count()==3,"化学物X仅增加火花数量，不增加13点群伤");
+        Check(enemies.All(e=>e.CurrentHp==9983)&&player.PlayerCombatState!.Hand.Cards.OfType<LittleFire>().Count()==3,"化学物X仅增加火花数量，不增加升级16点群伤");
         await Reset();var preview=New<KindlingSpark>(true);await CardPileCmd.Add(preview,PileType.Hand);player.PlayerCombatState!.Energy=2;
         foreach(string language in new[]{"zhs","eng"}){
             LocManager.Instance.SetLanguage(language);preview.UpdateDynamicVarPreview(CardPreviewMode.Normal,enemies[0],preview.DynamicVars);string text=preview.GetDescriptionForPile(PileType.Hand);

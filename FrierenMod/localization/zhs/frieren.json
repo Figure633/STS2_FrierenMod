@@ -139,7 +139,7 @@
   "CRAFT.Intangible": "获得{Amount}层无实体。[gold]消耗[/gold]。",
   "CRAFT.UpgradeHand": "升级所有[gold]手牌[/gold]。",
   "CRAFT.DoubleStrength": "力量翻倍。[gold]消耗[/gold]。",
-  "CRAFT.RemoveDebuffs": "移除自身所有负面效果。",
+  "CRAFT.RemoveDebuffs": "移除自身所有负面效果。[gold]消耗[/gold]。",
   "CRAFT.UpgradeAll": "升级本场战斗中的所有牌。[gold]消耗[/gold]。",
   "TIP.SYNCHRO.title": "同调",
   "TIP.SYNCHRO.description": "抽1张牌。[gold]消耗[/gold]。",
@@ -570,11 +570,15 @@
   "COMMISSION.CARRY_NOTICE": "有已完成的旧幕委托，切换至对应幕即可领取报酬。",
   "CRAFT.RetainAll": "保留你的全部[gold]手牌[/gold]{Amount}回合。",
   "CRAFT.DamageQuad": "造成{Amount}点伤害4次。",
-  "CRAFT.DamageSeven": "造成{Amount}点伤害7次。",
+  "CRAFT.DamageSeven": "造成{Amount}点伤害5次。",
   "CRAFT.DoubleStats": "力量与敏捷翻倍。[gold]消耗[/gold]。",
   "CRAFT.ReduceStrength": "所有敌人失去{Amount}点力量。[gold]消耗[/gold]。",
   "FACTOR.BlackGoldWings": "[gold]咏唱[/gold] 2X：对所有敌人造成6X点伤害。获得6X点格挡。",
   "EFFECT.BlackGoldWings": "对所有敌人造成{Damage:diff()}点伤害。获得{Block:diff()}点格挡。",
   "SEALING_ORE.REMOVE": "选择一张牌移除。",
-  "SEALING_ORE.MERCHANT": "嚯嚯，终于买到封魔石啦，标价1000金币！"
+  "SEALING_ORE.MERCHANT": "嚯嚯，终于买到封魔石啦，标价1000金币！",
+  "MANA_PILE_CHOOSE": "选择一个牌堆。",
+  "MANA_GENERATE_CHOICE": "在[gold]{Slot}[/gold]生成{Amount}张[gold]魔力[/gold]。",
+  "LEGACY_CHANT_CHOICE": "[gold]消耗[/gold][gold]{Slot}[/gold]中的{Amount}张[gold]魔力[/gold]。{Effect}",
+  "CRAFT.DamageFive": "造成{Amount}点伤害5次。"
 }

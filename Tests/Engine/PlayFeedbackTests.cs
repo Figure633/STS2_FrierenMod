@@ -56,8 +56,9 @@ public static class PlayFeedbackTests
             LocManager.Instance.SetLanguage(language); CombatManager.Instance.History.Clear();
             player.PlayerCombatState.Energy = 10;
             foreach (var card in new CardModel[] { Card<RapidChant>(), Card<DefensiveMagic>(), Card<SecondDefensiveMagic>(),
-                Card<FlowerFieldSpell>(), Card<PreciseChant>(), Card<FinalChant>(), Card<PerfectDefensiveMagic>() })
+                Card<FlowerFieldSpell>(), Card<FinalChant>(), Card<PerfectDefensiveMagic>() })
                 Blocked(card, "PLAY.NO_MANA");
+            Check(Card<PreciseChant>().CanPlay(), "精准咏唱可在零魔力时先生成4张魔力：" + language);
             Blocked(Card<OilSpell>(), "PLAY.NO_CHANT");
             Blocked(Card<ContinualChant>(), "PLAY.NO_CHANT");
             Check(Card<StrikeFrieren>().CanPlay(out var ordinaryReason, out var ordinaryPreventer) &&

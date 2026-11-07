@@ -139,7 +139,7 @@
   "CRAFT.Intangible": "Gain {Amount} Intangible. [gold]Exhaust[/gold].",
   "CRAFT.UpgradeHand": "Upgrade all cards in your hand.",
   "CRAFT.DoubleStrength": "Double your Strength. [gold]Exhaust[/gold].",
-  "CRAFT.RemoveDebuffs": "Remove all your debuffs.",
+  "CRAFT.RemoveDebuffs": "Remove all your Debuffs. [gold]Exhaust[/gold].",
   "CRAFT.UpgradeAll": "Upgrade ALL cards in this combat. [gold]Exhaust[/gold].",
   "TIP.SYNCHRO.title": "Synchro",
   "TIP.SYNCHRO.description": "Draw 1 card. [gold]Exhaust[/gold].",
@@ -570,11 +570,15 @@
   "COMMISSION.CARRY_NOTICE": "Completed requests from earlier acts await rewards. Switch to their act to claim them.",
   "CRAFT.RetainAll": "Retain your entire hand for {Amount} turns.",
   "CRAFT.DamageQuad": "Deal {Amount} damage 4 times.",
-  "CRAFT.DamageSeven": "Deal {Amount} damage 7 times.",
+  "CRAFT.DamageSeven": "Deal {Amount} damage 5 times.",
   "CRAFT.DoubleStats": "Double your Strength and Dexterity. [gold]Exhaust[/gold].",
   "CRAFT.ReduceStrength": "ALL enemies lose {Amount} Strength. [gold]Exhaust[/gold].",
   "FACTOR.BlackGoldWings": "[gold]Chant[/gold] 2X: Deal 6X damage to ALL enemies. Gain 6X Block.",
   "EFFECT.BlackGoldWings": "Deal {Damage:diff()} damage to ALL enemies. Gain {Block:diff()} Block.",
   "SEALING_ORE.REMOVE": "Choose a card to remove.",
-  "SEALING_ORE.MERCHANT": "Ho ho, finally some anti-magic stone! Priced at 1,000 Gold!"
+  "SEALING_ORE.MERCHANT": "Ho ho, finally some anti-magic stone! Priced at 1,000 Gold!",
+  "MANA_PILE_CHOOSE": "Choose a pile.",
+  "MANA_GENERATE_CHOICE": "Generate {Amount} [gold]Mana[/gold] in your [gold]{Slot}[/gold].",
+  "LEGACY_CHANT_CHOICE": "[gold]Exhaust[/gold] {Amount} [gold]Mana[/gold] from your [gold]{Slot}[/gold]. {Effect}",
+  "CRAFT.DamageFive": "Deal {Amount} damage 5 times."
 }

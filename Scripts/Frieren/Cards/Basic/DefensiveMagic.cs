@@ -8,7 +8,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace FrierenMod.Scripts.Cards;
 
-public sealed class DefensiveMagic() : FrierenCard(1, CardType.Skill, CardRarity.Common, TargetType.Self), IChantCard
+public sealed class DefensiveMagic() : FrierenCard(1, CardType.Skill, CardRarity.Basic, TargetType.Self), IChantCard
 {
     protected override bool IsPlayable => Owner != null && ChantCmd.Options(Owner, 1).Count > 0;
     protected override void AddExtraArgsToDescription(MegaCrit.Sts2.Core.Localization.LocString description) => description.Add("Upgraded", IsUpgraded);

@@ -33,5 +33,5 @@ public sealed class KindlingSpark() : FrierenCard(0, CardType.Attack, CardRarity
         for (int i = 0; i < count; i++) await CardFlowCmd.Generate<LittleFire>(Owner, PileType.Hand);
     }
 
-    protected override void OnUpgrade() => DynamicVars["ExtraSparks"].UpgradeValueBy(1);
+    protected override void OnUpgrade() { DynamicVars.Damage.UpgradeValueBy(3); DynamicVars["ExtraSparks"].UpgradeValueBy(1); }
 }
