@@ -29,11 +29,24 @@ public static class CardCatalogAudit
             rows.Add(new { model = type.Name, id = card.Id.Entry, name = card.Title, englishName = englishNames[card.Id.Entry], upgraded,
                 kind = card is FactorCard ? "因子" : card is MagicPropCard ? "魔具" : card.Type.ToString(),
                 retired = FrierenMod.Scripts.Mechanics.FrierenCardAvailability.IsRetired(card),
+                randomCandidate = FrierenMod.Scripts.Mechanics.FrierenCardAvailability.IsRandomCandidate(card),
+                showInLibrary = card.ShouldShowInCardLibrary,
+                portraitPath = card.PortraitPath,
+                generatedOnly = card is IGeneratedOnlyCard,
                 cost = card.EnergyCost.CostsX ? "X" : card.EnergyCost.GetWithModifiers(CostModifiers.Local).ToString(),
                 type = card.Type.ToString(), rarity = card.Rarity.ToString(), text = card.GetDescriptionForPile(PileType.None) });
         }
         File.WriteAllText(ProjectSettings.GlobalizePath("res://../../artifacts/card-catalog-current.json"),
             JsonSerializer.Serialize(rows, new JsonSerializerOptions { WriteIndented = true }));
+        var pools = UnlockState.all.CharacterCardPools.Select(pool => new {
+            model = pool.GetType().Name,
+            cards = pool.AllCards.Where(card => card.Rarity is CardRarity.Common or CardRarity.Uncommon or CardRarity.Rare &&
+                card.ShouldShowInCardLibrary && (pool is FrierenCardPool ?
+                    FrierenMod.Scripts.Mechanics.FrierenCardAvailability.IsRandomCandidate(card) : card.CanBeGeneratedByModifiers))
+                .Select(card => new { model = card.GetType().Name, type = card.Type.ToString(), rarity = card.Rarity.ToString() }).ToArray()
+        }).ToArray();
+        File.WriteAllText(ProjectSettings.GlobalizePath("res://../../artifacts/card-pools-current.json"),
+            JsonSerializer.Serialize(pools, new JsonSerializerOptions { WriteIndented = true }));
         return rows.Count;
     }
 }

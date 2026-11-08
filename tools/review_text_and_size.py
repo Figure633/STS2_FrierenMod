@@ -7,8 +7,8 @@ ROOT=Path(__file__).resolve().parents[1]
 VERSION=json.loads((ROOT/'FrierenMod.json').read_text('utf-8-sig'))['version']
 DATE=datetime.now(timezone(timedelta(hours=8))).strftime('%Y-%m-%d')
 OLD=ROOT.parent/'FrierenMod_STS1_source code/src/main/resources/FrierenModResources/localization/ZHS'
-OUT=ROOT/'docs/review-20261030'
-OUT.mkdir(exist_ok=True)
+OUT=ROOT/'artifacts/text-and-size-review'
+OUT.mkdir(parents=True,exist_ok=True)
 def flatten(value,key=''):
  if isinstance(value,str):yield key,value
  elif isinstance(value,dict):
