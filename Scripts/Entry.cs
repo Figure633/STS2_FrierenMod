@@ -18,6 +18,7 @@ public class Entry
         Godot.Bridge.ScriptManagerBridge.LookupScriptsInAssembly(typeof(Entry).Assembly);
         _ = MagicDeckStore.Data;
         _ = CommissionCmd.Data;
+        _ = DebtStore.Data;
         _ = Events.ReadingGrimoireEntrance.Stage;
         _ = Rewards.FactorReward.SavedChoices;
         BaseLib.Utils.CustomLocTableManager.Register("frieren");

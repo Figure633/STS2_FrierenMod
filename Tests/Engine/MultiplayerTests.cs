@@ -140,7 +140,7 @@ public static class MultiplayerTests
             // 阶段完成后再比较两端全部玩家数据，而非只核对本机角色。
             string snapshot=JsonSerializer.Serialize(run.Players.Select(p=>new {p.NetId,deck=MagicDeckStore.Read(p).ToJson(),commissions=CommissionCmd.Read(p).ToJson(),gold=p.Gold,
                 deckCards=p.Deck.Cards.Select(c=>new{Id=c.Id.ToString(),c.CurrentUpgradeLevel,fare=c is ValuableCargo v?v.Fare:-1,stop=c is ValuableCargo cargo?cargo.LastStop:""}),
-                rng=CombatTestState.RngCounter(p.PlayerRng.Rewards),hp=p.Creature.CurrentHp,energy=p.PlayerCombatState?.Energy,
+                rng=CombatTestState.RngCounter(p.PlayerRng.Rewards),debt=DebtStore.Read(p),rolls=run.Rng.Niche.Counter,hp=p.Creature.CurrentHp,energy=p.PlayerCombatState?.Energy,
                 piles=p.PlayerCombatState?.AllPiles.Select(pile=>new {pile.Type,cards=pile.Cards.Select(c=>c.Id.ToString()).ToArray()}).ToArray(),
                 powers=p.Creature.Powers.Select(power=>new{power.Id,power.Amount,gate=power is OpenTheWaygatePower g?g.Opportunities+"/"+g.PendingTurns+"/"+g.Consecutive:null}).ToArray()}));
             Publish(name+"-"+role+".json",snapshot);
@@ -217,6 +217,7 @@ public static class MultiplayerTests
         await Same("invalid");
         var combat=new CombatState(runState:run);foreach(var p in run.Players)combat.AddPlayer(p);
         var enemy=combat.CreateCreature(ModelDb.Monster<Axebot>().ToMutable(),CombatSide.Enemy,null);combat.AddCreature(enemy);
+        enemy.SetMaxHpInternal(9999);enemy.SetCurrentHpInternal(9999);
         CombatManager.Instance.SetUpCombat(combat);CombatTestState.SetInProgress(true);
         AccessTools.Property(typeof(CombatManager),nameof(CombatManager.IsStarting)).SetValue(CombatManager.Instance,false);
         AccessTools.Property(typeof(CombatManager),nameof(CombatManager.PlayerActionsDisabled)).SetValue(CombatManager.Instance,false);
@@ -273,10 +274,33 @@ public static class MultiplayerTests
         await gate.AfterTakingExtraTurn(p1);Check(gate.PendingTurns==1,"第一次额外回合后保留一次");
         await gate.AfterTakingExtraTurn(p1);Check(!p1.Creature.HasPower<OpenTheWaygatePower>(),"机会耗尽后两端移除图标");
         await Same("waygate-consumed");
+        // 前面的十次同调会把手牌抽满；先腾出位置，避免测试牌被原生满手规则送进弃牌堆。
+        foreach(var held in p1.PlayerCombatState!.Hand.Cards.ToArray())await CardPileCmd.Add(held,PileType.Discard);
+        foreach(bool jackpot in new[]{false,true}) {
+            var rng=run.Rng.Niche;int minimum=jackpot?5:4;
+            int nextCounter=rng.Counter;
+            while(true){
+                var probe=new MegaCrit.Sts2.Core.Random.Rng(rng.Seed,nextCounter);
+                var rolls=Enumerable.Range(0,3).Select(_=>probe.NextInt(minimum,8)).ToArray();
+                if(rolls.All(n=>n==7)==jackpot)break;
+                if(++nextCounter>rng.Counter+20000)throw new Exception("未找到联机投点测试序列");
+            }
+            rng.FastForwardCounter(nextCounter);
+            var honest=combat.CreateCard<HonestLiving>(p1);if(jackpot)CardCmd.Upgrade(honest);
+            int oldGold=p1.Gold,oldDebt=DebtStore.Read(p1);
+            await CardPileCmd.Add(honest,PileType.Hand);
+            Check(honest.Pile?.Type==PileType.Hand&&honest.CanPlay(),"联机测试牌实际进入手牌且可以打出");
+            await Barrier("honest-ready-"+jackpot);await HostPlay(honest);
+            await Same("honest-result-"+jackpot,()=>honest.Pile?.Type==PileType.Exhaust);
+            Check(p1.Gold==oldGold+(jackpot?777:0)&&DebtStore.Read(p1)==oldDebt+(jackpot?0:7)&&DebtStore.Read(p2)==0,
+                "原生ENet出牌同步随机金币／负债，仅属于施法者："+jackpot);
+            Check(rng.Counter==nextCounter+3,"双端三次独立投点计数相同："+jackpot);
+        }
         var save=RunManager.Instance.ToSave(null);var writer=new PacketWriter();save.Serialize(writer);var reader=new PacketReader();reader.Reset(writer.Buffer);var packet=new SerializableRun();packet.Deserialize(reader);
         var restored=RunState.FromSerializable(packet);
         Check(restored.Players.Select(p=>MagicDeckStore.Read(p).ToJson()).SequenceEqual(run.Players.Select(p=>MagicDeckStore.Read(p).ToJson())),"原生完整跑局网络存档保留各玩家魔法书及赠品标记");
         Check(restored.Players.Select(p=>CommissionCmd.Read(p).ToJson()).SequenceEqual(run.Players.Select(p=>CommissionCmd.Read(p).ToJson())),"原生完整网络存档保留委托与已领奖状态");
+        Check(restored.Players.Select(DebtStore.Read).SequenceEqual(run.Players.Select(DebtStore.Read)),"原生完整网络存档保留各玩家独立负债");
         await Barrier("before-reconnect");
         timer.Stop();RunManager.Instance.CleanUp();timer.QueueFree();
         await Barrier("disconnected");

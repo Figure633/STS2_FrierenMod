@@ -5148,5 +5148,13 @@
     "modified": true,
     "processing": "tools/update_author_relic_icon.py；由作者PNG的Alpha生成白色轮廓，不改原图。",
     "sha256": "21d9c8364c38052594712f52cc9f684f397d609cbc431868f57bf7ffadc899a9"
+  },
+  {
+    "file": "FrierenMod/images/cards/HonestLiving.png",
+    "source": "TODOs.docx:word/media/image3.png",
+    "source_kind": "author_provided",
+    "modified": true,
+    "processing": "作者原图等比裁切500x380，顶端对齐保留头脸，下方裁去衣摆；无重绘、锐化或新增内容。原图SHA256=df5cb54dc884dff16af34f60a0239ceb2201b1ae3433dbe5dd6244ca1e75925d",
+    "sha256": "b9a69f35dd219f2ea31af740a43d577b8c3afb6a1d900948c3dc3b8d46c4b141"
   }
 ]

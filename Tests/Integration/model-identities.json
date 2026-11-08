@@ -264,5 +264,6 @@
   "FrierenMod.Scripts.Cards.BlackGoldWings": "CARD.BLACK_GOLD_WINGS",
   "FrierenMod.Scripts.Cards.SealingOre": "CARD.SEALING_ORE",
   "FrierenMod.Scripts.Events.DemonArmyAttack": "EVENT.DEMON_ARMY_ATTACK",
-  "FrierenMod.Scripts.Powers.BindingStrengthDownPower": "POWER.BINDING_STRENGTH_DOWN_POWER"
+  "FrierenMod.Scripts.Powers.BindingStrengthDownPower": "POWER.BINDING_STRENGTH_DOWN_POWER",
+  "FrierenMod.Scripts.Cards.HonestLiving": "CARD.HONEST_LIVING"
 }

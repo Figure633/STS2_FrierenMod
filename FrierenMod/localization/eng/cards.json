@@ -325,5 +325,7 @@
   "FRIERENMOD-BLACK_GOLD_WINGS.title": "Black-and-Gold Wings",
   "FRIERENMOD-BLACK_GOLD_WINGS.description": "{Context}{Effect}",
   "FRIERENMOD-SEALING_ORE.title": "Anti-Magic Ore",
-  "FRIERENMOD-SEALING_ORE.description": "Consumed on use.\nYou cannot [gold]Chant[/gold] while carrying this.\nAutomatically sold for 300 Gold upon reaching a merchant."
+  "FRIERENMOD-SEALING_ORE.description": "Consumed on use.\nYou cannot [gold]Chant[/gold] while carrying this.\nAutomatically sold for 300 Gold upon reaching a merchant.",
+  "FRIERENMOD-HONEST_LIVING.title": "Honest Work Is Boring, Right?",
+  "FRIERENMOD-HONEST_LIVING.description": "Deal {MinDamage:diff()}–{MaxDamage:diff()} fixed damage to random enemies {Hits} times. If all rolls are {MaxDamage}, gain {Gold} Gold. Otherwise, accumulate {Debt} Gold of debt.\n(Debt: {CurrentDebt} Gold!)"
 }
