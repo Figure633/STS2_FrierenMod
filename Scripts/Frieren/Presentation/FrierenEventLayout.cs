@@ -3,6 +3,7 @@ using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Events;
+using MegaCrit.Sts2.Core.Localization;
 
 namespace FrierenMod.Scripts.Presentation;
 
@@ -30,9 +31,10 @@ public static class FrierenEventLayout
             background = new TextureRect { Name = "FrierenEventBackdrop", ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize,
                 StretchMode = TextureRect.StretchModeEnum.KeepAspectCovered, MouseFilter = Control.MouseFilterEnum.Ignore };
             __instance.AddChild(background); __instance.MoveChild(background, 0);
-            background.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
-            background.OffsetTop = -__instance.OffsetTop;
-            background.OffsetBottom = -__instance.OffsetBottom;
+            __instance.Resized += () => {
+                if (GodotObject.IsInstanceValid(__instance) && !__instance.IsQueuedForDeletion())
+                    Compose(__instance, ____event);
+            };
         }
         // 页面换图也同步背景；按视口铺满，避免窄图两边出现黑带。
         background.Texture = portrait;
@@ -46,6 +48,62 @@ public static class FrierenEventLayout
         }
         var column = __instance.GetNode<VBoxContainer>("VBoxContainer");
         Area(column, 0.52f, 0.16f, 0.965f, 0.16f);
+        Compose(__instance, ____event);
+    }
+
+    private static void Compose(NEventLayout layout, EventModel model)
+    {
+        var background = layout.GetNode<TextureRect>("FrierenEventBackdrop");
+        if (background.Texture == null || layout.Size.X <= 0 || layout.Size.Y <= 0) return;
+        var composition = EventArtComposition.For(model);
+        var origin = new Vector2(0, -layout.OffsetTop);
+        var backdropBase = layout.GetNodeOrNull<ColorRect>("FrierenEventBackdropBase");
+        if (backdropBase == null) {
+            backdropBase = new ColorRect { Name = "FrierenEventBackdropBase", Color = new Color(0.015f, 0.017f, 0.022f),
+                MouseFilter = Control.MouseFilterEnum.Ignore };
+            layout.AddChild(backdropBase);
+        }
+        backdropBase.Position = origin; backdropBase.Size = layout.Size;
+        layout.MoveChild(backdropBase, 0); layout.MoveChild(background, 1);
+        background.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.TopLeft);
+        background.StretchMode = TextureRect.StretchModeEnum.Scale;
+        var rect = composition.BackgroundRect(layout.Size, background.Texture.GetSize());
+        background.Position = rect.Position + origin; background.Size = rect.Size;
+        background.SelfModulate = composition.FullScene ? Colors.White : new Color(0.16f, 0.16f, 0.16f);
+        layout.GetNode<TextureRect>("%Portrait").Visible = !composition.FullScene;
+
+        var shade = layout.GetNodeOrNull<TextureRect>("FrierenFullSceneShade");
+        if (shade == null) {
+            shade = new TextureRect { Name = "FrierenFullSceneShade", MouseFilter = Control.MouseFilterEnum.Ignore,
+                ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, Texture = new GradientTexture2D {
+                    Width = 256, Height = 1, FillFrom = Vector2.Zero, FillTo = Vector2.Right,
+                    Gradient = new Gradient { Offsets = [0f, 0.35f, 0.65f, 1f],
+                        Colors = [new Color(0, 0, 0, 0.05f), new Color(0, 0, 0, 0.05f),
+                            new Color(0, 0, 0, 0.75f), new Color(0, 0, 0, 0.75f)] } } };
+            layout.AddChild(shade);
+        }
+        layout.MoveChild(shade, 2); shade.Position = origin; shade.Size = layout.Size;
+        shade.Visible = composition.FullScene;
+
+        var credit = layout.GetNodeOrNull<Label>("FrierenEventArtCredit");
+        if (credit == null) {
+            credit = new Label { Name = "FrierenEventArtCredit", MouseFilter = Control.MouseFilterEnum.Ignore,
+                HorizontalAlignment = HorizontalAlignment.Right, ZIndex = 10 };
+            credit.AddThemeFontSizeOverride("font_size", 18);
+            credit.AddThemeColorOverride("font_color", new Color(0.92f, 0.86f, 0.72f));
+            credit.AddThemeColorOverride("font_shadow_color", Colors.Black);
+            credit.AddThemeConstantOverride("shadow_offset_x", 2); credit.AddThemeConstantOverride("shadow_offset_y", 2);
+            layout.AddChild(credit);
+        }
+        credit.Visible = model is EventArtPreview;
+        Area(credit, 0, 1, 0.5f, 1);
+        credit.OffsetLeft = 18; credit.OffsetRight = -18;
+        credit.OffsetTop = -34 - layout.OffsetBottom; credit.OffsetBottom = -8 - layout.OffsetBottom;
+        if (credit.Visible) {
+            var text = new LocString("frieren", "EVENT_ART_CREDIT");
+            text.Add("Artist", composition.Artist ?? new LocString("frieren", "EVENT_ART_CREDIT_UNKNOWN").GetFormattedText());
+            credit.Text = text.GetFormattedText();
+        }
     }
 
     private static void Area(Control control, float left, float top, float right, float bottom)

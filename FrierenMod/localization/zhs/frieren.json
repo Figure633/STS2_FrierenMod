@@ -580,5 +580,7 @@
   "MANA_PILE_CHOOSE": "选择一个牌堆。",
   "MANA_GENERATE_CHOICE": "在[gold]{Slot}[/gold]生成{Amount}张[gold]魔力[/gold]。",
   "LEGACY_CHANT_CHOICE": "[gold]消耗[/gold][gold]{Slot}[/gold]中的{Amount}张[gold]魔力[/gold]。{Effect}",
-  "CRAFT.DamageFive": "造成{Amount}点伤害5次。"
+  "CRAFT.DamageFive": "造成{Amount}点伤害5次。",
+  "EVENT_ART_CREDIT": "画师：{Artist}",
+  "EVENT_ART_CREDIT_UNKNOWN": "待确认"
 }

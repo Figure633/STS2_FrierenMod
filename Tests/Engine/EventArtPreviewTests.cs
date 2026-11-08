@@ -1,5 +1,6 @@
 using FrierenMod.Scripts.Characters;
 using FrierenMod.Scripts.Events;
+using FrierenMod.Scripts.Presentation;
 using Godot;
 using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Debug;
@@ -27,7 +28,7 @@ public static class EventArtPreviewTests
         var models = ModelDb.AllEvents.OfType<EventArtPreview>().OrderBy(model => model.ArtIndex).ToArray();
         Check(models.Length == 12 && models.Select(m => m.ArtIndex).Distinct().Count() == 12, "12张图均有原生事件控制台入口");
         Check(models.All(m => !m.IsAllowed(run)), "预览不进入普通随机事件抽取");
-        var directory = ProjectSettings.GlobalizePath("res://../../artifacts/event-layout-review");
+        var directory = ProjectSettings.GlobalizePath("res://../../artifacts/event-focus-review");
         Directory.CreateDirectory(directory);
         foreach (var language in new[] { "zhs", "eng" }) {
             LocManager.Instance.SetLanguage(language);
@@ -50,14 +51,26 @@ public static class EventArtPreviewTests
                 await Tick();
                 var portrait = layout.GetNode<TextureRect>("%Portrait");
                 var backdrop = layout.GetNode<TextureRect>("FrierenEventBackdrop");
+                var composition = EventArtComposition.For(model);
                 foreach (var size in new[] { new Vector2(1920, 1080), new Vector2(1920, 1200), new Vector2(2560, 1080) }) {
                     host.Size = size; await Tick();
                     Check(portrait.GetGlobalRect().Position.Y > topBar.GetGlobalRect().End.Y &&
                         Mathf.IsEqualApprox(portrait.GetGlobalRect().End.Y, host.GetGlobalRect().End.Y), "前景避开原版顶栏并延伸到底部：" + size);
+                    if (!composition.Centered) {
+                        var focus = backdrop.GetGlobalPosition() + backdrop.Size * new Vector2(composition.Focus[0], composition.Focus[1]);
+                        var target = size * new Vector2(composition.Target[0], composition.Target[1]);
+                        Check(focus.DistanceTo(target) < 1 && focus.X > size.X / 2 && focus.Y > topBar.GetGlobalRect().End.Y,
+                            "背景焦点保持在右半屏并随窗口更新：" + model.ArtLabel);
+                    }
                 }
                 host.Size = new Vector2(1920, 1080); await Tick();
-                Check(backdrop.SelfModulate == new Color(0.16f, 0.16f, 0.16f) &&
+                Check(backdrop.SelfModulate == (composition.FullScene ? Colors.White : new Color(0.16f, 0.16f, 0.16f)) &&
                     layout.GetNodeOrNull("FrierenEventTextShade") == null, "背景左右统一中间亮度，不额外遮暗右侧");
+                Check(portrait.Visible == !composition.FullScene && layout.GetNode<TextureRect>("FrierenFullSceneShade").Visible == composition.FullScene,
+                    "横图使用单幅全屏事件，竖图继续左侧海报和右侧背景");
+                if (composition.FullScene) Check(backdrop.GetGlobalRect().Encloses(host.GetGlobalRect()), "P5R整幅图铺满视口");
+                Check(layout.GetNode<Label>("FrierenEventArtCredit").Text.Contains(composition.Artist ??
+                    new LocString("frieren", "EVENT_ART_CREDIT_UNKNOWN").GetFormattedText()), "画师署名按当前插画显示");
                 Check(portrait.StretchMode == TextureRect.StretchModeEnum.KeepAspectCentered && portrait.Texture.GetSize() == model.CreateInitialPortrait().GetSize(), "使用完整原图等比显示");
                 Check(!portrait.GetGlobalRect().Intersects(layout.GetNode<Control>("%EventDescription").GetGlobalRect()) && layout.OptionButtons.All(button => !portrait.GetGlobalRect().Intersects(button.GetGlobalRect())), "插画与正文/选项分离");
                 Check(layout.OptionButtons.All(button => host.GetGlobalRect().Encloses(button.GetGlobalRect())), "五个原生按钮均在视口内");

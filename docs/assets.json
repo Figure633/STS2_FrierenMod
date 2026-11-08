@@ -5163,7 +5163,8 @@
     "source_kind": "author_provided",
     "modified": true,
     "processing": "保留完整构图和原尺寸；WebP与扩展名为PNG的JPEG均只转换格式；未裁切、锐化或重绘。",
-    "sha256": "e541f3ea62e7e5de9ad17c6369e3787c3e2ad2b28addc0800d3661622e9e5f3f"
+    "sha256": "e541f3ea62e7e5de9ad17c6369e3787c3e2ad2b28addc0800d3661622e9e5f3f",
+    "credit_record": "FrierenMod/data/event_art.json#BugKnight"
   },
   {
     "file": "FrierenMod/images/events/PreviewDragonBall.png",
@@ -5171,7 +5172,8 @@
     "source_kind": "author_provided",
     "modified": true,
     "processing": "保留完整构图和原尺寸；WebP与扩展名为PNG的JPEG均只转换格式；未裁切、锐化或重绘。",
-    "sha256": "b56d402dc7e2cb186e542ba5aa9e2c962adc6d6a000b7fb875a57963fab7ee49"
+    "sha256": "b56d402dc7e2cb186e542ba5aa9e2c962adc6d6a000b7fb875a57963fab7ee49",
+    "credit_record": "FrierenMod/data/event_art.json#DragonBall"
   },
   {
     "file": "FrierenMod/images/events/PreviewelderRing.png",
@@ -5179,7 +5181,8 @@
     "source_kind": "author_provided",
     "modified": true,
     "processing": "保留完整构图和原尺寸；WebP与扩展名为PNG的JPEG均只转换格式；未裁切、锐化或重绘。",
-    "sha256": "9126c1bcb051863cb8936abb3b9e42ce96fe50393a4249ee4a3770d4ce231a86"
+    "sha256": "9126c1bcb051863cb8936abb3b9e42ce96fe50393a4249ee4a3770d4ce231a86",
+    "credit_record": "FrierenMod/data/event_art.json#elderRing"
   },
   {
     "file": "FrierenMod/images/events/Previewjojo.png",
@@ -5187,7 +5190,8 @@
     "source_kind": "author_provided",
     "modified": true,
     "processing": "保留完整构图和原尺寸；WebP与扩展名为PNG的JPEG均只转换格式；未裁切、锐化或重绘。",
-    "sha256": "947bc73d4bc5b9bb01c13b38126035e0158f7c371d9911e37294ac3ca2a951a5"
+    "sha256": "947bc73d4bc5b9bb01c13b38126035e0158f7c371d9911e37294ac3ca2a951a5",
+    "credit_record": "FrierenMod/data/event_art.json#jojo"
   },
   {
     "file": "FrierenMod/images/events/Previewnier.png",
@@ -5195,7 +5199,8 @@
     "source_kind": "author_provided",
     "modified": true,
     "processing": "保留完整构图和原尺寸；WebP与扩展名为PNG的JPEG均只转换格式；未裁切、锐化或重绘。",
-    "sha256": "9e51c5cd6b867199d4008893e099a7913dc794f97800f71169ab36ce7e1783c7"
+    "sha256": "9e51c5cd6b867199d4008893e099a7913dc794f97800f71169ab36ce7e1783c7",
+    "credit_record": "FrierenMod/data/event_art.json#nier"
   },
   {
     "file": "FrierenMod/images/events/Previewonepiece.png",
@@ -5203,7 +5208,8 @@
     "source_kind": "author_provided",
     "modified": true,
     "processing": "保留完整构图和原尺寸；WebP与扩展名为PNG的JPEG均只转换格式；未裁切、锐化或重绘。",
-    "sha256": "610d4969d0d999052d9a29642fb7b306de81d928f764a2a04db0d0f6a311fc89"
+    "sha256": "610d4969d0d999052d9a29642fb7b306de81d928f764a2a04db0d0f6a311fc89",
+    "credit_record": "FrierenMod/data/event_art.json#onepiece"
   },
   {
     "file": "FrierenMod/images/events/Previewp5r.png",
@@ -5211,7 +5217,8 @@
     "source_kind": "author_provided",
     "modified": true,
     "processing": "保留完整构图和原尺寸；WebP与扩展名为PNG的JPEG均只转换格式；未裁切、锐化或重绘。",
-    "sha256": "007ee04a15d667be1c905893760bb6104c32e2c570b3c317702f4819a215e054"
+    "sha256": "007ee04a15d667be1c905893760bb6104c32e2c570b3c317702f4819a215e054",
+    "credit_record": "FrierenMod/data/event_art.json#p5r"
   },
   {
     "file": "FrierenMod/images/events/Previewsekiro.png",
@@ -5219,7 +5226,8 @@
     "source_kind": "author_provided",
     "modified": true,
     "processing": "保留完整构图和原尺寸；WebP与扩展名为PNG的JPEG均只转换格式；未裁切、锐化或重绘。",
-    "sha256": "b0c93f9ffaf48fdb9039a28d26cd1a7363a32ce68fcffa2c4ccd610bcad8ca38"
+    "sha256": "b0c93f9ffaf48fdb9039a28d26cd1a7363a32ce68fcffa2c4ccd610bcad8ca38",
+    "credit_record": "FrierenMod/data/event_art.json#sekiro"
   },
   {
     "file": "FrierenMod/images/events/Previewstarve.png",
@@ -5227,7 +5235,8 @@
     "source_kind": "author_provided",
     "modified": true,
     "processing": "保留完整构图和原尺寸；WebP与扩展名为PNG的JPEG均只转换格式；未裁切、锐化或重绘。",
-    "sha256": "ab654c1ae988319ea6ff81a62ae701c2aa626fbb77623c71da6264d543e075d9"
+    "sha256": "ab654c1ae988319ea6ff81a62ae701c2aa626fbb77623c71da6264d543e075d9",
+    "credit_record": "FrierenMod/data/event_art.json#starve"
   },
   {
     "file": "FrierenMod/images/events/Previewterraria.png",
@@ -5235,7 +5244,8 @@
     "source_kind": "author_provided",
     "modified": true,
     "processing": "保留完整构图和原尺寸；WebP与扩展名为PNG的JPEG均只转换格式；未裁切、锐化或重绘。",
-    "sha256": "18257e5b52543c52ea1ce7ca411efe5b5108b7160685a572262f6eca99e8e03c"
+    "sha256": "18257e5b52543c52ea1ce7ca411efe5b5108b7160685a572262f6eca99e8e03c",
+    "credit_record": "FrierenMod/data/event_art.json#terraria"
   },
   {
     "file": "FrierenMod/images/events/Previewtrail.png",
@@ -5243,7 +5253,8 @@
     "source_kind": "author_provided",
     "modified": true,
     "processing": "保留完整构图和原尺寸；WebP与扩展名为PNG的JPEG均只转换格式；未裁切、锐化或重绘。",
-    "sha256": "a16c01f2ab218c122785eed9e179824c9b1f48771cab50e500e12ad94475f5de"
+    "sha256": "a16c01f2ab218c122785eed9e179824c9b1f48771cab50e500e12ad94475f5de",
+    "credit_record": "FrierenMod/data/event_art.json#trail"
   },
   {
     "file": "FrierenMod/images/events/Zelda.png",
@@ -5251,6 +5262,7 @@
     "source_kind": "author_provided",
     "modified": false,
     "processing": "保留完整构图和原尺寸；WebP与扩展名为PNG的JPEG均只转换格式；未裁切、锐化或重绘。",
-    "sha256": "eca6af0c430248941d34e99ce2dbaddade0d3cb37e0dd6971ea6a2783699d2d6"
+    "sha256": "eca6af0c430248941d34e99ce2dbaddade0d3cb37e0dd6971ea6a2783699d2d6",
+    "credit_record": "FrierenMod/data/event_art.json#Zelda"
   }
 ]

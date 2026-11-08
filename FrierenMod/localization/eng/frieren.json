@@ -580,5 +580,7 @@
   "MANA_PILE_CHOOSE": "Choose a pile.",
   "MANA_GENERATE_CHOICE": "Generate {Amount} [gold]Mana[/gold] in your [gold]{Slot}[/gold].",
   "LEGACY_CHANT_CHOICE": "[gold]Exhaust[/gold] {Amount} [gold]Mana[/gold] from your [gold]{Slot}[/gold]. {Effect}",
-  "CRAFT.DamageFive": "Deal {Amount} damage 5 times."
+  "CRAFT.DamageFive": "Deal {Amount} damage 5 times.",
+  "EVENT_ART_CREDIT": "Art: {Artist}",
+  "EVENT_ART_CREDIT_UNKNOWN": "unconfirmed"
 }

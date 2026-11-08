@@ -1,0 +1,221 @@
+{
+  "BugKnight": {
+    "artist": "ononotsu",
+    "source": "https://x.com/ononotsu/status/1769027603921547432",
+    "status": "confirmed",
+    "focus": [
+      0.5,
+      0.34
+    ],
+    "target": [
+      0.76,
+      0.28
+    ],
+    "centered": false,
+    "fullScene": false,
+    "evidence": [
+      "https://safebooru.org/index.php?page=post&s=view&id=4816082"
+    ]
+  },
+  "DragonBall": {
+    "artist": "ononotsu",
+    "source": "https://x.com/ononotsu/status/1773718140897386876",
+    "status": "confirmed",
+    "focus": [
+      0.43,
+      0.35
+    ],
+    "target": [
+      0.77,
+      0.28
+    ],
+    "centered": false,
+    "fullScene": false,
+    "evidence": [
+      "https://safebooru.org/index.php?page=post&s=view&id=4841596"
+    ]
+  },
+  "elderRing": {
+    "artist": null,
+    "source": null,
+    "status": "unconfirmed",
+    "focus": [
+      0.53,
+      0.31
+    ],
+    "target": [
+      0.77,
+      0.29
+    ],
+    "centered": false,
+    "fullScene": false,
+    "evidence": [
+      "https://www.steamgriddb.com/grid/429663",
+      "https://steamcommunity.com/sharedfiles/filedetails/?id=3195415119"
+    ],
+    "note": "同图Steam转载明确注明art by @Ramasanc27 (twitter)，但未找到可核对的原帖；保留此署名线索，游戏仍标待确认，不把转载上传者当成原作者。",
+    "reportedArtist": "@Ramasanc27"
+  },
+  "jojo": {
+    "artist": "ononotsu",
+    "source": "https://x.com/ononotsu/status/1773402172451098934",
+    "status": "confirmed",
+    "focus": [
+      0.75,
+      0.35
+    ],
+    "target": [
+      0.75,
+      0.35
+    ],
+    "centered": true,
+    "fullScene": false,
+    "evidence": [
+      "https://safebooru.org/index.php?page=post&s=view&id=4840442"
+    ]
+  },
+  "nier": {
+    "artist": "ononotsu",
+    "source": "https://x.com/ononotsu/status/1769811997187600554",
+    "status": "confirmed",
+    "focus": [
+      0.38,
+      0.36
+    ],
+    "target": [
+      0.77,
+      0.28
+    ],
+    "centered": false,
+    "fullScene": false,
+    "evidence": [
+      "https://safebooru.org/index.php?page=post&s=view&id=4820557"
+    ]
+  },
+  "onepiece": {
+    "artist": "ononotsu",
+    "source": "https://x.com/ononotsu/status/1774101025030389835",
+    "status": "confirmed",
+    "focus": [
+      0.5,
+      0.41
+    ],
+    "target": [
+      0.77,
+      0.27
+    ],
+    "centered": false,
+    "fullScene": false,
+    "evidence": [
+      "https://safebooru.org/index.php?page=post&s=view&id=4851559"
+    ]
+  },
+  "p5r": {
+    "artist": "Saikekuu",
+    "source": "https://x.com/Saikekuu/status/1771635569207988323",
+    "status": "confirmed",
+    "focus": [
+      0.5,
+      0.5
+    ],
+    "target": [
+      0.5,
+      0.5
+    ],
+    "centered": true,
+    "fullScene": true,
+    "evidence": [
+      "https://knowyourmeme.com/photos/2782460-frieren-video-game-cover-parodies"
+    ]
+  },
+  "sekiro": {
+    "artist": "ononotsu",
+    "source": "https://x.com/ononotsu/status/1769389864162857061",
+    "status": "confirmed",
+    "focus": [
+      0.54,
+      0.43
+    ],
+    "target": [
+      0.77,
+      0.28
+    ],
+    "centered": false,
+    "fullScene": false,
+    "evidence": [
+      "https://safebooru.org/index.php?page=post&s=view&id=4818369"
+    ]
+  },
+  "starve": {
+    "artist": "Kuumo (@q_kumoriza_p)",
+    "source": "https://x.com/q_kumoriza_p/status/1771961678495895804",
+    "status": "confirmed",
+    "focus": [
+      0.54,
+      0.56
+    ],
+    "target": [
+      0.77,
+      0.28
+    ],
+    "centered": false,
+    "fullScene": false,
+    "evidence": [
+      "https://knowyourmeme.com/photos/2782357-frieren-video-game-cover-parodies"
+    ]
+  },
+  "terraria": {
+    "artist": "RyanKamos",
+    "source": "https://x.com/RyanKamos/status/1770287396107501602",
+    "status": "confirmed",
+    "focus": [
+      0.49,
+      0.38
+    ],
+    "target": [
+      0.77,
+      0.28
+    ],
+    "centered": false,
+    "fullScene": false,
+    "evidence": [
+      "https://safebooru.org/index.php?page=post&s=view&id=4826281"
+    ]
+  },
+  "trail": {
+    "artist": "ononotsu",
+    "source": "https://x.com/ononotsu/status/1828513111248425403",
+    "status": "confirmed",
+    "focus": [
+      0.53,
+      0.16
+    ],
+    "target": [
+      0.77,
+      0.27
+    ],
+    "centered": false,
+    "fullScene": false,
+    "evidence": [
+      "https://safebooru.org/index.php?page=post&s=view&id=5168683"
+    ]
+  },
+  "Zelda": {
+    "artist": "ononotsu",
+    "source": "https://x.com/ononotsu/status/1770160590809391179",
+    "status": "confirmed",
+    "focus": [
+      0.47,
+      0.22
+    ],
+    "target": [
+      0.77,
+      0.27
+    ],
+    "centered": false,
+    "fullScene": false,
+    "evidence": [
+      "https://safebooru.org/index.php?page=post&s=view&id=4822827"
+    ]
+  }
+}
