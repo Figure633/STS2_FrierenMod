@@ -14,10 +14,12 @@ public static class FrierenEventLayout
     {
         if (____event is not FrierenStoryEvent and not ReadingGrimoireEvent and not EventArtPreview) return;
         var image = __instance.GetNode<TextureRect>("%Portrait");
-        // 保留作者要求的左半幅；使用覆盖裁剪填满，不露出其下的全幅背景。
+        // 原生布局上下偏移-39；前景必须从顶栏(约100)下方开始，并延伸至视口底部。
         image.Show();
         image.Scale = Vector2.One; image.PivotOffset = Vector2.Zero;
         Area(image, 0, 0, 0.5f, 1);
+        image.OffsetTop = 112f - __instance.OffsetTop;
+        image.OffsetBottom = -__instance.OffsetBottom;
         image.StretchMode = TextureRect.StretchModeEnum.KeepAspectCovered;
         if (____event is EventArtPreview) image.StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered;
         image.ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize;
@@ -26,8 +28,7 @@ public static class FrierenEventLayout
         var background = __instance.GetNodeOrNull<TextureRect>("FrierenEventBackdrop");
         if (background == null) {
             background = new TextureRect { Name = "FrierenEventBackdrop", ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize,
-                StretchMode = TextureRect.StretchModeEnum.KeepAspectCovered, MouseFilter = Control.MouseFilterEnum.Ignore,
-                SelfModulate = new Color(0.25f, 0.25f, 0.25f) };
+                StretchMode = TextureRect.StretchModeEnum.KeepAspectCovered, MouseFilter = Control.MouseFilterEnum.Ignore };
             __instance.AddChild(background); __instance.MoveChild(background, 0);
             background.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
             background.OffsetTop = -__instance.OffsetTop;
@@ -35,15 +36,13 @@ public static class FrierenEventLayout
         }
         // 页面换图也同步背景；按视口铺满，避免窄图两边出现黑带。
         background.Texture = portrait;
+        // 原来左侧0.25，右侧再乘0.3约为0.075；两侧统一使用中间亮度。
+        background.SelfModulate = new Color(0.16f, 0.16f, 0.16f);
 
         var shade = __instance.GetNodeOrNull<ColorRect>("FrierenEventTextShade");
-        if (shade == null) {
-            shade = new ColorRect { Name = "FrierenEventTextShade", Color = new Color(0.025f, 0.03f, 0.045f, 0.7f),
-                MouseFilter = Control.MouseFilterEnum.Ignore };
-            __instance.AddChild(shade); __instance.MoveChild(shade, 1);
-            Area(shade, 0.49f, 0, 1, 1);
-            shade.OffsetTop = -__instance.OffsetTop;
-            shade.OffsetBottom = -__instance.OffsetBottom;
+        if (shade != null) {
+            __instance.RemoveChild(shade);
+            shade.QueueFree();
         }
         var column = __instance.GetNode<VBoxContainer>("VBoxContainer");
         Area(column, 0.52f, 0.16f, 0.965f, 0.16f);

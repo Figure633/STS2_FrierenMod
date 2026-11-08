@@ -27,7 +27,7 @@ public static class EventArtPreviewTests
         var models = ModelDb.AllEvents.OfType<EventArtPreview>().OrderBy(model => model.ArtIndex).ToArray();
         Check(models.Length == 12 && models.Select(m => m.ArtIndex).Distinct().Count() == 12, "12张图均有原生事件控制台入口");
         Check(models.All(m => !m.IsAllowed(run)), "预览不进入普通随机事件抽取");
-        var directory = ProjectSettings.GlobalizePath("res://../../artifacts/event-preview-0126");
+        var directory = ProjectSettings.GlobalizePath("res://../../artifacts/event-layout-review");
         Directory.CreateDirectory(directory);
         foreach (var language in new[] { "zhs", "eng" }) {
             LocManager.Instance.SetLanguage(language);
@@ -42,9 +42,22 @@ public static class EventArtPreviewTests
                 layout.SetEvent(model); layout.SetTitle(model.Title.GetFormattedText());
                 var description = model.Description!; model.DynamicVars.AddTo(description); layout.SetDescription(description.GetFormattedText());
                 layout.AddOptions(model.CurrentOptions); layout.OnSetupComplete(); await Tick();
+                // 使用原版顶栏场景的背景及几何位置，覆盖在事件上方，复现实际跑局的遮挡。
+                var nativeTopBar = GD.Load<PackedScene>("res://scenes/ui/top_bar.tscn").Instantiate<Control>();
+                var topBar = (TextureRect)nativeTopBar.GetNode<TextureRect>("BgImage").Duplicate();
+                nativeTopBar.Free(); host.AddChild(topBar); topBar.ZIndex = 20;
                 foreach (var tween in root.GetTree().GetProcessedTweens()) tween.CustomStep(10);
                 await Tick();
                 var portrait = layout.GetNode<TextureRect>("%Portrait");
+                var backdrop = layout.GetNode<TextureRect>("FrierenEventBackdrop");
+                foreach (var size in new[] { new Vector2(1920, 1080), new Vector2(1920, 1200), new Vector2(2560, 1080) }) {
+                    host.Size = size; await Tick();
+                    Check(portrait.GetGlobalRect().Position.Y > topBar.GetGlobalRect().End.Y &&
+                        Mathf.IsEqualApprox(portrait.GetGlobalRect().End.Y, host.GetGlobalRect().End.Y), "前景避开原版顶栏并延伸到底部：" + size);
+                }
+                host.Size = new Vector2(1920, 1080); await Tick();
+                Check(backdrop.SelfModulate == new Color(0.16f, 0.16f, 0.16f) &&
+                    layout.GetNodeOrNull("FrierenEventTextShade") == null, "背景左右统一中间亮度，不额外遮暗右侧");
                 Check(portrait.StretchMode == TextureRect.StretchModeEnum.KeepAspectCentered && portrait.Texture.GetSize() == model.CreateInitialPortrait().GetSize(), "使用完整原图等比显示");
                 Check(!portrait.GetGlobalRect().Intersects(layout.GetNode<Control>("%EventDescription").GetGlobalRect()) && layout.OptionButtons.All(button => !portrait.GetGlobalRect().Intersects(button.GetGlobalRect())), "插画与正文/选项分离");
                 Check(layout.OptionButtons.All(button => host.GetGlobalRect().Encloses(button.GetGlobalRect())), "五个原生按钮均在视口内");
@@ -59,6 +72,20 @@ public static class EventArtPreviewTests
                 Check(model.IsFinished && player.Gold == gold, "离开预览正常结束且没有奖励");
                 layout.ClearOptions(); host.QueueFree(); await Tick();
             }
+        }
+        // 正式剧情事件与开局事件也使用相同安全区域，不只检查十二张预览图。
+        foreach (var canonical in ModelDb.AllEvents.Where(m => m is FrierenStoryEvent).Append(ModelDb.Event<ReadingGrimoireEvent>())) {
+            var model = canonical.ToMutable();
+            var host = new Control { Size = new Vector2(1920, 1080) }; root.AddChild(host);
+            var layout = model.CreateScene().Instantiate<NEventLayout>(); host.AddChild(layout); model.SetNode(layout); layout.SetEvent(model);
+            var portrait = layout.GetNode<TextureRect>("%Portrait");
+            foreach (var path in model.GetAssetPaths(run).Where(path => path.StartsWith("res://FrierenMod/images/events/")).Distinct()) {
+                layout.SetPortrait(GD.Load<Texture2D>(path)); await Tick(1);
+                Check(portrait.GetGlobalRect().Position.Y >= 112 &&
+                    Mathf.IsEqualApprox(portrait.GetGlobalRect().End.Y, 1080) &&
+                    layout.GetNode<TextureRect>("FrierenEventBackdrop").SelfModulate == new Color(0.16f, 0.16f, 0.16f), "剧情事件换图后保持安全区域与统一背景：" + path);
+            }
+            host.QueueFree(); await Tick();
         }
         LocManager.Instance.SetLanguage("eng"); RunManager.Instance.CleanUp(); return checks;
     }
