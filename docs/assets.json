@@ -5177,11 +5177,11 @@
   },
   {
     "file": "FrierenMod/images/events/PreviewelderRing.png",
-    "source": "../png/elderRing.png",
+    "source": "C:/Users/a1362/AppData/Local/Temp/codex-clipboard-0b36ba62-45bd-418c-91da-3f7e93fbb389.png",
     "source_kind": "author_provided",
-    "modified": true,
-    "processing": "保留完整构图和原尺寸；WebP与扩展名为PNG的JPEG均只转换格式；未裁切、锐化或重绘。",
-    "sha256": "9126c1bcb051863cb8936abb3b9e42ce96fe50393a4249ee4a3770d4ce231a86",
+    "modified": false,
+    "processing": "2026-11-09作者提供的ononotsu新版法环图，原样复制PNG；未裁切、锐化或重绘。",
+    "sha256": "094e1e75ca62be52452f41490647776967a98bbd892513c0475e0289dcaeb8eb",
     "credit_record": "FrierenMod/data/event_art.json#elderRing"
   },
   {

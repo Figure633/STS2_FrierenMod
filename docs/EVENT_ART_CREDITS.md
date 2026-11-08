@@ -6,7 +6,7 @@
 |---|---|---|---|
 | BugKnight | ononotsu | [原帖](https://x.com/ononotsu/status/1769027603921547432) | [图像与署名索引](https://safebooru.org/index.php?page=post&s=view&id=4816082) |
 | DragonBall | ononotsu | [原帖](https://x.com/ononotsu/status/1773718140897386876) | [图像与署名索引](https://safebooru.org/index.php?page=post&s=view&id=4841596) |
-| elderRing | **待确认**（转载署名 @Ramasanc27） | 原作者待确认 | [图像与署名索引](https://www.steamgriddb.com/grid/429663)、[图像与署名索引](https://steamcommunity.com/sharedfiles/filedetails/?id=3195415119) |
+| elderRing | ononotsu | [原帖](https://x.com/ononotsu/status/1771235965685686343) | [图像与署名索引](https://safebooru.org/index.php?page=post&s=view&id=4828529) |
 | jojo | ononotsu | [原帖](https://x.com/ononotsu/status/1773402172451098934) | [图像与署名索引](https://safebooru.org/index.php?page=post&s=view&id=4840442) |
 | nier | ononotsu | [原帖](https://x.com/ononotsu/status/1769811997187600554) | [图像与署名索引](https://safebooru.org/index.php?page=post&s=view&id=4820557) |
 | onepiece | ononotsu | [原帖](https://x.com/ononotsu/status/1774101025030389835) | [图像与署名索引](https://safebooru.org/index.php?page=post&s=view&id=4851559) |
@@ -19,8 +19,8 @@
 
 P5R原图内另有“ART BY: SAIKEKUU”署名，与原帖账号和索引相符。
 
-同图Steam转载明确注明art by @Ramasanc27 (twitter)，但未找到可核对的原帖；保留此署名线索，游戏仍标待确认，不把转载上传者当成原作者。
+法环图已按作者2026-11-09提供的新图替换为ononotsu作品；旧图的未确认署名不再适用。当前十二张均已核对画师。
 
-核对方法：逐张对照本地构图、署名、公开图像索引及索引指向的原帖。X原帖部分受登录／访问限制，保留原帖链接并用可访问的图像索引交叉核对；不把转载者当成作者。未确认的条目在游戏内也显示“待确认”。
+核对方法：逐张对照本地构图、署名、公开图像索引及索引指向的原帖。X原帖部分受登录／访问限制，保留原帖链接并用可访问的图像索引交叉核对；不把转载者当成作者。后续未确认的条目在游戏内显示“待确认”。
 
 运行时署名、出处和背景焦点统一保存在 [event_art.json](../FrierenMod/data/event_art.json)。
