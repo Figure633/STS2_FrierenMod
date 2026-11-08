@@ -28,7 +28,7 @@ public static class EventArtPreviewTests
         var models = ModelDb.AllEvents.OfType<EventArtPreview>().OrderBy(model => model.ArtIndex).ToArray();
         Check(models.Length == 12 && models.Select(m => m.ArtIndex).Distinct().Count() == 12, "12张图均有原生事件控制台入口");
         Check(models.All(m => !m.IsAllowed(run)), "预览不进入普通随机事件抽取");
-        var directory = ProjectSettings.GlobalizePath("res://../../artifacts/event-focus-review");
+        var directory = ProjectSettings.GlobalizePath("res://../../artifacts/event-text-review");
         Directory.CreateDirectory(directory);
         foreach (var language in new[] { "zhs", "eng" }) {
             LocManager.Instance.SetLanguage(language);
@@ -49,6 +49,19 @@ public static class EventArtPreviewTests
                 nativeTopBar.Free(); host.AddChild(topBar); topBar.ZIndex = 20;
                 foreach (var tween in root.GetTree().GetProcessedTweens()) tween.CustomStep(10);
                 await Tick();
+                var body = layout.GetNode<RichTextLabel>("%EventDescription");
+                Check(body.VisibleRatio == 1 && body.Modulate == Colors.White &&
+                    !body.GetParsedText().Contains("[fly_in") && !body.GetParsedText().Contains("[fade_in") &&
+                    !body.GetParsedText().Contains("[thinky_dots"), "预览直接展示已解析的原生文字特效");
+                if (language == "zhs" && model.ArtIndex == 0 && OS.GetCmdlineUserArgs().Contains("--ui-snapshot")) {
+                    layout.SetDescription(description.GetFormattedText());
+                    await Tick(1);
+                    for (int frame = 0; frame < 54; frame++) {
+                        root.GetViewport().GetTexture().GetImage().GetRegion(new Rect2I(650, 135, 600, 210))
+                            .SavePng(Path.Combine(directory, $"text-{frame:D2}.png"));
+                        await Tick(5);
+                    }
+                }
                 var portrait = layout.GetNode<TextureRect>("%Portrait");
                 var backdrop = layout.GetNode<TextureRect>("FrierenEventBackdrop");
                 var composition = EventArtComposition.For(model);

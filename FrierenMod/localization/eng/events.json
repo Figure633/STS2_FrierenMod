@@ -108,5 +108,6 @@
   "FRIERENMOD-EVENT_ART_PREVIEW.pages.INITIAL.options.NEXT.description": "View the next illustration.",
   "FRIERENMOD-EVENT_ART_PREVIEW.pages.INITIAL.options.LEAVE.title": "Leave",
   "FRIERENMOD-EVENT_ART_PREVIEW.pages.INITIAL.options.LEAVE.description": "End the preview.",
-  "FRIERENMOD-EVENT_ART_PREVIEW.pages.LEAVE.description": "You leave."
+  "FRIERENMOD-EVENT_ART_PREVIEW.pages.LEAVE.description": "You leave.",
+  "FRIERENMOD-EVENT_ART_PREVIEW.pages.INITIAL.description": "Normal: This text stays still.\n\nFade in: [fade_in speed=0.8 tick=0.06]This text slowly appears.[/fade_in]\nFly in: [fly_in offset_x=-24 offset_y=12]This text flies in from below.[/fly_in]\nDots: Frieren is thinking[thinky_dots]...[/thinky_dots]\n\nUse Previous / Next to replay."
 }

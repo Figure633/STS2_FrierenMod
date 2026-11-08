@@ -108,5 +108,6 @@
   "FRIERENMOD-EVENT_ART_PREVIEW.pages.INITIAL.options.NEXT.description": "查看下一张插画。",
   "FRIERENMOD-EVENT_ART_PREVIEW.pages.INITIAL.options.LEAVE.title": "离开",
   "FRIERENMOD-EVENT_ART_PREVIEW.pages.INITIAL.options.LEAVE.description": "结束预览。",
-  "FRIERENMOD-EVENT_ART_PREVIEW.pages.LEAVE.description": "你离开了。"
+  "FRIERENMOD-EVENT_ART_PREVIEW.pages.LEAVE.description": "你离开了。",
+  "FRIERENMOD-EVENT_ART_PREVIEW.pages.INITIAL.description": "普通：这里的文字保持不动。\n\n淡入：[fade_in speed=0.8 tick=0.12]这里的文字会慢慢浮现。[/fade_in]\n飞入：[fly_in offset_x=-24 offset_y=12]这里的文字从左下方飞入。[/fly_in]\n省略号：芙莉莲正在思考[thinky_dots]...[/thinky_dots]\n\n点击上一张／下一张可重播。"
 }

@@ -13,7 +13,7 @@ using NativeWisp = MegaCrit.Sts2.Core.Models.Relics.LostWisp;
 
 namespace FrierenMod.Scripts.Events;
 
-// 临时插画验收：原生事件模型/按钮，复用迷失鬼火的正文、选项与结算。
+// 临时插画与文字特效验收：原生事件模型/按钮，奖励选项与结算复用迷失鬼火。
 // 只通过控制台打开；不让占位叙事进入正常跑局的随机事件池。
 public abstract class EventArtPreview : CustomEventModel
 {
@@ -27,7 +27,7 @@ public abstract class EventArtPreview : CustomEventModel
     public static string ArtPath(int index) => Images[index] == "Zelda"
         ? "res://FrierenMod/images/events/Zelda.png" : $"res://FrierenMod/images/events/Preview{Images[index]}.png";
     public override bool IsAllowed(IRunState runState) => false;
-    public override LocString InitialDescription => new("events", "LOST_WISP.pages.INITIAL.description");
+    public override LocString InitialDescription => new("events", "FRIERENMOD-EVENT_ART_PREVIEW.pages.INITIAL.description");
     public override IEnumerable<LocString> GameInfoOptions {
         get {
             foreach (var option in new[] { "CLAIM", "SEARCH" }) {
