@@ -12,13 +12,14 @@ public static class FrierenEventLayout
 {
     private static void Postfix(NEventLayout __instance, EventModel ____event, Texture2D portrait)
     {
-        if (____event is not FrierenStoryEvent and not ReadingGrimoireEvent) return;
+        if (____event is not FrierenStoryEvent and not ReadingGrimoireEvent and not EventArtPreview) return;
         var image = __instance.GetNode<TextureRect>("%Portrait");
         // 保留作者要求的左半幅；使用覆盖裁剪填满，不露出其下的全幅背景。
         image.Show();
         image.Scale = Vector2.One; image.PivotOffset = Vector2.Zero;
         Area(image, 0, 0, 0.5f, 1);
         image.StretchMode = TextureRect.StretchModeEnum.KeepAspectCovered;
+        if (____event is EventArtPreview) image.StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered;
         image.ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize;
         image.MouseFilter = Control.MouseFilterEnum.Ignore;
 
