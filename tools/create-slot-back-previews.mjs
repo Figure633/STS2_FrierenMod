@@ -88,6 +88,7 @@ if (!manifestFile || !destination) throw Error('用法: node create-slot-back-pr
 const manifest = JSON.parse(await fs.readFile(manifestFile, 'utf8'));
 const output = path.resolve(destination);
 await fs.mkdir(output, { recursive: true });
+await fs.writeFile(path.join(output, '.gdignore'), '');
 for (const dir of ['金色花纹', '基础圆角', '原图', '模板图层']) await fs.mkdir(path.join(output, dir), { recursive: true });
 const basic = psdReader(await fs.readFile(manifest.basicTemplate));
 const decorated = psdReader(await fs.readFile(manifest.decoratedTemplate));
@@ -116,10 +117,22 @@ await fs.writeFile(path.join(output, '模板图层', '原生描边.png'), outlin
 const records = [];
 for (let index = 0; index < manifest.images.length; index++) {
   const entry = manifest.images[index], id = String(index + 1).padStart(2, '0');
-  const source = await fs.readFile(entry.source), meta = await sharp(source).metadata();
+  const source = await fs.readFile(entry.source), originalMeta = await sharp(source).metadata();
+  const region = entry.sourceRect ?? { left: 0, top: 0, width: originalMeta.width, height: originalMeta.height };
+  if (!['left', 'top', 'width', 'height'].every(k => Number.isInteger(region[k])) ||
+      region.left < 0 || region.top < 0 || region.width < 1 || region.height < 1 ||
+      region.left + region.width > originalMeta.width || region.top + region.height > originalMeta.height)
+    throw Error(`${entry.name} 原图裁切区域无效`);
+  if (entry.fit && !['cover', 'contain'].includes(entry.fit)) throw Error(`${entry.name} fit 必须为 cover 或 contain`);
+  let preparation = sharp(source).extract(region);
+  if (entry.background) preparation = preparation.flatten({ background: entry.background });
+  const prepared = await preparation.png().toBuffer(), meta = await sharp(prepared).metadata();
   const file = `${id}-${entry.name}.png`;
-  await fs.copyFile(entry.source, path.join(output, '原图', file));
-  const record = { number: index + 1, name: entry.name, file, source: entry.source, focus: entry.focus ?? [.5, .5], originalWidth: meta.width, originalHeight: meta.height, crops: {} };
+  const preservedSource = path.join(output, '原图', file);
+  if (path.resolve(entry.source) !== preservedSource) await fs.copyFile(entry.source, preservedSource);
+  const record = { number: index + 1, name: entry.name, file, source: entry.source, focus: entry.focus ?? [.5, .5],
+    originalWidth: originalMeta.width, originalHeight: originalMeta.height, sourceRect: region,
+    fit: entry.fit ?? 'cover', background: entry.background ?? null, crops: {} };
   for (const [directory, top, innerHeight, frame] of [['基础圆角', 0, H, []], ['金色花纹', 32, 398, ornaments]]) {
     const ratio = W / innerHeight;
     let cropWidth = meta.width, cropHeight = meta.height;
@@ -129,7 +142,9 @@ for (let index = 0; index < manifest.images.length; index++) {
     const left = Math.round(Math.max(0, Math.min(meta.width - cropWidth, meta.width * cx - cropWidth / 2)));
     const y = Math.round(Math.max(0, Math.min(meta.height - cropHeight, meta.height * cy - cropHeight / 2)));
     const crop = { left, top: y, width: Math.min(Math.round(cropWidth), meta.width - left), height: Math.min(Math.round(cropHeight), meta.height - y) };
-    const art = await sharp(source).extract(crop).resize(W, innerHeight, { fit: 'fill' }).png().toBuffer();
+    const art = entry.fit === 'contain'
+      ? await sharp(prepared).resize(W, innerHeight, { fit: 'contain', background: entry.background ?? '#ffffff' }).png().toBuffer()
+      : await sharp(prepared).extract(crop).resize(W, innerHeight, { fit: 'cover' }).png().toBuffer();
     // 扩展图片上下边缘到花纹背后；原生图层的透明缝隙不会露出白底。
     const canvas = await sharp(art).extend({ top, bottom: H - innerHeight - top, left: 0, right: 0, extendWith: 'copy' }).png().toBuffer();
     const framed = await sharp(canvas).composite([{ input: outlinePNG }, ...frame]).png().toBuffer();
@@ -137,17 +152,21 @@ for (let index = 0; index < manifest.images.length; index++) {
     await fs.writeFile(path.join(output, directory, file), final);
     const check = await sharp(final).ensureAlpha().raw().toBuffer();
     for (const pixel of [0, W - 1, (H - 1) * W, H * W - 1]) if (check[pixel * 4 + 3] !== 0) throw Error(`${file} 圆角外不透明`);
-    record.crops[directory] = crop;
+    record.crops[directory] = entry.fit === 'contain'
+      ? { left: region.left, top: region.top, width: region.width, height: region.height, fit: 'contain' }
+      : { ...crop, left: crop.left + region.left, top: crop.top + region.top, fit: 'cover' };
   }
   records.push(record);
 }
 await fs.writeFile(path.join(output, 'manifest.json'), JSON.stringify({ note: '直接套用原始 PSD 图层，未使用生成式重画，未替换游戏内资源。', basicTemplate: manifest.basicTemplate, decoratedTemplate: manifest.decoratedTemplate, width: W, height: H, images: records }, null, 2));
 const escape = s => s.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('"', '&quot;');
 const cards = records.map(r => `<article><h2>${String(r.number).padStart(2, '0')} · ${escape(r.name)}</h2><div class="pair"><figure><img src="${encodeURI(`金色花纹/${r.file}`)}"><figcaption>模板·改</figcaption></figure><figure><img src="${encodeURI(`基础圆角/${r.file}`)}"><figcaption>模板真</figcaption></figure></div><details><summary>查看原图</summary><img class="source" src="${encodeURI(`原图/${r.file}`)}"></details></article>`).join('\n');
-await fs.writeFile(path.join(output, 'index.html'), `<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>卡槽背景预览 · 19组</title><style>*{box-sizing:border-box}body{margin:0;padding:32px;background:#161b24;color:#eae4d9;font-family:system-ui,sans-serif}header{max-width:1250px;margin:auto auto 24px}h1{font-size:27px;font-weight:600}p,figcaption,summary{color:#b6bbc5}main{max-width:1500px;margin:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:22px}article{background:#242b36;padding:18px;border-radius:14px}h2{font-size:16px;margin:0 0 16px}.pair{display:flex;gap:12px;justify-content:center}figure{margin:0;width:50%;text-align:center}figure img{width:100%;max-width:301px;height:auto;display:block;margin:auto}figcaption{font-size:12px;margin-top:9px}summary{cursor:pointer;font-size:13px;margin-top:16px}.source{width:100%;margin-top:12px}a{color:#ddc693}</style><header><h1>卡槽背景 · 模板对照预览</h1><p>19 张原图 × 2 种模板，共 38 张透明 PNG，单张 301×461。左为金色花纹，右为基础圆角。点击“查看原图”对照裁切。</p><p>保持原画比例，逐张调整主体位置；直接使用原 PSD 轮廓及装饰图层。此批仅供预览，未指定成就，也未替换游戏资源。</p></header><main>${cards}</main></html>`);
+await fs.writeFile(path.join(output, 'index.html'), `<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>卡槽背景预览 · ${records.length}组</title><style>*{box-sizing:border-box}body{margin:0;padding:32px;background:#161b24;color:#eae4d9;font-family:system-ui,sans-serif}header{max-width:1250px;margin:auto auto 24px}h1{font-size:27px;font-weight:600}p,figcaption,summary{color:#b6bbc5}main{max-width:1500px;margin:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:22px}article{background:#242b36;padding:18px;border-radius:14px}h2{font-size:16px;margin:0 0 16px}.pair{display:flex;gap:12px;justify-content:center}figure{margin:0;width:50%;text-align:center}figure img{width:100%;max-width:301px;height:auto;display:block;margin:auto}figcaption{font-size:12px;margin-top:9px}summary{cursor:pointer;font-size:13px;margin-top:16px}.source{width:100%;margin-top:12px}a{color:#ddc693}</style><header><h1>卡槽背景 · 模板对照预览</h1><p>${records.length} 张原图 × 2 种模板，共 ${records.length * 2} 张透明 PNG，单张 301×461。左为金色花纹，右为基础圆角。点击“查看原图”对照裁切。</p><p>保持原画比例，逐张调整主体位置；直接使用原 PSD 轮廓及装饰图层。此批仅供预览，未指定成就，也未替换游戏资源。</p></header><main>${cards}</main></html>`);
 // 总览采用成品原尺寸；标签与背景只用于预览，不写入单张图片。
 for (const directory of ['金色花纹', '基础圆角']) {
-  const cols = 5, rows = Math.ceil(records.length / cols), cellW = 329, cellH = 509;
+  const cols = manifest.columns ?? 5;
+  if (!Number.isInteger(cols) || cols < 1 || cols > 8) throw Error('总览列数必须是1至8的整数');
+  const rows = Math.ceil(records.length / cols), cellW = 329, cellH = 509;
   const composite = [];
   for (let i = 0; i < records.length; i++) {
     const x = i % cols * cellW, y = Math.floor(i / cols) * cellH, r = records[i];
