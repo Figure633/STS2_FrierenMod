@@ -34,7 +34,7 @@ public static class FrierenAchievements
     public static void TurnStarted(Player player)
     {
         if (!Applies(player) || player.PlayerCombatState == null) return;
-        if (player.Creature.Block == 999) Unlock(player, "5002");
+        if (player.Creature.Block >= 100) Unlock(player, "5002");
         if (player.Creature.Powers.Count(p => p.Type == PowerType.Buff) >= 5) Unlock(player, "5003");
         if (player.GetRelic<HimmelGravestone>() != null && player.GetRelic<StatueOfHimmel>() != null && player.GetRelic<MirroredLotusRing>() != null) Unlock(player, "5004");
         if (player.PlayerCombatState.DiscardPile.Cards.OfType<Laziness>().Count() >= 4) Unlock(player, "5005");
@@ -90,7 +90,7 @@ public static class FrierenAchievements
         var deck = MagicDeckStore.Read(player);
         var equipped = deck.Items.Where(i => i.Slot >= 0).ToArray();
         if (player.Deck.Cards.Count >= 40) Unlock(player, "5008");
-        if (deck.Items.Count + deck.Props.Count >= 30) Unlock(player, "5009");
+        if (deck.Items.Count + deck.Props.Count >= 20) Unlock(player, "5009");
         if (equipped.Length == 3) {
             if (equipped.All(i => SpellCatalog.Get(i.SpellId).Rarity == FactorRarity.Rare)) Unlock(player, "5010");
             if (equipped.All(i => SpellCatalog.Get(i.SpellId).Rarity == FactorRarity.Common)) Unlock(player, "5011");

@@ -65,7 +65,8 @@ public static class CommissionCmd
             "upgraded-five"=>cards.Count(c=>c.IsUpgraded)>=5,
             "zero-three"=>cards.Where(c=>c.EnergyCost.Canonical==0&&!c.EnergyCost.CostsX&&c is not IManaCard).Select(c=>c.Id).Distinct().Count()>=3,
             "power-three"=>cards.Where(c=>c.Type==CardType.Power).Select(c=>c.Id).Distinct().Count()>=3,
-            "distinct-twelve"=>cards.Select(c=>c.Id).Distinct().Count()>=12,
+            // 保留旧存档的条件键，实际门槛按作者新文案改为15种。
+            "distinct-twelve"=>cards.Select(c=>c.Id).Distinct().Count()>=15,
             _=>cards.Any(c=>c.GetType().Name==requirement)
         };
     }

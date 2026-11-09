@@ -20,7 +20,8 @@ public sealed class BirdCapturingSpell() : FrierenCard(0, CardType.Skill, CardRa
     {
         if (play.Target != null && IsBird(play.Target.Monster)) {
             await PowerCmd.Apply<BirdCapturedPower>(context, play.Target, (int)DynamicVars["Amount"].BaseValue, Owner.Creature, this);
-            if (play.Target.HasPower<BirdCapturedPower>()) Presentation.FrierenAchievements.Unlock(Owner, "4004");
+            if (play.Target.Monster is HunterKiller && play.Target.HasPower<BirdCapturedPower>())
+                Presentation.FrierenAchievements.Unlock(Owner, "4004");
         }
     }
     protected override void OnUpgrade() => DynamicVars["Amount"].UpgradeValueBy(1);

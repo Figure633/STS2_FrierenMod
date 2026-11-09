@@ -51,7 +51,8 @@ public static class Achievement101Tests
         foreach(var type in new[]{typeof(Byrdpip),typeof(Byrdonis),typeof(OwlMagistrate),typeof(HunterKiller),typeof(ThievingHopper),typeof(Ovicopter),typeof(Exoskeleton)}) {
             Clear("4004");var e=combat.CreateCreature(ModelDb.GetById<MonsterModel>(ModelDb.GetId(type)).ToMutable(),CombatSide.Enemy,type==typeof(Exoskeleton)?"first":null);combat.AddCreature(e);
             e.Monster!.SetUpForCombat();e.Monster.RollMove([player.Creature]);
-            await Use(combat.CreateCard<BirdCapturingSpell>(player),e);Check(Has("4004")&&e.HasPower<BirdCapturedPower>(),"捕鸟对实际有翼模型触发："+type.Name);
+            await Use(combat.CreateCard<BirdCapturingSpell>(player),e);
+            Check(Has("4004")== (type==typeof(HunterKiller)) && e.HasPower<BirdCapturedPower>(),"捕鸟仍可眩晕原有目标，仅猎人杀手解锁成就："+type.Name);
         }
         foreach(int kinds in new[]{2,3}) {
             await Reset();Clear("4006");await PowerCmd.Apply<WeakPower>(context,player.Creature,99,target,null);await PowerCmd.Apply<VulnerablePower>(context,player.Creature,1,target,null);
@@ -85,11 +86,11 @@ public static class Achievement101Tests
         await Puzzle([2,2,1,0]);Check(!Has("7001"),"重复谜题因子不冒充完整反序");
         await Puzzle([2,1]);foreach(var p in player.Creature.Powers.OfType<TurnOnlyPower>().ToArray())await p.AfterSideTurnEnd(context,CombatSide.Player,[player.Creature]);
         await PuzzleCmd.Chant(context,Play(combat.CreateCard<RapidChant>(player)),ChantRules.Preview(ManaSlot.Draw,SpellCatalog.Get("Factor100").Rules,1));Check(!Has("7001"),"反序进度不能跨回合拼接");
-        foreach(var (rarity,time,total) in new[]{(FactorRarity.Uncommon,3600L,29),(FactorRarity.Rare,3601L,30)}) {
+        foreach(var (rarity,time,total) in new[]{(FactorRarity.Uncommon,3600L,19),(FactorRarity.Rare,3601L,20)}) {
             foreach(string id in new[]{"5009","5010","5012"})Clear(id);
             var ids=SpellCatalog.All.Where(f=>f.Rarity==rarity&&!f.Puzzle).Take(3).Select(f=>f.Id).ToArray();var d=Deck(ids);while(d.Items.Count+d.Props.Count<total)d.AddProp("MysteryBox");MagicDeckStore.Write(player,d);
             AccessTools.Property(typeof(RunManager),nameof(RunManager.WinTime)).SetValue(RunManager.Instance,time);FrierenAchievements.RunEnded(run,player,true);
-            Check(Has("5010")== (rarity==FactorRarity.Rare)&&Has("5012")== (time>3600)&&Has("5009")== (total>=30),"通关稀有度、1小时和30件边界："+rarity+"/"+time+"/"+total);
+            Check(Has("5010")== (rarity==FactorRarity.Rare)&&Has("5012")== (time>3600)&&Has("5009")== (total>=20),"通关稀有度、1小时和20件边界："+rarity+"/"+time+"/"+total);
         }
         await Reset();Clear("5007");var eater=Spawn<Mimic>();await PowerCmd.Apply<MimicPower>(context,eater,5,eater,null);var countdown=eater.GetPower<MimicPower>()!;
         var patch=new Harmony("frieren.tests.eating101");patch.Patch(AccessTools.Method(typeof(PlayerCmd),nameof(PlayerCmd.EndTurn)),prefix:new HarmonyMethod(typeof(Achievement101Tests),nameof(SkipEndTurn)));

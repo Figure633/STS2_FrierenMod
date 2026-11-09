@@ -47,7 +47,7 @@ public sealed class CommissionState
     public static readonly VillageCommission[] Villagers = [
         new("GRAPES",1,"GrapeSpell"), new("STATUE",1,"MoldSpell"), new("WEDDING",1,"FlowerFieldSpell"),
         new("TEA",1,"HotTeaSpell"), new("FESTIVAL",1,"TongueTwisterSpell"), new("COPPER",1,"RustCleanMagic"),
-        new("SUMMER",1,"ShavedIceSpell"), new("LOST",1,"AccessoriesSpell"), new("SLEEP",1,"BabySleeping"),
+        new("SUMMER",1,"ShavedIceSpell"), new("LOST",1,"AccessoriesSpell"),
         new("TUTOR",2,"tutor"), new("CARGO",2,"",true), new("EXHIBITION",2,"rare-pair"),
         new("LIBRARY",2,"legendary-three"), new("LESSON",2,"upgraded-five"), new("THRIFT",2,"zero-three"),
         new("SHELTER",2,"power-three"), new("VARIETY",2,"distinct-twelve")
