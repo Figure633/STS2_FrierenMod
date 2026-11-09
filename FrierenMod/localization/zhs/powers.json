@@ -131,5 +131,7 @@
   "FRIERENMOD-COMMISSION_ELITE_POWER.title": "委托强化",
   "FRIERENMOD-COMMISSION_ELITE_POWER.description": "{Effect}",
   "FRIERENMOD-SEALING_ORE_POWER.title": "封魔矿",
-  "FRIERENMOD-SEALING_ORE_POWER.description": "你无法[gold]咏唱[/gold]。"
+  "FRIERENMOD-SEALING_ORE_POWER.description": "你无法[gold]咏唱[/gold]。",
+  "FRIERENMOD-SHAPE_OF_UNN_POWER.title": "乌恩之形",
+  "FRIERENMOD-SHAPE_OF_UNN_POWER.description": "咏唱后，回复{Amount}点生命。"
 }

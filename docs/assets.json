@@ -5264,5 +5264,54 @@
     "processing": "保留完整构图和原尺寸；WebP与扩展名为PNG的JPEG均只转换格式；未裁切、锐化或重绘。",
     "sha256": "eca6af0c430248941d34e99ce2dbaddade0d3cb37e0dd6971ea6a2783699d2d6",
     "credit_record": "FrierenMod/data/event_art.json#Zelda"
+  },
+  {
+    "file": "FrierenMod/images/relics/KnightSecret.png",
+    "source": "assets/author_adjusted/20261109/KnightSecret-original.png",
+    "source_kind": "author_provided",
+    "modified": true,
+    "processing": "仅裁透明留白并等比适配图标；未重绘或锐化。",
+    "sha256": "31ec4f3e39d3f2e9ae0b90bb5bd10e471f34decfa15e580817b0ecc0d19771f6",
+    "source_document": "../事件todo.docx"
+  },
+  {
+    "file": "FrierenMod/images/relics/KnightSecretOutline.png",
+    "source": "assets/author_adjusted/20261109/KnightSecret-original.png",
+    "source_kind": "author_provided",
+    "modified": true,
+    "processing": "同一图标的白色透明轮廓。",
+    "sha256": "bbc2436f8e12a3eeb12a1d7e190399acec2eedf267589ae829f17f1b0a7fc0bc",
+    "source_document": "../事件todo.docx"
+  },
+  {
+    "file": "FrierenMod/images/enchantments/MarkOfPride.png",
+    "source": "assets/author_adjusted/20261109/MarkOfPride-original.png",
+    "source_kind": "author_provided",
+    "modified": true,
+    "processing": "仅裁透明留白并等比适配图标；未重绘或锐化。",
+    "sha256": "88158ceff92eafb8020872948eb9a93fd366df04472ec939e7cb89f5ee22b88e",
+    "source_document": "../事件todo.docx"
+  },
+  {
+    "file": "FrierenMod/images/powers/ShapeOfUnnPower.png",
+    "source": "assets/author_adjusted/20261109/ShapeOfUnn-original.png",
+    "source_kind": "game_original",
+    "modified": true,
+    "processing": "仅裁透明留白并等比适配图标；未重绘或锐化。",
+    "sha256": "a2e2bcdb09283b039fadb0ec505032eb4450b26be1907c59dc8e992f40e07eb1",
+    "source_url": "https://static.wikia.nocookie.net/hollowknight/images/b/b4/Shape_of_Unn.png",
+    "source_page": "https://hollowknight.wiki/w/Shape_of_Unn",
+    "credit": "Team Cherry，《空洞骑士》护符乌恩之形原版图标"
+  },
+  {
+    "file": "FrierenMod/images/powers/big/ShapeOfUnnPower.png",
+    "source": "assets/author_adjusted/20261109/ShapeOfUnn-original.png",
+    "source_kind": "game_original",
+    "modified": true,
+    "processing": "仅裁透明留白并等比适配图标；未重绘或锐化。",
+    "sha256": "6eb504ddebfaa7e1b13af9b52dd3a050d0100d97e8be2f094c6a556bcd006dde",
+    "source_url": "https://static.wikia.nocookie.net/hollowknight/images/b/b4/Shape_of_Unn.png",
+    "source_page": "https://hollowknight.wiki/w/Shape_of_Unn",
+    "credit": "Team Cherry，《空洞骑士》护符乌恩之形原版图标"
   }
 ]

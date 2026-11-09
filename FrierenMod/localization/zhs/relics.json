@@ -64,5 +64,8 @@
   "FRIERENMOD-KRAFT_SERPENT_RING.flavor": "克拉伏特送给你的饯别礼。",
   "FRIERENMOD-AURA_COMPANION.title": "阿乌拉的陪伴",
   "FRIERENMOD-AURA_COMPANION.description": "阿乌拉会在战斗中陪伴你。\nb站原作者@肯Kenenk",
-  "FRIERENMOD-AURA_COMPANION.flavor": "阿乌拉因为输给了自己的服从魔法，成为了你最忠诚的小提琴手。"
+  "FRIERENMOD-AURA_COMPANION.flavor": "阿乌拉因为输给了自己的服从魔法，成为了你最忠诚的小提琴手。",
+  "FRIERENMOD-KNIGHT_SECRET.title": "小骑士的奥义",
+  "FRIERENMOD-KNIGHT_SECRET.description": "每次受到未被[gold]格挡[/gold]的伤害时，获得1层[gold]乌恩之形[/gold]。",
+  "FRIERENMOD-KNIGHT_SECRET.flavor": "蜷起身子，再来过。"
 }

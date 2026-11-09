@@ -131,5 +131,7 @@
   "FRIERENMOD-COMMISSION_ELITE_POWER.title": "Commission Empowerment",
   "FRIERENMOD-COMMISSION_ELITE_POWER.description": "{Effect}",
   "FRIERENMOD-SEALING_ORE_POWER.title": "Anti-Magic Ore",
-  "FRIERENMOD-SEALING_ORE_POWER.description": "You cannot [gold]Chant[/gold]."
+  "FRIERENMOD-SEALING_ORE_POWER.description": "You cannot [gold]Chant[/gold].",
+  "FRIERENMOD-SHAPE_OF_UNN_POWER.title": "Shape of Unn",
+  "FRIERENMOD-SHAPE_OF_UNN_POWER.description": "After chanting, heal {Amount} HP."
 }

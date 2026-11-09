@@ -22,7 +22,7 @@ public static class FrierenEventLayout
         image.OffsetTop = 112f - __instance.OffsetTop;
         image.OffsetBottom = -__instance.OffsetBottom;
         image.StretchMode = TextureRect.StretchModeEnum.KeepAspectCovered;
-        if (____event is EventArtPreview) image.StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered;
+        if (____event is EventArtPreview or HollowKnightAdventure) image.StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered;
         image.ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize;
         image.MouseFilter = Control.MouseFilterEnum.Ignore;
 
@@ -95,7 +95,7 @@ public static class FrierenEventLayout
             credit.AddThemeConstantOverride("shadow_offset_x", 2); credit.AddThemeConstantOverride("shadow_offset_y", 2);
             layout.AddChild(credit);
         }
-        credit.Visible = model is EventArtPreview;
+        credit.Visible = model is EventArtPreview or HollowKnightAdventure;
         Area(credit, 0, 1, 0.5f, 1);
         credit.OffsetLeft = 18; credit.OffsetRight = -18;
         credit.OffsetTop = -34 - layout.OffsetBottom; credit.OffsetBottom = -8 - layout.OffsetBottom;

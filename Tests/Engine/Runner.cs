@@ -104,6 +104,10 @@ public partial class Runner : Node
             new Harmony("frieren.tests.hover_host").Patch(
                 AccessTools.Method(typeof(MegaCrit.Sts2.Core.Nodes.Cards.Holders.NCardHolder), "CreateHoverTips"),
                 prefix: new HarmonyMethod(typeof(Runner), nameof(SkipGlobalHoverWindow)));
+            if (OS.GetCmdlineUserArgs().Contains("--hollow-knight-only")) {
+                GD.Print("HOLLOW_KNIGHT_OK: " + await HollowKnightTests.Run(this));
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--event-art-preview-only")) {
                 GD.Print("EVENT_ART_PREVIEW_OK: " + await EventArtPreviewTests.Run(this));
                 await Finish(); return;

@@ -64,5 +64,8 @@
   "FRIERENMOD-KRAFT_SERPENT_RING.flavor": "A parting gift from Kraft.",
   "FRIERENMOD-AURA_COMPANION.title": "Aura’s Company",
   "FRIERENMOD-AURA_COMPANION.description": "Aura accompanies you in combat.\nOriginal animation by 肯Kenenk on Bilibili.",
-  "FRIERENMOD-AURA_COMPANION.flavor": "Aura, keep up."
+  "FRIERENMOD-AURA_COMPANION.flavor": "Aura, keep up.",
+  "FRIERENMOD-KNIGHT_SECRET.title": "The Knight's Secret",
+  "FRIERENMOD-KNIGHT_SECRET.description": "Whenever you take unblocked damage, gain 1 [gold]Shape of Unn[/gold].",
+  "FRIERENMOD-KNIGHT_SECRET.flavor": "Curl up. Try again."
 }

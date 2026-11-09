@@ -20,8 +20,11 @@ public sealed class EventArtComposition
         JsonSerializer.Deserialize<Dictionary<string, EventArtComposition>>(
             Godot.FileAccess.GetFileAsString("res://FrierenMod/data/event_art.json"),
             new JsonSerializerOptions { PropertyNameCaseInsensitive = true })!);
-    public static EventArtComposition For(EventModel model) => model is EventArtPreview preview
-        ? Catalog.Value[EventArtPreview.Images[preview.ArtIndex]] : new();
+    public static EventArtComposition For(EventModel model) => model switch {
+        EventArtPreview preview => Catalog.Value[EventArtPreview.Images[preview.ArtIndex]],
+        HollowKnightAdventure => Catalog.Value["BugKnight"],
+        _ => new()
+    };
 
     public Rect2 BackgroundRect(Vector2 viewport, Vector2 texture)
     {
