@@ -98,7 +98,8 @@ public static class StoryEventTests
             Check(chosen.IsUpgraded && well.IsFinished, "动物井经原生牌组选牌升级一张");
         }
         well = await Story<AnimalWell>(); await well.CurrentOptions[2].Chosen();
-        Check(well.Owner!.Deck.Cards.OfType<BirdCapturingSpell>().Count() == 1 && well.IsFinished, "动物井获得捕鸟魔法");
+        Check(MagicDeckStore.Read(well.Owner!).Props.Count(p => p.PropId == "BirdCapturingGrimoire") == 1 &&
+            !well.Owner!.Deck.Cards.OfType<BirdCapturingSpell>().Any() && well.IsFinished, "动物井获得捕鸟魔法书魔具");
         var mimic = await Story<MimicFight>(); await mimic.CurrentOptions[0].Chosen();
         Check(mimic.CurrentOptions.Count == 3 && mimic.Description!.LocEntryKey.Contains("CAUGHT"), "宝箱两种打开选项进入被吞页面");
         await mimic.CurrentOptions[1].Chosen(); Check(mimic.Owner!.Creature.CurrentHp == 5 && mimic.Owner.Deck.Cards.OfType<RingletForm>().Count() == 1 && mimic.IsFinished,

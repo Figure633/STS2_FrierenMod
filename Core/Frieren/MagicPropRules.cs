@@ -1,7 +1,7 @@
 namespace FrierenMod.Core;
 
 public sealed record PropDefinition(string Id, int Targets, bool CombatOnly = false);
-public sealed record PropResult(MagicDeckState Deck, int Heal = 0, int Energy = 0, int Draw = 0);
+public sealed record PropResult(MagicDeckState Deck, int Heal = 0, int Energy = 0, int Draw = 0, bool BirdSpell = false);
 
 // 一代八种可获得魔具。Tutorial 标记 NEVER_DROP，不进入营地选择池。
 public static class MagicPropRules
@@ -14,7 +14,9 @@ public static class MagicPropRules
     public static IReadOnlyList<PropDefinition> CommissionOnly { get; } = Array.AsReadOnly(new[] {
         new PropDefinition("RoyalGrimoire",0), new("ElvenHourglass",0,true), new("PhoenixQuill",1)
     });
-    public static IReadOnlyList<PropDefinition> EventOnly { get; } = Array.AsReadOnly(new[] { new PropDefinition("SealingOre", 0) });
+    public static IReadOnlyList<PropDefinition> EventOnly { get; } = Array.AsReadOnly(new[] {
+        new PropDefinition("SealingOre", 0), new("BirdCapturingGrimoire", 0, true)
+    });
     public static PropDefinition Get(string id) => All.Concat(CommissionOnly).Concat(EventOnly).SingleOrDefault(p => p.Id == id)
         ?? throw new ArgumentException("未知魔具：" + id);
 
@@ -23,7 +25,7 @@ public static class MagicPropRules
         var factors = deck.Items.Where(i => prop.PropId switch {
             "CrystalBall" => i.Slot >= 0,
             "MysticBox" or "SeinNote" or "ShadowDragonHorn" or "UnbelievableToolBox" => i.Slot < 0,
-            "MysteryBox" or "RoyalGrimoire" or "ElvenHourglass" => false,
+            "MysteryBox" or "RoyalGrimoire" or "ElvenHourglass" or "BirdCapturingGrimoire" => false,
             _ => true
         }).Select(i => i.InstanceId);
         return prop.PropId is "SeinNote" or "ShadowDragonHorn" or "UnbelievableToolBox"
@@ -72,6 +74,9 @@ public static class MagicPropRules
             case "RoyalGrimoire":
                 // 具体因子由原生同步选牌流程选择，纯规则层只负责消费魔具。
                 break;
+            case "BirdCapturingGrimoire":
+                // 战斗卡牌通过运行时原生生成命令添加，纯规则层只消费魔具并返回效果。
+                break;
             case "ElvenHourglass": energy=3;draw=3;break;
             case "PhoenixQuill":
                 var source=chosen.Single();deck.Remove(source.InstanceId);
@@ -103,6 +108,6 @@ public static class MagicPropRules
                 break;
         }
         deck.Remove(prop.InstanceId);
-        return new(deck, heal, energy, draw);
+        return new(deck, heal, energy, draw, prop.PropId == "BirdCapturingGrimoire");
     }
 }

@@ -56,7 +56,7 @@
   "FRIERENMOD-ANIMAL_WELL.pages.INITIAL.options.FLUTE.title": "吹动物笛子",
   "FRIERENMOD-ANIMAL_WELL.pages.INITIAL.options.FLUTE.description": "[green]升级[/green]一张牌。需要可以升级的牌。",
   "FRIERENMOD-ANIMAL_WELL.pages.INITIAL.options.BIRD.title": "用捕鸟魔法",
-  "FRIERENMOD-ANIMAL_WELL.pages.INITIAL.options.BIRD.description": "[green]获得捕鸟魔法。[/green]",
+  "FRIERENMOD-ANIMAL_WELL.pages.INITIAL.options.BIRD.description": "获得魔具[gold]捕鸟魔法书[/gold]。",
   "FRIERENMOD-MIMIC_FIGHT.title": "遭遇宝箱怪",
   "FRIERENMOD-MIMIC_FIGHT.pages.INITIAL.description": "那里有一个 [jitter][gold]闪闪发光的宝箱[/gold][/jitter] !你使用了 宝箱判别魔法 [blue]Meekhite[/blue] 发现它有百分之99的概率是 [red]宝箱怪[/red] ，身为真正的魔法使，你打算...",
   "FRIERENMOD-MIMIC_FIGHT.pages.CAUGHT.description": "不出所料它是个 [red]宝箱怪[/red] ，而你落到了它的的嘴里！ [jitter]好黑，好可怕[/jitter] 但堂堂魔法使不会被宝箱怪单杀！，你决定...",

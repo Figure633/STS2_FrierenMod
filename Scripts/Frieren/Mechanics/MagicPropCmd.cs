@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
@@ -127,6 +128,8 @@ public static class MagicPropCmd
         if (result.Heal > 0) await CreatureCmd.Heal(player.Creature, result.Heal);
         if (result.Energy > 0) await PlayerCmd.GainEnergy(result.Energy, player);
         if (result.Draw > 0) await CardPileCmd.Draw(context,result.Draw,player);
+        if (result.BirdSpell) await CardPileCmd.AddGeneratedCardToCombat(
+            player.Creature.CombatState!.CreateCard<BirdCapturingSpell>(player), PileType.Hand, player);
         // 与原生休息/锻造保持同一楼层检查点，避免重复领取营地收益。
         return true;
     }

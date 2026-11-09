@@ -327,5 +327,7 @@
   "FRIERENMOD-SEALING_ORE.title": "封魔矿",
   "FRIERENMOD-SEALING_ORE.description": "使用后消耗。\n持有时无法[gold]咏唱[/gold]。\n抵达商店时自动出售，获得300金币。",
   "FRIERENMOD-HONEST_LIVING.title": "老实赚钱，很枯燥吧？",
-  "FRIERENMOD-HONEST_LIVING.description": "随机造成{MinDamage:diff()}～{MaxDamage:diff()}点固定伤害{Hits}次。若均为{MaxDamage}点，获得{Gold}金币；否则累积{Debt}金币负债。\n（负债{CurrentDebt}金币！）"
+  "FRIERENMOD-HONEST_LIVING.description": "随机造成{MinDamage:diff()}～{MaxDamage:diff()}点固定伤害{Hits}次。若均为{MaxDamage}点，获得{Gold}金币；否则累积{Debt}金币负债。\n（负债{CurrentDebt}金币！）",
+  "FRIERENMOD-BIRD_CAPTURING_GRIMOIRE.title": "捕鸟魔法书",
+  "FRIERENMOD-BIRD_CAPTURING_GRIMOIRE.description": "只能在战斗中使用。将一张[gold]捕鸟魔法[/gold]加入你的[gold]手牌[/gold]。"
 }

@@ -582,5 +582,6 @@
   "LEGACY_CHANT_CHOICE": "[gold]消耗[/gold][gold]{Slot}[/gold]中的{Amount}张[gold]魔力[/gold]。{Effect}",
   "CRAFT.DamageFive": "造成{Amount}点伤害5次。",
   "EVENT_ART_CREDIT": "画师：{Artist}",
-  "EVENT_ART_CREDIT_UNKNOWN": "待确认"
+  "EVENT_ART_CREDIT_UNKNOWN": "待确认",
+  "PROP.BirdCapturingGrimoire": "只能在战斗中使用。将一张[gold]捕鸟魔法[/gold]加入你的[gold]手牌[/gold]。"
 }

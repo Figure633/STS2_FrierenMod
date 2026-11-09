@@ -582,5 +582,6 @@
   "LEGACY_CHANT_CHOICE": "[gold]Exhaust[/gold] {Amount} [gold]Mana[/gold] from your [gold]{Slot}[/gold]. {Effect}",
   "CRAFT.DamageFive": "Deal {Amount} damage 5 times.",
   "EVENT_ART_CREDIT": "Art: {Artist}",
-  "EVENT_ART_CREDIT_UNKNOWN": "unconfirmed"
+  "EVENT_ART_CREDIT_UNKNOWN": "unconfirmed",
+  "PROP.BirdCapturingGrimoire": "Can only be used in combat. Add a [gold]Bird-Capturing Spell[/gold] to your [gold]hand[/gold]."
 }

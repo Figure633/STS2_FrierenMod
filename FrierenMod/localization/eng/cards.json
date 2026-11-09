@@ -327,5 +327,7 @@
   "FRIERENMOD-SEALING_ORE.title": "Anti-Magic Ore",
   "FRIERENMOD-SEALING_ORE.description": "Consumed on use.\nYou cannot [gold]Chant[/gold] while carrying this.\nAutomatically sold for 300 Gold upon reaching a merchant.",
   "FRIERENMOD-HONEST_LIVING.title": "Honest Work Is Boring, Right?",
-  "FRIERENMOD-HONEST_LIVING.description": "Deal {MinDamage:diff()}–{MaxDamage:diff()} fixed damage to random enemies {Hits} times. If all rolls are {MaxDamage}, gain {Gold} Gold. Otherwise, accumulate {Debt} Gold of debt.\n(Debt: {CurrentDebt} Gold!)"
+  "FRIERENMOD-HONEST_LIVING.description": "Deal {MinDamage:diff()}–{MaxDamage:diff()} fixed damage to random enemies {Hits} times. If all rolls are {MaxDamage}, gain {Gold} Gold. Otherwise, accumulate {Debt} Gold of debt.\n(Debt: {CurrentDebt} Gold!)",
+  "FRIERENMOD-BIRD_CAPTURING_GRIMOIRE.title": "Bird-Capturing Grimoire",
+  "FRIERENMOD-BIRD_CAPTURING_GRIMOIRE.description": "Can only be used in combat. Add a [gold]Bird-Capturing Spell[/gold] to your [gold]hand[/gold]."
 }

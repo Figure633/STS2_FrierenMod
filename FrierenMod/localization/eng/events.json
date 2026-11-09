@@ -56,7 +56,7 @@
   "FRIERENMOD-ANIMAL_WELL.pages.INITIAL.options.FLUTE.title": "Play the Animal Flute",
   "FRIERENMOD-ANIMAL_WELL.pages.INITIAL.options.FLUTE.description": "[green]Upgrade[/green] a card. Requires an upgradeable card.",
   "FRIERENMOD-ANIMAL_WELL.pages.INITIAL.options.BIRD.title": "Cast Bird-Capturing Magic",
-  "FRIERENMOD-ANIMAL_WELL.pages.INITIAL.options.BIRD.description": "[green]Obtain Bird-Capturing Spell.[/green]",
+  "FRIERENMOD-ANIMAL_WELL.pages.INITIAL.options.BIRD.description": "Obtain the [gold]Bird-Capturing Grimoire[/gold] magic item.",
   "FRIERENMOD-MIMIC_FIGHT.title": "Mimic!?",
   "FRIERENMOD-MIMIC_FIGHT.pages.INITIAL.description": "There is a [jitter][gold]glittering[/gold][/jitter] [jitter][gold]chest[/gold][/jitter] ! You chant [sine][blue]Meekhite[/blue][/sine] , the spell to analyze treasure chests, and it has 99% to be a [red]Mimic[/red] . As a true Mage, you decide...",
   "FRIERENMOD-MIMIC_FIGHT.pages.CAUGHT.description": "It is a [red]Mimic[/red] , for sure, and you just jump into its mouth! [jitter]Dark[/jitter] [jitter]and[/jitter] [jitter]Scary[/jitter] ! But [green]Great[/green] [green]Mage[/green] won't be killed by a Mimic! You decide...",
