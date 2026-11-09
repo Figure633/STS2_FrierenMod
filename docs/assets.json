@@ -5520,5 +5520,212 @@
     "modified": false,
     "processing": "作者提供的301×461成品，原字节复制",
     "redistribution_review": "pending; author-provided local prototype"
+  },
+  {
+    "file": "FrierenMod/images/commissions/Hunt1.png",
+    "source": "../png/强化精英1.png",
+    "source_commit": "",
+    "sha256": "9aca606828799214d440a7a025c0616f318bda4eb15ef749e9ca91f4e0baeef1",
+    "modified": false,
+    "processing": "原始500×380 PNG直接复制",
+    "redistribution_review": "author supplied; local prototype"
+  },
+  {
+    "file": "FrierenMod/images/commissions/Hunt2.png",
+    "source": "../png/强化精英2.png",
+    "source_commit": "",
+    "sha256": "2c391fa3c14845b12471b1e4cdb39fa77f1496a880f55fe1234cd074b90c16fe",
+    "modified": false,
+    "processing": "原始500×380 PNG直接复制",
+    "redistribution_review": "author supplied; local prototype"
+  },
+  {
+    "file": "FrierenMod/images/commissions/Hunt3.png",
+    "source": "../png/强化精英3.png",
+    "source_commit": "",
+    "sha256": "d5ae8560ef41c9fa4967710776715cd366ef4b10a6bf89ec4f5cd92083ac3721",
+    "modified": false,
+    "processing": "原始500×380 PNG直接复制",
+    "redistribution_review": "author supplied; local prototype"
+  },
+  {
+    "file": "FrierenMod/images/commissions/Cargo.png",
+    "source": "../png/委托图2.png",
+    "source_commit": "",
+    "sha256": "001265290b254b5a43d9cdeaa1ac14baa678e3e881e50971ce20940c647be855",
+    "modified": false,
+    "processing": "原始500×380 PNG直接复制",
+    "redistribution_review": "author supplied; local prototype"
+  },
+  {
+    "file": "FrierenMod/images/commissions/Tutor.png",
+    "source": "../png/招募资深魔法使家教.png",
+    "source_commit": "",
+    "sha256": "ffe5585fd70669827ec5e3aed4adb94061af7821255556b714646d211b4e9b3b",
+    "modified": false,
+    "processing": "原始500×380 PNG直接复制",
+    "redistribution_review": "author supplied; local prototype"
+  },
+  {
+    "file": "FrierenMod/images/commissions/Exhibition.png",
+    "source": "../png/压轴节目委托.png",
+    "source_commit": "",
+    "sha256": "203a111029245b2e61431bf633546aeb760eaaff9aa0e8c9f7f1696107e66b65",
+    "modified": false,
+    "processing": "原始500×380 PNG直接复制",
+    "redistribution_review": "author supplied; local prototype"
+  },
+  {
+    "file": "FrierenMod/images/commissions/Library.png",
+    "source": "../png/传说魔法专栏.png",
+    "source_commit": "",
+    "sha256": "13b154d0d10cd1afd92b72ca19bf95d771c5821342a42e635ca88c8b15e94ea7",
+    "modified": false,
+    "processing": "原始500×380 PNG直接复制",
+    "redistribution_review": "author supplied; local prototype"
+  },
+  {
+    "file": "FrierenMod/images/commissions/Lesson.png",
+    "source": "../png/魔法学校的示范课.png",
+    "source_commit": "",
+    "sha256": "7185eccc2e39468ccb696583d64ef306eba254254d77b44dd08f29e372a68160",
+    "modified": false,
+    "processing": "原始500×380 PNG直接复制",
+    "redistribution_review": "author supplied; local prototype"
+  },
+  {
+    "file": "FrierenMod/images/commissions/Variety.png",
+    "source": "../png/魔术师委托.png",
+    "source_commit": "",
+    "sha256": "9dceb04029d6d40edfc956e64a7eef58d030bd65fec83aaf98f3657e54608ffc",
+    "modified": false,
+    "processing": "原始500×380 PNG直接复制",
+    "redistribution_review": "author supplied; local prototype"
+  },
+  {
+    "file": "FrierenMod/images/commissions/Granny.png",
+    "source": "../png/顽固婆婆的委托.png",
+    "source_commit": "",
+    "sha256": "6016eaf1b43eb520c5f0a6f0a729214afa97f34f99fa38156cf63f465d83421f",
+    "modified": false,
+    "processing": "原始500×380 PNG直接复制",
+    "redistribution_review": "author supplied; local prototype"
+  },
+  {
+    "file": "FrierenMod/images/commissions/Namusan.png",
+    "source": "../png/委托南无三.png",
+    "source_commit": "",
+    "sha256": "72b6f161ac263d5d10197375ff93ff79a08ae1bed37da6d5dcc4c701101f2d7d",
+    "modified": false,
+    "processing": "原始500×380 PNG直接复制",
+    "redistribution_review": "author supplied; local prototype"
+  },
+  {
+    "file": "FrierenMod/images/commissions/Stark.png",
+    "source": "../png/修塔尔克的请求.png",
+    "source_commit": "",
+    "sha256": "a0b803794484f907c9160260f27b1735c5524bab4ae65c22f74826bf1c996825",
+    "modified": false,
+    "processing": "原始500×380 PNG直接复制",
+    "redistribution_review": "author supplied; local prototype"
+  },
+  {
+    "file": "FrierenMod/images/commissions/Guide.png",
+    "source": "../png/冒险者小队委托.png",
+    "source_commit": "",
+    "sha256": "1356bfbd2244a6b607a0615c674ee2b8b4f16fdba02d938813ab94cb1418e1dd",
+    "modified": false,
+    "processing": "原始500×380 PNG直接复制",
+    "redistribution_review": "author supplied; local prototype"
+  },
+  {
+    "file": "FrierenMod/images/cards/MagicExamVial.png",
+    "source": "../png/魔法考试小瓶.png",
+    "source_commit": "",
+    "sha256": "65e61cb90b1e821b971e65456d304e77a68152512cf8e69dba3af0cfb4944ead",
+    "modified": false,
+    "processing": "作者原图直接复制",
+    "redistribution_review": "author supplied; local prototype"
+  },
+  {
+    "file": "FrierenMod/images/cards/MagicPot.png",
+    "source": "../png/魔法陶罐.png",
+    "source_commit": "",
+    "sha256": "54eaa997ba3a53f5f710988636a255656c88338f807b15aa4c31805909468324",
+    "modified": false,
+    "processing": "作者原图直接复制",
+    "redistribution_review": "author supplied; local prototype"
+  },
+  {
+    "file": "FrierenMod/images/relics/MagicShopMembership.png",
+    "source": "../png/魔具店会员卡.png",
+    "source_commit": "",
+    "sha256": "f1c8a370e488c88ffd367c12d3c4909783435949ea30ba3276e9b22ba01c2764",
+    "modified": false,
+    "processing": "作者原RGB不变；GamblerCoin仅使用imagegen蒙版去背景；tools/prepare-author-review-assets.mjs",
+    "redistribution_review": "author supplied; local prototype"
+  },
+  {
+    "file": "FrierenMod/images/relics/MagicShopMembershipOutline.png",
+    "source": "FrierenMod/images/relics/MagicShopMembership.png",
+    "source_commit": "",
+    "sha256": "26b0dca68ccc412688fa58524f54613a86a5abc37120725b73fabfe56126065b",
+    "modified": true,
+    "processing": "tools/prepare-author-review-assets.mjs；原生AtlasTexture及白色轮廓",
+    "redistribution_review": "author supplied; local prototype"
+  },
+  {
+    "file": "FrierenMod/images/relics/MagicShopMembership.tres",
+    "source": "FrierenMod/images/relics/MagicShopMembership.png",
+    "source_commit": "",
+    "sha256": "e8144e2b73933c4a1a781c24d62049bf54e45d64b1cf8a4b32d87b9347d73003",
+    "modified": true,
+    "processing": "tools/prepare-author-review-assets.mjs；原生AtlasTexture及白色轮廓",
+    "redistribution_review": "author supplied; local prototype"
+  },
+  {
+    "file": "FrierenMod/images/relics/MagicShopMembershipOutline.tres",
+    "source": "FrierenMod/images/relics/MagicShopMembership.png",
+    "source_commit": "",
+    "sha256": "767c91be5dc2a4c1d6fef5f663eb7e10a3139007772757fd514128b8bdccab75",
+    "modified": true,
+    "processing": "tools/prepare-author-review-assets.mjs；原生AtlasTexture及白色轮廓",
+    "redistribution_review": "author supplied; local prototype"
+  },
+  {
+    "file": "FrierenMod/images/relics/GamblerCoin.png",
+    "source": "../png/赌徒金币（遗物，要抠图）.png",
+    "source_commit": "",
+    "sha256": "d1fbd365bf6a6d4eb221de0948cc23c07bca81cf1b229c2760718d8f041b945d",
+    "modified": true,
+    "processing": "作者原RGB不变；GamblerCoin仅使用imagegen蒙版去背景；tools/prepare-author-review-assets.mjs",
+    "redistribution_review": "author supplied; local prototype"
+  },
+  {
+    "file": "FrierenMod/images/relics/GamblerCoinOutline.png",
+    "source": "FrierenMod/images/relics/GamblerCoin.png",
+    "source_commit": "",
+    "sha256": "f1ec7859cc59d6257a23062b91b3c9f3cd15986d140c28208ebbc6be98edb652",
+    "modified": true,
+    "processing": "tools/prepare-author-review-assets.mjs；原生AtlasTexture及白色轮廓",
+    "redistribution_review": "author supplied; local prototype"
+  },
+  {
+    "file": "FrierenMod/images/relics/GamblerCoin.tres",
+    "source": "FrierenMod/images/relics/GamblerCoin.png",
+    "source_commit": "",
+    "sha256": "ad15f774a15d083c32dfb460fb9e44a7544efb8254f012595cd7ccec49d810a0",
+    "modified": true,
+    "processing": "tools/prepare-author-review-assets.mjs；原生AtlasTexture及白色轮廓",
+    "redistribution_review": "author supplied; local prototype"
+  },
+  {
+    "file": "FrierenMod/images/relics/GamblerCoinOutline.tres",
+    "source": "FrierenMod/images/relics/GamblerCoin.png",
+    "source_commit": "",
+    "sha256": "9b4072adc0c8e1888363f1bcbd3f42d4ed2ae13f0ea10b33e38a1a94ad38f983",
+    "modified": true,
+    "processing": "tools/prepare-author-review-assets.mjs；原生AtlasTexture及白色轮廓",
+    "redistribution_review": "author supplied; local prototype"
   }
 ]

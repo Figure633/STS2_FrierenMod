@@ -1,23 +1,25 @@
 namespace FrierenMod.Core;
 
-public sealed record PropDefinition(string Id, int Targets, bool CombatOnly = false);
-public sealed record PropResult(MagicDeckState Deck, int Heal = 0, int Energy = 0, int Draw = 0, bool BirdSpell = false);
+public sealed record PropDefinition(string Id, int Targets, bool CombatOnly = false, bool Reusable = false, int GoldCost = 0);
+public sealed record PropResult(MagicDeckState Deck, int Heal = 0, int Energy = 0, int Draw = 0, bool BirdSpell = false, bool Escape = false);
 
 // 一代八种可获得魔具。Tutorial 标记 NEVER_DROP，不进入营地选择池。
 public static class MagicPropRules
 {
     public static IReadOnlyList<PropDefinition> All { get; } = Array.AsReadOnly(new[] {
-        new PropDefinition("CrystalBall", 2), new("MysteryBox", 0), new("MysticBox", 3),
+        new PropDefinition("CrystalBall", 2), new("MysteryBox", 0),
         new("SeinNote", 2), new("ShadowDragonHorn", 2, true), new("TransmutationCircle", 2),
         new("UnbelievableTool", 2), new("UnbelievableToolBox", 2)
     });
     public static IReadOnlyList<PropDefinition> CommissionOnly { get; } = Array.AsReadOnly(new[] {
-        new PropDefinition("RoyalGrimoire",0), new("ElvenHourglass",0,true), new("PhoenixQuill",1)
+        new PropDefinition("RoyalGrimoire",0), new("MagicExamVial",0,true), new("MagicPot",0,Reusable:true,GoldCost:30)
     });
     public static IReadOnlyList<PropDefinition> EventOnly { get; } = Array.AsReadOnly(new[] {
         new PropDefinition("SealingOre", 0), new("BirdCapturingGrimoire", 0, true)
     });
-    public static PropDefinition Get(string id) => All.Concat(CommissionOnly).Concat(EventOnly).SingleOrDefault(p => p.Id == id)
+    // 兼容旧存档，已弃用的魔具不再进入任何新获取池。
+    public static IReadOnlyList<PropDefinition> Legacy { get; } = [new("MysticBox",3),new("ElvenHourglass",0,true),new("PhoenixQuill",1)];
+    public static PropDefinition Get(string id) => All.Concat(CommissionOnly).Concat(EventOnly).Concat(Legacy).SingleOrDefault(p => p.Id == id)
         ?? throw new ArgumentException("未知魔具：" + id);
 
     public static int[] Eligible(MagicDeckState deck, MagicProp prop)
@@ -25,7 +27,7 @@ public static class MagicPropRules
         var factors = deck.Items.Where(i => prop.PropId switch {
             "CrystalBall" => i.Slot >= 0,
             "MysticBox" or "SeinNote" or "ShadowDragonHorn" or "UnbelievableToolBox" => i.Slot < 0,
-            "MysteryBox" or "RoyalGrimoire" or "ElvenHourglass" or "BirdCapturingGrimoire" => false,
+            "MysteryBox" or "RoyalGrimoire" or "ElvenHourglass" or "BirdCapturingGrimoire" or "MagicExamVial" or "MagicPot" => false,
             _ => true
         }).Select(i => i.InstanceId);
         return prop.PropId is "SeinNote" or "ShadowDragonHorn" or "UnbelievableToolBox"
@@ -36,6 +38,7 @@ public static class MagicPropRules
     public static bool CanUse(MagicDeckState deck, MagicProp prop, bool inCombat)
     {
         var rule = Get(prop.PropId);
+        if(prop.PropId=="MysticBox")return false;
         if (rule.CombatOnly && !inCombat) return false;
         if (prop.PropId == "UnbelievableTool")
             return deck.Items.Any(i => i.Slot >= 0) && deck.Items.Any(i => i.Slot < 0);
@@ -77,6 +80,8 @@ public static class MagicPropRules
             case "BirdCapturingGrimoire":
                 // 战斗卡牌通过运行时原生生成命令添加，纯规则层只消费魔具并返回效果。
                 break;
+            case "MagicExamVial": break;
+            case "MagicPot": deck.AddProp(All[next(All.Count)].Id);break;
             case "ElvenHourglass": energy=3;draw=3;break;
             case "PhoenixQuill":
                 var source=chosen.Single();deck.Remove(source.InstanceId);
@@ -107,7 +112,7 @@ public static class MagicPropRules
                 }
                 break;
         }
-        deck.Remove(prop.InstanceId);
-        return new(deck, heal, energy, draw, prop.PropId == "BirdCapturingGrimoire");
+        if(!Get(prop.PropId).Reusable)deck.Remove(prop.InstanceId);
+        return new(deck, heal, energy, draw, prop.PropId == "BirdCapturingGrimoire",prop.PropId=="MagicExamVial");
     }
 }

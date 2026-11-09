@@ -317,7 +317,7 @@
   "FRIERENMOD-VALUABLE_CARGO.title": "Precious Cargo",
   "FRIERENMOD-VALUABLE_CARGO.description": "Each unblocked damage event: -2 freight.\nEach new location: +20 freight (minimum 0).\nAt the next merchant, remove all copies from your deck and receive each copy’s freight.\n(Current freight: {Fare} Gold)",
   "FRIERENMOD-ROYAL_GRIMOIRE.title": "Royal Grimoire",
-  "FRIERENMOD-ROYAL_GRIMOIRE.description": "Choose 1 obtainable factor to add to your magic deck.\nCommission-exclusive magic tool. Consumed on use.",
+  "FRIERENMOD-ROYAL_GRIMOIRE.description": "Choose 1 obtainable factor, including puzzles, to add to your magic deck. Removed after use.",
   "FRIERENMOD-ELVEN_HOURGLASS.title": "Elven Hourglass",
   "FRIERENMOD-ELVEN_HOURGLASS.description": "Combat only: Gain {energyPrefix:energyIcons(3)} and draw 3 cards.\nCommission-exclusive magic tool. Consumed on use.",
   "FRIERENMOD-PHOENIX_QUILL.title": "Phoenix Quill",
@@ -329,5 +329,9 @@
   "FRIERENMOD-HONEST_LIVING.title": "Honest Work Is Boring, Right?",
   "FRIERENMOD-HONEST_LIVING.description": "Deal {MinDamage:diff()}–{MaxDamage:diff()} fixed damage to random enemies {Hits} times. If all rolls are {MaxDamage}, gain {Gold} Gold. Otherwise, accumulate {Debt} Gold of debt.\n(Debt: {CurrentDebt} Gold!)",
   "FRIERENMOD-BIRD_CAPTURING_GRIMOIRE.title": "Bird-Capturing Grimoire",
-  "FRIERENMOD-BIRD_CAPTURING_GRIMOIRE.description": "Can only be used in combat. Add a [gold]Bird-Capturing Spell[/gold] to your [gold]hand[/gold]."
+  "FRIERENMOD-BIRD_CAPTURING_GRIMOIRE.description": "Can only be used in combat. Add a [gold]Bird-Capturing Spell[/gold] to your [gold]hand[/gold].",
+  "FRIERENMOD-MAGIC_EXAM_VIAL.title": "Mage Exam Vial",
+  "FRIERENMOD-MAGIC_EXAM_VIAL.description": "Can only be used in combat. Heal 30% of your maximum HP and escape a non-Boss combat. Removed after use.",
+  "FRIERENMOD-MAGIC_POT.title": "Magic Pot",
+  "FRIERENMOD-MAGIC_POT.description": "Reusable. Spend 30 Gold to add a random common magic item to your magic deck."
 }

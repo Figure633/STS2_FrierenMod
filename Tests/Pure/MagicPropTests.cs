@@ -40,9 +40,9 @@ static class MagicPropTests
             var result = Use(Deck(), "MysteryBox", []);
             Check(result.Deck.Items.Count == 8 && result.Deck.Items.TakeLast(2).All(i => i.Slot == -1 && !SpellCatalog.Get(i.SpellId).Puzzle));
         });
-        Test("神秘箱随机装入三个新因子并保留旧库存", () => {
-            var result = Use(Deck(), "MysticBox", [4, 5, 6]);
-            Check(result.Deck.Items.Take(3).All(i => i.Slot == -1) && result.Deck.Items.Skip(3).Select(i => i.Slot).Order().SequenceEqual(new[] {0, 1, 2}));
+        Test("魔术箱弃用，旧存档仍可读取但不能使用", () => {
+            var deck=Deck();int id=deck.AddProp("MysticBox").InstanceId;
+            Check(MagicDeckState.FromJson(deck.ToJson()).Props.Any(p=>p.PropId=="MysticBox")&&MagicPropRules.Apply(deck,id,[4,5,6],false,_=>throw new Exception())==null);
         });
         Test("炼成阵保留稀有度与槽位并分配新编号", () => {
             var deck = Deck(); var result = Use(deck, "TransmutationCircle", [1, 3]);
@@ -90,8 +90,21 @@ static class MagicPropTests
             catch (JsonException) { return; }
             throw new Exception("重复编号未拒绝");
         });
-        Test("委托独占魔具不进入八种普通魔具池",()=>{
-            Check(MagicPropRules.All.Count==8&&MagicPropRules.CommissionOnly.Count==3&&MagicPropRules.CommissionOnly.All(p=>!MagicPropRules.All.Contains(p)));
+        Test("委托独占魔具与弃用魔具不进入七种普通魔具池",()=>{
+            Check(MagicPropRules.All.Count==7&&MagicPropRules.CommissionOnly.Count==3&&MagicPropRules.CommissionOnly.All(p=>!MagicPropRules.All.Contains(p))&&!MagicPropRules.All.Any(p=>p.Id=="MysticBox"));
+        });
+        Test("魔法陶罐保留自身，每次生成一个普通魔具，不能生成陶罐或弃用魔具",()=>{
+            var deck=Deck();int id=deck.AddProp("MagicPot").InstanceId;
+            for(int i=0;i<MagicPropRules.All.Count;i++){
+                var result=MagicPropRules.Apply(deck,id,[],false,_=>i)!;
+                Check(result.Deck.Props.Count==2&&result.Deck.Props.Any(p=>p.InstanceId==id)&&result.Deck.Props.Any(p=>p.PropId==MagicPropRules.All[i].Id));
+            }
+        });
+        Test("考试小瓶仅战斗可用并消费自身，返回逃跑标记",()=>{
+            var deck=Deck();int id=deck.AddProp("MagicExamVial").InstanceId;
+            Check(MagicPropRules.Apply(deck,id,[],false,_=>0)==null);
+            var result=MagicPropRules.Apply(deck,id,[],true,_=>0)!;
+            Check(result.Escape&&result.Deck.Props.Count==0);
         });
         Test("王室秘典不随机生成或覆盖槽位，留给同步选牌流程",()=>{
             var deck=Deck();int old=deck.Items.Count;var result=Use(deck,"RoyalGrimoire",[]);

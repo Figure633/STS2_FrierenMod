@@ -46,7 +46,7 @@ public static class CommissionCargo
         if(room is not MerchantRoom||!advanced)return;
         var goods=Goods(p);var active=state.Active;
         if(goods.Length==0&&active?.Goal!=CommissionGoal.Cargo)return;
-        int fare=goods.Sum(c=>c.Fare);
+        int fare=goods.Sum(c=>c.Fare)+(active?.BaseGold??0);
         if(active?.Goal==CommissionGoal.Cargo){active.Status=goods.Length>0?CommissionStatus.Claimed:CommissionStatus.Abandoned;active.PaidFreight=fare;active.Progress=goods.Length>0?1:0;state.Revision++;CommissionCmd.Write(p,state);}
         // 先取快照并锁定交付状态，原生移除与金币命令只执行一次。
         await Remove(p);

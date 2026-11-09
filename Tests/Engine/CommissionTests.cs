@@ -132,7 +132,8 @@ public static class CommissionTests
             CombatManager.Instance.Reset(true);run.PushRoom(new RestSiteRoom());CombatTestState.SetInProgress(false);
         }
         var book=MagicDeckStore.Read(p);int royal=book.AddProp("RoyalGrimoire").InstanceId;MagicDeckStore.Write(p,book);
-        Check(await MagicPropCmd.UseSelected(p,royal,[])&&MagicDeckStore.Read(p).Items.Count==3&&MagicDeckStore.Read(p).Items.All(i=>i.Slot>=0&&SpellCatalog.Get(i.SpellId).Rarity==FactorRarity.Rare),"王室魔导书实际入库并装载三个稀有因子");
+        int factorsBefore=book.Items.Count;var royalChoices=SpellCatalog.Available.OrderBy(f=>f.Id,StringComparer.Ordinal).ToArray();int puzzleIndex=Array.FindIndex(royalChoices,f=>f.Puzzle);selector.PrepareToSelect(new[]{puzzleIndex});
+        Check(await MagicPropCmd.UseSelected(p,royal,[])&&MagicDeckStore.Read(p).Items.Count==factorsBefore+1&&MagicDeckStore.Read(p).Items.Last().SpellId==royalChoices[puzzleIndex].Id&&MagicDeckStore.Read(p).Items.Last().Slot<0,"王室魔导书可选择谜题，新增一个库存因子且不自动装槽");
         book=MagicDeckStore.Read(p);int quill=book.AddProp("PhoenixQuill").InstanceId;int factor=book.Items[0].InstanceId;MagicDeckStore.Write(p,book);
         Check(await MagicPropCmd.UseSelected(p,quill,[factor])&&MagicDeckStore.Read(p).Props.Count(x=>x.PropId=="UnbelievableTool")==2&&MagicDeckStore.Read(p).Items.All(i=>i.InstanceId!=factor),"羽笔实际替换因子并生成两件工具");
         state=Fixture(p);state.Accept(Id(3),0,1);CommissionCmd.Write(p,state);await CommissionCargo.Add(p,Id(3));
@@ -168,7 +169,8 @@ public static class CommissionTests
         int maxEnergy=p.MaxEnergy;Check(await CommissionCmd.Execute(p,Id(1),CommissionOperation.Claim,state.Revision)&&p.Relics.OfType<ComfortableBed>().Any()&&p.GetRelic<ComfortableBed>()!.ModifyMaxEnergy(p,maxEnergy)==maxEnergy+1,"第二幕一代Boss遗物实际获得并保留能量加成");
         state=Fixture(p,first:Make(1,"HUNT",CommissionGoal.EmpoweredElite,reward:new(CommissionRewardKind.Relic,"ComfortableBed",1,FallbackProp:"PhoenixQuill")));state.Accept(Id(1),1,1);state.Active!.Progress=1;CommissionCmd.Write(p,state);int props=MagicDeckStore.Read(p).Props.Count;
         Check(await CommissionCmd.Execute(p,Id(1),CommissionOperation.Claim,state.Revision)&&MagicDeckStore.Read(p).Props.Count==props+1&&MagicDeckStore.Read(p).Props.Last().PropId=="PhoenixQuill","重复Boss遗物按预先显示的专属魔具兜底");
-        Fixture(p,second:Make(2,"TUTOR",CommissionGoal.Deck,"tutor",new(CommissionRewardKind.Relic,"BagOfPreparation",160)),third:Make(3,"CARGO",CommissionGoal.Cargo,reward:new(CommissionRewardKind.Freight,"",1)));
+        var display=Fixture(p,first:Make(1,"HUNT",CommissionGoal.EmpoweredElite,reward:new(CommissionRewardKind.Prop,"MagicExamVial",1)),second:Make(2,"TUTOR",CommissionGoal.Deck,"tutor",new(CommissionRewardKind.Relic,"BagOfPreparation",120)),third:Make(3,"CARGO",CommissionGoal.Cargo,reward:new(CommissionRewardKind.Freight,"",1)));
+        display.Quests=display.Quests.Select(q=>new Commission{Id=q.Id,Act=q.Act,Template=q.Template,Stars=q.Stars,Goal=q.Goal,Spell=q.Spell,Reward=q.Reward,BaseGold=q.Stars==3?100:50}).ToList();CommissionCmd.Write(p,display);
         run.PushRoom(new RestSiteRoom());var ui=new Control{Size=new(1920,1080)};root.AddChild(ui);var screen=new CommissionScreen(ui,p);
         foreach(string language in new[]{"zhs","eng"}){
             LocManager.Instance.SetLanguage(language);screen.Open();await Tick();var list=screen.View.GetNode<VBoxContainer>("CommissionCanvas/CommissionScroll/Quests");

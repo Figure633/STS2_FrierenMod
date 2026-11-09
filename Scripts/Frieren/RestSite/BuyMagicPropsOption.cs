@@ -5,6 +5,7 @@ using HarmonyLib;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.RestSite;
 using MegaCrit.Sts2.Core.Localization;
+using MegaCrit.Sts2.Core.Hooks;
 
 namespace FrierenMod.Scripts.RestSite;
 
@@ -25,5 +26,16 @@ public static class FrierenRestSiteOptions
     {
         if (player.Character is Frieren && !__result.OfType<BuyMagicPropsOption>().Any())
             __result.Add(new BuyMagicPropsOption(player));
+    }
+}
+
+// 原生同步器仍将逛店记为成功并移除该选项，只保留其他营地行动。
+[HarmonyPatch(typeof(Hook), nameof(Hook.ShouldDisableRemainingRestSiteOptions))]
+internal static class MagicShopMembershipChoice
+{
+    private static bool Prefix(Player player,ref bool __result)
+    {
+        if(!MagicPropCmd.ConsumeFreeShopChoice(player))return true;
+        __result=false;return false;
     }
 }

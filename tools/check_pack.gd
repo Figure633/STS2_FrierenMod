@@ -28,7 +28,7 @@ func _initialize():
 			return
 	var textures = 0
 	var slot_backs = 0
-	for folder in ["cards", "powers", "powers/big", "relics", "potions", "character", "energy", "ui", "card_frames", "events", "monsters", "vfx", "slot_backs", "achievement"]:
+	for folder in ["cards", "powers", "powers/big", "relics", "potions", "character", "energy", "ui", "card_frames", "events", "monsters", "vfx", "slot_backs", "achievement", "commissions"]:
 		var path = "res://FrierenMod/images/" + folder
 		for file in DirAccess.get_files_at(path):
 			if not file.ends_with(".png") and not file.ends_with(".tres"):

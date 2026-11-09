@@ -129,4 +129,6 @@ Test("不同音乐池分别记住上一首", () => {
     if(a==playlist.Next("event",6))throw new Exception("离开再回来重复上一首");
     Equal(0,playlist.Next("single",1));Throws<ArgumentOutOfRangeException>(()=>playlist.Next("empty",0));
 });
+passed+=CommissionTests.Run();
+passed+=MagicPropTests.Run();
 Console.WriteLine($"{passed} tests passed.");

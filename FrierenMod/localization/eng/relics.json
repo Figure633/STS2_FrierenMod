@@ -67,5 +67,11 @@
   "FRIERENMOD-AURA_COMPANION.flavor": "Aura, keep up.",
   "FRIERENMOD-KNIGHT_SECRET.title": "The Knight's Secret",
   "FRIERENMOD-KNIGHT_SECRET.description": "Whenever you take unblocked damage, gain 1 [gold]Shape of Unn[/gold].",
-  "FRIERENMOD-KNIGHT_SECRET.flavor": "Curl up. Try again."
+  "FRIERENMOD-KNIGHT_SECRET.flavor": "Curl up. Try again.",
+  "FRIERENMOD-MAGIC_SHOP_MEMBERSHIP.title": "Magic Shop Membership",
+  "FRIERENMOD-MAGIC_SHOP_MEMBERSHIP.description": "Visiting the magic shop does not consume your Rest Site action.",
+  "FRIERENMOD-MAGIC_SHOP_MEMBERSHIP.flavor": "",
+  "FRIERENMOD-GAMBLER_COIN.title": "Gambler's Coin",
+  "FRIERENMOD-GAMBLER_COIN.description": "Lose all your Gold. Add [gold]Honest Work Is Boring, Right?[/gold] to your [gold]deck[/gold].",
+  "FRIERENMOD-GAMBLER_COIN.flavor": ""
 }

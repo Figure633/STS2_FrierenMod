@@ -14,6 +14,8 @@ using MegaCrit.Sts2.Core.Nodes.Screens.Overlays;
 using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.Context;
+using MegaCrit.Sts2.Core.Entities.Gold;
+using FrierenMod.Scripts.Relics;
 
 namespace FrierenMod.Scripts.Mechanics;
 
@@ -22,6 +24,8 @@ public static class MagicPropCmd
     private static readonly HashSet<Player> Busy = [];
     private static readonly HashSet<Player> Shopping = [];
     private static readonly HashSet<Player> ShopPending = [];
+    private static readonly HashSet<Player> FreeShopChoices = [];
+    internal static bool ConsumeFreeShopChoice(Player player) => FreeShopChoices.Remove(player);
     public static bool IsBusy(Player player) => Busy.Contains(player) || Shopping.Contains(player) || ShopPending.Contains(player);
     // IsComplete 仅表示奖励已领完，界面仍停留在“前进”；该阶段同样可以整理魔法牌组。
     // 选择具体卡牌时顶层会换成独立选牌屏，仍保护其选择任务。
@@ -45,8 +49,12 @@ public static class MagicPropCmd
         if (IsBusy(player) || !CanAct(player)) return false;
         var deck = MagicDeckStore.Read(player);
         var prop = deck.Props.SingleOrDefault(p => p.InstanceId == propId);
-        return prop != null && MagicPropRules.CanUse(deck, prop, CombatManager.Instance.IsInProgress);
+        return prop != null && CanUseRule(player,deck,prop);
     }
+    private static bool CanUseRule(Player player,MagicDeckState deck,MagicProp prop) =>
+        prop.PropId!="MysticBox" && player.Gold>=MagicPropRules.Get(prop.PropId).GoldCost &&
+        (prop.PropId!="MagicExamVial" || player.RunState.CurrentRoom is CombatRoom {RoomType:not RoomType.Boss}) &&
+        MagicPropRules.CanUse(deck,prop,CombatManager.Instance.IsInProgress);
 
     public static async Task<bool> VisitShop(Player player)
     {
@@ -75,6 +83,7 @@ public static class MagicPropCmd
             var deck = MagicDeckStore.Read(player);
             foreach (var card in chosen.Cast<MagicPropCard>()) deck.AddProp(card.PropId);
             MagicDeckStore.Write(player, deck);
+            if(player.GetRelic<MagicShopMembership>() is {} membership){membership.Flash();FreeShopChoices.Add(player);}
             // 与原生锻造一致，成功后由营地同步器消费此次行动，跑局统一保存。
             return true;
         }
@@ -106,7 +115,7 @@ public static class MagicPropCmd
         if (Shopping.Contains(player) || !CanAct(player, fromInput: false)) return false;
         var original = MagicDeckStore.Read(player);
         var prop = original.Props.SingleOrDefault(p => p.InstanceId == propId);
-        if (prop == null) return false;
+        if (prop == null || !CanUseRule(player,original,prop)) return false;
         string? chosenFactor = null;
         if (prop.PropId == "RoyalGrimoire") {
             var choices = SpellCatalog.Available.OrderBy(f => f.Id, StringComparer.Ordinal)
@@ -119,6 +128,8 @@ public static class MagicPropCmd
         var result = MagicPropRules.Apply(MagicDeckStore.Read(player), propId, targets,
             CombatManager.Instance.IsInProgress, player.PlayerRng.Rewards.NextInt);
         if (result == null) return false;
+        int goldCost=MagicPropRules.Get(prop.PropId).GoldCost;
+        if(goldCost>0)await PlayerCmd.LoseGold(goldCost,player,GoldLossType.Spent);
         if (chosenFactor != null) result.Deck.Add(chosenFactor);
         string usedProp = MagicDeckStore.Read(player).Props.Single(p => p.InstanceId == propId).PropId;
         MagicDeckStore.Write(player, result.Deck, propId);
@@ -130,6 +141,7 @@ public static class MagicPropCmd
         if (result.Draw > 0) await CardPileCmd.Draw(context,result.Draw,player);
         if (result.BirdSpell) await CardPileCmd.AddGeneratedCardToCombat(
             player.Creature.CombatState!.CreateCard<BirdCapturingSpell>(player), PileType.Hand, player);
+        if(result.Escape){await CreatureCmd.Heal(player.Creature,decimal.Floor(player.Creature.MaxHp*.30m));await MagicExamEscape.Flee(player);}
         // 与原生休息/锻造保持同一楼层检查点，避免重复领取营地收益。
         return true;
     }

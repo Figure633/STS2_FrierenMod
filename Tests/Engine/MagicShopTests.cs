@@ -71,10 +71,10 @@ public static class MagicShopTests
         selector.PrepareToSelect(Array.Empty<int>());
         Check(!await sync.ChooseLocalOption(shopIndex) && sync.GetOptionsForPlayer(player).Count == 3 && Read().ToJson() == before,
             "从真实营地同步器取消魔具选择，库存和营地行动保持不变");
-        selector.PrepareToSelect(new[] {1, 6});
+        selector.PrepareToSelect(new[] {1, 5});
         Check(await sync.ChooseLocalOption(shopIndex) && sync.GetOptionsForPlayer(player).Count == 0 &&
             Read().Props.Select(p => p.PropId).SequenceEqual(new[] {"MysteryBox", "UnbelievableTool"}) && player.Gold == gold,
-            "营地八选二获得魔具，免费但消费一次营地行动");
+            "营地七选二获得魔具，免费但消费一次营地行动");
         int box = Read().Props.Single(p => p.PropId == "MysteryBox").InstanceId;
         Check(await Use(box) && Read().Items.Count == 5 && Read().Props.Count == 1,
             "盲盒实际进入因子库存且使用后消耗");
@@ -86,8 +86,8 @@ public static class MagicShopTests
             "水晶球交换两个槽位");
         prop = Prepare("UnbelievableTool", "BePrepared"); Check(await Use(prop, 0, 3) && Read().Items.Single(i => i.SpellId == "BePrepared").Slot == 0,
             "妙妙工具完成装载与库存替换");
-        prop = Prepare("MysticBox", "BePrepared", "IceArrows", "BluePrint"); Check(await Use(prop, 0, 1, 2) && Read().Items.Take(3).All(i => i.Slot == -1),
-            "神秘魔术箱通过内联目标编号重装三个槽位");
+        prop = Prepare("MysticBox", "BePrepared", "IceArrows", "BluePrint"); before=Read().ToJson();Check(!await Use(prop, 0, 1, 2)&&Read().ToJson()==before,
+            "魔术箱已弃用，旧库存可读取但不可使用");
         prop = Prepare("TransmutationCircle"); Check(await Use(prop, 0, 2) && Read().Items.Count == 3 && Read().Items.All(i => i.Slot >= 0),
             "炼成阵实际替换两张因子且保留装载槽位");
         prop = Prepare("SeinNote", "BePrepared", "IceArrows");

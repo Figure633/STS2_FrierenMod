@@ -96,6 +96,21 @@
       "sha256": "86938df3ae9d052a7b55b7fafe6660ff9caa0649f8c52f39c53fa80a9c10b3a3",
       "processing": "original image_gen output retained unchanged outside game pack",
       "status": "replaced by author artwork in 0.10.8; original retained"
+    },
+    {
+      "key": "GamblerCoin_alpha_only",
+      "date": "2026-11-09",
+      "source": "built-in image_gen exec-336c7ba2-d8b5-46b9-9e26-e843fe318300.png; only alpha used",
+      "referenced_image_paths": [
+        "../png/赌徒金币（遗物，要抠图）.png"
+      ],
+      "prompt": "Use case: background-extraction. Precise extraction of the original oval gold coin from the provided 500x380 screenshot. Remove the hand/fingers, skin background and all surroundings, leaving ONLY the complete coin including its dark lower rim. Preserve the original coin exactly: same anime screenshot pixels, off-center profile face engraved on coin, edge beads, perspective, orientation, irregular silhouette, highlights, original blur and low resolution. NO enhancement, NO sharpening, NO reconstruction, NO repaint, NO new details. Keep exact original composition and full-image framing. Output transparent PNG. This is source-material extraction for a game relic; all original artwork must remain unchanged.",
+      "transparent_background": true,
+      "mask_source": "outputs/author-review-20261109/GamblerCoin-mask-source.png",
+      "processing": "tools/prepare-author-review-assets.mjs；仅借用alpha，最终500×380的RGB逐像素来自作者原截图",
+      "target": "FrierenMod/images/relics/GamblerCoin.png",
+      "sha256": "d1fbd365bf6a6d4eb221de0948cc23c07bca81cf1b229c2760718d8f041b945d",
+      "prompt_file": "outputs/author-review-20261109/GamblerCoin-mask-prompt.txt"
     }
   ],
   "retired_assets": [

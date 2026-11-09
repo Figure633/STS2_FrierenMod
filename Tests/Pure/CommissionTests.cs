@@ -31,12 +31,12 @@ public static class CommissionTests
         var allTemplates=new HashSet<string>();var grapeRewards=new HashSet<string>();bool bossSeen=false,rareSeen=false;
         for(int seed=0;seed<1500;seed++){
             var a=New(seed);var b=New(seed,1);var c=New(seed,2);
-            if(a.Quests[0].Reward.Kind==CommissionRewardKind.Relic)throw new Exception("第一幕出现Boss遗物");
+            if(a.Quests[0].Reward.Item=="boss"||b.Quests[0].Reward.Item=="boss")throw new Exception("Boss遗物早于第三幕出现");
             bossSeen|=b.Quests[0].Reward.Item=="boss"||c.Quests[0].Reward.Item=="boss";
-            foreach(var q in a.Quests){allTemplates.Add(q.Template);if(q.Template=="GRAPES")grapeRewards.Add(q.Reward.Kind.ToString());if(q.Reward.Kind==CommissionRewardKind.RareChoice){rareSeen=true;if(q.Reward.Choices?.Distinct().Count()!=3)throw new Exception("金卡选项不完整");}}
+            foreach(var q in a.Quests.Concat(b.Quests).Concat(c.Quests)){allTemplates.Add(q.Template);if(q.Template=="GRAPES")grapeRewards.Add(q.Reward.Kind.ToString());if(q.Reward.Kind==CommissionRewardKind.RareChoice){rareSeen=true;if(q.Reward.Choices?.Distinct().Count()!=3)throw new Exception("金卡选项不完整");}}
             if(a.Quests.Count!=3||b.Quests.Count!=3)throw new Exception("超出三项");
         }
-        Check(bossSeen,"二、三幕可以抽到一代模组Boss遗物");
+        Check(bossSeen,"第三幕可以抽到一代模组Boss遗物");
         Check(rareSeen,"三星奖励池包含固定金卡三选一");
         Check(grapeRewards.Count>=3,"同一村民任务可配不同同星级报酬，不绑定模板");
         Check(allTemplates.Count==CommissionState.Villagers.Length+1&&CommissionState.Villagers.Length>=15,"村民池内容丰富并可实际抽到全部模板");
@@ -45,7 +45,16 @@ public static class CommissionTests
         var migrated=CommissionState.FromJson(old.ToJson());migrated.EnsureAct(0,_=>0,["a","b","c"],["MysteryBox"],["potion"],["common"]);
         Check(migrated.Quests.Count(q=>!q.Legacy)==3&&migrated.Quests.Single(q=>q.Legacy).Status==CommissionStatus.Abandoned,"旧六项板仅迁移一次，保留历史并生成新三项板");
         Check(CommissionState.FromJson(migrated.ToJson()).ToJson()==migrated.ToJson(),"迁移后重新载入不再次生成");
-        try{CommissionState.FromJson("{\"Version\":4}");throw new Exception("未来版本未拒绝");}catch(ArgumentException){Check(true,"未来存档版本拒绝");}
+        var v3=New();v3.Version=3;var accepted=v3.Quests[0];v3.Accept(accepted.Id,0,1);var oldReward=accepted.Reward;
+        var v4=CommissionState.FromJson(v3.ToJson());v4.EnsureAct(0,_=>0,["a","b","c"],["MysteryBox"],["potion"],["common"]);
+        Check(v4.Quests.Count==3&&v4.Active!.Reward==oldReward&&v4.Quests.Where(q=>q.Status==CommissionStatus.Available).All(q=>q.BaseGold>0),"v3迁移保留已接合同，只重建未接取的两项");
+        try{CommissionState.FromJson("{\"Version\":5}");throw new Exception("未来版本未拒绝");}catch(ArgumentException){Check(true,"未来存档版本拒绝");}
+        var guide=new CommissionState{CurrentAct=0,GeneratedActs=[0],Quests=[new(){Id=10002,Act=0,Template="GUIDE",Goal=CommissionGoal.UnknownRooms,Target=4}]};
+        guide.SetUnknownRooms(0,3);
+        Check(!guide.SetUnknownRooms(0,3)&&guide.Accept(10002,0,1)&&guide.Active!.Progress==3,"问号房接取前也计数，重复历史通知不增加计数");
+        guide.SetUnknownRooms(0,4);Check(guide.Claim(10002,_=>false),"累计四个问号房可领取");
+        guide.EnsureAct(1,_=>0,["a","b","c"],["MysteryBox"],["potion"],["common"]);
+        Check(!guide.Quests.Any(q=>q.Act==1&&q.Template=="GUIDE"),"已完成村民委托不再出现在以后幕");
         return count;
     }
 }

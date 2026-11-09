@@ -121,10 +121,10 @@ public sealed class CommissionScreen
         int current=q.Spell switch {
             "rare-pair"=>player.Deck.Cards.Where(c=>c.Rarity==MegaCrit.Sts2.Core.Entities.Cards.CardRarity.Rare).Select(c=>c.Id).Distinct().Count(),
             "legendary-three"=>player.Deck.Cards.Where(c=>c is ILegendaryCard).Select(c=>c.Id).Distinct().Count(),
-            "upgraded-five"=>player.Deck.Cards.Count(c=>c.IsUpgraded),
+            "upgraded-five" or "upgraded-four"=>player.Deck.Cards.Count(c=>c.IsUpgraded),
             "zero-three"=>player.Deck.Cards.Where(c=>c.EnergyCost.Canonical==0&&!c.EnergyCost.CostsX&&c is not IManaCard).Select(c=>c.Id).Distinct().Count(),
             "power-three"=>player.Deck.Cards.Where(c=>c.Type==MegaCrit.Sts2.Core.Entities.Cards.CardType.Power).Select(c=>c.Id).Distinct().Count(),
-            "distinct-twelve"=>player.Deck.Cards.Select(c=>c.Id).Distinct().Count(),_=>0};
+            "distinct-twelve"=>player.Deck.Cards.Select(c=>c.Id).Distinct().Count(),_=>q.Progress};
         var required=MegaCrit.Sts2.Core.Models.ModelDb.AllCards.FirstOrDefault(c=>c.GetType().Name==q.Spell);
         string goal=Format("GOAL."+q.Template,("Spell",required?.Title??""),("Mana",tutor.Mana),("Chants",tutor.Chants),("Current",current),
             ("Count",CommissionCargo.Goods(player).Length),("Gold",CommissionCargo.Freight(player)));
@@ -137,18 +137,23 @@ public sealed class CommissionScreen
         string item=r.Kind switch {
             CommissionRewardKind.Prop=>MagicPropCard.Create(player,r.Item).Title,
             CommissionRewardKind.Relic=>CommissionCmd.Relic(r.Item).Title.GetFormattedText(),
-            CommissionRewardKind.Potion=>CommissionCmd.Potion(r.Item).Title.GetFormattedText(),
+            CommissionRewardKind.Potion=>"",
             CommissionRewardKind.Card=>CommissionCmd.Spell(r.Item).Title+"+",_=>""};
         string text=Format("REWARD."+(r.FallbackProp.Length>0?"BossRelic":r.Kind.ToString()),("Item",item),("Amount",r.Amount));
         if(r.FallbackProp.Length>0)text+=Format("FALLBACK_PROP",("Item",MagicPropCard.Create(player,r.FallbackProp).Title));
-        if(r.BonusGold>0)text+=Format("BONUS_GOLD",("Gold",r.BonusGold));return text;
+        bool duplicate=r.Kind==CommissionRewardKind.Relic&&player.Relics.Any(owned=>owned.Id==CommissionCmd.Relic(r.Item).Id);
+        int bonus=r.BonusGold;
+        if(duplicate&&r.FallbackProp.Length==0){text=Format("REWARD.Gold",("Amount",r.DuplicateGold>=0?r.DuplicateGold:r.Amount));if(r.DuplicateGold>=0)bonus=0;}
+        if(r.ExtraProp.Length>0)text+=Format("EXTRA_PROP",("Item",MagicPropCard.Create(player,r.ExtraProp).Title));
+        if(bonus>0)text+=Format("BONUS_GOLD",("Gold",bonus));
+        if(q.BaseGold>0)text+=Format("BASE_GOLD",("Gold",q.BaseGold));return text;
     }
     public static IEnumerable<IHoverTip> RewardTips(Player player,Commission q)
     {
         var r=q.Reward;
-        if(r.Kind==CommissionRewardKind.Prop)return [new CardHoverTip(MagicPropCard.Create(player,r.Item))];
+        if(r.Kind==CommissionRewardKind.Prop)return new[]{r.Item,r.ExtraProp}.Where(id=>id.Length>0).Select(id=>(IHoverTip)new CardHoverTip(MagicPropCard.Create(player,id)));
         if(r.Kind==CommissionRewardKind.Relic)return CommissionCmd.Relic(r.Item).HoverTips.Concat(r.FallbackProp.Length>0?[new CardHoverTip(MagicPropCard.Create(player,r.FallbackProp))]:Array.Empty<IHoverTip>());
-        if(r.Kind==CommissionRewardKind.Potion)return CommissionCmd.Potion(r.Item).HoverTips;
+        if(r.Kind==CommissionRewardKind.Potion)return [];
         if(r.Kind==CommissionRewardKind.RareChoice)return (r.Choices??[]).Select(id=>{var c=CommissionCmd.Spell(id).ToMutable();c.Owner=player;return (IHoverTip)new CardHoverTip(c);});
         if(r.Kind==CommissionRewardKind.Card){var c=CommissionCmd.Spell(r.Item).ToMutable();c.Owner=player;MegaCrit.Sts2.Core.Commands.CardCmd.Upgrade(c);return [new CardHoverTip(c)];}
         return [];
@@ -172,9 +177,11 @@ public sealed class CommissionScreen
             ContentMarginLeft=24,ContentMarginRight=24,ContentMarginTop=18,ContentMarginBottom=18});_list.AddChild(panel);
         var columns=new HBoxContainer();columns.AddThemeConstantOverride("separation",24);panel.AddChild(columns);
         string art=q.Template switch {
-            "HUNT"=>"cards/ManaBarricade","GRAPES"=>"cards/GrapeSpell","STATUE"=>"cards/MoldSpell","WEDDING"=>"cards/FlowerFieldSpell",
+            "HUNT"=>$"commissions/Hunt{Math.Clamp(q.Act+1,1,3)}","GRAPES"=>"cards/GrapeSpell","STATUE"=>"cards/MoldSpell","WEDDING"=>"cards/FlowerFieldSpell",
             "TEA"=>"cards/HotTeaSpell","FESTIVAL"=>"cards/TongueTwisterSpell","COPPER"=>"cards/RustCleanMagic","SUMMER"=>"cards/ShavedIceSpell",
-            "LOST"=>"cards/AccessoriesSpell","SLEEP"=>"cards/BabySleeping","CARGO"=>"events/Kraft1",_=>"events/ReadingGrimoire"};
+            "LOST"=>"cards/AccessoriesSpell","SLEEP"=>"cards/BabySleeping","CARGO"=>"commissions/Cargo",
+            "TUTOR"=>"commissions/Tutor","EXHIBITION"=>"commissions/Exhibition","LIBRARY"=>"commissions/Library","LESSON"=>"commissions/Lesson",
+            "VARIETY"=>"commissions/Variety","GRANNY"=>"commissions/Granny","NAMUSAN"=>"commissions/Namusan","STARK"=>"commissions/Stark","GUIDE"=>"commissions/Guide",_=>"events/ReadingGrimoire"};
         columns.AddChild(new TextureRect{Name="Illustration",Texture=ResourceLoader.Load<Texture2D>("res://FrierenMod/images/"+art+".png"),CustomMinimumSize=new(235,179),
             ExpandMode=TextureRect.ExpandModeEnum.IgnoreSize,StretchMode=TextureRect.StretchModeEnum.KeepAspectCovered,SizeFlagsVertical=Control.SizeFlags.ShrinkCenter,ClipContents=true,MouseFilter=Control.MouseFilterEnum.Ignore});
         var content=new VBoxContainer{SizeFlagsHorizontal=Control.SizeFlags.ExpandFill};content.AddThemeConstantOverride("separation",8);columns.AddChild(content);
