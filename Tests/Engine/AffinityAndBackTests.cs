@@ -95,7 +95,8 @@ public static class AffinityAndBackTests
         }
         Check(!player.Character.CardPool.GetUnlockedCards(UnlockState.all, CardMultiplayerConstraint.None).Any(c => c is Snuggle1 or Snuggle2), "二选一选项不进入普通卡池");
         var state = new SlotBackProgress();
-        Check(SlotBackCatalog.Ids.Count == 104 && SlotBackCatalog.Ids.Distinct().Count() == 104, "104张原版卡背ID完整无重复");
+        Check(SlotBackCatalog.LegacyIds.Count == 104 && SlotBackCatalog.LegacyIds.Distinct().Count() == 104, "104张一代卡背ID完整无重复");
+        Check(SlotBackCatalog.NewIds.Count == 23 && SlotBackCatalog.Ids.Distinct().Count() == 127, "23张二代背景追加到原有收藏库且ID不冲突");
         Check(state.Unlocked.Count == 3 && state.Selected.SequenceEqual(new[] { "0001", "0002", "0003" }), "三个原版初始背景");
         Check(!state.Select(0, "0004") && !state.Select(3, "0001"), "锁定背景及非法槽位无法装载");
         Check(state.Unlock("0004") && !state.Unlock("0004") && !state.Unlock("bogus"), "解锁去重并拒绝非法ID");

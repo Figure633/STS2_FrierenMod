@@ -86,7 +86,9 @@ async function contact(items, file, columns = 5, title = '') {
   await sharp({ create: { width: columns * cellW, height: rows * cellH + header, channels: 4, background: '#202630' } }).composite(layers).png().toFile(file);
 }
 await fs.mkdir(path.join(output, '制作对照'), { recursive: true });
-const representatives = [0, 3, 12, 17];
+await fs.writeFile(path.join(output, '.gdignore'), '');
+const representatives = manifest.images.length >= 18 ? [0, 3, 12, 17]
+  : [...new Set([0, Math.floor(manifest.images.length / 3), Math.floor(manifest.images.length * 2 / 3), manifest.images.length - 1])];
 if (option === '--candidates') {
   const items = [];
   for (const index of representatives) {
@@ -125,7 +127,7 @@ for (const directory of ['基础圆角', '金色花纹']) {
     items.push({ input: final, label: `${String(entry.number).padStart(2, '0')} · ${entry.name}` });
     checked++;
   }
-  await contact(items, path.join(output, `${directory}-最终总览.png`), 5, `${directory} · 浅浮雕与倒角最终版`);
+  await contact(items, path.join(output, `${directory}-最终总览.png`), Math.min(5, Math.ceil(Math.sqrt(manifest.images.length))), `${directory} · 浅浮雕与倒角最终版`);
 }
 const beforeAfter = [];
 for (const index of representatives) {
@@ -137,17 +139,18 @@ for (const index of representatives) {
 }
 await contact(beforeAfter, path.join(output, '修改前后对照.png'), 4, '基础版：修改前 / 最终版　　花纹版：修改前 / 最终版');
 const referenceDir = path.dirname(manifest.basicTemplate);
+const sample = index => manifest.images[Math.min(index, manifest.images.length - 1)].file;
 await contact([
   { input: path.join(referenceDir, '图图', '9001.png'), label: '旧图参考 · 彩色浅浮雕' },
   { input: path.join(output, '基础圆角', manifest.images[0].file), label: '最终版 · 人像' },
   { input: path.join(output, '基础圆角', manifest.images[3].file), label: '最终版 · 花冠' },
-  { input: path.join(output, '基础圆角', manifest.images[13].file), label: '最终版 · 冬日' },
+  { input: path.join(output, '基础圆角', sample(13)), label: '最终版 · 构图参考' },
   { input: path.join(referenceDir, '图图', '0001.png'), label: '旧图参考 · 金色花纹' },
   { input: path.join(output, '金色花纹', manifest.images[3].file), label: '最终版 · 花冠' },
-  { input: path.join(output, '金色花纹', manifest.images[12].file), label: '最终版 · 雪原' },
-  { input: path.join(output, '金色花纹', manifest.images[15].file), label: '最终版 · 菲伦' }
+  { input: path.join(output, '金色花纹', sample(12)), label: '最终版 · 构图参考' },
+  { input: path.join(output, '金色花纹', sample(15)), label: '最终版 · 构图参考' }
 ], path.join(output, '旧图参考对照.png'), 4, '每行第一张为旧图参考，其余为本次最终成品');
 await fs.writeFile(path.join(output, 'manifest.json'), JSON.stringify({ ...manifest, note: '最终材质版：原画和裁切保持；浅浮雕叠加生成式中性透明倒角素材；尚未替换游戏资源。', material: { profile: selected, rimWidth: 8.7, sourceRim: '制作素材/倒角材质-生成原稿.png', alphaPreserved: true } }, null, 2));
 const cards = manifest.images.map(entry => `<article><h2>${String(entry.number).padStart(2, '0')} · ${escape(entry.name)}</h2><div class="pair">${['金色花纹', '基础圆角'].map(d => `<figure><img src="${encodeURI(`${d}/${entry.file}`)}"><figcaption>${d}</figcaption></figure>`).join('')}</div></article>`).join('');
-await fs.writeFile(path.join(output, 'index.html'), `<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>卡槽背景最终版</title><style>*{box-sizing:border-box}body{margin:0;padding:30px;background:#161b24;color:#eee6d8;font-family:system-ui,sans-serif}header{max-width:1300px;margin:0 auto 24px}h1{font-size:26px}p{color:#b5beca;line-height:1.7}main{max-width:1500px;margin:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}article{background:#242b36;padding:18px;border-radius:12px}h2{font-size:16px;font-weight:500;margin:0 0 16px}.pair{display:flex;gap:12px}figure{margin:0;width:50%;text-align:center}img{width:100%;max-width:301px}figcaption{color:#b5beca;font-size:12px;margin-top:8px}a{color:#e2c998}</style><header><h1>卡槽背景 · 最终材质版</h1><p>19张原画，两种模板，共38张301×461透明PNG。补充统一的边缘倒角、内侧亮暗线和浅浮雕，保留原画构图与透明轮廓。</p><p><a href="${encodeURI('修改前后对照.png')}">修改前后对照</a> · <a href="${encodeURI('基础圆角-最终总览.png')}">基础版总览</a> · <a href="${encodeURI('金色花纹-最终总览.png')}">花纹版总览</a></p></header><main>${cards}</main></html>`);
+await fs.writeFile(path.join(output, 'index.html'), `<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>卡槽背景最终版</title><style>*{box-sizing:border-box}body{margin:0;padding:30px;background:#161b24;color:#eee6d8;font-family:system-ui,sans-serif}header{max-width:1300px;margin:0 auto 24px}h1{font-size:26px}p{color:#b5beca;line-height:1.7}main{max-width:1500px;margin:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}article{background:#242b36;padding:18px;border-radius:12px}h2{font-size:16px;font-weight:500;margin:0 0 16px}.pair{display:flex;gap:12px}figure{margin:0;width:50%;text-align:center}img{width:100%;max-width:301px}figcaption{color:#b5beca;font-size:12px;margin-top:8px}a{color:#e2c998}</style><header><h1>卡槽背景 · 最终材质版</h1><p>${manifest.images.length}张原画，两种模板，共${manifest.images.length * 2}张301×461透明PNG。补充统一的边缘倒角、内侧亮暗线和浅浮雕，保留原画构图与透明轮廓。</p><p><a href="${encodeURI('修改前后对照.png')}">修改前后对照</a> · <a href="${encodeURI('基础圆角-最终总览.png')}">基础版总览</a> · <a href="${encodeURI('金色花纹-最终总览.png')}">花纹版总览</a></p></header><main>${cards}</main></html>`);
 console.log(`SLOT_BACK_MATERIAL_OK: ${checked} 张 301×461，全部透明轮廓逐像素一致`);

@@ -14,6 +14,7 @@
 | 联机设计和验收范围 | [MULTIPLAYER.md](MULTIPLAYER.md) |
 | 作者待决定的代理新增内容 | [AGENT_ADDITIONS_REVIEW.md](AGENT_ADDITIONS_REVIEW.md) |
 | 卡图、事件图与卡背模板 | [CARD_ART_GUIDE.md](CARD_ART_GUIDE.md)、[EVENT_ART_GUIDE.md](EVENT_ART_GUIDE.md)、[SLOT_BACK_TEMPLATES.md](SLOT_BACK_TEMPLATES.md) |
+| 二代新增卡槽背景的解锁条件填写 | [带缩略图的Excel填写表](../outputs/slot-backs-final-20261109/二代新增卡槽背景-解锁条件填写表.xlsx)，共23张，新增条件待作者指定 |
 | 能力分类原则 | [POWER_TYPES.md](POWER_TYPES.md)，具体分类以当前模型的 Type 为准 |
 | 资源来源与文件指纹 | [assets.json](assets.json)、[generated_assets.json](generated_assets.json) |
 | 卡名检索 | [inventory/card_names.jsonl](inventory/card_names.jsonl)，作者工作簿优先 |

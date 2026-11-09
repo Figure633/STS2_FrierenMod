@@ -94,6 +94,16 @@ public static class AchievementPresentationTests
         // 只模拟静止指针的位置；触发真实滚动条、延迟回调及提示计时器，不补发MouseEntered。
         patch.Patch(AccessTools.Method(typeof(CanvasItem),nameof(CanvasItem.GetGlobalMousePosition)),prefix:new HarmonyMethod(typeof(AchievementPresentationTests),nameof(Pointer)));
         var scroll = library.GetNode<ScrollContainer>("LibraryCanvas/BackScroll");
+        Check(grid.GetChildren().Count(c => c.Name.ToString().StartsWith("Back_")) == SlotBackCatalog.Ids.Count, "原有背景和23张新增背景全部出现在收藏库");
+        var lastNew = grid.GetNode<TextureButton>("Back_8023/SelectBack_8023");
+        scroll.ScrollVertical = int.MaxValue; await Tick();
+        Check(scroll.GetGlobalRect().Encloses(lastNew.GetGlobalRect()), "最后一张新增背景可滚动到完整可见位置");
+        lastNew.EmitSignal(Control.SignalName.MouseEntered);
+        library.GetNode<Godot.Timer>("LibraryCanvas/HoverDelay").EmitSignal(Godot.Timer.SignalName.Timeout); await Tick();
+        Check(tip.GetNode<Label>("Contents/Condition").Text == "解锁条件待定。", "新增背景显示待作者指定条件");
+        lastNew.EmitSignal(BaseButton.SignalName.Pressed);
+        Check(SlotBackStore.Selected(1) != "8023", "未指定解锁条件的新增背景无法直接装载");
+        await Snapshot("slot-backs-sts2-new");
         scroll.ScrollVertical=0;await Tick();
         _pointer=grid.GetChildren().OfType<Control>().First().GetNode<TextureButton>("SelectBack_0001").GetGlobalRect().GetCenter();
         scroll.ScrollVertical=400;await Tick();

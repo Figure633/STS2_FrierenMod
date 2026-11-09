@@ -66,7 +66,7 @@ public sealed class SlotBackLibrary
         _scroll = new ScrollContainer { Name = "BackScroll", Position = new(90, 110), Size = new(1740, 930),
             HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled, FollowFocus = true };
         _canvas.AddChild(_scroll);
-        _grid = new Control { Name = "BackGrid", CustomMinimumSize = new(1710, 26 * 400 + 70), MouseFilter = Control.MouseFilterEnum.Pass };
+        _grid = new Control { Name = "BackGrid", CustomMinimumSize = new(1710, ((SlotBackCatalog.Ids.Count + 3) / 4) * 400 + 70), MouseFilter = Control.MouseFilterEnum.Pass };
         _scroll.AddChild(_grid);
         _grid.GuiInput += Drag; _scroll.GuiInput += Drag;
         _scroll.GetVScrollBar().ValueChanged += _ => {

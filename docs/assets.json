@@ -5313,5 +5313,212 @@
     "source_url": "https://static.wikia.nocookie.net/hollowknight/images/b/b4/Shape_of_Unn.png",
     "source_page": "https://hollowknight.wiki/w/Shape_of_Unn",
     "credit": "Team Cherry，《空洞骑士》护符乌恩之形原版图标"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/8001.png",
+    "source": "outputs/slot-backs-final-20261109/基础圆角/01-冰上双人.png",
+    "source_commit": "",
+    "sha256": "54b926d4fbf4cc30c91b9bd594a8768777e659db759dfa3e255565b9ead41959",
+    "modified": true,
+    "processing": "原PSD套图，复用2026-10-29适中档浅浮雕、8px倒角及内缘折线；未重画人物",
+    "redistribution_review": "pending; author-provided local prototype"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/8002.png",
+    "source": "outputs/slot-backs-final-20261109/基础圆角/02-画中芙莉莲.png",
+    "source_commit": "",
+    "sha256": "06efc585dc72b091dc5f8bf218243ee666bb96991d5c55058573d49e41a43836",
+    "modified": true,
+    "processing": "原PSD套图，复用2026-10-29适中档浅浮雕、8px倒角及内缘折线；未重画人物",
+    "redistribution_review": "pending; author-provided local prototype"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/8003.png",
+    "source": "outputs/slot-backs-final-20261109/金色花纹/03-黑翼双人.png",
+    "source_commit": "",
+    "sha256": "5998f20d6187c0c71e19ee8b08a20a5ffb473e8c6b49937e87db5cfde54bff20",
+    "modified": true,
+    "processing": "原PSD套图，复用2026-10-29适中档浅浮雕、8px倒角及内缘折线；未重画人物",
+    "redistribution_review": "pending; author-provided local prototype"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/8004.png",
+    "source": "outputs/slot-backs-final-20261109/金色花纹/04-举杯.png",
+    "source_commit": "",
+    "sha256": "56092d8e49985675799a115bb897feac01c95b2e2d8ee603e53dd6960b010e09",
+    "modified": true,
+    "processing": "原PSD套图，复用2026-10-29适中档浅浮雕、8px倒角及内缘折线；未重画人物",
+    "redistribution_review": "pending; author-provided local prototype"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/8005.png",
+    "source": "outputs/slot-backs-final-20261109/金色花纹/05-修塔尔克.png",
+    "source_commit": "",
+    "sha256": "9a9fb922e349fa30331597f7271561a8e64c507b78854037099904cd1dc372be",
+    "modified": true,
+    "processing": "原PSD套图，复用2026-10-29适中档浅浮雕、8px倒角及内缘折线；未重画人物",
+    "redistribution_review": "pending; author-provided local prototype"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/8006.png",
+    "source": "outputs/slot-backs-final-20261109/金色花纹/06-芙莉莲.png",
+    "source_commit": "",
+    "sha256": "941226ea9cdc0a7cc39c694d0e975c7df27352c8703d4d13e6a31bdffd64a817",
+    "modified": true,
+    "processing": "原PSD套图，复用2026-10-29适中档浅浮雕、8px倒角及内缘折线；未重画人物",
+    "redistribution_review": "pending; author-provided local prototype"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/8007.png",
+    "source": "outputs/slot-backs-final-20261109/金色花纹/07-菲伦.png",
+    "source_commit": "",
+    "sha256": "fc796d6e5b65f454a1478d2078c6f9b74c1af88e46489d5b86782e0dc7402b0d",
+    "modified": true,
+    "processing": "原PSD套图，复用2026-10-29适中档浅浮雕、8px倒角及内缘折线；未重画人物",
+    "redistribution_review": "pending; author-provided local prototype"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/8008.png",
+    "source": "outputs/slot-backs-final-20261109/金色花纹/08-海塔.png",
+    "source_commit": "",
+    "sha256": "d9b3bcaf3b5959120f09fb0bfd1bfea026fa9485141459a06aefede54498d8f1",
+    "modified": true,
+    "processing": "原PSD套图，复用2026-10-29适中档浅浮雕、8px倒角及内缘折线；未重画人物",
+    "redistribution_review": "pending; author-provided local prototype"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/8009.png",
+    "source": "outputs/slot-backs-final-20261109/金色花纹/09-辛美尔.png",
+    "source_commit": "",
+    "sha256": "2f54286873cd20cf1aedf655d9f308d8fff68293ec2cc8dc448157baa4b86972",
+    "modified": true,
+    "processing": "原PSD套图，复用2026-10-29适中档浅浮雕、8px倒角及内缘折线；未重画人物",
+    "redistribution_review": "pending; author-provided local prototype"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/8010.png",
+    "source": "outputs/slot-backs-final-20261109/金色花纹/10-艾泽.png",
+    "source_commit": "",
+    "sha256": "97b5378bbaae6b43b46bdcf329f4bdb8c66334be62ed6a861eb83fe24370d672",
+    "modified": true,
+    "processing": "原PSD套图，复用2026-10-29适中档浅浮雕、8px倒角及内缘折线；未重画人物",
+    "redistribution_review": "pending; author-provided local prototype"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/8011.png",
+    "source": "outputs/slot-backs-final-20261109/基础圆角/11-勇者一行.png",
+    "source_commit": "",
+    "sha256": "8c145dd0bbf82d79867b6c839efe573be86f42289dec5d34d802bb91d39c0951",
+    "modified": true,
+    "processing": "原PSD套图，复用2026-10-29适中档浅浮雕、8px倒角及内缘折线；未重画人物",
+    "redistribution_review": "pending; author-provided local prototype"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/8012.png",
+    "source": "outputs/slot-backs-final-20261109/基础圆角/12-黄金乡.png",
+    "source_commit": "",
+    "sha256": "cc1fcfe188f8db697ec503c8b0c3a8496d81ac648a07d885e0bc5def96b0471f",
+    "modified": true,
+    "processing": "原PSD套图，复用2026-10-29适中档浅浮雕、8px倒角及内缘折线；未重画人物",
+    "redistribution_review": "pending; author-provided local prototype"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/8013.png",
+    "source": "C:/Users/a1362/AppData/Local/Temp/codex-clipboard-cf33b327-ff8e-4912-b7a2-9b6842d324ec.png",
+    "source_commit": "",
+    "sha256": "b56a80697ef18cfe00b9ef38b0e4cfa068c79472dfd0c5eb8d69742069ba334a",
+    "modified": false,
+    "processing": "作者提供的301×461成品，原字节复制",
+    "redistribution_review": "pending; author-provided local prototype"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/8014.png",
+    "source": "C:/Users/a1362/AppData/Local/Temp/codex-clipboard-37a7232e-b41e-43ca-813c-ee0909eba64b.png",
+    "source_commit": "",
+    "sha256": "e6d3f6402cdb2c1a44860ed8ca60f645b86bcbe0f43a91b90fb109dcef2b15b7",
+    "modified": false,
+    "processing": "作者提供的301×461成品，原字节复制",
+    "redistribution_review": "pending; author-provided local prototype"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/8015.png",
+    "source": "C:/Users/a1362/AppData/Local/Temp/codex-clipboard-95adce0f-13ca-4741-a386-aaa71dc1131d.png",
+    "source_commit": "",
+    "sha256": "e041cc76d2a9743936370ae686d5658c2aaf0af1c0488eb24a42e86cefb71204",
+    "modified": false,
+    "processing": "作者提供的301×461成品，原字节复制",
+    "redistribution_review": "pending; author-provided local prototype"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/8016.png",
+    "source": "C:/Users/a1362/AppData/Local/Temp/codex-clipboard-507b4368-0637-499a-8439-e1ac2905aea6.png",
+    "source_commit": "",
+    "sha256": "1da46664a50c6103b71bfab64e9de250d52b4facee2417135ff2d13e1c4af915",
+    "modified": false,
+    "processing": "作者提供的301×461成品，原字节复制",
+    "redistribution_review": "pending; author-provided local prototype"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/8017.png",
+    "source": "C:/Users/a1362/AppData/Local/Temp/codex-clipboard-65d0c8a7-606c-4582-8484-b93270088405.png",
+    "source_commit": "",
+    "sha256": "ea47d4246012db1158dab4c2f6fe8e94ff9895a6bf97945224cc729d5ceeca92",
+    "modified": false,
+    "processing": "作者提供的301×461成品，原字节复制",
+    "redistribution_review": "pending; author-provided local prototype"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/8018.png",
+    "source": "C:/Users/a1362/AppData/Local/Temp/codex-clipboard-a35c8929-6404-4a4b-bbe3-e44936ace1df.png",
+    "source_commit": "",
+    "sha256": "c310e2feb97fb2a55bbc5372959ec3af8687bbe6447d55e71e3dccd423b81648",
+    "modified": false,
+    "processing": "作者提供的301×461成品，原字节复制",
+    "redistribution_review": "pending; author-provided local prototype"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/8019.png",
+    "source": "C:/Users/a1362/AppData/Local/Temp/codex-clipboard-385b350b-9949-408e-ae0c-20dce60ce437.png",
+    "source_commit": "",
+    "sha256": "a0f44aa8b5b6ac9df21866fbe521eb9ec6d0330364e97e7b9c7c7388ab49f62c",
+    "modified": false,
+    "processing": "作者提供的301×461成品，原字节复制",
+    "redistribution_review": "pending; author-provided local prototype"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/8020.png",
+    "source": "C:/Users/a1362/AppData/Local/Temp/codex-clipboard-38466be3-107b-4c71-83a6-7d372a17ebbe.png",
+    "source_commit": "",
+    "sha256": "a0e147fbdcde47b9cc007412c48c38773a82ae85dabfaafad885a7cc016d69f0",
+    "modified": false,
+    "processing": "作者提供的301×461成品，原字节复制",
+    "redistribution_review": "pending; author-provided local prototype"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/8021.png",
+    "source": "C:/Users/a1362/AppData/Local/Temp/codex-clipboard-3eddae61-1824-425b-b081-9590d01c5a1c.png",
+    "source_commit": "",
+    "sha256": "e17dbd4f860f56b21e980ffe1892e00472ed44d909df5a1c5baf341ab485c917",
+    "modified": false,
+    "processing": "作者提供的301×461成品，原字节复制",
+    "redistribution_review": "pending; author-provided local prototype"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/8022.png",
+    "source": "C:/Users/a1362/AppData/Local/Temp/codex-clipboard-f5de301d-5304-4ae4-843c-834b4d824b31.png",
+    "source_commit": "",
+    "sha256": "78b0998eba48e663e78a4609407e3af7226911715956dc55fd651f88677364fb",
+    "modified": false,
+    "processing": "作者提供的301×461成品，原字节复制",
+    "redistribution_review": "pending; author-provided local prototype"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/8023.png",
+    "source": "C:/Users/a1362/AppData/Local/Temp/codex-clipboard-b8b581ba-2046-40c5-90df-7eddf4250c45.png",
+    "source_commit": "",
+    "sha256": "6a15650942a0320073cd4db33e78c70b4f7ef866fc5c0865856f8a84e8c9318a",
+    "modified": false,
+    "processing": "作者提供的301×461成品，原字节复制",
+    "redistribution_review": "pending; author-provided local prototype"
   }
 ]

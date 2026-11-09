@@ -1,9 +1,9 @@
 namespace FrierenMod.Core;
 
-// 一代 SlotBgHelper 的完整资源 ID；顺序固定，随机奖励只从未解锁的同组背景中选择。
+// 保留一代资源顺序；二代新增背景使用独立的8号段，不进入原有通关随机池。
 public static class SlotBackCatalog
 {
-    public static readonly IReadOnlyList<string> Ids = [
+    public static readonly IReadOnlyList<string> LegacyIds = [
         "0001", "0002", "0003", "0004", "0005", "0006", "0007", "0008", "0009", "0010", "1001", "1002",
         "1003", "1004", "1005", "1006", "1007", "1008", "1009", "1010", "1011", "1012", "1013", "1014",
         "1015", "1016", "1017", "1018", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008",
@@ -14,5 +14,11 @@ public static class SlotBackCatalog
         "5006", "5007", "5008", "5009", "5010", "5011", "5012", "5013", "5014", "5015", "6001", "6002",
         "7001", "7002", "9001", "9002", "9003", "9997", "9998", "9999",
     ];
+    // 对应作者选定的12张新图和11张旧成品；解锁条件尚待作者填写。
+    public static readonly IReadOnlyList<string> NewIds = [
+        "8001", "8002", "8003", "8004", "8005", "8006", "8007", "8008", "8009", "8010", "8011", "8012",
+        "8013", "8014", "8015", "8016", "8017", "8018", "8019", "8020", "8021", "8022", "8023",
+    ];
+    public static readonly IReadOnlyList<string> Ids = [.. LegacyIds, .. NewIds];
     public static bool Contains(string id) => Ids.Contains(id);
 }
