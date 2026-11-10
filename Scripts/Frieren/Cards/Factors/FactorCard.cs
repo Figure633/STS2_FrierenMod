@@ -15,6 +15,7 @@ namespace FrierenMod.Scripts.Cards;
 public abstract class FactorCard(bool showInLibrary = true) : FrierenCard(-1, CardType.Skill, CardRarity.Token, TargetType.Self, showInLibrary), ICustomTypeTextCard
 {
     public string FactorId => GetType().Name;
+    protected override string ArtName=>Option.HasValue && Slot.HasValue ? ChantChoice.ArtFor(Slot.Value) : base.ArtName;
     public override CardRarity Rarity => SpellCatalog.Get(FactorId).Rarity switch {
         FactorRarity.Uncommon => CardRarity.Uncommon,
         FactorRarity.Rare => CardRarity.Rare,

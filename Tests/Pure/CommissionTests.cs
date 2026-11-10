@@ -29,8 +29,13 @@ public static class CommissionTests
         deck.EnsureAct(1,_=>0,["a","b","c"],["MysteryBox"],["potion"],["common"],meets:x=>x=="owned");
         Check(deck.Claim(10001,_=>false),"跨幕锁定已满足的持有条件，之后丢失卡牌仍可领奖");
         var allTemplates=new HashSet<string>();var grapeRewards=new HashSet<string>();bool bossSeen=false,rareSeen=false;
+        var breadActs=new HashSet<int>();bool breadFallback=false;
         for(int seed=0;seed<1500;seed++){
             var a=New(seed);var b=New(seed,1);var c=New(seed,2);
+            foreach(var q in a.Quests.Concat(b.Quests).Concat(c.Quests)){
+                if(q.Reward.Item=="MagicBread")breadActs.Add(q.Act);
+                breadFallback|=q.Reward.FallbackProp=="MagicBread";
+            }
             if(a.Quests[0].Reward.Item=="boss"||b.Quests[0].Reward.Item=="boss")throw new Exception("Boss遗物早于第三幕出现");
             bossSeen|=b.Quests[0].Reward.Item=="boss"||c.Quests[0].Reward.Item=="boss";
             foreach(var q in a.Quests.Concat(b.Quests).Concat(c.Quests)){allTemplates.Add(q.Template);if(q.Template=="GRAPES")grapeRewards.Add(q.Reward.Kind.ToString());if(q.Reward.Kind==CommissionRewardKind.RareChoice){rareSeen=true;if(q.Reward.Choices?.Distinct().Count()!=3)throw new Exception("金卡选项不完整");}}
@@ -38,6 +43,7 @@ public static class CommissionTests
         }
         Check(bossSeen,"第三幕可以抽到一代模组Boss遗物");
         Check(rareSeen,"三星奖励池包含固定金卡三选一");
+        Check(breadActs.SetEquals(new[]{1,2})&&breadFallback,"魔法面包仅二三幕三星报酬出现，并可作为Boss遗物重复替代");
         Check(grapeRewards.Count>=3,"同一村民任务可配不同同星级报酬，不绑定模板");
         Check(allTemplates.Count==CommissionState.Villagers.Length+1&&CommissionState.Villagers.Length>=15,"村民池内容丰富并可实际抽到全部模板");
         Check(New(2).Quests.All(q=>q.Goal!=CommissionGoal.Cargo||q.Reward.Kind==CommissionRewardKind.Freight),"护送专门按运费结算");

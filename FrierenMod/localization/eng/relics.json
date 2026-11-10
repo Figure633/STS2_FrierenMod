@@ -1,7 +1,7 @@
 {
   "FRIERENMOD-HOLY_EMBLEM.title": "Holy Emblem",
   "FRIERENMOD-HOLY_EMBLEM.description": "At the start of each turn, add 1 [gold]Mana[/gold] to your draw and discard piles.",
-  "FRIERENMOD-HOLY_EMBLEM.flavor": "Magic gathered over a long journey.",
+  "FRIERENMOD-HOLY_EMBLEM.flavor": "An old mage certification. The organizations governing magic keep changing, much to Frieren’s annoyance.",
   "FRIERENMOD-EAR_ACCESSORY.title": "Elegant Ear Ornament",
   "FRIERENMOD-EAR_ACCESSORY.description": "At the start of combat, add 2 [gold]Mana[/gold] to your hand.",
   "FRIERENMOD-EAR_ACCESSORY.flavor": "The ornament Frieren has been wearing all along, it seems to match the style of the one worn by her master, Flamme.",
@@ -58,7 +58,7 @@
   "FRIERENMOD-COMFORTABLE_BED.flavor": "Even the great mage who has lived for over a thousand years makes it impossible for to break free from its constraints, indicating its great power.",
   "FRIERENMOD-UPGRADED_HOLY_EMBLEM.title": "Upgraded Holy Emblem",
   "FRIERENMOD-UPGRADED_HOLY_EMBLEM.description": "At the start of each turn, add 1 [gold]Mana[/gold] to your draw pile, hand, and discard pile.",
-  "FRIERENMOD-UPGRADED_HOLY_EMBLEM.flavor": "Magic gathered along the journey.",
+  "FRIERENMOD-UPGRADED_HOLY_EMBLEM.flavor": "Your outstanding performance has earned this mage certification the recognition of every magical organization.",
   "FRIERENMOD-KRAFT_SERPENT_RING.title": "Ring of the Serpent",
   "FRIERENMOD-KRAFT_SERPENT_RING.description": "Draw [blue]1[/blue] additional card each turn.",
   "FRIERENMOD-KRAFT_SERPENT_RING.flavor": "A parting gift from Kraft.",

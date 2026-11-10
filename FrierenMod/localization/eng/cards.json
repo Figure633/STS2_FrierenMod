@@ -342,5 +342,7 @@
   "FRIERENMOD-ARCANE_NET.description": "Deal {Damage:diff()} damage to ALL enemies.\nCosts 1 less for each [gold]Synchro[/gold] performed this combat.",
   "FRIERENMOD-MEMORY_TRANSFER_SPELL.title": "Memory Transfer Magic",
   "FRIERENMOD-MEMORY_TRANSFER_SPELL.description": "[gold]Legendary Spell[/gold].\nDeal {Damage:diff()} damage.\nChoose a card in your [gold]Hand[/gold]. It costs {Reduction:diff()} less this turn.",
-  "FRIERENMOD-MEMORY_TRANSFER_SPELL.selectionScreenPrompt": "Choose a card to reduce its cost."
+  "FRIERENMOD-MEMORY_TRANSFER_SPELL.selectionScreenPrompt": "Choose a card to reduce its cost.",
+  "FRIERENMOD-MAGIC_BREAD.title": "Magic Bread",
+  "FRIERENMOD-MAGIC_BREAD.description": "Can only be used in combat. Draw 2 cards, then gain {energyPrefix:energyIcons(2)}."
 }

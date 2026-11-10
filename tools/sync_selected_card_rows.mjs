@@ -18,8 +18,9 @@ for(const [cell,value] of Object.entries(plan.cells))sheet.getRange(cell).values
 for(const [row,height] of Object.entries(plan.heights))sheet.getRange(`A${row}:K${row}`).format.rowHeight=height;
 book.recalculate();
 for(const [cell,value] of Object.entries(plan.cells))assert.deepEqual(sheet.getRange(cell).values,[[value]],cell);
-console.log((await book.inspect({kind:'table',range:'卡名对照!A151:G152',tableMaxRows:2,tableMaxCols:7,maxChars:1200})).ndjson);
-for(const [range,file] of [['A151:G152','new-rares'],['A174:G175','new-magic']]){
+const previews=plan.previews??[['A151:G152','new-rares'],['A174:G175','new-magic']];
+for(const [range,file] of previews){
+ console.log((await book.inspect({kind:'table',range:`${sheet.name}!${range}`,tableMaxRows:2,tableMaxCols:7,maxChars:1200})).ndjson);
  const preview=await book.render({sheetName:sheet.name,range,scale:1,format:'png'});
  await fs.writeFile(path.join(temp,file+'.png'),new Uint8Array(await preview.arrayBuffer()));
 }

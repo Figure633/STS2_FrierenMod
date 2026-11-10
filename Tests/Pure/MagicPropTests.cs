@@ -91,7 +91,7 @@ static class MagicPropTests
             throw new Exception("重复编号未拒绝");
         });
         Test("委托独占魔具与弃用魔具不进入七种普通魔具池",()=>{
-            Check(MagicPropRules.All.Count==7&&MagicPropRules.CommissionOnly.Count==3&&MagicPropRules.CommissionOnly.All(p=>!MagicPropRules.All.Contains(p))&&!MagicPropRules.All.Any(p=>p.Id=="MysticBox"));
+            Check(MagicPropRules.All.Count==7&&MagicPropRules.CommissionOnly.Count==4&&MagicPropRules.CommissionOnly.All(p=>!MagicPropRules.All.Contains(p))&&!MagicPropRules.All.Any(p=>p.Id=="MysticBox"));
         });
         Test("魔法陶罐保留自身，每次生成一个普通魔具，不能生成陶罐或弃用魔具",()=>{
             var deck=Deck();int id=deck.AddProp("MagicPot").InstanceId;
@@ -99,6 +99,12 @@ static class MagicPropTests
                 var result=MagicPropRules.Apply(deck,id,[],false,_=>i)!;
                 Check(result.Deck.Props.Count==2&&result.Deck.Props.Any(p=>p.InstanceId==id)&&result.Deck.Props.Any(p=>p.PropId==MagicPropRules.All[i].Id));
             }
+        });
+        Test("魔法面包仅战斗可用，返回2抽牌2能量并消耗自身",()=>{
+            var deck=Deck();int id=deck.AddProp("MagicBread").InstanceId;string before=deck.ToJson();
+            Check(MagicPropRules.Apply(deck,id,[],false,_=>throw new Exception("不应使用随机数"))==null&&deck.ToJson()==before);
+            var result=MagicPropRules.Apply(deck,id,[],true,_=>throw new Exception("不应使用随机数"))!;
+            Check(result.Draw==2&&result.Energy==2&&result.Heal==0&&!result.Deck.Props.Any(p=>p.InstanceId==id)&&deck.ToJson()==before);
         });
         Test("考试小瓶仅战斗可用并消费自身，返回逃跑标记",()=>{
             var deck=Deck();int id=deck.AddProp("MagicExamVial").InstanceId;

@@ -12,7 +12,7 @@ public static class MagicPropRules
         new("UnbelievableTool", 2), new("UnbelievableToolBox", 2)
     });
     public static IReadOnlyList<PropDefinition> CommissionOnly { get; } = Array.AsReadOnly(new[] {
-        new PropDefinition("RoyalGrimoire",0), new("MagicExamVial",0,true), new("MagicPot",0,Reusable:true,GoldCost:30)
+        new PropDefinition("RoyalGrimoire",0), new("MagicExamVial",0,true), new("MagicPot",0,Reusable:true,GoldCost:30),new("MagicBread",0,true)
     });
     public static IReadOnlyList<PropDefinition> EventOnly { get; } = Array.AsReadOnly(new[] {
         new PropDefinition("SealingOre", 0), new("BirdCapturingGrimoire", 0, true)
@@ -27,7 +27,7 @@ public static class MagicPropRules
         var factors = deck.Items.Where(i => prop.PropId switch {
             "CrystalBall" => i.Slot >= 0,
             "MysticBox" or "SeinNote" or "ShadowDragonHorn" or "UnbelievableToolBox" => i.Slot < 0,
-            "MysteryBox" or "RoyalGrimoire" or "ElvenHourglass" or "BirdCapturingGrimoire" or "MagicExamVial" or "MagicPot" => false,
+            "MysteryBox" or "RoyalGrimoire" or "ElvenHourglass" or "BirdCapturingGrimoire" or "MagicExamVial" or "MagicPot" or "MagicBread" => false,
             _ => true
         }).Select(i => i.InstanceId);
         return prop.PropId is "SeinNote" or "ShadowDragonHorn" or "UnbelievableToolBox"
@@ -82,6 +82,7 @@ public static class MagicPropRules
                 break;
             case "MagicExamVial": break;
             case "MagicPot": deck.AddProp(All[next(All.Count)].Id);break;
+            case "MagicBread": draw=2;energy=2;break;
             case "ElvenHourglass": energy=3;draw=3;break;
             case "PhoenixQuill":
                 var source=chosen.Single();deck.Remove(source.InstanceId);

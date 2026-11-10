@@ -647,5 +647,6 @@
   "COMMISSION.REQUEST.GUIDE": "They say question marks lead to treasure! We need an experienced guide.",
   "COMMISSION.GOAL.GUIDE": "Enter 4 ? rooms this Act. You have entered {Current}.",
   "FACTOR.CopyMagic": "[gold]Chant[/gold] 2X: Add X Upgraded Colorless cards to this slot’s pile.",
-  "EFFECT.CopyMagic": "Add {Reward} Upgraded Colorless cards to this slot’s pile."
+  "EFFECT.CopyMagic": "Add {Reward} Upgraded Colorless cards to this slot’s pile.",
+  "PROP.MagicBread": "Can only be used in combat. Draw 2 cards, then gain {energyPrefix:energyIcons(2)}."
 }

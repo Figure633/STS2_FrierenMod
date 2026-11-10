@@ -130,27 +130,33 @@
   },
   {
     "file": "FrierenMod/images/cards/DrawChantChoice.png",
-    "source": "src/main/resources/FrierenModResources/img/cards/AdvancedDefensiveMagic_p.png",
+    "source": "assets/author_adjusted/20261110/抽牌堆咏唱.png",
     "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
-    "sha256": "bdee0d9bd512e19cd10afff7c104ca46f97c59668d5930d6b62baf3b9cfb66ad",
+    "sha256": "39a4bc14e82b8e157609418d7fc09b2a45d87b2d5bb6d120e332c4a9257fb4fa",
     "modified": false,
-    "redistribution_review": "pending; local prototype only"
+    "redistribution_review": "pending; local prototype only",
+    "source_kind": "author_provided",
+    "processing": "作者提供500×380原图，原字节保留。"
   },
   {
     "file": "FrierenMod/images/cards/HandChantChoice.png",
-    "source": "src/main/resources/FrierenModResources/img/cards/BuildUpBody_p.png",
+    "source": "assets/author_adjusted/20261110/手牌咏唱.png",
     "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
-    "sha256": "99dc6fbd3a587d84df64860feb517c0b0540cd53c5f31555f27cad09380cddc7",
+    "sha256": "01ccfb2cb3d3a9aa1c707f1e5ff279450b8a23197208c1275c326aeb1f80f8f8",
     "modified": false,
-    "redistribution_review": "pending; local prototype only"
+    "redistribution_review": "pending; local prototype only",
+    "source_kind": "author_provided",
+    "processing": "作者提供500×380原图，原字节保留。"
   },
   {
     "file": "FrierenMod/images/cards/DiscardChantChoice.png",
-    "source": "src/main/resources/FrierenModResources/img/cards/HighSpeedMovement_p.png",
+    "source": "assets/author_adjusted/20261110/弃牌堆咏唱.png",
     "source_commit": "8604c9cd072dba6ae1bf8f47986fdc291b26c3cc",
-    "sha256": "0a320aea730e5de2f91fafcf2995e6cbddd272ce074369405e6a61eaba05031b",
+    "sha256": "29d2a43496a4adf776077d8791241ea5a2eb78816fbb955ae35680cc6f3bf928",
     "modified": false,
-    "redistribution_review": "pending; local prototype only"
+    "redistribution_review": "pending; local prototype only",
+    "source_kind": "author_provided",
+    "processing": "作者提供500×380原图，原字节保留。"
   },
   {
     "file": "FrierenMod/images/cards/AdvancedDefensiveMagic.png",
@@ -5843,5 +5849,13 @@
     "modified": false,
     "processing": "作者500×380原图，原字节保留。",
     "sha256": "91693d4aed51489cfa99a412ed57f00a4c6e26a8c2275575d637281da8dc2013"
+  },
+  {
+    "file": "FrierenMod/images/cards/MagicBread.png",
+    "source": "assets/author_adjusted/20261110/魔法面包.png",
+    "source_kind": "author_provided",
+    "modified": false,
+    "processing": "作者提供500×380原图，原字节保留。",
+    "sha256": "0e45fc17264f1372eb609a8ebdd34fb0e8017e935acb9967be9e638d8386d8ba"
   }
 ]

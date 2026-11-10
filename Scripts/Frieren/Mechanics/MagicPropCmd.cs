@@ -137,8 +137,9 @@ public static class MagicPropCmd
         if (usedProp == "UnbelievableTool") Presentation.FrierenAchievements.Unlock(player, "0006");
         if (usedProp == "SeinNote") Presentation.FrierenAchievements.Unlock(player, "4013");
         if (result.Heal > 0) await CreatureCmd.Heal(player.Creature, result.Heal);
+        if (usedProp == "MagicBread" && result.Draw > 0) await CardPileCmd.Draw(context,result.Draw,player);
         if (result.Energy > 0) await PlayerCmd.GainEnergy(result.Energy, player);
-        if (result.Draw > 0) await CardPileCmd.Draw(context,result.Draw,player);
+        if (usedProp != "MagicBread" && result.Draw > 0) await CardPileCmd.Draw(context,result.Draw,player);
         if (result.BirdSpell) await CardPileCmd.AddGeneratedCardToCombat(
             player.Creature.CombatState!.CreateCard<BirdCapturingSpell>(player), PileType.Hand, player);
         if(result.Escape){await CreatureCmd.Heal(player.Creature,decimal.Floor(player.Creature.MaxHp*.30m));await MagicExamEscape.Flee(player);}

@@ -12,7 +12,10 @@ public abstract class ChantChoice() : FrierenCard(0, CardType.Skill, CardRarity.
     private string _spellId = "AdvancedDefensiveMagic";
     public int GenerationAmount { get; private set; }
     public ManaSlot Slot => this is DrawChantChoice ? ManaSlot.Draw : this is HandChantChoice ? ManaSlot.Hand : ManaSlot.Discard;
-    protected override string ArtName => GenerationAmount > 0 ? nameof(Mana) : _spellId;
+    public static string ArtFor(ManaSlot slot)=>slot switch {
+        ManaSlot.Draw=>nameof(DrawChantChoice),ManaSlot.Hand=>nameof(HandChantChoice),ManaSlot.Discard=>nameof(DiscardChantChoice),
+        _=>throw new ArgumentOutOfRangeException(nameof(slot))};
+    protected override string ArtName => ArtFor(Slot);
     public override string Title => GenerationAmount > 0 ? new LocString("frieren", "SLOT." + Slot).GetFormattedText() : base.Title;
     public override int MaxUpgradeLevel => 0;
     protected override bool IsPlayable => false;

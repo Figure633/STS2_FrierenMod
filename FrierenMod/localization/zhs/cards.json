@@ -342,5 +342,7 @@
   "FRIERENMOD-ARCANE_NET.description": "对所有敌人造成{Damage:diff()}点伤害。\n本场战斗每[gold]同调[/gold]过一次，此牌耗能-1。",
   "FRIERENMOD-MEMORY_TRANSFER_SPELL.title": "记忆让渡魔法",
   "FRIERENMOD-MEMORY_TRANSFER_SPELL.description": "[gold]传说魔法[/gold]。\n造成{Damage:diff()}点伤害。\n选择[gold]手牌[/gold]中的一张牌，使其在本回合耗能减{Reduction:diff()}。",
-  "FRIERENMOD-MEMORY_TRANSFER_SPELL.selectionScreenPrompt": "选择一张牌降低耗能。"
+  "FRIERENMOD-MEMORY_TRANSFER_SPELL.selectionScreenPrompt": "选择一张牌降低耗能。",
+  "FRIERENMOD-MAGIC_BREAD.title": "魔法面包",
+  "FRIERENMOD-MAGIC_BREAD.description": "仅战斗中使用。抽2张牌，回复{energyPrefix:energyIcons(2)}。"
 }
