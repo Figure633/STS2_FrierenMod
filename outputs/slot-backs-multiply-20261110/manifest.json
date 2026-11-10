@@ -1,0 +1,244 @@
+{
+  "reference": "../png/8009-1_0000_图层 1.psd",
+  "rgb": [
+    101,
+    101,
+    109
+  ],
+  "opacityByte": 38,
+  "blend": "multiply",
+  "width": 301,
+  "height": 461,
+  "images": [
+    {
+      "id": "8001",
+      "name": "冰上双人",
+      "file": "01-冰上双人.png",
+      "original": "outputs/slot-backs-final-20261109/已选成品/01-冰上双人.png",
+      "originalSha256": "54b926d4fbf4cc30c91b9bd594a8768777e659db759dfa3e255565b9ead41959",
+      "png": "outputs/slot-backs-multiply-20261110/PNG/01-冰上双人.png",
+      "psd": "outputs/slot-backs-multiply-20261110/PSD/01-冰上双人.psd",
+      "sha256": "79d9125035122b523eae3fb0aa1cb5c4d187dd30e286e919b358299a31faa66e"
+    },
+    {
+      "id": "8002",
+      "name": "画中芙莉莲",
+      "file": "02-画中芙莉莲.png",
+      "original": "outputs/slot-backs-final-20261109/已选成品/02-画中芙莉莲.png",
+      "originalSha256": "06efc585dc72b091dc5f8bf218243ee666bb96991d5c55058573d49e41a43836",
+      "png": "outputs/slot-backs-multiply-20261110/PNG/02-画中芙莉莲.png",
+      "psd": "outputs/slot-backs-multiply-20261110/PSD/02-画中芙莉莲.psd",
+      "sha256": "96a28375dea57657204181c478c2e5b5bcfc4c1fb2b00218e21c9fc521d2cea4"
+    },
+    {
+      "id": "8003",
+      "name": "黑翼双人",
+      "file": "03-黑翼双人.png",
+      "original": "outputs/slot-backs-final-20261109/已选成品/03-黑翼双人.png",
+      "originalSha256": "5998f20d6187c0c71e19ee8b08a20a5ffb473e8c6b49937e87db5cfde54bff20",
+      "png": "outputs/slot-backs-multiply-20261110/PNG/03-黑翼双人.png",
+      "psd": "outputs/slot-backs-multiply-20261110/PSD/03-黑翼双人.psd",
+      "sha256": "26bf9ad48fdee9c03cd058fd8c8de30aa5b98f277a4353d2fe47882d538696f1"
+    },
+    {
+      "id": "8004",
+      "name": "举杯",
+      "file": "04-举杯.png",
+      "original": "outputs/slot-backs-final-20261109/已选成品/04-举杯.png",
+      "originalSha256": "56092d8e49985675799a115bb897feac01c95b2e2d8ee603e53dd6960b010e09",
+      "png": "outputs/slot-backs-multiply-20261110/PNG/04-举杯.png",
+      "psd": "outputs/slot-backs-multiply-20261110/PSD/04-举杯.psd",
+      "sha256": "5566f0bbb71af6fe738cccc11328369e31c8d788d670e0b765facbc22a52f157"
+    },
+    {
+      "id": "8005",
+      "name": "修塔尔克",
+      "file": "05-修塔尔克.png",
+      "original": "outputs/slot-backs-final-20261109/已选成品/05-修塔尔克.png",
+      "originalSha256": "9a9fb922e349fa30331597f7271561a8e64c507b78854037099904cd1dc372be",
+      "png": "outputs/slot-backs-multiply-20261110/PNG/05-修塔尔克.png",
+      "psd": "outputs/slot-backs-multiply-20261110/PSD/05-修塔尔克.psd",
+      "sha256": "452d05232cf2d6c50e7afd42022964b9ac772dea51961c6d6ccd304f88dcc874"
+    },
+    {
+      "id": "8006",
+      "name": "芙莉莲",
+      "file": "06-芙莉莲.png",
+      "original": "outputs/slot-backs-final-20261109/已选成品/06-芙莉莲.png",
+      "originalSha256": "941226ea9cdc0a7cc39c694d0e975c7df27352c8703d4d13e6a31bdffd64a817",
+      "png": "outputs/slot-backs-multiply-20261110/PNG/06-芙莉莲.png",
+      "psd": "outputs/slot-backs-multiply-20261110/PSD/06-芙莉莲.psd",
+      "sha256": "3bd5d3f1c6dacfc3fa9163fa08fbac655b9d6da950b84411ff72bd632489b050"
+    },
+    {
+      "id": "8007",
+      "name": "菲伦",
+      "file": "07-菲伦.png",
+      "original": "outputs/slot-backs-final-20261109/已选成品/07-菲伦.png",
+      "originalSha256": "fc796d6e5b65f454a1478d2078c6f9b74c1af88e46489d5b86782e0dc7402b0d",
+      "png": "outputs/slot-backs-multiply-20261110/PNG/07-菲伦.png",
+      "psd": "outputs/slot-backs-multiply-20261110/PSD/07-菲伦.psd",
+      "sha256": "a9d7491a89388a2ea80b61b8344db0f702acaf0d4d04d3421b7b31cd46332e0d"
+    },
+    {
+      "id": "8008",
+      "name": "海塔",
+      "file": "08-海塔.png",
+      "original": "outputs/slot-backs-final-20261109/已选成品/08-海塔.png",
+      "originalSha256": "d9b3bcaf3b5959120f09fb0bfd1bfea026fa9485141459a06aefede54498d8f1",
+      "png": "outputs/slot-backs-multiply-20261110/PNG/08-海塔.png",
+      "psd": "outputs/slot-backs-multiply-20261110/PSD/08-海塔.psd",
+      "sha256": "7bae4dff02c9f8fb8e64b1c69d50aae527141d25e589cd107d42d23b6a671356"
+    },
+    {
+      "id": "8009",
+      "name": "辛美尔",
+      "file": "09-辛美尔.png",
+      "original": "outputs/slot-backs-final-20261109/已选成品/09-辛美尔.png",
+      "originalSha256": "2f54286873cd20cf1aedf655d9f308d8fff68293ec2cc8dc448157baa4b86972",
+      "png": "outputs/slot-backs-multiply-20261110/PNG/09-辛美尔.png",
+      "psd": "outputs/slot-backs-multiply-20261110/PSD/09-辛美尔.psd",
+      "sha256": "c26f53b4acc2e157cd01f4a94ad7c59cce071bbf36ce54b2865f2844137d3d19"
+    },
+    {
+      "id": "8010",
+      "name": "艾泽",
+      "file": "10-艾泽.png",
+      "original": "outputs/slot-backs-final-20261109/已选成品/10-艾泽.png",
+      "originalSha256": "97b5378bbaae6b43b46bdcf329f4bdb8c66334be62ed6a861eb83fe24370d672",
+      "png": "outputs/slot-backs-multiply-20261110/PNG/10-艾泽.png",
+      "psd": "outputs/slot-backs-multiply-20261110/PSD/10-艾泽.psd",
+      "sha256": "a3da52234778b556f99df83f18219bb2dca93a4aa0491d67c829594e7f071926"
+    },
+    {
+      "id": "8011",
+      "name": "勇者一行",
+      "file": "11-勇者一行.png",
+      "original": "outputs/slot-backs-final-20261109/已选成品/11-勇者一行.png",
+      "originalSha256": "8c145dd0bbf82d79867b6c839efe573be86f42289dec5d34d802bb91d39c0951",
+      "png": "outputs/slot-backs-multiply-20261110/PNG/11-勇者一行.png",
+      "psd": "outputs/slot-backs-multiply-20261110/PSD/11-勇者一行.psd",
+      "sha256": "e74ee0fe81b2a8ceee5456b4680a8610d1b8356af9df2c244a040e87ac9b611a"
+    },
+    {
+      "id": "8012",
+      "name": "黄金乡",
+      "file": "12-黄金乡.png",
+      "original": "outputs/slot-backs-final-20261109/已选成品/12-黄金乡.png",
+      "originalSha256": "cc1fcfe188f8db697ec503c8b0c3a8496d81ac648a07d885e0bc5def96b0471f",
+      "png": "outputs/slot-backs-multiply-20261110/PNG/12-黄金乡.png",
+      "psd": "outputs/slot-backs-multiply-20261110/PSD/12-黄金乡.psd",
+      "sha256": "ae341fafa78e1daacb514cdf1b9bb9eab41d58f72a1f96584aa8fdc72f55c9b6"
+    },
+    {
+      "id": "8013",
+      "name": "芙莉莲·水光",
+      "file": "13-芙莉莲·水光.png",
+      "original": "outputs/slot-backs-final-20261109/已选成品/13-芙莉莲·水光.png",
+      "originalSha256": "b56a80697ef18cfe00b9ef38b0e4cfa068c79472dfd0c5eb8d69742069ba334a",
+      "png": "outputs/slot-backs-multiply-20261110/PNG/13-芙莉莲·水光.png",
+      "psd": "outputs/slot-backs-multiply-20261110/PSD/13-芙莉莲·水光.psd",
+      "sha256": "c03b3ffe6fd26512870170bc2aa99d273e86433a7554b6f94027005c4f0d4938"
+    },
+    {
+      "id": "8014",
+      "name": "辛美尔·晴空",
+      "file": "14-辛美尔·晴空.png",
+      "original": "outputs/slot-backs-final-20261109/已选成品/14-辛美尔·晴空.png",
+      "originalSha256": "e6d3f6402cdb2c1a44860ed8ca60f645b86bcbe0f43a91b90fb109dcef2b15b7",
+      "png": "outputs/slot-backs-multiply-20261110/PNG/14-辛美尔·晴空.png",
+      "psd": "outputs/slot-backs-multiply-20261110/PSD/14-辛美尔·晴空.psd",
+      "sha256": "0140250ffdbfe4bb1b2a6147c75319b58d6e97c1035a34fe669dce27c95f11e8"
+    },
+    {
+      "id": "8015",
+      "name": "芙莉莲·花冠",
+      "file": "15-芙莉莲·花冠.png",
+      "original": "outputs/slot-backs-final-20261109/已选成品/15-芙莉莲·花冠.png",
+      "originalSha256": "e041cc76d2a9743936370ae686d5658c2aaf0af1c0488eb24a42e86cefb71204",
+      "png": "outputs/slot-backs-multiply-20261110/PNG/15-芙莉莲·花冠.png",
+      "psd": "outputs/slot-backs-multiply-20261110/PSD/15-芙莉莲·花冠.psd",
+      "sha256": "2db345dd5239449bea4ed69635a10b35aa7dc95616a1e81b071976ebaa890ac9"
+    },
+    {
+      "id": "8016",
+      "name": "芙莉莲·温泉",
+      "file": "16-芙莉莲·温泉.png",
+      "original": "outputs/slot-backs-final-20261109/已选成品/16-芙莉莲·温泉.png",
+      "originalSha256": "1da46664a50c6103b71bfab64e9de250d52b4facee2417135ff2d13e1c4af915",
+      "png": "outputs/slot-backs-multiply-20261110/PNG/16-芙莉莲·温泉.png",
+      "psd": "outputs/slot-backs-multiply-20261110/PSD/16-芙莉莲·温泉.psd",
+      "sha256": "09682b515d907f7fdefb1026a4f7e112d94290d5e5867ff7c9a4be4d22740115"
+    },
+    {
+      "id": "8017",
+      "name": "芙莉莲·得意",
+      "file": "17-芙莉莲·得意.png",
+      "original": "outputs/slot-backs-final-20261109/已选成品/17-芙莉莲·得意.png",
+      "originalSha256": "ea47d4246012db1158dab4c2f6fe8e94ff9895a6bf97945224cc729d5ceeca92",
+      "png": "outputs/slot-backs-multiply-20261110/PNG/17-芙莉莲·得意.png",
+      "psd": "outputs/slot-backs-multiply-20261110/PSD/17-芙莉莲·得意.psd",
+      "sha256": "5aaa786223012bbcc2c04d6d8b878e12bfc8a20ec0018289dd4130dd7ea8d467"
+    },
+    {
+      "id": "8018",
+      "name": "弗兰梅",
+      "file": "18-弗兰梅.png",
+      "original": "outputs/slot-backs-final-20261109/已选成品/18-弗兰梅.png",
+      "originalSha256": "c310e2feb97fb2a55bbc5372959ec3af8687bbe6447d55e71e3dccd423b81648",
+      "png": "outputs/slot-backs-multiply-20261110/PNG/18-弗兰梅.png",
+      "psd": "outputs/slot-backs-multiply-20261110/PSD/18-弗兰梅.psd",
+      "sha256": "a17477ebd647bfd0439294149d120ee5bf209914c661061e424d8959df0f876a"
+    },
+    {
+      "id": "8019",
+      "name": "冰晶原野",
+      "file": "19-冰晶原野.png",
+      "original": "outputs/slot-backs-final-20261109/已选成品/19-冰晶原野.png",
+      "originalSha256": "a0f44aa8b5b6ac9df21866fbe521eb9ec6d0330364e97e7b9c7c7388ab49f62c",
+      "png": "outputs/slot-backs-multiply-20261110/PNG/19-冰晶原野.png",
+      "psd": "outputs/slot-backs-multiply-20261110/PSD/19-冰晶原野.psd",
+      "sha256": "8fb6886d1215ec5b52ec84c3128f59077e4236fd15811c1745b47eedffba6a07"
+    },
+    {
+      "id": "8020",
+      "name": "芙莉莲·冬日",
+      "file": "20-芙莉莲·冬日.png",
+      "original": "outputs/slot-backs-final-20261109/已选成品/20-芙莉莲·冬日.png",
+      "originalSha256": "a0e147fbdcde47b9cc007412c48c38773a82ae85dabfaafad885a7cc016d69f0",
+      "png": "outputs/slot-backs-multiply-20261110/PNG/20-芙莉莲·冬日.png",
+      "psd": "outputs/slot-backs-multiply-20261110/PSD/20-芙莉莲·冬日.psd",
+      "sha256": "d31e4a974646ec36f27d497f7653fb76094090d3b6f71f21ac036b41234d87d8"
+    },
+    {
+      "id": "8021",
+      "name": "菲伦·花冠",
+      "file": "21-菲伦·花冠.png",
+      "original": "outputs/slot-backs-final-20261109/已选成品/21-菲伦·花冠.png",
+      "originalSha256": "e17dbd4f860f56b21e980ffe1892e00472ed44d909df5a1c5baf341ab485c917",
+      "png": "outputs/slot-backs-multiply-20261110/PNG/21-菲伦·花冠.png",
+      "psd": "outputs/slot-backs-multiply-20261110/PSD/21-菲伦·花冠.psd",
+      "sha256": "eb566ed1f12638f13ba8f253a3a6da673447d77d3851c48532941f7fef83ab87"
+    },
+    {
+      "id": "8022",
+      "name": "修塔尔克·魔族装扮",
+      "file": "22-修塔尔克·魔族装扮.png",
+      "original": "outputs/slot-backs-final-20261109/已选成品/22-修塔尔克·魔族装扮.png",
+      "originalSha256": "78b0998eba48e663e78a4609407e3af7226911715956dc55fd651f88677364fb",
+      "png": "outputs/slot-backs-multiply-20261110/PNG/22-修塔尔克·魔族装扮.png",
+      "psd": "outputs/slot-backs-multiply-20261110/PSD/22-修塔尔克·魔族装扮.psd",
+      "sha256": "8610cc30356564614f15bcd4285643a4e4425074f804ca666a721448ebeae362"
+    },
+    {
+      "id": "8023",
+      "name": "菲伦·整理头发",
+      "file": "23-菲伦·整理头发.png",
+      "original": "outputs/slot-backs-final-20261109/已选成品/23-菲伦·整理头发.png",
+      "originalSha256": "6a15650942a0320073cd4db33e78c70b4f7ef866fc5c0865856f8a84e8c9318a",
+      "png": "outputs/slot-backs-multiply-20261110/PNG/23-菲伦·整理头发.png",
+      "psd": "outputs/slot-backs-multiply-20261110/PSD/23-菲伦·整理头发.psd",
+      "sha256": "8c2140946debc5c197e9b9c45173ccf4d3a2817db78b30ee3a161df41a5fd7dd"
+    }
+  ]
+}

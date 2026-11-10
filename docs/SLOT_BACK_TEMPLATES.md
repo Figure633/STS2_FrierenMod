@@ -44,6 +44,8 @@ node tools/create-slot-back-previews.mjs inputs.json outputs/slot-back-preview
 
 ## 补充旧成品的材质
 
+2026-11-10 按作者参考 `../png/8009-1_0000_图层 1.psd` 调整二代23张已选背景：灰色 RGB(101,101,109)，正片叠底，PSD不透明度38/255（约15%）。`tools/tint-slot-backs.mjs` 从2026-11-09已选原稿读取并另存，重复运行不会叠加变暗；加 `--apply` 同步8001～8023游戏资源及清单。输出在 `outputs/slot-backs-multiply-20261110/`，含23张PNG、23份两层PSD、总览和HTML前后对照。PSD上层为灰色剪贴图层，下层保留原稿，PNG逐像素保留原透明度。一代104张不修改。
+
 原PSD没有保存旧成品的倒角、内缘折线和主体浮雕效果。`tools/materialize-slot-backs.mjs` 将内置imagegen生成的中性透明倒角素材合成到原PSD套图，再对原画的已有轮廓作亮度方向差处理。主体构图不变，不使用生成式重画人物。
 
 ```powershell

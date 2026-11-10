@@ -9,15 +9,28 @@
       "batch": "本次新图",
       "batchNumber": 1,
       "style": "基础圆角",
-      "source": "outputs/slot-backs-final-20261109/基础圆角/01-冰上双人.png",
+      "source": "outputs/slot-backs-multiply-20261110/PNG/01-冰上双人.png",
       "processing": "原PSD套图，复用2026-10-29适中档浅浮雕、8px倒角及内缘折线；未重画人物",
       "number": 1,
       "file": "01-冰上双人.png",
       "asset": "FrierenMod/images/slot_backs/8001.png",
-      "sha256": "54b926d4fbf4cc30c91b9bd594a8768777e659db759dfa3e255565b9ead41959",
+      "sha256": "79d9125035122b523eae3fb0aa1cb5c4d187dd30e286e919b358299a31faa66e",
       "achievementName": "舞冰的祈愿",
       "condition": "使用芙莉莲完成两次游戏对局",
-      "unlockStatus": "implemented"
+      "unlockStatus": "implemented",
+      "originalSource": "outputs/slot-backs-final-20261109/已选成品/01-冰上双人.png",
+      "colorAdjustment": {
+        "reference": "../png/8009-1_0000_图层 1.psd",
+        "rgb": [
+          101,
+          101,
+          109
+        ],
+        "blend": "multiply",
+        "opacityByte": 38,
+        "opacity": 0.14901960784313725,
+        "psd": "outputs/slot-backs-multiply-20261110/PSD/01-冰上双人.psd"
+      }
     },
     {
       "id": "8002",
@@ -26,15 +39,28 @@
       "batch": "本次新图",
       "batchNumber": 2,
       "style": "基础圆角",
-      "source": "outputs/slot-backs-final-20261109/基础圆角/02-画中芙莉莲.png",
+      "source": "outputs/slot-backs-multiply-20261110/PNG/02-画中芙莉莲.png",
       "processing": "原PSD套图，复用2026-10-29适中档浅浮雕、8px倒角及内缘折线；未重画人物",
       "number": 2,
       "file": "02-画中芙莉莲.png",
       "asset": "FrierenMod/images/slot_backs/8002.png",
-      "sha256": "06efc585dc72b091dc5f8bf218243ee666bb96991d5c55058573d49e41a43836",
+      "sha256": "96a28375dea57657204181c478c2e5b5bcfc4c1fb2b00218e21c9fc521d2cea4",
       "achievementName": "这是什么地方？",
       "condition": "进入到任意冒险物语之中",
-      "unlockStatus": "implemented"
+      "unlockStatus": "implemented",
+      "originalSource": "outputs/slot-backs-final-20261109/已选成品/02-画中芙莉莲.png",
+      "colorAdjustment": {
+        "reference": "../png/8009-1_0000_图层 1.psd",
+        "rgb": [
+          101,
+          101,
+          109
+        ],
+        "blend": "multiply",
+        "opacityByte": 38,
+        "opacity": 0.14901960784313725,
+        "psd": "outputs/slot-backs-multiply-20261110/PSD/02-画中芙莉莲.psd"
+      }
     },
     {
       "id": "8003",
@@ -43,15 +69,28 @@
       "batch": "本次新图",
       "batchNumber": 3,
       "style": "金色花纹",
-      "source": "outputs/slot-backs-final-20261109/金色花纹/03-黑翼双人.png",
+      "source": "outputs/slot-backs-multiply-20261110/PNG/03-黑翼双人.png",
       "processing": "原PSD套图，复用2026-10-29适中档浅浮雕、8px倒角及内缘折线；未重画人物",
       "number": 3,
       "file": "03-黑翼双人.png",
       "asset": "FrierenMod/images/slot_backs/8003.png",
-      "sha256": "5998f20d6187c0c71e19ee8b08a20a5ffb473e8c6b49937e87db5cfde54bff20",
+      "sha256": "26bf9ad48fdee9c03cd058fd8c8de30aa5b98f277a4353d2fe47882d538696f1",
       "achievementName": "战斗狂们",
       "condition": "同时装载因子：精神操纵魔法和黑金之翼魔法",
-      "unlockStatus": "implemented"
+      "unlockStatus": "implemented",
+      "originalSource": "outputs/slot-backs-final-20261109/已选成品/03-黑翼双人.png",
+      "colorAdjustment": {
+        "reference": "../png/8009-1_0000_图层 1.psd",
+        "rgb": [
+          101,
+          101,
+          109
+        ],
+        "blend": "multiply",
+        "opacityByte": 38,
+        "opacity": 0.14901960784313725,
+        "psd": "outputs/slot-backs-multiply-20261110/PSD/03-黑翼双人.psd"
+      }
     },
     {
       "id": "8004",
@@ -60,15 +99,28 @@
       "batch": "本次新图",
       "batchNumber": 4,
       "style": "金色花纹",
-      "source": "outputs/slot-backs-final-20261109/金色花纹/04-举杯.png",
+      "source": "outputs/slot-backs-multiply-20261110/PNG/04-举杯.png",
       "processing": "原PSD套图，复用2026-10-29适中档浅浮雕、8px倒角及内缘折线；未重画人物",
       "number": 4,
       "file": "04-举杯.png",
       "asset": "FrierenMod/images/slot_backs/8004.png",
-      "sha256": "56092d8e49985675799a115bb897feac01c95b2e2d8ee603e53dd6960b010e09",
+      "sha256": "5566f0bbb71af6fe738cccc11328369e31c8d788d670e0b765facbc22a52f157",
       "achievementName": "举杯吧，敬那些想要杀死我的人",
       "condition": "使用芙莉莲获得5次游戏胜利",
-      "unlockStatus": "implemented"
+      "unlockStatus": "implemented",
+      "originalSource": "outputs/slot-backs-final-20261109/已选成品/04-举杯.png",
+      "colorAdjustment": {
+        "reference": "../png/8009-1_0000_图层 1.psd",
+        "rgb": [
+          101,
+          101,
+          109
+        ],
+        "blend": "multiply",
+        "opacityByte": 38,
+        "opacity": 0.14901960784313725,
+        "psd": "outputs/slot-backs-multiply-20261110/PSD/04-举杯.psd"
+      }
     },
     {
       "id": "8005",
@@ -77,15 +129,28 @@
       "batch": "本次新图",
       "batchNumber": 5,
       "style": "金色花纹",
-      "source": "outputs/slot-backs-final-20261109/金色花纹/05-修塔尔克.png",
+      "source": "outputs/slot-backs-multiply-20261110/PNG/05-修塔尔克.png",
       "processing": "原PSD套图，复用2026-10-29适中档浅浮雕、8px倒角及内缘折线；未重画人物",
       "number": 5,
       "file": "05-修塔尔克.png",
       "asset": "FrierenMod/images/slot_backs/8005.png",
-      "sha256": "9a9fb922e349fa30331597f7271561a8e64c507b78854037099904cd1dc372be",
+      "sha256": "452d05232cf2d6c50e7afd42022964b9ac772dea51961c6d6ccd304f88dcc874",
       "achievementName": "逃避虽可耻但有用",
       "condition": "使用魔法考试的小瓶逃离一场战斗",
-      "unlockStatus": "implemented"
+      "unlockStatus": "implemented",
+      "originalSource": "outputs/slot-backs-final-20261109/已选成品/05-修塔尔克.png",
+      "colorAdjustment": {
+        "reference": "../png/8009-1_0000_图层 1.psd",
+        "rgb": [
+          101,
+          101,
+          109
+        ],
+        "blend": "multiply",
+        "opacityByte": 38,
+        "opacity": 0.14901960784313725,
+        "psd": "outputs/slot-backs-multiply-20261110/PSD/05-修塔尔克.psd"
+      }
     },
     {
       "id": "8006",
@@ -94,15 +159,28 @@
       "batch": "本次新图",
       "batchNumber": 6,
       "style": "金色花纹",
-      "source": "outputs/slot-backs-final-20261109/金色花纹/06-芙莉莲.png",
+      "source": "outputs/slot-backs-multiply-20261110/PNG/06-芙莉莲.png",
       "processing": "原PSD套图，复用2026-10-29适中档浅浮雕、8px倒角及内缘折线；未重画人物",
       "number": 6,
       "file": "06-芙莉莲.png",
       "asset": "FrierenMod/images/slot_backs/8006.png",
-      "sha256": "941226ea9cdc0a7cc39c694d0e975c7df27352c8703d4d13e6a31bdffd64a817",
+      "sha256": "3bd5d3f1c6dacfc3fa9163fa08fbac655b9d6da950b84411ff72bd632489b050",
       "achievementName": "葬送的芙莉莲",
       "condition": "获得先古卡\"葬送的芙莉莲\"",
-      "unlockStatus": "implemented"
+      "unlockStatus": "implemented",
+      "originalSource": "outputs/slot-backs-final-20261109/已选成品/06-芙莉莲.png",
+      "colorAdjustment": {
+        "reference": "../png/8009-1_0000_图层 1.psd",
+        "rgb": [
+          101,
+          101,
+          109
+        ],
+        "blend": "multiply",
+        "opacityByte": 38,
+        "opacity": 0.14901960784313725,
+        "psd": "outputs/slot-backs-multiply-20261110/PSD/06-芙莉莲.psd"
+      }
     },
     {
       "id": "8007",
@@ -111,15 +189,28 @@
       "batch": "本次新图",
       "batchNumber": 7,
       "style": "金色花纹",
-      "source": "outputs/slot-backs-final-20261109/金色花纹/07-菲伦.png",
+      "source": "outputs/slot-backs-multiply-20261110/PNG/07-菲伦.png",
       "processing": "原PSD套图，复用2026-10-29适中档浅浮雕、8px倒角及内缘折线；未重画人物",
       "number": 7,
       "file": "07-菲伦.png",
       "asset": "FrierenMod/images/slot_backs/8007.png",
-      "sha256": "fc796d6e5b65f454a1478d2078c6f9b74c1af88e46489d5b86782e0dc7402b0d",
+      "sha256": "a9d7491a89388a2ea80b61b8344db0f702acaf0d4d04d3421b7b31cd46332e0d",
       "achievementName": "像蝴蝶般飞舞，如蜜蜂般突刺",
       "condition": "第一回合内击杀任意boss",
-      "unlockStatus": "implemented"
+      "unlockStatus": "implemented",
+      "originalSource": "outputs/slot-backs-final-20261109/已选成品/07-菲伦.png",
+      "colorAdjustment": {
+        "reference": "../png/8009-1_0000_图层 1.psd",
+        "rgb": [
+          101,
+          101,
+          109
+        ],
+        "blend": "multiply",
+        "opacityByte": 38,
+        "opacity": 0.14901960784313725,
+        "psd": "outputs/slot-backs-multiply-20261110/PSD/07-菲伦.psd"
+      }
     },
     {
       "id": "8008",
@@ -128,15 +219,28 @@
       "batch": "本次新图",
       "batchNumber": 8,
       "style": "金色花纹",
-      "source": "outputs/slot-backs-final-20261109/金色花纹/08-海塔.png",
+      "source": "outputs/slot-backs-multiply-20261110/PNG/08-海塔.png",
       "processing": "原PSD套图，复用2026-10-29适中档浅浮雕、8px倒角及内缘折线；未重画人物",
       "number": 8,
       "file": "08-海塔.png",
       "asset": "FrierenMod/images/slot_backs/8008.png",
-      "sha256": "d9b3bcaf3b5959120f09fb0bfd1bfea026fa9485141459a06aefede54498d8f1",
+      "sha256": "7bae4dff02c9f8fb8e64b1c69d50aae527141d25e589cd107d42d23b6a671356",
       "achievementName": "你有当僧侣的天赋哦",
       "condition": "在一场战斗中回复20点生命",
-      "unlockStatus": "implemented"
+      "unlockStatus": "implemented",
+      "originalSource": "outputs/slot-backs-final-20261109/已选成品/08-海塔.png",
+      "colorAdjustment": {
+        "reference": "../png/8009-1_0000_图层 1.psd",
+        "rgb": [
+          101,
+          101,
+          109
+        ],
+        "blend": "multiply",
+        "opacityByte": 38,
+        "opacity": 0.14901960784313725,
+        "psd": "outputs/slot-backs-multiply-20261110/PSD/08-海塔.psd"
+      }
     },
     {
       "id": "8009",
@@ -145,15 +249,28 @@
       "batch": "本次新图",
       "batchNumber": 9,
       "style": "金色花纹",
-      "source": "outputs/slot-backs-final-20261109/金色花纹/09-辛美尔.png",
+      "source": "outputs/slot-backs-multiply-20261110/PNG/09-辛美尔.png",
       "processing": "原PSD套图，复用2026-10-29适中档浅浮雕、8px倒角及内缘折线；未重画人物",
       "number": 9,
       "file": "09-辛美尔.png",
       "asset": "FrierenMod/images/slot_backs/8009.png",
-      "sha256": "2f54286873cd20cf1aedf655d9f308d8fff68293ec2cc8dc448157baa4b86972",
+      "sha256": "c26f53b4acc2e157cd01f4a94ad7c59cce071bbf36ce54b2865f2844137d3d19",
       "achievementName": "如果是辛美尔的话一定会这么做",
       "condition": "累计完成20个委托",
-      "unlockStatus": "implemented"
+      "unlockStatus": "implemented",
+      "originalSource": "outputs/slot-backs-final-20261109/已选成品/09-辛美尔.png",
+      "colorAdjustment": {
+        "reference": "../png/8009-1_0000_图层 1.psd",
+        "rgb": [
+          101,
+          101,
+          109
+        ],
+        "blend": "multiply",
+        "opacityByte": 38,
+        "opacity": 0.14901960784313725,
+        "psd": "outputs/slot-backs-multiply-20261110/PSD/09-辛美尔.psd"
+      }
     },
     {
       "id": "8010",
@@ -162,15 +279,28 @@
       "batch": "本次新图",
       "batchNumber": 10,
       "style": "金色花纹",
-      "source": "outputs/slot-backs-final-20261109/金色花纹/10-艾泽.png",
+      "source": "outputs/slot-backs-multiply-20261110/PNG/10-艾泽.png",
       "processing": "原PSD套图，复用2026-10-29适中档浅浮雕、8px倒角及内缘折线；未重画人物",
       "number": 10,
       "file": "10-艾泽.png",
       "asset": "FrierenMod/images/slot_backs/8010.png",
-      "sha256": "97b5378bbaae6b43b46bdcf329f4bdb8c66334be62ed6a861eb83fe24370d672",
+      "sha256": "a3da52234778b556f99df83f18219bb2dca93a4aa0491d67c829594e7f071926",
       "achievementName": "沉默寡言的战士",
       "condition": "在30分钟内通关",
-      "unlockStatus": "implemented"
+      "unlockStatus": "implemented",
+      "originalSource": "outputs/slot-backs-final-20261109/已选成品/10-艾泽.png",
+      "colorAdjustment": {
+        "reference": "../png/8009-1_0000_图层 1.psd",
+        "rgb": [
+          101,
+          101,
+          109
+        ],
+        "blend": "multiply",
+        "opacityByte": 38,
+        "opacity": 0.14901960784313725,
+        "psd": "outputs/slot-backs-multiply-20261110/PSD/10-艾泽.psd"
+      }
     },
     {
       "id": "8011",
@@ -179,15 +309,28 @@
       "batch": "本次新图",
       "batchNumber": 11,
       "style": "基础圆角",
-      "source": "outputs/slot-backs-final-20261109/基础圆角/11-勇者一行.png",
+      "source": "outputs/slot-backs-multiply-20261110/PNG/11-勇者一行.png",
       "processing": "原PSD套图，复用2026-10-29适中档浅浮雕、8px倒角及内缘折线；未重画人物",
       "number": 11,
       "file": "11-勇者一行.png",
       "asset": "FrierenMod/images/slot_backs/8011.png",
-      "sha256": "8c145dd0bbf82d79867b6c839efe573be86f42289dec5d34d802bb91d39c0951",
+      "sha256": "e74ee0fe81b2a8ceee5456b4680a8610d1b8356af9df2c244a040e87ac9b611a",
       "achievementName": "回忆中的勇者小队",
       "condition": "集齐20张卡槽背景解锁",
-      "unlockStatus": "implemented"
+      "unlockStatus": "implemented",
+      "originalSource": "outputs/slot-backs-final-20261109/已选成品/11-勇者一行.png",
+      "colorAdjustment": {
+        "reference": "../png/8009-1_0000_图层 1.psd",
+        "rgb": [
+          101,
+          101,
+          109
+        ],
+        "blend": "multiply",
+        "opacityByte": 38,
+        "opacity": 0.14901960784313725,
+        "psd": "outputs/slot-backs-multiply-20261110/PSD/11-勇者一行.psd"
+      }
     },
     {
       "id": "8012",
@@ -196,15 +339,28 @@
       "batch": "本次新图",
       "batchNumber": 12,
       "style": "基础圆角",
-      "source": "outputs/slot-backs-final-20261109/基础圆角/12-黄金乡.png",
+      "source": "outputs/slot-backs-multiply-20261110/PNG/12-黄金乡.png",
       "processing": "原PSD套图，复用2026-10-29适中档浅浮雕、8px倒角及内缘折线；未重画人物",
       "number": 12,
       "file": "12-黄金乡.png",
       "asset": "FrierenMod/images/slot_backs/8012.png",
-      "sha256": "cc1fcfe188f8db697ec503c8b0c3a8496d81ac648a07d885e0bc5def96b0471f",
+      "sha256": "ae341fafa78e1daacb514cdf1b9bb9eab41d58f72a1f96584aa8fdc72f55c9b6",
       "achievementName": "旅途结束，终至黄金之乡",
       "condition": "使用芙莉莲获得10次游戏胜利",
-      "unlockStatus": "implemented"
+      "unlockStatus": "implemented",
+      "originalSource": "outputs/slot-backs-final-20261109/已选成品/12-黄金乡.png",
+      "colorAdjustment": {
+        "reference": "../png/8009-1_0000_图层 1.psd",
+        "rgb": [
+          101,
+          101,
+          109
+        ],
+        "blend": "multiply",
+        "opacityByte": 38,
+        "opacity": 0.14901960784313725,
+        "psd": "outputs/slot-backs-multiply-20261110/PSD/12-黄金乡.psd"
+      }
     },
     {
       "id": "8013",
@@ -213,15 +369,28 @@
       "batch": "之前成品",
       "batchNumber": 1,
       "style": "原成品圆角",
-      "source": "C:/Users/a1362/AppData/Local/Temp/codex-clipboard-cf33b327-ff8e-4912-b7a2-9b6842d324ec.png",
+      "source": "outputs/slot-backs-multiply-20261110/PNG/13-芙莉莲·水光.png",
       "processing": "作者提供的301×461成品，原字节复制",
       "number": 13,
       "file": "13-芙莉莲·水光.png",
       "asset": "FrierenMod/images/slot_backs/8013.png",
-      "sha256": "b56a80697ef18cfe00b9ef38b0e4cfa068c79472dfd0c5eb8d69742069ba334a",
+      "sha256": "c03b3ffe6fd26512870170bc2aa99d273e86433a7554b6f94027005c4f0d4938",
       "achievementName": "那就稍微认真点吧",
       "condition": "完成击败强化精英委托",
-      "unlockStatus": "implemented"
+      "unlockStatus": "implemented",
+      "originalSource": "outputs/slot-backs-final-20261109/已选成品/13-芙莉莲·水光.png",
+      "colorAdjustment": {
+        "reference": "../png/8009-1_0000_图层 1.psd",
+        "rgb": [
+          101,
+          101,
+          109
+        ],
+        "blend": "multiply",
+        "opacityByte": 38,
+        "opacity": 0.14901960784313725,
+        "psd": "outputs/slot-backs-multiply-20261110/PSD/13-芙莉莲·水光.psd"
+      }
     },
     {
       "id": "8014",
@@ -230,15 +399,28 @@
       "batch": "之前成品",
       "batchNumber": 2,
       "style": "原成品圆角",
-      "source": "C:/Users/a1362/AppData/Local/Temp/codex-clipboard-37a7232e-b41e-43ca-813c-ee0909eba64b.png",
+      "source": "outputs/slot-backs-multiply-20261110/PNG/14-辛美尔·晴空.png",
       "processing": "作者提供的301×461成品，原字节复制",
       "number": 14,
       "file": "14-辛美尔·晴空.png",
       "asset": "FrierenMod/images/slot_backs/8014.png",
-      "sha256": "e6d3f6402cdb2c1a44860ed8ca60f645b86bcbe0f43a91b90fb109dcef2b15b7",
+      "sha256": "0140250ffdbfe4bb1b2a6147c75319b58d6e97c1035a34fe669dce27c95f11e8",
       "achievementName": "RPG享受者",
       "condition": "完成一次委托",
-      "unlockStatus": "implemented"
+      "unlockStatus": "implemented",
+      "originalSource": "outputs/slot-backs-final-20261109/已选成品/14-辛美尔·晴空.png",
+      "colorAdjustment": {
+        "reference": "../png/8009-1_0000_图层 1.psd",
+        "rgb": [
+          101,
+          101,
+          109
+        ],
+        "blend": "multiply",
+        "opacityByte": 38,
+        "opacity": 0.14901960784313725,
+        "psd": "outputs/slot-backs-multiply-20261110/PSD/14-辛美尔·晴空.psd"
+      }
     },
     {
       "id": "8015",
@@ -247,15 +429,28 @@
       "batch": "之前成品",
       "batchNumber": 3,
       "style": "原成品圆角",
-      "source": "C:/Users/a1362/AppData/Local/Temp/codex-clipboard-95adce0f-13ca-4741-a386-aaa71dc1131d.png",
+      "source": "outputs/slot-backs-multiply-20261110/PNG/15-芙莉莲·花冠.png",
       "processing": "作者提供的301×461成品，原字节复制",
       "number": 15,
       "file": "15-芙莉莲·花冠.png",
       "asset": "FrierenMod/images/slot_backs/8015.png",
-      "sha256": "e041cc76d2a9743936370ae686d5658c2aaf0af1c0488eb24a42e86cefb71204",
+      "sha256": "2db345dd5239449bea4ed69635a10b35aa7dc95616a1e81b071976ebaa890ac9",
       "achievementName": "芙莉莲2堂堂上线！",
       "condition": "打开卡背收藏库时自动赠送。",
-      "unlockStatus": "implemented"
+      "unlockStatus": "implemented",
+      "originalSource": "outputs/slot-backs-final-20261109/已选成品/15-芙莉莲·花冠.png",
+      "colorAdjustment": {
+        "reference": "../png/8009-1_0000_图层 1.psd",
+        "rgb": [
+          101,
+          101,
+          109
+        ],
+        "blend": "multiply",
+        "opacityByte": 38,
+        "opacity": 0.14901960784313725,
+        "psd": "outputs/slot-backs-multiply-20261110/PSD/15-芙莉莲·花冠.psd"
+      }
     },
     {
       "id": "8016",
@@ -264,15 +459,28 @@
       "batch": "之前成品",
       "batchNumber": 4,
       "style": "原成品圆角",
-      "source": "C:/Users/a1362/AppData/Local/Temp/codex-clipboard-507b4368-0637-499a-8439-e1ac2905aea6.png",
+      "source": "outputs/slot-backs-multiply-20261110/PNG/16-芙莉莲·温泉.png",
       "processing": "作者提供的301×461成品，原字节复制",
       "number": 16,
       "file": "16-芙莉莲·温泉.png",
       "asset": "FrierenMod/images/slot_backs/8016.png",
-      "sha256": "1da46664a50c6103b71bfab64e9de250d52b4facee2417135ff2d13e1c4af915",
+      "sha256": "09682b515d907f7fdefb1026a4f7e112d94290d5e5867ff7c9a4be4d22740115",
       "achievementName": "钱钱！？",
       "condition": "拥有超过999金币",
-      "unlockStatus": "implemented"
+      "unlockStatus": "implemented",
+      "originalSource": "outputs/slot-backs-final-20261109/已选成品/16-芙莉莲·温泉.png",
+      "colorAdjustment": {
+        "reference": "../png/8009-1_0000_图层 1.psd",
+        "rgb": [
+          101,
+          101,
+          109
+        ],
+        "blend": "multiply",
+        "opacityByte": 38,
+        "opacity": 0.14901960784313725,
+        "psd": "outputs/slot-backs-multiply-20261110/PSD/16-芙莉莲·温泉.psd"
+      }
     },
     {
       "id": "8017",
@@ -281,15 +489,28 @@
       "batch": "之前成品",
       "batchNumber": 5,
       "style": "原成品圆角",
-      "source": "C:/Users/a1362/AppData/Local/Temp/codex-clipboard-65d0c8a7-606c-4582-8484-b93270088405.png",
+      "source": "outputs/slot-backs-multiply-20261110/PNG/17-芙莉莲·得意.png",
       "processing": "作者提供的301×461成品，原字节复制",
       "number": 17,
       "file": "17-芙莉莲·得意.png",
       "asset": "FrierenMod/images/slot_backs/8017.png",
-      "sha256": "ea47d4246012db1158dab4c2f6fe8e94ff9895a6bf97945224cc729d5ceeca92",
+      "sha256": "5aaa786223012bbcc2c04d6d8b878e12bfc8a20ec0018289dd4130dd7ea8d467",
       "achievementName": "这种人我们一般称之为赌怪",
       "condition": "使用老实赚钱，很枯燥吧？成功赚取777金币",
-      "unlockStatus": "implemented"
+      "unlockStatus": "implemented",
+      "originalSource": "outputs/slot-backs-final-20261109/已选成品/17-芙莉莲·得意.png",
+      "colorAdjustment": {
+        "reference": "../png/8009-1_0000_图层 1.psd",
+        "rgb": [
+          101,
+          101,
+          109
+        ],
+        "blend": "multiply",
+        "opacityByte": 38,
+        "opacity": 0.14901960784313725,
+        "psd": "outputs/slot-backs-multiply-20261110/PSD/17-芙莉莲·得意.psd"
+      }
     },
     {
       "id": "8018",
@@ -298,15 +519,28 @@
       "batch": "之前成品",
       "batchNumber": 6,
       "style": "原成品圆角",
-      "source": "C:/Users/a1362/AppData/Local/Temp/codex-clipboard-a35c8929-6404-4a4b-bbe3-e44936ace1df.png",
+      "source": "outputs/slot-backs-multiply-20261110/PNG/18-弗兰梅.png",
       "processing": "作者提供的301×461成品，原字节复制",
       "number": 18,
       "file": "18-弗兰梅.png",
       "asset": "FrierenMod/images/slot_backs/8018.png",
-      "sha256": "c310e2feb97fb2a55bbc5372959ec3af8687bbe6447d55e71e3dccd423b81648",
+      "sha256": "a17477ebd647bfd0439294149d120ee5bf209914c661061e424d8959df0f876a",
       "achievementName": "得意弟子",
       "condition": "在卡牌百科中解锁所有传说魔法",
-      "unlockStatus": "implemented"
+      "unlockStatus": "implemented",
+      "originalSource": "outputs/slot-backs-final-20261109/已选成品/18-弗兰梅.png",
+      "colorAdjustment": {
+        "reference": "../png/8009-1_0000_图层 1.psd",
+        "rgb": [
+          101,
+          101,
+          109
+        ],
+        "blend": "multiply",
+        "opacityByte": 38,
+        "opacity": 0.14901960784313725,
+        "psd": "outputs/slot-backs-multiply-20261110/PSD/18-弗兰梅.psd"
+      }
     },
     {
       "id": "8019",
@@ -315,15 +549,28 @@
       "batch": "之前成品",
       "batchNumber": 7,
       "style": "原成品圆角",
-      "source": "C:/Users/a1362/AppData/Local/Temp/codex-clipboard-385b350b-9949-408e-ae0c-20dce60ce437.png",
+      "source": "outputs/slot-backs-multiply-20261110/PNG/19-冰晶原野.png",
       "processing": "作者提供的301×461成品，原字节复制",
       "number": 19,
       "file": "19-冰晶原野.png",
       "asset": "FrierenMod/images/slot_backs/8019.png",
-      "sha256": "a0f44aa8b5b6ac9df21866fbe521eb9ec6d0330364e97e7b9c7c7388ab49f62c",
+      "sha256": "8fb6886d1215ec5b52ec84c3128f59077e4236fd15811c1745b47eedffba6a07",
       "achievementName": "前有绝景",
       "condition": "进入事件圣雪结晶",
-      "unlockStatus": "pending-event"
+      "unlockStatus": "pending-event",
+      "originalSource": "outputs/slot-backs-final-20261109/已选成品/19-冰晶原野.png",
+      "colorAdjustment": {
+        "reference": "../png/8009-1_0000_图层 1.psd",
+        "rgb": [
+          101,
+          101,
+          109
+        ],
+        "blend": "multiply",
+        "opacityByte": 38,
+        "opacity": 0.14901960784313725,
+        "psd": "outputs/slot-backs-multiply-20261110/PSD/19-冰晶原野.psd"
+      }
     },
     {
       "id": "8020",
@@ -332,15 +579,28 @@
       "batch": "之前成品",
       "batchNumber": 8,
       "style": "原成品圆角",
-      "source": "C:/Users/a1362/AppData/Local/Temp/codex-clipboard-38466be3-107b-4c71-83a6-7d372a17ebbe.png",
+      "source": "outputs/slot-backs-multiply-20261110/PNG/20-芙莉莲·冬日.png",
       "processing": "作者提供的301×461成品，原字节复制",
       "number": 20,
       "file": "20-芙莉莲·冬日.png",
       "asset": "FrierenMod/images/slot_backs/8020.png",
-      "sha256": "a0e147fbdcde47b9cc007412c48c38773a82ae85dabfaafad885a7cc016d69f0",
+      "sha256": "d31e4a974646ec36f27d497f7653fb76094090d3b6f71f21ac036b41234d87d8",
       "achievementName": "生生流转",
       "condition": "获得先古卡“生生流转”",
-      "unlockStatus": "implemented"
+      "unlockStatus": "implemented",
+      "originalSource": "outputs/slot-backs-final-20261109/已选成品/20-芙莉莲·冬日.png",
+      "colorAdjustment": {
+        "reference": "../png/8009-1_0000_图层 1.psd",
+        "rgb": [
+          101,
+          101,
+          109
+        ],
+        "blend": "multiply",
+        "opacityByte": 38,
+        "opacity": 0.14901960784313725,
+        "psd": "outputs/slot-backs-multiply-20261110/PSD/20-芙莉莲·冬日.psd"
+      }
     },
     {
       "id": "8021",
@@ -349,15 +609,28 @@
       "batch": "之前成品",
       "batchNumber": 9,
       "style": "原成品圆角",
-      "source": "C:/Users/a1362/AppData/Local/Temp/codex-clipboard-3eddae61-1824-425b-b081-9590d01c5a1c.png",
+      "source": "outputs/slot-backs-multiply-20261110/PNG/21-菲伦·花冠.png",
       "processing": "作者提供的301×461成品，原字节复制",
       "number": 21,
       "file": "21-菲伦·花冠.png",
       "asset": "FrierenMod/images/slot_backs/8021.png",
-      "sha256": "e17dbd4f860f56b21e980ffe1892e00472ed44d909df5a1c5baf341ab485c917",
+      "sha256": "eb566ed1f12638f13ba8f253a3a6da673447d77d3851c48532941f7fef83ab87",
       "achievementName": "师徒羁绊",
       "condition": "获得游戏胜利时，卡组中至少有3张双色卡",
-      "unlockStatus": "implemented"
+      "unlockStatus": "implemented",
+      "originalSource": "outputs/slot-backs-final-20261109/已选成品/21-菲伦·花冠.png",
+      "colorAdjustment": {
+        "reference": "../png/8009-1_0000_图层 1.psd",
+        "rgb": [
+          101,
+          101,
+          109
+        ],
+        "blend": "multiply",
+        "opacityByte": 38,
+        "opacity": 0.14901960784313725,
+        "psd": "outputs/slot-backs-multiply-20261110/PSD/21-菲伦·花冠.psd"
+      }
     },
     {
       "id": "8022",
@@ -366,15 +639,28 @@
       "batch": "之前成品",
       "batchNumber": 10,
       "style": "原成品圆角",
-      "source": "C:/Users/a1362/AppData/Local/Temp/codex-clipboard-f5de301d-5304-4ae4-843c-834b4d824b31.png",
+      "source": "outputs/slot-backs-multiply-20261110/PNG/22-修塔尔克·魔族装扮.png",
       "processing": "作者提供的301×461成品，原字节复制",
       "number": 22,
       "file": "22-修塔尔克·魔族装扮.png",
       "asset": "FrierenMod/images/slot_backs/8022.png",
-      "sha256": "78b0998eba48e663e78a4609407e3af7226911715956dc55fd651f88677364fb",
+      "sha256": "8610cc30356564614f15bcd4285643a4e4425074f804ca666a721448ebeae362",
       "achievementName": "狮子搏兔，亦需全力",
       "condition": "击败猎人杀手",
-      "unlockStatus": "implemented"
+      "unlockStatus": "implemented",
+      "originalSource": "outputs/slot-backs-final-20261109/已选成品/22-修塔尔克·魔族装扮.png",
+      "colorAdjustment": {
+        "reference": "../png/8009-1_0000_图层 1.psd",
+        "rgb": [
+          101,
+          101,
+          109
+        ],
+        "blend": "multiply",
+        "opacityByte": 38,
+        "opacity": 0.14901960784313725,
+        "psd": "outputs/slot-backs-multiply-20261110/PSD/22-修塔尔克·魔族装扮.psd"
+      }
     },
     {
       "id": "8023",
@@ -383,15 +669,28 @@
       "batch": "之前成品",
       "batchNumber": 11,
       "style": "原成品圆角",
-      "source": "C:/Users/a1362/AppData/Local/Temp/codex-clipboard-b8b581ba-2046-40c5-90df-7eddf4250c45.png",
+      "source": "outputs/slot-backs-multiply-20261110/PNG/23-菲伦·整理头发.png",
       "processing": "作者提供的301×461成品，原字节复制",
       "number": 23,
       "file": "23-菲伦·整理头发.png",
       "asset": "FrierenMod/images/slot_backs/8023.png",
-      "sha256": "6a15650942a0320073cd4db33e78c70b4f7ef866fc5c0865856f8a84e8c9318a",
+      "sha256": "8c2140946debc5c197e9b9c45173ccf4d3a2817db78b30ee3a161df41a5fd7dd",
       "achievementName": "衣角微脏",
       "condition": "击败感染棱柱",
-      "unlockStatus": "implemented"
+      "unlockStatus": "implemented",
+      "originalSource": "outputs/slot-backs-final-20261109/已选成品/23-菲伦·整理头发.png",
+      "colorAdjustment": {
+        "reference": "../png/8009-1_0000_图层 1.psd",
+        "rgb": [
+          101,
+          101,
+          109
+        ],
+        "blend": "multiply",
+        "opacityByte": 38,
+        "opacity": 0.14901960784313725,
+        "psd": "outputs/slot-backs-multiply-20261110/PSD/23-菲伦·整理头发.psd"
+      }
     }
   ]
 }
