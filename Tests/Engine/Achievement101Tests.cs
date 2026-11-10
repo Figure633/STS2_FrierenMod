@@ -66,7 +66,7 @@ public static class Achievement101Tests
             await GameApi.Damage(context,player.Creature,damaged?11:10,ValueProp.Unpowered,target,null);await CreatureCmd.Heal(player.Creature,99);
             await CreatureCmd.Kill(mimic);Check(Has("6001")==!damaged,"宝箱怪无伤按整场生命伤害记录判定，治疗不抹除受伤："+damaged);
         }
-        foreach(var (up,kinds,expected) in new[]{(false,7,768),(false,8,1536),(true,6,512),(true,7,1024)}) {
+        foreach(var (up,kinds,expected) in new[]{(false,8,768),(false,9,1536),(true,7,512),(true,8,1024)}) {
             Clear("4005");foreach(var c in player.Deck.Cards.ToArray())player.Deck.RemoveInternal(c);
             var types=new[]{typeof(FairyTaleEnd)}.Concat(LegendaryCards.Pool.Where(t=>t!=typeof(FairyTaleEnd)).Take(kinds-1));
             foreach(var type in types) {var c=ModelDb.GetById<CardModel>(ModelDb.GetId(type)).ToMutable();run.AddCard(c,player);await CardPileCmd.Add(c,PileType.Deck);}

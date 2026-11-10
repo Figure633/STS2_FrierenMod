@@ -5811,5 +5811,37 @@
     "modified": false,
     "processing": "原文件保留；未分配事件或页面，不参与任何现有事件显示。",
     "sha256": "e5a559a3def20e2a036f8931b431e2c253b43d73d7297f035e4c408543ee0ad0"
+  },
+  {
+    "file": "FrierenMod/images/cards/ProspectingSpell.png",
+    "source": "assets/author_adjusted/20261110/探矿魔法.png",
+    "source_kind": "author_provided",
+    "modified": false,
+    "processing": "作者提供500×380卡图，按原字节使用，不重画或锐化。",
+    "sha256": "01222a3136a2636fbf9b90b1fb9815445268c26c22dac4c3aee15efdad0ab867"
+  },
+  {
+    "file": "FrierenMod/images/cards/CopyMagic.png",
+    "source": "assets/author_adjusted/20261110/他山之石：复制魔法.png",
+    "source_kind": "author_provided",
+    "modified": true,
+    "processing": "去掉原图顶部2px纯黑边，再等比铺满500×380；未锐化、重画或改变人物构图。",
+    "sha256": "2b128fca951d6404aab0e81f1954d7837714c04c92f324a33b6cd9b205f7eab4"
+  },
+  {
+    "file": "FrierenMod/images/cards/ArcaneNet.png",
+    "source": "assets/author_adjusted/20261110/天罗地网.png",
+    "source_kind": "author_provided",
+    "modified": false,
+    "processing": "作者500×380原图，原字节保留。",
+    "sha256": "c96efd66c3b5a372a95a5e3cfda277b9aee1e6fe22f93a9abcae7a31502065eb"
+  },
+  {
+    "file": "FrierenMod/images/cards/MemoryTransferSpell.png",
+    "source": "assets/author_adjusted/20261110/记忆让渡魔法.png",
+    "source_kind": "author_provided",
+    "modified": false,
+    "processing": "作者500×380原图，原字节保留。",
+    "sha256": "91693d4aed51489cfa99a412ed57f00a4c6e26a8c2275575d637281da8dc2013"
   }
 ]

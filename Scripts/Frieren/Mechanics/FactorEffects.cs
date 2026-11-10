@@ -5,8 +5,10 @@ using FrierenMod.Scripts.Cards;
 using FrierenMod.Scripts.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Factories;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 
@@ -74,6 +76,15 @@ public static class FactorEffects
             case "TheLivingLegend":
                 for (int i = 0; i < reward; i++)
                     await CardFlowCmd.AddGenerated(LegendaryCards.CreateRandom(player), ManaCmd.Pile(option.Slot), player);
+                break;
+            case "CopyMagic":
+                var colorless=CardFactory.GetForCombat(player,
+                    ModelDb.CardPool<ColorlessCardPool>().GetUnlockedCards(player.UnlockState,player.RunState.CardMultiplayerConstraint),
+                    reward,player.RunState.Rng.CombatCardGeneration);
+                foreach(var card in colorless){
+                    CardCmd.Upgrade(card);
+                    await CardFlowCmd.AddGenerated(card,ManaCmd.Pile(option.Slot),player);
+                }
                 break;
             case "Factor100": case "Factor010": case "Factor001":
                 await PuzzleCmd.Chant(context, play, option); break;

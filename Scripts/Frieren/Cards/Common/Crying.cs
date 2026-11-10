@@ -25,5 +25,5 @@ public sealed class Crying() : FrierenCard(1, CardType.Skill, CardRarity.Common,
         CurrentBlock = (int)weak;
         CurrentWeak = (int)block;
     }
-    protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(2);
+    protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(3);
 }

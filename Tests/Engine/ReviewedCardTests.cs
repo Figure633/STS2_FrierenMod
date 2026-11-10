@@ -150,9 +150,9 @@ public static class ReviewedCardTests
         {
             LocManager.Instance.SetLanguage(lang);
             tale.UpdateDynamicVarPreview(CardPreviewMode.Normal, null, tale.DynamicVars);
-            Check(tale.DynamicVars.Damage.PreviewValue == 12 && tale.DynamicVars["BaseDamage"].BaseValue == 6, "童话保留基础6、实际12");
+            Check(tale.DynamicVars.Damage.PreviewValue == 6 && tale.DynamicVars["BaseDamage"].BaseValue == 6, "童话不计算自身种类、实际6");
             string text = tale.GetDescriptionForPile(PileType.Hand);
-            Check(text.Contains("12") && text.Contains("6") && !text.Contains("BaseDamage"), "童话括号实际伤害");
+            Check(text.Contains("6") && !text.Contains("12") && !text.Contains("BaseDamage"), "童话括号实际伤害");
             hellfire.UpdateDynamicVarPreview(CardPreviewMode.Normal, null, hellfire.DynamicVars);
             text = hellfire.GetDescriptionForPile(PileType.Hand);
             Check(text.Contains(lang == "zhs" ? "伤害 4 次" : "damage 4 times") && !text.Contains("{Hits}"), "业火实际攻击次数");

@@ -104,6 +104,10 @@ public partial class Runner : Node
             new Harmony("frieren.tests.hover_host").Patch(
                 AccessTools.Method(typeof(MegaCrit.Sts2.Core.Nodes.Cards.Holders.NCardHolder), "CreateHoverTips"),
                 prefix: new HarmonyMethod(typeof(Runner), nameof(SkipGlobalHoverWindow)));
+            if (OS.GetCmdlineUserArgs().Contains("--author-01214-only")) {
+                GD.Print("AUTHOR01214_OK: " + await Author01214Tests.Run(this));
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--slot-back-unlocks-only")) {
                 GD.Print("SLOT_BACK_UNLOCKS_OK: " + await SlotBackUnlockTests.Run());
                 await Finish(); return;

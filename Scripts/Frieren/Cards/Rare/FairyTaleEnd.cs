@@ -34,7 +34,7 @@ public sealed class FairyTaleEnd() : LegendaryCard(1, CardType.Attack, CardRarit
     {
         public decimal Calculate(CardModel card)
         {
-            int count = card.IsMutable ? card.Owner?.Deck.Cards.OfType<ILegendaryCard>()
+            int count = card.IsMutable ? card.Owner?.Deck.Cards.Where(c=>c is ILegendaryCard && c is not FairyTaleEnd)
                 .Select(x => x.GetType()).Distinct().Count() ?? 0 : 0;
             return Math.Min(99999m, BaseValue * (decimal)Math.Pow(2, Math.Min(count, 16)));
         }

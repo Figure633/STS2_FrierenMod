@@ -125,7 +125,7 @@
   "FRIERENMOD-DOMAIN_EXPANSION_POWER.title": "Domain Expansion",
   "FRIERENMOD-DOMAIN_EXPANSION_POWER.description": "At the start of each turn, add {Amount} [gold]High-Density Mana[/gold] to your hand.",
   "FRIERENMOD-SLEEP_IN_POWER.title": "Sleeping In",
-  "FRIERENMOD-SLEEP_IN_POWER.description": "You cannot play other cards until Wake Up! is played or Exhausted. Unspent Energy stored: {StoredEnergy}.",
+  "FRIERENMOD-SLEEP_IN_POWER.description": "You cannot play other cards until [gold]Wake Up![/gold] is played or Exhausted. Stored unspent Energy: {StoredEnergy}.",
   "FRIERENMOD-GOOD_LUCK_REWARD_POWER.title": "I Want More Rewards!",
   "FRIERENMOD-GOOD_LUCK_REWARD_POWER.description": "After winning this combat, gain {Amount} extra Magic Deck rewards.",
   "FRIERENMOD-COMMISSION_ELITE_POWER.title": "Commission Empowerment",

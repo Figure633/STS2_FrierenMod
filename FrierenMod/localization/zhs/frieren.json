@@ -645,5 +645,7 @@
   "COMMISSION.GOAL.STARK": "接取后，累计赢得3场无伤战斗（当前{Current}场）。",
   "COMMISSION.NAME.GUIDE": "冒险者小队招聘导游",
   "COMMISSION.REQUEST.GUIDE": "听说有问号的地方就有宝藏！我们需要一个资深导游带路",
-  "COMMISSION.GOAL.GUIDE": "在本幕中累计进入4个问号房，已进入{Current}个。"
+  "COMMISSION.GOAL.GUIDE": "在本幕中累计进入4个问号房，已进入{Current}个。",
+  "FACTOR.CopyMagic": "[gold]咏唱[/gold] 2X：将X张升级过的无色牌加入此槽位牌堆。",
+  "EFFECT.CopyMagic": "将{Reward}张升级过的无色牌加入此槽位牌堆。"
 }

@@ -18,7 +18,7 @@ namespace FrierenMod.Scripts.Mechanics;
 public static class FrierenCardAvailability
 {
     public static bool IsRetired(CardModel card) => card is TimeConcept or ViolentExorcism or BackFlow or BreaksBarriersSpell or FireSpell
-        or Trick or ManaConcealment or TransferToAlchemist;
+        or Trick or ManaConcealment or TransferToAlchemist or RedAppleSpell;
     public static bool IsRandomCandidate(CardModel card) =>
         card.Rarity is CardRarity.Common or CardRarity.Uncommon or CardRarity.Rare &&
         !IsRetired(card) && card is not FactorCard and not MagicPropCard and not Flow and not IGeneratedOnlyCard;

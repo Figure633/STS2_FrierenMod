@@ -125,7 +125,7 @@
   "FRIERENMOD-DOMAIN_EXPANSION_POWER.title": "领域展开",
   "FRIERENMOD-DOMAIN_EXPANSION_POWER.description": "每回合开始时，将{Amount}张[gold]高密度魔力[/gold]加入[gold]手牌[/gold]。",
   "FRIERENMOD-SLEEP_IN_POWER.title": "赖床",
-  "FRIERENMOD-SLEEP_IN_POWER.description": "起床！被打出或消耗之前，你不能打出其他牌。已累计{StoredEnergy}点剩余能量。",
+  "FRIERENMOD-SLEEP_IN_POWER.description": "[gold]起床！[/gold]被打出或消耗之前，你不能打出其他牌。已累计{StoredEnergy}点剩余能量。",
   "FRIERENMOD-GOOD_LUCK_REWARD_POWER.title": "我要更多奖励！",
   "FRIERENMOD-GOOD_LUCK_REWARD_POWER.description": "本场战斗胜利后，额外掉落{Amount}次魔法牌组奖励。",
   "FRIERENMOD-COMMISSION_ELITE_POWER.title": "委托强化",

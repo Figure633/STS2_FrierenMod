@@ -12,6 +12,8 @@ namespace FrierenMod.Scripts.Mechanics;
 
 public static class SynchroCmd
 {
+    public static int CountThisCombat(Player player)=>CombatManager.Instance.History.CardPlaysStarted.Count(e=>
+        e.Actor==player.Creature && ManaCmd.IsMana(e.CardPlay.Card));
     public static int CountThisTurn(Player player) => CombatManager.Instance.History.CardPlaysStarted.Count(e =>
         e.Actor == player.Creature && e.HappenedThisTurn(player.Creature.CombatState) && ManaCmd.IsMana(e.CardPlay.Card));
 

@@ -14,7 +14,6 @@ namespace FrierenMod.Scripts.Cards;
 
 public sealed class Imagination() : FrierenCard(2, CardType.Skill, CardRarity.Rare, TargetType.Self)
 {
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         await PowerCmd.Apply<ChantWithoutManaPower>(context, Owner.Creature, 1, Owner.Creature, this);

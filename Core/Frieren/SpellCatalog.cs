@@ -19,6 +19,7 @@ public static class SpellCatalog
         F("BarrierMagic", FactorRarity.Uncommon, offset: 1),
         F("BigFire", FactorRarity.Uncommon, cost: 2),
         F("BlackGoldWings", FactorRarity.Uncommon, cost: 2, reward: 6),
+        F("CopyMagic", FactorRarity.Uncommon, cost: 2),
         F("BloodSpell", FactorRarity.Rare),
         F("BluePrint", FactorRarity.Uncommon), F("HighSpeedMovement", FactorRarity.Uncommon),
         F("Hypnosis", FactorRarity.Uncommon, cost: 2),

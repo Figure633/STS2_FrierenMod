@@ -60,7 +60,7 @@ public static class Todo098Tests
         Check(shop.CharacterCardEntries.All(e=>FrierenCardAvailability.IsRandomCandidate(e.CreationResult!.Card)),"真实商店库存不出售寿命论和魔法因子");
         await Reset();var draw=New<RapidChant>();var discard=New<RapidChant>(true);await CardPileCmd.Add(draw,PileType.Draw);await CardPileCmd.Add(discard,PileType.Discard);
         await Use(New<ReadyStance>());Check(draw.Pile?.Type==PileType.Hand&&discard.Pile?.Type==PileType.Discard,"两堆都有高速咏唱时优先抽牌堆");
-        await Use(New<ReadyStance>());Check(discard.Pile?.Type==PileType.Hand,"抽牌堆没有时检索弃牌堆高速咏唱");
+        await Use(New<ReadyStance>());Check(discard.Pile?.Type==PileType.Discard,"准备架势重做后不检索弃牌堆");
         for(int upgrade=0;upgrade<2;upgrade++)foreach(var slot in Enum.GetValues<ManaSlot>()) {
             await Reset();var deck=new MagicDeckState();for(int i=0;i<3;i++){deck.PrepareDraft(_=>0);deck.SelectInitial(deck.Draft[0]);deck.Equip(deck.Add("BuildUpBody").InstanceId,(ManaSlot)i);}MagicDeckStore.Write(player,deck);
             await ManaCmd.Generate(player,ManaCmd.Pile(slot),2);selector.PrepareToSelect(new[]{0});await Use(New<ManaBarricade>(upgrade==1));

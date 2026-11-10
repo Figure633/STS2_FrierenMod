@@ -14,7 +14,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace FrierenMod.Scripts.Cards;
 
-public sealed class RedAppleSpell() : FrierenCard(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+public sealed class RedAppleSpell() : FrierenCard(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self, showInLibrary:false)
 {
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {

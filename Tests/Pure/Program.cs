@@ -73,7 +73,7 @@ Test("重复实例拒绝", () => Throws<JsonException>(() => MagicDeckState.From
 Test("重复槽位拒绝", () => Throws<JsonException>(() => MagicDeckState.FromJson(JsonSerializer.Serialize(new MagicDeckSave(1, [new(1, "BuildUpBody", 0), new(2, "BuildUpBody", 0)])))));
 Test("未知因子拒绝", () => Throws<ArgumentException>(() => new MagicDeckState().Add("unknown")));
 Test("空条目拒绝", () => Throws<JsonException>(() => MagicDeckState.FromJson("{\"Version\":1,\"Items\":[null]}")));
-Test("因子目录完整且无重名", () => { Equal(29, SpellCatalog.All.Count); Equal(29, SpellCatalog.All.Select(x => x.Id).Distinct().Count()); });
+Test("因子目录完整且无重名", () => { Equal(30, SpellCatalog.All.Count); Equal(30, SpellCatalog.All.Select(x => x.Id).Distinct().Count()); });
 Test("黑金之翼按2X支付并给予6X奖励", () => { var f=SpellCatalog.Get("BlackGoldWings");Equal(FactorRarity.Uncommon,f.Rarity);Equal(6,ChantRules.Cost(3,f.Rules));Equal(18,ChantRules.Preview(ManaSlot.Hand,f.Rules,3).Reward); });
 Test("初始三次三选一完整装载", () => {
     var deck = new MagicDeckState();
