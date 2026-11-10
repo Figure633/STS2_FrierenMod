@@ -1,5 +1,7 @@
 extends SceneTree
 
+const IMPORTED_MEDIA_TYPES = ["CompressedTexture2D", "AudioStreamOggVorbis", "AudioStreamMP3", "AudioStreamWAV"]
+
 # 只打包模组资源、Godot 节点脚本和导入产物，排除游戏 DLL、其他源码、测试和本机配置。
 func _initialize():
 	var packer = PCKPacker.new()
@@ -22,14 +24,31 @@ func _initialize():
 	for script in ["FrierenDivinityEyeSpawner", "FrierenDivinityActivationBurst", "FrierenAuraBlobEmitter", "DivinityPresentation", "FrierenScreenFlashEffect"]:
 		files.append("res://Scripts/Frieren/Presentation/Divinity/" + script + ".cs")
 	var imported: Dictionary = {}
+	var omitted_sources: Dictionary = {}
 	for path in files:
 		if path.ends_with(".import"):
 			var config = ConfigFile.new()
 			if config.load(path) != OK:
 				quit(1)
 				return
-			for dest in config.get_value("deps", "dest_files", []):
+			var destinations = config.get_value("deps", "dest_files", [])
+			for dest in destinations:
+				if not FileAccess.file_exists(dest):
+					push_error("Missing imported resource: " + dest)
+					quit(1)
+					return
 				imported[dest] = true
+			# 沿用 Godot 的 .import 路径重映射；运行包只保留原有导入产物，不重新压缩。
+			# 原文件留在工程。只排除确认有完整导入结果的纹理和音频，JSON 等直接读取文件仍保留。
+			var source = config.get_value("deps", "source_file", "")
+			if destinations.size() > 0 and source == path.trim_suffix(".import") \
+					and config.get_value("remap", "type", "") in IMPORTED_MEDIA_TYPES:
+				omitted_sources[source] = true
+	var omitted_bytes: int = 0
+	for source in omitted_sources:
+		var original = FileAccess.open(source, FileAccess.READ)
+		omitted_bytes += original.get_length()
+	files = files.filter(func(path: String): return not omitted_sources.has(path))
 	for path in imported.keys():
 		files.append(path)
 	files.sort()
@@ -41,7 +60,7 @@ func _initialize():
 	if packer.flush() != OK:
 		quit(1)
 		return
-	print("PACK_OK files=", files.size())
+	print("PACK_OK files=", files.size(), " omitted_media=", omitted_sources.size(), " saved_source_bytes=", omitted_bytes)
 	quit(0)
 
 func collect(path: String, files: Array[String]):

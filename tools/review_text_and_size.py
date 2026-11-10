@@ -3,6 +3,7 @@ from pathlib import Path
 from collections import Counter,defaultdict
 import json,re,difflib
 from datetime import datetime, timezone, timedelta
+from verify_pack_payload import read_entries
 ROOT=Path(__file__).resolve().parents[1]
 VERSION=json.loads((ROOT/'FrierenMod.json').read_text('utf-8-sig'))['version']
 DATE=datetime.now(timezone(timedelta(hours=8))).strftime('%Y-%m-%d')
@@ -67,16 +68,11 @@ for base in ['Scripts','Core','FrierenMod/scenes']:
      lines.append(f'| {p.relative_to(ROOT).as_posix()}:{number} | {cell(text)} |');code_count+=1
 lines.insert(6,f'另列本地化之外中文字符串候选 {code_count} 处，包含诊断字符串，供按来源确认。')
 (OUT/'text-differences.md').write_text('\n'.join(lines)+'\n',encoding='utf-8')
-# 按 export_pack.gd 实际边界统计，原始图片和 Godot 导入副本分别计量。
-files={p for p in (ROOT/'FrierenMod').rglob('*') if p.is_file() and 'fonts' not in p.relative_to(ROOT/'FrierenMod').parts}
-for p in list(files):
- if p.suffix=='.import':
-  for dest in re.findall(r'"(res://\.godot/imported/[^\"]+)"',p.read_text('utf-8-sig')):
-   f=ROOT/dest.removeprefix('res://')
-   if f.is_file():files.add(f)
+# 以实际PCK目录为准，避免将工程保留的原图、音频重新算进发行大小。
+entries=read_entries(ROOT/'artifacts/FrierenMod/FrierenMod.pck')
 groups=Counter();sizes=defaultdict(list)
-for p in files:
- rel=p.relative_to(ROOT).as_posix();size=p.stat().st_size
+for rel,(_,size,_) in entries.items():
+ p=Path(rel)
  if rel.startswith('.godot/imported/'):
   group='字体导入副本' if p.suffix=='.fontdata' else '音频导入副本' if p.suffix in ['.oggvorbisstr','.mp3str'] else '纹理及其他Godot导入副本'
  elif rel.startswith('FrierenMod/audio/bgm/'):group='20首BGM原音频'
@@ -93,8 +89,8 @@ for p in sorted(release.iterdir()):
 size_lines += ['','| 打包资源分类 | MiB |','|---|---:|']
 for key,value in groups.most_common():size_lines.append(f'| {key} | {value/1048576:.2f} |')
 size_lines += ['','0.10.4起成就悬停直接复用二代字体。四份一代字体仅保留为仓库资料，原字体约39.29MiB及导入副本约34.95MiB均不再打入发行包。','',
-'其余 `FrierenMod/` 资源原文件和 `.import` 指向的 Godot 导入副本仍一起打包。图片原 PNG 与导入纹理、音频原文件与导入流会同时占体积。PCK 是打包容器，不会自动把所有文件再做一次通用压缩。','',
-'可以进一步按引用排除未使用资源、停止重复装入可省略的原文件，但要同时验证 Godot 导入路径、直接 FileAccess 读取和纹理/音频运行时加载；本批先统计，不擅自删原图、音频或作者资料。','', '| 最大单项（含导入副本） | MiB |','|---|---:|']
+'0.12.16起，仅在工程保留已有完整Godot导入结果的原始图片和音频。发行包保留 `.import` 重映射和既有导入文件，不重新编码；JSON、场景等直接读取资源仍保留。','',
+'打包检查在隔离目录验证全部纹理和音频，并核验包内文件与工程文件逐字节一致；原图、音频和作者资料不会从工程删除。','', '| 最大单项（含导入副本） | MiB |','|---|---:|']
 for size,rel in sorted((x for values in sizes.values() for x in values),reverse=True)[:30]:size_lines.append(f'| {rel} | {size/1048576:.2f} |')
 (OUT/'package-size.md').write_text('\n'.join(size_lines)+'\n',encoding='utf-8')
 print(f'LOCALIZATION total={total} unchanged={unchanged} differences={len(rows)} code_candidates={code_count}')

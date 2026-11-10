@@ -76,6 +76,7 @@ if ($Pack) {
     New-Item -ItemType Directory -Force -Path $checkDir | Out-Null
     Copy-Item -LiteralPath "$projectRoot/tools/check_pack.gd" -Destination "$checkDir/check_pack.gd"
     Invoke-Checked $GodotPath @("--headless", "--path", $checkDir, "--script", "$checkDir/check_pack.gd", "--log-file", "$projectRoot/artifacts/pack-check.log", "--", "$projectRoot/artifacts/FrierenMod/FrierenMod.pck", "$gameDir/SlayTheSpire2.pck")
+    Invoke-Checked "python" @("$projectRoot/tools/verify_pack_payload.py")
 }
 if ($EngineTests) {
     if (!(Test-Path -LiteralPath $GodotMonoPath)) { throw "请用 -GodotMonoPath 提供 Godot 4.5.1 .NET 版可执行文件。" }

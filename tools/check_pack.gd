@@ -1,5 +1,38 @@
 extends SceneTree
 
+var imported_textures = 0
+var imported_audio = 0
+
+func check_imported_media(path: String) -> bool:
+	for file in DirAccess.get_files_at(path):
+		if not file.ends_with(".import"):
+			continue
+		var config = ConfigFile.new()
+		if config.load(path.path_join(file)) != OK:
+			return false
+		var type = config.get_value("remap", "type", "")
+		if type not in ["CompressedTexture2D", "AudioStreamOggVorbis", "AudioStreamMP3", "AudioStreamWAV"]:
+			continue
+		var source = path.path_join(file.trim_suffix(".import"))
+		if FileAccess.file_exists(source):
+			push_error("Redundant media source packed: " + source)
+			return false
+		var resource = load(source)
+		if type == "CompressedTexture2D":
+			if not resource is Texture2D or resource.get_width() <= 0:
+				push_error("Invalid remapped texture: " + source)
+				return false
+			imported_textures += 1
+		else:
+			if not resource is AudioStream or resource.get_length() <= 0 or resource.instantiate_playback() == null:
+				push_error("Invalid remapped audio: " + source)
+				return false
+			imported_audio += 1
+	for folder in DirAccess.get_directories_at(path):
+		if not check_imported_media(path.path_join(folder)):
+			return false
+	return true
+
 func _initialize():
 	var args = OS.get_cmdline_user_args()
 	# 场景直接引用原版能量纹理，检查时先挂载游戏资源，再挂载模组。
@@ -9,6 +42,9 @@ func _initialize():
 		return
 	if args.size() < 1 or args.size() > 2 or not ProjectSettings.load_resource_pack(args[0], true):
 		push_error("Cannot mount PCK")
+		quit(1)
+		return
+	if not check_imported_media("res://FrierenMod"):
 		quit(1)
 		return
 	for font in ["SourceHanSerifSC-Bold.otf", "NotoSansMonoCJKsc-Regular.otf", "Kreon-Regular.ttf", "Kreon-Bold.ttf"]:
@@ -30,7 +66,8 @@ func _initialize():
 	var slot_backs = 0
 	for folder in ["cards", "powers", "powers/big", "relics", "potions", "character", "energy", "ui", "card_frames", "events", "monsters", "vfx", "slot_backs", "achievement", "commissions"]:
 		var path = "res://FrierenMod/images/" + folder
-		for file in DirAccess.get_files_at(path):
+		# 导出后原图只剩 .import 重映射，使用原生资源枚举获得编辑器中的原始名称。
+		for file in ResourceLoader.list_directory(path):
 			if not file.ends_with(".png") and not file.ends_with(".tres"):
 				continue
 			var texture = load(path + "/" + file)
@@ -51,7 +88,7 @@ func _initialize():
 	var audio_count = 0
 	var bgm_count = 0
 	for folder in ["res://FrierenMod/audio", "res://FrierenMod/audio/bgm"]:
-		for file in DirAccess.get_files_at(folder):
+		for file in ResourceLoader.list_directory(folder):
 			if not file.ends_with(".ogg") and not file.ends_with(".mp3"):
 				continue
 			var stream = load(folder + "/" + file)
@@ -87,9 +124,9 @@ func _initialize():
 		var scene = packed.instantiate()
 		scene.free()
 		scenes += 1
-	if textures < 119 or slot_backs != 127 or audio_count != 26 or bgm_count != 20 or scenes != 14:
+	if textures < 119 or slot_backs != 127 or audio_count != 26 or bgm_count != 20 or scenes != 14 or imported_textures < textures or imported_audio != 26:
 		push_error("Resource count mismatch: textures=%d slot_backs=%d audio=%d scenes=%d" % [textures, slot_backs, audio_count, scenes])
 		quit(1)
 		return
-	print("PACK_CHECK_OK: ", textures, " textures + ", audio_count, " audio + ", scenes, " scenes + 26 localization tables")
+	print("PACK_CHECK_OK: ", textures, " textures + ", audio_count, " audio + ", scenes, " scenes + 26 localization tables; all remapped media=", imported_textures, "/", imported_audio)
 	quit(0)
