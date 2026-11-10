@@ -91,7 +91,7 @@ public static class HollowKnightTests
         var play = CombatTestState.NewPlay(chant, null, PileType.Discard, new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 });
         hp = p.Creature.CurrentHp;
         await ChantCmd.Resolve(context, play, ChantCmd.Options(p, 1).Single(o => o.Slot == ManaSlot.Draw));
-        Check(p.Creature.CurrentHp == hp + 3 && power.Amount == 3, "实际支付魔力并咏唱后按层数治疗，层数不消耗");
+        Check(p.Creature.CurrentHp == hp + 3 && !p.Creature.HasPower<ShapeOfUnnPower>(), "实际支付魔力并咏唱后按层数治疗，然后移除乌恩之形");
         hp = ally.Creature.CurrentHp;
         await power.AfterChant(context, CombatTestState.NewPlay(combat.CreateCard<RapidChant>(ally), null, PileType.Discard, play.Resources));
         Check(ally.Creature.CurrentHp == hp, "队友的咏唱不触发持有者治疗");

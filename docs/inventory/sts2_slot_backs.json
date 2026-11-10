@@ -1,5 +1,5 @@
 {
-  "note": "二代新增23张；名称为画面标识，正式成就名称和解锁条件由作者在填写表中指定。尚未接入自动解锁。",
+  "note": "作者已填写23组成就名与条件；22组已接入，8019圣雪结晶按作者回复等待新增事件后接入。仍不进入一代随机通关池。",
   "unlockTable": "outputs/slot-backs-final-20261109/二代新增卡槽背景-解锁条件填写表.xlsx",
   "images": [
     {
@@ -14,7 +14,10 @@
       "number": 1,
       "file": "01-冰上双人.png",
       "asset": "FrierenMod/images/slot_backs/8001.png",
-      "sha256": "54b926d4fbf4cc30c91b9bd594a8768777e659db759dfa3e255565b9ead41959"
+      "sha256": "54b926d4fbf4cc30c91b9bd594a8768777e659db759dfa3e255565b9ead41959",
+      "achievementName": "舞冰的祈愿",
+      "condition": "使用芙莉莲完成两次游戏对局",
+      "unlockStatus": "implemented"
     },
     {
       "id": "8002",
@@ -28,7 +31,10 @@
       "number": 2,
       "file": "02-画中芙莉莲.png",
       "asset": "FrierenMod/images/slot_backs/8002.png",
-      "sha256": "06efc585dc72b091dc5f8bf218243ee666bb96991d5c55058573d49e41a43836"
+      "sha256": "06efc585dc72b091dc5f8bf218243ee666bb96991d5c55058573d49e41a43836",
+      "achievementName": "这是什么地方？",
+      "condition": "进入到任意冒险物语之中",
+      "unlockStatus": "implemented"
     },
     {
       "id": "8003",
@@ -42,7 +48,10 @@
       "number": 3,
       "file": "03-黑翼双人.png",
       "asset": "FrierenMod/images/slot_backs/8003.png",
-      "sha256": "5998f20d6187c0c71e19ee8b08a20a5ffb473e8c6b49937e87db5cfde54bff20"
+      "sha256": "5998f20d6187c0c71e19ee8b08a20a5ffb473e8c6b49937e87db5cfde54bff20",
+      "achievementName": "战斗狂们",
+      "condition": "同时装载因子：精神操纵魔法和黑金之翼魔法",
+      "unlockStatus": "implemented"
     },
     {
       "id": "8004",
@@ -56,7 +65,10 @@
       "number": 4,
       "file": "04-举杯.png",
       "asset": "FrierenMod/images/slot_backs/8004.png",
-      "sha256": "56092d8e49985675799a115bb897feac01c95b2e2d8ee603e53dd6960b010e09"
+      "sha256": "56092d8e49985675799a115bb897feac01c95b2e2d8ee603e53dd6960b010e09",
+      "achievementName": "举杯吧，敬那些想要杀死我的人",
+      "condition": "使用芙莉莲获得5次游戏胜利",
+      "unlockStatus": "implemented"
     },
     {
       "id": "8005",
@@ -70,7 +82,10 @@
       "number": 5,
       "file": "05-修塔尔克.png",
       "asset": "FrierenMod/images/slot_backs/8005.png",
-      "sha256": "9a9fb922e349fa30331597f7271561a8e64c507b78854037099904cd1dc372be"
+      "sha256": "9a9fb922e349fa30331597f7271561a8e64c507b78854037099904cd1dc372be",
+      "achievementName": "逃避虽可耻但有用",
+      "condition": "使用魔法考试的小瓶逃离一场战斗",
+      "unlockStatus": "implemented"
     },
     {
       "id": "8006",
@@ -84,7 +99,10 @@
       "number": 6,
       "file": "06-芙莉莲.png",
       "asset": "FrierenMod/images/slot_backs/8006.png",
-      "sha256": "941226ea9cdc0a7cc39c694d0e975c7df27352c8703d4d13e6a31bdffd64a817"
+      "sha256": "941226ea9cdc0a7cc39c694d0e975c7df27352c8703d4d13e6a31bdffd64a817",
+      "achievementName": "葬送的芙莉莲",
+      "condition": "获得先古卡\"葬送的芙莉莲\"",
+      "unlockStatus": "implemented"
     },
     {
       "id": "8007",
@@ -98,7 +116,10 @@
       "number": 7,
       "file": "07-菲伦.png",
       "asset": "FrierenMod/images/slot_backs/8007.png",
-      "sha256": "fc796d6e5b65f454a1478d2078c6f9b74c1af88e46489d5b86782e0dc7402b0d"
+      "sha256": "fc796d6e5b65f454a1478d2078c6f9b74c1af88e46489d5b86782e0dc7402b0d",
+      "achievementName": "像蝴蝶般飞舞，如蜜蜂般突刺",
+      "condition": "第一回合内击杀任意boss",
+      "unlockStatus": "implemented"
     },
     {
       "id": "8008",
@@ -112,7 +133,10 @@
       "number": 8,
       "file": "08-海塔.png",
       "asset": "FrierenMod/images/slot_backs/8008.png",
-      "sha256": "d9b3bcaf3b5959120f09fb0bfd1bfea026fa9485141459a06aefede54498d8f1"
+      "sha256": "d9b3bcaf3b5959120f09fb0bfd1bfea026fa9485141459a06aefede54498d8f1",
+      "achievementName": "你有当僧侣的天赋哦",
+      "condition": "在一场战斗中回复20点生命",
+      "unlockStatus": "implemented"
     },
     {
       "id": "8009",
@@ -126,7 +150,10 @@
       "number": 9,
       "file": "09-辛美尔.png",
       "asset": "FrierenMod/images/slot_backs/8009.png",
-      "sha256": "2f54286873cd20cf1aedf655d9f308d8fff68293ec2cc8dc448157baa4b86972"
+      "sha256": "2f54286873cd20cf1aedf655d9f308d8fff68293ec2cc8dc448157baa4b86972",
+      "achievementName": "如果是辛美尔的话一定会这么做",
+      "condition": "累计完成20个委托",
+      "unlockStatus": "implemented"
     },
     {
       "id": "8010",
@@ -140,7 +167,10 @@
       "number": 10,
       "file": "10-艾泽.png",
       "asset": "FrierenMod/images/slot_backs/8010.png",
-      "sha256": "97b5378bbaae6b43b46bdcf329f4bdb8c66334be62ed6a861eb83fe24370d672"
+      "sha256": "97b5378bbaae6b43b46bdcf329f4bdb8c66334be62ed6a861eb83fe24370d672",
+      "achievementName": "沉默寡言的战士",
+      "condition": "在30分钟内通关",
+      "unlockStatus": "implemented"
     },
     {
       "id": "8011",
@@ -154,7 +184,10 @@
       "number": 11,
       "file": "11-勇者一行.png",
       "asset": "FrierenMod/images/slot_backs/8011.png",
-      "sha256": "8c145dd0bbf82d79867b6c839efe573be86f42289dec5d34d802bb91d39c0951"
+      "sha256": "8c145dd0bbf82d79867b6c839efe573be86f42289dec5d34d802bb91d39c0951",
+      "achievementName": "回忆中的勇者小队",
+      "condition": "集齐20张卡槽背景解锁",
+      "unlockStatus": "implemented"
     },
     {
       "id": "8012",
@@ -168,7 +201,10 @@
       "number": 12,
       "file": "12-黄金乡.png",
       "asset": "FrierenMod/images/slot_backs/8012.png",
-      "sha256": "cc1fcfe188f8db697ec503c8b0c3a8496d81ac648a07d885e0bc5def96b0471f"
+      "sha256": "cc1fcfe188f8db697ec503c8b0c3a8496d81ac648a07d885e0bc5def96b0471f",
+      "achievementName": "旅途结束，终至黄金之乡",
+      "condition": "使用芙莉莲获得10次游戏胜利",
+      "unlockStatus": "implemented"
     },
     {
       "id": "8013",
@@ -182,7 +218,10 @@
       "number": 13,
       "file": "13-芙莉莲·水光.png",
       "asset": "FrierenMod/images/slot_backs/8013.png",
-      "sha256": "b56a80697ef18cfe00b9ef38b0e4cfa068c79472dfd0c5eb8d69742069ba334a"
+      "sha256": "b56a80697ef18cfe00b9ef38b0e4cfa068c79472dfd0c5eb8d69742069ba334a",
+      "achievementName": "那就稍微认真点吧",
+      "condition": "完成击败强化精英委托",
+      "unlockStatus": "implemented"
     },
     {
       "id": "8014",
@@ -196,7 +235,10 @@
       "number": 14,
       "file": "14-辛美尔·晴空.png",
       "asset": "FrierenMod/images/slot_backs/8014.png",
-      "sha256": "e6d3f6402cdb2c1a44860ed8ca60f645b86bcbe0f43a91b90fb109dcef2b15b7"
+      "sha256": "e6d3f6402cdb2c1a44860ed8ca60f645b86bcbe0f43a91b90fb109dcef2b15b7",
+      "achievementName": "RPG享受者",
+      "condition": "完成一次委托",
+      "unlockStatus": "implemented"
     },
     {
       "id": "8015",
@@ -210,7 +252,10 @@
       "number": 15,
       "file": "15-芙莉莲·花冠.png",
       "asset": "FrierenMod/images/slot_backs/8015.png",
-      "sha256": "e041cc76d2a9743936370ae686d5658c2aaf0af1c0488eb24a42e86cefb71204"
+      "sha256": "e041cc76d2a9743936370ae686d5658c2aaf0af1c0488eb24a42e86cefb71204",
+      "achievementName": "芙莉莲2堂堂上线！",
+      "condition": "打开卡背收藏库时自动赠送。",
+      "unlockStatus": "implemented"
     },
     {
       "id": "8016",
@@ -224,7 +269,10 @@
       "number": 16,
       "file": "16-芙莉莲·温泉.png",
       "asset": "FrierenMod/images/slot_backs/8016.png",
-      "sha256": "1da46664a50c6103b71bfab64e9de250d52b4facee2417135ff2d13e1c4af915"
+      "sha256": "1da46664a50c6103b71bfab64e9de250d52b4facee2417135ff2d13e1c4af915",
+      "achievementName": "钱钱！？",
+      "condition": "拥有超过999金币",
+      "unlockStatus": "implemented"
     },
     {
       "id": "8017",
@@ -238,7 +286,10 @@
       "number": 17,
       "file": "17-芙莉莲·得意.png",
       "asset": "FrierenMod/images/slot_backs/8017.png",
-      "sha256": "ea47d4246012db1158dab4c2f6fe8e94ff9895a6bf97945224cc729d5ceeca92"
+      "sha256": "ea47d4246012db1158dab4c2f6fe8e94ff9895a6bf97945224cc729d5ceeca92",
+      "achievementName": "这种人我们一般称之为赌怪",
+      "condition": "使用老实赚钱，很枯燥吧？成功赚取777金币",
+      "unlockStatus": "implemented"
     },
     {
       "id": "8018",
@@ -252,7 +303,10 @@
       "number": 18,
       "file": "18-弗兰梅.png",
       "asset": "FrierenMod/images/slot_backs/8018.png",
-      "sha256": "c310e2feb97fb2a55bbc5372959ec3af8687bbe6447d55e71e3dccd423b81648"
+      "sha256": "c310e2feb97fb2a55bbc5372959ec3af8687bbe6447d55e71e3dccd423b81648",
+      "achievementName": "得意弟子",
+      "condition": "在卡牌百科中解锁所有传说魔法",
+      "unlockStatus": "implemented"
     },
     {
       "id": "8019",
@@ -266,7 +320,10 @@
       "number": 19,
       "file": "19-冰晶原野.png",
       "asset": "FrierenMod/images/slot_backs/8019.png",
-      "sha256": "a0f44aa8b5b6ac9df21866fbe521eb9ec6d0330364e97e7b9c7c7388ab49f62c"
+      "sha256": "a0f44aa8b5b6ac9df21866fbe521eb9ec6d0330364e97e7b9c7c7388ab49f62c",
+      "achievementName": "前有绝景",
+      "condition": "进入事件圣雪结晶",
+      "unlockStatus": "pending-event"
     },
     {
       "id": "8020",
@@ -280,7 +337,10 @@
       "number": 20,
       "file": "20-芙莉莲·冬日.png",
       "asset": "FrierenMod/images/slot_backs/8020.png",
-      "sha256": "a0e147fbdcde47b9cc007412c48c38773a82ae85dabfaafad885a7cc016d69f0"
+      "sha256": "a0e147fbdcde47b9cc007412c48c38773a82ae85dabfaafad885a7cc016d69f0",
+      "achievementName": "生生流转",
+      "condition": "获得先古卡“生生流转”",
+      "unlockStatus": "implemented"
     },
     {
       "id": "8021",
@@ -294,7 +354,10 @@
       "number": 21,
       "file": "21-菲伦·花冠.png",
       "asset": "FrierenMod/images/slot_backs/8021.png",
-      "sha256": "e17dbd4f860f56b21e980ffe1892e00472ed44d909df5a1c5baf341ab485c917"
+      "sha256": "e17dbd4f860f56b21e980ffe1892e00472ed44d909df5a1c5baf341ab485c917",
+      "achievementName": "师徒羁绊",
+      "condition": "获得游戏胜利时，卡组中至少有3张双色卡",
+      "unlockStatus": "implemented"
     },
     {
       "id": "8022",
@@ -308,7 +371,10 @@
       "number": 22,
       "file": "22-修塔尔克·魔族装扮.png",
       "asset": "FrierenMod/images/slot_backs/8022.png",
-      "sha256": "78b0998eba48e663e78a4609407e3af7226911715956dc55fd651f88677364fb"
+      "sha256": "78b0998eba48e663e78a4609407e3af7226911715956dc55fd651f88677364fb",
+      "achievementName": "狮子搏兔，亦需全力",
+      "condition": "击败猎人杀手",
+      "unlockStatus": "implemented"
     },
     {
       "id": "8023",
@@ -322,7 +388,10 @@
       "number": 23,
       "file": "23-菲伦·整理头发.png",
       "asset": "FrierenMod/images/slot_backs/8023.png",
-      "sha256": "6a15650942a0320073cd4db33e78c70b4f7ef866fc5c0865856f8a84e8c9318a"
+      "sha256": "6a15650942a0320073cd4db33e78c70b4f7ef866fc5c0865856f8a84e8c9318a",
+      "achievementName": "衣角微脏",
+      "condition": "击败感染棱柱",
+      "unlockStatus": "implemented"
     }
   ]
 }

@@ -1653,19 +1653,21 @@
   },
   {
     "file": "FrierenMod/images/cards/Mana3.png",
-    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/cards/Mana3_p.png",
+    "source": "assets/author_adjusted/20261109/Mana3.png",
     "source_commit": null,
-    "source_kind": "local_author_assets",
-    "sha256": "1c18fefd4e292a463d424326cadd7cdd0f977f8ef5965a53b22c7bd89033991e",
-    "modified": false
+    "source_kind": "author_provided",
+    "sha256": "adba96bdba05e9c694eec9893611d10ab4b261308d6f99b18228e7a292ba8867",
+    "modified": false,
+    "processing": "作者在工作区直接替换的原文件；原字节保留。"
   },
   {
     "file": "FrierenMod/images/cards/Mana4.png",
-    "source": "../STS1_素材/FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/cards/Mana4_p.png",
+    "source": "assets/author_adjusted/20261109/Mana4.png",
     "source_commit": null,
-    "source_kind": "local_author_assets",
-    "sha256": "d9b187bbadedfe48919eac0875ab5378b7b2a2c96d705890badc96d7fad2d1e5",
-    "modified": false
+    "source_kind": "author_provided",
+    "sha256": "aea54232f8617121707577c4765bd0b35d9b1256254c0aa36a7321dd0688e8f6",
+    "modified": false,
+    "processing": "作者在工作区直接替换的原文件；原字节保留。"
   },
   {
     "file": "FrierenMod/images/relics/EarAccessory.png",
@@ -5118,14 +5120,6 @@
     "sha256": "215cecd49b47104ed33124bd6cdc92971035ee10e0b41a9c072625a5b9969f8f"
   },
   {
-    "file": "FrierenMod/images/events/SealingOreMine.png",
-    "source": "assets/author_adjusted/20261106/封魔石.png",
-    "source_kind": "author_provided",
-    "modified": false,
-    "processing": "作者原图；卡图按500×380原生画框等比处理，事件保留完整原图。",
-    "sha256": "f8cc39f113da476e1666e50345443b3adf4d1dad543b2e90ff71b3902b9e6025"
-  },
-  {
     "file": "FrierenMod/images/events/DemonArmyAttack.png",
     "source": "assets/author_adjusted/20261106/DemonArmyAttack.png",
     "source_kind": "author_provided",
@@ -5267,11 +5261,11 @@
   },
   {
     "file": "FrierenMod/images/relics/KnightSecret.png",
-    "source": "assets/author_adjusted/20261109/KnightSecret-original.png",
+    "source": "assets/author_adjusted/20261109/KnightSecret.png",
     "source_kind": "author_provided",
-    "modified": true,
-    "processing": "仅裁透明留白并等比适配图标；未重绘或锐化。",
-    "sha256": "31ec4f3e39d3f2e9ae0b90bb5bd10e471f34decfa15e580817b0ecc0d19771f6",
+    "modified": false,
+    "processing": "作者在工作区直接替换的原文件；原字节保留。",
+    "sha256": "1db87114e1167d5a58ecade352035ad42ffacf2db7eb89494a9a8045545a23b7",
     "source_document": "../事件todo.docx"
   },
   {
@@ -5727,5 +5721,95 @@
     "modified": true,
     "processing": "tools/prepare-author-review-assets.mjs；原生AtlasTexture及白色轮廓",
     "redistribution_review": "author supplied; local prototype"
+  },
+  {
+    "file": "FrierenMod/images/events/SealingOreMine.png",
+    "source": "assets/author_adjusted/20261109/SealingOreMine.png",
+    "source_kind": "author_provided",
+    "modified": true,
+    "processing": "按作者Word裁剪提取；手工收紧播放器边缘，不重画、不锐化。",
+    "source_rect": {
+      "left": 55,
+      "top": 62,
+      "width": 2450,
+      "height": 1366
+    },
+    "sha256": "f9359e17f1320aadfe13119d386f1897ac49df816df83a075c833c5519646d75"
+  },
+  {
+    "file": "FrierenMod/images/events/SealingOreMineGreed.png",
+    "source": "assets/author_adjusted/20261109/SealingOreMineGreed.png",
+    "source_kind": "author_provided",
+    "modified": true,
+    "processing": "按作者Word裁剪提取；手工收紧播放器边缘，不重画、不锐化。",
+    "source_rect": {
+      "left": 55,
+      "top": 51,
+      "width": 2436,
+      "height": 1370
+    },
+    "sha256": "388c9a3f21a2047a63b5002c220ec58000948e2730abd9b43ce6879d62870eac"
+  },
+  {
+    "file": "FrierenMod/images/events/SealingOreMinePlay.png",
+    "source": "assets/author_adjusted/20261109/SealingOreMinePlay.jpeg",
+    "source_kind": "author_provided",
+    "modified": true,
+    "processing": "按作者Word裁剪提取；手工收紧播放器边缘，不重画、不锐化。",
+    "source_rect": {
+      "left": 0,
+      "top": 0,
+      "width": 687,
+      "height": 607
+    },
+    "sha256": "3aa5a4de0d73d1252509546afc8a8f79bca85a994ff280db7e156e4115636bcf"
+  },
+  {
+    "file": "FrierenMod/images/cards/DamageAllOption.png",
+    "source": "assets/author_adjusted/20261109/DamageAllOption.png",
+    "source_kind": "author_provided",
+    "modified": false,
+    "processing": "作者在工作区直接替换的原文件；原字节保留。",
+    "sha256": "6815661bb55f7aabc9201db9fde329f04b81668196e21502f5ea64112ecffd36"
+  },
+  {
+    "file": "FrierenMod/images/cards/DamageOption.png",
+    "source": "assets/author_adjusted/20261109/DamageOption.png",
+    "source_kind": "author_provided",
+    "modified": false,
+    "processing": "作者在工作区直接替换的原文件；原字节保留。",
+    "sha256": "a7779dfe4b8cfddf5cd36e08552e75511c50a04e82ebeb9fd074d557d1a8b8f0"
+  },
+  {
+    "file": "FrierenMod/images/cards/DamageThirdOption.png",
+    "source": "assets/author_adjusted/20261109/DamageThirdOption.png",
+    "source_kind": "author_provided",
+    "modified": false,
+    "processing": "作者在工作区直接替换的原文件；原字节保留。",
+    "sha256": "0f6f3bf52a9362d9b971106b092456c3d0c931ed41cefa4cb8d3fcffa3ba40df"
+  },
+  {
+    "file": "FrierenMod/images/cards/DexterityOption.png",
+    "source": "assets/author_adjusted/20261109/DexterityOption.png",
+    "source_kind": "author_provided",
+    "modified": false,
+    "processing": "作者在工作区直接替换的原文件；原字节保留。",
+    "sha256": "c840c9c1f4695127192a11a56499fca1e9528823071815e7f153b163cce4473f"
+  },
+  {
+    "file": "FrierenMod/images/cards/IntangibleOption.png",
+    "source": "assets/author_adjusted/20261109/IntangibleOption.png",
+    "source_kind": "author_provided",
+    "modified": false,
+    "processing": "作者在工作区直接替换的原文件；原字节保留。",
+    "sha256": "459a3efe25920b2ca2838262c4b7394e0d5bec15edca2d0814f41126d7a73e04"
+  },
+  {
+    "file": "FrierenMod/images/events/仰头.png",
+    "source": "作者在工作区提供的 events/仰头.png；2026-11-10回复用途尚未决定",
+    "source_kind": "author_provided",
+    "modified": false,
+    "processing": "原文件保留；未分配事件或页面，不参与任何现有事件显示。",
+    "sha256": "e5a559a3def20e2a036f8931b431e2c253b43d73d7297f035e4c408543ee0ad0"
   }
 ]

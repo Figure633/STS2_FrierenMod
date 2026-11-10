@@ -7,6 +7,7 @@ public sealed class SlotBackProgress
     public HashSet<string> Unlocked { get; set; } = ["0001", "0002", "0003"];
     public string[] Selected { get; set; } = ["0001", "0002", "0003"];
     public HashSet<string> RewardedRuns { get; set; } = [];
+    public HashSet<string> CompletedCommissions { get; set; } = [];
 
     public bool Unlock(string id) => SlotBackCatalog.Contains(id) && Unlocked.Add(id);
 
@@ -36,6 +37,7 @@ public sealed class SlotBackProgress
 
     public IEnumerable<string> CollectionRewards()
     {
+        if (Unlock("8015")) yield return "8015";
         // 一代收藏库打开时赠送纪念背景，再按当前收藏数与勇者小队成员补发收藏成就。
         foreach (var id in new[] { "9999", "9997", "9998" }) if (Unlock(id)) yield return id;
         if (Unlocked.Count >= 50 && Unlock("9001")) yield return "9001";
@@ -43,6 +45,7 @@ public sealed class SlotBackProgress
         if (new[] { "2007", "2008", "3002", "4012", "9003" }.Any(Unlocked.Contains) &&
             Unlocked.Contains("4013") && new[] { "1008", "5015" }.Any(Unlocked.Contains) && Unlock("9003"))
             yield return "9003";
+        if (Unlocked.Count >= 20 && Unlock("8011")) yield return "8011";
     }
 
     public string ToJson() => JsonSerializer.Serialize(this);
@@ -52,6 +55,7 @@ public sealed class SlotBackProgress
         var state = JsonSerializer.Deserialize<SlotBackProgress>(json) ?? new();
         state.Unlocked ??= [];
         state.RewardedRuns ??= [];
+        state.CompletedCommissions ??= [];
         state.Unlocked.RemoveWhere(id => !SlotBackCatalog.Contains(id));
         state.Unlocked.UnionWith(["0001", "0002", "0003"]);
         if (state.Selected is not { Length: 3 }) state.Selected = ["0001", "0002", "0003"];

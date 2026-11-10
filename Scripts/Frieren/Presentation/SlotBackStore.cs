@@ -47,15 +47,26 @@ public static class SlotBackStore
     {
         if (!Read().Unlock(id)) return false;
         Save(); Changed?.Invoke(); Unlocked?.Invoke(id);
+        if(id!="8011" && _progress.Unlocked.Count>=20)Unlock("8011");
         return true;
     }
 
     public static void CollectLibraryRewards()
     {
+        NewSlotBackAchievements.ReconcileProfile();
         var added = Read().CollectionRewards().ToArray();
         if (added.Length == 0) return;
         Save(); Changed?.Invoke();
         foreach (var id in added) Unlocked?.Invoke(id);
+    }
+
+    public static int RecordCommissions(IEnumerable<string> keys)
+    {
+        var progress=Read();
+        int before=progress.CompletedCommissions.Count;
+        progress.CompletedCommissions.UnionWith(keys);
+        if(progress.CompletedCommissions.Count!=before)Save();
+        return progress.CompletedCommissions.Count;
     }
 
     public static bool Select(int slot, string id)

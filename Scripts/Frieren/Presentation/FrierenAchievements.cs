@@ -80,6 +80,7 @@ public static class FrierenAchievements
     public static void RunEnded(RunState state, Player player, bool victory)
     {
         if (!Applies(player) || RunManager.Instance.IsAbandoned) return;
+        NewSlotBackAchievements.ReconcileProfile();
         if (!victory) {
             if (!player.Creature.IsDead || state.CurrentRoom is not CombatRoom room) return;
             Unlock(player, "0008");
@@ -88,6 +89,7 @@ public static class FrierenAchievements
             return;
         }
         var deck = MagicDeckStore.Read(player);
+        NewSlotBackAchievements.RunVictory(player,RunManager.Instance.RunTime);
         var equipped = deck.Items.Where(i => i.Slot >= 0).ToArray();
         if (player.Deck.Cards.Count >= 40) Unlock(player, "5008");
         if (deck.Items.Count + deck.Props.Count >= 20) Unlock(player, "5009");

@@ -40,10 +40,11 @@ public static class CommissionCmd
     private static readonly HashSet<string> ManaMakers=["MultipleOffensiveMagic","ManaDetection","DomainExpansion","ContinualChant","ClearMind","ButtSlam","TreasureVaultSpell","EndlessFlow","Snuggle","ManaCollapse","Disperse","ManaParcel","RapidChant","GrapeSpell","ShavedIceSpell","GoodLuckSpell","ManaExpansion","TrueColours"];
     public static bool IsBusy(Player p)=>Pending.Contains(p);
     public static CommissionState Read(Player p){var json=Data.Get(p);return string.IsNullOrEmpty(json)?new():CommissionState.FromJson(json);}
-    public static void Write(Player p,CommissionState state)=>Data.Set(p,state.ToJson());
+    public static void Write(Player p,CommissionState state){Data.Set(p,state.ToJson());Presentation.NewSlotBackAchievements.Commissions(p,state);}
     private static uint Seed(string text)=>BitConverter.ToUInt32(SHA256.HashData(Encoding.UTF8.GetBytes(text)),0);
     public static CommissionState State(Player p){
         var state=Read(p);if(p.Character is not Frieren)return state;int act=p.RunState.CurrentActIndex;
+        Presentation.NewSlotBackAchievements.Commissions(p,state);
         // 原生地图历史保存进入前的问号类型；包括未接任务前的房间，且事件内战斗不重复计数。
         bool counted=state.SetUnknownRooms(act,p.RunState.MapPointHistory.ElementAtOrDefault(act)?.Count(e=>e.MapPointType==MapPointType.Unknown)??0);
         if(state.CurrentAct==act&&state.GeneratedActs.Contains(act)){if(counted)Write(p,state);return state;}

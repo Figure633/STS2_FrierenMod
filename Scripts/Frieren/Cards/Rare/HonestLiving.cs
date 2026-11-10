@@ -30,7 +30,10 @@ public sealed class HonestLiving() : FrierenCard(1, CardType.Attack, CardRarity.
         foreach (int damage in rolls)
             await DamageCmd.Attack(damage).FromCardCompatibility(this, play).Unpowered()
                 .TargetingRandomOpponents(CombatState!).Execute(context);
-        if (rolls.All(damage => damage == maximum)) await PlayerCmd.GainGold(DynamicVars["Gold"].IntValue, Owner);
+        if (rolls.All(damage => damage == maximum)) {
+            await PlayerCmd.GainGold(DynamicVars["Gold"].IntValue, Owner);
+            Presentation.FrierenAchievements.Unlock(Owner,"8017");
+        }
         else DebtStore.Add(Owner, DynamicVars["Debt"].IntValue);
     }
 

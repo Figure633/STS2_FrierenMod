@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bhk3rbbj77wvp"
-path="res://.godot/imported/05-海塔.png-936ae7ae14d71ea46252f4a5a7def606.ctex"
+uid="uid://bsjtamqerfjme"
+path="res://.godot/imported/SealingOreMineGreed.png-6b539f352d0b6ab31c0ecb8acb601469.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://outputs/slot-backs-final-20261029/卡槽背景最终版-19组/基础圆角/05-海塔.png"
-dest_files=["res://.godot/imported/05-海塔.png-936ae7ae14d71ea46252f4a5a7def606.ctex"]
+source_file="res://FrierenMod/images/events/SealingOreMineGreed.png"
+dest_files=["res://.godot/imported/SealingOreMineGreed.png-6b539f352d0b6ab31c0ecb8acb601469.ctex"]
 
 [params]
 

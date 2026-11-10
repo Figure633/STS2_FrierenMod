@@ -5,12 +5,14 @@ using MegaCrit.Sts2.Core.Events;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Potions;
 using MegaCrit.Sts2.Core.Rewards;
+using MegaCrit.Sts2.Core.Runs;
 
 namespace FrierenMod.Scripts.Events;
 
 public sealed class AnimalWell : FrierenStoryEvent
 {
     protected override string[] Portraits => ["AnimalWell", "AnimalWell1", "AnimalWell2", "AnimalWell3"];
+    public override bool IsAllowed(IRunState runState) => base.IsAllowed(runState) && runState.CurrentActIndex is 0 or 1;
     protected override IReadOnlyList<EventOption> GenerateInitialOptions() => [
         Choice("FIRECRACKERS", Firecrackers), Choice("FLUTE", Flute, Owner!.Deck.Cards.Any(c => c.IsUpgradable)),
         CardChoice<BirdCapturingGrimoire>("BIRD", Bird)

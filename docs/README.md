@@ -13,8 +13,9 @@
 | 阿乌拉战斗 | [AURA_BOSS.md](AURA_BOSS.md) |
 | 联机设计和验收范围 | [MULTIPLAYER.md](MULTIPLAYER.md) |
 | 作者待决定的代理新增内容 | [AGENT_ADDITIONS_REVIEW.md](AGENT_ADDITIONS_REVIEW.md) |
+| 代理补写及尚无逐句确认的文本 | [AGENT_TEXT_REVIEW.md](AGENT_TEXT_REVIEW.md)，附全部中英文本来源索引 |
 | 卡图、事件图与卡背模板 | [CARD_ART_GUIDE.md](CARD_ART_GUIDE.md)、[EVENT_ART_GUIDE.md](EVENT_ART_GUIDE.md)、[SLOT_BACK_TEMPLATES.md](SLOT_BACK_TEMPLATES.md) |
-| 二代新增卡槽背景的解锁条件填写 | [带缩略图的Excel填写表](../outputs/slot-backs-final-20261109/二代新增卡槽背景-解锁条件填写表.xlsx)，共23张，新增条件待作者指定 |
+| 二代新增卡槽背景的解锁条件 | [作者填写的Excel表](../outputs/slot-backs-final-20261109/二代新增卡槽背景-解锁条件填写表.xlsx)，23组文案已登记，22组已接入，圣雪结晶待作者新增事件 |
 | 能力分类原则 | [POWER_TYPES.md](POWER_TYPES.md)，具体分类以当前模型的 Type 为准 |
 | 资源来源与文件指纹 | [assets.json](assets.json)、[generated_assets.json](generated_assets.json) |
 | 卡名检索 | [inventory/card_names.jsonl](inventory/card_names.jsonl)，作者工作簿优先 |

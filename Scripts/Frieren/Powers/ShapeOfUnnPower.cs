@@ -8,7 +8,9 @@ public sealed class ShapeOfUnnPower : FrierenPower, IChantListener
 {
     public async Task AfterChant(PlayerChoiceContext context, CardPlay play)
     {
-        if (play.Card.Owner.Creature == Owner && Owner.IsAlive)
+        if (play.Card.Owner.Creature == Owner && Owner.IsAlive) {
             await CreatureCmd.Heal(Owner, Amount);
+            await PowerCmd.Remove(this);
+        }
     }
 }

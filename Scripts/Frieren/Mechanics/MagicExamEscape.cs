@@ -22,6 +22,7 @@ public static class MagicExamEscape
         string key=CommissionCmd.BattleKey(player.RunState,room);
         foreach(var member in combat.Players)EscapedRoom.Set(member,key);
         foreach(var enemy in combat.Enemies.ToArray())await CreatureCmd.Escape(enemy);
+        Presentation.FrierenAchievements.Unlock(player,"8005");
     }
     [HarmonyPatch(typeof(EncounterModel),nameof(EncounterModel.ShouldGiveRewards),MethodType.Getter)]
     private static class NoRewards

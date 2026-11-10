@@ -18,14 +18,14 @@ public static class Sts2SlotBackTests
             LocManager.Instance.SetLanguage(language);
             foreach (string id in SlotBackCatalog.NewIds) {
                 Check(!SlotBackLibrary.Text($"BACK.{id}.title").Contains($"BACK.{id}") &&
-                    SlotBackLibrary.Text($"BACK.{id}.description") == (language == "zhs" ? "解锁条件待定。" : "Unlock condition to be determined."),
-                    "名称与待定条件本地化完整：" + language + "/" + id);
+                    !SlotBackLibrary.Text($"BACK.{id}.description").Contains("待定") && !SlotBackLibrary.Text($"BACK.{id}.description").Contains("to be determined"),
+                    "作者成就名称与条件本地化完整：" + language + "/" + id);
             }
         }
         var pending = new SlotBackProgress();
         foreach (int ascension in new[] { 0, 5, 10 }) pending.GrantVictory("pending-conditions-" + ascension, ascension, _ => 0);
         pending.CollectionRewards().ToArray();
-        Check(!pending.Unlocked.Overlaps(SlotBackCatalog.NewIds), "未指定条件的新增背景不进入通关或收藏赠送奖励");
+        Check(pending.Unlocked.Intersect(SlotBackCatalog.NewIds).SequenceEqual(new[]{"8015"}), "新增背景不进入一代随机池，仅自动赠送指定8015");
         Check(!pending.Select(2, "8023"), "锁定背景不能直接选择");
         Check(pending.Unlock("8023") && pending.Select(2, "8023"), "新背景复用原有解锁与选择接口");
         Check(SlotBackProgress.FromJson(pending.ToJson()).Selected[2] == "8023", "新增背景的解锁和选择可保存恢复");

@@ -133,5 +133,6 @@
   "FRIERENMOD-SEALING_ORE_POWER.title": "Anti-Magic Ore",
   "FRIERENMOD-SEALING_ORE_POWER.description": "You cannot [gold]Chant[/gold].",
   "FRIERENMOD-SHAPE_OF_UNN_POWER.title": "Shape of Unn",
-  "FRIERENMOD-SHAPE_OF_UNN_POWER.description": "After chanting, heal {Amount} HP."
+  "FRIERENMOD-SHAPE_OF_UNN_POWER.description": "After chanting, heal HP equal to the number of Shape of Unn stacks, then remove this Power.",
+  "FRIERENMOD-SHAPE_OF_UNN_POWER.smartDescription": "After chanting, heal {Amount} HP, then remove this Power."
 }

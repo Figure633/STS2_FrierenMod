@@ -12,7 +12,7 @@ namespace FrierenMod.Scripts.Events;
 public sealed class FoodEvent : FrierenStoryEvent
 {
     protected override string[] Portraits => ["FoodEvent", "FreeFood", "Package", "Meal", "BigMeal"];
-    public override bool IsAllowed(IRunState runState) => base.IsAllowed(runState) && runState.Players.All(p => p.Gold >= 75);
+    public override bool IsAllowed(IRunState runState) => base.IsAllowed(runState) && runState.Players.All(p => p.Gold >= 75 && p.Creature.CurrentHp <= p.Creature.MaxHp * .65m);
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("MealHeal", 0), new DynamicVar("FeastHeal", 0)];
     public override void CalculateVars()
     {

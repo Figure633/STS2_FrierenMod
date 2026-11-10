@@ -10,16 +10,18 @@ public static class FrierenCardFrames
     private static readonly Dictionary<(string Kind, string Style), (Texture2D Texture, ShaderMaterial Material)> Frames = [];
 
     private static bool Applies(CustomCardModel card) => card.Rarity != CardRarity.Ancient &&
-        (card is IManaCard || card.Type is not (CardType.Status or CardType.Curse));
+        (card is IManaCard || card.Type is not (CardType.Status or CardType.Curse or CardType.Quest));
 
     public static Texture2D? Texture(CustomCardModel card) => Applies(card) ? Get(card).Texture : null;
     public static Material? Material(CustomCardModel card) => Applies(card) ? Get(card).Material : null;
+    public static bool IsShared(MegaCrit.Sts2.Core.Models.CardModel card) => card is BabySleeping or ShavedIceSpell or ManaDetection
+        or GrapeSpell or FlyingMagic or Disperse or ClearMind or ManaAffinity or Snuggle;
 
     private static (Texture2D Texture, ShaderMaterial Material) Get(CustomCardModel card)
     {
         string kind = card.Type switch { CardType.Attack => "attack", CardType.Power => "power", _ => "skill" };
         // 一代因子、魔具和魔力共用紫色卡背，七张 FRIEREN_FERN_CARD 另用双色卡背。
-        bool shared = card is BabySleeping or ShavedIceSpell or ManaDetection or GrapeSpell or FlyingMagic or Disperse or ClearMind or ManaAffinity or Snuggle;
+        bool shared = IsShared(card);
         string style = card is FactorCard or MagicPropCard or IManaCard ? "magic" : shared ? "shared" : "frieren";
         var key = (kind, style);
         if (Frames.TryGetValue(key, out var cached)) return cached;

@@ -6,7 +6,7 @@ using MegaCrit.Sts2.Core.Saves.Runs;
 namespace FrierenMod.Scripts.Cards;
 
 // 运费属于单张主牌组实例；原生深拷贝、DeckVersion和SavedProperty负责复制与存读档。
-public sealed class ValuableCargo() : FrierenCard(-1,CardType.Skill,CardRarity.Token,TargetType.None)
+public sealed class ValuableCargo() : FrierenCard(-1,CardType.Quest,CardRarity.Quest,TargetType.None)
 {
     protected override string ArtName => "UnbelievableToolBox";
     public override int MaxUpgradeLevel => 0;
