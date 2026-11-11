@@ -68,9 +68,18 @@ await fs.writeFile(`${output}/SenzuBean-cutout.png`, cutout);
 const icon = await sharp(cutout).resize(72, 72, { fit: 'contain', background: '#00000000' })
   .extend({ top: 4, bottom: 4, left: 4, right: 4, background: '#00000000' }).png().toBuffer();
 await fs.writeFile(`${output}/SenzuBean.png`, icon);
-const alpha = await sharp(icon).extractChannel('alpha').dilate(2).raw().toBuffer();
+const alpha = await sharp(icon).extractChannel('alpha').raw().toBuffer();
 const outline = Buffer.alloc(80 * 80 * 4, 255);
-for (let i = 0; i < alpha.length; i++) outline[i * 4 + 3] = alpha[i];
+// 直接对Alpha作2像素最大值扩展，避免图像操作作用到RGB而让轮廓错位。
+for (let y = 0; y < 80; y++) for (let x = 0; x < 80; x++) {
+  let opacity = 0;
+  for (let dy = -2; dy <= 2; dy++) for (let dx = -2; dx <= 2; dx++) {
+    const nx = x + dx, ny = y + dy;
+    if (nx >= 0 && ny >= 0 && nx < 80 && ny < 80) opacity = Math.max(opacity, alpha[ny * 80 + nx]);
+  }
+  outline[(y * 80 + x) * 4 + 3] = opacity;
+}
+for (let i = 0; i < alpha.length; i++) if (outline[i * 4 + 3] < alpha[i]) throw Error('悬停轮廓未完整覆盖图标。');
 await sharp(outline, { raw: { width: 80, height: 80, channels: 4 } }).png().toFile(`${output}/SenzuBeanOutline.png`);
 const files = [];
 for (const name of ['SenzuBean-cutout.png', 'SenzuBean.png', 'SenzuBeanOutline.png']) {
