@@ -26,6 +26,7 @@ public static class FrierenRestSiteOptions
     {
         if (player.Character is Frieren && !__result.OfType<BuyMagicPropsOption>().Any())
             __result.Add(new BuyMagicPropsOption(player));
+        DragonSummoning.RestoreOptions(player,__result);
     }
 }
 

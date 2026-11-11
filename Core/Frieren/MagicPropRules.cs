@@ -15,7 +15,9 @@ public static class MagicPropRules
         new PropDefinition("RoyalGrimoire",0), new("MagicExamVial",0,true), new("MagicPot",0,Reusable:true,GoldCost:30),new("MagicBread",0,true)
     });
     public static IReadOnlyList<PropDefinition> EventOnly { get; } = Array.AsReadOnly(new[] {
-        new PropDefinition("SealingOre", 0), new("BirdCapturingGrimoire", 0, true)
+        new PropDefinition("SealingOre", 0), new("BirdCapturingGrimoire", 0, true),
+        new("DragonBall1",0),new("DragonBall2",0),new("DragonBall3",0),new("DragonBall4",0),
+        new("DragonBall5",0),new("DragonBall6",0),new("DragonBall7",0)
     });
     // 兼容旧存档，已弃用的魔具不再进入任何新获取池。
     public static IReadOnlyList<PropDefinition> Legacy { get; } = [new("MysticBox",3),new("ElvenHourglass",0,true),new("PhoenixQuill",1)];
@@ -38,7 +40,7 @@ public static class MagicPropRules
     public static bool CanUse(MagicDeckState deck, MagicProp prop, bool inCombat)
     {
         var rule = Get(prop.PropId);
-        if(prop.PropId=="MysticBox")return false;
+        if(prop.PropId=="MysticBox" || prop.PropId.StartsWith("DragonBall",StringComparison.Ordinal))return false;
         if (rule.CombatOnly && !inCombat) return false;
         if (prop.PropId == "UnbelievableTool")
             return deck.Items.Any(i => i.Slot >= 0) && deck.Items.Any(i => i.Slot < 0);

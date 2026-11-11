@@ -79,7 +79,7 @@ public static class CommissionCmd
     public static bool CanAct(Player p,bool input=true){
         var m=RunManager.Instance;var c=CombatManager.Instance;
         return p.Character is Frieren&&ReferenceEquals(m.DebugOnlyGetState(),p.RunState)&&!m.IsCleaningUp&&!p.Creature.IsDead&&!c.IsStarting&&!c.IsEnding&&
-            (!input||!MagicPropCmd.IsBusy(p))&&(!input||!Pending.Contains(p)&&!m.NetService.IsGameLoading&&LocalContext.IsMe(p)&&!m.ActionExecutor.IsRunning&&MagicPropCmd.AllowsUseOver(NOverlayStack.Instance?.Peek()))&&
+            (!input||!MagicPropCmd.IsBusy(p))&&(!input||!DragonSummoning.IsTransitioning&&!Pending.Contains(p)&&!m.NetService.IsGameLoading&&LocalContext.IsMe(p)&&!m.ActionExecutor.IsRunning&&MagicPropCmd.AllowsUseOver(NOverlayStack.Instance?.Peek()))&&
             (!c.IsInProgress||!c.PlayerActionsDisabled&&!c.IsEnemyTurnStarted&&!c.EndingPlayerTurnPhaseOne&&!c.EndingPlayerTurnPhaseTwo&&(p.RunState.Players.Count==1||p.PlayerCombatState?.Phase==PlayerTurnPhase.Play));
     }
     public static bool CanReceive(Player p,CommissionReward r)=>r.Kind!=CommissionRewardKind.Potion||p.HasOpenPotionSlots&&Hook.ShouldProcurePotion(p.RunState,p.Creature.CombatState,Potion(r.Item).ToMutable(),p);
@@ -130,7 +130,9 @@ public static class CommissionCmd
         }
         int gold=q.BaseGold+(duplicateRelic&&reward.DuplicateGold>=0?0:reward.BonusGold);
         if(gold>0)await PlayerCmd.GainGold(gold,p);
-        q.RewardReceived=received;if(received&&reward.UniqueKey.Length>0)state.ClaimedRewards.Add(reward.UniqueKey);state.Revision++;Write(p,state);return true;
+        q.RewardReceived=received;if(received&&reward.UniqueKey.Length>0)state.ClaimedRewards.Add(reward.UniqueKey);state.Revision++;Write(p,state);
+        if(q.Stars==3)DragonBallStore.GrantNext(p);
+        return true;
         bool Restore(){q.Status=CommissionStatus.Accepted;state.Revision++;Write(p,state);return false;}
     }
     private static void GiveProp(Player p,string id,int count){var deck=MagicDeckStore.Read(p);for(int i=0;i<count;i++)deck.AddProp(id);MagicDeckStore.Write(p,deck);}

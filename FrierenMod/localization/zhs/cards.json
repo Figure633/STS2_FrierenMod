@@ -344,5 +344,21 @@
   "FRIERENMOD-MEMORY_TRANSFER_SPELL.description": "[gold]传说魔法[/gold]。\n造成{Damage:diff()}点伤害。\n选择[gold]手牌[/gold]中的一张牌，使其在本回合[gold]耗能[/gold]减{Reduction:diff()}。",
   "FRIERENMOD-MEMORY_TRANSFER_SPELL.selectionScreenPrompt": "选择一张牌降低[gold]耗能[/gold]。",
   "FRIERENMOD-MAGIC_BREAD.title": "魔法面包",
-  "FRIERENMOD-MAGIC_BREAD.description": "仅战斗中使用。抽2张牌，回复{energyPrefix:energyIcons(2)}。"
+  "FRIERENMOD-MAGIC_BREAD.description": "仅战斗中使用。抽2张牌，回复{energyPrefix:energyIcons(2)}。",
+  "FRIERENMOD-KAMEHAMEHA.title": "龟派气功",
+  "FRIERENMOD-KAMEHAMEHA.description": "[gold]传说魔法[/gold]。\n造成{Damage:diff()}点伤害。每次[gold]咏唱[/gold]时，使本牌本回合[gold]耗能[/gold]减少1。\n[i]KA~ME~KA~ME~[/i]",
+  "FRIERENMOD-DRAGON_BALL1.title": "龙珠其一",
+  "FRIERENMOD-DRAGON_BALL1.description": "在尖塔中寻找其余{Remaining}颗[gold]龙珠[/gold]，集齐七颗后在休息处[gold]召唤神龙[/gold]！",
+  "FRIERENMOD-DRAGON_BALL2.title": "龙珠其二",
+  "FRIERENMOD-DRAGON_BALL2.description": "在尖塔中寻找其余{Remaining}颗[gold]龙珠[/gold]，集齐七颗后在休息处[gold]召唤神龙[/gold]！",
+  "FRIERENMOD-DRAGON_BALL3.title": "龙珠其三",
+  "FRIERENMOD-DRAGON_BALL3.description": "在尖塔中寻找其余{Remaining}颗[gold]龙珠[/gold]，集齐七颗后在休息处[gold]召唤神龙[/gold]！",
+  "FRIERENMOD-DRAGON_BALL4.title": "龙珠其四",
+  "FRIERENMOD-DRAGON_BALL4.description": "在尖塔中寻找其余{Remaining}颗[gold]龙珠[/gold]，集齐七颗后在休息处[gold]召唤神龙[/gold]！",
+  "FRIERENMOD-DRAGON_BALL5.title": "龙珠其五",
+  "FRIERENMOD-DRAGON_BALL5.description": "在尖塔中寻找其余{Remaining}颗[gold]龙珠[/gold]，集齐七颗后在休息处[gold]召唤神龙[/gold]！",
+  "FRIERENMOD-DRAGON_BALL6.title": "龙珠其六",
+  "FRIERENMOD-DRAGON_BALL6.description": "在尖塔中寻找其余{Remaining}颗[gold]龙珠[/gold]，集齐七颗后在休息处[gold]召唤神龙[/gold]！",
+  "FRIERENMOD-DRAGON_BALL7.title": "龙珠其七",
+  "FRIERENMOD-DRAGON_BALL7.description": "在尖塔中寻找其余{Remaining}颗[gold]龙珠[/gold]，集齐七颗后在休息处[gold]召唤神龙[/gold]！"
 }

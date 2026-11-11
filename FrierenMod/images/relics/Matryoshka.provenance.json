@@ -1,0 +1,15 @@
+{
+  "source": "Slay the Spire desktop-1.0.jar",
+  "assets": [
+    {
+      "file": "FrierenMod/images/relics/Matryoshka.png",
+      "sourceJarEntry": "images/relics/matryoshka.png",
+      "sha256": "d36edd373a7f32601e7c85d722be919ea11b7df0069ca1229509ccda55179448"
+    },
+    {
+      "file": "FrierenMod/images/relics/MatryoshkaOutline.png",
+      "sourceJarEntry": "images/relics/outline/matryoshka.png",
+      "sha256": "65cb7b6b975ab6c83bc3213014a62deb4cb424bd8bfcd72e473b0d429ed3a60e"
+    }
+  ]
+}

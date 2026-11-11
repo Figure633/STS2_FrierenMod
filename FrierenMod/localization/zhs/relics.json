@@ -76,5 +76,8 @@
   "FRIERENMOD-GAMBLER_COIN.flavor": "僧侣[gold]赞因[/gold]在赌场输光了所有金币，你用这[gold]最后一枚金币[/gold]决定给他展示什么叫真正的[gold]赌怪[/gold]。",
   "FRIERENMOD-GHOST_IN_BLOOM.title": "替身「花上亡灵」",
   "FRIERENMOD-GHOST_IN_BLOOM.description": "每次[gold]洗牌[/gold]后，将一张[gold]苍月草[/gold]加入[gold]抽牌堆[/gold]。",
-  "FRIERENMOD-GHOST_IN_BLOOM.flavor": "[i]人面不知何处去，桃花依旧笑春风[/i]。[gold]「花上亡灵」[/gold]象征着你的[blue]花田魔法[/blue]已经到了登峰造极的地步，也象征着对[blue]那个人[/blue]的涓涓思念..."
+  "FRIERENMOD-GHOST_IN_BLOOM.flavor": "[i]人面不知何处去，桃花依旧笑春风[/i]。[gold]「花上亡灵」[/gold]象征着你的[blue]花田魔法[/blue]已经到了登峰造极的地步，也象征着对[blue]那个人[/blue]的涓涓思念...",
+  "FRIERENMOD-MATRYOSHKA.title": "套娃",
+  "FRIERENMOD-MATRYOSHKA.description": "接下来的2个非Boss宝箱各包含1件额外[gold]遗物[/gold]。",
+  "FRIERENMOD-MATRYOSHKA.flavor": "一套环环相套的娃娃，上面的图案是一只白眼蓝羽毛的鸟，你不知道这是只什么鸟。"
 }

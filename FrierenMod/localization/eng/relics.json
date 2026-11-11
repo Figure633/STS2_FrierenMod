@@ -76,5 +76,8 @@
   "FRIERENMOD-GAMBLER_COIN.flavor": "The priest [gold]Sein[/gold] lost all his Gold at the casino. With this [gold]last coin[/gold], you decide to show him what a [gold]real gambler[/gold] can do.",
   "FRIERENMOD-GHOST_IN_BLOOM.title": "Stand: Ghost in Bloom",
   "FRIERENMOD-GHOST_IN_BLOOM.description": "After you [gold]shuffle[/gold], add a [gold]Blue Moon Weed[/gold] to your [gold]Draw Pile[/gold].",
-  "FRIERENMOD-GHOST_IN_BLOOM.flavor": "[i]That familiar face is gone, I know not where; peach blossoms still smile in the spring breeze[/i]. [gold]“Ghost in Bloom”[/gold] signifies that your [blue]Flower Field Spell[/blue] has reached its pinnacle, and reflects your quiet, lingering longing for [blue]that person[/blue]..."
+  "FRIERENMOD-GHOST_IN_BLOOM.flavor": "[i]That familiar face is gone, I know not where; peach blossoms still smile in the spring breeze[/i]. [gold]“Ghost in Bloom”[/gold] signifies that your [blue]Flower Field Spell[/blue] has reached its pinnacle, and reflects your quiet, lingering longing for [blue]that person[/blue]...",
+  "FRIERENMOD-MATRYOSHKA.title": "Matryoshka",
+  "FRIERENMOD-MATRYOSHKA.description": "The next 2 non-Boss chests contain an additional [gold]Relic[/gold].",
+  "FRIERENMOD-MATRYOSHKA.flavor": "A stackable set of painted dolls. The paint depicts an unknown bird with white eyes and blue feathers."
 }

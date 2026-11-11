@@ -34,7 +34,7 @@ public static class MagicPropCmd
     {
         var combat = CombatManager.Instance;
         return player.Character is Frieren && ReferenceEquals(RunManager.Instance.DebugOnlyGetState(), player.RunState) &&
-            !RunManager.Instance.IsCleaningUp && (!fromInput || !RunManager.Instance.NetService.IsGameLoading) &&
+            !RunManager.Instance.IsCleaningUp && (!fromInput || !DragonSummoning.IsTransitioning && !RunManager.Instance.NetService.IsGameLoading) &&
             (!fromInput || player.RunState.Players.Count == 1 || LocalContext.IsMe(player)) &&
             (!fromInput || AllowsUseOver(NOverlayStack.Instance?.Peek())) &&
             MagicDeckStore.Read(player).SetupCompleted && !player.Creature.IsDead &&
@@ -75,13 +75,23 @@ public static class MagicPropCmd
             player.RunState.CurrentRoom is not RestSiteRoom || !Shopping.Add(player)) return false;
         try
         {
-            var cards = MagicPropRules.All.Select(p => (CardModel)MagicPropCard.Create(player, p.Id)).ToArray();
+            var offers = MagicPropRules.All.Select(p => (CardModel)MagicPropCard.Create(player, p.Id)).ToList();
+            int nextBall = DragonBallStore.Next(player);
+            if (nextBall > 0) offers.Add(MagicPropCard.Create(player,DragonBallStore.Ball(nextBall)));
+            var cards = offers.ToArray();
             var prefs = new CardSelectorPrefs(new LocString("frieren", "SHOP_SELECT"), 2)
                 { Cancelable = true, RequireManualConfirmation = true };
             var chosen = (await CardSelectCmd.FromSimpleGrid(context, cards, player, prefs)).ToArray();
             if (chosen.Length != 2 || chosen.Distinct().Count() != 2 || chosen.Except(cards).Any()) return false;
+            if(chosen.OfType<DragonBall>().Any(ball=>DragonBallStore.Next(player)==0 || ball.PropId!=DragonBallStore.Ball(DragonBallStore.Next(player))))return false;
             var deck = MagicDeckStore.Read(player);
-            foreach (var card in chosen.Cast<MagicPropCard>()) deck.AddProp(card.PropId);
+            foreach (var card in chosen.Cast<MagicPropCard>()) {
+                deck.AddProp(card.PropId);
+                if (DragonBallStore.IsBall(card.PropId)) {
+                    var balls = DragonBallStore.Read(player); balls.GrantedMask |= 1 << (card.PropId[^1] - '1');
+                    DragonBallStore.Write(player,balls);
+                }
+            }
             MagicDeckStore.Write(player, deck);
             if(player.GetRelic<MagicShopMembership>() is {} membership){membership.Flash();FreeShopChoices.Add(player);}
             // 与原生锻造一致，成功后由营地同步器消费此次行动，跑局统一保存。

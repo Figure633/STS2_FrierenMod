@@ -25,8 +25,7 @@ public sealed class HonestLiving() : FrierenCard(1, CardType.Attack, CardRarity.
     {
         int maximum = DynamicVars["MaxDamage"].IntValue;
         // 三次投点先独立生成，判奖依据投点，而非敌人格挡后的生命损失。
-        var rolls = Enumerable.Range(0, DynamicVars["Hits"].IntValue).Select(_ =>
-            Owner.RunState.Rng.Niche.NextInt(DynamicVars["MinDamage"].IntValue, maximum + 1)).ToArray();
+        var rolls = Enumerable.Range(0, DynamicVars["Hits"].IntValue).Select(_ => RollDamage()).ToArray();
         foreach (int damage in rolls)
             await DamageCmd.Attack(damage).FromCardCompatibility(this, play).Unpowered()
                 .TargetingRandomOpponents(CombatState!).Execute(context);
@@ -38,4 +37,15 @@ public sealed class HonestLiving() : FrierenCard(1, CardType.Attack, CardRarity.
     }
 
     protected override void OnUpgrade() => DynamicVars["MinDamage"].UpgradeValueBy(1);
+
+    internal int RollDamage()
+    {
+        int min = DynamicVars["MinDamage"].IntValue, max = DynamicVars["MaxDamage"].IntValue;
+        var rng = Owner.RunState.Rng.Niche;
+        if (Enchantment is not Enchantments.LoadedDice { Status: MegaCrit.Sts2.Core.Entities.Enchantments.EnchantmentStatus.Normal })
+            return rng.NextInt(min, max + 1);
+        // 原本最大值的概率加 15 个百分点，其余点数均分剩余概率。
+        int count = max - min + 1;
+        return count <= 1 || rng.NextInt(100 * count) < 100 + 15 * count ? max : rng.NextInt(min, max);
+    }
 }

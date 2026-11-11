@@ -1,4 +1,4 @@
-param([switch]$Mixed, [string]$GodotMonoPath = '')
+param([switch]$Mixed, [switch]$Dragon, [string]$GodotMonoPath = '')
 $ErrorActionPreference='Stop'
 $mpRoot=Split-Path -Parent $PSScriptRoot
 [xml]$mpConfig=Get-Content -LiteralPath (Join-Path $mpRoot 'local.props') -Raw
@@ -21,6 +21,7 @@ try {
   $env:LOCALAPPDATA=Join-Path $mpDir ($mpRole+'-localappdata')
   $mpArgs=@('--headless','--path',(Join-Path $mpRoot 'Tests/Engine'),'--log-file',(Join-Path $mpDir ($mpRole+'.log')),'--',('--mp-'+$mpRole))
   if($Mixed){$mpArgs+='--mp-mixed'}
+  if($Dragon){$mpArgs+='--mp-dragon'}
   $mpProcesses+=Start-Process -FilePath $GodotMonoPath -ArgumentList $mpArgs -WindowStyle Hidden -PassThru -RedirectStandardOutput (Join-Path $mpDir ($mpRole+'-stdout.log')) -RedirectStandardError (Join-Path $mpDir ($mpRole+'-stderr.log'))
  }
  $mpDeadline=[DateTime]::UtcNow.AddSeconds(100)

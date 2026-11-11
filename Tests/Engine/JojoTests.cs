@@ -41,7 +41,7 @@ public static class JojoTests
         p.Creature.SetCurrentHpInternal(p.Creature.MaxHp-12);var story=await Enter();
         Check(story.CurrentOptions.Count==3&&story.CurrentOptions[0].HoverTips.Any()&&story.CurrentOptions[1].HoverTips.Any(),"三个作者分支提供附魔和遗物悬停");
         var tip=story.CurrentOptions[2].HoverTips.OfType<CardHoverTip>().Single();
-        Check(tip.Card is Spinner&&tip.Card.IsUpgraded,"旋转工艺选项提前预览升级版本");
+        Check(tip.Card is Spinner&&!tip.Card.IsUpgraded,"旋转工艺选项预览普通版本");
         var selector=new TestCardSelector();using(CombatTestState.UseSelector(selector)){selector.PrepareToSelect([0]);await story.CurrentOptions[0].Chosen();}
         var enchanted=p.Deck.Cards.Single(c=>c.Enchantment is HamonOverdrive);
         Check(story.IsFinished&&p.Creature.CurrentHp==p.Creature.MaxHp-4,"假面之门治疗8并完成事件");
@@ -50,7 +50,7 @@ public static class JojoTests
         Check(p.Relics.OfType<GhostInBloom>().Count()==1&&ally.GetRelic<GhostInBloom>()==null,"钻石之门仅给持有者，重复点击不重复领取");
         Check((await Enter()).CurrentOptions[1].IsLocked,"已有花上亡灵时该分支锁定");
         story=await Enter();int spinnerCount=p.Deck.Cards.OfType<Spinner>().Count();await story.CurrentOptions[2].Chosen();
-        Check(story.IsFinished&&p.Deck.Cards.OfType<Spinner>().Count()==spinnerCount+1&&p.Deck.Cards.OfType<Spinner>().Last().IsUpgraded,"漆黑之门实际获得旋转工艺+");
+        Check(story.IsFinished&&p.Deck.Cards.OfType<Spinner>().Count()==spinnerCount+1&&!p.Deck.Cards.OfType<Spinner>().Last().IsUpgraded,"漆黑之门实际获得未升级的旋转工艺");
         var serial=p.ToSerializable();var writer=new PacketWriter();serial.Serialize(writer);var reader=new PacketReader();reader.Reset(writer.Buffer);var copy=new SerializablePlayer();copy.Deserialize(reader);var restored=Player.FromSerializable(copy);
         Check(restored.GetRelic<GhostInBloom>()!=null&&restored.Deck.Cards.Any(c=>c.Enchantment is HamonOverdrive)&&reader.BitPosition==writer.BitPosition,"网络玩家数据往返保留新遗物、附魔和卡牌");
         foreach(string lang in new[]{"zhs","eng"}){

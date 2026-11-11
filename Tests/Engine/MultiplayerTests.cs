@@ -118,6 +118,11 @@ public static class MultiplayerTests
         await Barrier("connected");
         RunManager.Instance.SetUpTest(run,service);LocalContext.NetId=host?1ul:2ul;
         RunManager.Instance.GenerateRooms();
+        if(OS.GetCmdlineUserArgs().Contains("--mp-dragon")){
+            checks+=await DragonBallTests.RunParty(root,run,host,Barrier,Wait);
+            File.WriteAllText(Path.Combine(dir,role+"-result.json"),JsonSerializer.Serialize(new{checks,dragon=true}));
+            await Barrier("finished");timer.Stop();RunManager.Instance.CleanUp();timer.QueueFree();return checks;
+        }
         // 不模拟 Steam 会话，不读写作者存档。选择屏替身只生成本地选择结果。
         Overlay=new NOverlayStack();
         var harmony=new Harmony("frieren.tests.multiplayer");

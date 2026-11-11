@@ -26,6 +26,7 @@ public static class MagicDeckStore
     {
         var before = Read(player);
         Data.Set(player, deck.ToJson());
+        DragonBallStore.RecordOwned(player,deck);
         Presentation.NewSlotBackAchievements.Equipped(player,deck);
         if (CombatManager.Instance.IsInProgress && player.Creature.CombatState != null &&
             !before.Items.Where(i => i.Slot >= 0).OrderBy(i => i.Slot)

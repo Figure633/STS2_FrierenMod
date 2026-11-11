@@ -344,5 +344,21 @@
   "FRIERENMOD-MEMORY_TRANSFER_SPELL.description": "[gold]Legendary Spell[/gold].\nDeal {Damage:diff()} damage.\nChoose a card in your [gold]Hand[/gold]. Reduce its [gold]cost[/gold] by {Reduction:diff()} this turn.",
   "FRIERENMOD-MEMORY_TRANSFER_SPELL.selectionScreenPrompt": "Choose a card to reduce its [gold]cost[/gold].",
   "FRIERENMOD-MAGIC_BREAD.title": "Magic Bread",
-  "FRIERENMOD-MAGIC_BREAD.description": "Can only be used in combat. Draw 2 cards, then gain {energyPrefix:energyIcons(2)}."
+  "FRIERENMOD-MAGIC_BREAD.description": "Can only be used in combat. Draw 2 cards, then gain {energyPrefix:energyIcons(2)}.",
+  "FRIERENMOD-KAMEHAMEHA.title": "Kamehameha",
+  "FRIERENMOD-KAMEHAMEHA.description": "[gold]Legendary Spell[/gold].\nDeal {Damage:diff()} damage. Whenever you [gold]Chant[/gold], reduce its [gold]cost[/gold] by 1 this turn.\n[i]KA~ME~KA~ME~[/i]",
+  "FRIERENMOD-DRAGON_BALL1.title": "Dragon Ball 1",
+  "FRIERENMOD-DRAGON_BALL1.description": "Find the remaining {Remaining} [gold]Dragon Balls[/gold] in the Spire. Collect all seven to [gold]summon Shenron[/gold] at a Rest Site!",
+  "FRIERENMOD-DRAGON_BALL2.title": "Dragon Ball 2",
+  "FRIERENMOD-DRAGON_BALL2.description": "Find the remaining {Remaining} [gold]Dragon Balls[/gold] in the Spire. Collect all seven to [gold]summon Shenron[/gold] at a Rest Site!",
+  "FRIERENMOD-DRAGON_BALL3.title": "Dragon Ball 3",
+  "FRIERENMOD-DRAGON_BALL3.description": "Find the remaining {Remaining} [gold]Dragon Balls[/gold] in the Spire. Collect all seven to [gold]summon Shenron[/gold] at a Rest Site!",
+  "FRIERENMOD-DRAGON_BALL4.title": "Dragon Ball 4",
+  "FRIERENMOD-DRAGON_BALL4.description": "Find the remaining {Remaining} [gold]Dragon Balls[/gold] in the Spire. Collect all seven to [gold]summon Shenron[/gold] at a Rest Site!",
+  "FRIERENMOD-DRAGON_BALL5.title": "Dragon Ball 5",
+  "FRIERENMOD-DRAGON_BALL5.description": "Find the remaining {Remaining} [gold]Dragon Balls[/gold] in the Spire. Collect all seven to [gold]summon Shenron[/gold] at a Rest Site!",
+  "FRIERENMOD-DRAGON_BALL6.title": "Dragon Ball 6",
+  "FRIERENMOD-DRAGON_BALL6.description": "Find the remaining {Remaining} [gold]Dragon Balls[/gold] in the Spire. Collect all seven to [gold]summon Shenron[/gold] at a Rest Site!",
+  "FRIERENMOD-DRAGON_BALL7.title": "Dragon Ball 7",
+  "FRIERENMOD-DRAGON_BALL7.description": "Find the remaining {Remaining} [gold]Dragon Balls[/gold] in the Spire. Collect all seven to [gold]summon Shenron[/gold] at a Rest Site!"
 }

@@ -4,5 +4,8 @@
   "FRIERENMOD-MARK_OF_PRIDE.extraCardText": "对另一名随机敌人再打出一次。",
   "FRIERENMOD-HAMON_OVERDRIVE.title": "波纹疾走",
   "FRIERENMOD-HAMON_OVERDRIVE.description": "从[gold]手牌[/gold]中央打出时，返还这次花费的能量。",
-  "FRIERENMOD-HAMON_OVERDRIVE.extraCardText": "从[gold]手牌[/gold]中央打出时，返还这次花费的能量。"
+  "FRIERENMOD-HAMON_OVERDRIVE.extraCardText": "从[gold]手牌[/gold]中央打出时，返还这次花费的能量。",
+  "FRIERENMOD-LOADED_DICE.title": "灌铅",
+  "FRIERENMOD-LOADED_DICE.description": "每次投出7点的概率提高15%。不再[gold]消耗[/gold]。",
+  "FRIERENMOD-LOADED_DICE.extraCardText": "每次投出7点的概率提高15%。"
 }

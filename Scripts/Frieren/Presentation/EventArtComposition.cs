@@ -24,6 +24,7 @@ public sealed class EventArtComposition
         EventArtPreview preview => Catalog.Value[EventArtPreview.Images[preview.ArtIndex]],
         HollowKnightAdventure => Catalog.Value["BugKnight"],
         JojoAdventure => Catalog.Value["jojo"],
+        DragonBallAdventure => Catalog.Value["DragonBall"],
         SealingOreMine mine => new(){FullScene=mine.ArtIndex is 0 or 1},
         _ => new()
     };
