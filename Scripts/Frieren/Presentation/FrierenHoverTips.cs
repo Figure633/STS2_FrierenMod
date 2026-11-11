@@ -5,6 +5,8 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Powers;
+using ModPowers = FrierenMod.Scripts.Powers;
 
 namespace FrierenMod.Scripts.Presentation;
 
@@ -19,6 +21,18 @@ public static class FrierenHoverTips
     private static readonly string[] Keywords = ["CHANT", "LEGENDARY", "DIVINITY", "MANA_PAYMENT",
         "SEALED", "SECOND_DEFENSE", "SYNCHRO", "ACCELERATED_SYNCHRO", "ULTIMATE_SYNCHRO",
         "ULTIMATE_ACCELERATED_SYNCHRO", "BACKFIRE"];
+    // 通用状态用游戏现有的能力说明，名称随语言切换，不另抄写规则。
+    private static readonly Func<PowerModel>[] ReferencedPowers = [
+        ModelDb.Power<WeakPower>, ModelDb.Power<VulnerablePower>, ModelDb.Power<IntangiblePower>,
+        ModelDb.Power<SlowPower>, ModelDb.Power<BufferPower>, ModelDb.Power<FrailPower>,
+        ModelDb.Power<StrengthPower>, ModelDb.Power<DexterityPower>, ModelDb.Power<ArtifactPower>,
+        ModelDb.Power<VigorPower>, ModelDb.Power<PoisonPower>, ModelDb.Power<ThornsPower>,
+        ModelDb.Power<RegenPower>, ModelDb.Power<PlatingPower>, ModelDb.Power<FocusPower>,
+        ModelDb.Power<RitualPower>, ModelDb.Power<BlurPower>, ModelDb.Power<BarricadePower>, ModelDb.Power<ShrinkPower>,
+        ModelDb.Power<ModPowers.ConcentrationPower>, ModelDb.Power<ModPowers.MetallicizePower>,
+        ModelDb.Power<ModPowers.PhantasmalPower>, ModelDb.Power<ModPowers.StrikeUpPower>,
+        ModelDb.Power<ModPowers.SynchroWithoutManaPower>, ModelDb.Power<ModPowers.ChantWithoutManaTimesPower>
+    ];
 
     public static IEnumerable<IHoverTip> For(CardModel source)
     {
@@ -48,7 +62,7 @@ public static class FrierenHoverTips
         if (!keys.Contains("CHANT") && words.Contains(new LocString("frieren", "TIP.LEGENDARY.title").GetFormattedText()) &&
             !words.Contains(new LocString("frieren", "TIP.CHANT.title").GetFormattedText()))
             yield return new HoverTip(new LocString("frieren", "TIP.CHANT.title"), TipDescription("CHANT"));
-        foreach (var tip in NativeReferences(words))
+        foreach (var tip in NativeReferences(description, source))
             if (!source.HoverTipsNativeKeywordsContain(tip.Id)) yield return tip;
         foreach (var preview in DerivedCardPreviews.For(source)) yield return preview;
     }
@@ -62,14 +76,29 @@ public static class FrierenHoverTips
             if (words.Contains(title.GetFormattedText()))
                 yield return new HoverTip(title, TipDescription(key));
         }
-        foreach (var tip in NativeReferences(words)) yield return tip;
+        foreach (var tip in NativeReferences(text)) yield return tip;
     }
 
-    private static IEnumerable<IHoverTip> NativeReferences(HashSet<string> words)
+    private static bool Mentions(string text, string term) => !string.IsNullOrWhiteSpace(term) &&
+        Regex.IsMatch(text, @"(?<![A-Za-z])" + Regex.Escape(term) + @"(?![A-Za-z])", RegexOptions.IgnoreCase);
+
+    private static IEnumerable<IHoverTip> NativeReferences(string text, CardModel? source = null)
     {
-        foreach (var keyword in new[] { CardKeyword.Exhaust, CardKeyword.Retain })
-            if (words.Contains(new LocString("card_keywords", keyword.ToString().ToUpperInvariant() + ".title").GetFormattedText()))
+        // 去除颜色及动画标签后再匹配；普通文本、嵌套标签和英文单词均可识别。
+        string plain = Regex.Replace(text, @"\[[^\]]*\]", "");
+        foreach (var keyword in Enum.GetValues<CardKeyword>().Where(k => k != CardKeyword.None))
+            if (Mentions(plain, new LocString("card_keywords", keyword.ToString().ToUpperInvariant() + ".title").GetFormattedText()))
                 yield return HoverTipFactory.FromKeyword(keyword);
+        foreach (var getPower in ReferencedPowers) {
+            var power = getPower();
+            // 本牌另有精确到1回合的原生缩小提示，不用通用3回合说明覆盖它。
+            if (source is Underestimated && power is ShrinkPower) continue;
+            if (Mentions(plain, power.Title.GetFormattedText()) || power is SlowPower && Mentions(plain, "迟缓"))
+                // 自定义层数能力以单层说明，避免未附着模型显示“减少0”等无效效果。
+                yield return HoverTipFactory.FromPower(power, power is ModPowers.FrierenPower ? 1 : null);
+        }
+        var block = HoverTipFactory.Static(StaticHoverTip.Block);
+        if (block is HoverTip { Title: { } title } && Mentions(plain, title)) yield return block;
     }
 
     private static bool HoverTipsNativeKeywordsContain(this CardModel card, string id) =>

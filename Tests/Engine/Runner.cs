@@ -116,6 +116,10 @@ public partial class Runner : Node
                 GD.Print("AUTHOR01215_OK: " + await Author01215Tests.Run(this));
                 await Finish(); return;
             }
+            if (OS.GetCmdlineUserArgs().Contains("--ready-keywords-only")) {
+                GD.Print("READY_KEYWORDS_OK: " + await Author01214Tests.Run(this, readyAndKeywordsOnly: true));
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--author-01214-only")) {
                 GD.Print("AUTHOR01214_OK: " + await Author01214Tests.Run(this));
                 await Finish(); return;

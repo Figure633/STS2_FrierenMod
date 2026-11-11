@@ -14,6 +14,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.CardPools;
@@ -34,7 +35,7 @@ public static class Author01214Tests
         async Task<IEnumerable<CardModel>> MegaCrit.Sts2.Core.TestSupport.ICardSelector.GetSelectedCards(IEnumerable<CardModel> options,int min,int max)
         {var cards=options.ToArray();Seen.Add(cards);return await base.GetSelectedCards(cards,min,max);}
     }
-    public static async Task<int> Run(Node root)
+    public static async Task<int> Run(Node root, bool readyAndKeywordsOnly = false)
     {
         int checks=0;void Check(bool ok,string text){if(!ok)throw new Exception(text);checks++;GD.Print("PASS 0.12.14："+text);}
         SaveManager.Instance.InitPrefsDataForTest();LocManager.Instance.SetLanguage("zhs");
@@ -53,6 +54,8 @@ public static class Author01214Tests
             p.Deck.Clear(silent:true);CombatManager.Instance.History.Clear();selector.Cleanup();selector.Seen.Clear();
         }
         MagicDeckState Deck(string spell){var d=MagicDeckState.CreatePrototypeLoadout();for(int i=0;i<3;i++)d.Equip(d.Add(spell).InstanceId,(ManaSlot)i);return MagicDeckState.FromJson(JsonSerializer.Serialize(new MagicDeckSave(3,d.Items.ToArray(),true,3,StartingPropsGranted:true)));}
+        int hp;
+        if (!readyAndKeywordsOnly) {
         foreach(bool up in new[]{false,true}){
             await Reset();var c=New<Imagination>(up);await Use(c);Check(!c.Keywords.Contains(CardKeyword.Exhaust)&&c.Pile?.Type==PileType.Discard,"想象力普通／升级打出后进入弃牌堆："+up);
             Check(!up||c.Keywords.Contains(CardKeyword.Retain),"想象力升级保留仍在");
@@ -61,7 +64,8 @@ public static class Author01214Tests
         var fairy=New<FairyTaleEnd>();fairy.UpdateDynamicVarPreview(CardPreviewMode.Normal,enemies[0],fairy.DynamicVars);Check(fairy.DynamicVars.Damage.PreviewValue==6,"两张童话自身均不增加倍率");
         await CardPileCmd.Add(run.CreateCard<LightningMagic>(p),PileType.Deck);await CardPileCmd.Add(run.CreateCard<LightningMagic>(p),PileType.Deck);
         await CardPileCmd.Add(New<MoldSpell>(),PileType.Hand);fairy.UpdateDynamicVarPreview(CardPreviewMode.Normal,enemies[0],fairy.DynamicVars);
-        Check(fairy.DynamicVars.Damage.PreviewValue==12,"同名其他传说只翻倍一次，临时手牌不计入");int hp=enemies[0].CurrentHp;await Use(fairy);Check(hp-enemies[0].CurrentHp==12,"童话实际命中与预览一致");
+        Check(fairy.DynamicVars.Damage.PreviewValue==12,"同名其他传说只翻倍一次，临时手牌不计入");hp=enemies[0].CurrentHp;await Use(fairy);Check(hp-enemies[0].CurrentHp==12,"童话实际命中与预览一致");
+        }
         foreach(bool up in new[]{false,true}){
             await Reset();var ready=New<ReadyStance>(up);var high=New<Imagination>();var low=New<RapidChant>();await CardPileCmd.Add(high,PileType.Draw);await CardPileCmd.Add(low,PileType.Draw);hp=enemies[0].CurrentHp;await Use(ready);
             Check(hp-enemies[0].CurrentHp==(up?13:10)&&low.Pile?.Type==PileType.Hand&&high.Pile?.Type==PileType.Draw,"准备架势伤害及最低耗能技能："+up);
@@ -69,12 +73,43 @@ public static class Author01214Tests
         foreach(bool xFirst in new[]{false,true}){
             await Reset();var x=New<TreasureVaultSpell>();var zero=New<FiveMinutesMore>();
             foreach(var c in xFirst?new CardModel[]{x,zero}:new CardModel[]{zero,x})await CardPileCmd.Add(c,PileType.Draw);
-            await Use(New<ReadyStance>());Check((xFirst?(CardModel)x:zero).Pile?.Type==PileType.Hand,"X费和0费同优先级、按牌顶顺序："+xFirst);
+            await Use(New<ReadyStance>());Check(zero.Pile?.Type==PileType.Hand && x.Pile?.Type==PileType.Draw,"0费技能始终先于X费技能："+xFirst);
         }
+        await Reset();var expensive=New<Imagination>();var xSkill=New<TreasureVaultSpell>();
+        await CardPileCmd.Add(xSkill,PileType.Draw);await CardPileCmd.Add(expensive,PileType.Draw);await Use(New<ReadyStance>());
+        Check(expensive.Pile?.Type==PileType.Hand&&xSkill.Pile?.Type==PileType.Draw,"高费定费技能也先于X费技能");
+        await Reset();var onlyX=New<TreasureVaultSpell>();await CardPileCmd.Add(onlyX,PileType.Draw);await Use(New<ReadyStance>());
+        Check(onlyX.Pile?.Type==PileType.Hand,"仅有X费技能时仍可抽取");
         await Reset();var discounted=New<Imagination>();discounted.EnergyCost.AddThisCombat(-2);await CardPileCmd.Add(New<DefendFrieren>(),PileType.Draw);await CardPileCmd.Add(discounted,PileType.Draw);await Use(New<ReadyStance>());
         Check(discounted.Pile?.Type==PileType.Hand,"准备架势按当前修正后耗能选牌");
         await Reset();var discard=New<FiveMinutesMore>();var attack=New<StrikeFrieren>();await CardPileCmd.Add(discard,PileType.Discard);await CardPileCmd.Add(attack,PileType.Draw);await Use(New<ReadyStance>());
         Check(discard.Pile?.Type==PileType.Discard&&attack.Pile?.Type==PileType.Draw,"没有技能时不抽其他类型，也不检索弃牌堆");
+        if (readyAndKeywordsOnly) {
+            foreach (string language in new[] { "zhs", "eng" }) {
+                LocManager.Instance.SetLanguage(language);
+                var crafted=New<CustomLegendarySpell>();crafted.Configure(1,[new("Vulnerable",2),new("Intangible",1)]);
+                (CardModel card, Type[] powers)[] cases = [
+                    (New<Kiss>(), [typeof(WeakPower),typeof(VulnerablePower)]),
+                    (New<FlyingMagic>(), [typeof(IntangiblePower)]),
+                    (New<RestraintMagic>(), [typeof(SlowPower),typeof(StrengthPower)]),
+                    (New<PerfectDefensiveMagic>(), [typeof(BufferPower)]),
+                    (New<FullAhead>(), [typeof(StrengthPower),typeof(DexterityPower)]),
+                    (New<Hypnosis>(), [typeof(WeakPower),typeof(VulnerablePower)]),
+                    (New<ImpeccableIntangible>(), [typeof(IntangiblePower)]),
+                    (crafted, [typeof(VulnerablePower),typeof(IntangiblePower)])
+                ];
+                foreach(var (card,powers) in cases) {
+                    var tips=card.HoverTips.ToArray();
+                    foreach(var type in powers.Where(type=>tips.All(t=>t.Id!=ModelDb.GetId(type).ToString())))
+                        GD.Print("MISSING_TOOLTIP: "+ModelDb.GetById<PowerModel>(ModelDb.GetId(type)).Title.GetFormattedText()+"; "+card.GetDescriptionForPile(PileType.None));
+                    Check(powers.All(type=>tips.Any(t=>t.Id==ModelDb.GetId(type).ToString())) && tips.GroupBy(t=>t.Id).All(g=>g.Count()==1),
+                        language+"原生状态说明完整且不重复："+card.Id);
+                }
+                var shrink=New<Underestimated>().HoverTips.OfType<HoverTip>().Single(t=>t.Id==ModelDb.Power<ShrinkPower>().Id.ToString());
+                Check(shrink.Description.Contains(language=="zhs"?"1回合":"1 turn"),"保留本牌专用的一回合缩小说明："+language);
+            }
+            LocManager.Instance.SetLanguage("eng");CombatTestState.SetInProgress(false);RunManager.Instance.CleanUp();return checks;
+        }
         await Reset();var cry=New<Crying>(true);await Use(cry);Check(p.Creature.Block==9&&cry.CurrentWeak==9,"嗷嗷哭升级实际获得9格挡并交换到虚弱层数");
         Check(FrierenCardAvailability.IsRetired(ModelDb.Card<RedAppleSpell>())&&!ModelDb.Card<RedAppleSpell>().ShouldShowInCardLibrary&&!FrierenCardAvailability.IsRandomCandidate(ModelDb.Card<RedAppleSpell>()),"青苹果魔法废弃、隐藏百科并退出新获取");
         Check(CardModel.FromSerializable(New<RedAppleSpell>().ToSerializable()) is RedAppleSpell,"废弃卡保留旧档读取");
