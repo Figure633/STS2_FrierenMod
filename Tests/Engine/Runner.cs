@@ -104,6 +104,10 @@ public partial class Runner : Node
             new Harmony("frieren.tests.hover_host").Patch(
                 AccessTools.Method(typeof(MegaCrit.Sts2.Core.Nodes.Cards.Holders.NCardHolder), "CreateHoverTips"),
                 prefix: new HarmonyMethod(typeof(Runner), nameof(SkipGlobalHoverWindow)));
+            if (OS.GetCmdlineUserArgs().Contains("--event-fixes-only")) {
+                GD.Print("EVENT_FIXES_OK: " + await DragonBallTests.RunFixes(this));
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--dragon-only")) {
                 GD.Print("DRAGON_OK: " + await DragonBallTests.Run(this));
                 await Finish(); return;

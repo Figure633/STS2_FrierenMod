@@ -77,18 +77,19 @@ public static class MagicPropCmd
         {
             var offers = MagicPropRules.All.Select(p => (CardModel)MagicPropCard.Create(player, p.Id)).ToList();
             int nextBall = DragonBallStore.Next(player);
-            if (nextBall > 0) offers.Add(MagicPropCard.Create(player,DragonBallStore.Ball(nextBall)));
+            if (DragonBallStore.CanFindInShop(player)) offers.Add(MagicPropCard.Create(player,DragonBallStore.Ball(nextBall)));
             var cards = offers.ToArray();
             var prefs = new CardSelectorPrefs(new LocString("frieren", "SHOP_SELECT"), 2)
                 { Cancelable = true, RequireManualConfirmation = true };
             var chosen = (await CardSelectCmd.FromSimpleGrid(context, cards, player, prefs)).ToArray();
             if (chosen.Length != 2 || chosen.Distinct().Count() != 2 || chosen.Except(cards).Any()) return false;
-            if(chosen.OfType<DragonBall>().Any(ball=>DragonBallStore.Next(player)==0 || ball.PropId!=DragonBallStore.Ball(DragonBallStore.Next(player))))return false;
+            if(chosen.OfType<DragonBall>().Any(ball=>!DragonBallStore.CanFindInShop(player) || ball.PropId!=DragonBallStore.Ball(DragonBallStore.Next(player))))return false;
             var deck = MagicDeckStore.Read(player);
             foreach (var card in chosen.Cast<MagicPropCard>()) {
                 deck.AddProp(card.PropId);
                 if (DragonBallStore.IsBall(card.PropId)) {
                     var balls = DragonBallStore.Read(player); balls.GrantedMask |= 1 << (card.PropId[^1] - '1');
+                    balls.ShopBallClaimed=true;
                     DragonBallStore.Write(player,balls);
                 }
             }

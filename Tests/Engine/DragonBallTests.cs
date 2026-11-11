@@ -30,6 +30,7 @@ using MegaCrit.Sts2.Core.Multiplayer;
 using MegaCrit.Sts2.Core.Multiplayer.Serialization;
 using MegaCrit.Sts2.Core.Nodes.Cards;
 using MegaCrit.Sts2.Core.Nodes.Events;
+using MegaCrit.Sts2.Core.Nodes.Rewards;
 using MegaCrit.Sts2.Core.Rewards;
 using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.Runs;
@@ -40,6 +41,79 @@ using MegaCrit.Sts2.Core.Unlocks;
 
 public static class DragonBallTests
 {
+    private static IReadOnlyList<CardModel> LastOffer=[];
+    public static void ObserveOffer(IReadOnlyList<CardModel> cardsIn)=>LastOffer=cardsIn;
+    public static async Task<int> RunFixes(Node root)
+    {
+        int checks=0;void Check(bool ok,string text){if(!ok)throw new Exception(text);GD.Print("PASS 事件修正："+text);checks++;}
+        SaveManager.Instance.InitProfileId(1);SaveManager.Instance.InitPrefsDataForTest();LocalContext.NetId=1;
+        var manager=RunManager.Instance;var player=Player.CreateForNewRun<Frieren>(UnlockState.none,1);var ally=Player.CreateForNewRun<Frieren>(UnlockState.none,2);
+        var run=RunState.CreateForTest([player,ally],seed:"EVENT-FIXES-01222");manager.SetUpTest(run,new NetSingleplayerGameService());LocalContext.NetId=1;manager.GenerateRooms();
+        CombatTestState.SetInProgress(false);run.CurrentActIndex=1;
+        async Task<T> Begin<T>() where T:EventModel {var e=(T)ModelDb.GetById<T>(ModelDb.GetId<T>()).ToMutable();await CombatTestState.BeginEvent(e,player);return e;}
+        var debt=await Begin<DebtCollector>();int gold=player.Gold;
+        Check(ModelDb.Event<DebtCollector>().IsAllowed(run)&&!debt.CurrentOptions[0].IsLocked,"没欠债且没有老实赚钱时，仍能进入事件并选择第一项");
+        await debt.CurrentOptions[0].Chosen();Check(player.Gold>=gold+100&&player.Gold<=gold+125&&debt.IsFinished,"第一项真实获得100至125金币并结束");
+        DebtStore.Add(player,7);debt=await Begin<DebtCollector>();Check(debt.CurrentOptions[0].IsLocked&&debt.CurrentOptions[1].IsLocked,"有债时第一项锁定，没有老实赚钱时第二项锁定");
+        await CardPileCmd.Add(run.CreateCard<HonestLiving>(player),PileType.Deck);debt=await Begin<DebtCollector>();Check(!debt.CurrentOptions[1].IsLocked,"有债、足额金币和老实赚钱时可还债");
+        var selector=new TestCardSelector();using var selection=CombatTestState.UseSelector(selector);
+        var results=new HashSet<string>();
+        for(int i=0;i<8;i++){
+            var original=new CardModel[]{run.CreateCard<StrikeFrieren>(player),run.CreateCard<StrikeFrieren>(player)};
+            foreach(var card in original)await CardPileCmd.Add(card,PileType.Deck);
+            var snow=await Begin<SnowCrystalLand>();
+            var old=player.Deck.Cards.ToHashSet();selector.Cleanup();selector.PrepareToSelect(original);
+            await snow.CurrentOptions[0].Chosen();foreach(var added in player.Deck.Cards.Except(old).Where(c=>c is not Doubt))results.Add(added.Id.Entry);
+        }
+        Check(results.Count>=6&&results.All(id=>FrierenCardAvailability.IsRandomCandidate(ModelDb.AllCards.Single(c=>c.Id.Entry==id))),"同一局重复进入也按原生变化随机流推进，结果覆盖多张正常牌");
+        Check(CombatTestState.RngCounter(player.PlayerRng.Transformations)==16,"每次真实变化两张，使用原生可存档的玩家变化随机流");
+        MagicDeckStore.Write(player,MagicDeckState.FromJson(JsonSerializer.Serialize(new MagicDeckSave(3,MagicDeckState.CreatePrototypeLoadout().Items.ToArray(),true,3,StartingPropsGranted:true))));
+        run.PushRoom(new RestSiteRoom());DragonBallStore.GrantNext(player,true);DragonBallStore.GrantNext(ally,true);
+        var harmony=new Harmony("frieren.tests.event-fixes");
+        harmony.Patch(AccessTools.Method(typeof(CardSelectCmd),nameof(CardSelectCmd.FromSimpleGrid)),prefix:new HarmonyMethod(typeof(DragonBallTests),nameof(ObserveOffer)));
+        try {
+            var shop=AccessTools.Method(typeof(MagicPropCmd),"VisitShopCore");selector.Cleanup();selector.PrepareToSelect([7,0]);
+            Check(await (Task<bool>)shop.Invoke(null,[player,new BlockingPlayerChoiceContext()])!&&LastOffer.OfType<DragonBall>().Count()==1,"整局第一次可以从魔具店获得一颗龙珠");
+            selector.Cleanup();selector.PrepareToSelect([0,1]);await (Task<bool>)shop.Invoke(null,[player,new BlockingPlayerChoiceContext()])!;
+            Check(!LastOffer.OfType<DragonBall>().Any()&&!DragonBallStore.CanFindInShop(ally),"之后逛店不再出现龙珠，其他玩家也共享整局一次限制");
+            var copy=Player.FromSerializable(player.ToSerializable());Check(DragonBallStore.Read(copy).ShopBallClaimed,"魔具店领取记录随玩家存档保存");
+            run.PopCurrentRoom();
+            var canonical=ModelDb.Event<DragonBallAdventure>();run.AppendToMapPointHistory(MapPointType.Unknown,RoomType.Event,canonical.Id);run.PushRoom(new EventRoom(canonical));
+            manager.EventSynchronizer.BeginEvent(canonical);var story=(DragonBallAdventure)manager.EventSynchronizer.GetLocalEvent();
+            harmony.Patch(AccessTools.Method(typeof(RunManager),nameof(RunManager.EnterRoomWithoutExitingCurrentRoom)),prefix:new HarmonyMethod(typeof(DemonArmyAttackTests),nameof(DemonArmyAttackTests.CaptureEnterRoom)));
+            manager.CombatReplayWriter.IsEnabled=true;manager.CombatReplayWriter.StopRecording();DemonArmyAttackTests.CapturedRoom=null;
+            await story.CurrentOptions[0].Chosen();var room=DemonArmyAttackTests.CapturedRoom!;
+            Check(manager.CombatReplayWriter.IsRecordingReplay,"从控制台式事件入口开战也先建立原生战斗回放起点");
+            harmony.Unpatch(AccessTools.Method(typeof(RunManager),nameof(RunManager.EnterRoomWithoutExitingCurrentRoom)),HarmonyPatchType.Prefix,harmony.Id);
+            run.PushRoom(room);run.Map=new MockSinglePointActMap();run.AppendToMapPointHistory(MapPointType.Unknown,room.RoomType,room.ModelId);
+            var combat=room.CombatState;foreach(var p in run.Players)combat.AddPlayer(p);room.Encounter.GenerateMonstersWithSlots(run);
+            foreach(var(m,s)in room.Encounter.MonstersWithSlots)combat.AddCreature(combat.CreateCreature(m,CombatSide.Enemy,s));
+            CombatManager.Instance.SetUpCombat(combat);CombatTestState.SetInProgress(true);await Hook.BeforeCombatStart(run,combat);
+            var dummy=combat.Enemies.Single();await dummy.Monster!.AfterAddedToRoom();
+            for(int turn=0;turn<3;turn++)await Hook.AfterTurnEnd(combat,CombatSide.Enemy,[dummy]);
+            Check(((BattlewornDummyEventEncounter)room.Encounter).RanOutOfTime&&CombatManager.Instance.IsEnding,"三回合未击杀后由原生计时能力标记失败、假人逃离并结束战斗");
+            await CombatManager.Instance.CheckWinCondition();Check(room.IsPreFinished&&!CombatManager.Instance.IsInProgress,"实际走完原生战斗结束结算，不因回放缺失抛错");
+            await manager.ProceedFromTerminalRewardsScreen();await manager.EventSynchronizer.AwaitPendingOptionTasks();
+            Check(run.CurrentRoom is EventRoom&&story.IsFinished&&story.Description!.LocEntryKey.Contains("FAILURE")&&!player.Potions.OfType<SenzuBean>().Any(),"实际返回失败事件页，没有仙豆，原生前进选项可用");
+            var reward=new DragonBallReward(player);reward.Populate();TextureRect icon;
+            TestMode.IsOn=false;try{icon=(TextureRect)reward.CreateIcon()!;}finally{TestMode.IsOn=true;}
+            Check(icon.Texture.GetWidth()==icon.Texture.GetHeight(),"原生战利品图标使用正方形纹理，圆球不再被横向卡图比例压扁");icon.Free();
+            if(OS.GetCmdlineUserArgs().Contains("--ui-snapshot")){
+                var canvas=new Control();root.AddChild(canvas);canvas.AddChild(new ColorRect{Size=new Vector2(1920,1080),Color=new Color("17202c")});
+                var scene=GD.Load<PackedScene>("res://scenes/cards/card.tscn");
+                for(int i=1;i<=7;i++){
+                    var card=scene.Instantiate<NCard>();AccessTools.Property(typeof(NCard),nameof(NCard.Model)).SetValue(card,MagicPropCard.Create(player,DragonBallStore.Ball(i)));canvas.AddChild(card);
+                    card.Position=new Vector2(150+(i-1)*270,370);card.Scale=Vector2.One*.85f;card.UpdateVisuals(PileType.None,CardPreviewMode.Normal);
+                }
+                NRewardButton button;TestMode.IsOn=false;try{button=NRewardButton.Create(reward,null!);canvas.AddChild(button);}finally{TestMode.IsOn=true;}
+                button.Position=new Vector2(600,780);
+                for(int i=0;i<8;i++)await root.ToSignal(root.GetTree(),SceneTree.SignalName.ProcessFrame);
+                root.GetViewport().GetTexture().GetImage().SavePng(ProjectSettings.GlobalizePath("res://../../artifacts/dragon-ball-fixed.png"));canvas.QueueFree();
+            }
+        }
+        finally{manager.CombatReplayWriter.IsEnabled=false;harmony.UnpatchAll(harmony.Id);manager.CleanUp();}
+        return checks;
+    }
     public static async Task<int> Run(Node root)
     {
         int checks=0;void Check(bool ok,string text){if(!ok)throw new Exception(text);GD.Print("PASS 作者事件："+text);checks++;}

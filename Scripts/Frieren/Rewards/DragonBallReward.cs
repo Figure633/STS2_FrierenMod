@@ -14,7 +14,9 @@ public sealed class DragonBallReward(Player player) : CustomReward(player)
     [CustomEnum] public static RewardType FrierenDragonBall;
     public static readonly SavedSpireField<DragonBallReward,int> Number = new(() => 0,"FrierenDragonBallNumber");
     protected override RewardType RewardType => FrierenDragonBall;
-    protected override string IconPath => "res://FrierenMod/images/cards/DragonBall1.png";
+    protected override string IconPath {
+        get { int next=DragonBallStore.Next(Player);return $"res://FrierenMod/images/ui/DragonBall{Math.Clamp(next>0?next:Number.Get(this),1,7)}.png"; }
+    }
     public override LocString Description { get { var text=new LocString("frieren","DRAGON_BALL_REWARD"); text.Add("Number",DragonBallStore.Next(Player)); return text; } }
     public override bool IsPopulated => Number.Get(this) > 0;
     public override CreateRewardFromSave<CustomReward> DeserializeMethod => Restore;

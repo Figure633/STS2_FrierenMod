@@ -36,8 +36,12 @@ const svgDir='assets/prepared/dragon-balls';await fs.mkdir(svgDir,{recursive:tru
 function star(x,y){return Array.from({length:10},(_,i)=>{const a=-Math.PI/2+i*Math.PI/5,r=i%2?4.4:10;return `${(x+Math.cos(a)*r).toFixed(2)},${(y+Math.sin(a)*r).toFixed(2)}`;}).join(' ');}
 for(let n=1;n<=7;n++){
   const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="250" height="190" viewBox="0 0 250 190"><defs><radialGradient id="g" cx=".32" cy=".25" r=".8"><stop stop-color="#fff2a4"/><stop offset=".4" stop-color="#ffc14a"/><stop offset=".8" stop-color="#ed7a14"/><stop offset="1" stop-color="#9e320b"/></radialGradient></defs><circle cx="125" cy="95" r="82" fill="url(#g)" stroke="#6b2b13" stroke-width="4"/><ellipse cx="91" cy="49" rx="24" ry="12" transform="rotate(-35 91 49)" fill="#fff9d7" opacity=".8"/>${positions[n].map(([x,y])=>`<polygon points="${star(x,y)}" fill="#c72e1b"/>`).join('')}</svg>`;
-  await fs.writeFile(path.join(svgDir,`DragonBall${n}.svg`),svg);
-  await sharp(Buffer.from(svg)).png().toFile(`FrierenMod/images/cards/DragonBall${n}.png`);
+  const filled=svg.replace('<defs>','<rect width="250" height="190" fill="#000"/><defs>');
+  await fs.writeFile(path.join(svgDir,`DragonBall${n}.svg`),filled);
+  await sharp(Buffer.from(filled)).png().toFile(`FrierenMod/images/cards/DragonBall${n}.png`);
+  // 原生战利品按钮使用正方形槽位，不能直接塞入横向卡图。
+  await sharp(Buffer.from(filled)).extract({left:30,top:0,width:190,height:190}).resize(128,128)
+    .png().toFile(`FrierenMod/images/ui/DragonBall${n}.png`);
 }
 await fs.writeFile('FrierenMod/images/enchantments/LoadedDice.svg','<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64"><rect x="8" y="8" width="48" height="48" rx="9" fill="#e8d9ac" stroke="#725832" stroke-width="4"/><g fill="#7f341e"><circle cx="20" cy="20" r="4"/><circle cx="44" cy="20" r="4"/><circle cx="20" cy="44" r="4"/><circle cx="44" cy="44" r="4"/><circle cx="32" cy="32" r="4"/></g></svg>');
 await fs.writeFile(path.join(sources,'manifest.json'),JSON.stringify(manifest,null,2)+'\n');

@@ -3,6 +3,7 @@ using FrierenMod.Scripts.Cards;
 using FrierenMod.Scripts.Encounters;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Events;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.ValueProps;
@@ -22,7 +23,7 @@ public sealed class MimicFight : FrierenStoryEvent
     }
     private Task Fight()
     {
-        EnterCombatWithoutExitingEvent<MimicEncounter>([], shouldResumeAfterCombat: false);
+        EnterStoryCombat(ModelDb.Encounter<MimicEncounter>().ToMutable(),[],resume:false);
         return Task.CompletedTask;
     }
     private async Task Explode()

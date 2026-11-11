@@ -23,7 +23,8 @@ public sealed class SnowCrystalLand : FrierenStoryEvent
     {
         var cards = (await CardSelectCmd.FromDeckForTransformation(Owner!,new CardSelectorPrefs(CardSelectorPrefs.TransformSelectionPrompt,2))).ToArray();
         if (cards.Length != 2) return;
-        await CardCmd.Transform(cards.Select(c => new CardTransformation(c)),Rng,CardPreviewStyle.EventLayout);
+        // 与原版 MorphicGrove 的两张变化相同，逐张交给原生随机变化命令。
+        foreach(var card in cards) await CardCmd.TransformToRandom(card,Owner!.PlayerRng.Transformations,CardPreviewStyle.EventLayout);
         await CardPileCmd.AddCurseToDeck<Doubt>(Owner!);
         Finish("TOUCH",1);
     }

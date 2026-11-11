@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Events;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Rewards;
 using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Runs;
@@ -46,5 +47,14 @@ public abstract class FrierenStoryEvent : CustomEventModel
         if(upgraded){card.UpgradeInternal();card.FinalizeUpgradeInternal();}
         var result = await CardPileCmd.Add(card, PileType.Deck);
         CardCmd.PreviewCardPileAdd(result, 1.2f, CardPreviewStyle.EventLayout);
+    }
+    protected void EnterStoryCombat(EncounterModel encounter,IReadOnlyList<Reward> rewards,bool resume)
+    {
+        var manager=RunManager.Instance;
+        // 原生 event 控制台指令直接跳房，可能尚未建立本场战斗的回放起点。
+        // 缺少起点会使结束回合及结束战斗抛错，超时假人也无法返回事件。
+        if(LocalContext.IsMe(Owner!) && manager.CombatReplayWriter.IsEnabled && !manager.CombatReplayWriter.IsRecordingReplay)
+            manager.CombatReplayWriter.RecordInitialState(manager.ToSave(Owner!.RunState.CurrentRoom));
+        EnterCombatWithoutExitingEvent(encounter,rewards,shouldResumeAfterCombat:resume);
     }
 }

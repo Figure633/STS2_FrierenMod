@@ -9,6 +9,7 @@ public sealed class DragonBallState
 {
     public bool Started { get; set; }
     public int GrantedMask { get; set; }
+    public bool ShopBallClaimed { get; set; }
     public int DropChance { get; set; } = 10;
     public bool EventSeen { get; set; }
     public int EventMisses { get; set; }
@@ -56,6 +57,7 @@ public static class DragonBallStore
         return Enumerable.Range(1, 7).FirstOrDefault(n => (state.GrantedMask & (1 << (n - 1))) == 0);
     }
     public static int Held(Player player) => MagicDeckStore.Read(player).Props.Where(p => IsBall(p.PropId)).Select(p => p.PropId).Distinct().Count();
+    public static bool CanFindInShop(Player player)=>Next(player)>0 && !player.RunState.Players.Any(p=>Read(p).ShopBallClaimed);
     public static bool CanSummon(Player player) => !Read(player).WishUsed && Held(player) == 7;
     public static bool GrantNext(Player player, bool start = false)
     {

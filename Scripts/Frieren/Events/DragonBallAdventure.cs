@@ -39,7 +39,7 @@ public sealed class DragonBallAdventure : FrierenStoryEvent
     {
         var encounter = (BattlewornDummyEventEncounter)ModelDb.Encounter<BattlewornDummyEventEncounter>().ToMutable();
         encounter.Setting = BattlewornDummyEventEncounter.DummySetting.Setting1;
-        EnterCombatWithoutExitingEvent(encounter,[],shouldResumeAfterCombat:true); return Task.CompletedTask;
+        EnterStoryCombat(encounter,[],resume:true); return Task.CompletedTask;
     }
     public override async Task Resume(AbstractRoom room)
     {

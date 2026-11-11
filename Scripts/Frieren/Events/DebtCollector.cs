@@ -22,10 +22,10 @@ public sealed class DebtCollector : FrierenStoryEvent
     public static readonly SavedSpireField<Player,bool> Settled = new(() => false,"FrierenDebtSettled");
     protected override string[] Portraits => ["DebtCollector"];
     public override bool IsAllowed(IRunState run) => base.IsAllowed(run) && run.CurrentActIndex > 0 &&
-        run.Players.Any(p => !Settled.Get(p) && p.Deck.Cards.Any(c => c is HonestLiving));
+        run.Players.Any(p => !Settled.Get(p));
     protected override IReadOnlyList<EventOption> GenerateInitialOptions()
     {
-        if(Settled.Get(Owner!) || !Owner!.Deck.Cards.Any(c=>c is HonestLiving))
+        if(Settled.Get(Owner!))
             return [Choice("LEAVE",()=>{Finish("LEAVE",0);return Task.CompletedTask;})];
         int debt = DebtStore.Read(Owner!);
         var repay = new EventOption(this,debt > 0 && Owner!.Gold >= debt && Owner.Deck.Cards.Any(c => c is HonestLiving) ? Repay : null,
