@@ -64,7 +64,7 @@ func _initialize():
 			return
 	var textures = 0
 	var slot_backs = 0
-	for folder in ["cards", "powers", "powers/big", "relics", "potions", "character", "energy", "ui", "card_frames", "events", "monsters", "vfx", "slot_backs", "achievement", "commissions"]:
+	for folder in ["cards", "powers", "powers/big", "relics", "potions", "character", "energy", "ui", "card_frames", "events", "ancients", "monsters", "vfx", "slot_backs", "achievement", "commissions"]:
 		var path = "res://FrierenMod/images/" + folder
 		# 导出后原图只剩 .import 重映射，使用原生资源枚举获得编辑器中的原始名称。
 		for file in ResourceLoader.list_directory(path):
@@ -99,7 +99,10 @@ func _initialize():
 			audio_count += 1
 			if folder.ends_with("/bgm"): bgm_count += 1
 	var scenes = 0
-	for file in DirAccess.get_files_at("res://FrierenMod/scenes"):
+	var scene_files = DirAccess.get_files_at("res://FrierenMod/scenes")
+	for file in DirAccess.get_files_at("res://FrierenMod/scenes/ancients"):
+		scene_files.append("ancients/" + file)
+	for file in scene_files:
 		if not file.ends_with(".tscn"):
 			continue
 		# 非 Mono 打包器无法创建原版 C# 教程节点；真实继承场景由引擎专项验证。
@@ -124,7 +127,7 @@ func _initialize():
 		var scene = packed.instantiate()
 		scene.free()
 		scenes += 1
-	if textures < 119 or slot_backs != 127 or audio_count != 26 or bgm_count != 20 or scenes != 14 or imported_textures < textures or imported_audio != 26:
+	if textures < 119 or slot_backs != 127 or audio_count != 26 or bgm_count != 20 or scenes != 15 or imported_textures < textures or imported_audio != 26:
 		push_error("Resource count mismatch: textures=%d slot_backs=%d audio=%d scenes=%d" % [textures, slot_backs, audio_count, scenes])
 		quit(1)
 		return

@@ -14,9 +14,9 @@ public sealed class UpgradedHolyEmblem : CustomRelicModel
 {
     // 与原版升级初始遗物一致，不进入普通随机遗物奖励池。
     public override RelicRarity Rarity => RelicRarity.Starter;
-    public override string PackedIconPath => "res://FrierenMod/images/relics/HolyEmblem.tres";
-    protected override string PackedIconOutlinePath => "res://FrierenMod/images/relics/HolyEmblemOutline.tres";
-    protected override string BigIconPath => PackedIconPath;
+    public override string PackedIconPath => "res://FrierenMod/images/relics/UpgradedHolyEmblem.tres";
+    protected override string PackedIconOutlinePath => "res://FrierenMod/images/relics/UpgradedHolyEmblemOutline.tres";
+    protected override string BigIconPath => "res://FrierenMod/images/relics/UpgradedHolyEmblem.png";
 
     public override async Task AfterActEntered()
     {

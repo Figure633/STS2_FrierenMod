@@ -1,0 +1,44 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Texture2D" path="res://FrierenMod/images/ancients/serie.png" id="1"]
+
+[sub_resource type="Gradient" id="Gradient_shade"]
+offsets = PackedFloat32Array(0, 0.46, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0.12, 0, 0, 0, 0.86)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture_shade"]
+gradient = SubResource("Gradient_shade")
+fill_from = Vector2(0, 0)
+fill_to = Vector2(0, 1)
+
+[node name="Serie" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Library" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("1")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="DialogueShade" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture_shade")
+expand_mode = 1

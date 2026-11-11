@@ -10,6 +10,7 @@
 | 本地原版、BaseLib与一代源码 | [LOCAL_REFERENCES.md](LOCAL_REFERENCES.md) |
 | 正式版／测试版兼容入口 | [VERSION_COMPATIBILITY.md](VERSION_COMPATIBILITY.md) |
 | 委托规则与报酬 | [COMMISSIONS.md](COMMISSIONS.md) |
+| 第三幕先古之民赛莉耶与升级圣徽 | [SERIE_ANCIENT.md](SERIE_ANCIENT.md) |
 | 阿乌拉战斗 | [AURA_BOSS.md](AURA_BOSS.md) |
 | 联机设计和验收范围 | [MULTIPLAYER.md](MULTIPLAYER.md) |
 | 作者待决定的代理新增内容 | [AGENT_ADDITIONS_REVIEW.md](AGENT_ADDITIONS_REVIEW.md) |

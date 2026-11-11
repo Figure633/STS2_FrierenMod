@@ -108,5 +108,18 @@ await contact(beforeAfter, '23张-叠加后总览.png', 4, false);
 await contact(beforeAfter.filter(x => ['8001', '8009', '8013', '8022'].includes(x.item.id)), '修改前后对照.png', 2, true);
 await fs.writeFile(path.join(output, 'index.html'), `<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>23张卡槽背景 · 灰色正片叠底</title><style>body{background:#202630;color:#eee6dc;font:16px system-ui;margin:24px}main{display:grid;grid-template-columns:repeat(auto-fit,minmax(640px,1fr));gap:20px}article{background:#292f39;padding:16px}h2{font-size:17px}.pair{display:flex;gap:16px}figure{margin:0;text-align:center}img{width:301px;height:461px}a{color:#ddc693}</style><h1>23张卡槽背景 · 灰色正片叠底</h1><p>作者参考 #65656D · 不透明度38/255（约15%） · 原图与叠加后对照。PNG保留透明圆角，PSD保留原图层和可调灰色剪贴图层。</p><main>${beforeAfter.map(({ item }) => `<article><h2>${item.id} · ${esc(item.name)}</h2><div class="pair"><figure><img src="../slot-backs-final-20261109/已选成品/${encodeURIComponent(item.file)}"><figcaption>原图</figcaption></figure><figure><img src="PNG/${encodeURIComponent(item.file)}"><figcaption>叠加后 · <a href="PSD/${encodeURIComponent(item.file.replace(/\.png$/, '.psd'))}">PSD</a></figcaption></figure></div></article>`).join('')}</main></html>`);
 await fs.writeFile(path.join(output, 'manifest.json'), JSON.stringify({ reference: rel(reference), rgb: color, opacityByte: opacity, blend: 'multiply', width: W, height: H, images: records }, null, 2) + '\n');
-if (apply) await fs.writeFile(inventoryPath, JSON.stringify(inventory, null, 2) + '\n');
+if (apply) {
+  await fs.writeFile(inventoryPath, JSON.stringify(inventory, null, 2) + '\n');
+  const assetsPath = path.join(root, 'docs/assets.json');
+  const assets = JSON.parse(await fs.readFile(assetsPath, 'utf8'));
+  for (const asset of assets) {
+    const item = inventory.images.find(i => i.asset === asset.file);
+    if (!item) continue;
+    asset.source = item.source;
+    asset.sha256 = item.sha256;
+    asset.modified = true;
+    asset.processing = `${item.processing}；作者灰色RGB(${color})、正片叠底、不透明度${opacity}/255`;
+  }
+  await fs.writeFile(assetsPath, JSON.stringify(assets, null, 2) + '\n');
+}
 console.log(`MULTIPLY_OK count=${records.length} rgb=${color} opacity=${opacity}/255 alpha=unchanged layeredPSD=verified applied=${apply}`);

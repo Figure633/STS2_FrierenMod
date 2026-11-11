@@ -17,7 +17,8 @@ public sealed class HolyEmblem : CustomRelicModel
 {
     private string _magicDeckJson = new MagicDeckState().ToJson();
     public override RelicRarity Rarity => RelicRarity.Starter;
-    public override RelicModel GetUpgradeReplacement() => ModelDb.Relic<UpgradedHolyEmblem>().ToMutable();
+    // 百科用规范模型比较解锁/发现集合；原生获得流程会再创建可变副本。
+    public override RelicModel GetUpgradeReplacement() => ModelDb.Relic<UpgradedHolyEmblem>();
     public override string PackedIconPath => "res://FrierenMod/images/relics/HolyEmblem.tres";
     protected override string PackedIconOutlinePath => "res://FrierenMod/images/relics/HolyEmblemOutline.tres";
     protected override string BigIconPath => PackedIconPath;
