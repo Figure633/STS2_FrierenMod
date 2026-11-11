@@ -3,6 +3,6 @@
   "FRIERENMOD-MARK_OF_PRIDE.description": "Only for single-target Attacks. After playing, play it again against a different random enemy.",
   "FRIERENMOD-MARK_OF_PRIDE.extraCardText": "Play again against a different random enemy.",
   "FRIERENMOD-HAMON_OVERDRIVE.title": "Hamon Overdrive",
-  "FRIERENMOD-HAMON_OVERDRIVE.description": "When played from the center of your [gold]Hand[/gold], refund the Energy actually spent. With an even number of cards, either of the two middle cards qualifies.",
-  "FRIERENMOD-HAMON_OVERDRIVE.extraCardText": "When played from the center of your [gold]Hand[/gold], refund the Energy actually spent."
+  "FRIERENMOD-HAMON_OVERDRIVE.description": "When played from the center of your [gold]Hand[/gold], refund the Energy spent on it.",
+  "FRIERENMOD-HAMON_OVERDRIVE.extraCardText": "When played from the center of your [gold]Hand[/gold], refund the Energy spent on it."
 }

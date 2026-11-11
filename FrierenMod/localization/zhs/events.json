@@ -122,14 +122,14 @@
   "FRIERENMOD-HOLLOW_KNIGHT_ADVENTURE.pages.INITIAL.options.SILKSONG.description": "将一张[gold]预借时间[/gold]加入你的[gold]牌组[/gold]。",
   "FRIERENMOD-HOLLOW_KNIGHT_ADVENTURE.pages.SILKSONG.description": "看来[gold]小骑士[/gold]因为一个叫[red]丝之歌[/red]的东西郁郁寡欢，你突然想到尖塔中有一个[blue]预借时间的魔法[/blue]，[gold]小骑士[/gold]迫不及待地请你使用魔法...成功了！看来你们穿越到了[sine][red]丝之歌[/red][/sine]已经发售的年代！",
   "FRIERENMOD-JOJO_ADVENTURE.title": "冒险物语：JOJO的奇妙冒险",
-  "FRIERENMOD-JOJO_ADVENTURE.pages.INITIAL.description": "你在尖塔的时空裂隙中穿梭。这一次，你的面前有三道[gold]传送门[/gold]。\n\n第一道门上刻着石头做的假面，里头散发着[red]吸血鬼[/red]的气息。第二道门上刻着一颗[blue]钻石[/blue]，门里是个和睦的小镇。第三道门里正在上演一场宏大的骑马比赛。\n\n每个门都有独特的魅力，你最后决定进入了……",
+  "FRIERENMOD-JOJO_ADVENTURE.pages.INITIAL.description": "你在尖塔的时空裂隙中穿梭。这一次，你的面前有三道[gold]传送门[/gold]。\n\n第一道门上刻着石头做的假面，里头散发着[red]吸血鬼[/red]的气息。第二道门上刻着一颗[blue]钻石[/blue]，门里是个和睦的小镇。第三道门里正在上演一场[gold]宏大的骑马比赛[/gold]。\n\n每道门都有独特的魅力，你最后决定进入了……",
   "FRIERENMOD-JOJO_ADVENTURE.pages.INITIAL.options.MASK.title": "假面之门",
   "FRIERENMOD-JOJO_ADVENTURE.pages.INITIAL.options.MASK.description": "回复[green]8[/green]点生命。将一张牌附魔：[gold]波纹疾走[/gold]。",
   "FRIERENMOD-JOJO_ADVENTURE.pages.INITIAL.options.DIAMOND.title": "钻石之门",
   "FRIERENMOD-JOJO_ADVENTURE.pages.INITIAL.options.DIAMOND.description": "获得遗物：[gold]替身「花上亡灵」[/gold]。",
   "FRIERENMOD-JOJO_ADVENTURE.pages.INITIAL.options.SPIN.title": "漆黑之门",
   "FRIERENMOD-JOJO_ADVENTURE.pages.INITIAL.options.SPIN.description": "获得一张[gold]旋转工艺+[/gold]。",
-  "FRIERENMOD-JOJO_ADVENTURE.pages.MASK.description": "这里的人们掌握了魔法一样强大的招数，名叫「[gold]波纹[/gold]」。\n\n你用[gold]几千年的经验[/gold]嗅到了波纹的诀窍。只要使用独特的[gold]呼吸法[/gold]，就能扭转乾坤，转败为胜。",
-  "FRIERENMOD-JOJO_ADVENTURE.pages.DIAMOND.description": "你进入了钻石之门。你和这个小镇上的人很合得来。\n\n在感受小镇宁静的气息时，你察觉到一丝不自然……\n\n你的身旁突然出现了……你的[gold]替身[/gold]？",
-  "FRIERENMOD-JOJO_ADVENTURE.pages.SPIN.description": "你感受到，这场骑马大赛远没有看上去那么简单。\n\n你看着旁边的瘸子与金牙组合，嘴里念着什么[wave][gold]回旋[/gold][/wave]的事，想起尖塔里也有一名[blue]玩球的高手[/blue]。\n\n回去向他请教回旋的奥秘吧。"
+  "FRIERENMOD-JOJO_ADVENTURE.pages.MASK.description": "这里的人们掌握了如魔法般强大的招数，名叫[gold]「波纹」[/gold]。\n\n你凭借[gold]几千年的经验[/gold]，嗅到了[gold]「波纹」[/gold]的诀窍。只要使用独特的[sine][gold]呼吸法[/gold][/sine]，就能扭转乾坤，转败为胜。",
+  "FRIERENMOD-JOJO_ADVENTURE.pages.DIAMOND.description": "你进入了钻石之门，这里的居民们也有[gold]「替身」[/gold]的能力，不远处有个头发像牛排的学生和一个上班族对峙着。\n\n看着看着，你的旁边突然浮现出你的...[gold]「替身」[/gold]？",
+  "FRIERENMOD-JOJO_ADVENTURE.pages.SPIN.description": "你感受到，这场骑马大赛远没有看上去那么简单。\n\n旁边的瘸子与金牙组合正念叨着[wave][gold]「回旋」[/gold][/wave]，让你想起尖塔里也有一名[blue]玩球的高手[/blue]。\n\n回去向他请教回旋的奥秘吧。"
 }

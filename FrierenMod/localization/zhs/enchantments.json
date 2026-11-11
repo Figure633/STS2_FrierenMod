@@ -3,6 +3,6 @@
   "FRIERENMOD-MARK_OF_PRIDE.description": "只能附于单体攻击牌。打出后，对另一名随机敌人再打出一次。",
   "FRIERENMOD-MARK_OF_PRIDE.extraCardText": "对另一名随机敌人再打出一次。",
   "FRIERENMOD-HAMON_OVERDRIVE.title": "波纹疾走",
-  "FRIERENMOD-HAMON_OVERDRIVE.description": "从[gold]手牌[/gold]中央打出时，返还这次实际支付的能量。奇数张时为中央一张，偶数张时为中间两张。",
-  "FRIERENMOD-HAMON_OVERDRIVE.extraCardText": "从[gold]手牌[/gold]中央打出时，返还实际支付的能量。"
+  "FRIERENMOD-HAMON_OVERDRIVE.description": "从[gold]手牌[/gold]中央打出时，返还这次花费的能量。",
+  "FRIERENMOD-HAMON_OVERDRIVE.extraCardText": "从[gold]手牌[/gold]中央打出时，返还这次花费的能量。"
 }
