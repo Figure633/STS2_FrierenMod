@@ -5909,17 +5909,31 @@
   },
   {
     "file": "FrierenMod/images/relics/GhostInBloom.png",
-    "source": "assets/generated/jojo-20261111/GhostInBloom-source.png",
-    "sha256": "e1ff2e60f867559f1026999017e79697c959a24ced305b4e889dcd655769b542",
+    "source": "FrierenMod/images/cards/BlueMoonWeed.png",
+    "sha256": "3e78c17b914aa6a01950ca2ea0d5404d5e3e0271aaf0b4d2b3dc36ac0df299c8",
     "modified": true,
-    "processing": "内置image_gen透明花幽灵原稿等比缩至128×128；轮廓由Alpha外扩2px生成"
+    "processing": "按作者要求裁出苍月草原图前景花朵，花瓣轮廓遮罩去背景，等比缩放并置于128×128透明画布；轮廓由Alpha外扩2px生成，无生成或重绘",
+    "source_kind": "derived_from_author_artwork",
+    "source_rect": {
+      "left": 170,
+      "top": 235,
+      "width": 210,
+      "height": 145
+    }
   },
   {
     "file": "FrierenMod/images/relics/GhostInBloomOutline.png",
-    "source": "assets/generated/jojo-20261111/GhostInBloom-source.png",
-    "sha256": "c2320b4490a8cbb9626b3649520f2f8c63b883cb66daa046a596bfebdbba621f",
+    "source": "FrierenMod/images/cards/BlueMoonWeed.png",
+    "sha256": "14cd5b4c757f685e0a15955b53d082149b5d939d82e08c41634e8900a8515642",
     "modified": true,
-    "processing": "内置image_gen透明花幽灵原稿等比缩至128×128；轮廓由Alpha外扩2px生成"
+    "processing": "按作者要求裁出苍月草原图前景花朵，花瓣轮廓遮罩去背景，等比缩放并置于128×128透明画布；轮廓由Alpha外扩2px生成，无生成或重绘",
+    "source_kind": "derived_from_author_artwork",
+    "source_rect": {
+      "left": 170,
+      "top": 235,
+      "width": 210,
+      "height": 145
+    }
   },
   {
     "file": "FrierenMod/images/enchantments/HamonOverdrive.svg",
