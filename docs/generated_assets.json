@@ -111,6 +111,17 @@
       "target": "FrierenMod/images/relics/GamblerCoin.png",
       "sha256": "d1fbd365bf6a6d4eb221de0948cc23c07bca81cf1b229c2760718d8f041b945d",
       "prompt_file": "outputs/author-review-20261109/GamblerCoin-mask-prompt.txt"
+    },
+    {
+      "key": "GhostInBloom",
+      "date": "2026-11-11",
+      "tool": "built-in image_gen",
+      "prompt": "Use case: stylized-concept. Asset type: small fantasy roguelike inventory relic icon, square, isolated on a truly transparent background. Create one compact spectral flower familiar named Ghost in Bloom, an original whimsical spirit associated with pale blue moon flowers: a single large five-petal pale blue-white flower forming a tiny friendly ghost's face, two subtle glowing eyes in the flower center, a short curved green stem fading into a soft translucent blue wisp, two small leaves. Hand painted 2D Slay the Spire-style inventory art with bold dark outlines, simple readable shapes, slightly uneven painted shading, no frame or badge. Center the object, occupy 78 percent of canvas, clean alpha, recognizable at 68 pixels. Do not add text, letters, scenery, hands, multiple icons, or a checkerboard. This is a flower-shaped ghost, not a humanoid or an existing anime character.\r\n",
+      "transparent_background": true,
+      "source": "assets/generated/jojo-20261111/GhostInBloom-source.png",
+      "target": "FrierenMod/images/relics/GhostInBloom.png",
+      "sha256": "e1ff2e60f867559f1026999017e79697c959a24ced305b4e889dcd655769b542",
+      "status": "新事件遗物图标；待作者游戏验收"
     }
   ],
   "retired_assets": [

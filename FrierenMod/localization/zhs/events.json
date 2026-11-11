@@ -120,5 +120,16 @@
   "FRIERENMOD-HOLLOW_KNIGHT_ADVENTURE.pages.PATH.description": "[gold]小骑士[/gold]的脚步略显踌躇，苦难之路遍布着[jitter]致命机关[/jitter]，走错一步便万劫不复。你使出[sine][gold]飞行魔法[/gold][/sine]准备带他飞过这一片苦海，却被它的骨钉拦下。看来[gold]小骑士[/gold]想靠自己的实力寻求答案，经过三天三夜的修行，[gold]小骑士[/gold]终于抵达了苦难之路的终点，那里没有传说中的荣华富贵...或许通过这场[gold]试炼[/gold]本身就足以称之为荣誉。虽然你在那[red]饿了三天[/red]，但也学到即使生而为虫，也能为自己的不屈精神而[gold]骄傲[/gold]。",
   "FRIERENMOD-HOLLOW_KNIGHT_ADVENTURE.pages.INITIAL.options.SILKSONG.title": "和他一起等丝之歌......",
   "FRIERENMOD-HOLLOW_KNIGHT_ADVENTURE.pages.INITIAL.options.SILKSONG.description": "将一张[gold]预借时间[/gold]加入你的[gold]牌组[/gold]。",
-  "FRIERENMOD-HOLLOW_KNIGHT_ADVENTURE.pages.SILKSONG.description": "看来[gold]小骑士[/gold]因为一个叫[red]丝之歌[/red]的东西郁郁寡欢，你突然想到尖塔中有一个[blue]预借时间的魔法[/blue]，[gold]小骑士[/gold]迫不及待地请你使用魔法...成功了！看来你们穿越到了[sine][red]丝之歌[/red][/sine]已经发售的年代！"
+  "FRIERENMOD-HOLLOW_KNIGHT_ADVENTURE.pages.SILKSONG.description": "看来[gold]小骑士[/gold]因为一个叫[red]丝之歌[/red]的东西郁郁寡欢，你突然想到尖塔中有一个[blue]预借时间的魔法[/blue]，[gold]小骑士[/gold]迫不及待地请你使用魔法...成功了！看来你们穿越到了[sine][red]丝之歌[/red][/sine]已经发售的年代！",
+  "FRIERENMOD-JOJO_ADVENTURE.title": "冒险物语：JOJO的奇妙冒险",
+  "FRIERENMOD-JOJO_ADVENTURE.pages.INITIAL.description": "你在尖塔的时空裂隙中穿梭。这一次，你的面前有三道[gold]传送门[/gold]。\n\n第一道门上刻着石头做的假面，里头散发着[red]吸血鬼[/red]的气息。第二道门上刻着一颗[blue]钻石[/blue]，门里是个和睦的小镇。第三道门里正在上演一场宏大的骑马比赛。\n\n每个门都有独特的魅力，你最后决定进入了……",
+  "FRIERENMOD-JOJO_ADVENTURE.pages.INITIAL.options.MASK.title": "假面之门",
+  "FRIERENMOD-JOJO_ADVENTURE.pages.INITIAL.options.MASK.description": "回复[green]8[/green]点生命。将一张牌附魔：[gold]波纹疾走[/gold]。",
+  "FRIERENMOD-JOJO_ADVENTURE.pages.INITIAL.options.DIAMOND.title": "钻石之门",
+  "FRIERENMOD-JOJO_ADVENTURE.pages.INITIAL.options.DIAMOND.description": "获得遗物：[gold]替身「花上亡灵」[/gold]。",
+  "FRIERENMOD-JOJO_ADVENTURE.pages.INITIAL.options.SPIN.title": "漆黑之门",
+  "FRIERENMOD-JOJO_ADVENTURE.pages.INITIAL.options.SPIN.description": "获得一张[gold]旋转工艺+[/gold]。",
+  "FRIERENMOD-JOJO_ADVENTURE.pages.MASK.description": "这里的人们掌握了魔法一样强大的招数，名叫「[gold]波纹[/gold]」。\n\n你用[gold]几千年的经验[/gold]嗅到了波纹的诀窍。只要使用独特的[gold]呼吸法[/gold]，就能扭转乾坤，转败为胜。",
+  "FRIERENMOD-JOJO_ADVENTURE.pages.DIAMOND.description": "你进入了钻石之门。你和这个小镇上的人很合得来。\n\n在感受小镇宁静的气息时，你察觉到一丝不自然……\n\n你的身旁突然出现了……你的[gold]替身[/gold]？",
+  "FRIERENMOD-JOJO_ADVENTURE.pages.SPIN.description": "你感受到，这场骑马大赛远没有看上去那么简单。\n\n你看着旁边的瘸子与金牙组合，嘴里念着什么[wave][gold]回旋[/gold][/wave]的事，想起尖塔里也有一名[blue]玩球的高手[/blue]。\n\n回去向他请教回旋的奥秘吧。"
 }

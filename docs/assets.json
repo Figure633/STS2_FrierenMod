@@ -5906,5 +5906,26 @@
     "sha256": "43a41d69753abd15ef9acc93731069591506f94b1e22ff4c5089a1bf3a38282a",
     "modified": true,
     "processing": "升级圣徽Alpha外扩2px生成独立白色轮廓"
+  },
+  {
+    "file": "FrierenMod/images/relics/GhostInBloom.png",
+    "source": "assets/generated/jojo-20261111/GhostInBloom-source.png",
+    "sha256": "e1ff2e60f867559f1026999017e79697c959a24ced305b4e889dcd655769b542",
+    "modified": true,
+    "processing": "内置image_gen透明花幽灵原稿等比缩至128×128；轮廓由Alpha外扩2px生成"
+  },
+  {
+    "file": "FrierenMod/images/relics/GhostInBloomOutline.png",
+    "source": "assets/generated/jojo-20261111/GhostInBloom-source.png",
+    "sha256": "c2320b4490a8cbb9626b3649520f2f8c63b883cb66daa046a596bfebdbba621f",
+    "modified": true,
+    "processing": "内置image_gen透明花幽灵原稿等比缩至128×128；轮廓由Alpha外扩2px生成"
+  },
+  {
+    "file": "FrierenMod/images/enchantments/HamonOverdrive.svg",
+    "source": "tools/native SVG; original concentric ripple glyph",
+    "sha256": "95ef6fa84c3206575a6653f0a2f974ea698d63afe51a87f0be7bd7883691258e",
+    "modified": false,
+    "processing": "原生矢量金色波纹符号"
   }
 ]

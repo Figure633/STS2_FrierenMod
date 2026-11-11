@@ -73,5 +73,8 @@
   "FRIERENMOD-MAGIC_SHOP_MEMBERSHIP.flavor": "",
   "FRIERENMOD-GAMBLER_COIN.title": "Gambler's Coin",
   "FRIERENMOD-GAMBLER_COIN.description": "Lose all your Gold. Add [gold]Honest Work Is Boring, Right?[/gold] to your [gold]deck[/gold].",
-  "FRIERENMOD-GAMBLER_COIN.flavor": ""
+  "FRIERENMOD-GAMBLER_COIN.flavor": "",
+  "FRIERENMOD-GHOST_IN_BLOOM.title": "Stand: Ghost in Bloom",
+  "FRIERENMOD-GHOST_IN_BLOOM.description": "After you [gold]shuffle[/gold], add a [gold]Blue Moon Weed[/gold] to your [gold]Draw Pile[/gold].",
+  "FRIERENMOD-GHOST_IN_BLOOM.flavor": ""
 }

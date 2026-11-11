@@ -73,5 +73,8 @@
   "FRIERENMOD-MAGIC_SHOP_MEMBERSHIP.flavor": "",
   "FRIERENMOD-GAMBLER_COIN.title": "赌徒金币",
   "FRIERENMOD-GAMBLER_COIN.description": "失去所有金币。将1张[gold]老实赚钱，很枯燥吧？[/gold]加入你的[gold]牌组[/gold]。",
-  "FRIERENMOD-GAMBLER_COIN.flavor": ""
+  "FRIERENMOD-GAMBLER_COIN.flavor": "",
+  "FRIERENMOD-GHOST_IN_BLOOM.title": "替身「花上亡灵」",
+  "FRIERENMOD-GHOST_IN_BLOOM.description": "每次[gold]洗牌[/gold]后，将一张[gold]苍月草[/gold]加入[gold]抽牌堆[/gold]。",
+  "FRIERENMOD-GHOST_IN_BLOOM.flavor": ""
 }
