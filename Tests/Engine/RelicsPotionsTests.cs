@@ -16,6 +16,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Hooks;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
@@ -32,7 +33,7 @@ using ConcentrationPower = FrierenMod.Scripts.Powers.ConcentrationPower;
 
 public static class RelicsPotionsTests
 {
-    public static async Task<int> Run()
+    public static async Task<int> Run(bool scaleOnly = false)
     {
         int count = 0;
         void Check(bool value, string name) { if (!value) throw new Exception(name); count++; GD.Print("PASS 遗物药水：" + name); }
@@ -69,6 +70,41 @@ public static class RelicsPotionsTests
             CombatManager.Instance.History.Clear();
             MagicDeckStore.Write(player, MagicDeckState.CreatePrototypeLoadout());
         }
+        async Task CheckScale()
+        {
+            await Reset();
+            var scale = await RelicCmd.Obtain<ScaleOfObedience>(player);
+            int before = player.PlayerCombatState!.Energy;
+            await scale.AfterPlayerTurnStart(context, player);
+            await Hook.BeforeTurnEnd(combat, CombatSide.Player, [player.Creature]);
+            Check(player.Creature.GetPowerAmount<EnergyNextTurnPower>() == 0 && player.PlayerCombatState.Energy == before &&
+                player.PlayerCombatState.Hand.Cards.Count == 0, "天平无魔力不触发，移除旧版开局能量与抽牌");
+            foreach (var pile in new[] { PileType.Draw, PileType.Hand, PileType.Discard })
+            {
+                await Reset(); await RelicCmd.Obtain<ScaleOfObedience>(player);
+                var mana = Card<Mana>(); await CardPileCmd.Add(mana, pile);
+                before = player.PlayerCombatState.Energy;
+                await Hook.BeforeTurnEnd(combat, CombatSide.Player, [player.Creature]);
+                Check(player.Creature.GetPowerAmount<EnergyNextTurnPower>() == 1 && player.PlayerCombatState.Energy == before,
+                    "天平回合末预存次回合能量，魔力位于" + pile);
+                mana.RemoveFromCurrentPile();
+                await Hook.AfterEnergyReset(combat, player);
+                Check(player.PlayerCombatState.Energy == before + 1 && player.Creature.GetPowerAmount<EnergyNextTurnPower>() == 0 &&
+                    player.PlayerCombatState.Hand.Cards.Count == 0, "次回合原生能量重置钩子仅兑现一次且不抽牌，来源" + pile);
+            }
+            await Reset(); await RelicCmd.Obtain<ScaleOfObedience>(player);
+            foreach (var pile in new[] { PileType.Draw, PileType.Hand, PileType.Discard }) await CardPileCmd.Add(Card<Mana>(), pile);
+            await Hook.BeforeTurnEnd(combat, CombatSide.Enemy, [enemy]);
+            await Hook.BeforeTurnEnd(combat, CombatSide.Player, [other.Creature]);
+            Check(player.Creature.GetPowerAmount<EnergyNextTurnPower>() == 0, "敌方及队友单独的额外回合不触发持有者天平");
+            await Hook.BeforeTurnEnd(combat, CombatSide.Player, [player.Creature]);
+            Check(player.Creature.GetPowerAmount<EnergyNextTurnPower>() == 1 && other.Creature.GetPowerAmount<EnergyNextTurnPower>() == 0,
+                "三个牌堆都有魔力仍只奖励1能量，不影响队友");
+            await Reset(); await RelicCmd.Obtain<ScaleOfObedience>(player); await CardPileCmd.Add(Card<Mana>(), PileType.Exhaust);
+            await Hook.BeforeTurnEnd(combat, CombatSide.Player, [player.Creature]);
+            Check(player.Creature.GetPowerAmount<EnergyNextTurnPower>() == 0, "已消耗的魔力不再满足天平条件");
+        }
+        if (scaleOnly) { await CheckScale(); CombatTestState.SetInProgress(false); RunManager.Instance.CleanUp(); return count; }
         var relics = ModelDb.RelicPool<FrierenRelicPool>().AllRelics.ToArray();
         var potions = ModelDb.PotionPool<FrierenPotionPool>().AllPotions.ToArray();
         Check(relics.Length == 20 && relics.Count(r => r.Rarity != RelicRarity.None) == 19 && potions.Length == 3,
@@ -177,10 +213,7 @@ public static class RelicsPotionsTests
             player.PlayerCombatState.DiscardPile.Cards.OfType<Laziness>().Count() == 1, "舒适的床增加能量上限并生成两张懒懒散散");
         await RelicCmd.Remove(bed); Check(player.PlayerCombatState.MaxEnergy == maxEnergy, "移除床恢复能量上限");
 
-        await Reset(); var scale = await RelicCmd.Obtain<ScaleOfObedience>(player);
-        await CardPileCmd.Add(Card<DefendFrieren>(), PileType.Draw); energy = player.PlayerCombatState!.Energy;
-        await scale.AfterPlayerTurnStart(context, player);
-        Check(player.PlayerCombatState.Energy == energy + 1 && player.PlayerCombatState.Hand.Cards.Count == 1, "服从天平普通战斗提供能量和抽牌");
+        await CheckScale();
 
         await Reset(); var ice = await RelicCmd.Obtain<IcicleCherryBlossom>(player);
         var results = Enumerable.Range(0, 100).Select(_ => new CardCreationResult(run.CreateCard<DefendFrieren>(player))).ToList();

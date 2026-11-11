@@ -451,6 +451,10 @@ public partial class Runner : Node
                 GD.Print("LIBRARY_OK: " + await LibraryTests.Run(this));
                 await Finish(); return;
             }
+            if (OS.GetCmdlineUserArgs().Contains("--scale-only")) {
+                GD.Print("SCALE_OK: " + await RelicsPotionsTests.Run(scaleOnly: true));
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--relics-potions-only")) {
                 GD.Print("RELICS_POTIONS_OK: " + await RelicsPotionsTests.Run());
                 await Finish(); return;
