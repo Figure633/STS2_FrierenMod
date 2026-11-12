@@ -135,8 +135,8 @@ public static class DragonBallTests
         var dragon=await Event<DragonBallAdventure>(p);var select=new TestCardSelector();
         using(CombatTestState.UseSelector(select)){select.PrepareToSelect([0]);await dragon.CurrentOptions[1].Chosen();}
         var kame=p.Deck.Cards.OfType<Kamehameha>().Single();
-        Check(kame.IsUpgraded&&kame.Enchantment is HamonOverdrive&&kame.DynamicVars.Damage.IntValue==80,"龟派气功继承升级及原附魔");
-        Check(!kame.CanBeGeneratedInCombat&&!kame.CanBeGeneratedByModifiers&&kame.EnergyCost.GetWithModifiers(CostModifiers.All)==4,"金色龟派气功仅事件获取，基础4费");
+        Check(kame.IsUpgraded&&kame.Enchantment is HamonOverdrive&&kame.DynamicVars.Damage.IntValue==88,"龟派气功继承升级及原附魔");
+        Check(!kame.CanBeGeneratedInCombat&&!kame.CanBeGeneratedByModifiers&&kame.EnergyCost.GetWithModifiers(CostModifiers.All)==5,"金色龟派气功仅事件获取，基础5费");
         Check(DragonBallStore.GrantNext(p,true)&&DragonBallStore.Next(p)==2,"首次只获得一星龙珠");
         var deck=MagicDeckStore.Read(p);deck.Remove(deck.Props.Single(x=>x.PropId=="DragonBall1").InstanceId);MagicDeckStore.Write(p,deck);
         Check(DragonBallStore.GrantNext(p)&&DragonBallStore.Next(p)==3&&DragonBallStore.Held(p)==1,"丢失的龙珠不再获取，继续按编号发放");

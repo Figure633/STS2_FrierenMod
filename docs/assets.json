@@ -5941,5 +5941,21 @@
     "sha256": "95ef6fa84c3206575a6653f0a2f974ea698d63afe51a87f0be7bd7883691258e",
     "modified": false,
     "processing": "原生矢量金色波纹符号"
+  },
+  {
+    "file": "FrierenMod/images/relics/WeatheredHelmet.png",
+    "source": "assets/author_adjusted/20261112/relics/WeatheredHelmet.png",
+    "source_kind": "author_provided",
+    "modified": true,
+    "processing": "tools/prepare-nov12-relic-assets.mjs; preserve author Word crop and source alpha, uniform scale; native white outline",
+    "sha256": "7080998c2af6ac1abf99d47bed3edf679fa07bd1aeab5f883e4cbb3c969c1082"
+  },
+  {
+    "file": "FrierenMod/images/relics/WeatheredHelmetOutline.png",
+    "source": "assets/author_adjusted/20261112/relics/WeatheredHelmet.png",
+    "source_kind": "author_provided",
+    "modified": true,
+    "processing": "tools/prepare-nov12-relic-assets.mjs; preserve author Word crop and source alpha, uniform scale; native white outline",
+    "sha256": "b618ffc04d90aeef99e8eff7efb74d4ec335b158b58e5fe7c96247a477ce5932"
   }
 ]

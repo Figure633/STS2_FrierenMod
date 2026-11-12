@@ -64,6 +64,8 @@ public static class FrierenHoverTips
             yield return new HoverTip(new LocString("frieren", "TIP.CHANT.title"), TipDescription("CHANT"));
         foreach (var tip in NativeReferences(description, source))
             if (!source.HoverTipsNativeKeywordsContain(tip.Id)) yield return tip;
+        if(source is RustCleanMagic)
+            foreach(var tip in HoverTipFactory.FromEnchantment<FrierenMod.Scripts.Enchantments.ManaSource>(readable.DynamicVars["ManaSource"].IntValue)) yield return tip;
         foreach (var preview in DerivedCardPreviews.For(source)) yield return preview;
     }
 

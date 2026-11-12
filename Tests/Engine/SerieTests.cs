@@ -48,11 +48,13 @@ public static class SerieTests
         void Check(bool ok, string text) { if (!ok) throw new Exception(text); count++; GD.Print("PASS 赛莉耶：" + text); }
         void Snapshot(string file) { using var image = root.GetViewport().GetTexture().GetImage(); image.SavePng(ProjectSettings.GlobalizePath("res://../../artifacts/" + file)); }
         SaveManager.Instance.InitPrefsDataForTest(); LocalContext.NetId = 1;
+        var selector=new MegaCrit.Sts2.Core.TestSupport.TestCardSelector();
+        using var selections=CombatTestState.UseSelector(selector);
         var canonical = ModelDb.AncientEvent<Serie>();
         Check(ModelDb.AllSharedAncients.Contains(canonical), "BaseLib先古注册及百科入口");
         var gifts = Serie.Gifts;
-        Check(gifts.Count == 4 && gifts.All(r => r.Rarity == RelicRarity.Ancient) &&
-            canonical.AllPossibleOptions.Select(o => o.Relic!.Id).ToHashSet().SetEquals(gifts.Select(r => r.Id)), "四件一代Boss遗物均归入先古池且各登记一次");
+        Check(gifts.Count == 6 && gifts.All(r => r.Rarity == RelicRarity.Ancient) &&
+            canonical.AllPossibleOptions.Select(o => o.Relic!.Id).ToHashSet().SetEquals(gifts.Select(r => r.Id)), "六件遗物共用先古池且各登记一次");
         bool running = false;
         RunState Start(Player p, string seed = "SERIE-TEST") {
             if (running) RunManager.Instance.CleanUp(); running = true;
@@ -76,10 +78,15 @@ public static class SerieTests
         foreach (var chosenGift in gifts) {
             player = Player.CreateForNewRun<Frieren>(UnlockState.all, 1); Start(player);
             // 只剩指定礼物，覆盖持有三件时的少选项分支与每件礼物的实际领取。
-            foreach (var already in gifts.Where(r => r.Id != chosenGift.Id)) await RelicCmd.Obtain(already.ToMutable(), player);
+            foreach (var already in gifts.Where(r => r.Id != chosenGift.Id)) {
+                if(already is RottingSageSkull) selector.PrepareToSelect([0,1,2]);
+                await RelicCmd.Obtain(already.ToMutable(), player);
+            }
             encounter = await Enter(player);
             Check(encounter.CurrentOptions.Count == 1 && encounter.CurrentOptions[0].Relic!.Id == chosenGift.Id, "排除已持有，只展示剩余礼物：" + chosenGift.GetType().Name);
-            var option = encounter.CurrentOptions[0]; await option.Chosen(); await option.Chosen();
+            var option = encounter.CurrentOptions[0];
+            if(chosenGift is RottingSageSkull) selector.PrepareToSelect([0,1,2]);
+            await option.Chosen(); await option.Chosen();
             Check(encounter.IsFinished && player.Relics.Count(r => r.Id == chosenGift.Id) == 1, "原生领取完成且重复点击不重复获得：" + chosenGift.GetType().Name);
             var restored = Player.FromSerializable(player.ToSerializable());
             Check(restored.Relics.Any(r => r.Id == chosenGift.Id) && player.Deck.Cards.OfType<LongevityPain>().Count() == 1, "遗物真实存档可恢复，墓碑诅咒只获得一张");

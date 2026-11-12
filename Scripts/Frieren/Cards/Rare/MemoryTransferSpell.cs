@@ -19,5 +19,5 @@ public sealed class MemoryTransferSpell() : LegendaryCard(1,CardType.Attack,Card
         foreach(var card in cards)card.EnergyCost.AddThisTurn(-DynamicVars["Reduction"].IntValue);
         Owner.PlayerCombatState?.Hand.InvokeContentsChanged();
     }
-    protected override void OnUpgrade()=>DynamicVars["Reduction"].UpgradeValueBy(1);
+    protected override void OnUpgrade() { DynamicVars["Reduction"].UpgradeValueBy(1); DynamicVars.Damage.UpgradeValueBy(3); }
 }

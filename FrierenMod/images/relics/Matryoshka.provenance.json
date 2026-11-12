@@ -4,12 +4,16 @@
     {
       "file": "FrierenMod/images/relics/Matryoshka.png",
       "sourceJarEntry": "images/relics/matryoshka.png",
-      "sha256": "d36edd373a7f32601e7c85d722be919ea11b7df0069ca1229509ccda55179448"
+      "sourceSha256": "d36edd373a7f32601e7c85d722be919ea11b7df0069ca1229509ccda55179448",
+      "processing": "\u5171\u540c\u88c1\u6846(33,36,99,98)\uff0c\u7b49\u6bd4\u653e\u5927\u81f3120x112\u4ee5\u5185\uff0c\u5c45\u4e2d128x128",
+      "sha256": "e35dc2478ecde1c7289473bf9d3fa7b97a5fed50b8d04ca446373b8274f6dc0c"
     },
     {
       "file": "FrierenMod/images/relics/MatryoshkaOutline.png",
       "sourceJarEntry": "images/relics/outline/matryoshka.png",
-      "sha256": "65cb7b6b975ab6c83bc3213014a62deb4cb424bd8bfcd72e473b0d429ed3a60e"
+      "sourceSha256": "65cb7b6b975ab6c83bc3213014a62deb4cb424bd8bfcd72e473b0d429ed3a60e",
+      "processing": "\u5171\u540c\u88c1\u6846(33,36,99,98)\uff0c\u7b49\u6bd4\u653e\u5927\u81f3120x112\u4ee5\u5185\uff0c\u5c45\u4e2d128x128",
+      "sha256": "a299c0bb422ecca0551f252dada43e46f8052ae1bd1c6a9a731efded79fd2d3c"
     }
   ]
 }

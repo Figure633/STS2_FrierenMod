@@ -11,7 +11,7 @@ namespace FrierenMod.Scripts.Cards;
 
 public sealed class ArcaneNet() : FrierenCard(10,CardType.Attack,CardRarity.Rare,TargetType.AllEnemies)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars=>[new DamageVar(19,ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> CanonicalVars=>[new DamageVar(23,ValueProp.Move)];
     public override bool TryModifyEnergyCostInCombat(CardModel card,decimal cost,out decimal modifiedCost)
     {
         modifiedCost=cost;

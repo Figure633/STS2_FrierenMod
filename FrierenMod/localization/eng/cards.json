@@ -71,7 +71,7 @@
   "FRIERENMOD-PAPER_PLANE_SPELL.title": "Paper Plane Spell",
   "FRIERENMOD-PAPER_PLANE_SPELL.description": "[gold]Legendary Magic[/gold].\nYour attacks deal double damage while this turn's longest [gold]Synchro[/gold] streak is {Upgraded:cond:at least|greater than} the highest record from earlier turns this combat.\n(This turn: {Current}. Previous best: {Previous}.)",
   "FRIERENMOD-RUST_CLEAN_MAGIC.title": "Rust Removal Spell",
-  "FRIERENMOD-RUST_CLEAN_MAGIC.description": "[gold]Legendary Magic[/gold].\nRemove all your debuffs. Gain {Gold:diff()} Gold for each debuff removed.",
+  "FRIERENMOD-RUST_CLEAN_MAGIC.description": "Transform a card in your [gold]Draw Pile[/gold] into [gold]Mana[/gold] enchanted with [gold]Mana Source {ManaSource:diff()}[/gold].",
   "FRIERENMOD-LIGHTNING_MAGIC.title": "Destructive Lightning",
   "FRIERENMOD-LIGHTNING_MAGIC.description": "[gold]Legendary Spell[/gold].\nMove ALL [gold]Mana[/gold] from Draw and Discard to Hand. This combat, [gold]Synchro[/gold] deals 15 damage to a random enemy instead of drawing.",
   "FRIERENMOD-LITTLE_FIRE.title": "Little Spark",
@@ -346,7 +346,7 @@
   "FRIERENMOD-MAGIC_BREAD.title": "Magic Bread",
   "FRIERENMOD-MAGIC_BREAD.description": "Can only be used in combat. Draw 2 cards, then gain {energyPrefix:energyIcons(2)}.",
   "FRIERENMOD-KAMEHAMEHA.title": "Kamehameha",
-  "FRIERENMOD-KAMEHAMEHA.description": "[gold]Legendary Spell[/gold].\nDeal {Damage:diff()} damage. Whenever you [gold]Chant[/gold], reduce its [gold]cost[/gold] by 1 this turn.\n[i]KA~ME~KA~ME~[/i]",
+  "FRIERENMOD-KAMEHAMEHA.description": "[gold]Legendary Spell[/gold].\nDeal {Damage:diff()} damage. Whenever you [gold]Chant[/gold], reduce its [gold]cost[/gold] by 1 this turn.\n[i][blue]KA~ME~KA~ME~[/blue][/i]",
   "FRIERENMOD-DRAGON_BALL1.title": "Dragon Ball 1",
   "FRIERENMOD-DRAGON_BALL1.description": "Find the remaining {Remaining} [gold]Dragon Balls[/gold] in the Spire. Collect all seven to [gold]summon Shenron[/gold] at a Rest Site!",
   "FRIERENMOD-DRAGON_BALL2.title": "Dragon Ball 2",
@@ -360,5 +360,6 @@
   "FRIERENMOD-DRAGON_BALL6.title": "Dragon Ball 6",
   "FRIERENMOD-DRAGON_BALL6.description": "Find the remaining {Remaining} [gold]Dragon Balls[/gold] in the Spire. Collect all seven to [gold]summon Shenron[/gold] at a Rest Site!",
   "FRIERENMOD-DRAGON_BALL7.title": "Dragon Ball 7",
-  "FRIERENMOD-DRAGON_BALL7.description": "Find the remaining {Remaining} [gold]Dragon Balls[/gold] in the Spire. Collect all seven to [gold]summon Shenron[/gold] at a Rest Site!"
+  "FRIERENMOD-DRAGON_BALL7.description": "Find the remaining {Remaining} [gold]Dragon Balls[/gold] in the Spire. Collect all seven to [gold]summon Shenron[/gold] at a Rest Site!",
+  "FRIERENMOD-RUST_CLEAN_MAGIC.selectionScreenPrompt": "Choose a card to transform into Mana with Mana Source."
 }

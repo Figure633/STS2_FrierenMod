@@ -104,6 +104,10 @@ public partial class Runner : Node
             new Harmony("frieren.tests.hover_host").Patch(
                 AccessTools.Method(typeof(MegaCrit.Sts2.Core.Nodes.Cards.Holders.NCardHolder), "CreateHoverTips"),
                 prefix: new HarmonyMethod(typeof(Runner), nameof(SkipGlobalHoverWindow)));
+            if (OS.GetCmdlineUserArgs().Contains("--nov12-only")) {
+                GD.Print("NOV12_OK: " + await CurrentTodoFixTests.RunNov12(this));
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--hands-only")) {
                 GD.Print("HANDS_OK: " + await PresentationTests.RunHands(this));
                 await Finish(); return;

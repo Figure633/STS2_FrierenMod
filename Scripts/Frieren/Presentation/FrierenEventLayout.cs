@@ -71,7 +71,12 @@ public static class FrierenEventLayout
         var rect = composition.BackgroundRect(layout.Size, background.Texture.GetSize());
         background.Position = rect.Position + origin; background.Size = rect.Size;
         background.SelfModulate = composition.FullScene ? Colors.White : new Color(0.16f, 0.16f, 0.16f);
-        layout.GetNode<TextureRect>("%Portrait").Visible = !composition.FullScene;
+        var portrait = layout.GetNode<TextureRect>("%Portrait");
+        portrait.Visible = !composition.FullScene;
+        if(model is DemonArmyAttack or FoodEvent) {
+            portrait.PivotOffset = portrait.Size / 2;
+            portrait.Scale = new Vector2(1.06f,1.06f);
+        }
 
         var shade = layout.GetNodeOrNull<TextureRect>("FrierenFullSceneShade");
         if (shade == null) {

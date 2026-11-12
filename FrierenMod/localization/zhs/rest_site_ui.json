@@ -3,5 +3,5 @@
   "OPTION_FRIEREN_MAGIC_SHOP.description": "选择两件魔具加入魔法牌组，然后在魔法书中使用。占用一次营地行动。",
   "OPTION_FRIEREN_MAGIC_SHOP.descriptionDisabled": "需要先完成初始因子选择。",
   "OPTION_FRIEREN_SUMMON_DRAGON.name": "召唤神龙！",
-  "OPTION_FRIEREN_SUMMON_DRAGON.description": "消耗七颗[gold]龙珠[/gold]，向神龙许下一个愿望。不消耗营地行动。"
+  "OPTION_FRIEREN_SUMMON_DRAGON.description": "消耗[gold]七颗龙珠[/gold]，向[green]神龙[/green]许下一个[gold]愿望[/gold]。不消耗营地行动。"
 }

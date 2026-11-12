@@ -79,5 +79,17 @@
   "FRIERENMOD-GHOST_IN_BLOOM.flavor": "[i]That familiar face is gone, I know not where; peach blossoms still smile in the spring breeze[/i]. [gold]“Ghost in Bloom”[/gold] signifies that your [blue]Flower Field Spell[/blue] has reached its pinnacle, and reflects your quiet, lingering longing for [blue]that person[/blue]...",
   "FRIERENMOD-MATRYOSHKA.title": "Matryoshka",
   "FRIERENMOD-MATRYOSHKA.description": "The next 2 non-Boss chests contain an additional [gold]Relic[/gold].",
-  "FRIERENMOD-MATRYOSHKA.flavor": "A stackable set of painted dolls. The paint depicts an unknown bird with white eyes and blue feathers."
+  "FRIERENMOD-MATRYOSHKA.flavor": "A stackable set of painted dolls. The paint depicts an unknown bird with white eyes and blue feathers.",
+  "FRIERENMOD-SACRED_SNOW_CRYSTAL.title": "Sacred Snow Crystal",
+  "FRIERENMOD-SACRED_SNOW_CRYSTAL.description": "At the start of combat, choose 1 of 3 random Rare cards to add to your [gold]Hand[/gold]. It gains [gold]Retain[/gold].",
+  "FRIERENMOD-SACRED_SNOW_CRYSTAL.flavor": "",
+  "FRIERENMOD-SKYCLEAVER.title": "Skycleaver",
+  "FRIERENMOD-SKYCLEAVER.description": "Whenever damage is [gold]Blocked[/gold], gain 2 [gold]Block[/gold] next turn.",
+  "FRIERENMOD-SKYCLEAVER.flavor": "",
+  "FRIERENMOD-WEATHERED_HELMET.title": "Weathered Helmet",
+  "FRIERENMOD-WEATHERED_HELMET.description": "Whenever you play a card whose printed cost is at least {energyPrefix:energyIcons(3)}, gain 1 [gold]Buffer[/gold].",
+  "FRIERENMOD-WEATHERED_HELMET.flavor": "The helmet of [gold]Eisen[/gold], the warrior of [blue]Himmel’s hero party[/blue]. An exceptional vanguard, Eisen took [gold]Stark[/gold] as his apprentice after demons destroyed the boy’s village.",
+  "FRIERENMOD-ROTTING_SAGE_SKULL.title": "Skull of the Rotting Sage",
+  "FRIERENMOD-ROTTING_SAGE_SKULL.description": "Upon pickup, choose 3 cards in your [gold]Deck[/gold] to enchant with [gold]Mana Source 3[/gold].",
+  "FRIERENMOD-ROTTING_SAGE_SKULL.flavor": ""
 }

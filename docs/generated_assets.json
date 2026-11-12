@@ -176,6 +176,90 @@
       "processing": "tools/prepare-frieren-hands.mjs; uniform scale, wrist alignment, 422x1200 transparent canvas",
       "target": "FrierenMod/images/character/hand_scissors.png",
       "sha256": "8738f869a96a9253422321e9f5917e30d53b0629b1973b2209c2b1325c6e88b2"
+    },
+    {
+      "key": "SacredSnowCrystal",
+      "date": "2026-11-12",
+      "target": "FrierenMod/images/relics/SacredSnowCrystal.png",
+      "sha256": "463abfd67ee0c0abff79c575e1446e28a48aa568f8ae08fc3e2a24c9c178fbb1",
+      "tool": "built-in image_gen",
+      "source": "exec-ea04e2a1-1e9c-4989-a102-6026f871300d.png; retained at assets/prepared/relics-nov12/SacredSnowCrystal.png",
+      "prompt_file": "assets/prepared/relics-nov12/prompts.json",
+      "prompt_key": "prompts.SacredSnowCrystal",
+      "transparent_background": true,
+      "processing": "tools/prepare-nov12-relic-assets.mjs; alpha cutout, uniform fit 128x128; outline from alpha"
+    },
+    {
+      "key": "SacredSnowCrystalOutline",
+      "date": "2026-11-12",
+      "target": "FrierenMod/images/relics/SacredSnowCrystalOutline.png",
+      "sha256": "63be24976acdd6562bb9ea74de2970135f7a2f6a4c843b921ad7276823121fcf",
+      "tool": "built-in image_gen",
+      "source": "exec-ea04e2a1-1e9c-4989-a102-6026f871300d.png; retained at assets/prepared/relics-nov12/SacredSnowCrystal.png",
+      "prompt_file": "assets/prepared/relics-nov12/prompts.json",
+      "prompt_key": "prompts.SacredSnowCrystal",
+      "transparent_background": true,
+      "processing": "tools/prepare-nov12-relic-assets.mjs; alpha cutout, uniform fit 128x128; outline from alpha"
+    },
+    {
+      "key": "Skycleaver",
+      "date": "2026-11-12",
+      "target": "FrierenMod/images/relics/Skycleaver.png",
+      "sha256": "abe68ca3b988ec65c4ba72b47acab32555821f78b313f57612eda86ae4359bdf",
+      "tool": "built-in image_gen",
+      "source": "exec-f3c5ef90-450a-4a4a-a7f2-d8056ab07c3a.png; retained at assets/prepared/relics-nov12/Skycleaver.png",
+      "prompt_file": "assets/prepared/relics-nov12/prompts.json",
+      "prompt_key": "prompts.Skycleaver",
+      "transparent_background": true,
+      "processing": "tools/prepare-nov12-relic-assets.mjs; alpha cutout, uniform fit 128x128; outline from alpha"
+    },
+    {
+      "key": "SkycleaverOutline",
+      "date": "2026-11-12",
+      "target": "FrierenMod/images/relics/SkycleaverOutline.png",
+      "sha256": "3fd89abbaa04879a471e6cf1c8204a04e86760ea312fdcd00f15b259d249f328",
+      "tool": "built-in image_gen",
+      "source": "exec-f3c5ef90-450a-4a4a-a7f2-d8056ab07c3a.png; retained at assets/prepared/relics-nov12/Skycleaver.png",
+      "prompt_file": "assets/prepared/relics-nov12/prompts.json",
+      "prompt_key": "prompts.Skycleaver",
+      "transparent_background": true,
+      "processing": "tools/prepare-nov12-relic-assets.mjs; alpha cutout, uniform fit 128x128; outline from alpha"
+    },
+    {
+      "key": "RottingSageSkull",
+      "date": "2026-11-12",
+      "target": "FrierenMod/images/relics/RottingSageSkull.png",
+      "sha256": "6cd7b1371610bf0619af6b983667748835710ef2dae5cbe17ea567ba56309beb",
+      "tool": "built-in image_gen",
+      "source": "exec-8781d2cc-2531-4b37-9a60-e498967361b4.png; retained at assets/prepared/relics-nov12/RottingSageSkull.png",
+      "prompt_file": "assets/prepared/relics-nov12/prompts.json",
+      "prompt_key": "prompts.RottingSageSkull",
+      "transparent_background": true,
+      "processing": "tools/prepare-nov12-relic-assets.mjs; alpha cutout, uniform fit 128x128; outline from alpha"
+    },
+    {
+      "key": "RottingSageSkullOutline",
+      "date": "2026-11-12",
+      "target": "FrierenMod/images/relics/RottingSageSkullOutline.png",
+      "sha256": "e39bdd5f56de5b9bbcc3838657697b8ca989479e69d6142f84b44164cd0f014d",
+      "tool": "built-in image_gen",
+      "source": "exec-8781d2cc-2531-4b37-9a60-e498967361b4.png; retained at assets/prepared/relics-nov12/RottingSageSkull.png",
+      "prompt_file": "assets/prepared/relics-nov12/prompts.json",
+      "prompt_key": "prompts.RottingSageSkull",
+      "transparent_background": true,
+      "processing": "tools/prepare-nov12-relic-assets.mjs; alpha cutout, uniform fit 128x128; outline from alpha"
+    },
+    {
+      "key": "ManaSource",
+      "date": "2026-11-12",
+      "target": "FrierenMod/images/enchantments/ManaSource.png",
+      "sha256": "66932d82353c1d5efd3ea5c392dc394712bbea5d6d5714060890ab442dc826d8",
+      "tool": "built-in image_gen",
+      "source": "exec-2cd9f55d-50b8-4b5e-9dbf-42368a779b49.png; retained at assets/prepared/relics-nov12/ManaSource.png",
+      "prompt_file": "assets/prepared/relics-nov12/prompts.json",
+      "prompt_key": "prompts.ManaSource",
+      "transparent_background": true,
+      "processing": "tools/prepare-nov12-relic-assets.mjs; original Word crop, alpha cutout, uniform fit 128x128"
     }
   ],
   "retired_assets": [

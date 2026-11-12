@@ -8,6 +8,7 @@ using Godot;
 using MegaCrit.Sts2.Core.Events;
 using MegaCrit.Sts2.Core.Entities.Ancients;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Runs;
 
 namespace FrierenMod.Scripts.Ancients;
@@ -15,7 +16,8 @@ namespace FrierenMod.Scripts.Ancients;
 public sealed class Serie : CustomAncientModel
 {
     public static IReadOnlyList<RelicModel> Gifts => [ModelDb.Relic<IcicleCherryBlossom>(),
-        ModelDb.Relic<ScaleOfObedience>(), ModelDb.Relic<ComfortableBed>(), ModelDb.Relic<HimmelGravestone>()];
+        ModelDb.Relic<ScaleOfObedience>(), ModelDb.Relic<ComfortableBed>(), ModelDb.Relic<HimmelGravestone>(),
+        ModelDb.Relic<SacredSnowCrystal>(), ModelDb.Relic<RottingSageSkull>()];
     protected override OptionPools MakeOptionPools => new(MakePool(Gifts.ToArray()));
     // 百科每件只登记一次，不能使用重复三次的选项池枚举。
     public override IEnumerable<EventOption> AllPossibleOptions => Gifts.Select(r => RelicOption(r.ToMutable()));
@@ -42,13 +44,14 @@ public sealed class Serie : CustomAncientModel
     protected override IReadOnlyList<EventOption> GenerateInitialOptions()
     {
         // 委托可能已给出其中的遗物；只抽未持有的，少于三件时展示剩余件数。
-        var remaining = Gifts.Where(r => !Owner!.Relics.Any(owned => owned.Id == r.Id)).ToList();
+        var remaining = new GrabBag<RelicModel>();
+        foreach(var relic in Gifts.Where(r => !Owner!.Relics.Any(owned => owned.Id == r.Id)))
+            remaining.Add(relic,relic is HimmelGravestone ? .5 : 1);
         var options = new List<EventOption>();
         while (remaining.Count > 0 && options.Count < 3)
         {
-            int index = Rng.NextInt(remaining.Count);
-            options.Add(RelicOption(remaining[index].ToMutable()));
-            remaining.RemoveAt(index);
+            // 原生加权袋，不放回抽取；六件礼物没有固定选项位置。
+            options.Add(RelicOption(remaining.GrabAndRemove(Rng)!.ToMutable()));
         }
         return options; // 全部持有时由原生先古流程进入结束页。
     }

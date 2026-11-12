@@ -71,7 +71,7 @@
   "FRIERENMOD-PAPER_PLANE_SPELL.title": "让纸飞机飞得很远的魔法",
   "FRIERENMOD-PAPER_PLANE_SPELL.description": "[gold]传说魔法[/gold]。\n本回合最高连续[gold]同调[/gold]次数{Upgraded:cond:大于或等于|大于}本场战斗此前回合的最高记录时，你的攻击伤害翻倍。\n（本回合：{Current}，此前最高：{Previous}）",
   "FRIERENMOD-RUST_CLEAN_MAGIC.title": "清洁铜像生锈的魔法",
-  "FRIERENMOD-RUST_CLEAN_MAGIC.description": "[gold]传说魔法[/gold]。\n移除你的所有减益，每移除一个获得{Gold:diff()}金币。",
+  "FRIERENMOD-RUST_CLEAN_MAGIC.description": "将[gold]抽牌堆[/gold]中的一张牌变化为附有[gold]魔力源{ManaSource:diff()}[/gold]的[gold]魔力[/gold]。",
   "FRIERENMOD-LIGHTNING_MAGIC.title": "破灭之雷魔法",
   "FRIERENMOD-LIGHTNING_MAGIC.description": "[gold]传说魔法[/gold]。\n将[gold]抽牌堆[/gold]和[gold]弃牌堆[/gold]的所有[gold]魔力[/gold]移入[gold]手牌[/gold]。本场战斗，[gold]同调[/gold]变为[gold]终极同调[/gold]。",
   "FRIERENMOD-LITTLE_FIRE.title": "小小火花",
@@ -346,7 +346,7 @@
   "FRIERENMOD-MAGIC_BREAD.title": "魔法面包",
   "FRIERENMOD-MAGIC_BREAD.description": "仅战斗中使用。抽2张牌，回复{energyPrefix:energyIcons(2)}。",
   "FRIERENMOD-KAMEHAMEHA.title": "龟派气功",
-  "FRIERENMOD-KAMEHAMEHA.description": "[gold]传说魔法[/gold]。\n造成{Damage:diff()}点伤害。每次[gold]咏唱[/gold]时，使本牌本回合[gold]耗能[/gold]减少1。\n[i]KA~ME~KA~ME~[/i]",
+  "FRIERENMOD-KAMEHAMEHA.description": "[gold]传说魔法[/gold]。\n造成{Damage:diff()}点伤害。每次[gold]咏唱[/gold]时，使本牌本回合[gold]耗能[/gold]减少1。\n[i][blue]KA~ME~KA~ME~[/blue][/i]",
   "FRIERENMOD-DRAGON_BALL1.title": "龙珠其一",
   "FRIERENMOD-DRAGON_BALL1.description": "在尖塔中寻找其余{Remaining}颗[gold]龙珠[/gold]，集齐七颗后在休息处[gold]召唤神龙[/gold]！",
   "FRIERENMOD-DRAGON_BALL2.title": "龙珠其二",
@@ -360,5 +360,6 @@
   "FRIERENMOD-DRAGON_BALL6.title": "龙珠其六",
   "FRIERENMOD-DRAGON_BALL6.description": "在尖塔中寻找其余{Remaining}颗[gold]龙珠[/gold]，集齐七颗后在休息处[gold]召唤神龙[/gold]！",
   "FRIERENMOD-DRAGON_BALL7.title": "龙珠其七",
-  "FRIERENMOD-DRAGON_BALL7.description": "在尖塔中寻找其余{Remaining}颗[gold]龙珠[/gold]，集齐七颗后在休息处[gold]召唤神龙[/gold]！"
+  "FRIERENMOD-DRAGON_BALL7.description": "在尖塔中寻找其余{Remaining}颗[gold]龙珠[/gold]，集齐七颗后在休息处[gold]召唤神龙[/gold]！",
+  "FRIERENMOD-RUST_CLEAN_MAGIC.selectionScreenPrompt": "选择一张牌，变化为附有魔力源的魔力。"
 }

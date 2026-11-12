@@ -79,5 +79,17 @@
   "FRIERENMOD-GHOST_IN_BLOOM.flavor": "[i]人面不知何处去，桃花依旧笑春风[/i]。[gold]「花上亡灵」[/gold]象征着你的[blue]花田魔法[/blue]已经到了登峰造极的地步，也象征着对[blue]那个人[/blue]的涓涓思念...",
   "FRIERENMOD-MATRYOSHKA.title": "套娃",
   "FRIERENMOD-MATRYOSHKA.description": "接下来的2个非Boss宝箱各包含1件额外[gold]遗物[/gold]。",
-  "FRIERENMOD-MATRYOSHKA.flavor": "一套环环相套的娃娃，上面的图案是一只白眼蓝羽毛的鸟，你不知道这是只什么鸟。"
+  "FRIERENMOD-MATRYOSHKA.flavor": "一套环环相套的娃娃，上面的图案是一只白眼蓝羽毛的鸟，你不知道这是只什么鸟。",
+  "FRIERENMOD-SACRED_SNOW_CRYSTAL.title": "圣雪结晶",
+  "FRIERENMOD-SACRED_SNOW_CRYSTAL.description": "战斗开始时，从3张随机稀有牌中选择1张加入[gold]手牌[/gold]，使其获得[gold]保留[/gold]。",
+  "FRIERENMOD-SACRED_SNOW_CRYSTAL.flavor": "",
+  "FRIERENMOD-SKYCLEAVER.title": "开天斧",
+  "FRIERENMOD-SKYCLEAVER.description": "每次有伤害被[gold]格挡[/gold]抵消后，下回合获得2点[gold]格挡[/gold]。",
+  "FRIERENMOD-SKYCLEAVER.flavor": "",
+  "FRIERENMOD-WEATHERED_HELMET.title": "饱经风霜的头盔",
+  "FRIERENMOD-WEATHERED_HELMET.description": "每打出一张原本耗能大于等于{energyPrefix:energyIcons(3)}的牌，获得1层[gold]缓冲[/gold]。",
+  "FRIERENMOD-WEATHERED_HELMET.flavor": "[blue]辛美尔勇者小队[/blue]的战士[gold]艾泽[/gold]的头盔。艾泽的前卫能力极其出色，隐居时收留了被魔族灭村的[gold]修塔尔克[/gold]作为徒弟。",
+  "FRIERENMOD-ROTTING_SAGE_SKULL.title": "腐坏贤者之颅",
+  "FRIERENMOD-ROTTING_SAGE_SKULL.description": "拾取时，选择3张[gold]牌组[/gold]中的牌，附魔：[gold]魔力源3[/gold]。",
+  "FRIERENMOD-ROTTING_SAGE_SKULL.flavor": ""
 }

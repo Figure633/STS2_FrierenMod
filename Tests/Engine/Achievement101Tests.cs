@@ -58,7 +58,7 @@ public static class Achievement101Tests
             await Reset();Clear("4006");await PowerCmd.Apply<WeakPower>(context,player.Creature,99,target,null);await PowerCmd.Apply<VulnerablePower>(context,player.Creature,1,target,null);
             if(kinds==3)await PowerCmd.Apply<FrailPower>(context,player.Creature,1,target,null);
             await PowerCmd.Apply<StrengthPower>(context,player.Creature,3,player.Creature,null);await Use(combat.CreateCard<RustCleanMagic>(player));
-            Check(Has("4006")== (kinds==3)&&player.Creature.GetPowerAmount<StrengthPower>()==3,"除锈按负面种类计数，保留正面能力："+kinds);
+            Check(!Has("4006")&&player.Creature.GetPowerAmount<StrengthPower>()==3,"除锈重做后旧卡背条件待定，不误触发或移除增益："+kinds);
         }
         await Reset();var aura=Spawn<Aura>();await CreatureCmd.Kill(aura);Check(Has("5001"),"实际死亡钩子在击败阿乌拉后解锁");
         foreach(bool damaged in new[]{false,true}) {

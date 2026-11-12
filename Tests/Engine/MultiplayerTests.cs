@@ -119,6 +119,15 @@ public static class MultiplayerTests
         RunManager.Instance.SetUpTest(run,service);LocalContext.NetId=host?1ul:2ul;
         RunManager.Instance.GenerateRooms();
         if(OS.GetCmdlineUserArgs().Contains("--mp-dragon")){
+            var stats=SaveManager.Instance.Progress.GetOrCreateAncientStats(ModelDb.AncientEvent<FrierenMod.Scripts.Ancients.Serie>().Id);
+            stats.CharStats.Clear();stats.CharStats.Add(new AncientCharacterStats{Character=p1.Character.Id,Wins=host?0:5});
+            await Barrier("serie-first-start");await FrierenMod.Scripts.Ancients.SerieFirstVisit.Ensure(run,2);await Barrier("serie-first-done");
+            Check(run.Acts[2].Ancient is FrierenMod.Scripts.Ancients.Serie&&FrierenMod.Scripts.Ancients.SerieFirstVisit.Decision.Get(p1)==2,"访问记录不同仍按房主首次必遇赛莉耶");
+            foreach(var p in run.Players)FrierenMod.Scripts.Ancients.SerieFirstVisit.Decision.Set(p,0);
+            stats.CharStats[0].Wins=host?1:0;
+            var rooms=(RoomSet)AccessTools.Field(typeof(ActModel),"_rooms").GetValue(run.Acts[2])!;rooms.Ancient=ModelDb.AncientEvent<MegaCrit.Sts2.Core.Models.Events.Tanx>();
+            await Barrier("serie-repeat-start");await FrierenMod.Scripts.Ancients.SerieFirstVisit.Ensure(run,2);await Barrier("serie-repeat-done");
+            Check(rooms.Ancient is MegaCrit.Sts2.Core.Models.Events.Tanx&&FrierenMod.Scripts.Ancients.SerieFirstVisit.Decision.Get(p1)==1,"房主已访问时客户端首次记录不强制改图");
             checks+=await DragonBallTests.RunParty(root,run,host,Barrier,Wait);
             File.WriteAllText(Path.Combine(dir,role+"-result.json"),JsonSerializer.Serialize(new{checks,dragon=true}));
             await Barrier("finished");timer.Stop();RunManager.Instance.CleanUp();timer.QueueFree();return checks;

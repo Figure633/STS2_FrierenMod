@@ -44,6 +44,8 @@ public static class DerivedCardPreviews
                 if (!remaining.Contains(canonical.Title, StringComparison.OrdinalIgnoreCase)) continue;
             }
             var preview = canonical.ToMutable();
+            if(source is RustCleanMagic && preview is Mana)
+                MegaCrit.Sts2.Core.Commands.CardCmd.Enchant<FrierenMod.Scripts.Enchantments.ManaSource>(preview,readable.DynamicVars["ManaSource"].IntValue);
             if (readable.Owner is { } owner) preview.Owner = owner;
             bool upgraded = readable.IsUpgraded && explicitTypes.Contains(type) && source is not FiveMinutesMore and not KindlingSpark and not DomainExpansion;
             if (upgraded && preview.MaxUpgradeLevel > 0) { preview.UpgradeInternal(); preview.FinalizeUpgradeInternal(); }
