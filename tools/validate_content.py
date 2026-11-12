@@ -19,6 +19,8 @@ for table in ["cards", "characters", "relics", "potions", "frieren", "powers", "
     eng = load(ROOT / f"FrierenMod/localization/eng/{table}.json")
     zhs = load(ROOT / f"FrierenMod/localization/zhs/{table}.json")
     assert eng.keys() == zhs.keys(), f"localization key mismatch: {table}"
+    if table == 'frieren':
+        assert not any(key.startswith('FRIERENMOD-READING_GRIMOIRE_EVENT.') for key in eng), '开局事件文案应只在实际读取的events表维护'
     # 风味文字可留空；作者未提供时不自行编造。
     assert all(v for k,v in eng.items() if not k.endswith('.flavor')) and all(v for k,v in zhs.items() if not k.endswith('.flavor')), f"empty localization: {table}"
     if table in ('cards', 'frieren'):

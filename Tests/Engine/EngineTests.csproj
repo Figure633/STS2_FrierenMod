@@ -11,6 +11,8 @@
     <Compile Include="../Integration/CombatTests.cs" Link="CombatTests.cs" />
     <Compile Include="../Integration/CombatTestState.cs" Link="CombatTestState.cs" />
     <Reference Update="sts2;0Harmony;BaseLib" Private="true" />
+    <Reference Include="BaseLibCompatibilityHelper" HintPath="$(BaseLibDir)/BaseLibCompatibilityHelper.dll"
+      Condition="Exists('$(BaseLibDir)/BaseLibCompatibilityHelper.dll')" Private="true" />
   </ItemGroup>
   <!-- 可选运行时的附属依赖必须进入 deps 清单；仅复制 DLL 不会让 .NET 自动解析。 -->
   <ItemGroup Condition="'$(TestRuntimeDataDir)' != ''">

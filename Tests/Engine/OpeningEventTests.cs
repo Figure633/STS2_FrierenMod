@@ -147,7 +147,7 @@ public static class OpeningEventTests
         if (!InputMap.HasAction(DebugHotkey.hideEventUi)) InputMap.AddAction(DebugHotkey.hideEventUi);
         foreach (string language in new[] { "zhs", "eng" }) {
             LocManager.Instance.SetLanguage(language);
-            foreach (int progress in language == "zhs" ? new[] { 0, 1, 2, 3, 4 } : new[] { 0, 4 }) {
+            foreach (int progress in new[] { 0, 1, 2, 3, 4 }) {
             var previewDeck = new MagicDeckState();
             for (int i = 0; i < Math.Min(progress, 3); i++) { previewDeck.PrepareDraft(_ => 0); previewDeck.SelectInitial(previewDeck.Draft[0]); }
             if (progress == 4) previewDeck.GrantStartingProps();
@@ -166,6 +166,13 @@ public static class OpeningEventTests
                 language + "实际原版事件布局显示阶段按钮：" + progress);
             Check(page.CreateInitialPortrait().GetWidth() == 600 && !page.Description!.GetFormattedText().Contains("LOC_ERR"),
                 language + "一代事件原图与完整本地化可用");
+            if (progress > 0) {
+                var expected = language == "zhs"
+                    ? new[] { "因子被装载到了", "因子被装载到了", "旅途开始前", "这下终于开始了" }
+                    : new[] { "The factor is now installed", "The factor is now installed", "Before setting off", "At last, it begins" };
+                Check(page.LocTable == "events" && page.Description!.GetFormattedText().Contains(expected[progress - 1]),
+                    language + "实际事件读取作者改稿：" + progress);
+            }
             var description = view.Layout!.GetNode<Control>("%EventDescription");
             var button = view.Layout.GetNode<VBoxContainer>("%OptionsContainer").GetChild<Control>(0);
             Check(description.IsVisibleInTree() && description.Modulate.A > 0.99f && button.IsVisibleInTree() &&
