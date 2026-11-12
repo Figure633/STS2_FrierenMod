@@ -82,7 +82,7 @@
   "FRIERENMOD-MATRYOSHKA.flavor": "一套环环相套的娃娃，上面的图案是一只白眼蓝羽毛的鸟，你不知道这是只什么鸟。",
   "FRIERENMOD-SACRED_SNOW_CRYSTAL.title": "圣雪结晶",
   "FRIERENMOD-SACRED_SNOW_CRYSTAL.description": "战斗开始时，从3张随机稀有牌中选择1张加入[gold]手牌[/gold]，使其获得[gold]保留[/gold]。",
-  "FRIERENMOD-SACRED_SNOW_CRYSTAL.flavor": "",
+  "FRIERENMOD-SACRED_SNOW_CRYSTAL.flavor": "在北方诸国中，有一个村庄世世代代守护着[gold]圣雪结晶[/gold]矿脉，这一块或许是[gold]赛莉耶[/gold]几千年前就珍藏的。",
   "FRIERENMOD-SKYCLEAVER.title": "开天斧",
   "FRIERENMOD-SKYCLEAVER.description": "每次有伤害被[gold]格挡[/gold]抵消后，下回合获得2点[gold]格挡[/gold]。",
   "FRIERENMOD-SKYCLEAVER.flavor": "战士[gold]修塔尔克[/gold]所用之斧，用它使出的[gold]闪天击[/gold]能劈开山脉。",
@@ -91,5 +91,5 @@
   "FRIERENMOD-WEATHERED_HELMET.flavor": "[blue]辛美尔勇者小队[/blue]的战士[gold]艾泽[/gold]的头盔。艾泽的前卫能力极其出色，隐居时收留了被魔族灭村的[gold]修塔尔克[/gold]作为徒弟。",
   "FRIERENMOD-ROTTING_SAGE_SKULL.title": "腐坏贤者之颅",
   "FRIERENMOD-ROTTING_SAGE_SKULL.description": "拾取时，选择3张[gold]牌组[/gold]中的牌，附魔：[gold]魔力源3[/gold]。",
-  "FRIERENMOD-ROTTING_SAGE_SKULL.flavor": ""
+  "FRIERENMOD-ROTTING_SAGE_SKULL.flavor": "大魔族[gold]库瓦尔[/gold]，史称[red]腐败贤者[/red]，是[gold]“杀人魔法”(zoltraak)[/gold]的创造者。[gold]芙莉莲[/gold]在勇者小队时期将其封印，在80年后和[purple]菲伦[/purple]一起击败了[gold]库瓦尔[/gold]。"
 }

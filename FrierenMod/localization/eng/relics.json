@@ -82,7 +82,7 @@
   "FRIERENMOD-MATRYOSHKA.flavor": "A stackable set of painted dolls. The paint depicts an unknown bird with white eyes and blue feathers.",
   "FRIERENMOD-SACRED_SNOW_CRYSTAL.title": "Sacred Snow Crystal",
   "FRIERENMOD-SACRED_SNOW_CRYSTAL.description": "At the start of combat, choose 1 of 3 random Rare cards to add to your [gold]Hand[/gold]. It gains [gold]Retain[/gold].",
-  "FRIERENMOD-SACRED_SNOW_CRYSTAL.flavor": "",
+  "FRIERENMOD-SACRED_SNOW_CRYSTAL.flavor": "In the Northern Lands, a village has guarded a vein of [gold]Sacred Snow Crystal[/gold] for generations. [gold]Serie[/gold] may have treasured this piece for thousands of years.",
   "FRIERENMOD-SKYCLEAVER.title": "Skycleaver",
   "FRIERENMOD-SKYCLEAVER.description": "Whenever damage is [gold]Blocked[/gold], gain 2 [gold]Block[/gold] next turn.",
   "FRIERENMOD-SKYCLEAVER.flavor": "The axe wielded by the warrior [gold]Stark[/gold]. His [gold]Lightning Strike[/gold] can cleave mountains.",
@@ -91,5 +91,5 @@
   "FRIERENMOD-WEATHERED_HELMET.flavor": "The helmet of [gold]Eisen[/gold], the warrior of [blue]Himmel’s hero party[/blue]. An exceptional vanguard, Eisen took [gold]Stark[/gold] as his apprentice after demons destroyed the boy’s village.",
   "FRIERENMOD-ROTTING_SAGE_SKULL.title": "Skull of the Rotting Sage",
   "FRIERENMOD-ROTTING_SAGE_SKULL.description": "Upon pickup, choose 3 cards in your [gold]Deck[/gold] to enchant with [gold]Mana Source 3[/gold].",
-  "FRIERENMOD-ROTTING_SAGE_SKULL.flavor": ""
+  "FRIERENMOD-ROTTING_SAGE_SKULL.flavor": "The great demon [gold]Qual[/gold], known as the [red]Sage of Corruption[/red], created [gold]“Killing Magic” (Zoltraak)[/gold]. [gold]Frieren[/gold] sealed him away during her journey with the hero party, then defeated [gold]Qual[/gold] with [purple]Fern[/purple] 80 years later."
 }
