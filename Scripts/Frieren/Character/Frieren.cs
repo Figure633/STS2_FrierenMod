@@ -20,6 +20,10 @@ public sealed class Frieren : PlaceholderCharacterModel
     public override string CustomCharacterSelectIconPath => Images + "select_icon.png";
     public override string CustomCharacterSelectLockedIconPath => Images + "select_icon.png";
     public override string CustomMapMarkerPath => Images + "map_marker_sts2.png";
+    public override string CustomArmPointingTexturePath => Images + "hand_point.png";
+    public override string CustomArmRockTexturePath => Images + "hand_rock.png";
+    public override string CustomArmPaperTexturePath => Images + "hand_paper.png";
+    public override string CustomArmScissorsTexturePath => Images + "hand_scissors.png";
     public override string CustomRestSiteAnimPath => Scenes + "frieren_rest.tscn";
     public override string CustomMerchantAnimPath => Scenes + "frieren_merchant.tscn";
     public override string CustomEnergyCounterPath => Scenes + "frieren_energy.tscn";

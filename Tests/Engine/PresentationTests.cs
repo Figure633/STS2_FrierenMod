@@ -16,6 +16,35 @@ using MegaCrit.Sts2.Core.Localization;
 
 public static class PresentationTests
 {
+    public static async Task<int> RunHands(Node root)
+    {
+        MegaCrit.Sts2.Core.Context.LocalContext.NetId=1;
+        var player=Player.CreateForNewRun<Frieren>(MegaCrit.Sts2.Core.Unlocks.UnlockState.none,1);
+        var panel=new Control {Size=new(1920,1080)};root.AddChild(panel);
+        panel.AddChild(new ColorRect {Size=panel.Size,Color=new("30343d")});
+        var moves=new[]{"point","rock","paper","scissors"};
+        for(int i=0;i<moves.Length;i++) {
+            var hand=MegaCrit.Sts2.Core.Nodes.Screens.TreasureRoomRelic.NHandImage.Create(player,0);
+            panel.AddChild(hand);hand.SetProcess(false);
+            if(i>0) {
+                hand.SetIsInFight(true);
+                var move=Enum.Parse<MegaCrit.Sts2.Core.Entities.TreasureRelicPicking.RelicPickingFightMove>(moves[i],true);
+                AccessTools.Method(hand.GetType(),"SetTextureToFightMove").Invoke(hand,[move]);
+            }
+            var image=hand.GetNode<TextureRect>("TextureRect");
+            if(image.Texture.GetSize()!=new Vector2(422,1200) || !image.Texture.ResourcePath.EndsWith("hand_"+moves[i]+".png"))
+                throw new Exception("原生抢遗物手势未正确使用芙莉莲贴图："+moves[i]);
+            image.Position=Vector2.Zero;image.PivotOffset=Vector2.Zero;
+            hand.Position=new(130+i*440,100);hand.Scale=new(.7f,.7f);
+            panel.AddChild(new Label {Text=moves[i],Position=new(230+i*440,980)});
+        }
+        for(int frame=0;frame<4;frame++)await root.ToSignal(root.GetTree(),SceneTree.SignalName.ProcessFrame);
+        if(OS.GetCmdlineUserArgs().Contains("--ui-snapshot"))
+            root.GetViewport().GetTexture().GetImage().SavePng(ProjectSettings.GlobalizePath("res://../../artifacts/frieren-hands.png"));
+        panel.QueueFree();
+        await root.ToSignal(root.GetTree(),SceneTree.SignalName.ProcessFrame);
+        return moves.Length;
+    }
     private static bool InteractiveAudio(ref bool __result) { __result = false; return false; }
     public static async Task<int> Run(Node root, Player player)
     {
