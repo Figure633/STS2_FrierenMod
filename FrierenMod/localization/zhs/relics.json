@@ -85,7 +85,7 @@
   "FRIERENMOD-SACRED_SNOW_CRYSTAL.flavor": "",
   "FRIERENMOD-SKYCLEAVER.title": "开天斧",
   "FRIERENMOD-SKYCLEAVER.description": "每次有伤害被[gold]格挡[/gold]抵消后，下回合获得2点[gold]格挡[/gold]。",
-  "FRIERENMOD-SKYCLEAVER.flavor": "",
+  "FRIERENMOD-SKYCLEAVER.flavor": "战士[gold]修塔尔克[/gold]所用之斧，用它使出的[gold]闪天击[/gold]能劈开山脉。",
   "FRIERENMOD-WEATHERED_HELMET.title": "饱经风霜的头盔",
   "FRIERENMOD-WEATHERED_HELMET.description": "每打出一张原本耗能大于等于{energyPrefix:energyIcons(3)}的牌，获得1层[gold]缓冲[/gold]。",
   "FRIERENMOD-WEATHERED_HELMET.flavor": "[blue]辛美尔勇者小队[/blue]的战士[gold]艾泽[/gold]的头盔。艾泽的前卫能力极其出色，隐居时收留了被魔族灭村的[gold]修塔尔克[/gold]作为徒弟。",

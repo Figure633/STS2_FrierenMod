@@ -85,7 +85,7 @@
   "FRIERENMOD-SACRED_SNOW_CRYSTAL.flavor": "",
   "FRIERENMOD-SKYCLEAVER.title": "Skycleaver",
   "FRIERENMOD-SKYCLEAVER.description": "Whenever damage is [gold]Blocked[/gold], gain 2 [gold]Block[/gold] next turn.",
-  "FRIERENMOD-SKYCLEAVER.flavor": "",
+  "FRIERENMOD-SKYCLEAVER.flavor": "The axe wielded by the warrior [gold]Stark[/gold]. His [gold]Lightning Strike[/gold] can cleave mountains.",
   "FRIERENMOD-WEATHERED_HELMET.title": "Weathered Helmet",
   "FRIERENMOD-WEATHERED_HELMET.description": "Whenever you play a card whose printed cost is at least {energyPrefix:energyIcons(3)}, gain 1 [gold]Buffer[/gold].",
   "FRIERENMOD-WEATHERED_HELMET.flavor": "The helmet of [gold]Eisen[/gold], the warrior of [blue]Himmel’s hero party[/blue]. An exceptional vanguard, Eisen took [gold]Stark[/gold] as his apprentice after demons destroyed the boy’s village.",
