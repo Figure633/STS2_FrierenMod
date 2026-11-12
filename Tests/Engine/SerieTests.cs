@@ -96,12 +96,15 @@ public static class SerieTests
         foreach (string lang in new[] { "zhs", "eng" }) {
             LocManager.Instance.SetLanguage(lang);
             AccessTools.Field(typeof(AncientEventModel), "_dialogueSet").SetValue(canonical, null);
-            foreach (int visits in new[] { 0, 1, 2, 4, 20 }) {
+            foreach (int visits in new[] { 0, 1, 2, 3, 4, 5, 20, 21 }) {
                 var dialogues = canonical.DialogueSet.GetValidDialogues(player.Character.Id, visits, visits,
                     !canonical.AnyCharacterDialogueBlacklist.Contains(player.Character)).ToArray();
-                Check(dialogues.Length > 0 && dialogues.All(d => d.Lines.Count >= 5 && d.Lines.All(l =>
+                bool wave = visits >= 3 && visits % 2 == 1;
+                string expected = wave ? "FRIERENMOD-FRIEREN.3-0.ancient" : $"FRIERENMOD-FRIEREN.{Math.Min(visits, 2)}-0.{(visits >= 2 ? "char" : "ancient")}";
+                Check(dialogues.Length == 1 && dialogues[0].Lines[0].LineText!.LocEntryKey == "FRIERENMOD-SERIE.talk." + expected &&
+                    dialogues.All(d => !d.IsRepeating && d.Lines.Count == (wave ? 1 : visits == 0 ? 4 : 5) && d.Lines.All(l =>
                     l.LineText != null && LocString.Exists("ancients", l.LineText.LocEntryKey)) &&
-                    d.Lines.Take(d.Lines.Count - 1).All(l => l.NextButtonText != null && LocString.Exists("ancients", l.NextButtonText.LocEntryKey))), $"初见、再访和重复对话完整：{lang}/{visits}");
+                    d.Lines.Take(d.Lines.Count - 1).All(l => l.NextButtonText != null && LocString.Exists("ancients", l.NextButtonText.LocEntryKey))), $"按0、1、2、3、2、3顺序且无回退台词：{lang}/{visits}");
             }
         }
         LocManager.Instance.SetLanguage("zhs");
@@ -157,6 +160,29 @@ public static class SerieTests
             await root.ToSignal(root.GetTree().CreateTimer(5.5), SceneTreeTimer.SignalName.Timeout);
             Snapshot("serie-native-options.png");
             Check(layout.OptionButtons.Count() == 3 && layout.OptionButtons.All(b => b.GetGlobalRect().End.Y <= 1080), "原生先古版式展示三件礼物且选项不溢出");
+            layout.QueueFree();
+            for (int i = 0; i < 3; i++) await root.ToSignal(root.GetTree(), SceneTree.SignalName.ProcessFrame);
+            layout = GD.Load<PackedScene>("res://scenes/events/ancient_event_layout.tscn").Instantiate<NAncientEventLayout>();
+            root.AddChild(layout); layout.SetEvent(encounter);
+            lines = canonical.DialogueSet.GetValidDialogues(player.Character.Id, 3, 3, false).Single().Lines;
+            layout.SetDialogue(lines); layout.AddOptions(encounter.CurrentOptions); layout.OnSetupComplete();
+            await root.ToSignal(root.GetTree().CreateTimer(1.2), SceneTreeTimer.SignalName.Timeout);
+            Check(layout.GetNode<Control>("%FakeNextButtonContainer").Visible &&
+                layout.GetNode<Control>("%DialogueHitbox").Visible && lines.Count == 1 &&
+                lines[0].NextButtonText?.GetFormattedText() == "继续" &&
+                lines[0].LineText!.GetRawText() == "[i]赛莉耶摆摆手，示意你随便挑一件然后出去。[/i]", "摆手斜体独句显示原生继续按钮");
+            Snapshot("serie-wave-continue.png");
+            AccessTools.Method(typeof(NAncientEventLayout), "OnDialogueHitboxClicked").Invoke(layout, [null]);
+            await root.ToSignal(root.GetTree().CreateTimer(1.2), SceneTreeTimer.SignalName.Timeout);
+            Check(!layout.GetNode<Control>("%FakeNextButtonContainer").Visible &&
+                !layout.GetNode<Control>("%DialogueHitbox").Visible && layout.OptionButtons.Count() == 3 &&
+                (int)AccessTools.Field(typeof(NAncientEventLayout), "_currentDialogueLine").GetValue(layout)! == 0 &&
+                layout.GetNode<Control>("%DialogueContainer").GetChildCount() == 1, "点击继续后展开礼物，保留有效行索引且无芙莉莲回应");
+            // 鼠标回看动作说明时仍使用有效的原生对话节点。
+            var lineNode = layout.GetNode<Control>("%DialogueContainer").GetChild<NAncientDialogueLine>(0);
+            AccessTools.Method(typeof(NAncientEventLayout), "OnDialogueLineFocused").Invoke(layout, [lineNode]);
+            AccessTools.Method(typeof(NAncientEventLayout), "OnDialogueLineUnfocused").Invoke(layout, [lineNode]);
+            Snapshot("serie-wave-options.png");
             layout.QueueFree();
             for (int i = 0; i < 3; i++) await root.ToSignal(root.GetTree(), SceneTree.SignalName.ProcessFrame);
             Controller.Free(); Input.Free(); Controller = null; Input = null;
