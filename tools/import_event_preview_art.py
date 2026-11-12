@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT.parent / "png"
 NAMES = ["BugKnight", "DragonBall", "elderRing", "jojo", "nier", "onepiece",
          "p5r", "sekiro", "starve", "terraria", "trail", "Zelda"]
-manifest = ROOT / "docs/assets.json"
+manifest = ROOT / "tools/data/assets.json"
 entries = json.loads(manifest.read_text(encoding="utf-8-sig"))
 for name in NAMES:
     source = SOURCE / (name + (".webp" if name in ("p5r", "starve") else ".png"))
@@ -17,7 +17,7 @@ for name in NAMES:
     target = ROOT / "FrierenMod/images/events" / (("" if name == "Zelda" else "Preview") + name + ".png")
     if name == "Zelda" and target.exists() and Image.open(target).size != image.size:
         # 作者已经另存了600x675构图；优先使用该版本，不用下载的竖版覆盖。
-        source = ROOT / "assets/author_adjusted/20261108/Zelda.png"
+        source = ROOT / "../开发资料/assets/author_adjusted/20261108/Zelda.png"
         source.parent.mkdir(parents=True, exist_ok=True)
         if source.exists():
             assert source.read_bytes() == target.read_bytes(), "作者又调整了Zelda，请先核对新构图"

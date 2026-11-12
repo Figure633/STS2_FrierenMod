@@ -9,8 +9,8 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const temp = path.join(root, 'artifacts/card-names');
 const req = createRequire(path.join(temp, 'runtime.cjs'));
 const { Workbook, SpreadsheetFile, FileBlob } = await import(pathToFileURL(req.resolve('@oai/artifact-tool')).href);
-const records = (await fs.readFile(path.join(root, 'docs/inventory/card_names.jsonl'), 'utf8')).trim().split('\n').map(JSON.parse);
-const output = path.join(root, '卡名对照表.xlsx');
+const records = (await fs.readFile(path.join(root, 'tools/data/card_names.jsonl'), 'utf8')).trim().split('\n').map(JSON.parse);
+const output = path.join(root, '../开发资料/卡名对照表.xlsx');
 const rows = records.map(r => [r.model, r.chinese, r.english, r.descriptionChinese]);
 const headers = ['ID', '二代中文名', '二代英文名', '卡面效果（中文）'];
 assert.equal(new Set(records.map(r => r.model)).size, records.length);
@@ -59,7 +59,7 @@ for (const [range, filename] of [['A1:D7', 'names-final-top.png'], ['A38:D43', '
   const preview = await wb.render({sheetName: sheet.name, range, scale: 1.2, format: 'png'});
   await fs.writeFile(path.join(temp, filename), new Uint8Array(await preview.arrayBuffer()));
 }
-const staged = path.join(temp, '卡名对照表.xlsx');
+const staged = path.join(temp, '../开发资料/卡名对照表.xlsx');
 await (await SpreadsheetFile.exportXlsx(wb)).save(staged);
 await fs.copyFile(staged, output);
 console.log(`已导出 ${records.length} 行四列表。`);

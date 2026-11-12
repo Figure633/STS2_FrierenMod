@@ -39,6 +39,7 @@ public static class Achievement101Tests
         Creature Spawn<T>()where T:MonsterModel {var c=combat.CreateCreature(ModelDb.Monster<T>().ToMutable(),CombatSide.Enemy,null);combat.AddCreature(c);return c;}
         var target=Spawn<Axebot>();target.SetMaxHpInternal(99999);target.SetCurrentHpInternal(99999);CombatManager.Instance.SetUpCombat(combat);CombatTestState.SetInProgress(true);
         var context=new ThrowingPlayerChoiceContext();
+        using var selection=CombatTestState.UseSelector(new MegaCrit.Sts2.Core.TestSupport.TestCardSelector());
         bool Has(string id)=>SlotBackStore.Read().Unlocked.Contains(id);
         void Clear(string id)=>SlotBackStore.Read().Unlocked.Remove(id);
         async Task Reset(){foreach(var p in player.Creature.Powers.ToArray())await PowerCmd.Remove(p);CombatManager.Instance.History.Clear();player.Creature.LoseBlockInternal(player.Creature.Block);player.Creature.SetCurrentHpInternal(player.Creature.MaxHp);}
@@ -58,8 +59,20 @@ public static class Achievement101Tests
             await Reset();Clear("4006");await PowerCmd.Apply<WeakPower>(context,player.Creature,99,target,null);await PowerCmd.Apply<VulnerablePower>(context,player.Creature,1,target,null);
             if(kinds==3)await PowerCmd.Apply<FrailPower>(context,player.Creature,1,target,null);
             await PowerCmd.Apply<StrengthPower>(context,player.Creature,3,player.Creature,null);await Use(combat.CreateCard<RustCleanMagic>(player));
-            Check(!Has("4006")&&player.Creature.GetPowerAmount<StrengthPower>()==3,"除锈重做后旧卡背条件待定，不误触发或移除增益："+kinds);
+            Check(!Has("4006")&&player.Creature.GetPowerAmount<StrengthPower>()==3,"除锈不再解锁4006，也不移除增益："+kinds);
         }
+        foreach(int kinds in new[]{0,1,3}) {
+            await Reset();Clear("4006");
+            if(kinds>0)await PowerCmd.Apply<WeakPower>(context,player.Creature,3,target,null);
+            if(kinds==3) {await PowerCmd.Apply<VulnerablePower>(context,player.Creature,2,target,null);await PowerCmd.Apply<FrailPower>(context,player.Creature,2,target,null);}
+            await PowerCmd.Apply<StrengthPower>(context,player.Creature,3,player.Creature,null);
+            var spell=combat.CreateCard<CustomLegendarySpell>(player);spell.Configure(3,[new LegendaryEffect("RemoveDebuffs",1)]);
+            await Use(spell);
+            Check(Has("4006")&&!player.Creature.Powers.Any(p=>p.TypeForCurrentAmount==PowerType.Debuff)&&player.Creature.GetPowerAmount<StrengthPower>()==3,
+                "自定义魔法清除自身减益即解锁4006，无三种门槛并保留增益："+kinds);
+        }
+        Clear("4006");var remoteSpell=combat.CreateCard<CustomLegendarySpell>(other);remoteSpell.Configure(3,[new LegendaryEffect("RemoveDebuffs",1)]);await Use(remoteSpell);
+        Check(!Has("4006"),"其他玩家的自定义魔法不解锁本机卡背");
         await Reset();var aura=Spawn<Aura>();await CreatureCmd.Kill(aura);Check(Has("5001"),"实际死亡钩子在击败阿乌拉后解锁");
         foreach(bool damaged in new[]{false,true}) {
             await Reset();Clear("6001");var mimic=Spawn<Mimic>();player.Creature.GainBlockInternal(10);

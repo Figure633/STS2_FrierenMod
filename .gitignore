@@ -40,8 +40,12 @@ desktop.ini
 # Generated test data
 Tests/Engine/release_info.json
 
-# Generated docs
-docs/*.translation
-docs/*.csv.import
+# Author notes and source artwork live outside this repository.
+/AGENTS.md
+/TODOs.docx
+/卡名对照表.xlsx
+/docs/
+/assets/
+/outputs/
 
 *.csproj.old*

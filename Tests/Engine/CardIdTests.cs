@@ -43,7 +43,7 @@ public static class CardIdTests
             (typeof(ReadyStance), "PreparedPosture", "PREPARED_POSTURE", "READY_STANCE"),
             (typeof(SustainedBarrage), "ContinuousShooting", "CONTINUOUS_SHOOTING", "SUSTAINED_BARRAGE")
         };
-        var index = File.ReadLines(ProjectSettings.GlobalizePath("res://../../docs/inventory/card_names.jsonl"))
+        var index = File.ReadLines(ProjectSettings.GlobalizePath("res://../../tools/data/card_names.jsonl"))
             .Select(line => JsonDocument.Parse(line).RootElement.Clone()).ToDictionary(row => row.GetProperty("model").GetString()!);
         foreach (var item in cases) {
             var id = ModelDb.GetId(item.Type);

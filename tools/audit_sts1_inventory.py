@@ -11,7 +11,7 @@ sys.stdout.reconfigure(encoding="utf-8")
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = Path(os.environ.get("FRIEREN_STS1_SOURCE", ROOT.parent / "reference" / "FrierenMod_STS1"))
-OUT = ROOT / "docs" / "inventory"
+OUT = ROOT / "../开发资料/docs/inventory"
 OUT.mkdir(parents=True, exist_ok=True)
 
 def git(*args):

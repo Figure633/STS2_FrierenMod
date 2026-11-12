@@ -44,15 +44,15 @@ for table in ["cards", "characters", "relics", "potions", "frieren", "powers", "
                 text = re.sub(r"\d*X(?:[+-]\d+)?", "X", text)
             assert not re.search(r"\b(?:max|min|Math\.\w+)\s*\(|\b\d+X\b|\bX[+-]\d", text), f"formula exposed in {language}/{table}/{key}"
     print(f"PASS {table}: {len(eng)} bilingual keys")
-for item in load(ROOT / "docs/assets.json"):
+for item in load(ROOT / "tools/data/assets.json"):
     path = ROOT / item["file"]
     assert path.is_file(), str(path)
     assert hashlib.sha256(path.read_bytes()).hexdigest() == item["sha256"], str(path)
-print(f"PASS asset provenance: {len(load(ROOT / 'docs/assets.json'))} file hashes")
-for item in load(ROOT / "docs/generated_assets.json")["assets"]:
+print(f"PASS asset provenance: {len(load(ROOT / 'tools/data/assets.json'))} file hashes")
+for item in load(ROOT / "tools/data/generated_assets.json")["assets"]:
     path = ROOT / item["target"]
     assert hashlib.sha256(path.read_bytes()).hexdigest() == item["sha256"], str(path)
-print(f"PASS generated asset provenance: {len(load(ROOT / 'docs/generated_assets.json')['assets'])} file hashes and saved prompts")
+print(f"PASS generated asset provenance: {len(load(ROOT / 'tools/data/generated_assets.json')['assets'])} file hashes and saved prompts")
 manifest = load(ROOT / "FrierenMod.json")
 project_version = ET.parse(ROOT / "FrierenMod.csproj").findtext("./PropertyGroup/Version")
 assert project_version and manifest["version"] == project_version, "manifest/project version mismatch"
@@ -63,7 +63,7 @@ assert not list((ROOT / "FrierenMod").rglob("*.cs"))
 print("PASS manifest and resource boundaries")
 
 # 音乐池是20首曲目，不用已删除的旧混音文件数量充当曲目数。
-music=load(ROOT / "docs/inventory/bgm_audio.json")
+music=load(ROOT / "tools/data/bgm_audio.json")
 assert len(music["tracks"])==20
 assert len({t["id"] for t in music["tracks"]})==20
 for track in music["tracks"]:

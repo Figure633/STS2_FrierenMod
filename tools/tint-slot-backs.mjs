@@ -8,10 +8,10 @@ import { psdReader } from './lib/psd-rgba.mjs';
 const require = createRequire(import.meta.url);
 const sharp = require(process.env.SHARP_MODULE || 'sharp');
 const root = process.cwd(), apply = process.argv.includes('--apply');
-const output = path.join(root, 'outputs/slot-backs-multiply-20261110');
-const inventoryPath = path.join(root, 'docs/inventory/sts2_slot_backs.json');
+const output = path.join(root, '../开发资料/outputs/slot-backs-multiply-20261110');
+const inventoryPath = path.join(root, '../开发资料/docs/inventory/sts2_slot_backs.json');
 const inventory = JSON.parse(await fs.readFile(inventoryPath, 'utf8'));
-const originalDir = 'outputs/slot-backs-final-20261109/已选成品';
+const originalDir = '../开发资料/outputs/slot-backs-final-20261109/已选成品';
 const reference = path.resolve(root, '../png/8009-1_0000_图层 1.psd');
 const ref = psdReader(await fs.readFile(reference));
 const gray = ref.layers.find(l => l.visible && l.blend === 'mul ');
@@ -110,7 +110,7 @@ await fs.writeFile(path.join(output, 'index.html'), `<!doctype html><html lang="
 await fs.writeFile(path.join(output, 'manifest.json'), JSON.stringify({ reference: rel(reference), rgb: color, opacityByte: opacity, blend: 'multiply', width: W, height: H, images: records }, null, 2) + '\n');
 if (apply) {
   await fs.writeFile(inventoryPath, JSON.stringify(inventory, null, 2) + '\n');
-  const assetsPath = path.join(root, 'docs/assets.json');
+  const assetsPath = path.join(root, 'tools/data/assets.json');
   const assets = JSON.parse(await fs.readFile(assetsPath, 'utf8'));
   for (const asset of assets) {
     const item = inventory.images.find(i => i.asset === asset.file);

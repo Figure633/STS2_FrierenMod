@@ -7,8 +7,8 @@ from lxml import etree as E
 import hashlib,os
 
 root=Path(__file__).resolve().parents[1]
-file=root/'TODOs.docx'
-assert not (root/'~$TODOs.docx').exists(),'作者Word仍在使用，停止回写'
+file=root/'../开发资料/TODOs.docx'
+assert not (root/'~$../开发资料/TODOs.docx').exists(),'作者Word仍在使用，停止回写'
 raw=file.read_bytes();fingerprint=hashlib.sha256(raw).hexdigest()
 temp=root/'artifacts/author-todo-docx';temp.mkdir(parents=True,exist_ok=True)
 if not (temp/'before.docx').exists():(temp/'before.docx').write_bytes(raw)
@@ -58,7 +58,7 @@ with ZipFile(BytesIO(raw)) as package:
     with ZipFile(output,'w') as target:
         for info in package.infolist():target.writestr(info,xml if info.filename=='word/document.xml' else package.read(info.filename))
 assert hashlib.sha256(file.read_bytes()).hexdigest()==fingerprint,'作者在回写期间更新了Word，停止覆盖'
-assert not (root/'~$TODOs.docx').exists(),'作者重新打开了Word，停止覆盖'
+assert not (root/'~$../开发资料/TODOs.docx').exists(),'作者重新打开了Word，停止覆盖'
 os.replace(output,file)
 with ZipFile(BytesIO(raw)) as before,ZipFile(file) as after:
     assert set(before.namelist())==set(after.namelist())

@@ -5,9 +5,9 @@ import json
 from PIL import Image, ImageOps, ImageDraw, ImageFont
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCES = ROOT / 'assets/card_sources'
+SOURCES = ROOT / '../开发资料/assets/card_sources'
 SIZE = (598, 842)
-assets_path = ROOT / 'docs/assets.json'
+assets_path = ROOT / 'tools/data/assets.json'
 assets = json.loads(assets_path.read_text('utf-8-sig'))
 
 
@@ -25,7 +25,7 @@ def record(path, source, processing, modified=True):
 def save(name, image, processing):
     path = ROOT / f'FrierenMod/images/cards/{name}.png'
     image.save(path)
-    record(path, f'assets/card_sources/{name}.png', processing)
+    record(path, f'../开发资料/assets/card_sources/{name}.png', processing)
 
 
 flow = Image.open(SOURCES / 'EndlessFlow.png').convert('RGB')

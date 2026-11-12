@@ -107,6 +107,7 @@ public static class LegendaryCraftCmd
                     await PowerCmd.Apply<StrengthPower>(context, owner.Creature.CombatState!.Enemies.Where(e => e.IsAlive), -n, owner.Creature, card); break;
                 case "RemoveDebuffs":
                     foreach (var power in owner.Creature.Powers.Where(p => p.TypeForCurrentAmount == PowerType.Debuff).ToArray()) await PowerCmd.Remove(power);
+                    Presentation.FrierenAchievements.Unlock(owner, "4006");
                     break;
                 case "UpgradeHand": case "UpgradeAll":
                     var cards = effect.Kind == "UpgradeHand" ? owner.PlayerCombatState!.Hand.Cards : owner.PlayerCombatState!.AllCards;

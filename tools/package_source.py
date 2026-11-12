@@ -2,6 +2,7 @@
 import argparse
 import hashlib
 import json
+import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
 import zipfile
@@ -12,9 +13,9 @@ ROOT_FILES = {
     ".editorconfig", ".gitattributes", ".gitignore", "FrierenMod.csproj",
     "FrierenMod.json", "FrierenMod.sln", "GameReferences.props", "global.json",
     "icon.svg", "icon.svg.import", "LICENSE.STS1", "LICENSE.WATCHER", "local.props.example",
-    "project.godot", "README.md", "TODOs.docx", "卡名对照表.xlsx", "AGENTS.md",
+    "project.godot", "README.md", "build-and-install.bat",
 }
-SOURCE_DIRS = ("Core", "Scripts", "FrierenMod", "Tests", "docs", "tools")
+SOURCE_DIRS = ("Core", "Scripts", "FrierenMod", "Tests", "tools")
 EXCLUDED_DIRS = {".git", ".godot", ".cache", "bin", "obj", "artifacts", "__pycache__", "backups"}
 EXCLUDED_SUFFIXES = {".pyc", ".pyo", ".dll", ".pdb", ".pck", ".zip", ".save", ".bak", ".log", ".translation"}
 
@@ -36,7 +37,7 @@ def source_files():
                 continue
             if path.name in {"local.props", "release_info.json"} or path.name.startswith(".env"):
                 continue
-            if relative.as_posix().startswith("docs/") and path.name.endswith(".csv.import"):
+            if relative.as_posix().startswith("../开发资料/docs/") and path.name.endswith(".csv.import"):
                 continue
             files.append(path)
     for path in files:
@@ -55,16 +56,14 @@ def main():
     if output.exists() or output.with_suffix(output.suffix + ".sha256").exists():
         raise FileExistsError(f"目标已存在，请使用新文件名：{output}")
     files = source_files()
-    baseline = json.loads((ROOT / "docs/baseline.json").read_text(encoding="utf-8-sig"))
+    revision = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
     snapshot = {
         "format": 1, "mod_version": version,
         "created_utc": datetime.now(timezone.utc).isoformat(),
         "kind": "complete source working-tree snapshot; no git history; not an upstream commit",
         "source_file_count": len(files),
-        "sts2_upstream": {"url": "https://github.com/FrierenModForSlayTheSpire/FrierenMod_STS2", "commit": baseline["target_upstream_commit"]},
-        "sts1_reference": {"url": "https://github.com/FrierenModForSlayTheSpire/FrierenMod_STS1", "commit": baseline["source_commit"]},
+        "source_revision": revision,
         "dependencies": {"game": ["v0.107.1", "v0.111.0"], "BaseLib": "v3.4.7", "dotnet_sdk": "9.0.306", "Godot": "4.5.1"},
-        "pending_source": "TODOs.docx; current author requirements and outstanding game validation",
         "excluded": ["git history", "build/import caches", "game and BaseLib binaries", "personal settings and saves", "raw machine logs"],
         "integrity": "SHA256SUMS.txt covers every other file, including SOURCE_SNAPSHOT.json",
     }

@@ -107,7 +107,7 @@ public static class PlayFeedbackTests
 
         LocManager.Instance.SetLanguage("zhs");
         string Plain(string text) => Regex.Replace(Regex.Replace(text, @"\[[^\]]*\]", ""), @"\s+", "");
-        var index = File.ReadLines(ProjectSettings.GlobalizePath("res://../../docs/inventory/card_names.jsonl"))
+        var index = File.ReadLines(ProjectSettings.GlobalizePath("res://../../tools/data/card_names.jsonl"))
             .Select(line => JsonDocument.Parse(line).RootElement.Clone()).ToDictionary(row => row.GetProperty("model").GetString()!);
         foreach (var type in new[] { typeof(ElementsBombing), typeof(Envy), typeof(SpeakFromHeartSpell), typeof(ShavedIceSpell) }) {
             var row = index[type.Name]; string source = row.GetProperty("descriptionChinese").GetString()!;

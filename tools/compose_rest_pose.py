@@ -5,7 +5,7 @@ from pathlib import Path
 from PIL import Image, ImageDraw
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE = ROOT / "docs/reference/frieren-rest-source.png"
+SOURCE = ROOT / "../开发资料/docs/reference/frieren-rest-source.png"
 SOURCE_SHA256 = "960648c4fa4f2414a08b980b6e0278398db5e78cbb0336b52ae3d0da999a0186"
 # 在 482×608 作者原图上沿人物与书本外轮廓手工勾选，去掉床和背景。
 OUTLINE = [

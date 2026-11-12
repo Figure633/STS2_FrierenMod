@@ -3,9 +3,9 @@ from pathlib import Path
 from PIL import Image, ImageDraw
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE = ROOT / "docs/reference/frieren_avatar_original.png"
+SOURCE = ROOT / "../开发资料/docs/reference/frieren_avatar_original.png"
 OUTPUT = ROOT / "FrierenMod/images/character/icon.png"
-CUTOUT = ROOT / "docs/reference/frieren_avatar_cutout.png"
+CUTOUT = ROOT / "../开发资料/docs/reference/frieren_avatar_cutout.png"
 
 # 原图为502x502。沿人物外缘手工描点，以三次贝塞尔曲线保留发丝、耳尖和围巾。
 PATH = [

@@ -34,11 +34,11 @@ def main():
                   "resources_different": different, "source_only_resources": sorted(paths.keys() - jar_paths),
                   "jar_only_resources": sorted(jar_paths - paths.keys()),
                   "scope": "metadata/class names/resource bytes only; method bodies and numerical rules not compared"}
-    (ROOT / "docs/baseline.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    (ROOT / "../开发资料/docs/baseline.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     implemented = {"Strike_Frieren", "Defend_Frieren", "Flow", "DefensiveMagic", "RapidChant", "Mana",
                    "SecondDefensiveMagic", "PreciseChant", "FinalChant", "ManaExpansion",
                    "AdvancedDefensiveMagic", "BuildUpBody", "HighSpeedMovement", "HolyEmblem"}
-    with (ROOT / "docs/content_inventory.csv").open("w", newline="", encoding="utf-8-sig") as stream:
+    with (ROOT / "../开发资料/docs/content_inventory.csv").open("w", newline="", encoding="utf-8-sig") as stream:
         writer = csv.writer(stream)
         writer.writerow(["source", "class", "category", "status"])
         for name, path in sorted(sources.items()):

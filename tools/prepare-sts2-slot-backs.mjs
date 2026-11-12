@@ -6,7 +6,7 @@ import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const sharp = require(process.env.SHARP_MODULE || 'sharp');
 const root = process.cwd();
-const output = path.join(root, 'outputs/slot-backs-final-20261109');
+const output = path.join(root, '../开发资料/outputs/slot-backs-final-20261109');
 const previous = JSON.parse(await fs.readFile(path.join(output, 'manifest.json'), 'utf8'));
 const basic = new Set([1, 2, 11, 12]);
 const uploaded = [
@@ -45,9 +45,9 @@ for (let i = 0; i < items.length; i++) {
   await fs.writeFile(path.join(output, '已选成品', file), data);
   records.push({ ...item, number: i + 1, file, asset, source: path.relative(root, item.source).replaceAll('\\', '/'), sha256: crypto.createHash('sha256').update(data).digest('hex') });
 }
-await fs.writeFile(path.join(root, 'docs/inventory/sts2_slot_backs.json'), JSON.stringify({
+await fs.writeFile(path.join(root, '../开发资料/docs/inventory/sts2_slot_backs.json'), JSON.stringify({
   note: '二代新增23张；名称为画面标识，正式成就名称和解锁条件由作者在填写表中指定。尚未接入自动解锁。',
-  unlockTable: 'outputs/slot-backs-final-20261109/二代新增卡槽背景-解锁条件填写表.xlsx',
+  unlockTable: '../开发资料/outputs/slot-backs-final-20261109/二代新增卡槽背景-解锁条件填写表.xlsx',
   images: records,
 }, null, 2));
 const esc = s => s.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('"', '&quot;');

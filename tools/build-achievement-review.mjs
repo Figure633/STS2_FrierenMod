@@ -9,7 +9,7 @@ const require = createRequire(pathToFileURL(path.join(work, 'resolver.cjs')));
 const { Workbook, SpreadsheetFile } = await import(pathToFileURL(require.resolve('@oai/artifact-tool')));
 const sharp = require('sharp');
 const rows = JSON.parse(await fs.readFile(path.join(work, 'records.json'), 'utf8'));
-const output = path.join(root, 'outputs/achievement-review-20261024');
+const output = path.join(root, '../开发资料/outputs/achievement-review-20261024');
 await fs.mkdir(output, { recursive: true });
 const outputFile = path.join(output, '成就与因子卡背对照表.xlsx');
 if (await fs.stat(outputFile).then(() => true, () => false))

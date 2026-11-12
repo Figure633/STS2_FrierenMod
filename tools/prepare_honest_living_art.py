@@ -10,7 +10,7 @@ ROOT=Path(__file__).resolve().parents[1]
 NS={'w':'http://schemas.openxmlformats.org/wordprocessingml/2006/main',
     'a':'http://schemas.openxmlformats.org/drawingml/2006/main',
     'r':'http://schemas.openxmlformats.org/officeDocument/2006/relationships'}
-with ZipFile(ROOT/'TODOs.docx') as z:
+with ZipFile(ROOT/'../开发资料/TODOs.docx') as z:
     tree=E.fromstring(z.read('word/document.xml'))
     rels={r.get('Id'):r.get('Target') for r in E.fromstring(z.read('word/_rels/document.xml.rels'))}
     paragraphs=tree.findall('.//w:p',NS)
@@ -24,9 +24,9 @@ image=Image.open(BytesIO(data)).convert('RGB')
 target=ROOT/'FrierenMod/images/cards/HonestLiving.png'
 # 原图脸贴近上边缘，保留顶部，裁去下方部分衣摆。
 ImageOps.fit(image,(500,380),method=Image.Resampling.LANCZOS,centering=(.5,0)).save(target)
-path=ROOT/'docs/assets.json';assets=json.loads(path.read_text(encoding='utf-8-sig'))
+path=ROOT/'tools/data/assets.json';assets=json.loads(path.read_text(encoding='utf-8-sig'))
 relative=target.relative_to(ROOT).as_posix();assets=[a for a in assets if a['file']!=relative]
-assets.append({'file':relative,'source':'TODOs.docx:'+source,'source_kind':'author_provided',
+assets.append({'file':relative,'source':'../开发资料/TODOs.docx:'+source,'source_kind':'author_provided',
     'modified':True,'processing':'作者原图等比裁切500x380，顶端对齐保留头脸，下方裁去衣摆；无重绘、锐化或新增内容。原图SHA256='+hashlib.sha256(data).hexdigest(),
     'sha256':hashlib.sha256(target.read_bytes()).hexdigest()})
 path.write_text(json.dumps(assets,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')

@@ -8,7 +8,7 @@ from io import BytesIO
 
 ROOT=Path(__file__).resolve().parents[1]
 parser=argparse.ArgumentParser()
-parser.add_argument('--document',default='TODOs.docx')
+parser.add_argument('--document',default='../开发资料/TODOs.docx')
 parser.add_argument('--title',required=True)
 parser.add_argument('--model',required=True)
 parser.add_argument('--date',required=True)
@@ -38,7 +38,7 @@ rect={'left':left,'top':top,'width':right-left,'height':bottom-top}
 if args.bounds:
     x,y,w,h=map(int,args.bounds.split(','));assert x>=left and y>=top and w>0 and h>0 and x+w<=right and y+h<=bottom,'手工范围超出作者Word裁剪'
     rect={'left':x,'top':y,'width':w,'height':h}
-source=ROOT/'assets/author_adjusted'/args.date/(args.model+Path(media).suffix)
+source=ROOT/'../开发资料/assets/author_adjusted'/args.date/(args.model+Path(media).suffix)
 source.parent.mkdir(parents=True,exist_ok=True);source.write_bytes(data)
 target=ROOT/'FrierenMod/images/events'/(args.model+'.png')
 modified=has_crop or bool(args.bounds) or source.suffix.lower()!='.png'
@@ -47,7 +47,7 @@ if modified:
     js="const sharp=require(process.env.SHARP_MODULE||'sharp');sharp(process.argv[1]).extract(JSON.parse(process.argv[3])).png().toFile(process.argv[2]).catch(e=>{console.error(e);process.exitCode=1})"
     subprocess.run([args.node,'-e',js,str(source),str(target),json.dumps(rect)],check=True)
 else:shutil.copy2(source,target)
-provenance=ROOT/'docs/assets.json';entries=json.loads(provenance.read_text(encoding='utf-8'))
+provenance=ROOT/'tools/data/assets.json';entries=json.loads(provenance.read_text(encoding='utf-8'))
 relative=target.relative_to(ROOT).as_posix()
 entries=[e for e in entries if e['file']!=relative]
 entries.append({'file':relative,'source':source.relative_to(ROOT).as_posix(),'source_kind':'author_provided','modified':modified,'processing':'按作者Word裁剪提取；手工收紧播放器边缘，不重画、不锐化。' if modified else '作者Word完整原图直接复制。','source_rect':rect,'sha256':hashlib.sha256(target.read_bytes()).hexdigest()})

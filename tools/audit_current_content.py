@@ -19,7 +19,7 @@ comparison=[dict(model=p['model'],total=len(p['cards']),types=dict(Counter(c['ty
 source=ROOT.parent/'FrierenMod_STS1_source code/src/main'
 java=defaultdict(list)
 for path in (source/'java/FrierenMod/cards').rglob('*.java'):java[path.stem].append(path)
-assets={Path(x['file']).name:x for x in load(ROOT/'docs/assets.json') if '/images/cards/'in x['file']}
+assets={Path(x['file']).name:x for x in load(ROOT/'tools/data/assets.json') if '/images/cards/'in x['file']}
 artcards=defaultdict(list)
 for c in cards:
  path=c['portraitPath'].replace('res://','');artcards[path].append(c)
@@ -100,12 +100,12 @@ else:candidates=list(oldfolder.glob('*.png'))
 old={p.stem:p for p in candidates};same=[id for id,p in installed.items()if id in old and p.read_bytes()==old[id].read_bytes()]
 labels=load(ROOT/'FrierenMod/localization/zhs/frieren.json')
 newbacks=[]
-for folder in ['outputs/slot-back-preview-20261029','outputs/slot-backs-final-20261029']:
+for folder in ['../开发资料/outputs/slot-back-preview-20261029','../开发资料/outputs/slot-backs-final-20261029']:
  for p in (ROOT/folder).rglob('*.png'):
   if Image.open(p).size==(301,461):
    digest=hashlib.sha256(p.read_bytes()).hexdigest()
    newbacks.append(dict(file=p.relative_to(ROOT).as_posix(),sha256=digest,installed=digest in installed_hashes))
-prepared=[r for r in newbacks if r['file'].startswith(('outputs/slot-backs-final-20261029/基础圆角/','outputs/slot-backs-final-20261029/金色花纹/'))]
+prepared=[r for r in newbacks if r['file'].startswith(('../开发资料/outputs/slot-backs-final-20261029/基础圆角/','../开发资料/outputs/slot-backs-final-20261029/金色花纹/'))]
 achievementfiles=list((ROOT/'Scripts').rglob('*.cs'))
 hooks='\n'.join(p.read_text(encoding='utf-8-sig') for p in achievementfiles if 'Achievement' in p.name)
 unlocks=sorted(set(re.findall(r'Unlock\([^\n]*?"(\d{4})"',hooks)))

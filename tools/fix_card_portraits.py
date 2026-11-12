@@ -10,7 +10,7 @@ from PIL import Image, ImageOps
 ROOT = Path(__file__).resolve().parents[1]
 NORMAL = (500, 380)  # 原生 Portrait: 250x190, KeepAspectCentered
 ANCIENT = (598, 842)  # 原生 AncientPortrait: 598x842, Scale
-assets_path = ROOT / 'docs/assets.json'
+assets_path = ROOT / 'tools/data/assets.json'
 assets = json.loads(assets_path.read_text('utf-8-sig'))
 
 
@@ -42,7 +42,7 @@ def extend_transparent_background(image):
 
 
 # 用固定Git快照保留作者原始图及Word裁剪，不依赖后续文档的图片编号。
-with ZipFile(BytesIO(subprocess.check_output(['git', 'show', 'af59100:TODOs.docx'], cwd=ROOT))) as word:
+with ZipFile(BytesIO(subprocess.check_output(['git', 'show', 'af59100:../开发资料/TODOs.docx'], cwd=ROOT))) as word:
     for name, media, word_crop, size in [
         ('RingletForm', 'image3.png', (.21572, .03226, 0, .07103), NORMAL),
     ]:
@@ -51,7 +51,7 @@ with ZipFile(BytesIO(subprocess.check_output(['git', 'show', 'af59100:TODOs.docx
         l, t, r, b = word_crop
         box = (round(w*l), round(h*t), round(w*(1-r)), round(h*(1-b)))
         image = ImageOps.fit(image.crop(box), size, method=Image.Resampling.LANCZOS)
-        save(name, image, 'TODOs.docx@af59100:word/media/' + media,
+        save(name, image, '../开发资料/TODOs.docx@af59100:word/media/' + media,
              f'先应用作者Word裁剪{word_crop}，再等比裁剪为{size[0]}x{size[1]}；保留脸部完整，无拉伸。', box)
 
 originals = ROOT.parent / 'FrierenMod_STS1_source code/src/main/resources/FrierenModResources/img/cards'

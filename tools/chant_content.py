@@ -214,7 +214,7 @@ def main():
         )[index]
         (directory / "relics.json").write_text(json.dumps(relics, ensure_ascii=False, indent=2) + "\n", encoding="utf8")
     # 同步一代内容盘点，避免仍把已经接通的因子列为未移植。
-    inventory = ROOT / "docs/content_inventory.csv"
+    inventory = ROOT / "../开发资料/docs/content_inventory.csv"
     entries = list(csv.DictReader(inventory.read_text(encoding="utf-8-sig").splitlines()))
     implemented = set(factors) | set(CARDS) | set(POWERS) | {"HolyEmblem", "RapidChant", "DefensiveMagic", "PreciseChant", "FinalChant", "ManaExpansion", "Mana", "Flow"}
     implemented = {LEGACY_SOURCE_NAMES.get(name, name) for name in implemented}

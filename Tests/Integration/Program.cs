@@ -81,7 +81,7 @@ Test("重构保持全部已注册模型身份", () => {
 });
 Test("一代77张有效芙莉莲卡牌均有可获得模型", () => {
     var root = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../../../"));
-    using var audit = JsonDocument.Parse(File.ReadAllText(Path.Combine(root, "docs/inventory/frieren_card_parity.json")));
+    using var audit = JsonDocument.Parse(File.ReadAllText(Path.Combine(root, "tools/data/frieren_card_parity.json")));
     int count = 0;
     foreach (var entry in audit.RootElement.EnumerateArray())
     {

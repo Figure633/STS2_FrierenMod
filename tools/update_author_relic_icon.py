@@ -10,7 +10,7 @@ alpha=image.getchannel('A');left,top,right,bottom=alpha.getbbox();outline=Image.
 for name in [args.name,args.name+'Outline']:
  bounds=alpha.getbbox() if name==args.name else outline.getchannel('A').getbbox();l,t,r,b=bounds
  (folder/(name+'.tres')).write_text('[gd_resource type="AtlasTexture" load_steps=2 format=3]\n[ext_resource type="Texture2D" path="res://FrierenMod/images/relics/'+name+'.png" id="1"]\n[resource]\natlas = ExtResource("1")\nregion = Rect2('+', '.join(map(str,[l,t,r-l,b-t]))+')\nfilter_clip = true\n',encoding='utf-8')
-file=ROOT/'docs/assets.json';data=json.loads(file.read_text(encoding='utf-8'))
+file=ROOT/'tools/data/assets.json';data=json.loads(file.read_text(encoding='utf-8'))
 for name in [args.name,args.name+'Outline']:
  relative='FrierenMod/images/relics/'+name+'.png';entry=next((r for r in data if r['file']==relative),None)
  if entry is None:entry={'file':relative};data.append(entry)

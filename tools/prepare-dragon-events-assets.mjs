@@ -4,7 +4,7 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { createRequire } from 'node:module';
 const require=createRequire(import.meta.url),sharp=require(process.env.SHARP_MODULE||'sharp');
-const sources='assets/author_adjusted/20261111/events';
+const sources='../开发资料/assets/author_adjusted/20261111/events';
 await fs.mkdir(sources,{recursive:true}); await fs.writeFile(path.join(sources,'.gdignore'),'');
 const extracted=process.argv[2]||'artifacts/new-event-art';
 const manifest={sourceDocument:'../事件todo.docx',assets:[]};
@@ -29,10 +29,10 @@ try{await fs.access(kameSource);}catch{await fs.copyFile('../png/龟派气功！
 const kameBytes=await fs.readFile(kameSource);
 await sharp(kameBytes).resize(250,190,{fit:'cover'}).png().toFile('FrierenMod/images/cards/Kamehameha.png');
 manifest.assets.push({name:'Kamehameha',source:kameSource,sha256:crypto.createHash('sha256').update(kameBytes).digest('hex'),output:[250,190]});
-for(const file of ['SenzuBean.png','SenzuBeanOutline.png']) await fs.copyFile('assets/prepared/event-potions/senzu/'+file,'FrierenMod/images/potions/'+file);
+for(const file of ['SenzuBean.png','SenzuBeanOutline.png']) await fs.copyFile('../开发资料/assets/prepared/event-potions/senzu/'+file,'FrierenMod/images/potions/'+file);
 // 1—7 星的离散图形，每一颗都能在魔法书和奖励预览中辨认。
 const positions={1:[[125,95]],2:[[107,78],[143,112]],3:[[125,67],[98,112],[152,112]],4:[[103,73],[147,73],[103,117],[147,117]],5:[[103,72],[147,72],[125,95],[103,118],[147,118]],6:[[125,61],[96,78],[154,78],[96,112],[154,112],[125,129]],7:[[125,95],[125,57],[92,76],[158,76],[92,114],[158,114],[125,133]]};
-const svgDir='assets/prepared/dragon-balls';await fs.mkdir(svgDir,{recursive:true});await fs.writeFile(path.join(svgDir,'.gdignore'),'');
+const svgDir='../开发资料/assets/prepared/dragon-balls';await fs.mkdir(svgDir,{recursive:true});await fs.writeFile(path.join(svgDir,'.gdignore'),'');
 function star(x,y){return Array.from({length:10},(_,i)=>{const a=-Math.PI/2+i*Math.PI/5,r=i%2?4.4:10;return `${(x+Math.cos(a)*r).toFixed(2)},${(y+Math.sin(a)*r).toFixed(2)}`;}).join(' ');}
 for(let n=1;n<=7;n++){
   const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="250" height="190" viewBox="0 0 250 190"><defs><radialGradient id="g" cx=".32" cy=".25" r=".8"><stop stop-color="#fff2a4"/><stop offset=".4" stop-color="#ffc14a"/><stop offset=".8" stop-color="#ed7a14"/><stop offset="1" stop-color="#9e320b"/></radialGradient></defs><circle cx="125" cy="95" r="82" fill="url(#g)" stroke="#6b2b13" stroke-width="4"/><ellipse cx="91" cy="49" rx="24" ry="12" transform="rotate(-35 91 49)" fill="#fff9d7" opacity=".8"/>${positions[n].map(([x,y])=>`<polygon points="${star(x,y)}" fill="#c72e1b"/>`).join('')}</svg>`;

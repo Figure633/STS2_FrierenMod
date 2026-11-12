@@ -18,7 +18,7 @@ def main():
         ffmpeg=imageio_ffmpeg.get_ffmpeg_exe()
     manifest=json.loads((ROOT/'tools/music_sources.json').read_text(encoding='utf-8'))
     out=ROOT/'FrierenMod/audio/bgm';out.mkdir(parents=True,exist_ok=True)
-    report_path=ROOT/'docs/inventory/bgm_audio.json'
+    report_path=ROOT/'tools/data/bgm_audio.json'
     old={t['id']:t for t in json.loads(report_path.read_text(encoding='utf-8'))['tracks']} if report_path.exists() else {}
     def run(params):
         result=subprocess.run([ffmpeg,'-hide_banner','-nostdin','-threads','1',*params],capture_output=True,text=True,encoding='utf-8',errors='replace')

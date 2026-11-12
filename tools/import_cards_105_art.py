@@ -21,12 +21,12 @@ recipes={'SleepIn':('95a8315845f103e37c407558f7d521b06af50fc42f5f80a7befc4669845
 parser=argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--good-luck-image',type=Path,help='作者提供的好运魔法PNG原图；省略时保留现有主卡图')
 args=parser.parse_args()
-assets=load(ROOT/'docs/assets.json')
+assets=load(ROOT/'tools/data/assets.json')
 def record(path,source,processing):
  global assets
  rel=path.relative_to(ROOT).as_posix();assets=[a for a in assets if a['file']!=rel]
  assets.append(dict(file=rel,source=source,sha256=hashlib.sha256(path.read_bytes()).hexdigest(),modified=True,processing=processing))
-with ZipFile(ROOT/'TODOs.docx') as z:
+with ZipFile(ROOT/'../开发资料/TODOs.docx') as z:
  media={hashlib.sha256(z.read(n)).hexdigest():n for n in z.namelist() if n.startswith('word/media/')}
  for key,_ in recipes.values():
   if key not in media:raise ValueError('TODO中找不到原图：'+key)
@@ -34,10 +34,10 @@ with ZipFile(ROOT/'TODOs.docx') as z:
   source=media[source_hash]
   im=Image.open(BytesIO(z.read(source))).convert('RGB');target=ROOT/f'FrierenMod/images/cards/{name}.png'
   ImageOps.fit(im,(500,380),method=Image.Resampling.LANCZOS,centering=center).save(target)
-  record(target,'TODOs.docx:'+source,'作者原图等比裁切为500x380；无重绘。原图SHA256='+source_hash)
+  record(target,'../开发资料/TODOs.docx:'+source,'作者原图等比裁切为500x380；无重绘。原图SHA256='+source_hash)
  source=media['e1cf2635783166f38712e18ab94409b5a63301f0972345ad0b00ed1cb30f4d42']
  target=ROOT/'FrierenMod/images/powers/SleepInPower.png';target.write_bytes(z.read(source))
- record(target,'TODOs.docx:'+source,'作者提供的100x100能力图标，原样复制。')
+ record(target,'../开发资料/TODOs.docx:'+source,'作者提供的100x100能力图标，原样复制。')
 if args.good_luck_image:
  if Image.open(args.good_luck_image).format!='PNG':raise ValueError('好运魔法请提供PNG原图')
  target=ROOT/'FrierenMod/images/cards/GoodLuckSpell.png'
@@ -46,4 +46,4 @@ if args.good_luck_image:
 for name,source in [('DomainExpansionPower','DomainExpansion'),('GoodLuckRewardPower','RewardWish')]:
  target=ROOT/f'FrierenMod/images/powers/{name}.png';ImageOps.fit(Image.open(ROOT/f'FrierenMod/images/cards/{source}.png'),(84,84)).save(target)
  record(target,f'FrierenMod/images/cards/{source}.png','作者卡图中心裁切为84x84能力图标。')
-save(ROOT/'docs/assets.json',assets)
+save(ROOT/'tools/data/assets.json',assets)

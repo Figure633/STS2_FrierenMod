@@ -29,12 +29,12 @@ outline=Image.new('RGBA',image.size,(255,255,255,0));outline.putalpha(image.getc
 bounds=image.getchannel('A').getbbox();left,top,right,bottom=bounds
 for name in ['AuraCompanion','AuraCompanionOutline']:
     (folder/(name+'.tres')).write_text('[gd_resource type="AtlasTexture" load_steps=2 format=3]\n[ext_resource type="Texture2D" path="res://FrierenMod/images/relics/'+name+'.png" id="1"]\n[resource]\natlas = ExtResource("1")\nregion = Rect2('+', '.join(map(str,[left,top,right-left,bottom-top]))+')\nfilter_clip = true\n',encoding='utf-8')
-provenance=ROOT/'docs/assets.json';records=json.loads(provenance.read_text(encoding='utf-8'))
+provenance=ROOT/'tools/data/assets.json';records=json.loads(provenance.read_text(encoding='utf-8'))
 for name in ['AuraCompanion','AuraCompanionOutline']:
     relative='FrierenMod/images/relics/'+name+'.png';records=[r for r in records if r['file']!=relative]
     records.append({'file':relative,'source':source.relative_to(ROOT).as_posix(),'source_kind':'original_animation_frame_alpha_only','modified':True,'processing':'tools/restore_aura_companion_icon.py；原帧270×249，只处理连通背景Alpha；主体RGB逐像素不变，无缩放、锐化或重绘。Outline为同一Alpha轮廓。','sha256':hashlib.sha256((ROOT/relative).read_bytes()).hexdigest()})
 provenance.write_text(json.dumps(records,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-generated=ROOT/'docs/generated_assets.json';data=json.loads(generated.read_text(encoding='utf-8'))
+generated=ROOT/'tools/data/generated_assets.json';data=json.loads(generated.read_text(encoding='utf-8'))
 retired=[r for r in data['assets'] if r['target']=='FrierenMod/images/relics/AuraCompanion.png']
 for r in retired:r['status']='0.12.3已撤换；旧版本可从Git历史查阅'
 data.setdefault('retired_assets',[]).extend(retired)

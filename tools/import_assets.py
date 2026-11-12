@@ -76,7 +76,7 @@ def main():
                     "conversion": "Spine 3.8 Idle -> 24 fps Godot Polygon2D; original speed 1.2; synthetic action reactions",
                     "redistribution_review": "pending; local prototype only"})
     copy(SOURCE / "LICENSE", ROOT / "LICENSE.STS1")
-    (ROOT / "docs/assets.json").write_text(json.dumps(records, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    (ROOT / "tools/data/assets.json").write_text(json.dumps(records, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"Imported {len(records)} files from {sha}")
 
 if __name__ == "__main__":

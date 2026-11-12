@@ -9,7 +9,7 @@ from PIL import Image, ImageOps
 ROOT = Path(__file__).resolve().parents[1]
 BACKUP = ROOT/'artifacts/author-review-20261106/input'
 BACKUP.mkdir(parents=True,exist_ok=True)
-for relative in ['TODOs.docx','卡名对照表.xlsx','FrierenMod/localization/zhs/powers.json','FrierenMod/localization/zhs/relics.json']:
+for relative in ['../开发资料/TODOs.docx','../开发资料/卡名对照表.xlsx','FrierenMod/localization/zhs/powers.json','FrierenMod/localization/zhs/relics.json']:
     target=BACKUP/relative
     if not target.exists():
         target.parent.mkdir(parents=True,exist_ok=True)
@@ -110,17 +110,17 @@ for table in ['powers','events','frieren']:
   data[key]=value
  p.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 # 作者原图按已有画框比例裁剪，保留原图副本，禁止重绘。
-sources=ROOT/'assets/author_adjusted/20261106';sources.mkdir(parents=True,exist_ok=True)
+sources=ROOT/'../开发资料/assets/author_adjusted/20261106';sources.mkdir(parents=True,exist_ok=True)
 for name,model in [('黑金之翼.png','BlackGoldWings'),('封魔石.png','SealingOre')]:
  source=ROOT.parent/'png'/name;shutil.copy2(source,sources/name)
  image=Image.open(source).convert('RGB')
  ImageOps.fit(image,(500,380),method=Image.Resampling.LANCZOS).save(ROOT/f'FrierenMod/images/cards/{model}.png')
 shutil.copy2(sources/'封魔石.png',ROOT/'FrierenMod/images/events/SealingOreMine.png')
-provenance=ROOT/'docs/assets.json'
+provenance=ROOT/'tools/data/assets.json'
 entries=json.loads(provenance.read_text(encoding='utf-8'))
 for target,source in [('cards/BlackGoldWings.png','黑金之翼.png'),('cards/SealingOre.png','封魔石.png'),('events/SealingOreMine.png','封魔石.png')]:
  relative='FrierenMod/images/'+target
- entry={'file':relative,'source':'assets/author_adjusted/20261106/'+source,'source_kind':'author_provided','modified':target.startswith('cards/'),'processing':'作者原图；卡图按500×380原生画框等比处理，事件保留完整原图。','sha256':hashlib.sha256((ROOT/relative).read_bytes()).hexdigest()}
+ entry={'file':relative,'source':'../开发资料/assets/author_adjusted/20261106/'+source,'source_kind':'author_provided','modified':target.startswith('cards/'),'processing':'作者原图；卡图按500×380原生画框等比处理，事件保留完整原图。','sha256':hashlib.sha256((ROOT/relative).read_bytes()).hexdigest()}
  entries=[e for e in entries if e['file']!=relative];entries.append(entry)
 provenance.write_text(json.dumps(entries,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 print('AUTHOR_CONTENT_0120_OK')

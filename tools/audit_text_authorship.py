@@ -88,11 +88,11 @@ for p in sorted((ROOT/'FrierenMod/localization/zhs').glob('*.json')):
         elif len(n)>=8 and (match:=next(((s,path) for s,path in author if n in s),None)):
             status='现有作者需求文档有对应';source=match[1];note='仅说明存在文字依据，不将文档中的代理进度说明当批准。'
         if key.startswith('BACK.80'):
-            status='作者本次填写并明确要求实装';source='outputs/slot-backs-final-20261109/二代新增卡槽背景-解锁条件填写表.xlsx';note='8019仅登记文字，待作者新增事件。'
+            status='作者本次填写并明确要求实装';source='../开发资料/outputs/slot-backs-final-20261109/二代新增卡槽背景-解锁条件填写表.xlsx';note='8019仅登记文字，待作者新增事件。'
         if key in known_json_edits:
             status='作者工作区JSON修订';source='本次开始前作者已修改的JSON；病毒误改按2026-11-10回复恢复';note='保留作者改稿，不归为本次代理自创。'
         if table=='frieren' and key.startswith(('COMMISSION.NAME.','COMMISSION.REQUEST.')) and key.rsplit('.',1)[1] in ['HUNT','GRAPES','STATUE','WEDDING','FESTIVAL','SUMMER','LOST','TUTOR','CARGO','EXHIBITION','LIBRARY','LESSON','VARIETY','GRANNY','NAMUSAN','STARK','GUIDE']:
-            status='作者指定沿用当前frieren.json';source='docs/AGENT_ADDITIONS_REVIEW.md：“这些名字和文本照我在frieren.json里的写”';note='这是采用当前文案的依据；不冒充每句都有独立逐字审阅记录。'
+            status='作者指定沿用当前frieren.json';source='../开发资料/docs/AGENT_ADDITIONS_REVIEW.md：“这些名字和文本照我在frieren.json里的写”';note='这是采用当前文案的依据；不冒充每句都有独立逐字审阅记录。'
         if (override:=priority.get(table,{}).get(key)):
             status,note=override;source='当前源码、一代原文、作者文档与Git差异对照'
         if table=='events' and 'EVENT_ART_' in key:
@@ -113,7 +113,7 @@ for p in sorted((ROOT/'FrierenMod/localization/eng').glob('*.json')):
             evidence=old_eng.get(norm(value),''),note='中文获准不代表本句英文已经逐字验收。',
             file=p.relative_to(ROOT).as_posix(),line=next(i for i,s in enumerate(lines,1) if json.dumps(key) in s),authorDecision=''))
 
-out=ROOT/'docs/inventory/text_authorship.jsonl'
+out=ROOT/'../开发资料/docs/inventory/text_authorship.jsonl'
 out.write_text(''.join(json.dumps(r,ensure_ascii=False)+'\n' for r in [*records,*english]),encoding='utf-8')
 def cell(x):return x.replace('|','\\|').replace('\n','<br>')
 def row(r):
@@ -149,5 +149,5 @@ report += ['', '## 不应误算为代理原创的部分','',
  '', '## 来源判断统计','', '| 判断 | 中文键数 |','|---|---:|']
 for status,n in Counter(r['status'] for r in records).most_common():report.append('| '+status+' | '+str(n)+' |')
 report += ['', '没有把未找到本地批准记录解释为“用户从未批准”。聊天批准可能未逐句持久化；可疑处保留当前内容，由作者在上表或索引的authorDecision中填写意见。已有整体玩法核对文档仍见 [代理新增内容核对](AGENT_ADDITIONS_REVIEW.md)。','']
-(ROOT/'docs/AGENT_TEXT_REVIEW.md').write_text('\n'.join(report),encoding='utf-8')
+(ROOT/'../开发资料/docs/AGENT_TEXT_REVIEW.md').write_text('\n'.join(report),encoding='utf-8')
 print('TEXT_AUDIT_OK:',len(records),'Chinese entries;',len([r for r in records if r['key'] in priority.get(r['table'],{})]),'priority/legacy entries. No game localization was changed.')

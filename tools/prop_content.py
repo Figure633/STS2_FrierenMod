@@ -64,7 +64,7 @@ def main():
         )[index]
         for table, data in [("cards", cards), ("frieren", texts), ("rest_site_ui", rest), ("relics", relics)]:
             (folder / f"{table}.json").write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf8")
-    inventory = ROOT / "docs/content_inventory.csv"
+    inventory = ROOT / "../开发资料/docs/content_inventory.csv"
     with inventory.open(encoding="utf8", newline="") as stream:
         entries = list(csv.DictReader(stream))
     for row in entries:

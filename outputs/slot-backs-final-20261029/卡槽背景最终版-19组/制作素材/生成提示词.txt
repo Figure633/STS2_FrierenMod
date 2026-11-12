@@ -1,8 +1,0 @@
-工具：内置 image_gen.imagegen；transparent_background=true。
-参考：D:/program/STS2_FrierenMod/STS1_素材/图图/9001.png。
-生成产物仅为透明倒角材质；人物、背景、原PSD装饰均来自作者原图，未生成式重画。
-
-Prompt:
-Use case: background-extraction / precise-object-edit. Asset: transparent material overlay for a 301:461 portrait game card, used over existing anime art. Reference image 1 is the author's old finished card. Reproduce ONLY the subtle bevel material treatment around its outermost perimeter. Remove ALL interior anime art completely to true transparency. Output exactly ONE empty portrait rounded rectangular bezel overlay with a large completely transparent center, true transparent outside rounded corners, no solid fill. Match the reference's modest 7-pixel bevel at 301px card width: pale desaturated silver/gray translucent highlight on upper-left edge and corner, subdued dark gray translucent shading on lower-right edge and corner, faint inner rim line around 7 pixels inward. Same rounded silhouette as reference, corner radius around 20px at 301px width, aspect ratio 301:461. This is a subtle flat game-card embossed rim seen straight-on, not a freestanding photo frame. Absolutely no gold ornaments, no thick metal frame, no screws, no drop shadow outside the silhouette, no perspective, no character, no patterns or drawing in the middle, no text, no symbols, no background. The useful opacity must be confined to a narrow edge band, preserving a fully transparent 95% center. Align rectangle almost edge-to-edge in image so it can be scaled and reused as a compositing overlay. Keep colors neutral silver and black only.
-
-后处理：缩放到301×461；将材质约束到8.7像素内侧边带，柔光并少量正常混合；7.5像素处补细折边。原画保留，使用亮度方向差形成浅浮雕；重效果因五官和花瓣的明暗线过强而未采用。最终参数见manifest.json及tools/materialize-slot-backs.mjs。

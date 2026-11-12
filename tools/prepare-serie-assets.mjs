@@ -3,7 +3,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url), sharp = require(process.env.SHARP_MODULE || 'sharp');
-const sourceDir = 'assets/author_adjusted/20261111';
+const sourceDir = '../开发资料/assets/author_adjusted/20261111';
 const ancientDir = 'FrierenMod/images/ancients', relicDir = 'FrierenMod/images/relics';
 await fs.mkdir(ancientDir, { recursive: true });
 await fs.copyFile(`${sourceDir}/Serie.png`, `${ancientDir}/serie.png`);
