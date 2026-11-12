@@ -5866,34 +5866,6 @@
     "processing": "作者提供928×524赛莉耶图，原字节保留，场景等比显示"
   },
   {
-    "file": "FrierenMod/images/ancients/serie_node.png",
-    "source": "../开发资料/assets/author_adjusted/20261111/Serie.png",
-    "sha256": "f1c748a9c6c7cb5461057c74765fc46529d3091df2acbb991adb7bebb496447f",
-    "modified": true,
-    "processing": "tools/prepare-serie-assets.mjs --avatar-only; author-selected circular portrait; source crop (372,42,185,185), character centered; preserve source RGB, hand and shoulders; no redraw"
-  },
-  {
-    "file": "FrierenMod/images/ancients/serie_node_outline.png",
-    "source": "../开发资料/assets/author_adjusted/20261111/Serie.png",
-    "sha256": "bf668cb410933a8c2ea5b6af42ba9c068cbbab5db3ff832b80e9510c5184c246",
-    "modified": true,
-    "processing": "tools/prepare-serie-assets.mjs --avatar-only; author-selected circular portrait; source crop (372,42,185,185), character centered; preserve source RGB, hand and shoulders; no redraw"
-  },
-  {
-    "file": "FrierenMod/images/ancients/serie_history.png",
-    "source": "../开发资料/assets/author_adjusted/20261111/Serie.png",
-    "sha256": "c18de3ea9936cda26ea5ba57987646f99123b331673cd00888a4462cf9552615",
-    "modified": true,
-    "processing": "tools/prepare-serie-assets.mjs --avatar-only; author-selected circular portrait; source crop (372,42,185,185), character centered; preserve source RGB, hand and shoulders; no redraw"
-  },
-  {
-    "file": "FrierenMod/images/ancients/serie_history_outline.png",
-    "source": "../开发资料/assets/author_adjusted/20261111/Serie.png",
-    "sha256": "020961298cb5c394cd2ccafed7accc9ad3c677181f03ac747ae7e851179dc7dd",
-    "modified": true,
-    "processing": "tools/prepare-serie-assets.mjs --avatar-only; author-selected circular portrait; source crop (372,42,185,185), character centered; preserve source RGB, hand and shoulders; no redraw"
-  },
-  {
     "file": "FrierenMod/images/relics/UpgradedHolyEmblem.png",
     "source": "../开发资料/assets/author_adjusted/20261111/UpgradedHolyEmblem.png",
     "sha256": "763de5e43d35c4e9f05867bface14c92f5783494d8ef568b3f345d16de8a25df",

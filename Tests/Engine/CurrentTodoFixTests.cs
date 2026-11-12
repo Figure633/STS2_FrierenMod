@@ -57,11 +57,11 @@ public static class CurrentTodoFixTests
         }
         var point=new MegaCrit.Sts2.Core.Nodes.Screens.Map.NAncientMapPoint();var icon=new TextureRect{Name="Icon",Texture=ModelDb.AncientEvent<FrierenMod.Scripts.Ancients.Serie>().MapIcon};point.AddChild(icon);
         var type=point.GetType();var color=(Color)AccessTools.PropertyGetter(type,"UntravelableColor").Invoke(point,null)!;
-        Check(color.R>.99f&&color.G>.99f&&color.B>.99f,"原生地图标记保留赛莉耶彩色头像，不染黑");
+        Check(color==MegaCrit.Sts2.Core.Helpers.StsColors.bossNodeUntraveled,"赛莉耶简笔图标沿用原生未访问配色");
         AccessTools.Field(typeof(MegaCrit.Sts2.Core.Nodes.Screens.Map.NMapPoint),"_state").SetValue(point,MegaCrit.Sts2.Core.Map.MapPointState.Travelable);
-        color=(Color)AccessTools.PropertyGetter(type,"TraveledColor").Invoke(point,null)!;Check(color.R>.99f,"可以进入的头像保持正常亮度");
+        color=(Color)AccessTools.PropertyGetter(type,"TraveledColor").Invoke(point,null)!;Check(color==MegaCrit.Sts2.Core.Helpers.StsColors.pathDotTraveled,"可以进入的简笔图标沿用原生配色");
         AccessTools.Field(typeof(MegaCrit.Sts2.Core.Nodes.Screens.Map.NMapPoint),"_state").SetValue(point,MegaCrit.Sts2.Core.Map.MapPointState.Traveled);
-        color=(Color)AccessTools.PropertyGetter(type,"TraveledColor").Invoke(point,null)!;Check(color.R>.7f&&color.R<.8f,"已访问头像仍有原生状态亮度区别");
+        color=(Color)AccessTools.PropertyGetter(type,"TraveledColor").Invoke(point,null)!;Check(color==MegaCrit.Sts2.Core.Helpers.StsColors.pathDotTraveled,"已访问简笔图标沿用原生配色");
         icon.Texture=ModelDb.AncientEvent<MegaCrit.Sts2.Core.Models.Events.Neow>().MapIcon;color=(Color)AccessTools.PropertyGetter(type,"UntravelableColor").Invoke(point,null)!;
         Check(color.R<.99f||color.G<.99f||color.B<.99f,"其他先古地图颜色不变");point.Free();
         Check(new MegaCrit.Sts2.Core.Localization.LocString("events","FRIERENMOD-DRAGON_BALL_ADVENTURE.title").GetFormattedText()=="Adventure Story: Dragon Ball","七龙珠事件英文标题同步");

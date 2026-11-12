@@ -260,6 +260,54 @@
       "prompt_key": "prompts.ManaSource",
       "transparent_background": true,
       "processing": "tools/prepare-nov12-relic-assets.mjs; original Word crop, alpha cutout, uniform fit 128x128"
+    },
+    {
+      "key": "serie_node",
+      "date": "2026-11-13",
+      "target": "FrierenMod/images/ancients/serie_node.png",
+      "sha256": "aa318e33cfc486c2ebca8fb69085c0fa518f3ab13623bd650d701abb83b0d3db",
+      "tool": "built-in image_gen",
+      "source": "../开发资料/assets/prepared/serie-map-faceless/serie-faceless-preview.png",
+      "prompt_file": "../开发资料/assets/prepared/serie-map-faceless/prompt.json",
+      "prompt_key": "prompt",
+      "transparent_background": true,
+      "processing": "tools/prepare-serie-assets.mjs --faceless; approved full silhouette uniformly resized to 128x128; white outline from alpha"
+    },
+    {
+      "key": "serie_node_outline",
+      "date": "2026-11-13",
+      "target": "FrierenMod/images/ancients/serie_node_outline.png",
+      "sha256": "ccb4a131b8d53c083eb92e17586b0d4194f72f65c1bf7cae885a7d25f008a289",
+      "tool": "built-in image_gen",
+      "source": "../开发资料/assets/prepared/serie-map-faceless/serie-faceless-preview.png",
+      "prompt_file": "../开发资料/assets/prepared/serie-map-faceless/prompt.json",
+      "prompt_key": "prompt",
+      "transparent_background": true,
+      "processing": "tools/prepare-serie-assets.mjs --faceless; approved full silhouette uniformly resized to 128x128; white outline from alpha"
+    },
+    {
+      "key": "serie_history",
+      "date": "2026-11-13",
+      "target": "FrierenMod/images/ancients/serie_history.png",
+      "sha256": "301a0afa038392b8feb329d883ce3b0b2abfeeba63fade8dd6da873b8f9e2416",
+      "tool": "built-in image_gen",
+      "source": "../开发资料/assets/prepared/serie-map-faceless/serie-faceless-preview.png",
+      "prompt_file": "../开发资料/assets/prepared/serie-map-faceless/prompt.json",
+      "prompt_key": "prompt",
+      "transparent_background": true,
+      "processing": "tools/prepare-serie-assets.mjs --faceless; approved full silhouette uniformly resized to 64x64; white outline from alpha"
+    },
+    {
+      "key": "serie_history_outline",
+      "date": "2026-11-13",
+      "target": "FrierenMod/images/ancients/serie_history_outline.png",
+      "sha256": "17ab66a4a1d471e54442e1c598efff4af7972d0add7dc66c91a7f490e0c5cd9a",
+      "tool": "built-in image_gen",
+      "source": "../开发资料/assets/prepared/serie-map-faceless/serie-faceless-preview.png",
+      "prompt_file": "../开发资料/assets/prepared/serie-map-faceless/prompt.json",
+      "prompt_key": "prompt",
+      "transparent_background": true,
+      "processing": "tools/prepare-serie-assets.mjs --faceless; approved full silhouette uniformly resized to 64x64; white outline from alpha"
     }
   ],
   "retired_assets": [

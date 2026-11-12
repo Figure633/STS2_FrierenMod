@@ -106,6 +106,11 @@ public static class SerieTests
                     l.LineText != null && LocString.Exists("ancients", l.LineText.LocEntryKey)) &&
                     d.Lines.Take(d.Lines.Count - 1).All(l => l.NextButtonText != null && LocString.Exists("ancients", l.NextButtonText.LocEntryKey))), $"按0、1、2、3、2、3顺序且无回退台词：{lang}/{visits}");
             }
+            foreach (int visits in new[] { 0, 1, 20 }) {
+                var fallback = canonical.DialogueSet.GetValidDialogues(ModelDb.Character<Ironclad>().Id, visits, visits, true).Single();
+                Check(fallback.Lines.Count == 1 && fallback.Lines[0].Speaker == MegaCrit.Sts2.Core.Entities.Ancients.AncientDialogueSpeaker.Ancient &&
+                    fallback.Lines[0].LineText!.LocEntryKey == "FRIERENMOD-SERIE.talk.ANY.0-0r.ancient", $"其他角色始终有赛莉耶通用对话兜底：{lang}/{visits}");
+            }
         }
         LocManager.Instance.SetLanguage("zhs");
         var replacement = ModelDb.Relic<TouchOfOrobas>().GetUpgradedStarterRelic(ModelDb.Relic<HolyEmblem>());
@@ -137,6 +142,14 @@ public static class SerieTests
         Check(background.GetNode<TextureRect>("Library").Texture.GetSize() == new Vector2(928, 524) &&
             background.GetNode<TextureRect>("Library").StretchMode == TextureRect.StretchModeEnum.KeepAspectCovered &&
             canonical.MapIcon.GetWidth() > 0 && canonical.RunHistoryIcon.GetWidth() > 0, "原图原尺寸加载，事件等比铺满，地图与历史图标可加载");
+        using (var iconImage = canonical.MapIcon.GetImage())
+            Check(iconImage.GetSize() == new Vector2I(128,128) && iconImage.GetPixel(0,0).A == 0 &&
+                iconImage.GetPixel(64,64).A < .1f && iconImage.GetPixel(64,20).A > .5f && canonical.RunHistoryIcon.GetWidth() == 64,
+                "简笔图标完整加载，脸部和边缘透明，头发轮廓保留");
+        var point = new MegaCrit.Sts2.Core.Nodes.Screens.Map.NAncientMapPoint();
+        Check((Color)AccessTools.PropertyGetter(point.GetType(),"UntravelableColor").Invoke(point,null)! == MegaCrit.Sts2.Core.Helpers.StsColors.bossNodeUntraveled,
+            "简笔图标恢复原生先古地图状态配色");
+        point.Free();
         if (OS.GetCmdlineUserArgs().Contains("--ui-snapshot")) {
             for (int i = 0; i < 4; i++) await root.ToSignal(root.GetTree(), SceneTree.SignalName.ProcessFrame);
             Snapshot("serie-background.png");
