@@ -39,7 +39,12 @@ public static class CommissionCmd
     private static readonly HashSet<Player> Pending=[];
     private static readonly HashSet<string> ManaMakers=["MultipleOffensiveMagic","ManaDetection","DomainExpansion","ContinualChant","ClearMind","ButtSlam","TreasureVaultSpell","EndlessFlow","Snuggle","ManaCollapse","Disperse","ManaParcel","RapidChant","GrapeSpell","ShavedIceSpell","GoodLuckSpell","ManaExpansion","TrueColours"];
     public static bool IsBusy(Player p)=>Pending.Contains(p);
-    public static CommissionState Read(Player p){var json=Data.Get(p);return string.IsNullOrEmpty(json)?new():CommissionState.FromJson(json);}
+    public static CommissionState Read(Player p){
+        var json=Data.Get(p);if(string.IsNullOrEmpty(json))return new();
+        var state=CommissionState.FromJson(json);
+        if(state.MigrateGrimoireRewards())Data.Set(p,state.ToJson());
+        return state;
+    }
     public static void Write(Player p,CommissionState state){Data.Set(p,state.ToJson());Presentation.NewSlotBackAchievements.Commissions(p,state);}
     private static uint Seed(string text)=>BitConverter.ToUInt32(SHA256.HashData(Encoding.UTF8.GetBytes(text)),0);
     public static CommissionState State(Player p){

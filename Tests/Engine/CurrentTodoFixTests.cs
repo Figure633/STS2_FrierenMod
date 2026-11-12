@@ -20,6 +20,53 @@ using MegaCrit.Sts2.Core.Unlocks;
 
 public static class CurrentTodoFixTests
 {
+    public static async Task<int> RunLateNov12(Node root)
+    {
+        int checks=0;void Check(bool ok,string text){if(!ok)throw new Exception(text);checks++;GD.Print("PASS 最新待办："+text);}
+        SaveManager.Instance.InitPrefsDataForTest();LocalContext.NetId=1;
+        var player=Player.CreateForNewRun<Frieren>(UnlockState.all,1);var run=RunState.CreateForTest([player],seed:"TODO-01229");
+        var manager=RunManager.Instance;manager.SetUpTest(run,new NetSingleplayerGameService());CombatTestState.SetInProgress(false);
+        run.PushRoom(new MegaCrit.Sts2.Core.Rooms.RestSiteRoom());manager.ActionExecutor.Unpause();
+        var density=run.CreateCard<HighDensityMana>(player);await CardPileCmd.Add(density,PileType.Deck);
+        var swift=ModelDb.Enchantment<MegaCrit.Sts2.Core.Models.Enchantments.Swift>();
+        Check(swift.CanEnchant(density)&&ModelDb.Enchantment<FrierenMod.Scripts.Enchantments.ManaSource>().CanEnchant(density),"高密度魔力可用于原生与模组通用附魔");
+        Check(!ModelDb.Enchantment<MegaCrit.Sts2.Core.Models.Enchantments.Sharp>().CanEnchant(density),"攻击牌专属附魔仍不能附在高密度魔力上");
+        Check(!swift.CanEnchant(run.CreateCard<Mana>(player))&&!swift.CanEnchant(run.CreateCard<MegaCrit.Sts2.Core.Models.Cards.Dazed>(player)),"其他状态牌仍保留原生限制");
+        CardCmd.Enchant<MegaCrit.Sts2.Core.Models.Enchantments.Swift>(density,1);
+        Check(!ModelDb.Enchantment<FrierenMod.Scripts.Enchantments.ManaSource>().CanEnchant(density)&&Player.FromSerializable(player.ToSerializable()).Deck.Cards.OfType<HighDensityMana>().Single().Enchantment is MegaCrit.Sts2.Core.Models.Enchantments.Swift,"附魔真实存档恢复，不能覆盖不同附魔");
+        bool foundFake=false;bool foundTrue=false;
+        for(uint seed=0;seed<100;seed++) {
+            var random=FrierenMod.Scripts.Shared.Compatibility.GameApi.CreateRng(seed);var generated=new FrierenMod.Core.CommissionState();
+            generated.EnsureAct(0,random.NextInt,["A","B","C"],["UnbelievableTool"],["BlockPotion"],["CommonRelic"],["A","B","C"],["BossRelic"]);
+            foundFake|=generated.Quests.Any(q=>q.Reward.Item=="FakeFlammeGrimoire");foundTrue|=generated.Quests.Any(q=>q.Reward.Item=="FlammeGrimoire");
+        }
+        Check(foundFake&&!foundTrue,"首幕委托生成伪作，不再生成真作");
+        var old=new FrierenMod.Core.CommissionState{CurrentAct=0,GeneratedActs=[0],Quests=[new(){Id=10000,Act=0,Stars=3,Goal=FrierenMod.Core.CommissionGoal.Elites,Progress=1,BaseGold=100,Status=FrierenMod.Core.CommissionStatus.Accepted,Reward=new(FrierenMod.Core.CommissionRewardKind.Relic,"FlammeGrimoire",200,150,DuplicateGold:200)}]};
+        CommissionCmd.Data.Set(player,old.ToJson());var migrated=CommissionCmd.Read(player);
+        Check(migrated.Quests.Single().Reward.Item=="FakeFlammeGrimoire"&&CommissionCmd.Data.Get(player).Contains("FakeFlammeGrimoire"),"旧存档未领奖的真作合同迁移为伪作并保存");
+        int gold=player.Gold;Check(await CommissionCmd.Execute(player,10000,FrierenMod.Core.CommissionOperation.Claim,migrated.Revision),"迁移后的旧委托仍可原生领奖");
+        Check(player.GetRelic<FrierenMod.Scripts.Relics.FakeFlammeGrimoire>()!=null&&player.GetRelic<FrierenMod.Scripts.Relics.FlammeGrimoire>()==null&&player.Gold==gold+250,"领奖获得伪作且金币总额保留250");
+        Check(FrierenMod.Scripts.Encounters.MimicEncounter.Rewards(player).OfType<MegaCrit.Sts2.Core.Rewards.RelicReward>().Any(r=>r.Relic is FrierenMod.Scripts.Relics.FlammeGrimoire),"持有伪作时宝箱怪仍奖励真作");
+        old.Quests[0].Status=FrierenMod.Core.CommissionStatus.Claimed;CommissionCmd.Data.Set(player,old.ToJson());
+        Check(CommissionCmd.Read(player).Quests.Single().Reward.Item=="FlammeGrimoire","已领奖的历史合同不改写");
+        var normal=run.CreateCard<RapidChant>(player);var precise=run.CreateCard<PreciseChant>(player);
+        foreach(var slot in Enum.GetValues<FrierenMod.Core.ManaSlot>()) {
+            var option=new FrierenMod.Core.ChantOption(slot,"BuildUpBody",1,1,1);
+            Check(FactorCard.Create(player,"BuildUpBody",slot,option,chantSource:normal).PortraitPath.EndsWith("BuildUpBody.png"),"普通咏唱使用因子图："+slot);
+            Check(FactorCard.Create(player,"BuildUpBody",slot,option,chantSource:precise).PortraitPath.EndsWith(ChantChoice.ArtFor(slot)+".png"),"精准咏唱使用牌堆图："+slot);
+        }
+        var point=new MegaCrit.Sts2.Core.Nodes.Screens.Map.NAncientMapPoint();var icon=new TextureRect{Name="Icon",Texture=ModelDb.AncientEvent<FrierenMod.Scripts.Ancients.Serie>().MapIcon};point.AddChild(icon);
+        var type=point.GetType();var color=(Color)AccessTools.PropertyGetter(type,"UntravelableColor").Invoke(point,null)!;
+        Check(color.R>.99f&&color.G>.99f&&color.B>.99f,"原生地图标记保留赛莉耶彩色头像，不染黑");
+        AccessTools.Field(typeof(MegaCrit.Sts2.Core.Nodes.Screens.Map.NMapPoint),"_state").SetValue(point,MegaCrit.Sts2.Core.Map.MapPointState.Travelable);
+        color=(Color)AccessTools.PropertyGetter(type,"TraveledColor").Invoke(point,null)!;Check(color.R>.99f,"可以进入的头像保持正常亮度");
+        AccessTools.Field(typeof(MegaCrit.Sts2.Core.Nodes.Screens.Map.NMapPoint),"_state").SetValue(point,MegaCrit.Sts2.Core.Map.MapPointState.Traveled);
+        color=(Color)AccessTools.PropertyGetter(type,"TraveledColor").Invoke(point,null)!;Check(color.R>.7f&&color.R<.8f,"已访问头像仍有原生状态亮度区别");
+        icon.Texture=ModelDb.AncientEvent<MegaCrit.Sts2.Core.Models.Events.Neow>().MapIcon;color=(Color)AccessTools.PropertyGetter(type,"UntravelableColor").Invoke(point,null)!;
+        Check(color.R<.99f||color.G<.99f||color.B<.99f,"其他先古地图颜色不变");point.Free();
+        Check(new MegaCrit.Sts2.Core.Localization.LocString("events","FRIERENMOD-DRAGON_BALL_ADVENTURE.title").GetFormattedText()=="Adventure Story: Dragon Ball","七龙珠事件英文标题同步");
+        manager.CleanUp();return checks;
+    }
     private static async Task Nov12Visuals(Node root,Player player)
     {
         var dir=ProjectSettings.GlobalizePath("res://../../artifacts/todo-nov12/ui");Directory.CreateDirectory(dir);

@@ -48,8 +48,8 @@ public static class AuthorReviewTests
         int before=p.Gold;await Claim(new(CommissionRewardKind.Gold,"",50));Check(p.Gold==before+80,"一星额外50加固定30，合计80");
         before=p.Gold;await Claim(new(CommissionRewardKind.Prop,"UnbelievableTool",1,ExtraProp:"MysteryBox"));
         Check(p.Gold==before+30&&MagicDeckStore.Read(p).Props.Select(x=>x.PropId).Order().SequenceEqual(new[]{"MysteryBox","UnbelievableTool"}),"一件固定工具、一件独立随机魔具及固定金币");
-        before=p.Gold;await Claim(new(CommissionRewardKind.Relic,"FlammeGrimoire",200,150,DuplicateGold:200),100);Check(p.Gold==before+250&&p.GetRelic<FlammeGrimoire>()!=null,"首幕著作报酬合计250金币");
-        before=p.Gold;await Claim(new(CommissionRewardKind.Relic,"FlammeGrimoire",200,150,DuplicateGold:200),100);Check(p.Gold==before+300,"已有著作时合计300金币，不重复累加150");
+        before=p.Gold;await Claim(new(CommissionRewardKind.Relic,"FakeFlammeGrimoire",200,150,DuplicateGold:200),100);Check(p.Gold==before+250&&p.GetRelic<FakeFlammeGrimoire>()!=null&&p.GetRelic<FlammeGrimoire>()==null,"首幕只奖励伪作，报酬合计250金币");
+        before=p.Gold;await Claim(new(CommissionRewardKind.Relic,"FakeFlammeGrimoire",200,150,DuplicateGold:200),100);Check(p.Gold==before+300,"已有伪作时合计300金币，不重复累加150");
         await Claim(new(CommissionRewardKind.Prop,"RoyalGrimoire",1,UniqueKey:"RoyalGrimoire"),50);
         Check(CommissionCmd.Read(p).ClaimedRewards.Contains("RoyalGrimoire"),"王室魔导书仅领取后标记唯一奖励");
         var potion=Contract(new(CommissionRewardKind.Potion,"BlockPotion",1)).Active!;

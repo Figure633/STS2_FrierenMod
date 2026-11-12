@@ -61,7 +61,7 @@ public static class Author01215Tests
         Check(ManaCmd.InPile(p,PileType.Discard).Count()==4&&ManaCmd.InPile(p,PileType.Draw).Count()==7-expected.Cost,"换图不影响先生成再咏唱的目标与支付");
         foreach(var group in selector.Seen)for(int i=0;i<3;i++)Check(group[i].PortraitPath.EndsWith(ChantChoice.ArtFor((ManaSlot)i)+".png"),"生成／咏唱选项使用对应牌堆原图："+group[i].GetType().Name);
         foreach(var slot in Enum.GetValues<ManaSlot>()){
-            var factor=FactorCard.Create(p,"BuildUpBody",slot,new ChantOption(slot,"BuildUpBody",2,2,2));Check(factor.PortraitPath.EndsWith(ChantChoice.ArtFor(slot)+".png"),"所有咏唱牌共用牌堆图映射："+slot);
+            var factor=FactorCard.Create(p,"BuildUpBody",slot,new ChantOption(slot,"BuildUpBody",2,2,2));Check(factor.PortraitPath.EndsWith("BuildUpBody.png"),"普通咏唱保留因子自身卡图："+slot);
             Check(FactorCard.Create(p,"BuildUpBody",slot).PortraitPath.EndsWith("BuildUpBody.png"),"库存／初始因子保留自身卡图："+slot);
         }
         var texts=new Dictionary<string,string>();
@@ -74,9 +74,9 @@ public static class Author01215Tests
             Check(!play.Contains("#y")&&!greed.Contains("#r")&&play.Contains("[gold]")&&greed.Contains("[red]"),language+"矿山使用二代颜色标签");
             if(language=="zhs"){
                 Check(play.EndsWith("[gold]魔力[/gold]满溢而出。余兴节目结束，你继续踏上了旅程。"),"矿山结尾使用作者补全句子");
-                Check(new LocString("relics","FRIERENMOD-HOLY_EMBLEM.flavor").GetFormattedText().StartsWith("相当久远前的魔法使资格证明")&&new LocString("relics","FRIERENMOD-UPGRADED_HOLY_EMBLEM.flavor").GetFormattedText().Contains("所有魔法团体的认可"),"两种圣徽采用作者改稿");
+                Check(Regex.Replace(new LocString("relics","FRIERENMOD-HOLY_EMBLEM.flavor").GetFormattedText(),@"\[[^\]]+\]","").StartsWith("相当久远前的魔法使资格证明")&&new LocString("relics","FRIERENMOD-UPGRADED_HOLY_EMBLEM.flavor").GetFormattedText().Contains("所有魔法团体的认可"),"两种圣徽采用作者改稿");
             }
-            var cards=new List<CardModel>();cards.AddRange(ChantChoice.ManaGenerationChoices(p,4));cards.AddRange(Enum.GetValues<ManaSlot>().Select(slot=>FactorCard.Create(p,"BuildUpBody",slot,new ChantOption(slot,"BuildUpBody",1,1,1))));cards.Add(bread);
+            var cards=new List<CardModel>();cards.AddRange(Enum.GetValues<ManaSlot>().Select(slot=>FactorCard.Create(p,"BuildUpBody",slot,new ChantOption(slot,"BuildUpBody",1,1,1))));cards.AddRange(Enum.GetValues<ManaSlot>().Select(slot=>FactorCard.Create(p,"BuildUpBody",slot,new ChantOption(slot,"BuildUpBody",1,1,1),chantSource:precise)));cards.Add(bread);
             var host=new Control();root.AddChild(host);host.AddChild(new ColorRect{Size=new(1920,1080),Color=new("17202c")});var nodes=new List<NCard>();
             for(int i=0;i<cards.Count;i++){var node=GD.Load<PackedScene>("res://scenes/cards/card.tscn").Instantiate<NCard>();AccessTools.Property(typeof(NCard),nameof(NCard.Model)).SetValue(node,cards[i]);host.AddChild(node);node.Position=new(240+i%4*480,270+i/4*520);node.UpdateVisuals(PileType.None,CardPreviewMode.Normal);nodes.Add(node);}
             for(int i=0;i<5;i++)await root.ToSignal(root.GetTree(),SceneTree.SignalName.ProcessFrame);

@@ -140,7 +140,7 @@
   "FRIERENMOD-SNOW_CRYSTAL_LAND.pages.INITIAL.options.PROTECT.description": "Obtain [gold]Matryoshka[/gold].",
   "FRIERENMOD-SNOW_CRYSTAL_LAND.pages.TOUCH.description": "The [gold]sacred snow crystals[/gold] really do possess [gold]mysterious magic[/gold]!\nBut the villagers no longer [red]trust[/red] this mischievous elf. Was it really worth it?",
   "FRIERENMOD-SNOW_CRYSTAL_LAND.pages.PROTECT.description": "[blue]Himmel[/blue] would have wanted you to do this, too.\nYou cast a [gold]protective barrier[/gold] over the land. The villagers' gift has a distinctly [gold]northern charm[/gold]. This precious place can look forward to a thousand years of peace.",
-  "FRIERENMOD-DRAGON_BALL_ADVENTURE.title": "Dragon Ball Adventure",
+  "FRIERENMOD-DRAGON_BALL_ADVENTURE.title": "Adventure Story: Dragon Ball",
   "FRIERENMOD-DRAGON_BALL_ADVENTURE.pages.INITIAL.description": "You travel through a [jitter][gold]rift in spacetime[/gold][/jitter] within the Spire. This time, you emerge in a world where [gold]seven Dragon Balls[/gold] can grant a wish.\nA tall tower rises in the distance, while a small island lies out at sea. Nearby, people are fighting over a Dragon Ball!",
   "FRIERENMOD-DRAGON_BALL_ADVENTURE.pages.INITIAL.options.KORIN.title": "Take Korin's Trial",
   "FRIERENMOD-DRAGON_BALL_ADVENTURE.pages.INITIAL.options.KORIN.description": "Defeat a {Hp} HP dummy within 3 turns. Obtain a [gold]Senzu Bean[/gold].",

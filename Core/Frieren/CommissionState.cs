@@ -19,7 +19,7 @@ public sealed class Commission
     public CommissionGoal Goal { get; init; }
     public int Target { get; init; } = 1;
     public string Spell { get; init; } = "";
-    public CommissionReward Reward { get; init; } = new(CommissionRewardKind.Gold, "", 80);
+    public CommissionReward Reward { get; set; } = new(CommissionRewardKind.Gold, "", 80);
     public int Affix { get; init; }
     public string EliteBattle { get; set; } = "";
     public bool Legacy { get; set; }
@@ -90,7 +90,7 @@ public sealed class CommissionState
                 if(act is 1 or 2&&!Received("RoyalGrimoire"))Add(2,()=>new(CommissionRewardKind.Prop,"RoyalGrimoire",1,UniqueKey:"RoyalGrimoire"));
             }else{
                 Add(2,()=>new(CommissionRewardKind.RareChoice,"",1,Choices:ThreeRares()));
-                if(act==0)Add(2,()=>new(CommissionRewardKind.Relic,"FlammeGrimoire",200,150,DuplicateGold:200));
+                if(act==0)Add(2,()=>new(CommissionRewardKind.Relic,"FakeFlammeGrimoire",200,150,DuplicateGold:200));
                 else Add(2,()=>new(CommissionRewardKind.Prop,Pick(MagicPropRules.CommissionOnly.Where(p=>p.Id!="RoyalGrimoire").Select(p=>p.Id).ToArray()),1));
                 if(act==2&&bossRelics is {Count:>0})Add(1,()=>new(CommissionRewardKind.Relic,Pick(bossRelics),1,
                     FallbackProp:Pick(MagicPropRules.CommissionOnly.Where(p=>p.Id!="RoyalGrimoire").Select(p=>p.Id).ToArray())));
@@ -131,6 +131,14 @@ public sealed class CommissionState
     public bool WinElite(string key){var q=Active;if(q?.Goal!=CommissionGoal.EmpoweredElite||q.EliteBattle!=key)return false;return Record("empowered/"+key,CommissionGoal.EmpoweredElite);}
     public bool BeginCombat(string key){if(CombatKey==key)return false;CombatKey=key;LostHp=false;Revision++;return true;}
     public bool LoseHp(string key){BeginCombat(key);if(LostHp)return false;LostHp=true;Revision++;return true;}
+    public bool MigrateGrimoireRewards()
+    {
+        var pending = Quests.Where(q => q.Status is CommissionStatus.Available or CommissionStatus.Accepted &&
+            q.Reward.Kind == CommissionRewardKind.Relic && q.Reward.Item == "FlammeGrimoire").ToArray();
+        foreach (var q in pending) q.Reward = q.Reward with { Item = "FakeFlammeGrimoire" };
+        if (pending.Length > 0) Revision++;
+        return pending.Length > 0;
+    }
     public string ToJson()=>JsonSerializer.Serialize(this);
     public static CommissionState FromJson(string json){
         var s=JsonSerializer.Deserialize<CommissionState>(json)??throw new ArgumentException("委托存档为空");
