@@ -147,18 +147,19 @@
     {
       "key": "frieren_hand_paper",
       "date": "2026-11-12",
-      "prompt_file": "assets/hand_sources/v2/prompts.json",
-      "prompt_key": "poses.paper",
+      "prompt_file": "assets/hand_sources/v2/paper-nails-prompt.json",
+      "prompt_key": "prompt",
       "referenced_image_paths": [
+        "assets/hand_sources/v2/paper.png",
         "assets/hand_sources/v2/point.png",
-        "assets/hand_sources/paper.png"
+        "assets/hand_sources/v2/scissors.png"
       ],
       "transparent_background": true,
-      "source": "built-in image_gen exec-b2479866-071b-4b5d-a79a-1911c952553c.png; original retained at assets/hand_sources/v2/paper.png",
+      "source": "built-in image_gen exec-2fe6f144-f900-4418-9110-feb5b0117317.png; original retained at assets/hand_sources/v2/paper-nails.png",
       "reference_url": "https://frieren-anime.jp/character/chara_group1/1-1/",
       "processing": "tools/prepare-frieren-hands.mjs; uniform scale, wrist alignment, 422x1200 transparent canvas",
       "target": "FrierenMod/images/character/hand_paper.png",
-      "sha256": "06696660fb01aad2f10a1334173f399f2d4a252c1151e0d1944927f83df11f00"
+      "sha256": "5774fca00d9195e0e5650c7b398ca71d889412eb2a31bd46669ef9dfd522ed23"
     },
     {
       "key": "frieren_hand_scissors",
