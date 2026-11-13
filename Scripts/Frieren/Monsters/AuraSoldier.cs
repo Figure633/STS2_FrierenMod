@@ -50,6 +50,6 @@ public sealed class AuraSoldier : CustomMonsterModel
         await aura.ChangeMana(-15);
         foreach (var player in CombatState.Players.Where(p => p.Creature.IsAlive))
             await ManaCmd.Generate(player, PileType.Discard, 10, previewTime: 0.15f, fastAnimation: true);
-        aura.RefreshOrdinaryIntent();
+        // 死亡只结算资源；召唤资格留给下一次正常行动选择，不改写已公布的意图。
     }
 }
