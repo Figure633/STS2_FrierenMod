@@ -26,7 +26,10 @@ public sealed class MagicItemRewardHooks() : CustomSingletonModel(HookType.Run)
 
     public override Task AfterCombatVictory(CombatRoom room)
     {
-        if (room.IsPreFinished) return Task.CompletedTask;
+        var run = room.CombatState.RunState;
+        // 与原版 RewardsSet 相同：最终幕 Boss 不再生成通关后的战利品。
+        if (room.IsPreFinished || room.RoomType == RoomType.Boss && run.CurrentActIndex >= run.Acts.Count - 1)
+            return Task.CompletedTask;
         foreach (var player in room.CombatState.RunState.Players.Where(p => p.Character is Frieren)) {
             if (!_resolved.GetOrCreateValue(room).Add(player)) continue;
             if (room.ExtraRewards.TryGetValue(player, out var rewards) && rewards.OfType<FactorReward>().Any()) continue;
