@@ -11,6 +11,7 @@ namespace FrierenMod.Scripts.Encounters;
 
 public sealed class AuraEncounter() : CustomEncounterModel(RoomType.Boss)
 {
+    public override MegaCrit.Sts2.Core.Models.Dread.DominionModel GetDominion() => ModelDb.Dominion<Dread.AuraDominion>();
     public override bool IsValidForAct(ActModel act) => act is Hive;
     public override string CustomScenePath => "res://FrierenMod/scenes/aura_encounter.tscn";
     public override IReadOnlyList<string> Slots => ["Boss", "Soldier1", "Soldier2"];

@@ -30,6 +30,88 @@ using RitualPower = MegaCrit.Sts2.Core.Models.Powers.RitualPower;
 
 public static class SpiegelBossTests
 {
+    public static async Task<int> RunDread()
+    {
+        int checks = 0;
+        void Check(bool ok, string message)
+        {
+            if (!ok) throw new Exception(message);
+            checks++;
+            GD.Print("PASS Dread：" + message);
+        }
+        var player = Player.CreateForNewRun<Frieren>(UnlockState.all, 1);
+        var ally = Player.CreateForNewRun<Frieren>(UnlockState.all, 2);
+        var run = RunState.CreateForTest([player, ally], gameMode: MegaCrit.Sts2.Core.Runs.GameMode.Dread, seed: "FRIEREN-DREAD");
+        RunManager.Instance.SetUpTest(run, new NetSingleplayerGameService());
+        LocalContext.NetId = 1;
+        var combat = new CombatState(runState: run);
+        combat.AddPlayer(player);
+        combat.AddPlayer(ally);
+        var first = combat.CreateCreature(ModelDb.Monster<Axebot>().ToMutable(), CombatSide.Enemy, null);
+        var second = combat.CreateCreature(ModelDb.Monster<Axebot>().ToMutable(), CombatSide.Enemy, null);
+        combat.AddCreature(first);
+        combat.AddCreature(second);
+        CombatManager.Instance.SetUpCombat(combat);
+        CombatTestState.SetInProgress(true);
+        var context = new ThrowingPlayerChoiceContext();
+        var aura = ModelDb.Encounter<AuraEncounter>().GetDominion();
+        var spiegel = ModelDb.Encounter<SpiegelFrierenEncounter>().GetDominion();
+        Check(aura is FrierenMod.Scripts.Encounters.Dread.AuraDominion &&
+            spiegel is FrierenMod.Scripts.Encounters.Dread.SpiegelDominion, "Boss通过原生领域接口接入");
+        foreach (var language in new[] { "zhs", "eng" })
+        {
+            LocManager.Instance.SetLanguage(language);
+            Check(!aura!.Description.GetFormattedText().Contains("LOC_ERR") &&
+                !spiegel!.Description.GetFormattedText().Contains("LOC_ERR"), language + "领域说明可读取");
+        }
+        var dread = run.RunModels.OfType<MegaCrit.Sts2.Core.Models.Dread.DreadRunModel>().Single();
+        run.Acts[0].SetBossEncounter(ModelDb.Encounter<AuraEncounter>());
+        dread.AfterRunLoaded();
+        Check(run.Dominion is FrierenMod.Scripts.Encounters.Dread.AuraDominion, "原生Dread载入按Boss恢复阿乌拉领域");
+        run.Acts[0].SetBossEncounter(ModelDb.Encounter<SpiegelFrierenEncounter>());
+        dread.AfterRunLoaded();
+        Check(run.Dominion is FrierenMod.Scripts.Encounters.Dread.SpiegelDominion, "原生Dread载入按Boss恢复复制体领域");
+        // 同一战斗通过原生钩子验证多人、多敌人与回合边界。
+        run.SetDominion(spiegel);
+        combat.SetDominion(run.Dominion);
+        await CreatureCmd.GainBlock(player.Creature, 8, ValueProp.Unpowered, null);
+        Check(first.Block == 8 && second.Block == 8, "首回合两名敌人各复制8格挡，领域不会重复调用");
+        await CreatureCmd.GainBlock(ally.Creature, 3, ValueProp.Unpowered, null);
+        Check(first.Block == 11 && second.Block == 11, "队友首回合获得格挡也会被复制");
+        await CreatureCmd.GainBlock(first, 4, ValueProp.Unpowered, null);
+        Check(first.Block == 15 && second.Block == 11, "敌人获得格挡不会递归复制");
+        player.PlayerCombatState!.IncrementTurnNumber();
+        await CreatureCmd.GainBlock(player.Creature, 9, ValueProp.Unpowered, null);
+        Check(first.Block == 15 && second.Block == 11, "第二回合停止复制");
+        run.SetDominion(aura);
+        combat.SetDominion(run.Dominion);
+        for (int turn = 1; turn <= 4; turn++)
+        {
+            foreach (var participant in new[] { player, ally })
+            {
+                AccessTools.Property(typeof(PlayerCombatState), nameof(PlayerCombatState.TurnNumber)).SetValue(participant.PlayerCombatState, turn);
+                participant.PlayerCombatState!.Energy = 5;
+                await MegaCrit.Sts2.Core.Hooks.Hook.AfterPlayerTurnStart(combat, context, participant);
+                Check(participant.PlayerCombatState.Energy == (turn == 3 ? 3 : 5),
+                    "玩家" + participant.NetId + "第" + turn + "回合仅第三回合扣2能量，多敌人不叠加");
+            }
+        }
+        combat.RemoveCreature(second);
+        player.PlayerCombatState!.Energy = 1;
+        AccessTools.Property(typeof(PlayerCombatState), nameof(PlayerCombatState.TurnNumber)).SetValue(player.PlayerCombatState, 3);
+        await MegaCrit.Sts2.Core.Hooks.Hook.AfterPlayerTurnStart(combat, context, player);
+        Check(player.PlayerCombatState.Energy == 0, "不足2能量时按原生规则扣至0");
+        run.SetDominion(null);
+        combat.SetDominion(null);
+        player.PlayerCombatState.Energy = 5;
+        await MegaCrit.Sts2.Core.Hooks.Hook.AfterPlayerTurnStart(combat, context, player);
+        Check(player.PlayerCombatState.Energy == 5, "领域移除后第三回合不扣能量");
+        await CreatureCmd.GainBlock(ally.Creature, 2, ValueProp.Unpowered, null);
+        Check(first.Block == 15, "领域移除后不复制格挡");
+        RunManager.Instance.CleanUp();
+        return checks;
+    }
+
     public static async Task<int> Run(Node root)
     {
         int count = 0;

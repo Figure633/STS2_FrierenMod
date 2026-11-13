@@ -316,5 +316,7 @@
   "FrierenMod.Scripts.Relics.SacredSnowCrystal": "RELIC.SACRED_SNOW_CRYSTAL",
   "FrierenMod.Scripts.Relics.Skycleaver": "RELIC.SKYCLEAVER",
   "FrierenMod.Scripts.Relics.WeatheredHelmet": "RELIC.WEATHERED_HELMET",
-  "FrierenMod.Scripts.Rewards.DragonBallRewardHooks": "SINGLETON.DRAGON_BALL_REWARD_HOOKS"
+  "FrierenMod.Scripts.Rewards.DragonBallRewardHooks": "SINGLETON.DRAGON_BALL_REWARD_HOOKS",
+  "FrierenMod.Scripts.Encounters.Dread.AuraDominion": "DOMINION.AURA_DOMINION",
+  "FrierenMod.Scripts.Encounters.Dread.SpiegelDominion": "DOMINION.SPIEGEL_DOMINION"
 }

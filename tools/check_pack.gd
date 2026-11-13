@@ -79,7 +79,7 @@ func _initialize():
 			if folder == "slot_backs":
 				slot_backs += 1
 	for lang in ["eng", "zhs"]:
-		for table in ["cards", "characters", "relics", "potions", "frieren", "powers", "settings_ui", "rest_site_ui", "ancients", "events", "monsters", "encounters", "enchantments"]:
+		for table in ["cards", "characters", "relics", "potions", "frieren", "powers", "settings_ui", "rest_site_ui", "ancients", "events", "monsters", "encounters", "enchantments", "ascension"]:
 			var text = FileAccess.get_file_as_string("res://FrierenMod/localization/" + lang + "/" + table + ".json")
 			if not JSON.parse_string(text) is Dictionary:
 				push_error("Invalid localization: " + lang + "/" + table)
@@ -131,5 +131,5 @@ func _initialize():
 		push_error("Resource count mismatch: textures=%d slot_backs=%d audio=%d scenes=%d" % [textures, slot_backs, audio_count, scenes])
 		quit(1)
 		return
-	print("PACK_CHECK_OK: ", textures, " textures + ", audio_count, " audio + ", scenes, " scenes + 26 localization tables; all remapped media=", imported_textures, "/", imported_audio)
+	print("PACK_CHECK_OK: ", textures, " textures + ", audio_count, " audio + ", scenes, " scenes + 28 localization tables; all remapped media=", imported_textures, "/", imported_audio)
 	quit(0)

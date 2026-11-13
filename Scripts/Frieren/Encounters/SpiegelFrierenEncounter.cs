@@ -9,6 +9,7 @@ namespace FrierenMod.Scripts.Encounters;
 
 public sealed class SpiegelFrierenEncounter() : CustomEncounterModel(RoomType.Boss)
 {
+    public override MegaCrit.Sts2.Core.Models.Dread.DominionModel GetDominion() => ModelDb.Dominion<Dread.SpiegelDominion>();
     public override bool IsValidForAct(ActModel act) => act is Glory;
     public override string CustomScenePath => "res://FrierenMod/scenes/spiegel_encounter.tscn";
     public override IReadOnlyList<string> Slots => ["Boss", "Bird1", "Bird2"];
