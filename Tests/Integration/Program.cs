@@ -75,7 +75,12 @@ Test("重构保持全部已注册模型身份", () => {
     var actual = typeof(Mana).Assembly.GetTypes()
         .Where(t => !t.IsAbstract && typeof(AbstractModel).IsAssignableFrom(t))
         .ToDictionary(t => t.FullName!, t => ModelDb.GetId(t).ToString());
-    foreach (var (name, id) in expected) Equal(id, actual[name]);
+    foreach (var (name, id) in expected) {
+        // BaseLib 3.4.8 把无存档状态的全局钩子移到 CUSTOM_SINGLETON；其余模型身份仍严格核对。
+        if (typeof(BaseLib.Abstracts.CustomSingletonModel).IsAssignableFrom(typeof(Mana).Assembly.GetType(name)!))
+            Equal(true, actual[name] == id || actual[name] == id.Replace("SINGLETON.", "CUSTOM_SINGLETON."));
+        else Equal(id, actual[name]);
+    }
     if (expected.Count != actual.Count)
         throw new Exception("未登记模型：" + JsonSerializer.Serialize(actual.Where(pair => !expected.ContainsKey(pair.Key)).ToDictionary()));
 });

@@ -13,6 +13,9 @@ if ($EngineTests -and -not $Pack) {
     throw "执行引擎测试必须同时指定 -Pack，以确保测试使用最新的 PCK。"
 }
 $projectRoot = Split-Path -Parent $PSScriptRoot
+$buildTargetPath = Join-Path $projectRoot 'artifacts/build-target.json'
+# 构建失败后不能继续使用上一次的安装凭据。
+if (Test-Path -LiteralPath $buildTargetPath) { Remove-Item -LiteralPath $buildTargetPath }
 function Invoke-Checked([string]$program, [string[]]$arguments) {
     & $program @arguments
     if ($LASTEXITCODE -ne 0) { throw "Command failed ($LASTEXITCODE): $program" }
@@ -24,9 +27,14 @@ $baseLibDir = & dotnet msbuild "$projectRoot/FrierenMod.csproj" -nologo -getProp
 if ($LASTEXITCODE -ne 0) { throw "无法读取 BaseLibDir。" }
 $releaseInfo = Get-Content -Raw -LiteralPath "$gameDir/release_info.json" | ConvertFrom-Json
 $baseManifest = Get-Content -Raw -LiteralPath "$baseLibDir/BaseLib.json" | ConvertFrom-Json
-if ($releaseInfo.version -notin @("v0.107.1", "v0.111.0") -or $baseManifest.version -ne "v3.4.7") {
-    throw "验证基线为 StS2 v0.107.1 / v0.111.0 + BaseLib v3.4.7；其他版本需重新核查兼容性。"
+if ($releaseInfo.version -notin @("v0.107.1", "v0.111.0") -or $baseManifest.version -notin @("v3.4.7", "v3.4.8")) {
+    throw "验证基线为 StS2 v0.107.1 / v0.111.0 + BaseLib v3.4.7 / v3.4.8；其他版本需重新核查兼容性。"
 }
+if ($baseManifest.version -eq 'v3.4.8' -and !(Test-Path -LiteralPath (Join-Path $baseLibDir 'BaseLibCompatibilityHelper.dll'))) {
+    throw 'BaseLib 3.4.8 缺少随附的兼容助手，请更新完整的 BaseLib。'
+}
+$buildGameHash = (Get-FileHash -LiteralPath (Join-Path $gameDir 'data_sts2_windows_x86_64/sts2.dll')).Hash
+$buildBaseHash = (Get-FileHash -LiteralPath (Join-Path $baseLibDir 'BaseLib.dll')).Hash
 
 Invoke-Checked "dotnet" @(
     "build",
@@ -109,4 +117,24 @@ if ($EngineTests) {
     if ($engineLog -notmatch 'ENGINE_TESTS_OK:' -or $engineLog -match '\[ERROR\]|ERROR: System\.|Fatal error|System\.Exception:') {
         throw "Godot 引擎测试出现异步异常或缺少完成标记，请检查 engine-tests.log。"
     }
+}
+if ($Pack) {
+    # 全部构建与检查成功后才记录目标；安装时核对，避免切换分支后误装旧包。
+    if ($buildGameHash -ne (Get-FileHash -LiteralPath (Join-Path $gameDir 'data_sts2_windows_x86_64/sts2.dll')).Hash -or
+        $buildBaseHash -ne (Get-FileHash -LiteralPath (Join-Path $baseLibDir 'BaseLib.dll')).Hash) {
+        throw '构建期间游戏或依赖发生更新，请重新构建。'
+    }
+    $packageFiles = @{}
+    foreach ($packageFile in @('FrierenMod.dll', 'FrierenMod.pck', 'FrierenMod.json', 'README.md', 'LICENSE.STS1', 'LICENSE.WATCHER')) {
+        $packageFiles[$packageFile] = (Get-FileHash -LiteralPath (Join-Path $projectRoot "artifacts/FrierenMod/$packageFile")).Hash
+    }
+    $targetRecord = [ordered]@{
+        game_version = $releaseInfo.version
+        game_assembly_sha256 = $buildGameHash
+        baselib_version = $baseManifest.version
+        baselib_assembly_sha256 = $buildBaseHash
+        files = $packageFiles
+    }
+    $targetRecord | ConvertTo-Json -Depth 4 | Set-Content -LiteralPath $buildTargetPath -Encoding utf8
+    Write-Host "BUILD_TARGET_OK: $($releaseInfo.version) / BaseLib $($baseManifest.version)"
 }

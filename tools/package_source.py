@@ -63,7 +63,7 @@ def main():
         "kind": "complete source working-tree snapshot; no git history; not an upstream commit",
         "source_file_count": len(files),
         "source_revision": revision,
-        "dependencies": {"game": ["v0.107.1", "v0.111.0"], "BaseLib": "v3.4.7", "dotnet_sdk": "9.0.306", "Godot": "4.5.1"},
+        "dependencies": {"game": ["v0.107.1", "v0.111.0"], "BaseLib": ["v3.4.7", "v3.4.8"], "dotnet_sdk": "9.0.306", "Godot": "4.5.1"},
         "excluded": ["git history", "build/import caches", "game and BaseLib binaries", "personal settings and saves", "raw machine logs"],
         "integrity": "SHA256SUMS.txt covers every other file, including SOURCE_SNAPSHOT.json",
     }

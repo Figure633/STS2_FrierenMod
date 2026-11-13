@@ -1,14 +1,14 @@
 # FrierenMod STS2
 
-《杀戮尖塔2》的芙莉莲模组，移植自[一代模组](https://steamcommunity.com/sharedfiles/filedetails/?id=3164722329)。当前版本 **0.12.31**，开发中。
+《杀戮尖塔2》的芙莉莲模组，移植自[一代模组](https://steamcommunity.com/sharedfiles/filedetails/?id=3164722329)。当前版本 **0.12.32**，开发中。
 
 芙莉莲使用抽牌堆、手牌与弃牌堆中的魔力进行咏唱，可装配因子、使用魔具，包含专属卡牌、遗物、事件、委托与Boss。多人游戏双方需使用相同版本的模组和BaseLib；混合角色队伍保留原版事件和Boss池。
 
-0.12.31实装作者选定的赛莉耶简笔图标，地图沿用原生先古状态配色；补齐其他角色遇见赛莉耶时的中英文通用对话。芙莉莲仍按0、1、2、3、2、3的顺序触发专属对话。
+0.12.32复核正式版0.107.1与BaseLib 3.4.8，修复构建脚本误拦截新版依赖和模型分类检查；安装前核对游戏、依赖和构建包，防止切换分支后误装。
 
 ## 安装
 
-依赖 **BaseLib 3.4.7**。完整更新 `FrierenMod.dll`、`FrierenMod.pck` 和 `FrierenMod.json`，放入游戏的 `mods/FrierenMod/`，重启游戏并启用模组。
+依赖 **BaseLib 3.4.7 或 3.4.8**；使用3.4.8时保留其随附的兼容助手。完整更新 `FrierenMod.dll`、`FrierenMod.pck` 和 `FrierenMod.json`，放入游戏的 `mods/FrierenMod/`，重启游戏并启用模组。
 
 ## 构建
 
