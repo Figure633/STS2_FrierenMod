@@ -10,6 +10,9 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Helpers;
+using MegaCrit.Sts2.Core.Nodes.Rooms;
+using MegaCrit.Sts2.Core.Nodes.Vfx;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace FrierenMod.Scripts.Cards;
@@ -22,7 +25,15 @@ public sealed class ApexMagic() : FrierenCard(0, CardType.Attack, CardRarity.Rar
     {
         if (new[] { PileType.Draw, PileType.Hand, PileType.Discard }.All(p => ManaCmd.InPile(Owner, p).Count() == 4)) {
             Presentation.FrierenAchievements.Unlock(Owner, "4003");
-            await CreatureCmd.Kill(CombatState!.Enemies.Where(e => e.IsAlive).ToArray());
+            var finale = NGrandFinaleVfx.Create(Owner.Creature);
+            if (finale != null) {
+                NCombatRoom.Instance?.CombatVfxContainer.AddChildSafely(finale);
+                await Cmd.Wait(NGrandFinaleVfx.totalAnticipationDuration);
+            }
+            var targets = CombatState!.Enemies.Where(e => e.IsAlive).ToArray();
+            foreach (var target in targets)
+                target.GetVfxContainer()?.AddChildSafely(NGrandFinaleImpactVfx.Create(target));
+            await CreatureCmd.Kill(targets);
         }
     }
     protected override void OnUpgrade() { AddKeyword(CardKeyword.Retain); }
