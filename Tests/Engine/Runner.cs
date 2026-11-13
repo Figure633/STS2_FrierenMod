@@ -444,6 +444,10 @@ public partial class Runner : Node
                 GD.Print("STARTING_SETUP_OK: " + await StartingSetupTests.Run(this));
                 await Finish(); return;
             }
+            if (OS.GetCmdlineUserArgs().Contains("--fresh-opening-rooms-only")) {
+                GD.Print("FRESH_OPENING_ROOMS_OK: " + await OpeningEventTests.RunFreshRooms());
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--opening-event-only")) {
                 GD.Print("OPENING_EVENT_OK: " + await OpeningEventTests.Run(this));
                 await Finish(); return;
