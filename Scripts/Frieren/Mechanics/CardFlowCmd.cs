@@ -51,7 +51,7 @@ public static class CardFlowCmd
         if (count == 0) return [];
         if (count == cards.Length) return cards;
         prompt ??= pile == PileType.Hand
-            ? new LocString("powers", "WELL_LAID_PLANS_POWER.selectionScreenPrompt")
+            ? new LocString("cards", "SNAP.selectionScreenPrompt")
             : new LocString("cards", "DREDGE.selectionScreenPrompt");
         var prefs = new CardSelectorPrefs(prompt, count);
         if (pile == PileType.Hand)
