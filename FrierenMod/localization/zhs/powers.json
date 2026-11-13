@@ -109,7 +109,7 @@
   "FRIERENMOD-AURA_SCALES_POWER.title": "服从的天平",
   "FRIERENMOD-AURA_SCALES_POWER.description": "每3回合，比较双方[gold]魔力[/gold]。若[red]阿乌拉[/red]更高：你下回合失去{EnergyLoss:energyIcons()}，她下次必定攻击。若你更高：她[gold]眩晕[/gold]1回合，随后将生命与生命上限降至1，并将失去的生命转为[gold]魔力[/gold]。平局无效果。",
   "FRIERENMOD-AURA_ARROGANCE_POWER.title": "自大的魔族",
-  "FRIERENMOD-AURA_ARROGANCE_POWER.description": "你首次打出[gold]解除魔法[/gold]后，阿乌拉的行动变为嘲讽（天平生效时依然攻击）。",
+  "FRIERENMOD-AURA_ARROGANCE_POWER.description": "你首次打出[gold]解除魔法[/gold]后，阿乌拉的行动变为嘲讽。若正准备断头台，则照常攻击并失去这次嘲讽机会。",
   "FRIERENMOD-AURA_SOUL_POWER.title": "灵魂解放",
   "FRIERENMOD-AURA_SOUL_POWER.description": "死亡时，阿乌拉失去15[gold]魔力[/gold]，在你的[gold]弃牌堆[/gold]生成10张[gold]魔力[/gold]。",
   "FRIERENMOD-AURA_SUBMISSION_POWER.title": "服从",

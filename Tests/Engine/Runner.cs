@@ -296,6 +296,10 @@ public partial class Runner : Node
                 GD.Print("TODO091_OK: " + await Todo091Tests.Run(this));
                 await Finish(); return;
             }
+            if (OS.GetCmdlineUserArgs().Contains("--aura-actions-only")) {
+                GD.Print("AURA_ACTIONS_OK: " + await AuraBossTests.RunActions());
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--aura-boss-only")) {
                 GD.Print("AURA_BOSS_OK: " + await AuraBossTests.Run(this));
                 await Finish(); return;

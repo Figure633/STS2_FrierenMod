@@ -30,6 +30,51 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 public static class AuraBossTests
 {
+    public static async Task<int> RunActions()
+    {
+        int checks = 0;
+        void Check(bool ok, string text) { if (!ok) throw new Exception(text); checks++; GD.Print("PASS 阿乌拉行动：" + text); }
+        SaveManager.Instance.InitPrefsDataForTest();
+        var player = Player.CreateForNewRun<Frieren>(UnlockState.all, 1);
+        var run = RunState.CreateForTest([player], seed: "AURA-COORDINATION");
+        RunManager.Instance.SetUpTest(run, new NetSingleplayerGameService()); LocalContext.NetId = 1;
+        var encounter = ModelDb.Encounter<AuraEncounter>().ToMutable(); encounter.GenerateMonstersWithSlots(run);
+        var combat = new CombatState(encounter, run); combat.AddPlayer(player);
+        foreach (var (model, slot) in encounter.MonstersWithSlots) combat.AddCreature(combat.CreateCreature(model, CombatSide.Enemy, slot));
+        CombatManager.Instance.SetUpCombat(combat); CombatTestState.SetInProgress(true);
+        foreach (var enemy in combat.Enemies.ToArray()) { enemy.Monster!.RollMove([player.Creature]); await enemy.Monster.AfterAddedToRoom(); }
+        var aura = (Aura)combat.Enemies.Single(c => c.Monster is Aura).Monster!;
+        var soldiers = combat.Enemies.Where(c => c.Monster is AuraSoldier).ToArray();
+        var context = new ThrowingPlayerChoiceContext();
+        void Set(string field, object value) => AccessTools.Field(typeof(Aura), field).SetValue(aura, value);
+        Set("_meditateNext", true); aura.RefreshOrdinaryIntent();
+        foreach (var soldier in soldiers) soldier.Monster!.RollMove([player.Creature]);
+        Check(aura.NextMove.Id == "MEDITATE" && soldiers.All(c => c.Monster!.NextMove.Id == "STRIKE"), "冥想时两名士兵实际意图都是攻击");
+        int hp = player.Creature.CurrentHp;
+        foreach (var soldier in soldiers) await soldier.Monster!.PerformMove();
+        Check(player.Creature.CurrentHp == hp - 16, "两名士兵均实际攻击");
+        Set("_actions", 2); aura.RefreshOrdinaryIntent(); aura.NoticeDispel();
+        Check(aura.NextMove.Id == "TAUNT", "即使是第三回合，首次解除魔法也立即嘲讽");
+        await aura.PerformMove(); aura.RollMove([player.Creature]);
+        Set("_tauntUsed", false); Set("_tauntPending", false); Set("_verdict", "GUILLOTINE"); aura.RefreshOrdinaryIntent();
+        var dispel = combat.CreateCard<AuraDispel>(player); await CardPileCmd.Add(dispel, PileType.Hand);
+        await dispel.OnPlayWrapper(context, soldiers[0], false,
+            new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 }, true);
+        Check(soldiers[0].IsDead && aura.NextMove.Id == "GUILLOTINE", "断头台期间解除魔法只杀士兵，保留攻击");
+        hp = player.Creature.CurrentHp; await aura.PerformMove(); aura.RollMove([player.Creature]);
+        Check(player.Creature.CurrentHp == hp - 25 && aura.NextMove.Id != "TAUNT", "断头台照常结算25伤害，后续不补嘲讽");
+        Set("_meditateNext", true); aura.RefreshOrdinaryIntent();
+        Check(aura.NextMove.Id == "BARRAGE", "仅剩一名士兵时不再冥想");
+        aura.NoticeDispel(); Check(aura.NextMove.Id != "TAUNT", "首次嘲讽机会已经永久消耗");
+        var parcel = combat.CreateCard<ManaParcel>(player); CardCmd.Upgrade(parcel);
+        parcel.EnergyCost.AddThisCombat(3); await CardPileCmd.Add(parcel, PileType.Hand);
+        Check(parcel.EnergyCost.GetWithModifiers(CostModifiers.All) < 0 && !parcel.CanPlay(), "升级魔力包裹加费后仍隐藏费用且不可打出");
+        await parcel.AfterCardDrawn(context, parcel, false);
+        Check(parcel.Pile?.Type == PileType.Exhaust && ManaCmd.InPile(player, PileType.Hand).Count() == 4, "魔力包裹仍正常消耗并生成4张魔力");
+        RunManager.Instance.CleanUp();
+        return checks;
+    }
+
     public static async Task<int> Run(Node root)
     {
         int count = 0;
@@ -98,6 +143,9 @@ public static class AuraBossTests
         Check(soldiers[0].IsDead && aura.Mana == 185 && ManaCmd.Total(player) == 10 && aura.NextMove.Id == "TAUNT", "解除魔法立即解放士兵，削15／加10并改嘲讽");
         await soldiers[0].Monster.AfterDeath(context, soldiers[0], false, 0);
         Check(aura.Mana == 185 && ManaCmd.Total(player) == 10, "死亡奖励不会重复领取");
+        // 后续原有完整行动循环使用两名士兵，另由RunActions核对减员场景。
+        var replacement = combat.CreateCreature(ModelDb.Monster<AuraSoldier>().ToMutable(), CombatSide.Enemy, "Soldier1");
+        combat.AddCreature(replacement); replacement.Monster!.SetUpForCombat(); replacement.Monster.RollMove([player.Creature]); await replacement.Monster.AfterAddedToRoom();
         await aura.PerformMove(); aura.RollMove([player.Creature]);
         Check(aura.NextMove.Id == "BARRAGE", "嘲讽空过后继续普通行动");
         async Task Step()
@@ -134,6 +182,7 @@ public static class AuraBossTests
         Check(player.PlayerCombatState.Hand.Cards.OfType<AuraDispel>().Count()==1, "后续天平不再赠送解除魔法");
         int manaBeforeZeroSummon = aura.Mana + 100;
         await aura.ChangeMana(-aura.Mana);
+        await CreatureCmd.Kill(replacement);
         await CreatureCmd.Kill(soldiers[1]);
         Check(aura.NextMove.Id == "SUMMON", "清空士兵后可预判召唤");
         mana = aura.Mana; await Step();

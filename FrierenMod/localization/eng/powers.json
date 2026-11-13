@@ -109,7 +109,7 @@
   "FRIERENMOD-AURA_SCALES_POWER.title": "Scales of Obedience",
   "FRIERENMOD-AURA_SCALES_POWER.description": "Every 3 turns, compare [gold]Mana[/gold]. If Aura has more, you lose {EnergyLoss:energyIcons()} next turn and she attacks next. If you have more, she is [gold]Stunned[/gold] for 1 turn, then her HP and Max HP become 1 and the lost HP becomes Mana. Ties have no effect.",
   "FRIERENMOD-AURA_ARROGANCE_POWER.title": "Arrogance",
-  "FRIERENMOD-AURA_ARROGANCE_POWER.description": "The first time you play [gold]Dispel Magic[/gold], Aura taunts on her next action. Scale turns and their verdicts take priority, delaying the taunt.",
+  "FRIERENMOD-AURA_ARROGANCE_POWER.description": "The first time you play [gold]Dispel Magic[/gold], Aura taunts instead. If she is preparing Guillotine, she attacks as planned and loses this taunt.",
   "FRIERENMOD-AURA_SOUL_POWER.title": "Soul Release",
   "FRIERENMOD-AURA_SOUL_POWER.description": "On death, Aura loses 15 [gold]Mana[/gold]. Add 10 [gold]Mana[/gold] to your [gold]discard pile[/gold].",
   "FRIERENMOD-AURA_SUBMISSION_POWER.title": "Submission",

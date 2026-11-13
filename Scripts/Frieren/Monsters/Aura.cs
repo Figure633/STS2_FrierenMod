@@ -1,4 +1,5 @@
 using BaseLib.Abstracts;
+using HarmonyLib;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using FrierenMod.Scripts.Cards;
@@ -60,23 +61,33 @@ public sealed class Aura : CustomMonsterModel
     {
         if (_tauntUsed) return;
         _tauntUsed = true;
+        if (NextMove.Id == "GUILLOTINE") return;
         _tauntPending = true;
         RefreshOrdinaryIntent();
     }
 
-    // 只有首次解除魔法与清空士兵会即时改意图；固定天平及已结算的裁决具有更高优先级。
+    // 首次解除魔法即时嘲讽；已经准备的断头台照常攻击并消耗唯一嘲讽机会。
     public void RefreshOrdinaryIntent()
     {
         if (!Creature.IsAlive || IsPerformingMove || _moves.Count == 0) return;
         SetMoveImmediate(_moves[ChooseMove()], forceTransition: true);
+        CoordinateSoldiers();
+    }
+
+    internal void CoordinateSoldiers()
+    {
+        if (NextMove.Id != "MEDITATE") return;
+        foreach (var soldier in CombatState.Enemies.Where(c => c.IsAlive).Select(c => c.Monster).OfType<AuraSoldier>())
+            soldier.ForceAttack();
     }
 
     private string ChooseMove()
     {
+        if (_tauntPending) return "TAUNT";
         if (_verdict != null) return _verdict;
-        if (_tauntPending && UpcomingTurn % 3 != 0) return "TAUNT";
         if (_summonedCycle != _actions / 3 && !CombatState.Enemies.Any(c => c.IsAlive && c.Monster is AuraSoldier)) return "SUMMON";
-        return _meditateNext ? "MEDITATE" : "BARRAGE";
+        return _meditateNext && CombatState.Enemies.Count(c => c.IsAlive && c.Monster is AuraSoldier) == 2
+            ? "MEDITATE" : "BARRAGE";
     }
 
     protected override MonsterMoveStateMachine GenerateMoveStateMachine()
@@ -170,5 +181,19 @@ public sealed class Aura : CustomMonsterModel
         if (creature != Creature || prevented) return;
         foreach (var soldier in CombatState.Enemies.Where(c => c.IsAlive && c.Monster is AuraSoldier).ToArray())
             await CreatureCmd.Escape(soldier);
+    }
+}
+
+
+// 意图生成顺序中阿乌拉和士兵都可能先被处理，分别在原生掷行动后同步。
+[HarmonyPatch(typeof(MonsterModel), nameof(MonsterModel.RollMove))]
+internal static class AuraSoldierCoordination
+{
+    private static void Postfix(MonsterModel __instance)
+    {
+        if (__instance is Aura aura) aura.CoordinateSoldiers();
+        else if (__instance is AuraSoldier soldier &&
+            soldier.CombatState.Enemies.FirstOrDefault(c => c.IsAlive && c.Monster is Aura)?.Monster is Aura leader)
+            leader.CoordinateSoldiers();
     }
 }
