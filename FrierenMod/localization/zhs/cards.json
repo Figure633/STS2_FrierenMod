@@ -291,7 +291,7 @@
   "FRIERENMOD-FRIEREN_THE_SLAYER.title": "葬送的芙莉莲",
   "FRIERENMOD-FRIEREN_THE_SLAYER.description": "每回合开始时，挑选1张本场战斗未选过的{Upgraded:cond:升级的|}“魔法”加入[gold]手牌[/gold]。",
   "FRIERENMOD-KINDLING_SPARK.title": "星星之火",
-  "FRIERENMOD-KINDLING_SPARK.description": "对所有敌人造成{Damage:diff()}点伤害。将{Upgraded:cond:X+1|X}张[gold]小小火花[/gold]加入[gold]手牌[/gold]。{InCombat:cond:\n（加入{ActualSparks}张小小火花）|}",
+  "FRIERENMOD-KINDLING_SPARK.description": "对所有敌人造成{Damage:diff()}点伤害。将X张[gold]小小火花[/gold]加入[gold]手牌[/gold]。{InCombat:cond:\n（加入{ActualSparks}张小小火花）|}",
   "FRIERENMOD-CRYING.title": "嗷嗷哭",
   "FRIERENMOD-CRYING.description": "获得{Block:diff()}点格挡，给予{Weak:diff()}层[gold]虚弱[/gold]。交换此卡的[gold]格挡值[/gold]和[gold]虚弱层数[/gold]。",
   "FRIERENMOD-UNDERESTIMATED.title": "真是被看扁了啊",

@@ -56,7 +56,7 @@ public static class Author0124Tests
             Check(hp-enemy.CurrentHp==(up?9:6),"空气斩3伤×2／3 "+up);
         }
         var spark=Card<KindlingSpark>(true);int previous=enemy.CurrentHp;await Use(spark);
-        Check(previous-enemy.CurrentHp==16&&p.PlayerCombatState.Hand.Cards.OfType<LittleFire>().Count()==3,"星星之火升级16基础群伤，保留X+1张火花");
+        Check(previous-enemy.CurrentHp==18&&p.PlayerCombatState.Hand.Cards.OfType<LittleFire>().Count()==2,"星星之火升级18基础群伤，生成X张火花");
         Check(Card<Flow>().Rarity==CardRarity.Basic&&Card<DefensiveMagic>().Rarity==CardRarity.Basic&&
             !FrierenCardAvailability.IsRandomCandidate(Card<Flow>())&&!FrierenCardAvailability.IsRandomCandidate(Card<DefensiveMagic>()),"流转、防御魔法归入原生基础／其他且不掉落");
         Check(!ModelDb.Card<ViolentExorcism>().ShouldShowInCardLibrary,"弃用的物理超度不在百科显示");

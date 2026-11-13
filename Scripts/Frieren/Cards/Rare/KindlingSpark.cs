@@ -15,7 +15,7 @@ public sealed class KindlingSpark() : FrierenCard(0, CardType.Attack, CardRarity
 {
     protected override bool HasEnergyCostX => true;
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(13, ValueProp.Move), new DynamicVar("ExtraSparks", 0)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(13, ValueProp.Move)];
 
     protected override void AddExtraArgsToDescription(LocString description)
     {
@@ -23,15 +23,15 @@ public sealed class KindlingSpark() : FrierenCard(0, CardType.Attack, CardRarity
         bool inCombat = IsMutable && Owner?.PlayerCombatState != null && CombatState != null;
         description.Add("InCombat", inCombat);
         int energy = inCombat ? Pile?.Type == PileType.Play ? EnergyCost.CapturedXValue : EnergyCost.GetAmountToSpend() : 0;
-        description.Add("ActualSparks", inCombat ? Hook.ModifyXValue(CombatState!, this, energy) + DynamicVars["ExtraSparks"].IntValue : 0);
+        description.Add("ActualSparks", inCombat ? Hook.ModifyXValue(CombatState!, this, energy) : 0);
     }
 
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
-        int count = ResolveEnergyXValue() + DynamicVars["ExtraSparks"].IntValue;
+        int count = ResolveEnergyXValue();
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardCompatibility(this, play).TargetingAllOpponents(CombatState!).Execute(context);
         for (int i = 0; i < count; i++) await CardFlowCmd.Generate<LittleFire>(Owner, PileType.Hand);
     }
 
-    protected override void OnUpgrade() { DynamicVars.Damage.UpgradeValueBy(3); DynamicVars["ExtraSparks"].UpgradeValueBy(1); }
+    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(5);
 }

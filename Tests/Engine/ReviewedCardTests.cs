@@ -123,7 +123,7 @@ public static class ReviewedCardTests
 
         await Reset(); var fire = New<LittleFire>(); var spentFire = New<LittleFire>();
         await CardPileCmd.Add(spentFire, PileType.Exhaust); await Play(fire, enemy);
-        Check(fire.DynamicVars.Damage.BaseValue == 7 && spentFire.DynamicVars.Damage.BaseValue == 7 && New<LittleFire>().DynamicVars.Damage.BaseValue == 5,
+        Check(fire.DynamicVars.Damage.BaseValue == 5 && spentFire.DynamicVars.Damage.BaseValue == 5 && New<LittleFire>().DynamicVars.Damage.BaseValue == 3,
             "只强化战斗中现有火花，包括消耗堆，不强化后来生成的牌");
         Check(fire.EnergyCost.GetAmountToSpend() == 1, "回火加费");
         Pass("小小火花强化范围与回火");

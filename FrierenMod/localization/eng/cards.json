@@ -291,7 +291,7 @@
   "FRIERENMOD-FRIEREN_THE_SLAYER.title": "Frieren the Slayer",
   "FRIERENMOD-FRIEREN_THE_SLAYER.description": "At the start of each turn, choose 1 {Upgraded:cond:upgraded |}spell you have not chosen this combat and add it to your [gold]hand[/gold].",
   "FRIERENMOD-KINDLING_SPARK.title": "A Single Spark",
-  "FRIERENMOD-KINDLING_SPARK.description": "Deal {Damage:diff()} damage to ALL enemies. Add {Upgraded:cond:X+1|X} [gold]Little Sparks[/gold] to your hand.{InCombat:cond:\n(Add {ActualSparks} Little Sparks.)|}",
+  "FRIERENMOD-KINDLING_SPARK.description": "Deal {Damage:diff()} damage to ALL enemies. Add X [gold]Little Sparks[/gold] to your hand.{InCombat:cond:\n(Add {ActualSparks} Little Sparks.)|}",
   "FRIERENMOD-CRYING.title": "Waaah!",
   "FRIERENMOD-CRYING.description": "Gain {Block:diff()} Block. Apply {Weak:diff()} [gold]Weak[/gold]. Swap this card's [gold]Block value[/gold] and [gold]Weak stacks[/gold].",
   "FRIERENMOD-UNDERESTIMATED.title": "You Underestimate Me",

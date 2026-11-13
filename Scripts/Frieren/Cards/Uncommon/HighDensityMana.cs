@@ -17,7 +17,7 @@ using MegaCrit.Sts2.Core.Helpers;
 
 namespace FrierenMod.Scripts.Cards;
 
-public sealed class HighDensityMana() : FrierenCard(0, CardType.Status, CardRarity.Uncommon, TargetType.Self), IManaCard
+public sealed class HighDensityMana() : FrierenCard(-1, CardType.Status, CardRarity.Uncommon, TargetType.Self), IManaCard
 {
     protected override void AddExtraArgsToDescription(LocString description)
     {
