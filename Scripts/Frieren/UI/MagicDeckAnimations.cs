@@ -86,7 +86,7 @@ public static class MagicDeckAnimations
                         card.CardHighlight.AnimFlash();
                         // 单次绿光完成后，物品才淡出，接着展示新因子。
                         var flash = layer.CreateTween(); flash.TweenInterval(0.25);
-                        if (!await flash.AwaitFinished(layer)) return;
+                        if (await flash.AwaitFinished(layer) != TweenOutcome.Finished) return;
                     }
                     // 与原生 CardPileCmd 消耗牌相同：粒子与音效由原版提供，卡面变灰后释放。
                     var effectScale=card.GetGlobalTransform().Scale/layer.GetGlobalTransform().Scale;
@@ -116,7 +116,7 @@ public static class MagicDeckAnimations
                     if (Closed) return;
                     screen.FlashAcquiredItem(item.Id);
                     var reveal = layer.CreateTween(); reveal.TweenInterval(0.22);
-                    if (!await reveal.AwaitFinished(layer)) return;
+                    if (await reveal.AwaitFinished(layer) != TweenOutcome.Finished) return;
                     screen.ClearAcquiredItemFlash(item.Id);
                 }
                 // 外部奖励仍使用原版飞入；多件并排展示，依次起飞。
@@ -146,14 +146,14 @@ public static class MagicDeckAnimations
             async Task Fade(NCard card, bool release) {
                 var fade = layer.CreateTween();
                 fade.TweenProperty(card,"modulate",StsColors.exhaustGray,0.2);
-                if(await fade.AwaitFinished(layer) && release){Release(card);cards.Remove(card);}
+                if(await fade.AwaitFinished(layer) == TweenOutcome.Finished && release){Release(card);cards.Remove(card);}
             }
         }
 
         private async Task Fly(NCard card, double delay)
         {
             var pause = layer.CreateTween(); pause.TweenInterval(delay);
-            if (!await pause.AwaitFinished(layer)) return;
+            if (await pause.AwaitFinished(layer) != TweenOutcome.Finished) return;
             // 原生工厂只接受普通牌堆；同一原生场景改填魔法书终点，其余动画、拖尾与回收完全由原版执行。
             var effect = GD.Load<PackedScene>(NCardFlyVfx.AssetPaths.Single()).Instantiate<NCardFlyVfx>();
             effect.Set(NCardFlyVfx.PropertyName._card, card);

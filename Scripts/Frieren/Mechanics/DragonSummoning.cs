@@ -35,6 +35,7 @@ public static class DragonSummoning
     private static INetGameService? _service;
     private static readonly Dictionary<(int,int,ulong),HashSet<ulong>> Ready = [];
     private static int _campActions;
+    private static readonly HashSet<Player> SpentCampAction = [];
     private static bool _returnQueued;
     public static bool IsTransitioning { get; private set; }
     public static Task Pending { get; private set; } = Task.CompletedTask;
@@ -64,7 +65,7 @@ public static class DragonSummoning
         ready.Add(manager.NetService.NetId);
         manager.NetService.SendMessage(new DragonCampReady{Floor=run.TotalFloor,Stage=stage,Collector=owner.NetId});
         // Reliable 消息按发出顺序送达：所有 ready 之前的选项及选牌结果均会先处理。
-        while (run.Players.Any(p=>(manager.RunLobby?.ConnectedPlayerIds.Contains(p.NetId) ?? true) && !ready.Contains(p.NetId)) || Busy()) {
+        while (run.Players.Any(p=>(manager.RunLobby?.PlayerIds.Contains(p.NetId) ?? true) && !ready.Contains(p.NetId)) || Busy()) {
             if(manager.IsCleaningUp || !ReferenceEquals(manager.DebugOnlyGetState(),run)) return;
             await Frame();
         }
@@ -131,6 +132,18 @@ public static class DragonSummoning
             Ready.Clear(); _campActions=0; IsTransitioning=false; _returnQueued=false; Pending=Task.CompletedTask;
         }
     }
+    // beta 会在行动耗尽时立即完成营地，须先保留免费召唤入口。
+    [HarmonyPatch(typeof(MegaCrit.Sts2.Core.Hooks.Hook), "ShouldDisableRemainingRestSiteOptions")]
+    private static class KeepSummonAvailable
+    {
+        private static void Postfix(Player player, ref bool __result)
+        {
+            if (!__result || Collector(player.RunState) != null || !DragonBallStore.CanSummon(player) ||
+                player != player.RunState.Players.Where(DragonBallStore.CanSummon).MinBy(p => p.NetId)) return;
+            SpentCampAction.Add(player);
+            __result = false;
+        }
+    }
     [HarmonyPatch(typeof(RestSiteSynchronizer),"ChooseOption")]
     private static class TrackChoices
     {
@@ -144,6 +157,7 @@ public static class DragonSummoning
                 if(RunManager.Instance.DebugOnlyGetState() is {} run && run.CurrentRoom is RestSiteRoom) {
                     foreach(var player in run.Players) {
                         var options=(List<RestSiteOption>)RunManager.Instance.RestSiteSynchronizer.GetOptionsForPlayer(player);
+                        if (SpentCampAction.Remove(player)) options.RemoveAll(option => option is not SummonDragonOption);
                         // 普通休息耗尽行动，或逛店刚买到第七颗时，仍可免费召唤。
                         if(Collector(run)==null && DragonBallStore.CanSummon(player) &&
                             player==run.Players.Where(DragonBallStore.CanSummon).MinBy(p=>p.NetId) && !options.OfType<SummonDragonOption>().Any())

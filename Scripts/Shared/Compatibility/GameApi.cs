@@ -24,18 +24,12 @@ public static class GameApi
     public static Task BeginPlayerChoice(PlayerChoiceContext context, Player player, PlayerChoiceOptions options) =>
         BeginChoiceMethod.Invoke<Task>(context, player, options)!;
 
-    private static readonly VariableMethod DamageOne = DamageMethod(typeof(Creature));
-    private static readonly VariableMethod DamageMany = DamageMethod(typeof(IEnumerable<Creature>));
-    private static VariableMethod DamageMethod(Type target) => new(
-        (typeof(CreatureCmd), "Damage", [typeof(PlayerChoiceContext), target, typeof(decimal), typeof(ValueProp), typeof(Creature), typeof(CardModel), typeof(CardPlay)], [0,1,2,3,4,5,6]),
-        (typeof(CreatureCmd), "Damage", [typeof(PlayerChoiceContext), target, typeof(decimal), typeof(ValueProp), typeof(Creature), typeof(CardModel)], [0,1,2,3,4,5]));
-
     public static Task<IEnumerable<DamageResult>> Damage(PlayerChoiceContext context, Creature target, decimal amount,
         ValueProp props, Creature? dealer, CardModel? card, CardPlay? play = null) =>
-        DamageOne.Invoke<Task<IEnumerable<DamageResult>>>(null,context,target,amount,props,dealer,card,play)!;
+        CreatureCmd.Damage(context, target, amount, props, dealer, card, play);
     public static Task<IEnumerable<DamageResult>> Damage(PlayerChoiceContext context, IEnumerable<Creature> targets, decimal amount,
         ValueProp props, Creature? dealer, CardModel? card, CardPlay? play = null) =>
-        DamageMany.Invoke<Task<IEnumerable<DamageResult>>>(null,context,targets,amount,props,dealer,card,play)!;
+        CreatureCmd.Damage(context, targets, amount, props, dealer, card, play);
 
     private static readonly VariableMethod LoseBlockMethod = new(
         (typeof(CreatureCmd), "LoseBlock", [typeof(PlayerChoiceContext),typeof(Creature),typeof(decimal),typeof(Creature)], [0,1,2,3]),

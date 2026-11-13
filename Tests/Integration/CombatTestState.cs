@@ -40,8 +40,7 @@ public static class CombatTestState
         ? counter.GetValue(rng)! : AccessTools.Field(rng.GetType(),"_counter").GetValue(rng)!);
     public static IDisposable UseSelector(MegaCrit.Sts2.Core.TestSupport.ICardSelector selector)
     {
-        var method=AccessTools.Method(typeof(MegaCrit.Sts2.Core.Commands.CardSelectCmd),"UseSelector");
-        return (IDisposable)method.Invoke(null,method.GetParameters().Length==1?[selector]:[selector,false])!;
+        return MegaCrit.Sts2.Core.CardSelection.CardSelectorStack.SetTestSelector(selector);
     }
     public static void CompleteUnlocks()
     {

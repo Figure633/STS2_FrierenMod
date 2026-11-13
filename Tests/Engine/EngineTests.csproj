@@ -10,6 +10,7 @@
     <ProjectReference Include="../../FrierenMod.csproj" />
     <Compile Include="../Integration/CombatTests.cs" Link="CombatTests.cs" />
     <Compile Include="../Integration/CombatTestState.cs" Link="CombatTestState.cs" />
+    <Reference Include="Steamworks.NET" HintPath="$(Sts2DataDir)/Steamworks.NET.dll" Private="true" />
     <Reference Update="sts2;0Harmony;BaseLib" Private="true" />
     <Reference Include="BaseLibCompatibilityHelper" HintPath="$(BaseLibDir)/BaseLibCompatibilityHelper.dll"
       Condition="Exists('$(BaseLibDir)/BaseLibCompatibilityHelper.dll')" Private="true" />

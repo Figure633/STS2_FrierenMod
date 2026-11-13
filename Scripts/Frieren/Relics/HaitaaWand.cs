@@ -7,6 +7,6 @@ namespace FrierenMod.Scripts.Relics;
 public sealed class HaitaaWand : FrierenRelic
 {
     public override RelicRarity Rarity => RelicRarity.None;
-    public override bool IsAllowed(IRunState runState) => false;
+    protected override bool IsAllowedInternal(IRunState runState) => false;
     public override bool IsAllowedInShops => false;
 }

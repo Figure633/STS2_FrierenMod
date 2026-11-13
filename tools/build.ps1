@@ -27,8 +27,8 @@ $baseLibDir = & dotnet msbuild "$projectRoot/FrierenMod.csproj" -nologo -getProp
 if ($LASTEXITCODE -ne 0) { throw "无法读取 BaseLibDir。" }
 $releaseInfo = Get-Content -Raw -LiteralPath "$gameDir/release_info.json" | ConvertFrom-Json
 $baseManifest = Get-Content -Raw -LiteralPath "$baseLibDir/BaseLib.json" | ConvertFrom-Json
-if ($releaseInfo.version -notin @("v0.107.1", "v0.111.0") -or $baseManifest.version -notin @("v3.4.7", "v3.4.8")) {
-    throw "验证基线为 StS2 v0.107.1 / v0.111.0 + BaseLib v3.4.7 / v3.4.8；其他版本需重新核查兼容性。"
+if ($releaseInfo.version -ne "v0.113.0" -or $baseManifest.version -ne "v3.4.8") {
+    throw "验证基线为 StS2 beta v0.113.0 + BaseLib v3.4.8；其他版本需重新核查兼容性。"
 }
 if ($baseManifest.version -eq 'v3.4.8' -and !(Test-Path -LiteralPath (Join-Path $baseLibDir 'BaseLibCompatibilityHelper.dll'))) {
     throw 'BaseLib 3.4.8 缺少随附的兼容助手，请更新完整的 BaseLib。'

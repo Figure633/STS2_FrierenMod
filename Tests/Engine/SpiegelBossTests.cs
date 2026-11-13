@@ -152,7 +152,7 @@ public static class SpiegelBossTests
         await curse.AfterCardPlayed(context, play);
         Check(draw.Pile?.Type == PileType.Discard && discard.Pile?.Type == PileType.Draw && player.Creature.CurrentHp == hp-2,
             "颠倒在手牌中同调时交换原卡对象并失去2生命");
-        await monster.AfterDeath(context, boss, false, 0);
+        await monster.AfterDeath(context, boss, null, false, 0);
         Check(combat.Enemies.All(c => c.Monster is not DampCultist || !c.IsAlive), "Boss死亡时召唤物离场");
         RunManager.Instance.CleanUp();
         var hardPlayer=Player.CreateForNewRun<Frieren>(UnlockState.all,1);

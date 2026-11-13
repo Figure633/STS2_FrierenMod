@@ -108,7 +108,7 @@ public static class StoryEventTests
         Check(mimic.Owner!.Creature.CurrentHp == 20 && mimic.IsFinished, "菲伦救援免费结束事件");
         var player = mimic.Owner; var run = (RunState)player.RunState;
         var encounter = ModelDb.Encounter<MimicEncounter>().ToMutable(); encounter.GenerateMonstersWithSlots(run);
-        var combat = new CombatState(encounter, run, [], [], run.MultiplayerScalingModel); combat.AddPlayer(player);
+        var combat = new CombatState(encounter, run); combat.AddPlayer(player);
         var monster = (Mimic)ModelDb.Monster<Mimic>().ToMutable(); var enemy = combat.CreateCreature(monster, CombatSide.Enemy, null); combat.AddCreature(enemy);
         CombatManager.Instance.SetUpCombat(combat); CombatTestState.SetInProgress(true);
         monster.RollMove([player.Creature]);

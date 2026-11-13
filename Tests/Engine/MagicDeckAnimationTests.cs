@@ -188,19 +188,26 @@ public static class MagicDeckAnimationTests
         Check(board.IsVisibleInTree()&&layer.ZIndex>board.ZIndex&&!layer.ZAsRelative,"委托窗口打开时，领奖动画使用独立前景层");
         int commissionProps=MagicDeckStore.Read(player).Props.Count;int commissionGold=player.Gold;
         var claim=(BaseLib.Config.UI.NConfigButton)board.GetNode<Control>("CommissionCanvas/CommissionScroll/Quests/Quest"+questId).FindChild("Claim",true,false);
-        claim.EmitSignal(NButton.SignalName.Released,claim);await Tick();
-        Check(CommissionCmd.IsBusy(player)&&MagicDeckStore.Read(player).Props.Count==commissionProps+1,"委托领奖先入库，再等待本机动画，避免连点");
-        Check(!await CommissionCmd.Send(player,questId,CommissionOperation.Claim),"委托领奖动画期间不能重复提交");
+        // 本场景没有原生房间动作循环，直接执行领奖后核对表现层队列。
+        Check(await CommissionCmd.Execute(player, questId, CommissionOperation.Claim, commissions.Revision), "委托领奖成功");
+        Task claimAnimation = MagicDeckAnimations.WhenIdle(player);
+        Check(!claimAnimation.IsCompleted && MagicDeckStore.Read(player).Props.Count == commissionProps + 1,
+            "委托领奖先入库，再等待本机动画");
+        Check(!await CommissionCmd.Execute(player, questId, CommissionOperation.Claim, CommissionCmd.State(player).Revision),
+            "委托已领取时拒绝重复提交");
         elapsed.Restart();bool commissionFlight=false;
-        while(CommissionCmd.IsBusy(player)&&elapsed.Elapsed<TimeSpan.FromSeconds(5)){
+        while(!claimAnimation.IsCompleted && elapsed.Elapsed < TimeSpan.FromSeconds(5)) {
             await Tick();
-            if(!commissionFlight&&layer.GetChildren().OfType<NCardFlyVfx>().Any()){
+            if(!commissionFlight && layer.GetChildren().OfType<NCardFlyVfx>().Any()) {
                 commissionFlight=true;
-                Check(board.IsVisibleInTree()&&layer.GetChildren().OfType<NCardTrailVfx>().Any(),"委托魔具在窗口前方使用原生飞入和粒子拖尾");
+                Check(board.IsVisibleInTree() && layer.GetChildren().OfType<NCardTrailVfx>().Any(),
+                    "委托魔具在窗口前方使用原生飞入和粒子拖尾");
                 await Snapshot("commission-reward-flight");
             }
         }
-        Check(commissionFlight&&!CommissionCmd.IsBusy(player)&&layer.GetChildCount()==0&&player.Gold==commissionGold+commissions.Quests.Single(q=>q.Id==questId).Reward.BonusGold,"委托飞入完成后回收节点，物品与额外金币各发一次");
+        Check(commissionFlight && claimAnimation.IsCompleted && layer.GetChildCount() == 0 &&
+            player.Gold == commissionGold + commissions.Quests.Single(q=>q.Id==questId).Reward.BonusGold,
+            "委托飞入完成后回收节点，物品与额外金币各发一次");
         commissionButton.EmitSignal(NButton.SignalName.Released,commissionButton);await Tick();
         deck = MagicDeckStore.Read(player); deck.Add("BuildUpBody"); MagicDeckStore.Write(player, deck);
         Task pending = MagicDeckAnimations.WhenIdle(player);

@@ -34,7 +34,7 @@ public sealed class AuraSoldier : CustomMonsterModel
         strike.FollowUpState = guard; guard.FollowUpState = strike;
         return new MonsterMoveStateMachine([strike, guard], GuardFirst ? guard : strike);
     }
-    public override async Task AfterDeath(PlayerChoiceContext context, Creature creature, bool prevented, float animLength)
+    public override async Task AfterDeath(PlayerChoiceContext context, Creature creature, MegaCrit.Sts2.Core.Models.CardModel? source, bool prevented, float animLength)
     {
         if (creature != Creature || prevented || _released) return;
         _released = true;

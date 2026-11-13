@@ -10,8 +10,8 @@ namespace FrierenMod.Scripts.Presentation;
 [HarmonyPatch(typeof(NCharacterSelectScreen), nameof(NCharacterSelectScreen.SelectCharacter))]
 public static class SlotBackSelectionEntry
 {
-    private static void Postfix(NCharacterSelectScreen __instance, CharacterModel characterModel) =>
-        Attach(__instance, characterModel is Frieren);
+    private static void Postfix(NCharacterSelectScreen __instance, NCharacterSelectButton charSelectButton) =>
+        Attach(__instance, charSelectButton.Character is Frieren);
 
     public static void Attach(Control screen, bool frieren)
     {

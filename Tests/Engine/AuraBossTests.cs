@@ -96,7 +96,7 @@ public static class AuraBossTests
         var play = CombatTestState.NewPlay(card: dispel, target: soldiers[0], resultPile: PileType.Exhaust, isAutoPlay: false, playIndex: 0, playCount: 1, resources: new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 });
         await (Task)AccessTools.Method(typeof(AuraDispel), "OnPlay").Invoke(dispel, [context, play])!;
         Check(soldiers[0].IsDead && aura.Mana == 185 && ManaCmd.Total(player) == 10 && aura.NextMove.Id == "TAUNT", "解除魔法立即解放士兵，削15／加10并改嘲讽");
-        await soldiers[0].Monster.AfterDeath(context, soldiers[0], false, 0);
+        await soldiers[0].Monster.AfterDeath(context, soldiers[0], null, false, 0);
         Check(aura.Mana == 185 && ManaCmd.Total(player) == 10, "死亡奖励不会重复领取");
         await aura.PerformMove(); aura.RollMove([player.Creature]);
         Check(aura.NextMove.Id == "BARRAGE", "嘲讽空过后继续普通行动");
@@ -219,7 +219,7 @@ public static class AuraBossTests
             root.GetViewport().GetTexture().GetImage().SavePng(ProjectSettings.GlobalizePath("res://../../artifacts/aura-judgment.png"));
         }
         panel.QueueFree();
-        await aura.AfterDeath(context, boss, false, 0);
+        await aura.AfterDeath(context, boss, null, false, 0);
         Check(combat.Enemies.All(c => c.Monster is not AuraSoldier || !c.IsAlive), "阿乌拉死亡后士兵离场");
         LocManager.Instance.SetLanguage("eng"); RunManager.Instance.CleanUp();
         return count;

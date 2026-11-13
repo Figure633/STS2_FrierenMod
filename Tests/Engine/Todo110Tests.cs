@@ -81,10 +81,10 @@ public static class Todo110Tests
         finally {talk.UnpatchAll(talk.Id);}
         Check(player.Creature.GetPowerAmount<StrengthPower>()==1&&ManaCmd.InPile(player,PileType.Discard).Count()==1,"低语耳环原生入口跳过不可用前两槽并支付弃牌魔力");
         await Reset();await ManaCmd.Generate(player,PileType.Hand,3);
-        using(CardSelectCmd.PushSelector(new VakuuCardSelector()))await Use(New<PreciseChant>());
+        using(RunManager.Instance.CardSelectorStack.PushSelector(player,new VakuuCardSelector()))await Use(New<PreciseChant>());
         Check(player.Creature.GetPowerAmount<StrengthPower>()==3&&!ManaCmd.InPile(player,PileType.Hand).Any(),"原生耳环选择器精准咏唱消耗可用手牌槽全部3魔力");
         await Reset();var hair=await RelicCmd.Obtain<OldHairAccessory>(player);await hair.BeforeCombatStart();
-        CardPlay Play(CardModel c)=>new(){Card=c,Resources=Resources(),Target=enemy,ResultPile=PileType.Discard,IsAutoPlay=false,PlayIndex=0,PlayCount=1};
+        CardPlay Play(CardModel c)=>new(){Player=player,Card=c,Resources=Resources(),Target=enemy,ResultPile=PileType.Discard,IsAutoPlay=false,PlayIndex=0,PlayCount=1};
         await CardPileCmd.Add(New<StrikeFrieren>(),PileType.Draw);
         await hair.AfterCardPlayed(context,Play(New<Mana>()));await hair.AfterCardPlayed(context,Play(New<HighDensityMana>()));
         await hair.AfterSideTurnEnd(context,CombatSide.Player,[player.Creature]);await hair.AfterPlayerTurnStart(context,player);

@@ -37,8 +37,7 @@ public sealed class DragonBallAdventure : FrierenStoryEvent
     }
     private Task Trial()
     {
-        var encounter = (BattlewornDummyEventEncounter)ModelDb.Encounter<BattlewornDummyEventEncounter>().ToMutable();
-        encounter.Setting = BattlewornDummyEventEncounter.DummySetting.Setting1;
+        var encounter = ModelDb.Encounter<BattlewornDummyEventV1Encounter>();
         EnterStoryCombat(encounter,[],resume:true); return Task.CompletedTask;
     }
     public override async Task Resume(AbstractRoom room)

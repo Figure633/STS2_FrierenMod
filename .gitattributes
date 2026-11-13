@@ -1,2 +1,5 @@
 # Normalize EOL for all files that Git considers text files.
 * text=auto eol=lf
+
+# 来源校验按原始许可证字节计算，保留原文件换行。
+LICENSE.STS1 binary

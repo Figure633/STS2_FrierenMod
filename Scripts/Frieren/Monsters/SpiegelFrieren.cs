@@ -100,7 +100,7 @@ public sealed class SpiegelFrieren : CustomMonsterModel
             decimal damage = 999;
             var player = LocalContext.GetMe(owner.CombatState);
             if (player != null) damage = Hook.ModifyDamage(player.RunState, owner.CombatState, player.Creature, owner, damage,
-                ValueProp.Move | ValueProp.Unpowered, null, ModifyDamageHookType.All, CardPreviewMode.None, out _);
+                ValueProp.Move | ValueProp.Unpowered, null, null, ModifyDamageHookType.All, CardPreviewMode.None, out _);
             __result = Math.Max(0, (int)damage);
             return false;
         }
@@ -148,7 +148,7 @@ public sealed class SpiegelFrieren : CustomMonsterModel
         foreach (var power in Creature.Powers.ToArray()) await PowerCmd.Remove(power);
         await GameApi.LoseBlock(new ThrowingPlayerChoiceContext(), Creature, Creature.Block, Creature);
     }
-    public override async Task AfterDeath(PlayerChoiceContext context, Creature creature, bool prevented, float animLength)
+    public override async Task AfterDeath(PlayerChoiceContext context, Creature creature, MegaCrit.Sts2.Core.Models.CardModel? source, bool prevented, float animLength)
     {
         if (creature != Creature || prevented) return;
         foreach (var summoned in CombatState.Enemies.Where(c => c.Monster is DampCultist && c.IsAlive).ToArray()) await CreatureCmd.Escape(summoned);

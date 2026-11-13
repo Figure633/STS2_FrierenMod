@@ -1,8 +1,10 @@
 # FrierenMod STS2
 
-《杀戮尖塔2》的芙莉莲模组，移植自[一代模组](https://steamcommunity.com/sharedfiles/filedetails/?id=3164722329)。当前版本 **0.12.35**，开发中。
+《杀戮尖塔2》的芙莉莲模组，移植自[一代模组](https://steamcommunity.com/sharedfiles/filedetails/?id=3164722329)。当前为游戏 **beta v0.113.0** 的适配分支，模组版本 **0.12.36**。正式版请使用 main 分支。
 
 芙莉莲使用抽牌堆、手牌与弃牌堆中的魔力进行咏唱，可装配因子、使用魔具，包含专属卡牌、遗物、事件、委托与Boss。多人游戏双方需使用相同版本的模组和BaseLib；混合角色队伍保留原版事件和Boss池。
+
+0.12.36 适配 beta 的选牌器、事件假人、联机玩家列表、死亡回调与动画等待接口。
 
 0.12.35 调整「小小火花」为 3（5）点伤害，「星星之火」为 13（18）点群伤，升级前后均生成 X 张「小小火花」。所有魔力牌隐藏费用，始终免费打出。
 
@@ -12,7 +14,7 @@
 
 ## 安装
 
-依赖 **BaseLib 3.4.7 或 3.4.8**；使用3.4.8时保留其随附的兼容助手。完整更新 `FrierenMod.dll`、`FrierenMod.pck` 和 `FrierenMod.json`，放入游戏的 `mods/FrierenMod/`，重启游戏并启用模组。
+依赖 **BaseLib 3.4.8**；使用3.4.8时保留其随附的兼容助手。完整更新 `FrierenMod.dll`、`FrierenMod.pck` 和 `FrierenMod.json`，放入游戏的 `mods/FrierenMod/`，重启游戏并启用模组。
 
 ## 构建
 
@@ -31,3 +33,16 @@
 ## 来源与许可
 
 一代素材与改编内容遵循 [LICENSE.STS1](LICENSE.STS1)。神格相关代码与视觉改编自WatcherMod，遵循 [LICENSE.WATCHER](LICENSE.WATCHER)。运行资源的来源及指纹保留在 `tools/data/assets.json` 和 `tools/data/generated_assets.json`。
+
+
+## 本地双版本
+
+同一仓库使用两个独立工作目录，正式版目录 FrierenMod_STS2 对应 main，测试版目录 FrierenMod_STS2_beta 对应 beta。各自的 artifacts/FrierenMod 保留对应的 DLL、PCK 和清单。
+
+Steam 切换游戏分支并退出游戏后，在对应工作目录执行：
+
+```powershell
+./tools/install.ps1
+```
+
+安装脚本会核对构建时的游戏和 BaseLib 指纹。游戏或依赖再次更新时，需要在对应目录重新构建。两个模组包共用游戏里的 mods/FrierenMod 安装位置，每次切换游戏分支后安装对应包。

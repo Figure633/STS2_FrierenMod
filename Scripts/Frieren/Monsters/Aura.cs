@@ -165,7 +165,7 @@ public sealed class Aura : CustomMonsterModel
         }
     }
 
-    public override async Task AfterDeath(PlayerChoiceContext context, Creature creature, bool prevented, float animLength)
+    public override async Task AfterDeath(PlayerChoiceContext context, Creature creature, MegaCrit.Sts2.Core.Models.CardModel? source, bool prevented, float animLength)
     {
         if (creature != Creature || prevented) return;
         foreach (var soldier in CombatState.Enemies.Where(c => c.IsAlive && c.Monster is AuraSoldier).ToArray())

@@ -51,11 +51,11 @@ public static class Todo098Tests
         async Task Reset(){selector.Cleanup();foreach(var c in combat.Creatures){foreach(var p in c.Powers.ToArray())await PowerCmd.Remove(p);c.LoseBlockInternal(c.Block);c.SetCurrentHpInternal(c.MaxHp);}foreach(var pile in player.PlayerCombatState!.AllPiles)foreach(var c in pile.Cards.ToArray())pile.RemoveInternal(c);CombatManager.Instance.History.Clear();}
         var pool=ModelDb.CardPool<FrierenCardPool>().AllCards.ToArray();
         for(int i=0;i<40;i++)foreach(var type in new[]{CardType.Attack,CardType.Skill,CardType.Power}) {
-            var result=CardFactory.CreateForMerchant(player,pool,type);
+            var result=CardFactory.CreateForMerchant(player,pool,[],type);
             Check(FrierenCardAvailability.IsRandomCandidate(result.Card),"原生商店按类型取牌无衍生牌/因子："+type+"/"+i);
         }
         foreach(var rarity in new[]{CardRarity.Common,CardRarity.Uncommon,CardRarity.Rare})for(int i=0;i<12;i++)
-            Check(FrierenCardAvailability.IsRandomCandidate(CardFactory.CreateForMerchant(player,pool,rarity).Card),"商店按稀有度重载也过滤："+rarity+"/"+i);
+            Check(FrierenCardAvailability.IsRandomCandidate(CardFactory.CreateForMerchant(player,pool,[],rarity).Card),"商店按稀有度重载也过滤："+rarity+"/"+i);
         var shop=MerchantInventory.CreateForNormalMerchant(player);
         Check(shop.CharacterCardEntries.All(e=>FrierenCardAvailability.IsRandomCandidate(e.CreationResult!.Card)),"真实商店库存不出售寿命论和魔法因子");
         await Reset();var draw=New<RapidChant>();var discard=New<RapidChant>(true);await CardPileCmd.Add(draw,PileType.Draw);await CardPileCmd.Add(discard,PileType.Discard);

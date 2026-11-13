@@ -58,8 +58,8 @@ print(f"PASS generated asset provenance: {len(load(ROOT / 'tools/data/generated_
 manifest = load(ROOT / "FrierenMod.json")
 project_version = ET.parse(ROOT / "FrierenMod.csproj").findtext("./PropertyGroup/Version")
 assert project_version and manifest["version"] == project_version, "manifest/project version mismatch"
-assert manifest["min_game_version"] == "0.107.1"
-assert manifest["dependencies"] == [{"id": "BaseLib", "min_version": "3.4.7"}]
+assert manifest["min_game_version"] == "0.113.0"
+assert manifest["dependencies"] == [{"id": "BaseLib", "min_version": "3.4.8"}]
 assert not list((ROOT / "FrierenMod").rglob("*.dll"))
 assert not list((ROOT / "FrierenMod").rglob("*.cs"))
 print("PASS manifest and resource boundaries")
