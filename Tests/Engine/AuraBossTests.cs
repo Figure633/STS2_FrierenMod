@@ -72,6 +72,49 @@ public static class AuraBossTests
         await parcel.AfterCardDrawn(context, parcel, false);
         Check(parcel.Pile?.Type == PileType.Exhaust && ManaCmd.InPile(player, PileType.Hand).Count() == 4, "魔力包裹仍正常消耗并生成4张魔力");
         RunManager.Instance.CleanUp();
+        checks += await RunDeathIntentChecks();
+        return checks;
+    }
+
+    private static async Task<int> RunDeathIntentChecks()
+    {
+        int checks = 0;
+        void Check(bool ok, string text) { if (!ok) throw new Exception(text); checks++; GD.Print("PASS 阿乌拉死亡意图：" + text); }
+        foreach (var (planned, summonAvailable) in new[] { ("BARRAGE", true), ("MEDITATE", true), ("GUILLOTINE", true), ("BARRAGE", false) })
+        {
+            var player = Player.CreateForNewRun<Frieren>(UnlockState.all, 1);
+            var run = RunState.CreateForTest([player], seed: "AURA-DEATH-INTENT");
+            RunManager.Instance.SetUpTest(run, new NetSingleplayerGameService()); LocalContext.NetId = 1;
+            var encounter = ModelDb.Encounter<AuraEncounter>().ToMutable(); encounter.GenerateMonstersWithSlots(run);
+            var combat = new CombatState(encounter, run); combat.AddPlayer(player);
+            foreach (var (model, slot) in encounter.MonstersWithSlots) combat.AddCreature(combat.CreateCreature(model, CombatSide.Enemy, slot));
+            CombatManager.Instance.SetUpCombat(combat); CombatTestState.SetInProgress(true);
+            foreach (var enemy in combat.Enemies.ToArray()) { enemy.Monster!.RollMove([player.Creature]); await enemy.Monster.AfterAddedToRoom(); }
+            var aura = (Aura)combat.Enemies.Single(c => c.Monster is Aura).Monster!;
+            var soldiers = combat.Enemies.Where(c => c.Monster is AuraSoldier).ToArray();
+            void Set(string field, object? value) => AccessTools.Field(typeof(Aura), field).SetValue(aura, value);
+            Set("_actions", 3); Set("_summonedCycle", summonAvailable ? 0 : 1);
+            Set("_meditateNext", planned == "MEDITATE"); Set("_verdict", planned == "GUILLOTINE" ? planned : null);
+            aura.RefreshOrdinaryIntent();
+            var announced = aura.NextMove;
+            Check(announced.Id == planned, "先公布" + planned + "意图");
+            int mana = aura.Mana;
+            await CreatureCmd.Kill(soldiers[0]);
+            Check(ReferenceEquals(aura.NextMove, announced), planned + "：第一名士兵死亡不重选意图");
+            await CreatureCmd.Kill(soldiers[1]);
+            Check(ReferenceEquals(aura.NextMove, announced), planned + "：清空士兵不改为召唤");
+            Check(aura.Mana == mana - 30 && ManaCmd.InPile(player, PileType.Discard).Count() == 20,
+                planned + "：两次死亡仍各削15魔力并生成10张魔力");
+            int hp = player.Creature.CurrentHp; mana = aura.Mana;
+            await aura.PerformMove();
+            Check(planned == "MEDITATE" ? aura.Mana == mana + 20 && aura.Creature.GetPowerAmount<StrengthPower>() == 2
+                    : player.Creature.CurrentHp == hp - (planned == "BARRAGE" ? 18 : 25),
+                planned + "：已公布的行动照常实际结算");
+            aura.RollMove([player.Creature]);
+            Check(aura.NextMove.Id == (summonAvailable ? "SUMMON" : "BARRAGE"),
+                summonAvailable ? "完成原行动后，正常选行动才允许召唤" : "士兵死亡不绕过本周期召唤次数限制");
+            RunManager.Instance.CleanUp();
+        }
         return checks;
     }
 
@@ -182,16 +225,20 @@ public static class AuraBossTests
         Check(player.PlayerCombatState.Hand.Cards.OfType<AuraDispel>().Count()==1, "后续天平不再赠送解除魔法");
         int manaBeforeZeroSummon = aura.Mana + 100;
         await aura.ChangeMana(-aura.Mana);
+        var announcedBeforeDeaths = aura.NextMove;
         await CreatureCmd.Kill(replacement);
         await CreatureCmd.Kill(soldiers[1]);
-        Check(aura.NextMove.Id == "SUMMON", "清空士兵后可预判召唤");
-        mana = aura.Mana; await Step();
-        Check(aura.Mana == mana && combat.Enemies.Count(c => c.IsAlive && c.Monster is AuraSoldier) == 2,
-            "零魔力仍召唤两名士兵且不扣魔力");
-        await aura.ChangeMana(manaBeforeZeroSummon);
+        Check(ReferenceEquals(aura.NextMove, announcedBeforeDeaths), "清空士兵保留已经公布的连击意图");
         hp = player.Creature.CurrentHp; await Step();
-        Check(player.Creature.CurrentHp == hp - 30 && aura.ScaleCount == 3 && aura.NextMove.Id == "GUILLOTINE",
-            "第9回合连击正常造成10×3后额外判定第三次天平");
+        Check(player.Creature.CurrentHp == hp - 30 && aura.NextMove.Id == "SUMMON" && aura.ScaleCount == 2,
+            "第8回合先照常连击10×3，再于正常选行动时公布召唤");
+        mana = aura.Mana; await aura.PerformMove();
+        Check(aura.Mana == mana && combat.Enemies.Count(c => c.IsAlive && c.Monster is AuraSoldier) == 2,
+            "零魔力仍按已公布意图召唤两名士兵且不扣魔力");
+        await aura.ChangeMana(manaBeforeZeroSummon);
+        await aura.AfterSideTurnEnd(context, CombatSide.Enemy, combat.Enemies); aura.RollMove([player.Creature]);
+        Check(aura.ScaleCount == 3 && aura.NextMove.Id == "GUILLOTINE",
+            "第9回合召唤后仍额外判定第三次天平");
         Check(((SingleAttackIntent)aura.NextMove.Intents.Single()).GetTotalDamage([player.Creature], boss) == 29,
             "第三次断头台意图仍25加4力量");
         hp = player.Creature.CurrentHp; await Step();
