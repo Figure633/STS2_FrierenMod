@@ -24,6 +24,41 @@ using MegaCrit.Sts2.Core.Unlocks;
 
 public static class Todo103Tests
 {
+    public static async Task<int> RunFlowPreview()
+    {
+        int checks = 0;
+        var player = Player.CreateForNewRun<Frieren>(UnlockState.all, 1);
+        var run = RunState.CreateForTest([player], seed: "FLOW-PREVIEW");
+        RunManager.Instance.SetUpTest(run, new NetSingleplayerGameService()); MegaCrit.Sts2.Core.Context.LocalContext.NetId = 1;
+        var combat = new CombatState(runState: run); combat.AddPlayer(player);
+        var enemy = combat.CreateCreature(ModelDb.Monster<Axebot>().ToMutable(), CombatSide.Enemy, null);
+        combat.AddCreature(enemy); enemy.SetMaxHpInternal(999); enemy.SetCurrentHpInternal(999);
+        CombatManager.Instance.SetUpCombat(combat); CombatTestState.SetInProgress(true);
+        var context = new ThrowingPlayerChoiceContext();
+        var card = combat.CreateCard<EndlessFlow>(player); await CardPileCmd.Add(card, PileType.Hand);
+        await ManaCmd.Generate(player, PileType.Draw, 7);
+        void Preview(int expected) {
+            card.UpdateDynamicVarPreview(CardPreviewMode.Normal, null, card.DynamicVars);
+            foreach (var lang in new[] { "zhs", "eng" }) {
+                LocManager.Instance.SetLanguage(lang);
+                string text = card.GetDescriptionForPile(PileType.Hand);
+                string plain = System.Text.RegularExpressions.Regex.Replace(text, @"\[[^\]]*\]", "");
+                if (decimal.Floor(card.DynamicVars.CalculatedDamage.PreviewValue) != expected ||
+                    !plain.Contains(lang == "zhs" ? $"（造成{expected}点伤害）" : $"(Deal {expected} damage)"))
+                    throw new Exception("生生流转预览不符：" + text);
+                checks++;
+            }
+        }
+        Preview(10);
+        var strength = await PowerCmd.Apply<StrengthPower>(context, player.Creature, 2, player.Creature, null); Preview(12);
+        await PowerCmd.Remove(strength!);
+        var weak = await PowerCmd.Apply<WeakPower>(context, player.Creature, 1, enemy, null); Preview(7);
+        await PowerCmd.Remove(weak!);
+        await PowerCmd.Apply<BanManaGainPower>(context, player.Creature, 1, player.Creature, null); Preview(7);
+        GD.Print("PASS 生生流转：中英提示包含生成后的魔力，并识别力量、虚弱和禁止生成魔力");
+        return checks;
+    }
+
     public static async Task<int> Run()
     {
         int count=0; void Check(bool ok,string label){if(!ok)throw new Exception(label);count++;GD.Print("PASS TODO103: "+label);}

@@ -287,7 +287,7 @@
   "FRIERENMOD-AURA_DISPEL.title": "解除魔法",
   "FRIERENMOD-AURA_DISPEL.description": "消灭一个被操纵的士兵，触发其[gold]灵魂解放[/gold]。",
   "FRIERENMOD-ENDLESS_FLOW.title": "生生流转",
-  "FRIERENMOD-ENDLESS_FLOW.description": "向[gold]抽牌堆[/gold]、[gold]手牌[/gold]和[gold]弃牌堆[/gold]各加入1张[gold]魔力[/gold]。对所有敌人造成等同于你的魔力总数的伤害。",
+  "FRIERENMOD-ENDLESS_FLOW.description": "向[gold]抽牌堆[/gold]、[gold]手牌[/gold]和[gold]弃牌堆[/gold]各加入1张[gold]魔力[/gold]。对所有敌人造成等同于你的魔力总数的伤害。{InCombat:cond:\n（造成{CalculatedDamage:diff()}点伤害）|}",
   "FRIERENMOD-FRIEREN_THE_SLAYER.title": "葬送的芙莉莲",
   "FRIERENMOD-FRIEREN_THE_SLAYER.description": "每回合开始时，挑选1张本场战斗未选过的{Upgraded:cond:升级的|}“魔法”加入[gold]手牌[/gold]。",
   "FRIERENMOD-KINDLING_SPARK.title": "星星之火",
