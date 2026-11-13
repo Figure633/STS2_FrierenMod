@@ -35,6 +35,34 @@ using MegaCrit.Sts2.Core.Unlocks;
 
 public static class OpeningEventTests
 {
+    public static async Task<int> RunFreshRooms()
+    {
+        int checks = 0;
+        void Check(bool ok, string message) { if (!ok) throw new Exception(message); GD.Print("PASS 新档开局：" + message); checks++; }
+        var manager = RunManager.Instance;
+        SaveManager.Instance.InitPrefsDataForTest();
+        foreach (var player in new[] { Player.CreateForNewRun<Frieren>(UnlockState.none, 1), Player.CreateForNewRun<Ironclad>(UnlockState.none, 1) }) {
+            var run = RunState.CreateForTest([player], seed: "FRESH-PROFILE-ROOMS");
+            manager.SetUpTest(run, new NetSingleplayerGameService()); LocalContext.NetId = 1;
+            manager.GenerateRooms();
+            var rooms = (RoomSet)AccessTools.Field(typeof(ActModel), "_rooms").GetValue(run.Act)!;
+            Check(rooms.HasAncient == (player.Character is Frieren), "未解锁涅奥时，房间与开局入口一致：" + player.Character.Id);
+            if (player.Character is Frieren) {
+                Check(rooms.Ancient is Neow, "房间生成后可正常读取涅奥模型");
+                await manager.GenerateMap();
+                Check(run.Map!.StartingMapPoint.PointType == MapPointType.Ancient, "新档原生地图保留先古入口");
+                var room = (AbstractRoom)AccessTools.Method(typeof(RunManager), "CreateRoom").Invoke(manager,
+                    [RoomType.Event, MapPointType.Ancient, ModelDb.AncientEvent<Neow>()])!;
+                Check(room is EventRoom { CanonicalEvent: ReadingGrimoireEvent }, "原生房间进入检查魔导书");
+                AccessTools.Field(typeof(RoomSet), "_ancient").SetValue(rooms, null);
+                run.Act.ValidateRoomsAfterLoad(run.Rng.UpFront);
+                Check(rooms.HasAncient && rooms.Ancient is Neow, "读档时修复已有的缺失涅奥房间");
+            }
+            manager.CleanUp();
+        }
+        return checks;
+    }
+
     public static async Task<int> Run(Node root)
     {
         int count = 0;

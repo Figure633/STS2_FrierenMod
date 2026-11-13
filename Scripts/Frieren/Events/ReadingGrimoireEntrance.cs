@@ -35,6 +35,33 @@ public static class ReadingGrimoireEntrance
             RunManager.Instance.DebugOnlyGetState()?.CurrentRoom is not EventRoom { CanonicalEvent: ReadingGrimoireEvent };
     }
 
+    // 开局标记与实际房间必须一致；原生未解锁涅奥时不会生成这个先古。
+    private static void EnsureFirstRunNeowRoom(RunManager manager)
+    {
+        var run = manager.DebugOnlyGetState();
+        if (run is not { GameMode: GameMode.Standard, Players.Count: 1, Acts.Count: > 0 } ||
+            run.Players[0].Character is not Frieren || !run.ExtraFields.StartedWithNeow) return;
+        if (AccessTools.Field(typeof(ActModel), "_rooms").GetValue(run.Acts[0]) is RoomSet { HasAncient: false } rooms)
+            rooms.Ancient = ModelDb.AncientEvent<Neow>();
+    }
+
+    [HarmonyPatch(typeof(RunManager), nameof(RunManager.GenerateRooms))]
+    private static class GenerateFirstRunNeow
+    {
+        private static void Postfix(RunManager __instance) => EnsureFirstRunNeowRoom(__instance);
+    }
+
+    [HarmonyPatch(typeof(ActModel), nameof(ActModel.ValidateRoomsAfterLoad))]
+    private static class RestoreFirstRunNeow
+    {
+        private static void Postfix(ActModel __instance)
+        {
+            var manager = RunManager.Instance;
+            if (manager.DebugOnlyGetState() is { Acts.Count: > 0 } run && ReferenceEquals(run.Acts[0], __instance))
+                EnsureFirstRunNeowRoom(manager);
+        }
+    }
+
     [HarmonyPatch(typeof(RunManager), "SetStartedWithNeowFlag")]
     private static class FrierenFirstRun
     {
