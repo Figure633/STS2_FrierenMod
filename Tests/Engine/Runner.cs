@@ -459,6 +459,10 @@ public partial class Runner : Node
                 GD.Print("PUZZLE_DISPLAY_OK: " + PuzzlePresentationTests.Run(puzzlePlayer));
                 await Finish(); return;
             }
+            if (OS.GetCmdlineUserArgs().Contains("--precise-weakened-only")) {
+                GD.Print("PRECISE_WEAKENED_OK: " + await ChantSelectionTests.RunWeakenedPrecise());
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--chant-selection-only")) {
                 GD.Print("CHANT_SELECTION_OK: " + await ChantSelectionTests.Run(this));
                 await Finish(); return;

@@ -24,6 +24,14 @@ Test("费用下限为零", () => Equal(0, ChantRules.Cost(1, basic, 5)));
 Test("免 Mana", () => Equal(0, ChantRules.Cost(4, basic, free: true)));
 Test("精确咏唱向下取整", () => Equal(3, ChantRules.PreciseIntensity(9, new("test", 2, 2))));
 Test("偏移大于 Mana", () => Equal(0, ChantRules.PreciseIntensity(1, new("test", 2, 3))));
+Test("自动咏唱无实体因子在削弱下取可支付X", () => {
+    var spell = MagicDeckState.Definition("ImpeccableIntangible");
+    Equal(1, ChantRules.PreciseIntensity(14, spell, weakened: 3));
+    Equal(2, ChantRules.PreciseIntensity(15, spell, weakened: 3));
+    Equal(0, ChantRules.PreciseIntensity(8, spell, weakened: 3));
+    Equal(1, ChantRules.PreciseIntensity(4, spell, concentration: 2));
+    Equal(2, ChantRules.PreciseIntensity(14, spell, concentration: 1, weakened: 3));
+});
 Test("资源不足无选项", () => Equal<ChantOption?>(null, ChantRules.Option(ManaSlot.Hand, 1, basic, 2)));
 Test("零强度不生成精确选项", () => Equal<ChantOption?>(null, ChantRules.Option(ManaSlot.Hand, 5, basic, 0)));
 Test("独立牌堆费用", () => {

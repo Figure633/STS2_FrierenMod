@@ -38,6 +38,43 @@ public static class ChantSelectionTests
     private static bool SkipStartup() => false;
     private static bool TextHoverOnly(NCardHolder __instance) => __instance.CardModel is { } card && !card.HoverTips.Any(t => t is CardHoverTip);
 
+    public static async Task<int> RunWeakenedPrecise()
+    {
+        int checks = 0;
+        void Check(bool ok, string name) { if (!ok) throw new Exception(name); checks++; GD.Print("PASS 削弱咏唱：" + name); }
+        var player = Player.CreateForNewRun<Frieren>(UnlockState.all, 1);
+        var run = RunState.CreateForTest([player], seed: "WEAKENED-PRECISE");
+        RunManager.Instance.SetUpTest(run, new NetSingleplayerGameService()); LocalContext.NetId = 1;
+        var combat = new CombatState(runState: run); combat.AddPlayer(player);
+        var enemy = combat.CreateCreature(ModelDb.Monster<MegaCrit.Sts2.Core.Models.Monsters.Axebot>().ToMutable(), CombatSide.Enemy, null);
+        combat.AddCreature(enemy); CombatManager.Instance.SetUpCombat(combat); CombatTestState.SetInProgress(true);
+        var context = new ThrowingPlayerChoiceContext();
+        var selector = new MegaCrit.Sts2.Core.TestSupport.TestCardSelector();
+        using var selection = CombatTestState.UseSelector(selector);
+        var deck = new MagicDeckState();
+        for (int i = 0; i < 3; i++) { deck.PrepareDraft(_ => 0); deck.SelectInitial(deck.Draft[0]); }
+        foreach (var slot in Enum.GetValues<ManaSlot>())
+            deck.Equip(deck.Add(slot == ManaSlot.Draw ? "ImpeccableIntangible" : "BloodSpell").InstanceId, slot);
+        MagicDeckStore.Write(player, deck);
+        await PowerCmd.Apply<WeakenedChantPower>(context, player.Creature, 3, player.Creature, null);
+        await ManaCmd.Generate(player, PileType.Draw, 10);
+        var card = combat.CreateCard<PreciseChant>(player);
+        await CardPileCmd.Add(card, PileType.Hand);
+        selector.PrepareToSelect(new int[] { 0 }); selector.PrepareToSelect(new int[] { 0 });
+        await card.OnPlayWrapper(context, null, false, new ResourceInfo { EnergySpent = 1, EnergyValue = 1, StarsSpent = 0, StarValue = 0 }, true);
+        Check(player.Creature.GetPower<MegaCrit.Sts2.Core.Models.Powers.IntangiblePower>()?.Amount == 1,
+            "精准咏唱生成4张后以14张魔力正常获得1层无实体");
+        Check(ManaCmd.InPile(player, PileType.Draw).Count() == 5 && ManaCmd.InPile(player, PileType.Exhaust).Count() == 9,
+            "加费3后只支付9张魔力，余下5张");
+        await ManaCmd.Generate(player, PileType.Draw, 9);
+        var play = CombatTestState.NewPlay(combat.CreateCard<FinalChant>(player), null, PileType.Discard,
+            new ResourceInfo { EnergySpent = 0, EnergyValue = 0, StarsSpent = 0, StarValue = 0 });
+        await ChantCmd.Final(context, play);
+        Check(player.Creature.GetPower<MegaCrit.Sts2.Core.Models.Powers.IntangiblePower>()?.Amount == 2 &&
+            ManaCmd.InPile(player, PileType.Draw).Count() == 5, "终极咏唱使用同样的加费公式");
+        return checks;
+    }
+
     public static async Task<int> Run(Node root)
     {
         int count = 0;

@@ -19,14 +19,17 @@ public static class ChantRules
         return free ? 0 : Math.Max(0, checked(intensity * spell.CostMultiplier + spell.CostOffset - concentration + weakened));
     }
 
-    // 一代 PRECISE/FINAL 先按原始系数求 X，再检查减费后的实际费用。
-    public static int PreciseIntensity(int mana, SpellDefinition spell)
+    // 自动咏唱按当前费用修正反解可支付的最大整数X。
+    public static int PreciseIntensity(int mana, SpellDefinition spell, int concentration = 0,
+        int weakened = 0, bool free = false)
     {
         ArgumentOutOfRangeException.ThrowIfNegative(mana);
         Validate(spell);
         // 驭血魔法只接受普通咏唱指定的 X，自动咏唱不能以生命换魔力。
         if (spell.Id == "BloodSpell") return 0;
-        return Math.Max(0, (mana - spell.CostOffset) / spell.CostMultiplier);
+        // 免魔力时没有有限的费用上限，沿用原费用公式决定X，再免除实际支付。
+        int available = free ? mana : checked(mana + concentration - weakened);
+        return Math.Max(0, checked(available - spell.CostOffset) / spell.CostMultiplier);
     }
 
     public static ChantOption? Option(ManaSlot slot, int mana, SpellDefinition spell,
