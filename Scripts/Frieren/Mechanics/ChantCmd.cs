@@ -31,10 +31,12 @@ public static class ChantCmd
             var spell = deck.ResolveSlot(slot);
             if (spell == null) continue;
             int mana = ManaCmd.InPile(player, ManaCmd.Pile(slot)).Count();
-            var option = ChantRules.Preview(slot, spell, intensity ?? ChantRules.PreciseIntensity(mana, spell),
-                player.Creature.GetPower<ConcentrationPower>()?.Amount ?? 0,
-                player.Creature.GetPower<WeakenedChantPower>()?.Amount ?? 0,
-                player.Creature.GetPower<ChantWithoutManaPower>() != null || player.Creature.GetPower<ChantWithoutManaTimesPower>() != null);
+            int concentration = player.Creature.GetPower<ConcentrationPower>()?.Amount ?? 0;
+            int weakened = player.Creature.GetPower<WeakenedChantPower>()?.Amount ?? 0;
+            bool free = player.Creature.GetPower<ChantWithoutManaPower>() != null ||
+                player.Creature.GetPower<ChantWithoutManaTimesPower>() != null;
+            int effectiveIntensity = intensity ?? ChantRules.PreciseIntensity(mana, spell, concentration, weakened, free);
+            var option = ChantRules.Preview(slot, spell, effectiveIntensity, concentration, weakened, free);
             result.Add((option, option.Intensity > 0 && mana >= option.Cost));
         }
         return result;
