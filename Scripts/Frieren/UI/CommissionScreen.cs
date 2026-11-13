@@ -121,7 +121,7 @@ public sealed class CommissionScreen
         int current=q.Spell switch {
             "rare-pair"=>player.Deck.Cards.Where(c=>c.Rarity==MegaCrit.Sts2.Core.Entities.Cards.CardRarity.Rare).Select(c=>c.Id).Distinct().Count(),
             "legendary-three"=>player.Deck.Cards.Where(c=>c is ILegendaryCard).Select(c=>c.Id).Distinct().Count(),
-            "upgraded-five" or "upgraded-four"=>player.Deck.Cards.Count(c=>c.IsUpgraded),
+            "upgraded-cards" or "upgraded-four" or "upgraded-five" => player.Deck.Cards.Count(c=>c.IsUpgraded),
             "zero-three"=>player.Deck.Cards.Where(c=>c.EnergyCost.Canonical==0&&!c.EnergyCost.CostsX&&c is not IManaCard).Select(c=>c.Id).Distinct().Count(),
             "power-three"=>player.Deck.Cards.Where(c=>c.Type==MegaCrit.Sts2.Core.Entities.Cards.CardType.Power).Select(c=>c.Id).Distinct().Count(),
             "distinct-twelve"=>player.Deck.Cards.Select(c=>c.Id).Distinct().Count(),_=>q.Progress};

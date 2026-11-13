@@ -64,6 +64,13 @@ public static class AuthorText01210Tests
         Check(!CommissionCmd.OwnsSpell(p, "distinct-twelve"), "百变秀14种卡加同名重复牌仍未达标");
         await CardPileCmd.Add(run.CreateCard(kinds[14], p), PileType.Deck);
         Check(CommissionCmd.OwnsSpell(p, "distinct-twelve"), "百变秀达到15种卡，可兼容旧存档条件键");
+        var lesson = CommissionState.Villagers.Single(q => q.Id == "LESSON");
+        var upgradeable = p.Deck.Cards.Where(c => c.MaxUpgradeLevel > 0).Take(8).ToArray();
+        foreach (var card in upgradeable.Take(7)) CardCmd.Upgrade(card);
+        string[] lessonKeys = [lesson.Requirement, "upgraded-four", "upgraded-five"];
+        Check(lessonKeys.All(key => !CommissionCmd.OwnsSpell(p, key)), "公开课持有7张升级牌时未达标，含旧委托");
+        CardCmd.Upgrade(upgradeable[7]);
+        Check(lessonKeys.All(key => CommissionCmd.OwnsSpell(p, key)), "公开课持有8张升级牌即可交付，含旧委托");
         Check(CommissionState.Villagers.Length == 16 && CommissionState.Villagers.All(q => q.Id != "SLEEP"), "睡眠委托移出生成池");
         CombatTestState.SetInProgress(false);
         AccessTools.Property(typeof(CombatManager), nameof(CombatManager.IsStarting)).SetValue(CombatManager.Instance, false);

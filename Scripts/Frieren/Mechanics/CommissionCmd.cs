@@ -71,8 +71,7 @@ public static class CommissionCmd
             "tutor"=>TutorCounts(p) is var n&&(n.Mana>=3||n.Chants>=4),
             "rare-pair"=>cards.Where(c=>c.Rarity==CardRarity.Rare).Select(c=>c.Id).Distinct().Count()>=2,
             "legendary-three"=>cards.Where(c=>c is ILegendaryCard).Select(c=>c.Id).Distinct().Count()>=3,
-            "upgraded-five"=>cards.Count(c=>c.IsUpgraded)>=5,
-            "upgraded-four"=>cards.Count(c=>c.IsUpgraded)>=4,
+            "upgraded-cards" or "upgraded-four" or "upgraded-five" => cards.Count(c => c.IsUpgraded) >= 8,
             "zero-three"=>cards.Where(c=>c.EnergyCost.Canonical==0&&!c.EnergyCost.CostsX&&c is not IManaCard).Select(c=>c.Id).Distinct().Count()>=3,
             "power-three"=>cards.Where(c=>c.Type==CardType.Power).Select(c=>c.Id).Distinct().Count()>=3,
             // 保留旧存档的条件键，实际门槛按作者新文案改为15种。

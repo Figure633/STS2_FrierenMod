@@ -53,7 +53,7 @@ public sealed class CommissionState
         new("GRAPES",1,"GrapeSpell",Weight:1), new("STATUE",1,"MoldSpell",Weight:1), new("WEDDING",1,"FlowerFieldSpell"),
         new("FESTIVAL",1,"TongueTwisterSpell",Weight:1), new("SUMMER",1,"ShavedIceSpell"), new("LOST",2,"AccessoriesSpell",Weight:1),
         new("TUTOR",2,"tutor",Weight:3), new("CARGO",2,"",true,Weight:3), new("EXHIBITION",2,"rare-pair"),
-        new("LIBRARY",2,"legendary-three",Weight:1), new("LESSON",2,"upgraded-four"), new("VARIETY",1,"distinct-twelve"),
+        new("LIBRARY",2,"legendary-three",Weight:1), new("LESSON",2,"upgraded-cards"), new("VARIETY",1,"distinct-twelve"),
         new("GRANNY",1,"",Weight:3,Goal:CommissionGoal.Elites),
         new("NAMUSAN",1,"",MinAct:1,Goal:CommissionGoal.FirstTurnBattle),
         new("STARK",2,"",Goal:CommissionGoal.FlawlessBattle,Target:3),
