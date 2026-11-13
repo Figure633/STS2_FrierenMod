@@ -448,6 +448,13 @@ public partial class Runner : Node
                 GD.Print("FRESH_OPENING_ROOMS_OK: " + await OpeningEventTests.RunFreshRooms());
                 await Finish(); return;
             }
+            if (OS.GetCmdlineUserArgs().Contains("--english-card-text-only")) {
+                var textPlayer = MegaCrit.Sts2.Core.Entities.Players.Player.CreateForNewRun<FrierenMod.Scripts.Characters.Frieren>(MegaCrit.Sts2.Core.Unlocks.UnlockState.all, 1);
+                var textRun = MegaCrit.Sts2.Core.Runs.RunState.CreateForTest([textPlayer], seed: "ENGLISH-CARD-TEXT");
+                MegaCrit.Sts2.Core.Runs.RunManager.Instance.SetUpTest(textRun, new MegaCrit.Sts2.Core.Multiplayer.NetSingleplayerGameService());
+                GD.Print("ENGLISH_CARD_TEXT_OK: " + await CardUiAudit.Run(this, textPlayer, ["eng"], checkTitles: false));
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--opening-event-only")) {
                 GD.Print("OPENING_EVENT_OK: " + await OpeningEventTests.Run(this));
                 await Finish(); return;

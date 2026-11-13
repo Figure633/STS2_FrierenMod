@@ -13,12 +13,12 @@ using System.Text.RegularExpressions;
 // 使用原生卡牌场景测量真实排版，覆盖普通、升级、初始因子和结算预览。
 public static class CardUiAudit
 {
-    public static async Task<int> Run(Node root, Player player)
+    public static async Task<int> Run(Node root, Player player, string[]? languages = null, bool checkTitles = true)
     {
         var records = new List<object>();
         var scene = GD.Load<PackedScene>("res://scenes/cards/card.tscn");
         bool snapshots = OS.GetCmdlineUserArgs().Contains("--ui-snapshot");
-        foreach (string language in new[] { "eng", "zhs" })
+        foreach (string language in languages ?? new[] { "eng", "zhs" })
         {
             LocManager.Instance.SetLanguage(language);
             var models = new List<CardModel>();
@@ -87,7 +87,7 @@ public static class CardUiAudit
                         throw new Exception($"卡面文字溢出：{language}/{node.Model.Id}，{height}/{description.Size.Y}");
                     if (font < 16)
                         throw new Exception($"卡面字号过小：{language}/{node.Model.Id}，字号 {font}");
-                    if (titleFont < 16)
+                    if (checkTitles && titleFont < 16)
                         throw new Exception($"卡牌标题字号过小：{language}/{node.Model.Id}，字号 {titleFont}");
                 }
                 if (snapshots)
@@ -99,6 +99,6 @@ public static class CardUiAudit
         }
         System.IO.File.WriteAllText(ProjectSettings.GlobalizePath("res://../../artifacts/card-ui-audit.json"),
             JsonSerializer.Serialize(records, new JsonSerializerOptions { WriteIndented = true }));
-        return 2;
+        return languages?.Length ?? 2;
     }
 }
