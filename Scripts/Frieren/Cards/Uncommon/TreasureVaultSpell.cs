@@ -30,5 +30,9 @@ public sealed class TreasureVaultSpell() : FrierenCard(0, CardType.Skill, CardRa
         for (int i = 0; i < x; i++) await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, play);
         await ManaCmd.Generate(Owner, PileType.Draw, x + DynamicVars["ExtraMana"].IntValue);
     }
-    protected override void OnUpgrade() => DynamicVars["ExtraMana"].UpgradeValueBy(1);
+    protected override void OnUpgrade()
+    {
+        DynamicVars.Block.UpgradeValueBy(1);
+        DynamicVars["ExtraMana"].UpgradeValueBy(1);
+    }
 }
