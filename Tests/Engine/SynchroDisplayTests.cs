@@ -93,7 +93,7 @@ public static class SynchroDisplayTests
                 string formatted=card.GetDescriptionForPile(PileType.None);
                 string text=Plain(formatted);
                 string uncolored=Regex.Replace(formatted,@"\[gold\].*?\[/gold\]","",RegexOptions.Singleline);
-                string pattern=lang=="zhs"?@"同调|咏唱|传说魔法|魔力|封印|回火":@"\b(?:Synchro|Chant|Mana|Legendary Magic|Sealed|Backfire)\b";
+                string pattern=lang=="zhs"?@"同调|咏唱|传说魔法|魔力|封印|回火":@"\b(?:Synchro|Chant|Mana|Legendary Spell|Sealed|Backfire)\b";
                 if(Regex.IsMatch(uncolored,pattern,RegexOptions.IgnoreCase)) throw new Exception("关键词未变金色："+lang+"/"+card.Id);
                 var previews=card.HoverTips.OfType<CardHoverTip>().ToArray();
                 if(card is not Mana && text.Contains(lang=="zhs"?"魔力":"Mana",StringComparison.OrdinalIgnoreCase) &&

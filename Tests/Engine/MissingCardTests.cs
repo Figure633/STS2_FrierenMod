@@ -370,8 +370,8 @@ public static class MissingCardTests
                 LocManager.Instance.SetLanguage(language);
                 string text = multi.GetDescriptionForPile(PileType.Hand);
                 string rule = language == "zhs"
-                    ? $"随机造成X+4点伤害{(upgraded ? "X+1" : "X")}次，将X张[gold]魔力[/gold]放入手牌。"
-                    : $"Deal X+4 damage to a random enemy {(upgraded ? "X+1" : "X")} times. Add X Mana to your hand.";
+                    ? $"随机造成X+4点伤害{(upgraded ? "X+1" : "X")}次，将X张[gold]魔力[/gold]放入[gold]手牌[/gold]。"
+                    : $"Deal X+4 damage to a random enemy {(upgraded ? "X+1" : "X")} times. Add X [gold]Mana[/gold] to your [gold]Hand[/gold].";
                 string resolved = language == "zhs" ? $"（造成{number}点伤害{hits}次）" : $"({number} damage {hits} times)";
                 Check(text == rule + "\n" + resolved, "X费正文和括号预览格式不符：" + text);
             }

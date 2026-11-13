@@ -1,6 +1,6 @@
 {
   "OPTION_FRIEREN_MAGIC_SHOP.name": "Magic Shop",
-  "OPTION_FRIEREN_MAGIC_SHOP.description": "Choose two tools for your Magic Book. Uses one camp action.",
+  "OPTION_FRIEREN_MAGIC_SHOP.description": "Choose 2 tools to add to your Magic Deck, then use them in your Magic Book. Uses 1 Rest Site action.",
   "OPTION_FRIEREN_MAGIC_SHOP.descriptionDisabled": "Complete initial factor selection first.",
   "OPTION_FRIEREN_SUMMON_DRAGON.name": "Summon Shenron!",
   "OPTION_FRIEREN_SUMMON_DRAGON.description": "Consume [gold]seven Dragon Balls[/gold] to ask [green]Shenron[/green] for one [gold]wish[/gold]. Does not use a camp action."

@@ -30,7 +30,7 @@
   "FRIERENMOD-FULL_AHEAD_POWER.title": "全速前进",
   "FRIERENMOD-FULL_AHEAD_POWER.description": "每回合第一次[gold]咏唱[/gold]后，获得 {Amount} 力量和敏捷。",
   "FRIERENMOD-THUNDER_POWER.title": "破灭之雷",
-  "FRIERENMOD-THUNDER_POWER.description": "[gold]同调[/gold]对随机敌人造成 15 点伤害，不再抽牌。（受力量等效果影响）",
+  "FRIERENMOD-THUNDER_POWER.description": "本场战斗，[gold]同调[/gold]变为[gold]终极同调[/gold]。",
   "FRIERENMOD-SIMMERING_POWER.title": "暗流涌动",
   "FRIERENMOD-SIMMERING_POWER.description": "每次[gold]咏唱[/gold]时，从[gold]抽牌堆[/gold]抽取 {Amount} 张[gold]传说魔法[/gold]。",
   "FRIERENMOD-PAPER_PLANE_POWER.title": "让纸飞机飞得很远的魔法",
