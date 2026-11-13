@@ -16,6 +16,7 @@ namespace FrierenMod.Scripts.Monsters;
 public sealed class AuraSoldier : CustomMonsterModel
 {
     private bool _released;
+    private MoveState? _strike;
     public bool GuardFirst { get; set; }
     public bool Enhanced => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 1, 0) == 1;
     public int AttackDamage => Enhanced ? 10 : 8;
@@ -27,6 +28,7 @@ public sealed class AuraSoldier : CustomMonsterModel
     protected override MonsterMoveStateMachine GenerateMoveStateMachine()
     {
         var strike = new MoveState("STRIKE", _ => DamageCmd.Attack(AttackDamage).FromMonster(this).WithHitFx("vfx/vfx_attack_slash").Execute(null), new SingleAttackIntent(() => AttackDamage));
+        _strike = strike;
         var guard = new MoveState("GUARD", async _ => {
             if (CombatState.Enemies.FirstOrDefault(c => c.IsAlive && c.Monster is Aura) is { } aura)
                 await CreatureCmd.GainBlock(aura, GuardAmount, ValueProp.Unpowered, null);
@@ -34,6 +36,12 @@ public sealed class AuraSoldier : CustomMonsterModel
         strike.FollowUpState = guard; guard.FollowUpState = strike;
         return new MonsterMoveStateMachine([strike, guard], GuardFirst ? guard : strike);
     }
+    internal void ForceAttack()
+    {
+        if (_strike != null && NextMove.Id != "STRIKE")
+            SetMoveImmediate(_strike, forceTransition: true);
+    }
+
     public override async Task AfterDeath(PlayerChoiceContext context, Creature creature, MegaCrit.Sts2.Core.Models.CardModel? source, bool prevented, float animLength)
     {
         if (creature != Creature || prevented || _released) return;

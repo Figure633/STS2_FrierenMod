@@ -82,7 +82,7 @@ public sealed class CommissionScreen
         float scale = Math.Max(.1f, Math.Min(_root.Size.X / 1920, _root.Size.Y / 1080));
         _canvas.Scale = Vector2.One * scale; _canvas.Position = (_root.Size - _canvas.Size * scale) / 2;
     }
-    public void Open() { _act = _player.RunState.CurrentActIndex; Refresh(true); if (_capstone != null) _capstone.Open(View); else View.Show(); }
+    public void Open() { if (!CommissionCmd.Enabled(_player.RunState)) return; _act = _player.RunState.CurrentActIndex; Refresh(true); if (_capstone != null) _capstone.Open(View); else View.Show(); }
     public void Close() { if (_capstone?.CurrentCapstoneScreen == View) _capstone.Close(); else View.Hide(); }
     private void ClearHover() { foreach (var control in _hoverHosts) if (GodotObject.IsInstanceValid(control)) CommissionHoverTips.Remove(control); _hoverHosts.Clear(); }
     private void Hover(Control control, Func<IEnumerable<IHoverTip>> tips) {
@@ -223,6 +223,7 @@ public sealed class CommissionScreen
     }
     public static void Attach(Control root,Player player,Func<IOverlayScreen?> overlay)
     {
+        if (!CommissionCmd.Enabled(player.RunState)) return;
         var screen=new CommissionScreen(root,player);var seen=new HashSet<int>();bool hovered=false;string hoverText="";
         var button=Button("FrierenCommissionButton",Text("ENTRY"),()=>{if(screen.View.Visible)screen.Close();else screen.Open();},new(120,64));
         button.MouseEntered+=()=>{hovered=true;hoverText="";};button.MouseExited+=()=>{hovered=false;CommissionHoverTips.Remove(button);};

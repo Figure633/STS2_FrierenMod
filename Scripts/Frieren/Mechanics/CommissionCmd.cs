@@ -39,6 +39,7 @@ public static class CommissionCmd
     private static readonly HashSet<Player> Pending=[];
     private static readonly HashSet<string> ManaMakers=["MultipleOffensiveMagic","ManaDetection","DomainExpansion","ContinualChant","ClearMind","ButtSlam","TreasureVaultSpell","EndlessFlow","Snuggle","ManaCollapse","Disperse","ManaParcel","RapidChant","GrapeSpell","ShavedIceSpell","GoodLuckSpell","ManaExpansion","TrueColours"];
     public static bool IsBusy(Player p)=>Pending.Contains(p);
+    public static bool Enabled(IRunState run) => run.GameMode != GameMode.Blitz;
     public static CommissionState Read(Player p){
         var json=Data.Get(p);if(string.IsNullOrEmpty(json))return new();
         var state=CommissionState.FromJson(json);
@@ -48,6 +49,7 @@ public static class CommissionCmd
     public static void Write(Player p,CommissionState state){Data.Set(p,state.ToJson());Presentation.NewSlotBackAchievements.Commissions(p,state);}
     private static uint Seed(string text)=>BitConverter.ToUInt32(SHA256.HashData(Encoding.UTF8.GetBytes(text)),0);
     public static CommissionState State(Player p){
+        if (!Enabled(p.RunState)) return new CommissionState();
         var state=Read(p);if(p.Character is not Frieren)return state;int act=p.RunState.CurrentActIndex;
         Presentation.NewSlotBackAchievements.Commissions(p,state);
         // 原生地图历史保存进入前的问号类型；包括未接任务前的房间，且事件内战斗不重复计数。
@@ -82,7 +84,7 @@ public static class CommissionCmd
     public static int Floor(Player p)=>Math.Max(1,p.RunState is RunState r?r.ActFloor:1);
     public static bool CanAct(Player p,bool input=true){
         var m=RunManager.Instance;var c=CombatManager.Instance;
-        return p.Character is Frieren&&ReferenceEquals(m.DebugOnlyGetState(),p.RunState)&&!m.IsCleaningUp&&!p.Creature.IsDead&&!c.IsStarting&&!c.IsEnding&&
+        return Enabled(p.RunState)&&p.Character is Frieren&&ReferenceEquals(m.DebugOnlyGetState(),p.RunState)&&!m.IsCleaningUp&&!p.Creature.IsDead&&!c.IsStarting&&!c.IsEnding&&
             (!input||!MagicPropCmd.IsBusy(p))&&(!input||!DragonSummoning.IsTransitioning&&!Pending.Contains(p)&&!m.NetService.IsGameLoading&&LocalContext.IsMe(p)&&!m.ActionExecutor.IsRunning&&MagicPropCmd.AllowsUseOver(NOverlayStack.Instance?.Peek()))&&
             (!c.IsInProgress||!c.PlayerActionsDisabled&&!c.IsEnemyTurnStarted&&!c.EndingPlayerTurnPhaseOne&&!c.EndingPlayerTurnPhaseTwo&&(p.RunState.Players.Count==1||p.PlayerCombatState?.Phase==PlayerTurnPhase.Play));
     }
@@ -143,7 +145,8 @@ public static class CommissionCmd
     public static string BattleKey(IRunState r,CombatRoom room)=>$"{r.CurrentActIndex}/{r.TotalFloor}/{room.ModelId}";
     public static string AffixText(int affix,int act,int players=1){var text=new LocString("frieren","COMMISSION.AFFIX."+affix);text.Add("Strength",2+act);text.Add("Armor",4+act*2);text.Add("Heal",3+act*2);return text.GetFormattedText();}
     public static async Task Empower(ICombatState? combat){
-        if(combat?.RunState.CurrentRoom is not CombatRoom {RoomType:RoomType.Elite} room)return;
+        if(combat == null || !Enabled(combat.RunState)) return;
+        if(combat.RunState.CurrentRoom is not CombatRoom {RoomType:RoomType.Elite} room)return;
         var contracts=combat.Players.Where(p=>p.Character is Frieren&&p.Creature.IsAlive).Select(p=>(Player:p,State:State(p))).Where(x=>x.State.Active?.Goal==CommissionGoal.EmpoweredElite&&x.State.Active.Progress==0).ToArray();
         if(contracts.Length==0)return;string key=BattleKey(combat.RunState,room);
         foreach(var (p,state) in contracts)if(state.BindElite(key))Write(p,state);
@@ -157,7 +160,7 @@ public static class CommissionCmd
         }
     }
     public static void Victory(IRunState run,CombatRoom room){
-        if(MagicExamEscape.IsEscaped(room.CombatState))return;string key=BattleKey(run,room);
+        if(!Enabled(run) || MagicExamEscape.IsEscaped(room.CombatState))return;string key=BattleKey(run,room);
         // 战后原生可能已经清空能力；是否强化过由绑定的开战记录判定。
         foreach(var p in room.CombatState.Players.Where(p=>p.Character is Frieren&&p.Creature.IsAlive)){
             var state=State(p);bool changed=false;
@@ -167,14 +170,19 @@ public static class CommissionCmd
             if(changed)Write(p,state);
         }
     }
-    public static void Ensure(IRunState run){foreach(var p in run.Players.Where(p=>p.Character is Frieren))State(p);}
-    public static async Task Entered(IRunState run,AbstractRoom? room=null){Ensure(run);var current=room??run.CurrentRoom;if(current==null)return;foreach(var p in run.Players.Where(p=>p.Character is Frieren))await CommissionCargo.Visit(p,current);}
+    public static void Ensure(IRunState run){if(!Enabled(run))return;foreach(var p in run.Players.Where(p=>p.Character is Frieren))State(p);}
+    public static async Task Entered(IRunState run,AbstractRoom? room=null){
+        if (!Enabled(run)) {
+            foreach (var player in run.Players.Where(p => p.Character is Frieren)) await CommissionCargo.Remove(player);
+            return;
+        }
+        Ensure(run);var current=room??run.CurrentRoom;if(current==null)return;foreach(var p in run.Players.Where(p=>p.Character is Frieren))await CommissionCargo.Visit(p,current);}
 }
 [HarmonyPatch(typeof(Hook),nameof(Hook.BeforeCombatStart))]
 internal static class CommissionCombatHook{
     private static void Postfix(ICombatState? combatState,ref Task __result)=>__result=After(__result,combatState);
     private static async Task After(Task original,ICombatState? combat){await original;await CommissionCmd.Empower(combat);if(combat!=null)foreach(var p in combat.Players.Where(p=>p.Character is Frieren)){
-        if(combat.RunState.CurrentRoom is CombatRoom room){var state=CommissionCmd.State(p);if(state.BeginCombat(CommissionCmd.BattleKey(combat.RunState,room)))CommissionCmd.Write(p,state);}
+        if(CommissionCmd.Enabled(combat.RunState)&&combat.RunState.CurrentRoom is CombatRoom room){var state=CommissionCmd.State(p);if(state.BeginCombat(CommissionCmd.BattleKey(combat.RunState,room)))CommissionCmd.Write(p,state);}
         await SealingOreCmd.Refresh(p);
     }}
 }
@@ -182,7 +190,7 @@ internal static class CommissionCombatHook{
 internal static class CommissionDamageHook{
     private static void Prefix(Creature target,DamageResult result){
         CommissionCargo.Damaged(target,result);
-        if(target.Player is {} p&&p.Character is Frieren&&result.UnblockedDamage>0&&target.CombatState?.RunState.CurrentRoom is CombatRoom room){
+        if(target.Player is {} p&&CommissionCmd.Enabled(p.RunState)&&p.Character is Frieren&&result.UnblockedDamage>0&&target.CombatState?.RunState.CurrentRoom is CombatRoom room){
             var state=CommissionCmd.State(p);if(state.LoseHp(CommissionCmd.BattleKey(p.RunState,room)))CommissionCmd.Write(p,state);
         }
     }

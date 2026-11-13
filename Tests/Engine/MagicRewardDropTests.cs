@@ -29,6 +29,54 @@ using MegaCrit.Sts2.Core.Unlocks;
 
 public static class MagicRewardDropTests
 {
+    public static async Task<int> RunBlitz(Node root)
+    {
+        int checks = 0;
+        void Check(bool ok, string text) { if (!ok) throw new Exception(text); checks++; GD.Print("PASS 极速：" + text); }
+        var player = Player.CreateForNewRun<Frieren>(UnlockState.all, 1);
+        var run = RunState.CreateForTest([player], gameMode: GameMode.Blitz, seed: "FRIEREN-BLITZ");
+        RunManager.Instance.SetUpTest(run, new NetSingleplayerGameService()); LocalContext.NetId = 1;
+        run.PushRoom(new RestSiteRoom());
+        CommissionCmd.Ensure(run);
+        Check(!CommissionCmd.Enabled(run) && CommissionCmd.State(player).Quests.Count == 0 &&
+            string.IsNullOrEmpty(CommissionCmd.Data.Get(player)), "极速开局不生成或保存委托");
+        var host = new Control(); root.AddChild(host);
+        FrierenMod.Scripts.UI.CommissionScreen.Attach(host, player, () => null);
+        Check(host.FindChild("FrierenCommissionButton", true, false) == null, "极速模式不创建委托入口");
+        var legacy = new CommissionState { CurrentAct = 0, Quests = [
+            new() { Id = 10001, Act = 0, Stars = 3, Template = "HUNT", Status = CommissionStatus.Accepted,
+                Goal = CommissionGoal.EmpoweredElite, Progress = 1, Reward = new(CommissionRewardKind.Gold, "", 999) }] };
+        CommissionCmd.Data.Set(player, legacy.ToJson());
+        Check(CommissionCmd.State(player).Quests.Count == 0 &&
+            !await CommissionCmd.Execute(player, 10001, CommissionOperation.Claim, legacy.Revision),
+            "旧极速存档中的委托也不可领取");
+        var deck = MagicDeckState.CreatePrototypeLoadout(); deck.RewardPity = -10000;
+        MagicDeckStore.Write(player, deck);
+        bool allDrop = true, sameRarityRule = true;
+        for (int battle = 0; battle < 20; battle++)
+        {
+            int previousOffset = MagicDeckStore.Read(player).RewardRarityOffset;
+            var room = new CombatRoom(ModelDb.Encounter<TurretOperatorWeak>().ToMutable(), run);
+            await Hook.AfterCombatVictory(run, room.CombatState, room);
+            var reward = room.ExtraRewards.GetValueOrDefault(player)?.OfType<FactorReward>().SingleOrDefault();
+            allDrop &= reward != null;
+            if (reward != null)
+            {
+                var expected = MagicRewardRules.Offer(previousOffset, GameApi.CreateRng((uint)reward.Seed).NextInt);
+                sameRarityRule &= expected.Choices.SequenceEqual(reward.Choices) &&
+                    MagicDeckStore.Read(player).RewardRarityOffset == expected.RarityOffset;
+            }
+            await Hook.AfterCombatVictory(run, room.CombatState, room);
+            allDrop &= room.ExtraRewards.GetValueOrDefault(player)?.OfType<FactorReward>().Count() == 1;
+        }
+        Check(allDrop, "极速20场胜利每场必掉一次魔法牌组奖励，重复通知不多发");
+        Check(sameRarityRule, "每次奖励沿用原有稀有度公式及补偿");
+        Check(MagicDeckStore.Read(player).RewardPity == -10000, "极速掉落不受普通模式掉落补偿影响");
+        Check(CommissionCmd.Read(player).Quests.Single().Status == CommissionStatus.Accepted, "战斗胜利不推进旧极速委托");
+        host.QueueFree(); RunManager.Instance.CleanUp();
+        return checks;
+    }
+
     public static async Task<int> Run()
     {
         int count=0;

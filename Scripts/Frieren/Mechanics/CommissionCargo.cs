@@ -19,7 +19,7 @@ public static class CommissionCargo
         var result=await CardPileCmd.Add(card,PileType.Deck);CardCmd.PreviewCardPileAdd(result);
     }
     public static void Damaged(Creature target,DamageResult result){
-        if(target.Player is not {} p||result.UnblockedDamage<=0)return;
+        if(target.Player is not {} p||!CommissionCmd.Enabled(p.RunState)||result.UnblockedDamage<=0)return;
         var goods=Goods(p);
         var copies=p.PlayerCombatState?.AllPiles.SelectMany(pile=>pile.Cards).OfType<ValuableCargo>().Distinct().ToArray()??[];
         if(goods.Length==0&&copies.Length==0)return;

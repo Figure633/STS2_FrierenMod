@@ -46,9 +46,11 @@ public sealed class MagicItemRewardHooks() : CustomSingletonModel(HookType.Run)
         var deck = MagicDeckStore.Read(player);
         // 一代 Boss 继承普通怪物房；普通战斗有敌人逃跑时不掉落，事件战斗仍按 40%。
         bool escaped = room.ParentEventId == null && room.CombatState.EscapedCreatures.Any(c => c.IsMonster);
-        bool drop = MagicRewardRules.ShouldDrop(player.PlayerRng.Rewards.NextInt(100), deck.RewardPity,
+        bool blitz = player.RunState.GameMode == MegaCrit.Sts2.Core.Runs.GameMode.Blitz;
+        int roll = player.PlayerRng.Rewards.NextInt(100);
+        bool drop = blitz || MagicRewardRules.ShouldDrop(roll, deck.RewardPity,
             room.RoomType == RoomType.Elite, escaped);
-        deck.RewardPity += drop ? -10 : 10;
+        if (!blitz) deck.RewardPity += drop ? -10 : 10;
         MagicDeckStore.Write(player, deck);
         if (!drop) return;
         var reward = new FactorReward(player) { Seed = player.PlayerRng.Rewards.NextInt() };
