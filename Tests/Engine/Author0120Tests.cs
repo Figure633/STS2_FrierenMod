@@ -53,7 +53,7 @@ public static class Author0120Tests
         Check(Card<PaperPlaneSpell>().EnergyCost.Canonical==3&&Card<PaperPlaneSpell>(true).EnergyCost.GetWithModifiers(CostModifiers.Local)==3,"纸飞机普通升级均3费");
         var source=Card<RapidChant>();
         int hp=enemy.CurrentHp;await FactorEffects.Apply(context,Play(source),ChantRules.Preview(ManaSlot.Draw,SpellCatalog.Get("BlackGoldWings").Rules,2));
-        Check(enemy.CurrentHp==hp-12&&player.Creature.Block==12,"黑金之翼咏唱2给予12群伤12格挡");
+        Check(enemy.CurrentHp==hp-8&&player.Creature.Block==8,"黑金之翼咏唱2给予8群伤8格挡");
         await FactorEffects.Apply(context,Play(source),ChantRules.Preview(ManaSlot.Draw,SpellCatalog.Get("GrossedOutLook").Rules,2));
         Check(enemy.GetPowerAmount<StrengthPower>()==-3,"嫌弃脸X+1减力量");
         await enemy.GetPower<RestoreStrengthPower>()!.AfterSideTurnEnd(context,CombatSide.Enemy,[enemy]);

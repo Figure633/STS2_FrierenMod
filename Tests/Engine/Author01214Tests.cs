@@ -67,8 +67,11 @@ public static class Author01214Tests
         Check(fairy.DynamicVars.Damage.PreviewValue==12,"同名其他传说只翻倍一次，临时手牌不计入");hp=enemies[0].CurrentHp;await Use(fairy);Check(hp-enemies[0].CurrentHp==12,"童话实际命中与预览一致");
         }
         foreach(bool up in new[]{false,true}){
-            await Reset();var ready=New<ReadyStance>(up);var high=New<Imagination>();var low=New<RapidChant>();await CardPileCmd.Add(high,PileType.Draw);await CardPileCmd.Add(low,PileType.Draw);hp=enemies[0].CurrentHp;await Use(ready);
+            await Reset();var ready=New<ReadyStance>(up);var high=New<Imagination>();var low=New<RapidChant>();await CardPileCmd.Add(high,PileType.Draw);await CardPileCmd.Add(low,PileType.Draw);
+            int adds=0;void Observe(CardModel card){adds++;}p.PlayerCombatState!.DrawPile.CardAdded+=Observe;
+            hp=enemies[0].CurrentHp;await Use(ready);p.PlayerCombatState.DrawPile.CardAdded-=Observe;
             Check(hp-enemies[0].CurrentHp==(up?13:10)&&low.Pile?.Type==PileType.Hand&&high.Pile?.Type==PileType.Draw,"准备架势伤害及最低耗能技能："+up);
+            Check(adds==0,"准备架势只抽出，不额外播放入抽牌堆动画："+up);
         }
         foreach(bool xFirst in new[]{false,true}){
             await Reset();var x=New<TreasureVaultSpell>();var zero=New<FiveMinutesMore>();

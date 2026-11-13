@@ -90,8 +90,8 @@ public sealed class CommissionState
                 if(act is 1 or 2&&!Received("RoyalGrimoire"))Add(2,()=>new(CommissionRewardKind.Prop,"RoyalGrimoire",1,UniqueKey:"RoyalGrimoire"));
             }else{
                 Add(2,()=>new(CommissionRewardKind.RareChoice,"",1,Choices:ThreeRares()));
-                if(act==0)Add(2,()=>new(CommissionRewardKind.Relic,"FakeFlammeGrimoire",200,150,DuplicateGold:200));
-                else Add(2,()=>new(CommissionRewardKind.Prop,Pick(MagicPropRules.CommissionOnly.Where(p=>p.Id!="RoyalGrimoire").Select(p=>p.Id).ToArray()),1));
+                if(act==0)Add(2,()=>new(CommissionRewardKind.Relic,"FakeFlammeGrimoire",200,DuplicateGold:200));
+                Add(2,()=>new(CommissionRewardKind.Prop,Pick(MagicPropRules.CommissionOnly.Where(p=>p.Id!="RoyalGrimoire").Select(p=>p.Id).ToArray()),1));
                 if(act==2&&bossRelics is {Count:>0})Add(1,()=>new(CommissionRewardKind.Relic,Pick(bossRelics),1,
                     FallbackProp:Pick(MagicPropRules.CommissionOnly.Where(p=>p.Id!="RoyalGrimoire").Select(p=>p.Id).ToArray())));
             }
@@ -134,8 +134,9 @@ public sealed class CommissionState
     public bool MigrateGrimoireRewards()
     {
         var pending = Quests.Where(q => q.Status is CommissionStatus.Available or CommissionStatus.Accepted &&
-            q.Reward.Kind == CommissionRewardKind.Relic && q.Reward.Item == "FlammeGrimoire").ToArray();
-        foreach (var q in pending) q.Reward = q.Reward with { Item = "FakeFlammeGrimoire" };
+            q.Reward.Kind == CommissionRewardKind.Relic && (q.Reward.Item == "FlammeGrimoire" ||
+                q.Reward.Item == "FakeFlammeGrimoire" && q.Reward.BonusGold != 0)).ToArray();
+        foreach (var q in pending) q.Reward = q.Reward with { Item = "FakeFlammeGrimoire", BonusGold = 0 };
         if (pending.Length > 0) Revision++;
         return pending.Length > 0;
     }

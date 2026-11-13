@@ -6,7 +6,7 @@
   "FRIERENMOD-HAMON_OVERDRIVE.description": "从[gold]手牌[/gold]中央打出时，返还这次花费的能量。",
   "FRIERENMOD-HAMON_OVERDRIVE.extraCardText": "从[gold]手牌[/gold]中央打出时，返还这次花费的能量。",
   "FRIERENMOD-LOADED_DICE.title": "灌铅",
-  "FRIERENMOD-LOADED_DICE.description": "每次投出7点的概率提高15%。不再[gold]消耗[/gold]。",
+  "FRIERENMOD-LOADED_DICE.description": "每次投出7点的概率提高15%。",
   "FRIERENMOD-LOADED_DICE.extraCardText": "每次投出7点的概率提高15%。",
   "FRIERENMOD-MANA_SOURCE.title": "魔力源",
   "FRIERENMOD-MANA_SOURCE.description": "每场战斗第一次打出此牌时，在[gold]手牌[/gold]中生成{Amount}张[gold]魔力[/gold]。",

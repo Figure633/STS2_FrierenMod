@@ -153,8 +153,9 @@ public static class DragonBallTests
         Check(DragonBallStore.Next(p)==next+1,"魔具店可选择且只提供下一颗龙珠");
         var honest=run.CreateCard<HonestLiving>(p);await CardPileCmd.Add(honest,PileType.Deck);DebtStore.Add(p,21);
         var debtEvent=await Event<DebtCollector>(p);using(CombatTestState.UseSelector(select)){select.PrepareToSelect([0]);await debtEvent.CurrentOptions[1].Chosen();}
-        Check(DebtStore.Read(p)==0&&honest.Enchantment is LoadedDice&&!honest.Keywords.Contains(CardKeyword.Exhaust)&&DebtCollector.Settled.Get(p),"还清债务、永久灌铅并移除消耗");
-        var savedHonest=CardModel.FromSerializable(honest.ToSerializable());Check(savedHonest.Enchantment is LoadedDice&&!savedHonest.Keywords.Contains(CardKeyword.Exhaust),"灌铅和不消耗经原生卡牌存档保留");
+        Check(DebtStore.Read(p)==0&&honest.Enchantment is LoadedDice&&honest.Keywords.Contains(CardKeyword.Exhaust)&&DebtCollector.Settled.Get(p),"还清债务、永久灌铅并保留消耗");
+        honest.RemoveKeyword(CardKeyword.Exhaust); // 模拟旧版灌铅已移除消耗的牌。
+        var savedHonest=CardModel.FromSerializable(honest.ToSerializable());Check(savedHonest.Enchantment is LoadedDice&&savedHonest.Keywords.Contains(CardKeyword.Exhaust),"旧灌铅牌读档恢复原版消耗，附魔仍保留");
         foreach(bool upgraded in new[]{false,true}) {
             if(upgraded)CardCmd.Upgrade(honest);
             int count=0;for(int i=0;i<10000;i++)if((int)AccessTools.Method(typeof(HonestLiving),"RollDamage").Invoke(honest,null)! == 7)count++;

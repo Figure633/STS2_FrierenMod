@@ -183,7 +183,7 @@
   "FRIERENMOD-FIVE_MINUTES_MORE.title": "再睡五分钟",
   "FRIERENMOD-FIVE_MINUTES_MORE.description": "获得{Energy:energyIcons()}。将一张[gold]懒懒散散[/gold]{Upgraded:cond:加入[gold]手牌[/gold]|随机加入[gold]抽牌堆[/gold]}。",
   "FRIERENMOD-FLYING_MAGIC.title": "飞行魔法",
-  "FRIERENMOD-FLYING_MAGIC.description": "获得3层[gold]无实体[/gold]。每回合结束时，[gold]消耗[/gold][gold]弃牌堆[/gold]的{Amount:diff()}张[gold]魔力[/gold]。",
+  "FRIERENMOD-FLYING_MAGIC.description": "获得{Intangible:diff()}层[gold]无实体[/gold]。每回合结束时，[gold]消耗[/gold][gold]弃牌堆[/gold]的{Amount}张[gold]魔力[/gold]。",
   "FRIERENMOD-VIOLENT_EXORCISM.title": "物理超度",
   "FRIERENMOD-VIOLENT_EXORCISM.description": "丢弃所有非[gold]魔力[/gold][gold]手牌[/gold]。每丢弃一张，获得{Block:diff()}点格挡并造成{Damage:diff()}点伤害。",
   "FRIERENMOD-FRIEREN_SUITCASE.title": "芙莉莲的旅行箱",

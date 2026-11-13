@@ -43,7 +43,7 @@ public static class CommissionTests
         }
         Check(bossSeen,"第三幕可以抽到一代模组Boss遗物");
         Check(rareSeen,"三星奖励池包含固定金卡三选一");
-        Check(breadActs.SetEquals(new[]{1,2})&&breadFallback,"魔法面包仅二三幕三星报酬出现，并可作为Boss遗物重复替代");
+        Check(breadActs.SetEquals(new[]{0,1,2})&&breadFallback,"魔法面包在三幕三星报酬都可出现，并可作为Boss遗物重复替代");
         Check(grapeRewards.Count>=3,"同一村民任务可配不同同星级报酬，不绑定模板");
         Check(allTemplates.Count==CommissionState.Villagers.Length+1&&CommissionState.Villagers.Length>=15,"村民池内容丰富并可实际抽到全部模板");
         Check(New(2).Quests.All(q=>q.Goal!=CommissionGoal.Cargo||q.Reward.Kind==CommissionRewardKind.Freight),"护送专门按运费结算");

@@ -136,6 +136,11 @@ public static class SpiegelBossTests
         await monster.PerformMove(); monster.RollMove([player.Creature]);
         var intent = (MultiAttackIntent)monster.NextMove.Intents.Single();
         Check(!boss.Powers.Any() && boss.Block == 0 && player.Creature.CurrentHp==apexHp && player.Creature.GetPowerAmount<BufferPower>()==998 && monster.NextMove.Id=="APEX_ATTACK" && intent.Repeats==999, "准备回合清空能力和格挡并展示下回合999乘999攻击，本回合不攻击");
+        await PowerCmd.Apply<StrengthPower>(context,boss,20,boss,null);
+        await PowerCmd.Apply<WeakPower>(context,boss,2,player.Creature,null);
+        await PowerCmd.Apply<VulnerablePower>(context,player.Creature,2,boss,null);
+        Check(intent.GetSingleDamage([player.Creature],boss)==999&&intent.GetTotalDamage([player.Creature],boss)==999*999,
+            "最后一击意图固定999乘999，不吃力量、虚弱或易伤");
         await monster.PerformMove(); monster.RollMove([player.Creature]);
         Check(!player.Creature.HasPower<BufferPower>() && player.Creature.CurrentHp==apexHp-999,"准备后的下回合攻击999次，998层缓冲后最后一次造成999伤害");
         var curse = combat.CreateCard<UpsideDown>(player); await CardPileCmd.Add(curse, PileType.Hand);

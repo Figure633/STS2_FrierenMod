@@ -24,7 +24,7 @@ public sealed class ReadyStance() : FrierenCard(1, CardType.Attack, CardRarity.C
             .OrderBy(c=>c.EnergyCost.CostsX)
             .ThenBy(c=>c.EnergyCost.CostsX?0:Math.Max(0,c.EnergyCost.GetWithModifiers(CostModifiers.All))).FirstOrDefault();
         if (skill == null) return;
-        await CardPileCmd.Add(skill, PileType.Draw, CardPilePosition.Top);
+        Owner.PlayerCombatState.DrawPile.MoveToTopInternal(skill);
         await CardPileCmd.Draw(context, Owner);
     }
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3);

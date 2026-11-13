@@ -81,9 +81,9 @@ public static class StoryEventTests
             "大餐原生芒果奖励并恢复全部生命");
         var kraft = await Story<KraftGift>(299, 20, 79); Check(kraft.CurrentOptions.Take(3).All(o => o.IsLocked), "克拉伏特三个条件不足时锁定");
         kraft = await Story<KraftGift>(300, 20, 80); await kraft.CurrentOptions[1].Chosen();
-        Check(kraft.Owner!.Gold == 300 && kraft.Owner.GetRelic<MembershipCard>() != null, "会员卡检查持有金币且不扣钱");
+        Check(kraft.Owner!.Gold == 200 && kraft.Owner.GetRelic<MembershipCard>() != null, "会员卡检查持有300金币并扣100金币");
         kraft = await Story<KraftGift>(0, 20, 80); await kraft.CurrentOptions[0].Chosen();
-        Check(kraft.Owner!.GetRelic<MeatOnTheBone>() != null, "80最大生命可领取带骨肉");
+        Check(kraft.Owner!.Creature.CurrentHp == 10 && kraft.Owner.GetRelic<MeatOnTheBone>() != null, "80最大生命可领取带骨肉并失去10生命");
         kraft = await Story<KraftGift>(); while (kraft.Owner!.Deck.Cards.Count < 30) await CardPileCmd.Add(kraft.Owner.RunState.CreateCard<StrikeFrieren>(kraft.Owner), PileType.Deck);
         // 原生选项在进事件时冻结，重新开始以计算新的可选条件。
         var fullDeck = (KraftGift)ModelDb.Event<KraftGift>().ToMutable(); await CombatTestState.BeginEvent(fullDeck,kraft.Owner); await fullDeck.CurrentOptions[2].Chosen();

@@ -17,7 +17,7 @@ public sealed class SacredSnowCrystal : FrierenRelic
         Flash();
         var pool = Owner.Character.CardPool.GetUnlockedCards(player.UnlockState, player.RunState.CardMultiplayerConstraint)
             .Where(card => card.Rarity == CardRarity.Rare);
-        var choices = CardFactory.GetDistinctForCombat(Owner, pool, 3, Owner.RunState.Rng.CombatCardGeneration).ToList();
+        var choices = CardFactory.GetDistinctForCombat(Owner, pool, 2, Owner.RunState.Rng.CombatCardGeneration).ToList();
         var selected = await CardSelectCmd.FromChooseACardScreen(context, choices, Owner);
         if (selected == null) return;
         selected.AddKeyword(CardKeyword.Retain);

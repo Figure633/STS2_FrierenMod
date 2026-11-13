@@ -20,6 +20,103 @@ using MegaCrit.Sts2.Core.Unlocks;
 
 public static class CurrentTodoFixTests
 {
+    private sealed class TodoSelector : MegaCrit.Sts2.Core.TestSupport.TestCardSelector, MegaCrit.Sts2.Core.TestSupport.ICardSelector
+    {
+        public CardModel[] Offered = [];
+        async Task<IEnumerable<CardModel>> MegaCrit.Sts2.Core.TestSupport.ICardSelector.GetSelectedCards(IEnumerable<CardModel> cards, int min, int max)
+        { Offered=cards.ToArray(); return await base.GetSelectedCards(Offered,min,max); }
+    }
+    public static async Task<int> RunNov13(Node root)
+    {
+        int checks=0;void Check(bool ok,string message){if(!ok)throw new Exception(message);checks++;GD.Print("PASS 11月13日："+message);}
+        SaveManager.Instance.InitPrefsDataForTest();LocalContext.NetId=1;
+        var manager=RunManager.Instance;bool running=false;
+        Player Start(){if(running)manager.CleanUp();running=true;var p=Player.CreateForNewRun<Frieren>(UnlockState.all,1);var r=RunState.CreateForTest([p],seed:"TODO-01233");manager.SetUpTest(r,new NetSingleplayerGameService());CombatTestState.SetInProgress(false);return p;}
+        var p=Start();var context=new ThrowingPlayerChoiceContext();
+        var prizes=new HashSet<string>();bool fakeGoldCorrect=true;
+        for(uint seed=0;seed<300;seed++){
+            var rng=FrierenMod.Scripts.Shared.Compatibility.GameApi.CreateRng(seed);var state=new FrierenMod.Core.CommissionState();
+            state.EnsureAct(0,rng.NextInt,["A","B","C"],["UnbelievableTool"],["BlockPotion"],["CommonRelic"],["A","B","C"],["BossRelic"]);
+            var q=state.Quests.Single(q=>q.Stars==3);prizes.Add(q.Reward.Kind+":"+q.Reward.Item);
+            if(q.Reward.Item=="FakeFlammeGrimoire")fakeGoldCorrect&=q.BaseGold==100&&q.Reward.BonusGold==0;
+        }
+        Check(fakeGoldCorrect,"伪作报酬仅带固定100金币");
+        Check(new[]{"RareChoice:","Relic:FakeFlammeGrimoire","Prop:MagicExamVial","Prop:MagicPot","Prop:MagicBread"}.All(prizes.Contains)&&!prizes.Any(s=>s.Contains("BossRelic")),"首幕三星包含金卡、伪作和三种专属魔具，不提前出现Boss遗物");
+        var old=new FrierenMod.Core.CommissionState{CurrentAct=0,GeneratedActs=[0],Quests=[new(){Id=10001,Act=0,Stars=3,Goal=FrierenMod.Core.CommissionGoal.EmpoweredElite,Progress=1,BaseGold=100,Status=FrierenMod.Core.CommissionStatus.Accepted,Reward=new(FrierenMod.Core.CommissionRewardKind.Relic,"FakeFlammeGrimoire",200,150,DuplicateGold:200)}]};
+        CommissionCmd.Data.Set(p,old.ToJson());var updated=CommissionCmd.Read(p);
+        Check(updated.Quests[0].Reward.BonusGold==0,"未领取旧伪作合同取消额外150金币");
+        var gold=p.Gold;
+        Check(await CommissionCmd.Execute(p,10001,FrierenMod.Core.CommissionOperation.Claim,updated.Revision)&&p.Gold==gold+100&&p.GetRelic<FrierenMod.Scripts.Relics.FakeFlammeGrimoire>()!=null,"伪作合同实际领取为遗物加100金币");
+        Check(!await CommissionCmd.Execute(p,10001,FrierenMod.Core.CommissionOperation.Claim,CommissionCmd.Read(p).Revision)&&p.Gold==gold+100,"重复点击不重复领取金币");
+        foreach(bool up in new[]{false,true}){
+            var honest=p.RunState.CreateCard<HonestLiving>(p);if(up)CardCmd.Upgrade(honest);CardCmd.Enchant<FrierenMod.Scripts.Enchantments.LoadedDice>(honest,1);
+            Check(honest.Keywords.Contains(CardKeyword.Exhaust),"灌铅保留普通与升级牌的消耗："+up);
+            honest.RemoveKeyword(CardKeyword.Exhaust);
+            var restored=CardModel.FromSerializable(honest.ToSerializable());
+            Check(restored.Enchantment is FrierenMod.Scripts.Enchantments.LoadedDice&&restored.Keywords.Contains(CardKeyword.Exhaust),"旧灌铅牌读档恢复消耗："+up);
+        }
+        foreach(int gift in new[]{0,1,2}){
+            p=Start();p.Creature.SetMaxHpInternal(82);p.Creature.SetCurrentHpInternal(40);await PlayerCmd.GainGold(400-p.Gold,p);
+            while(p.Deck.Cards.Count<30)await CardPileCmd.Add(p.RunState.CreateCard<StrikeFrieren>(p),PileType.Deck);
+            var story=(FrierenMod.Scripts.Events.KraftGift)ModelDb.Event<FrierenMod.Scripts.Events.KraftGift>().ToMutable();await CombatTestState.BeginEvent(story,p);
+            if(gift==2)Check(story.CurrentOptions[2].HoverTips.Any(t=>t is MegaCrit.Sts2.Core.HoverTips.CardHoverTip),"长蛇戒指选项可预览苦恼");
+            await story.CurrentOptions[gift].Chosen();
+            Check(story.IsFinished&&(gift switch{
+                0=>p.Creature.CurrentHp==30&&p.GetRelic<MegaCrit.Sts2.Core.Models.Relics.MeatOnTheBone>()!=null,
+                1=>p.Gold==300&&p.GetRelic<MegaCrit.Sts2.Core.Models.Relics.MembershipCard>()!=null,
+                _=>p.Deck.Cards.OfType<MegaCrit.Sts2.Core.Models.Cards.Writhe>().Count()==1&&p.GetRelic<FrierenMod.Scripts.Relics.KraftSerpentRing>()!=null}),"礼物实际代价与奖励正确："+gift);
+        }
+        p=Start();var combat=new CombatState(runState:p.RunState);combat.AddPlayer(p);
+        var enemies=Enumerable.Range(0,2).Select(_=>combat.CreateCreature(ModelDb.Monster<MegaCrit.Sts2.Core.Models.Monsters.Axebot>().ToMutable(),CombatSide.Enemy,null)).ToArray();
+        foreach(var enemy in enemies){combat.AddCreature(enemy);enemy.SetMaxHpInternal(10000);enemy.SetCurrentHpInternal(10000);}
+        CombatManager.Instance.SetUpCombat(combat);CombatTestState.SetInProgress(true);
+        foreach(bool up in new[]{false,true}){
+            foreach(var power in p.Creature.Powers.ToArray())await PowerCmd.Remove(power);
+            foreach(var pile in p.PlayerCombatState!.AllPiles)foreach(var card in pile.Cards.ToArray())card.RemoveFromCurrentPile();
+            var flight=combat.CreateCard<FlyingMagic>(p);if(up)CardCmd.Upgrade(flight);await CardPileCmd.Add(flight,PileType.Hand);
+            await flight.OnPlayWrapper(context,null,true,new ResourceInfo{EnergySpent=3,EnergyValue=3,StarsSpent=0,StarValue=0},true);
+            await ManaCmd.Generate(p,PileType.Discard,4);
+            await p.Creature.GetPower<FlyingMagicPower>()!.BeforeSideTurnEnd(context,CombatSide.Player,[p.Creature]);
+            Check(flight.EnergyCost.Canonical==3&&p.Creature.GetPowerAmount<MegaCrit.Sts2.Core.Models.Powers.IntangiblePower>()==(up?3:2)&&ManaCmd.InPile(p,PileType.Discard).Count()==2&&ManaCmd.InPile(p,PileType.Exhaust).Count()==2,"飞行魔法3费，2／3无实体，固定消耗2魔力："+up);
+        }
+        foreach(var power in p.Creature.Powers.ToArray())await PowerCmd.Remove(power);
+        p.Creature.LoseBlockInternal(p.Creature.Block);
+        await PowerCmd.Apply<MegaCrit.Sts2.Core.Models.Powers.StrengthPower>(context,p.Creature,3,p.Creature,null);
+        await PowerCmd.Apply<MegaCrit.Sts2.Core.Models.Powers.DexterityPower>(context,p.Creature,2,p.Creature,null);
+        var caster=combat.CreateCard<RapidChant>(p);var play=CombatTestState.NewPlay(caster,null,PileType.Discard,new ResourceInfo{EnergySpent=0,EnergyValue=0,StarsSpent=0,StarValue=0});
+        var option=FrierenMod.Core.ChantRules.Preview(FrierenMod.Core.ManaSlot.Draw,FrierenMod.Core.SpellCatalog.Get("BlackGoldWings").Rules,2);
+        await FactorEffects.Apply(context,play,option);
+        Check(option.Reward==8&&enemies.All(e=>e.CurrentHp==9989)&&p.Creature.Block==10,"黑金之翼4X群伤及格挡仍受到力量、敏捷影响");
+        var selector=new TodoSelector();using(var selection=CombatTestState.UseSelector(selector)){
+            var relic=await RelicCmd.Obtain<FrierenMod.Scripts.Relics.SacredSnowCrystal>(p);selector.PrepareToSelect([0]);
+            await relic.BeforeHandDraw(p,context,combat);
+            Check(selector.Offered.Length==2&&selector.Offered.All(c=>c.Rarity==CardRarity.Rare)&&selector.Offered.Select(c=>c.Id).Distinct().Count()==2&&p.PlayerCombatState!.Hand.Cards.Any(c=>c.Rarity==CardRarity.Rare&&c.Keywords.Contains(CardKeyword.Retain)),"圣雪结晶实际二选一，加入手牌并保留");
+        }
+        if(OS.GetCmdlineUserArgs().Contains("--ui-snapshot")){
+            if(!InputMap.HasAction(MegaCrit.Sts2.Core.Debug.DebugHotkey.hideEventUi))InputMap.AddAction(MegaCrit.Sts2.Core.Debug.DebugHotkey.hideEventUi);
+            var dir=ProjectSettings.GlobalizePath("res://../../artifacts/todo-current/ui");Directory.CreateDirectory(dir);
+            async Task Tick(){for(int i=0;i<5;i++)await root.ToSignal(root.GetTree(),SceneTree.SignalName.ProcessFrame);}
+            p=Start();p.Creature.SetMaxHpInternal(82);await PlayerCmd.GainGold(400,p);while(p.Deck.Cards.Count<30)await CardPileCmd.Add(p.RunState.CreateCard<StrikeFrieren>(p),PileType.Deck);
+            foreach(string lang in new[]{"zhs","eng"}){
+                MegaCrit.Sts2.Core.Localization.LocManager.Instance.SetLanguage(lang);
+                foreach(var canonical in new EventModel[]{ModelDb.Event<FrierenMod.Scripts.Events.SnowCrystalLand>(),ModelDb.Event<FrierenMod.Scripts.Events.KraftGift>()}){
+                    var model=canonical.ToMutable();await CombatTestState.BeginEvent(model,p);
+                    var panel=new Control{Size=new(1920,1080)};root.AddChild(panel);
+                    var layout=model.CreateScene().Instantiate<MegaCrit.Sts2.Core.Nodes.Events.NEventLayout>();panel.AddChild(layout);model.SetNode(layout);
+                    layout.SetEvent(model);layout.SetTitle(model.Title.GetFormattedText());var description=model.Description!;model.DynamicVars.AddTo(description);layout.SetDescription(description.GetFormattedText());layout.AddOptions(model.CurrentOptions);layout.OnSetupComplete();
+                    await Tick();foreach(var tween in root.GetTree().GetProcessedTweens())tween.CustomStep(10);await Tick();
+                    if(model is FrierenMod.Scripts.Events.SnowCrystalLand)Check(layout.GetNode<TextureRect>("%Portrait").StretchMode==TextureRect.StretchModeEnum.KeepAspectCovered,"圣雪事件原生竖幅裁切铺满左栏："+lang);
+                    root.GetViewport().GetTexture().GetImage().SavePng(Path.Combine(dir,lang+"-"+model.GetType().Name+".png"));panel.QueueFree();await Tick();
+                }
+                var canvas=new Control();root.AddChild(canvas);canvas.AddChild(new ColorRect{Size=new(1920,1080),Color=new("20252f")});
+                var flight=p.RunState.CreateCard<FlyingMagic>(p);var upgraded=p.RunState.CreateCard<FlyingMagic>(p);CardCmd.Upgrade(upgraded);
+                var wing=FactorCard.Create(p,"BlackGoldWings");var cards=new CardModel[]{flight,upgraded,wing};
+                for(int i=0;i<cards.Length;i++){var node=GD.Load<PackedScene>("res://scenes/cards/card.tscn").Instantiate<MegaCrit.Sts2.Core.Nodes.Cards.NCard>();AccessTools.Property(node.GetType(),"Model").SetValue(node,cards[i]);canvas.AddChild(node);node.Position=new(420+i*530,450);node.UpdateVisuals(PileType.None,CardPreviewMode.Normal);}
+                await Tick();root.GetViewport().GetTexture().GetImage().SavePng(Path.Combine(dir,lang+"-cards.png"));canvas.QueueFree();await Tick();
+            }
+        }
+        manager.CleanUp();MegaCrit.Sts2.Core.Localization.LocManager.Instance.SetLanguage("eng");return checks;
+    }
     public static async Task<int> RunLateNov12(Node root)
     {
         int checks=0;void Check(bool ok,string text){if(!ok)throw new Exception(text);checks++;GD.Print("PASS 最新待办："+text);}
@@ -45,7 +142,7 @@ public static class CurrentTodoFixTests
         CommissionCmd.Data.Set(player,old.ToJson());var migrated=CommissionCmd.Read(player);
         Check(migrated.Quests.Single().Reward.Item=="FakeFlammeGrimoire"&&CommissionCmd.Data.Get(player).Contains("FakeFlammeGrimoire"),"旧存档未领奖的真作合同迁移为伪作并保存");
         int gold=player.Gold;Check(await CommissionCmd.Execute(player,10000,FrierenMod.Core.CommissionOperation.Claim,migrated.Revision),"迁移后的旧委托仍可原生领奖");
-        Check(player.GetRelic<FrierenMod.Scripts.Relics.FakeFlammeGrimoire>()!=null&&player.GetRelic<FrierenMod.Scripts.Relics.FlammeGrimoire>()==null&&player.Gold==gold+250,"领奖获得伪作且金币总额保留250");
+        Check(player.GetRelic<FrierenMod.Scripts.Relics.FakeFlammeGrimoire>()!=null&&player.GetRelic<FrierenMod.Scripts.Relics.FlammeGrimoire>()==null&&player.Gold==gold+100,"旧未领取委托改为伪作加固定100金币，不再额外150");
         Check(FrierenMod.Scripts.Encounters.MimicEncounter.Rewards(player).OfType<MegaCrit.Sts2.Core.Rewards.RelicReward>().Any(r=>r.Relic is FrierenMod.Scripts.Relics.FlammeGrimoire),"持有伪作时宝箱怪仍奖励真作");
         old.Quests[0].Status=FrierenMod.Core.CommissionStatus.Claimed;CommissionCmd.Data.Set(player,old.ToJson());
         Check(CommissionCmd.Read(player).Quests.Single().Reward.Item=="FlammeGrimoire","已领奖的历史合同不改写");

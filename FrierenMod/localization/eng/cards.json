@@ -183,7 +183,7 @@
   "FRIERENMOD-FIVE_MINUTES_MORE.title": "Five More Minutes",
   "FRIERENMOD-FIVE_MINUTES_MORE.description": "Gain {Energy:energyIcons()}. Add a [gold]Laziness[/gold] to your {Upgraded:cond:hand|draw pile}.",
   "FRIERENMOD-FLYING_MAGIC.title": "Flight Magic",
-  "FRIERENMOD-FLYING_MAGIC.description": "Gain 3 [gold]Intangible[/gold]. At the end of your turn, [gold]Exhaust[/gold] {Amount:diff()} [gold]Mana[/gold] from your [gold]Discard Pile[/gold].",
+  "FRIERENMOD-FLYING_MAGIC.description": "Gain {Intangible:diff()} [gold]Intangible[/gold]. At the end of your turn, [gold]Exhaust[/gold] {Amount} [gold]Mana[/gold] from your [gold]Discard Pile[/gold].",
   "FRIERENMOD-VIOLENT_EXORCISM.title": "Violent Exorcism",
   "FRIERENMOD-VIOLENT_EXORCISM.description": "Discard all non-[gold]Mana[/gold] cards in your hand. For each, gain {Block:diff()} Block and deal {Damage:diff()} damage.",
   "FRIERENMOD-FRIEREN_SUITCASE.title": "Frieren's Suitcase",

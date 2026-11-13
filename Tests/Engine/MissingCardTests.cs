@@ -237,8 +237,8 @@ public static class MissingCardTests
 
         await Reset(); await Play(New<FlyingMagic>(true)); await ManaCmd.Generate(player, PileType.Discard, 2);
         await player.Creature.GetPower<FlyingMagicPower>()!.BeforeSideTurnEnd(context, CombatSide.Player, [player.Creature]);
-        Check(Pow<IntangiblePower>() == 3 && Mana(PileType.Discard) == 1 && Mana(PileType.Exhaust) == 1, "飞行魔法消耗一");
-        Pass("飞行魔法无实体与升级后的魔力消耗");
+        Check(Pow<IntangiblePower>() == 3 && Mana(PileType.Discard) == 0 && Mana(PileType.Exhaust) == 2, "升级飞行魔法仍消耗两张魔力");
+        Pass("飞行魔法升级无实体与固定魔力消耗");
 
         await Reset(); await PowerCmd.Apply<StrengthPower>(context, player.Creature, 2, player.Creature, null);
         await PowerCmd.Apply<DexterityPower>(context, player.Creature, 5, player.Creature, null);

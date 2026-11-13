@@ -10,5 +10,4 @@ public sealed class LoadedDice : CustomEnchantmentModel
     protected override string CustomIconPath => "res://FrierenMod/images/enchantments/LoadedDice.svg";
     public override bool HasExtraCardText => true;
     public override bool CanEnchant(CardModel card) => card is HonestLiving && base.CanEnchant(card);
-    protected override void OnEnchant() => Card.RemoveKeyword(CardKeyword.Exhaust);
 }

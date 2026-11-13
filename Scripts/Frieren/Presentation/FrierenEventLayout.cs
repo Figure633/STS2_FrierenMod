@@ -22,7 +22,7 @@ public static class FrierenEventLayout
         image.OffsetTop = 112f - __instance.OffsetTop;
         image.OffsetBottom = -__instance.OffsetBottom;
         image.StretchMode = TextureRect.StretchModeEnum.KeepAspectCovered;
-        if (____event is EventArtPreview or HollowKnightAdventure or JojoAdventure or DragonBallAdventure or SnowCrystalLand or DebtCollector or SummonDragon)
+        if (____event is EventArtPreview or HollowKnightAdventure or JojoAdventure or DragonBallAdventure or DebtCollector or SummonDragon)
             image.StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered;
         image.ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize;
         image.MouseFilter = Control.MouseFilterEnum.Ignore;

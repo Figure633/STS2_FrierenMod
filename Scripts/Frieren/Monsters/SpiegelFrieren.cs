@@ -1,9 +1,12 @@
 using FrierenMod.Scripts.Shared.Compatibility;
 using BaseLib.Abstracts;
+using HarmonyLib;
 using FrierenMod.Scripts.Cards;
 using FrierenMod.Scripts.Mechanics;
 using FrierenMod.Scripts.Powers;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Context;
+using MegaCrit.Sts2.Core.Hooks;
 using MegaCrit.Sts2.Core.Entities.Ascension;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -28,6 +31,7 @@ public sealed class SpiegelFrieren : CustomMonsterModel
     private int MultiAttackHits => 2 + _multiAttackUses / 2;
     private bool _apexTriggered;
     private MoveState? _apex;
+    private AttackIntent? _apexAttackIntent;
     public bool Enhanced => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 1, 0) == 1;
     public override int MinInitialHp => 500;
     public override int MaxInitialHp => 500;
@@ -50,7 +54,8 @@ public sealed class SpiegelFrieren : CustomMonsterModel
         var weaken = new MoveState("CHANT_SUPPRESSION", Weaken, new DebuffIntent());
         var multi = new MoveState("MULTIPLE_OFFENSIVE_MAGIC", MultiAttack, new MultiAttackIntent(MultiAttackDamage, () => MultiAttackHits));
         _apex = new MoveState("APEX_MAGIC", PrepareApex, new UnknownIntent());
-        var apexAttack = new MoveState("APEX_ATTACK", _ => Attack(999, 999), new MultiAttackIntent(999, 999));
+        _apexAttackIntent = new MultiAttackIntent(999, 999);
+        var apexAttack = new MoveState("APEX_ATTACK", _ => Attack(999, 999, fixedDamage: true), _apexAttackIntent);
         var next = new ConditionalBranchState("NEXT_DEBUFF");
         next.AddState(pollute, () => NextDebuff() == 0);
         next.AddState(invert, () => NextDebuff() == 1);
@@ -73,15 +78,32 @@ public sealed class SpiegelFrieren : CustomMonsterModel
         return _debuffs.TryPeek(out var value) ? value : -1;
     }
     private void ConsumeDebuff() => _debuffs?.Dequeue();
-    private async Task Attack(int hits, int? damage = null)
+    private async Task Attack(int hits, int? damage = null, bool fixedDamage = false)
     {
         if (CombatState.PlayerCreatures.FirstOrDefault(c => c.IsAlive) is { } target && NHyperbeamVfx.Create(Creature, target) is { } beam)
         {
             NCombatRoom.Instance?.CombatVfxContainer.AddChild(beam);
             await Cmd.Wait(NHyperbeamVfx.hyperbeamAnticipationDuration + NHyperbeamVfx.hyperbeamLaserDuration);
         }
-        await DamageCmd.Attack(damage ?? Damage).WithHitCount(hits).FromMonster(this)
-            .WithHitFx("vfx/vfx_attack_blunt").OnlyPlayAnimOnce().Execute(null);
+        var attack = DamageCmd.Attack(damage ?? Damage).WithHitCount(hits).FromMonster(this)
+            .WithHitFx("vfx/vfx_attack_blunt").OnlyPlayAnimOnce();
+        if (fixedDamage) attack.Unpowered();
+        await attack.Execute(null);
+    }
+    // 原生攻击意图固定用 Move 预览；仅此招改用与结算相同的 Unpowered，保留无实体等受击防护。
+    [HarmonyPatch(typeof(AttackIntent), nameof(AttackIntent.GetSingleDamage))]
+    private static class ApexIntentDamage
+    {
+        private static bool Prefix(AttackIntent __instance, Creature owner, ref int __result)
+        {
+            if (owner.Monster is not SpiegelFrieren monster || !ReferenceEquals(__instance, monster._apexAttackIntent)) return true;
+            decimal damage = 999;
+            var player = LocalContext.GetMe(owner.CombatState);
+            if (player != null) damage = Hook.ModifyDamage(player.RunState, owner.CombatState, player.Creature, owner, damage,
+                ValueProp.Move | ValueProp.Unpowered, null, ModifyDamageHookType.All, CardPreviewMode.None, out _);
+            __result = Math.Max(0, (int)damage);
+            return false;
+        }
     }
     private async Task MultiAttack(IReadOnlyList<Creature> targets) { await Attack(MultiAttackHits, MultiAttackDamage); _multiAttackUses++; }
     private Task Suppress(IReadOnlyList<Creature> targets) => PowerCmd.Apply<BanManaGainPower>(new ThrowingPlayerChoiceContext(), targets, 1, Creature, null);

@@ -16,11 +16,11 @@ namespace FrierenMod.Scripts.Cards;
 
 public sealed class FlyingMagic() : FrierenCard(3, CardType.Power, CardRarity.Rare, TargetType.Self)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Amount", 2)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Amount", 2), new DynamicVar("Intangible", 2)];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
-        await PowerCmd.Apply<IntangiblePower>(context, Owner.Creature, 3, Owner.Creature, this);
+        await PowerCmd.Apply<IntangiblePower>(context, Owner.Creature, DynamicVars["Intangible"].IntValue, Owner.Creature, this);
         await PowerCmd.Apply<FlyingMagicPower>(context, Owner.Creature, (int)DynamicVars["Amount"].BaseValue, Owner.Creature, this);
     }
-    protected override void OnUpgrade() { DynamicVars["Amount"].UpgradeValueBy(-1); }
+    protected override void OnUpgrade() => DynamicVars["Intangible"].UpgradeValueBy(1);
 }

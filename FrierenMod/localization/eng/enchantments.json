@@ -6,7 +6,7 @@
   "FRIERENMOD-HAMON_OVERDRIVE.description": "When played from the center of your [gold]Hand[/gold], refund the Energy spent on it.",
   "FRIERENMOD-HAMON_OVERDRIVE.extraCardText": "When played from the center of your [gold]Hand[/gold], refund the Energy spent on it.",
   "FRIERENMOD-LOADED_DICE.title": "Loaded Dice",
-  "FRIERENMOD-LOADED_DICE.description": "Each roll is 15 percentage points more likely to be 7. No longer [gold]Exhausts[/gold].",
+  "FRIERENMOD-LOADED_DICE.description": "Each roll is 15 percentage points more likely to be 7.",
   "FRIERENMOD-LOADED_DICE.extraCardText": "Each roll is 15 percentage points more likely to be 7.",
   "FRIERENMOD-MANA_SOURCE.title": "Mana Source",
   "FRIERENMOD-MANA_SOURCE.description": "The first time you play this card each combat, create {Amount} [gold]Mana[/gold] in your [gold]Hand[/gold].",
