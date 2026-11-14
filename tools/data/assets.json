@@ -5929,5 +5929,15 @@
     "modified": true,
     "processing": "tools/prepare-nov12-relic-assets.mjs; preserve author Word crop and source alpha, uniform scale; native white outline",
     "sha256": "b618ffc04d90aeef99e8eff7efb74d4ec335b158b58e5fe7c96247a477ce5932"
+  },
+  {
+    "file": "FrierenMod/images/events/LookUp.png",
+    "source": "../事件todo.docx#word/media/image15.png",
+    "source_kind": "author_provided",
+    "artist": "SpaceDev1",
+    "original_source": "https://www.reddit.com/r/Frieren/comments/1ovnh4z/frieren/",
+    "modified": false,
+    "processing": "原样提取作者 Word 内嵌 PNG；无裁剪、拉伸或重绘。",
+    "sha256": "bba47c89ebd91e229dca65c667f57557a5b9fad7c2fe19e755053574a4490563"
   }
 ]

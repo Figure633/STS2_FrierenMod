@@ -30,6 +30,68 @@ using MegaCrit.Sts2.Core.Unlocks;
 
 public static class StoryEventTests
 {
+    public static async Task<int> RunLookUp(Node root)
+    {
+        int checks = 0;
+        void Check(bool value, string label) { if (!value) throw new Exception(label); checks++; GD.Print("PASS 仰头：" + label); }
+        SaveManager.Instance.InitPrefsDataForTest();
+        SaveManager.Instance.PrefsSave.FastMode = MegaCrit.Sts2.Core.Settings.FastModeType.Instant;
+        LocalContext.NetId = 1;
+        var player = Player.CreateForNewRun<Frieren>(UnlockState.all, 1);
+        var ally = Player.CreateForNewRun<Frieren>(UnlockState.all, 2);
+        var run = RunState.CreateForTest([player, ally], seed: "LOOK-UP-0130");
+        RunManager.Instance.SetUpTest(run, new NetSingleplayerGameService());
+        CombatTestState.SetInProgress(false);
+        var canonical = ModelDb.Event<LookUp>();
+        Check(ModelDb.AllSharedEvents.Contains(canonical) && canonical.IsAllowed(run), "登记随机事件池");
+        Task<LookUp> Enter() {
+            RunManager.Instance.EventSynchronizer.BeginEvent(canonical);
+            return Task.FromResult((LookUp)RunManager.Instance.EventSynchronizer.GetLocalEvent());
+        }
+        foreach (string language in new[] { "zhs", "eng" }) {
+            LocManager.Instance.SetLanguage(language);
+            player.Creature.SetMaxHpInternal(75); player.Creature.SetCurrentHpInternal(75);
+            var model = await Enter();
+            var preview = model.CurrentOptions[0].HoverTips.OfType<MegaCrit.Sts2.Core.HoverTips.CardHoverTip>().Single().Card;
+            Check(preview is MegaCrit.Sts2.Core.Models.Cards.Enlightenment && !preview.IsUpgraded &&
+                preview.Enchantment is MegaCrit.Sts2.Core.Models.Enchantments.Steady && preview.Keywords.Contains(CardKeyword.Retain),
+                language + "选择前显示稳定开悟，预览保留生效");
+            Check(!model.Title.GetFormattedText().Contains("LOC_ERR") && model.CurrentOptions.All(o =>
+                !o.Title.GetFormattedText().Contains("LOC_ERR") && !o.Description.GetFormattedText().Contains("LOC_ERR")), language + "文本格式化");
+            if (OS.GetCmdlineUserArgs().Contains("--ui-snapshot")) {
+                if (!InputMap.HasAction(MegaCrit.Sts2.Core.Debug.DebugHotkey.hideEventUi)) InputMap.AddAction(MegaCrit.Sts2.Core.Debug.DebugHotkey.hideEventUi);
+                var host = new Control { Size = new Vector2(1920, 1080) }; root.AddChild(host);
+                var layout = model.CreateScene().Instantiate<MegaCrit.Sts2.Core.Nodes.Events.NEventLayout>();
+                host.AddChild(layout); model.SetNode(layout); layout.SetEvent(model);
+                layout.SetTitle(model.Title.GetFormattedText()); layout.SetDescription(model.Description!.GetFormattedText());
+                layout.AddOptions(model.CurrentOptions); layout.OnSetupComplete();
+                for (int i=0;i<5;i++) await root.ToSignal(root.GetTree(), SceneTree.SignalName.ProcessFrame);
+                foreach(var tween in root.GetTree().GetProcessedTweens()) tween.CustomStep(10);
+                await root.ToSignal(root.GetTree(), SceneTree.SignalName.ProcessFrame);
+                Check(layout.GetNode<Label>("FrierenEventArtCredit").Text.Contains("SpaceDev1"), "原图画师署名");
+                root.GetViewport().GetTexture().GetImage().SavePng(ProjectSettings.GlobalizePath($"res://../../artifacts/look-up-{language}.png"));
+                layout.ClearOptions(); host.QueueFree();
+                await root.ToSignal(root.GetTree(), SceneTree.SignalName.ProcessFrame);
+                model = await Enter();
+            }
+            int count = player.Deck.Cards.Count;
+            await model.CurrentOptions[0].Chosen();
+            var card = player.Deck.Cards.OfType<MegaCrit.Sts2.Core.Models.Cards.Enlightenment>().Last();
+            Check(model.IsFinished && player.Creature.MaxHp == 68 && player.Creature.CurrentHp == 68 && player.Deck.Cards.Count == count+1,
+                language + "原生命令扣7最大生命，赠卡并结束");
+            Check(card.Enchantment is MegaCrit.Sts2.Core.Models.Enchantments.Steady && card.Keywords.Contains(CardKeyword.Retain) &&
+                CardModel.FromSerializable(card.ToSerializable()).Enchantment is MegaCrit.Sts2.Core.Models.Enchantments.Steady, "稳定附魔永久保留并可存档");
+            Check(!ally.Deck.Cards.OfType<MegaCrit.Sts2.Core.Models.Cards.Enlightenment>().Any(), "多人奖励仅归选择者");
+            model = await Enter(); int gold=player.Gold, allyGold=ally.Gold;
+            await model.CurrentOptions[1].Chosen();
+            Check(model.IsFinished && player.Gold-gold is >=75 and <=100 && ally.Gold==allyGold && player.Deck.Cards.Count==count+1,
+                language + "低头获得75～100金币，不额外赠卡或影响队友");
+        }
+        player.Creature.SetMaxHpInternal(7); player.Creature.SetCurrentHpInternal(7);
+        Check((await Enter()).CurrentOptions[0].IsLocked, "无法支付7最大生命时锁定抬头");
+        RunManager.Instance.CleanUp(); return checks;
+    }
+
     private static bool ForcedEndRequested;
     private static bool CaptureEnd(bool canBackOut) { ForcedEndRequested = !canBackOut; return false; }
     public static async Task<int> Run(Node root)
@@ -108,7 +170,7 @@ public static class StoryEventTests
         Check(mimic.Owner!.Creature.CurrentHp == 20 && mimic.IsFinished, "菲伦救援免费结束事件");
         var player = mimic.Owner; var run = (RunState)player.RunState;
         var encounter = ModelDb.Encounter<MimicEncounter>().ToMutable(); encounter.GenerateMonstersWithSlots(run);
-        var combat = new CombatState(encounter, run, [], [], run.MultiplayerScalingModel); combat.AddPlayer(player);
+        var combat = new CombatState(encounter, run); combat.AddPlayer(player);
         var monster = (Mimic)ModelDb.Monster<Mimic>().ToMutable(); var enemy = combat.CreateCreature(monster, CombatSide.Enemy, null); combat.AddCreature(enemy);
         CombatManager.Instance.SetUpCombat(combat); CombatTestState.SetInProgress(true);
         monster.RollMove([player.Creature]);

@@ -175,5 +175,13 @@
   "FRIERENMOD-DEBT_COLLECTOR.pages.DEFAULT.description": "You refuse to change and gamble harder than ever. What's a little more [gold]debt[/gold]?\nYou have become a [red][jitter]bad girl[/jitter][/red].",
   "FRIERENMOD-DEBT_COLLECTOR.pages.INITIAL.options.LEAVE.title": "Leave",
   "FRIERENMOD-DEBT_COLLECTOR.pages.INITIAL.options.LEAVE.description": "This does not concern you.",
-  "FRIERENMOD-DEBT_COLLECTOR.pages.LEAVE.description": "The collectors take another look at your face, then turn and leave."
+  "FRIERENMOD-DEBT_COLLECTOR.pages.LEAVE.description": "The collectors take another look at your face, then turn and leave.",
+  "FRIERENMOD-LOOK_UP.title": "Looking Up",
+  "FRIERENMOD-LOOK_UP.pages.INITIAL.description": "You walk alone down the road. For some reason, you feel an [jitter][red]urge[/red][/jitter] to look up.",
+  "FRIERENMOD-LOOK_UP.pages.INITIAL.options.UP.title": "Look at the sky",
+  "FRIERENMOD-LOOK_UP.pages.INITIAL.options.UP.description": "Lose [red]7 Max HP[/red]. Add an [gold]Enlightenment[/gold] enchanted with [purple]Steady[/purple] to your [gold]Deck[/gold].",
+  "FRIERENMOD-LOOK_UP.pages.INITIAL.options.DOWN.title": "Look at the ground",
+  "FRIERENMOD-LOOK_UP.pages.INITIAL.options.DOWN.description": "Gain [gold]75–100 Gold[/gold].",
+  "FRIERENMOD-LOOK_UP.pages.UP.description": "You throw your head back. Crack! Your neck makes an [red]alarming sound[/red]. For the next few hours, you can only stare at the sky. Everyone says you have reached [yellow][sine]enlightenment[/sine][/yellow].",
+  "FRIERENMOD-LOOK_UP.pages.DOWN.description": "Lucky~ You spot coins scattered on the ground. The [gold][sine]joy[/sine][/gold] of finding them overcomes your [jitter][red]urge[/red][/jitter] to look up. You are safe."
 }

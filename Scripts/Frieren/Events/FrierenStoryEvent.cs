@@ -24,10 +24,12 @@ public abstract class FrierenStoryEvent : CustomEventModel
     protected EventOption Choice(string key, Func<Task> action, bool available = true) =>
         new(this, available ? action : null, $"{Id.Entry}.pages.INITIAL.options.{key}");
     // 所有未来赠卡选项复用该入口，选中前由原生事件按钮提供卡牌悬停预览。
-    protected EventOption CardChoice<T>(string key,Func<Task> action,bool available=true,bool upgraded=false) where T:CardModel
+    protected EventOption CardChoice<T>(string key,Func<Task> action,bool available=true,bool upgraded=false,
+        Action<CardModel>? configure=null) where T:CardModel
     {
         var preview=ModelDb.Card<T>().ToMutable();preview.Owner=Owner!;
         if(upgraded){preview.UpgradeInternal();preview.FinalizeUpgradeInternal();}
+        configure?.Invoke(preview);
         return new EventOption(this,available?action:null,$"{Id.Entry}.pages.INITIAL.options.{key}",
             new MegaCrit.Sts2.Core.HoverTips.CardHoverTip(preview));
     }
@@ -41,10 +43,11 @@ public abstract class FrierenStoryEvent : CustomEventModel
         if (LocalContext.IsMe(Owner!) && NEventRoom.Instance != null)
             NEventRoom.Instance.SetPortrait(ResourceLoader.Load<Texture2D>(PortraitPath(Portraits[index])));
     }
-    protected async Task AddCard<T>(bool upgraded=false) where T : CardModel
+    protected async Task AddCard<T>(bool upgraded=false,Action<CardModel>? configure=null) where T : CardModel
     {
         var card=Owner!.RunState.CreateCard<T>(Owner!);
         if(upgraded){card.UpgradeInternal();card.FinalizeUpgradeInternal();}
+        configure?.Invoke(card);
         var result = await CardPileCmd.Add(card, PileType.Deck);
         CardCmd.PreviewCardPileAdd(result, 1.2f, CardPreviewStyle.EventLayout);
     }
