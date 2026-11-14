@@ -39,7 +39,8 @@ public static class MagicPropCmd
             (!fromInput || AllowsUseOver(NOverlayStack.Instance?.Peek())) &&
             MagicDeckStore.Read(player).SetupCompleted && !player.Creature.IsDead &&
             !combat.IsStarting && !combat.IsEnding && (!combat.IsInProgress ||
-                (!combat.PlayerActionsDisabled && !combat.IsEnemyTurnStarted &&
+                // PlayerActionsDisabled 只描述本机输入；同步动作必须按所属玩家的原生结束回合状态判断。
+                ((!fromInput || !combat.PlayerActionsDisabled) && !combat.IsPlayerReadyToEndTurn(player) && !combat.IsEnemyTurnStarted &&
                  !combat.EndingPlayerTurnPhaseOne && !combat.EndingPlayerTurnPhaseTwo &&
                  (!fromInput || !RunManager.Instance.ActionExecutor.IsRunning) &&
                  (player.RunState.Players.Count == 1 || player.PlayerCombatState?.Phase == PlayerTurnPhase.Play)));
