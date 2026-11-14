@@ -150,6 +150,7 @@
   "TIP.BACKFIRE.title": "Backfire",
   "TIP.BACKFIRE.description": "After this card is played, it costs 1 more Energy this turn.",
   "HISTORY_BOOK_HINT": "Historical Magic Deck · View only",
+  "TEAMMATE_BOOK_HINT": "Teammate's Magic Deck · View only",
   "BOOK_VIEW_ONLY": "View your factors and tools while choosing cards. Close this screen to continue your selection.",
   "FACTOR_TYPE": "Magic Factor",
   "PROP_TYPE": "Magic Tool",

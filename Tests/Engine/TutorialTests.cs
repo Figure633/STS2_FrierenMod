@@ -65,6 +65,7 @@ public static class TutorialTests
             var pending = FrierenTutorial.Show(player);
             await Tick();
             Check(modal.OpenModal is FrierenTutorial && !save.Progress.EnableFtues, "原版教程关闭时仍显示模组首次教程，不改动原版设置");
+            Check(Current().GetNode<Control>("Image/TutorialManaCounter").GetChildren().OfType<TextureRect>().All(t=>t.Size.X==68),"教程贴图与数字使用相同宽度，不被纹理最小尺寸撑偏");
             Check(!pending.IsCompleted && blockers.Count == initialBlockers + 1, "首次显示原版模态界面并阻止背后快捷键");
             Check(Current().GetNode<TextureRect>("Image").GetChildren().OfType<NCard>().Count() == 1, "第一页使用真实魔力卡面");
             Check(Current().GetNode<MegaRichTextLabel>("%Description").Text.Contains("Mana"), "英文教程正文从本地化读取");

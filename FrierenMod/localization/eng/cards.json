@@ -287,7 +287,7 @@
   "FRIERENMOD-AURA_DISPEL.title": "Dispel Magic",
   "FRIERENMOD-AURA_DISPEL.description": "Destroy a Controlled Soldier, triggering [gold]Soul Release[/gold].",
   "FRIERENMOD-ENDLESS_FLOW.title": "Endless Flow",
-  "FRIERENMOD-ENDLESS_FLOW.description": "Add 1 [gold]Mana[/gold] to each of your [gold]Draw Pile[/gold], [gold]Hand[/gold], and [gold]Discard Pile[/gold]. Deal damage to ALL enemies equal to your total [gold]Mana[/gold].{InCombat:cond:\n(Deal {CalculatedDamage:diff()} damage)|}",
+  "FRIERENMOD-ENDLESS_FLOW.description": "Add 1 [gold]Mana[/gold] to each of your [gold]Draw Pile[/gold], [gold]Hand[/gold], and [gold]Discard Pile[/gold]. Deal damage to ALL enemies equal to your total [gold]Mana[/gold].\n(Deal {CalculatedDamage:diff()} damage)",
   "FRIERENMOD-FRIEREN_THE_SLAYER.title": "Frieren the Slayer",
   "FRIERENMOD-FRIEREN_THE_SLAYER.description": "At the start of your turn, choose 1 {Upgraded:cond:upgraded |}spell you have not chosen this combat and add it to your [gold]Hand[/gold].",
   "FRIERENMOD-KINDLING_SPARK.title": "A Single Spark",
