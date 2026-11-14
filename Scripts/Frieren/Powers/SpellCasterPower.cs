@@ -16,6 +16,13 @@ public sealed class SpellCasterPower : FrierenPower
     public static readonly int[] Costs = [10, 20, 20, 30, 20, 30, 20, 50];
     public int SpellsCast { get; private set; }
     public override int DisplayAmount => SpellsCast;
+    public int CostForSpell(int index)
+    {
+        int hp = IsMutable && Owner?.Monster is SpiegelFrieren ? Owner.MaxHp : 500;
+        int before = index / 8 * Costs.Sum() + Costs.Take(index % 8).Sum();
+        // 对累计阈值取整，避免逐项取整让两轮施法的血量进度发生漂移。
+        return (int)Math.Ceiling((before + Costs[index % 8]) * (decimal)hp / 500) - (int)Math.Ceiling(before * (decimal)hp / 500);
+    }
     private bool Enhanced => Owner?.Monster is SpiegelFrieren { Enhanced: true };
     public override LocString Description
     {
@@ -23,7 +30,7 @@ public sealed class SpellCasterPower : FrierenPower
             var text = base.Description;
             text.Add("Spells", string.Join("\n", Enumerable.Range(0, 8).Select(i => {
                 var line = new LocString("powers", Id.Entry + ".spells." + i + (i == 5 && Enhanced ? ".enhanced" : ""));
-                line.Add("Cost", Costs[i]); line.Add("Block", Enhanced ? 15 : 10); line.Add("Ritual", Enhanced ? 5 : 3);
+                line.Add("Cost", CostForSpell(Math.Min(SpellsCast / 8, 1) * 8 + i)); line.Add("Block", Enhanced ? 15 : 10); line.Add("Ritual", Enhanced ? 5 : 3);
                 line.Add("Burns", Enhanced ? 3 : 2); line.Add("Buffer", Enhanced ? 2 : 1);
                 return (SpellsCast % 8 > i ? "[green]" : "[gold]") + line.GetFormattedText() + (SpellsCast % 8 > i ? "[/green]" : "[/gold]");
             })));
@@ -35,8 +42,9 @@ public sealed class SpellCasterPower : FrierenPower
         while (SpellsCast < 16 && Owner.GetPower<EnemyManaPower>() is { } mana)
         {
             int spell = SpellsCast % 8;
-            if(mana.StoredMana<Costs[spell])break;
-            await PowerCmd.ModifyAmount(context, mana, -Costs[spell], Owner, null);
+            int cost = CostForSpell(SpellsCast);
+            if(mana.StoredMana<cost)break;
+            await PowerCmd.ModifyAmount(context, mana, -cost, Owner, null);
             SpellsCast++; Flash(); InvokeDisplayAmountChanged();
             switch (spell)
             {

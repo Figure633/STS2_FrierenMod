@@ -33,11 +33,91 @@ using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.Saves;
 using MegaCrit.Sts2.Core.Saves.Runs;
 using MegaCrit.Sts2.Core.Unlocks;
+using MegaCrit.Sts2.Core.ValueProps;
 
 // 两个独立 Godot 进程 + 原生 ENet/消息总线/动作与选择同步器。
 // 仅替代选牌屏的人工点击；CardSelectCmd、choiceId、传输与队列恢复均走原版。
 public static class MultiplayerTests
 {
+    public static async Task<int> RunBossScaling()
+    {
+        int checks=0;
+        void Check(bool ok,string name) { if(!ok)throw new Exception(name);checks++;GD.Print("PASS 多人缩放："+name); }
+        var context=new ThrowingPlayerChoiceContext();
+        int[,] dummyHp={{100,220,330,440},{200,480,720,960},{300,720,1080,1440}};
+        for(int size=1;size<=4;size++) {
+            var players=Enumerable.Range(1,size).Select(i=>Player.CreateForNewRun<Frieren>(UnlockState.all,(ulong)i)).ToArray();
+            var run=RunState.CreateForTest(players,seed:"PARTY-SCALING-"+size);
+            RunManager.Instance.SetUpTest(run,new NetSingleplayerGameService());LocalContext.NetId=1;
+            for(int act=0;act<3;act++) {run.CurrentActIndex=act;Check(FrierenMod.Scripts.Events.DragonBallAdventure.TrialHpForRun(run)==dummyHp[act,size-1],size+"人第"+(act+1)+"幕假人血量");}
+            var recipient=players[^1];recipient.Creature.SetCurrentHpInternal(1);
+            var bean=(await PotionCmd.TryToProcure<FrierenMod.Scripts.Potions.SenzuBean>(players[0])).potion;
+            Check(bean.CanThrowAtAlly()==(size>1)&&bean.IsValidTarget(recipient.Creature),size+"人战斗外仙豆目标入口");
+            await bean.OnUseWrapper(context,recipient.Creature);
+            Check(recipient.Creature.CurrentHp==recipient.Creature.MaxHp,size+"人仙豆治疗所选玩家");
+            CombatState Begin(EncounterModel encounter) {
+                var combat=new CombatState(encounter,run);foreach(var player in players)combat.AddPlayer(player);
+                CombatManager.Instance.SetUpCombat(combat);CombatTestState.SetInProgress(true);return combat;
+            }
+            void End() { CombatTestState.SetInProgress(false);CombatManager.Instance.Reset(true); }
+            run.CurrentActIndex=1;
+            var auraCombat=Begin(ModelDb.Encounter<FrierenMod.Scripts.Encounters.AuraEncounter>().ToMutable());
+            var aura=(FrierenMod.Scripts.Monsters.Aura)ModelDb.Monster<FrierenMod.Scripts.Monsters.Aura>().ToMutable();
+            var auraBody=auraCombat.CreateCreature(aura,CombatSide.Enemy,"Boss");auraCombat.AddCreature(auraBody);
+            aura.SetUpForCombat();aura.RollMove(auraCombat.PlayerCreatures);await aura.AfterAddedToRoom();
+            Check(aura.Mana==200*size,size+"人阿乌拉初始魔力");
+            var moves=(Dictionary<string,MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine.MoveState>)AccessTools.Field(typeof(FrierenMod.Scripts.Monsters.Aura),"_moves").GetValue(aura);
+            aura.SetMoveImmediate(moves["MEDITATE"],true);await aura.PerformMove();
+            Check(aura.Mana==220*size,size+"人冥想魔力增量");
+            await aura.ChangeMana(2*size-1-aura.Mana);
+            foreach(var player in players)await ManaCmd.Generate(player,PileType.Draw,2);
+            await (Task)AccessTools.Method(typeof(FrierenMod.Scripts.Monsters.Aura),"Weigh").Invoke(aura,null);
+            Check((string?)AccessTools.Field(typeof(FrierenMod.Scripts.Monsters.Aura),"_verdict").GetValue(aura)=="STAGGER",size+"人天平按魔力总量比较");
+            await aura.ChangeMana(100*size-aura.Mana);
+            var soldier=(FrierenMod.Scripts.Monsters.AuraSoldier)ModelDb.Monster<FrierenMod.Scripts.Monsters.AuraSoldier>().ToMutable();
+            var soldierBody=auraCombat.CreateCreature(soldier,CombatSide.Enemy,"Soldier1");auraCombat.AddCreature(soldierBody);
+            await soldier.AfterAddedToRoom();
+            Check(!soldierBody.GetPower<AuraSoulPower>()!.Description.GetFormattedText().Contains("{ManaLoss}"),"士兵扣魔力说明已解析");
+            await soldier.AfterDeath(context,soldierBody,false,0);
+            Check(aura.Mana==85*size&&players.All(p=>ManaCmd.InPile(p,PileType.Discard).Count()==10),size+"人士兵死亡同步扣魔力并各获10魔力");
+            var potion=(await PotionCmd.TryToProcure<FrierenMod.Scripts.Potions.BottledMana>(players[0])).potion;
+            int ownMana=ManaCmd.InPile(players[0],PileType.Hand).Count();
+            Check(potion.IsValidTarget(recipient.Creature)&&potion.CanThrowAtAlly()==(size>1),size+"人瓶装魔力原生目标入口");
+            await potion.OnUseWrapper(context,recipient.Creature);
+            Check(ManaCmd.InPile(recipient,PileType.Hand).Count()==3&&(size==1||ManaCmd.InPile(players[0],PileType.Hand).Count()==ownMana),size+"人瓶装魔力只给指定目标");
+            End();
+
+            run.CurrentActIndex=2;
+            var replicaCombat=Begin(ModelDb.Encounter<FrierenMod.Scripts.Encounters.SpiegelFrierenEncounter>().ToMutable());
+            var replica=(FrierenMod.Scripts.Monsters.SpiegelFrieren)ModelDb.Monster<FrierenMod.Scripts.Monsters.SpiegelFrieren>().ToMutable();
+            var body=replicaCombat.CreateCreature(replica,CombatSide.Enemy,"Boss");replicaCombat.AddCreature(body);
+            replica.SetUpForCombat();replica.RollMove(replicaCombat.PlayerCreatures);await replica.AfterAddedToRoom();
+            var caster=body.GetPower<SpellCasterPower>()!;
+            int expectedHp=new[]{500,1300,1950,2600}[size-1];
+            Check(body.MaxHp==expectedHp&&Enumerable.Range(0,16).Sum(caster.CostForSpell)==expectedHp*4/5,size+"人复制体完整施法消耗对应80%生命");
+            await FrierenMod.Scripts.Shared.Compatibility.GameApi.Damage(context,body,expectedHp*4/5-1,ValueProp.Unblockable|ValueProp.Unpowered,null,null);
+            Check(caster.SpellsCast==15&&body.CurrentHp==expectedHp/5+1,size+"人第二次无实体前1血仍未触发");
+            foreach(var power in body.Powers.Where(p=>p is MegaCrit.Sts2.Core.Models.Powers.BufferPower or MegaCrit.Sts2.Core.Models.Powers.IntangiblePower).ToArray())await PowerCmd.Remove(power);
+            await FrierenMod.Scripts.Shared.Compatibility.GameApi.Damage(context,body,1,ValueProp.Unblockable|ValueProp.Unpowered,null,null);
+            Check(caster.SpellsCast==16&&body.HasPower<MegaCrit.Sts2.Core.Models.Powers.IntangiblePower>()&&body.CurrentHp==expectedHp/5,size+"人剩余20%生命时触发第二次无实体");
+            Check(replica.ApexHp==100*size,size+"人全力阈值不叠加幕系数");
+            if(size>1) {
+                await PowerCmd.Remove(body.GetPower<MegaCrit.Sts2.Core.Models.Powers.IntangiblePower>()!);
+                if(size==4) {players[^1].Creature.SetCurrentHpInternal(0);Check(replica.ApexHp==300,"队友倒下后全力阈值按存活人数减少");}
+                int threshold=replica.ApexHp;
+                await FrierenMod.Scripts.Shared.Compatibility.GameApi.Damage(context,body,body.CurrentHp-threshold-1,ValueProp.Unblockable|ValueProp.Unpowered,null,null);
+                Check(replica.NextMove.Id!="APEX_MAGIC",size+"人全力阈值前不提前切换");
+                await FrierenMod.Scripts.Shared.Compatibility.GameApi.Damage(context,body,1,ValueProp.Unblockable|ValueProp.Unpowered,null,null);
+            }
+            Check(replica.NextMove.Id=="APEX_MAGIC",size+"人触发后先准备");
+            int playerHp=players.Sum(p=>p.Creature.CurrentHp);
+            await replica.PerformMove();replica.RollMove(replicaCombat.PlayerCreatures.Where(c=>c.IsAlive).ToArray());
+            Check(replica.NextMove.Id=="APEX_ATTACK"&&body.Powers.Count==0&&body.Block==0&&players.Sum(p=>p.Creature.CurrentHp)==playerHp,size+"人准备行动无攻击，清空自身防护后留出完整玩家回合");
+            End();RunManager.Instance.CleanUp();
+        }
+        return checks;
+    }
+
     public static async Task<int> RunUi(Node root)
     {
         int checks = 0;
@@ -209,6 +289,41 @@ public static class MultiplayerTests
             },name+"快照发布");
             Check(remote==snapshot,name+"：两端所有玩家库存、RNG、生命和能量一致");
             await Barrier(name+"-checked");
+        }
+        if(OS.GetCmdlineUserArgs().Contains("--mp-potions")) {
+            p1.Creature.SetCurrentHpInternal(1);p2.Creature.SetCurrentHpInternal(2);
+            var bean=(await PotionCmd.TryToProcure<FrierenMod.Scripts.Potions.SenzuBean>(p1)).potion;
+            Check(bean.CanThrowAtAlly(),"战斗外可向队友投掷仙豆");
+            RunManager.Instance.ActionExecutor.Unpause();
+            await Barrier("potions-outside-ready");
+            if(host) {var action=new UsePotionAction(bean,p2.Creature,false);RunManager.Instance.ActionQueueSynchronizer.RequestEnqueue(action);await action.CompletionTask;}
+            await Same("bean-outside",()=>p2.Creature.CurrentHp==p2.Creature.MaxHp&&!p1.Potions.Any());
+            Check(p1.Creature.CurrentHp==1,"战斗外仙豆只治疗所选队友");
+            var potionCombat=new CombatState(runState:run);foreach(var p in run.Players)potionCombat.AddPlayer(p);
+            var potionEnemy=potionCombat.CreateCreature(ModelDb.Monster<Axebot>().ToMutable(),CombatSide.Enemy,null);potionCombat.AddCreature(potionEnemy);
+            CombatManager.Instance.SetUpCombat(potionCombat);CombatTestState.SetInProgress(true);
+            object turnState=AccessTools.Property(typeof(CombatManager),nameof(CombatManager.IsStarting)).SetMethod!=null
+                ? CombatManager.Instance : AccessTools.Field(typeof(CombatManager),"_turnState").GetValue(CombatManager.Instance);
+            AccessTools.Property(turnState.GetType(),nameof(CombatManager.IsStarting)).SetValue(turnState,false);
+            AccessTools.Property(typeof(CombatManager),nameof(CombatManager.PlayerActionsDisabled)).SetValue(CombatManager.Instance,false);
+            foreach(var p in run.Players)p.PlayerCombatState!.Phase=PlayerTurnPhase.Play;
+            RunManager.Instance.ActionQueueSynchronizer.SetCombatState(Enum.Parse<ActionSynchronizerCombatState>("PlayPhase"));
+            RunManager.Instance.ActionExecutor.Unpause();
+            var bottled=(await PotionCmd.TryToProcure<FrierenMod.Scripts.Potions.BottledMana>(p2)).potion;
+            await Barrier("mana-potion-ready");
+            // 客户端请求会被序列化并重建动作，等待实际执行器而非请求对象的 CompletionTask。
+            if(!host) {var action=new UsePotionAction(bottled,p1.Creature,true);RunManager.Instance.ActionQueueSynchronizer.RequestEnqueue(action);}
+            await Same("mana-potion",()=>ManaCmd.InPile(p1,PileType.Hand).Count()==3&&!p2.Potions.Any()&&RunManager.Instance.ActionExecutor.CurrentlyRunningAction==null);
+            Check(!ManaCmd.InPile(p2,PileType.Hand).Any(),"客户端瓶装魔力只在房主目标手牌生成");
+            p2.Creature.SetCurrentHpInternal(1);
+            await PowerCmd.Apply<MegaCrit.Sts2.Core.Models.Powers.WeakPower>(new ThrowingPlayerChoiceContext(),p2.Creature,2,p1.Creature,null);
+            var combatBean=(await PotionCmd.TryToProcure<FrierenMod.Scripts.Potions.SenzuBean>(p1)).potion;
+            await Barrier("bean-combat-ready");
+            if(host) {var action=new UsePotionAction(combatBean,p2.Creature,true);RunManager.Instance.ActionQueueSynchronizer.RequestEnqueue(action);await action.CompletionTask;}
+            await Same("bean-combat",()=>p2.Creature.CurrentHp==p2.Creature.MaxHp&&!p2.Creature.HasPower<MegaCrit.Sts2.Core.Models.Powers.WeakPower>()&&!p1.Potions.Any());
+            Check(p1.Creature.CurrentHp==1,"战斗内仙豆清除队友减益并治疗队友");
+            Publish(role+"-result.json",JsonSerializer.Serialize(new{role,checks,mode="potions"}));
+            RunManager.Instance.CleanUp();await Barrier("potions-finished");timer.QueueFree();return checks;
         }
         if(OS.GetCmdlineUserArgs().Contains("--mp-turn-guard")) {
             foreach(var p in run.Players) {

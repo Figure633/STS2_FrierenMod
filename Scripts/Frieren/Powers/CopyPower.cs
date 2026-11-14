@@ -9,6 +9,13 @@ namespace FrierenMod.Scripts.Powers;
 
 public sealed class CopyPower : FrierenPower
 {
+    public override MegaCrit.Sts2.Core.Localization.LocString Description {
+        get {
+            var text = base.Description;
+            text.Add("ApexHp", IsMutable && Owner?.Monster is Monsters.SpiegelFrieren replica ? replica.ApexHp : 100);
+            return text;
+        }
+    }
     public override async Task AfterDamageReceived(PlayerChoiceContext context, Creature target, DamageResult result, ValueProp props, Creature? dealer, CardModel? source)
     {
         if (target != Owner || Owner.IsDead || result.UnblockedDamage <= 0) return;

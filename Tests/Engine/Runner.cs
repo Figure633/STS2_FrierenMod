@@ -216,6 +216,10 @@ public partial class Runner : Node
                 GD.Print("MULTIPLAYER_UI_OK: " + await MultiplayerTests.RunUi(this));
                 await Finish(); return;
             }
+            if (OS.GetCmdlineUserArgs().Contains("--party-scaling-only")) {
+                GD.Print("PARTY_SCALING_OK: " + await MultiplayerTests.RunBossScaling());
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--flow-preview-only")) {
                 GD.Print("FLOW_PREVIEW_OK: " + await Todo103Tests.RunFlowPreview(this));
                 await Finish(); return;

@@ -89,7 +89,7 @@ public partial class AuraScalesHud : Control
         Visible = _aura != null && CombatManager.Instance.IsInProgress;
         if (!Visible) return;
         var players = combat!.Players.Where(p => p.Creature.IsAlive).ToArray();
-        decimal mana = players.Length == 0 ? 0 : players.Average(p => (decimal)ManaCmd.Total(p));
+        decimal mana = players.Sum(ManaCmd.Total);
         UpdateDisplay(mana, _aura!.Mana, _aura.UpcomingTurn, delta);
     }
 

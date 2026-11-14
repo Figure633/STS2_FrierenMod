@@ -30,6 +30,7 @@ public sealed class Aura : CustomMonsterModel
     public int ScaleCount { get; private set; }
     public int UpcomingTurn => _actions + 1;
     public int Mana => Creature.GetPower<AuraElegancePower>()?.StoredMana ?? 0;
+    public int PlayerCount => Math.Max(1, CombatState.Players.Count);
     public bool Enhanced => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 1, 0) == 1;
     public int BarrageDamage => Enhanced ? 7 : 6;
     public int GuillotineDamage => Enhanced ? 28 : 25;
@@ -41,7 +42,7 @@ public sealed class Aura : CustomMonsterModel
     public override async Task AfterAddedToRoom()
     {
         var context = new ThrowingPlayerChoiceContext();
-        await PowerCmd.Apply<AuraElegancePower>(context, Creature, 201, Creature, null);
+        await PowerCmd.Apply<AuraElegancePower>(context, Creature, 200 * PlayerCount + 1, Creature, null);
         await PowerCmd.Apply<AuraScalesPower>(context, Creature, 1, Creature, null);
         await PowerCmd.Apply<AuraArrogancePower>(context, Creature, 1, Creature, null);
     }
@@ -128,7 +129,7 @@ public sealed class Aura : CustomMonsterModel
                 _lastWeighedAction = UpcomingTurn;
                 await Weigh();
             }
-            await ChangeMana(20);
+            await ChangeMana(20 * PlayerCount);
             await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), Creature, 2, Creature, null);
         }, new BuffIntent());
         return new MonsterMoveStateMachine(_moves.Values.Cast<MonsterState>().Append(next), next);
@@ -161,9 +162,9 @@ public sealed class Aura : CustomMonsterModel
             FrierenMod.Scripts.UI.AuraScalesHud.Judgment();
             await Cmd.CustomScaledWait(0.6f, 0.6f);
         }
-        // 单人取本人；全芙莉莲联机队伍按平均魔力比较，避免人数直接决定天平胜负。
+        // 天平直接比较双方总魔力；阿乌拉的基础魔力与固定增减量按开场人数缩放。
         var players = CombatState.Players.Where(p => p.Creature.IsAlive).ToArray();
-        decimal playerMana = players.Length == 0 ? 0 : players.Average(p => (decimal)ManaCmd.Total(p));
+        int playerMana = players.Sum(ManaCmd.Total);
         if (Mana > playerMana)
         {
             _verdict = "GUILLOTINE";

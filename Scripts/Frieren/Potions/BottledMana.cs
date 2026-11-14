@@ -12,10 +12,14 @@ namespace FrierenMod.Scripts.Potions;
 public sealed class BottledMana : FrierenPotion
 {
     public override PotionRarity Rarity => PotionRarity.Common;
+    public override TargetType TargetType => TargetType.AnyPlayer;
     public override string CustomPackedImagePath => "res://FrierenMod/images/potions/BottledMana.png";
     public override string CustomPackedOutlinePath => "res://FrierenMod/images/potions/BottledManaOutline.png";
     protected override IEnumerable<DynamicVar> CanonicalVars => [new CardsVar(3)];
     public override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<Mana>()];
-    protected override async Task OnUse(PlayerChoiceContext context, Creature? target) =>
-        await ManaCmd.Generate(Owner, PileType.Hand, DynamicVars.Cards.IntValue);
+    protected override async Task OnUse(PlayerChoiceContext context, Creature? target)
+    {
+        AssertValidForTargetedPotion(target);
+        await ManaCmd.Generate(target!.Player!, PileType.Hand, DynamicVars.Cards.IntValue);
+    }
 }
