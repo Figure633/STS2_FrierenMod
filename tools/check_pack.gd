@@ -47,6 +47,10 @@ func _initialize():
 	if not check_imported_media("res://FrierenMod"):
 		quit(1)
 		return
+	if not load("res://FrierenMod/mod_image.png") is Texture2D:
+		push_error("Missing native mod menu cover")
+		quit(1)
+		return
 	for font in ["SourceHanSerifSC-Bold.otf", "NotoSansMonoCJKsc-Regular.otf", "Kreon-Regular.ttf", "Kreon-Bold.ttf"]:
 		if FileAccess.file_exists("res://FrierenMod/fonts/" + font):
 			push_error("Duplicate game font packed: " + font)

@@ -46,6 +46,15 @@ public sealed class CommissionScreen
         var button = new NConfigButton { Name = name, CustomMinimumSize = size, Size = size };
         button.Initialize(text, action); return button;
     }
+    private static void SetEntryText(NConfigButton button, string text) {
+        var label = button.GetNode<Label>("Label");
+        label.Text = text;
+        // 沿用 BaseLib 的原生按钮与字号，按实际字体宽度容纳英文和提醒标记。
+        float width = Math.Max(120, label.GetThemeFont("font").GetStringSize(text,
+            fontSize: label.GetThemeFontSize("font_size")).X + 40);
+        button.CustomMinimumSize = new(width, 64);
+        button.Size = button.CustomMinimumSize;
+    }
     public CommissionScreen(Control root, Player player)
     {
         _root = root; _player = player; _act = player.RunState.CurrentActIndex;
@@ -225,16 +234,19 @@ public sealed class CommissionScreen
     {
         var screen=new CommissionScreen(root,player);var seen=new HashSet<int>();bool hovered=false;string hoverText="";
         var button=Button("FrierenCommissionButton",Text("ENTRY"),()=>{if(screen.View.Visible)screen.Close();else screen.Open();},new(120,64));
+        SetEntryText(button, Text("ENTRY"));
         button.MouseEntered+=()=>{hovered=true;hoverText="";};button.MouseExited+=()=>{hovered=false;CommissionHoverTips.Remove(button);};
         var row=root.FindChild("RightAlignedStuff",true,false) as HBoxContainer??root.GetNodeOrNull<HBoxContainer>("FrierenTopBarRow");
-        if(row!=null){row.AddChild(button);row.MoveChild(button,0);}else{root.AddChild(button);button.SetAnchorsPreset(Control.LayoutPreset.TopRight);button.Position=new(root.Size.X-350,8);}
+        if(row!=null){row.AddChild(button);row.MoveChild(button,0);}else{root.AddChild(button);button.SetAnchorsPreset(Control.LayoutPreset.TopRight);button.Position=new(root.Size.X-button.Size.X-230,8);}
         var timer=new Godot.Timer{WaitTime=.1,Autostart=true};root.AddChild(timer);
         timer.Timeout+=()=>{
             var state=CommissionCmd.State(player);
             var completed=state.Quests.Where(q=>!q.Legacy&&q.Act==state.CurrentAct&&q.Status==CommissionStatus.Claimed).Select(q=>q.Id).ToArray();
             if(screen.View.Visible)seen.UnionWith(completed);
             bool attention=!screen.View.Visible&&(NeedsAttention(player)||completed.Any(id=>!seen.Contains(id)));
-            button.GetNode<Label>("Label").Text=Text("ENTRY")+(attention?" !":"");
+            string entryText = Text("ENTRY") + (attention ? " !" : "");
+            if (button.GetNode<Label>("Label").Text != entryText) SetEntryText(button, entryText);
+            if (row == null) button.Position = new(root.Size.X-button.Size.X-230,8);
             bool blocked=NModalContainer.Instance?.OpenModal!=null||!MagicBookUi.AllowsViewOver(overlay())||root is NGlobalUi global&&global.CapstoneContainer.InUse&&global.CapstoneContainer.CurrentCapstoneScreen!=screen.View;
             if(blocked)button.Disable();else button.Enable();
             float pulse=(float)(.5+.5*Math.Sin(Time.GetTicksMsec()/260d));button.Modulate=attention?new Color(1,.75f+.25f*pulse,.45f+.55f*pulse):Colors.White;
