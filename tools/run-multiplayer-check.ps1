@@ -1,4 +1,4 @@
-param([switch]$Mixed, [switch]$Dragon, [switch]$TurnGuard, [string]$GodotMonoPath = '', [string]$ReleaseInfoPath = '')
+param([switch]$Mixed, [switch]$Dragon, [switch]$TurnGuard, [switch]$Potions, [string]$GodotMonoPath = '', [string]$ReleaseInfoPath = '')
 $ErrorActionPreference='Stop'
 $mpRoot=Split-Path -Parent $PSScriptRoot
 [xml]$mpConfig=Get-Content -LiteralPath (Join-Path $mpRoot 'local.props') -Raw
@@ -23,6 +23,7 @@ try {
   if($Mixed){$mpArgs+='--mp-mixed'}
   if($Dragon){$mpArgs+='--mp-dragon'}
   if($TurnGuard){$mpArgs+='--mp-turn-guard'}
+  if($Potions){$mpArgs+='--mp-potions'}
   $mpProcesses+=Start-Process -FilePath $GodotMonoPath -ArgumentList $mpArgs -WindowStyle Hidden -PassThru -RedirectStandardOutput (Join-Path $mpDir ($mpRole+'-stdout.log')) -RedirectStandardError (Join-Path $mpDir ($mpRole+'-stderr.log'))
  }
  $mpDeadline=[DateTime]::UtcNow.AddSeconds(100)

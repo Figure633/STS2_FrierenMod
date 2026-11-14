@@ -47,7 +47,7 @@ public sealed class AuraSoldier : CustomMonsterModel
         if (creature != Creature || prevented || _released) return;
         _released = true;
         if (CombatState.Enemies.FirstOrDefault(c => c.IsAlive && c.Monster is Aura)?.Monster is not Aura aura) return;
-        await aura.ChangeMana(-15);
+        await aura.ChangeMana(-15 * aura.PlayerCount);
         foreach (var player in CombatState.Players.Where(p => p.Creature.IsAlive))
             await ManaCmd.Generate(player, PileType.Discard, 10, previewTime: 0.15f, fastAnimation: true);
         // 死亡只结算资源；召唤资格留给下一次正常行动选择，不改写已公布的意图。

@@ -35,6 +35,8 @@ public sealed class SpiegelFrieren : CustomMonsterModel
     public bool Enhanced => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 1, 0) == 1;
     public override int MinInitialHp => 500;
     public override int MaxInitialHp => 500;
+    // 最后的输出窗口按仍能行动的玩家计，不叠加多人 Boss 的额外生命系数。
+    public int ApexHp => 100 * Math.Max(1, CombatState.Players.Count(p => p.Creature.IsAlive));
     private int Damage => Enhanced ? 25 : 18;
     private int MultiAttackDamage => Enhanced ? 12 : 10;
     public override string CustomVisualPath => "res://FrierenMod/scenes/spiegel_combat.tscn";
@@ -137,7 +139,7 @@ public sealed class SpiegelFrieren : CustomMonsterModel
     }
     public override Task AfterCurrentHpChanged(Creature creature, decimal delta)
     {
-        if (creature == Creature && delta < 0 && Creature.CurrentHp is > 0 and <= 100 && !_apexTriggered && _apex != null)
+        if (creature == Creature && delta < 0 && Creature.CurrentHp > 0 && Creature.CurrentHp <= ApexHp && !_apexTriggered && _apex != null)
         {
             _apexTriggered = true; SetMoveImmediate(_apex, forceTransition: true);
         }

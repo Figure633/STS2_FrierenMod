@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Events;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Hooks;
@@ -30,7 +31,7 @@ public sealed class DragonBallAdventure : FrierenStoryEvent
     public override bool IsAllowed(IRunState runState) => false;
     protected override IReadOnlyList<EventOption> GenerateInitialOptions()
     {
-        var trial = Choice("KORIN",Trial); trial.Description.Add("Hp",100 * (Owner!.RunState.CurrentActIndex + 1));
+        var trial = Choice("KORIN",Trial); trial.Description.Add("Hp", TrialHpForRun(Owner!.RunState));
         trial.HoverTips=[HoverTipFactory.FromPotion<SenzuBean>()];
         return [trial,CardChoice<Kamehameha>("TURTLE",Turtle,Owner.Deck.Cards.Any(c => c is Famehameha && c.IsTransformable)),
             CardChoice<DragonBall1>("STEAL",Steal,!DragonBallStore.Read(Owner).Started).ThatDoesDamage(10)];
@@ -40,6 +41,8 @@ public sealed class DragonBallAdventure : FrierenStoryEvent
         var encounter = ModelDb.Encounter<BattlewornDummyEventV1Encounter>();
         EnterStoryCombat(encounter,[],resume:true); return Task.CompletedTask;
     }
+    public static int TrialHpForRun(IRunState run) => (int)Creature.ScaleHpForMultiplayer(
+        100 * (run.CurrentActIndex + 1), ModelDb.Encounter<BattlewornDummyEventV1Encounter>(), run.Players.Count, run.CurrentActIndex);
     public override async Task Resume(AbstractRoom room)
     {
         bool failed = ((BattlewornDummyEventEncounter)((CombatRoom)room).Encounter).RanOutOfTime;
@@ -101,7 +104,7 @@ public sealed class DragonBallAdventure : FrierenStoryEvent
         {
             await original;
             if (combat?.RunState.CurrentRoom is not CombatRoom room || room.ParentEventId != ModelDb.Event<DragonBallAdventure>().Id) return;
-            foreach (var enemy in combat.Enemies) { await CreatureCmd.SetMaxHp(enemy,100 * (combat.RunState.CurrentActIndex + 1)); await CreatureCmd.SetCurrentHp(enemy,enemy.MaxHp); }
+            foreach (var enemy in combat.Enemies) { await CreatureCmd.SetMaxHp(enemy,TrialHpForRun(combat.RunState)); await CreatureCmd.SetCurrentHp(enemy,enemy.MaxHp); }
         }
     }
 }

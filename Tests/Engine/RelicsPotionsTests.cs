@@ -246,7 +246,7 @@ public static class RelicsPotionsTests
         Check(player.PlayerCombatState.Hand.Cards.OfType<LongevityPain>().Any(), "诅咒消耗后返回手牌");
 
         await Reset(); var bottled = (await PotionCmd.TryToProcure<BottledMana>(player)).potion;
-        await bottled.OnUseWrapper(context, null);
+        await bottled.OnUseWrapper(context, player.Creature);
         Check(ManaCmd.InPile(player, PileType.Hand).Count() == 3 && !player.Potions.Contains(bottled), "瓶装魔力通过原生药水使用流程生成3张并消耗");
         var dissolve = (await PotionCmd.TryToProcure<DissolveClothPotion>(player)).potion;
         await CreatureCmd.GainBlock(enemy, 20, ValueProp.Unpowered, null);

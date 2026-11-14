@@ -28,6 +28,17 @@ public sealed class SenzuBean : FrierenPotion
     public static bool Blocks(PotionModel potion) => potion is not SenzuBean && potion.Owner != null &&
         potion.Owner.PotionSlots.Any(p => p is SenzuBean);
 
+    // 原生目标选择器已支持战斗外的队友头像；为仙豆开放此入口，仍走原生药水动作同步。
+    [HarmonyPatch(typeof(PotionModel), nameof(PotionModel.CanThrowAtAlly))]
+    private static class ThrowAtTeammate
+    {
+        private static void Postfix(PotionModel __instance, ref bool __result)
+        {
+            if (__instance is SenzuBean && __instance.IsMutable && __instance.Owner?.RunState.Players.Count > 1)
+                __result = true;
+        }
+    }
+
     [HarmonyPatch(typeof(PotionModel), nameof(PotionModel.IsValidTarget))]
     private static class ValidateUse
     {
