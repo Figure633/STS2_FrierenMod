@@ -1,0 +1,105 @@
+{
+  "targetLufs": -16,
+  "truePeakTargetDb": -2,
+  "encodedTruePeakLimitDb": -1.5,
+  "channels": 1,
+  "sampleRate": 48000,
+  "tracks": [
+    {
+      "id": "aura_opening",
+      "file": "FrierenMod/audio/aura/aura_opening.ogg",
+      "sourceFile": "阿乌拉战开场语音：我会亲自砍下你的头.MP3",
+      "sourceSha256": "980fba1fa63e80ca4bc974259178d969ac37ae4558afc5753b0925c8d204e16d",
+      "sha256": "661b7a90ed16c14b1dc8737c1ab8fc783cafd243d9e19a7fe5fd7bbac300ea4d",
+      "durationSeconds": 3.55,
+      "trimStartSeconds": 0.0,
+      "trimEndSeconds": 0.0,
+      "integratedLufs": -16.12,
+      "truePeakDb": -2.16
+    },
+    {
+      "id": "frieren_opening",
+      "file": "FrierenMod/audio/aura/frieren_opening.ogg",
+      "sourceFile": "芙莉莲在阿乌拉开场白说完后：你把我的灵魂放上天平了啊，阿乌拉.MP3",
+      "sourceSha256": "567b77e1fad09660fb3b77629fb6da64bce091e9cfa8da172a15d9c81002d92c",
+      "sha256": "9cff27cd81d8deb4e0347496da5038f5eef6401b04f6d180f0cf1f1fb0d3e685",
+      "durationSeconds": 3.4,
+      "trimStartSeconds": 0.0,
+      "trimEndSeconds": 0.0,
+      "integratedLufs": -15.94,
+      "truePeakDb": -3.59
+    },
+    {
+      "id": "aura_success",
+      "file": "FrierenMod/audio/aura/aura_success.ogg",
+      "sourceFile": "阿乌拉服从魔法成功时：是我赢了.MP3",
+      "sourceSha256": "a328e84e7228ac4b247d775828ec8e5149d42c0bf738e5dd253f57fa564f62bf",
+      "sha256": "a72c077f172c4a102baba4cbdeeac0c6d0871cb9468528d832716bea5091e22d",
+      "durationSeconds": 1.49,
+      "trimStartSeconds": 0.0,
+      "trimEndSeconds": 0.0,
+      "integratedLufs": -16.28,
+      "truePeakDb": -2.35
+    },
+    {
+      "id": "aura_failure",
+      "file": "FrierenMod/audio/aura/aura_failure.ogg",
+      "sourceFile": "阿乌拉服从魔法失败时：你是笨蛋吗？.MP3",
+      "sourceSha256": "db91362559521efbc815866511de2cac474b708eed82be6e253a560b1366e4fd",
+      "sha256": "7167c534fd9fed1a63625e2ab3b0cf4fc779d5a3cfcc5f4159456b5ad172f167",
+      "durationSeconds": 1.28,
+      "trimStartSeconds": 0.0,
+      "trimEndSeconds": 0.0,
+      "integratedLufs": -16.23,
+      "truePeakDb": -2.33
+    },
+    {
+      "id": "aura_transition",
+      "file": "FrierenMod/audio/aura/aura_transition.ogg",
+      "sourceFile": "阿乌拉转阶段语音：别开玩笑了，我可是活了超越五百年以上的大魔族.MP3",
+      "sourceSha256": "921b69ab4828e7432f83bc96c13fb0ef408be9c3d7c755fd8fcd77ea237c4efc",
+      "sha256": "7a6cbd135aa6ffde0100f3e33d0ad45c4f574fe0fe6f8de81fd6204f8b72d4f0",
+      "durationSeconds": 3.7238,
+      "trimStartSeconds": 0.6095,
+      "trimEndSeconds": 0.7367,
+      "integratedLufs": -16.08,
+      "truePeakDb": -2.55
+    },
+    {
+      "id": "aura_taunt",
+      "file": "FrierenMod/audio/aura/aura_taunt.ogg",
+      "sourceFile": "嘲讽回合：看来我根本没必要消耗你的魔力....MP3",
+      "sourceSha256": "ecafedb07acb298c30cce0ba1e5f8b61d66308d1869e1211d28ee6714292c30f",
+      "sha256": "00314e203f97ec29cce31a5f5089b55ece30f661931f8f88c42e334c60fd34a2",
+      "durationSeconds": 3.9377,
+      "trimStartSeconds": 0.0,
+      "trimEndSeconds": 0.4523,
+      "integratedLufs": -16.02,
+      "truePeakDb": -2.52
+    },
+    {
+      "id": "aura_death",
+      "file": "FrierenMod/audio/aura/aura_death.ogg",
+      "sourceFile": "阿乌拉死亡音效：...我竟然....MP3",
+      "sourceSha256": "236e1cec8d35534b0fbac14b66acdeb8f1555d5b02bb9a03013144a80f93ab19",
+      "sha256": "71dc909b99919232838eb8ba1a72a5d3568933b992cf7f16879eb03123331bd3",
+      "durationSeconds": 4.5988,
+      "trimStartSeconds": 0.6234,
+      "trimEndSeconds": 1.4677,
+      "integratedLufs": -16.5,
+      "truePeakDb": -1.67
+    },
+    {
+      "id": "frieren_victory",
+      "file": "FrierenMod/audio/aura/frieren_victory.ogg",
+      "sourceFile": "芙莉莲击败阿乌拉语音：阿乌拉，在你面前的是，活了超越千年的魔法使.MP3",
+      "sourceSha256": "e125ead753572a1831c7521ad3c10846c26f9c90c623ededf679e490f4409bf6",
+      "sha256": "418aecd2e8f1247e86091d33d530e303ba56162968bd12832e36a7c966e59022",
+      "durationSeconds": 6.0835,
+      "trimStartSeconds": 0.1615,
+      "trimEndSeconds": 0.675,
+      "integratedLufs": -16.25,
+      "truePeakDb": -2.68
+    }
+  ]
+}

@@ -5939,5 +5939,69 @@
     "modified": false,
     "processing": "原样提取作者 Word 内嵌 PNG；无裁剪、拉伸或重绘。",
     "sha256": "bba47c89ebd91e229dca65c667f57557a5b9fad7c2fe19e755053574a4490563"
+  },
+  {
+    "file": "FrierenMod/audio/aura/aura_opening.ogg",
+    "source": "阿乌拉战开场语音：我会亲自砍下你的头.MP3",
+    "source_kind": "author_provided",
+    "modified": true,
+    "processing": "tools/prepare_aura_voice.py; trim only leading/trailing silence, mono, two-pass loudness normalization and peak-limited short-clip correction; measurements in tools/data/aura_voice.json",
+    "sha256": "661b7a90ed16c14b1dc8737c1ab8fc783cafd243d9e19a7fe5fd7bbac300ea4d"
+  },
+  {
+    "file": "FrierenMod/audio/aura/frieren_opening.ogg",
+    "source": "芙莉莲在阿乌拉开场白说完后：你把我的灵魂放上天平了啊，阿乌拉.MP3",
+    "source_kind": "author_provided",
+    "modified": true,
+    "processing": "tools/prepare_aura_voice.py; trim only leading/trailing silence, mono, two-pass loudness normalization and peak-limited short-clip correction; measurements in tools/data/aura_voice.json",
+    "sha256": "9cff27cd81d8deb4e0347496da5038f5eef6401b04f6d180f0cf1f1fb0d3e685"
+  },
+  {
+    "file": "FrierenMod/audio/aura/aura_success.ogg",
+    "source": "阿乌拉服从魔法成功时：是我赢了.MP3",
+    "source_kind": "author_provided",
+    "modified": true,
+    "processing": "tools/prepare_aura_voice.py; trim only leading/trailing silence, mono, two-pass loudness normalization and peak-limited short-clip correction; measurements in tools/data/aura_voice.json",
+    "sha256": "a72c077f172c4a102baba4cbdeeac0c6d0871cb9468528d832716bea5091e22d"
+  },
+  {
+    "file": "FrierenMod/audio/aura/aura_failure.ogg",
+    "source": "阿乌拉服从魔法失败时：你是笨蛋吗？.MP3",
+    "source_kind": "author_provided",
+    "modified": true,
+    "processing": "tools/prepare_aura_voice.py; trim only leading/trailing silence, mono, two-pass loudness normalization and peak-limited short-clip correction; measurements in tools/data/aura_voice.json",
+    "sha256": "7167c534fd9fed1a63625e2ab3b0cf4fc779d5a3cfcc5f4159456b5ad172f167"
+  },
+  {
+    "file": "FrierenMod/audio/aura/aura_transition.ogg",
+    "source": "阿乌拉转阶段语音：别开玩笑了，我可是活了超越五百年以上的大魔族.MP3",
+    "source_kind": "author_provided",
+    "modified": true,
+    "processing": "tools/prepare_aura_voice.py; trim only leading/trailing silence, mono, two-pass loudness normalization and peak-limited short-clip correction; measurements in tools/data/aura_voice.json",
+    "sha256": "7a6cbd135aa6ffde0100f3e33d0ad45c4f574fe0fe6f8de81fd6204f8b72d4f0"
+  },
+  {
+    "file": "FrierenMod/audio/aura/aura_taunt.ogg",
+    "source": "嘲讽回合：看来我根本没必要消耗你的魔力....MP3",
+    "source_kind": "author_provided",
+    "modified": true,
+    "processing": "tools/prepare_aura_voice.py; trim only leading/trailing silence, mono, two-pass loudness normalization and peak-limited short-clip correction; measurements in tools/data/aura_voice.json",
+    "sha256": "00314e203f97ec29cce31a5f5089b55ece30f661931f8f88c42e334c60fd34a2"
+  },
+  {
+    "file": "FrierenMod/audio/aura/aura_death.ogg",
+    "source": "阿乌拉死亡音效：...我竟然....MP3",
+    "source_kind": "author_provided",
+    "modified": true,
+    "processing": "tools/prepare_aura_voice.py; trim only leading/trailing silence, mono, two-pass loudness normalization and peak-limited short-clip correction; measurements in tools/data/aura_voice.json",
+    "sha256": "71dc909b99919232838eb8ba1a72a5d3568933b992cf7f16879eb03123331bd3"
+  },
+  {
+    "file": "FrierenMod/audio/aura/frieren_victory.ogg",
+    "source": "芙莉莲击败阿乌拉语音：阿乌拉，在你面前的是，活了超越千年的魔法使.MP3",
+    "source_kind": "author_provided",
+    "modified": true,
+    "processing": "tools/prepare_aura_voice.py; trim only leading/trailing silence, mono, two-pass loudness normalization and peak-limited short-clip correction; measurements in tools/data/aura_voice.json",
+    "sha256": "418aecd2e8f1247e86091d33d530e303ba56162968bd12832e36a7c966e59022"
   }
 ]

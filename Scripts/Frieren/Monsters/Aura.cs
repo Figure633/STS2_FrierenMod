@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using FrierenMod.Scripts.Cards;
 using FrierenMod.Scripts.Mechanics;
 using FrierenMod.Scripts.Powers;
+using FrierenMod.Scripts.Presentation;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -38,6 +39,7 @@ public sealed class Aura : CustomMonsterModel
     public override int MinInitialHp => 200;
     public override int MaxInitialHp => 200;
     public override string CustomVisualPath => "res://FrierenMod/scenes/aura_combat.tscn";
+    public override IEnumerable<string> AssetPaths => base.AssetPaths.Concat(AuraDialogue.AssetPaths);
 
     public override async Task AfterAddedToRoom()
     {
@@ -45,6 +47,7 @@ public sealed class Aura : CustomMonsterModel
         await PowerCmd.Apply<AuraElegancePower>(context, Creature, 200 * PlayerCount + 1, Creature, null);
         await PowerCmd.Apply<AuraScalesPower>(context, Creature, 1, Creature, null);
         await PowerCmd.Apply<AuraArrogancePower>(context, Creature, 1, Creature, null);
+        AuraDialogue.Play(this, AuraDialogueCue.Opening);
     }
 
     public override async Task BeforeHandDraw(MegaCrit.Sts2.Core.Entities.Players.Player player, PlayerChoiceContext choiceContext, ICombatState combatState)
@@ -104,6 +107,7 @@ public sealed class Aura : CustomMonsterModel
         Add("GUILLOTINE", async () => { _verdict = null; await Attack(GuillotineDamage, 1); }, new SingleAttackIntent(() => GuillotineDamage));
         Add("STAGGER", async () => {
             _verdict = null;
+            if (Creature.MaxHp > 1) AuraDialogue.Play(this, AuraDialogueCue.Transition);
             int converted = Math.Max(0, Creature.CurrentHp - 1);
             await CreatureCmd.SetCurrentHp(Creature, 1);
             await CreatureCmd.SetMaxHp(Creature, 1);
@@ -111,7 +115,7 @@ public sealed class Aura : CustomMonsterModel
         }, new StunIntent());
         Add("TAUNT", () => {
             _tauntPending = false;
-            TalkCmd.Play(new LocString("monsters", "FRIERENMOD-AURA.taunt"), Creature, VfxColor.White, VfxDuration.Long);
+            AuraDialogue.Play(this, AuraDialogueCue.Taunt);
             return Task.CompletedTask;
         }, new UnknownIntent());
         Add("SUMMON", async () => {
@@ -167,12 +171,14 @@ public sealed class Aura : CustomMonsterModel
         int playerMana = players.Sum(ManaCmd.Total);
         if (Mana > playerMana)
         {
+            AuraDialogue.Play(this, AuraDialogueCue.Success);
             _verdict = "GUILLOTINE";
             foreach (var player in players)
                 await PowerCmd.Apply<AuraSubmissionPower>(new ThrowingPlayerChoiceContext(), player.Creature, SubmissionEnergy, Creature, null);
         }
         else if (Mana < playerMana)
         {
+            AuraDialogue.Play(this, AuraDialogueCue.Failure);
             _verdict = "STAGGER";
         }
     }
@@ -180,6 +186,7 @@ public sealed class Aura : CustomMonsterModel
     public override async Task AfterDeath(PlayerChoiceContext context, Creature creature, MegaCrit.Sts2.Core.Models.CardModel? source, bool prevented, float animLength)
     {
         if (creature != Creature || prevented) return;
+        AuraDialogue.Play(this, AuraDialogueCue.Defeat);
         foreach (var soldier in CombatState.Enemies.Where(c => c.IsAlive && c.Monster is AuraSoldier).ToArray())
             await CreatureCmd.Escape(soldier);
     }
