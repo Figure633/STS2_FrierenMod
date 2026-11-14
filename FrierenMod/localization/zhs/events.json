@@ -175,5 +175,13 @@
   "FRIERENMOD-DEBT_COLLECTOR.pages.DEFAULT.description": "你死性不改，而且变本加厉地赌博，所谓[gold]债多不压身[/gold]。\n你变成了[red][jitter]坏孩子[/jitter][/red]。",
   "FRIERENMOD-DEBT_COLLECTOR.pages.INITIAL.options.LEAVE.title": "离开",
   "FRIERENMOD-DEBT_COLLECTOR.pages.INITIAL.options.LEAVE.description": "这次与你无关。",
-  "FRIERENMOD-DEBT_COLLECTOR.pages.LEAVE.description": "收债人认清了你的面孔，转身离开了。"
+  "FRIERENMOD-DEBT_COLLECTOR.pages.LEAVE.description": "收债人认清了你的面孔，转身离开了。",
+  "FRIERENMOD-LOOK_UP.title": "仰头",
+  "FRIERENMOD-LOOK_UP.pages.INITIAL.description": "你独自走在路上，不知为何有一种想要抬头的[jitter][red]冲动[/red][/jitter]。",
+  "FRIERENMOD-LOOK_UP.pages.INITIAL.options.UP.title": "抬头望望天",
+  "FRIERENMOD-LOOK_UP.pages.INITIAL.options.UP.description": "失去[red]7点最大生命[/red]。获得1张附有[purple]稳定[/purple]的[gold]开悟[/gold]。",
+  "FRIERENMOD-LOOK_UP.pages.INITIAL.options.DOWN.title": "低头看看地",
+  "FRIERENMOD-LOOK_UP.pages.INITIAL.options.DOWN.description": "获得[gold]75～100金币[/gold]。",
+  "FRIERENMOD-LOOK_UP.pages.UP.description": "你猛地一抬头，咔嚓！你的脖子发出了[red]吓人的声音[/red]，后来的几个小时里，你一直注视着天空，别人都说你[yellow][sine]开悟[/sine][/yellow]了。",
+  "FRIERENMOD-LOOK_UP.pages.DOWN.description": "Lucky~你发现了地上散落的金币，这份[gold][sine]喜悦[/sine][/gold]盖过了抬头的[jitter][red]冲动[/red][/jitter]，你安全了。"
 }

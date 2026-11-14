@@ -214,5 +214,15 @@
     "evidence": [
       "https://safebooru.org/index.php?page=post&s=view&id=4822827"
     ]
+  },
+  "LookUp": {
+    "artist": "SpaceDev1",
+    "source": "https://www.reddit.com/r/Frieren/comments/1ovnh4z/frieren/",
+    "status": "confirmed",
+    "centered": true,
+    "fullScene": true,
+    "evidence": [
+      "https://knowyourmeme.com/memes/upward-angle-frieren-drawing-frieren-looking-up"
+    ]
   }
 }
