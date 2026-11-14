@@ -27,9 +27,104 @@ using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.Saves;
 using MegaCrit.Sts2.Core.Unlocks;
 using MegaCrit.Sts2.Core.ValueProps;
+using MegaCrit.Sts2.Core.Nodes.Vfx;
 
 public static class AuraBossTests
 {
+    private static readonly List<AuraDialogueCue> VoiceCues = [];
+    private static bool CaptureVoice(AuraDialogueCue cue) { VoiceCues.Add(cue); return false; }
+    private static bool NativeVoiceBubble(string text, Creature speaker, double secondsToDisplay, VfxColor vfxColor,
+        ref MegaCrit.Sts2.Core.Nodes.Vfx.NSpeechBubbleVfx __result)
+    {
+        var type=typeof(MegaCrit.Sts2.Core.Nodes.Vfx.NSpeechBubbleVfx);
+        var create=AccessTools.Method(type,"CreateInternal");
+        var side=Enum.Parse(create.GetParameters()[1].ParameterType,speaker.IsPlayer?"Left":"Right");
+        __result=(MegaCrit.Sts2.Core.Nodes.Vfx.NSpeechBubbleVfx)create.Invoke(null,[text,side,secondsToDisplay]);
+        AccessTools.Field(type,"_startPos").SetValue(__result,speaker.IsPlayer?new Vector2(470,420):new Vector2(1370,300));
+        AccessTools.Field(type,"_vfxColor").SetValue(__result,vfxColor);
+        return false;
+    }
+
+    public static async Task<int> RunVoice(Node root)
+    {
+        int checks=0;
+        void Check(bool ok,string text) { if(!ok)throw new Exception(text);checks++;GD.Print("PASS 阿乌拉语音："+text); }
+        async Task Tick(int frames=8) { for(int i=0;i<frames;i++)await root.ToSignal(root.GetTree(),SceneTree.SignalName.ProcessFrame); }
+        var player=Player.CreateForNewRun<Frieren>(UnlockState.all,1);var ally=Player.CreateForNewRun<Frieren>(UnlockState.all,2);
+        var run=RunState.CreateForTest([player,ally],seed:"AURA-VOICE");
+        RunManager.Instance.SetUpTest(run,new NetSingleplayerGameService());LocalContext.NetId=1;
+        SaveManager.Instance.InitPrefsDataForTest();
+        var encounter=ModelDb.Encounter<AuraEncounter>().ToMutable();encounter.GenerateMonstersWithSlots(run);
+        var combat=new CombatState(encounter,run);combat.AddPlayer(player);combat.AddPlayer(ally);
+        foreach(var(model,slot)in encounter.MonstersWithSlots)combat.AddCreature(combat.CreateCreature(model,CombatSide.Enemy,slot));
+        CombatManager.Instance.SetUpCombat(combat);CombatTestState.SetInProgress(true);
+        var aura=(Aura)combat.Enemies.Single(c=>c.Monster is Aura).Monster!;
+        var context=new ThrowingPlayerChoiceContext();
+        var harmony=new Harmony("frieren.tests.aura_voice");VoiceCues.Clear();
+        harmony.Patch(AccessTools.Method(typeof(AuraDialogue),nameof(AuraDialogue.Play)),prefix:new HarmonyMethod(typeof(AuraBossTests),nameof(CaptureVoice)));
+        try {
+            foreach(var creature in combat.Enemies.ToArray()){creature.Monster!.RollMove(combat.PlayerCreatures);await creature.Monster.AfterAddedToRoom();}
+            await aura.BeforeHandDraw(player,context,combat);await aura.BeforeHandDraw(ally,context,combat);
+            Check(VoiceCues.SequenceEqual(new[]{AuraDialogueCue.Opening}),"多人开场只触发一次对答，不随玩家重复");
+            var weigh=AccessTools.Method(typeof(Aura),"Weigh");
+            await (Task)weigh.Invoke(aura,null);
+            Check(VoiceCues[^1]==AuraDialogueCue.Success,"阿乌拉天平胜出时播放成功台词");
+            await ManaCmd.Generate(player,PileType.Draw,aura.Mana+1);await (Task)weigh.Invoke(aura,null);
+            Check(VoiceCues[^1]==AuraDialogueCue.Failure,"阿乌拉天平失败时仍由阿乌拉说话");
+            await aura.ChangeMana(1);int count=VoiceCues.Count;await (Task)weigh.Invoke(aura,null);
+            Check(VoiceCues.Count==count,"天平平局不误播胜负语音");
+            var moves=(Dictionary<string,MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine.MoveState>)AccessTools.Field(typeof(Aura),"_moves").GetValue(aura);
+            aura.SetMoveImmediate(moves["TAUNT"],true);await aura.PerformMove();Check(VoiceCues[^1]==AuraDialogueCue.Taunt,"嘲讽行动接入新语音");
+            aura.SetMoveImmediate(moves["STAGGER"],true);await aura.PerformMove();
+            aura.SetMoveImmediate(moves["STAGGER"],true);await aura.PerformMove();
+            Check(VoiceCues.Count(c=>c==AuraDialogueCue.Transition)==1,"生命转魔力阶段只播放一次转阶段台词");
+            var death=AccessTools.Method(typeof(Aura),"AfterDeath");
+            object[] DeathArgs(bool prevented)=>death.GetParameters().Length==5?[context,aura.Creature,null!,prevented,0f]:[context,aura.Creature,prevented,0f];
+            await (Task)death.Invoke(aura,DeathArgs(true));Check(!VoiceCues.Contains(AuraDialogueCue.Defeat),"死亡被阻止时不播放死亡对答");
+            await (Task)death.Invoke(aura,DeathArgs(false));Check(VoiceCues[^1]==AuraDialogueCue.Defeat,"死亡触发阿乌拉和芙莉莲对答");
+            foreach(var lang in new[]{"zhs","eng"}) {
+                LocManager.Instance.SetLanguage(lang);
+                foreach(var line in Enum.GetValues<AuraDialogueCue>().SelectMany(AuraDialogue.Lines)) {
+                    Check(!line.Caption.GetFormattedText().Contains("FRIERENMOD-")&&GD.Load<AudioStream>(line.Path).GetLength()>.4,lang+" 台词与音频完整："+line.Id);
+                }
+            }
+            Check(AuraDialogue.Lines(AuraDialogueCue.Opening).Select(l=>l.IsFrieren).SequenceEqual(new[]{false,true})&&!AuraDialogue.Lines(AuraDialogueCue.Failure).Single().IsFrieren,"开场顺序及失败台词说话人正确");
+        }
+        finally { harmony.Unpatch(AccessTools.Method(typeof(AuraDialogue),nameof(AuraDialogue.Play)),HarmonyPatchType.Prefix,harmony.Id); }
+        if(OS.GetCmdlineUserArgs().Contains("--ui-snapshot")) {
+            LocManager.Instance.SetLanguage("zhs");await Tick();
+            int sfx=AudioServer.GetBusIndex("SFX");if(sfx<0){AudioServer.AddBus();sfx=AudioServer.BusCount-1;AudioServer.SetBusName(sfx,"SFX");}
+            AudioServer.SetBusMute(sfx,true); // 只静音独立验证进程，不更改玩家设置。
+            var panel=new Control{Size=new(1920,1080)};root.GetTree().Root.AddChild(panel);
+            panel.AddChild(new ColorRect{Size=panel.Size,Color=new("1a1824")});
+            aura.RegisterSceneConversions();var enemyVisual=aura.CreateVisuals();panel.AddChild(enemyVisual);enemyVisual.Position=new(1400,720);
+            ((Frieren)player.Character).RegisterSceneConversions();
+            var playerVisual=player.Character.CreateVisuals();panel.AddChild(playerVisual);playerVisual.Position=new(450,750);
+            var bubbleType=typeof(MegaCrit.Sts2.Core.Nodes.Vfx.NSpeechBubbleVfx);
+            var bubbleFactory=AccessTools.Method(bubbleType,"Create",[typeof(string),typeof(Creature),typeof(double),typeof(VfxColor)]);
+            harmony.Patch(bubbleFactory,prefix:new HarmonyMethod(typeof(AuraBossTests),nameof(NativeVoiceBubble)));
+            var sessionType=AccessTools.Inner(typeof(AuraDialogue),"Session");var session=Activator.CreateInstance(sessionType,[aura,panel,panel]);
+            var enqueue=AccessTools.Method(sessionType,"Enqueue");
+            string Current()=>panel.GetChildren().OfType<MegaCrit.Sts2.Core.Nodes.Vfx.NSpeechBubbleVfx>().Select(b=>(string)AccessTools.Field(bubbleType,"_text").GetValue(b)).FirstOrDefault()??"";
+            async Task Until(Func<bool> ready){ulong start=Time.GetTicksMsec();while(!ready()){if(Time.GetTicksMsec()-start>10000)throw new Exception("语音表现等待超时");await Tick(1);}}
+            try {
+                enqueue.Invoke(session,[AuraDialogueCue.Opening]);enqueue.Invoke(session,[AuraDialogueCue.Opening]);
+                await root.ToSignal(root.GetTree().CreateTimer(1.8),SceneTreeTimer.SignalName.Timeout);await Tick(2);
+                Check(Current().Contains("砍下你的头"),"实际原生气泡与开场音频同时出现");
+                root.GetViewport().GetTexture().GetImage().SavePng(ProjectSettings.GlobalizePath("res://../../artifacts/aura-voice-opening.png"));
+                enqueue.Invoke(session,[AuraDialogueCue.Taunt]);enqueue.Invoke(session,[AuraDialogueCue.Defeat]);await Tick(8);
+                Check(Current().Contains("我竟然"),"死亡打断当前语音并丢弃旧嘲讽");
+                await Until(()=>Current().Contains("超越千年"));
+                await root.ToSignal(root.GetTree().CreateTimer(1.8),SceneTreeTimer.SignalName.Timeout);await Tick(2);
+                Check(panel.FindChildren("*","AudioStreamPlayer",true,false).Count==1,"对答使用一个音频流，不重叠播放");
+                root.GetViewport().GetTexture().GetImage().SavePng(ProjectSettings.GlobalizePath("res://../../artifacts/aura-voice-victory.png"));
+            }
+            finally { panel.QueueFree();await Tick();harmony.Unpatch(bubbleFactory,HarmonyPatchType.Prefix,harmony.Id); }
+            Check((bool)AccessTools.Field(sessionType,"_stopped").GetValue(session),"退出战斗场景会停止语音并清空台词");
+        }
+        harmony.UnpatchAll(harmony.Id);RunManager.Instance.CleanUp();return checks;
+    }
+
     public static async Task<int> RunActions()
     {
         int checks = 0;

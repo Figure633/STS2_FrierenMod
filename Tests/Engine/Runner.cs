@@ -212,6 +212,10 @@ public partial class Runner : Node
                 GD.Print("AUTHOR0120_OK: " + await Author0120Tests.Run(this));
                 await Finish(); return;
             }
+            if (OS.GetCmdlineUserArgs().Contains("--aura-voice-only")) {
+                GD.Print("AURA_VOICE_OK: " + await AuraBossTests.RunVoice(this));
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--multiplayer-ui-only")) {
                 GD.Print("MULTIPLAYER_UI_OK: " + await MultiplayerTests.RunUi(this));
                 await Finish(); return;

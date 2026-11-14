@@ -87,7 +87,8 @@ func _initialize():
 				return
 	var audio_count = 0
 	var bgm_count = 0
-	for folder in ["res://FrierenMod/audio", "res://FrierenMod/audio/bgm"]:
+	var aura_voice_count = 0
+	for folder in ["res://FrierenMod/audio", "res://FrierenMod/audio/bgm", "res://FrierenMod/audio/aura"]:
 		for file in ResourceLoader.list_directory(folder):
 			if not file.ends_with(".ogg") and not file.ends_with(".mp3"):
 				continue
@@ -98,6 +99,7 @@ func _initialize():
 				return
 			audio_count += 1
 			if folder.ends_with("/bgm"): bgm_count += 1
+			if folder.ends_with("/aura"): aura_voice_count += 1
 	var scenes = 0
 	var scene_files = DirAccess.get_files_at("res://FrierenMod/scenes")
 	for file in DirAccess.get_files_at("res://FrierenMod/scenes/ancients"):
@@ -127,7 +129,7 @@ func _initialize():
 		var scene = packed.instantiate()
 		scene.free()
 		scenes += 1
-	if textures < 119 or slot_backs != 127 or audio_count != 26 or bgm_count != 20 or scenes != 15 or imported_textures < textures or imported_audio != 26:
+	if textures < 119 or slot_backs != 127 or audio_count != 34 or bgm_count != 20 or aura_voice_count != 8 or scenes != 15 or imported_textures < textures or imported_audio != 34:
 		push_error("Resource count mismatch: textures=%d slot_backs=%d audio=%d scenes=%d" % [textures, slot_backs, audio_count, scenes])
 		quit(1)
 		return
