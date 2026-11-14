@@ -84,7 +84,7 @@ public static class CommissionCmd
         var m=RunManager.Instance;var c=CombatManager.Instance;
         return p.Character is Frieren&&ReferenceEquals(m.DebugOnlyGetState(),p.RunState)&&!m.IsCleaningUp&&!p.Creature.IsDead&&!c.IsStarting&&!c.IsEnding&&
             (!input||!MagicPropCmd.IsBusy(p))&&(!input||!DragonSummoning.IsTransitioning&&!Pending.Contains(p)&&!m.NetService.IsGameLoading&&LocalContext.IsMe(p)&&!m.ActionExecutor.IsRunning&&MagicPropCmd.AllowsUseOver(NOverlayStack.Instance?.Peek()))&&
-            (!c.IsInProgress||!c.PlayerActionsDisabled&&!c.IsEnemyTurnStarted&&!c.EndingPlayerTurnPhaseOne&&!c.EndingPlayerTurnPhaseTwo&&(p.RunState.Players.Count==1||p.PlayerCombatState?.Phase==PlayerTurnPhase.Play));
+            (!c.IsInProgress||(!input||!c.PlayerActionsDisabled)&&!c.IsPlayerReadyToEndTurn(p)&&!c.IsEnemyTurnStarted&&!c.EndingPlayerTurnPhaseOne&&!c.EndingPlayerTurnPhaseTwo&&(p.RunState.Players.Count==1||p.PlayerCombatState?.Phase==PlayerTurnPhase.Play));
     }
     public static bool CanReceive(Player p,CommissionReward r)=>r.Kind!=CommissionRewardKind.Potion||p.HasOpenPotionSlots&&Hook.ShouldProcurePotion(p.RunState,p.Creature.CombatState,Potion(r.Item).ToMutable(),p);
     public static async Task<bool> Send(Player p,int id,CommissionOperation op){

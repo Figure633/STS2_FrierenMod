@@ -166,6 +166,49 @@ public static class MultiplayerTests
             Check(remote==snapshot,name+"：两端所有玩家库存、RNG、生命和能量一致");
             await Barrier(name+"-checked");
         }
+        if(OS.GetCmdlineUserArgs().Contains("--mp-turn-guard")) {
+            foreach(var p in run.Players) {
+                var deck=new MagicDeckState();
+                for(int i=0;i<3;i++){deck.PrepareDraft(_=>0);deck.SelectInitial(deck.Draft[0]);}
+                deck.GrantStartingProps();deck.AddProp("ShadowDragonHorn");MagicDeckStore.Write(p,deck);
+            }
+            var turnCombat=new CombatState(runState:run);foreach(var p in run.Players)turnCombat.AddPlayer(p);
+            var target=turnCombat.CreateCreature(ModelDb.Monster<Axebot>().ToMutable(),CombatSide.Enemy,null);turnCombat.AddCreature(target);
+            CombatManager.Instance.SetUpCombat(turnCombat);CombatTestState.SetInProgress(true);
+            object turnState=AccessTools.Property(typeof(CombatManager),nameof(CombatManager.IsStarting)).SetMethod!=null
+                ? CombatManager.Instance : AccessTools.Field(typeof(CombatManager),"_turnState").GetValue(CombatManager.Instance);
+            AccessTools.Property(turnState.GetType(),nameof(CombatManager.IsStarting)).SetValue(turnState,false);
+            AccessTools.Property(typeof(CombatManager),nameof(CombatManager.PlayerActionsDisabled)).SetValue(CombatManager.Instance,false);
+            foreach(var p in run.Players)p.PlayerCombatState!.Phase=PlayerTurnPhase.Play;
+            RunManager.Instance.ActionQueueSynchronizer.SetCombatState(Enum.Parse<ActionSynchronizerCombatState>("PlayPhase"));
+            RunManager.Instance.ActionExecutor.Unpause();
+            int energy=p2.PlayerCombatState!.Energy;
+            await Barrier("turn-guard-ready");
+            if(host) {
+                var end=new EndPlayerTurnAction(p1,p1.PlayerCombatState!.TurnNumber);
+                RunManager.Instance.ActionQueueSynchronizer.RequestEnqueue(end);await end.CompletionTask;
+            }
+            await Wait(()=>CombatManager.Instance.IsPlayerReadyToEndTurn(p1),"房主结束回合动作同步");
+            Check(CombatManager.Instance.PlayerActionsDisabled==host,"只有已结束回合的房主禁用本机输入");
+            await Barrier("turn-guard-host-ended");
+            Check(CommissionCmd.CanAct(p2,false),"房主结束回合不阻止队友委托结算");
+            Check(!CommissionCmd.CanAct(p1,false),"已结束回合者不能结算新的委托");
+            if(!host) {
+                var deck=MagicDeckStore.Read(p2);var horn=deck.Props.Single(p=>p.PropId=="ShadowDragonHorn");
+                Check(await MagicPropCmd.UseSelected(p2,horn.InstanceId,MagicPropRules.Eligible(deck,horn).Take(2).ToArray()),"队友通过真实网络动作使用黑龙角");
+            }
+            await Same("turn-guard-horn",()=>!MagicDeckStore.Read(p2).Props.Any(p=>p.PropId=="ShadowDragonHorn"));
+            Check(p2.PlayerCombatState.Energy==energy+2,"两端都给尚未结束回合的队友2能量");
+            Check(MagicDeckStore.Read(p1).Props.Any(p=>p.PropId=="ShadowDragonHorn"),"不消耗房主魔具");
+            var rejected=new NetMagicDeckAction {Prop=MagicDeckStore.Read(p1).Props.Single(p=>p.PropId=="ShadowDragonHorn").InstanceId,
+                Targets=MagicDeckStore.Read(p1).Props.Where(p=>p.PropId=="UnbelievableTool").Select(p=>p.InstanceId).ToArray(),
+                Snapshot=MagicDeckNetwork.Snapshot(p1),InCombat=true,Turn=p1.PlayerCombatState!.TurnNumber};
+            if(host)Check(!await MagicDeckNetwork.Send(p1,rejected),"同步端拒绝已结束回合者的迟到魔具请求");
+            await Same("turn-guard-rejected");
+            File.WriteAllText(Path.Combine(dir,role+"-result.json"),JsonSerializer.Serialize(new{checks,turnGuard=true}));
+            await Barrier("finished");timer.Stop();harmony.UnpatchAll(harmony.Id);Overlay.Free();
+            RunManager.Instance.CleanUp();timer.QueueFree();return checks;
+        }
         await Barrier("run-ready");
         if(me.Character is Frieren)await MagicDeckCmd.ChooseStartingFactors(new BlockingPlayerChoiceContext(),me);
         await Same("initial",()=>frierens.All(p=>MagicDeckStore.Read(p).StartingPropsGranted));
