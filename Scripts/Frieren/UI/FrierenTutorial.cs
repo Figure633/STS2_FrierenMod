@@ -144,17 +144,13 @@ public partial class FrierenTutorial : NCombatRulesFtue
     private void AddManaCounter()
     {
         var counter = new Control { Name = "TutorialManaCounter", Position = new(_image.Size.X * .72f, _image.Size.Y / 2 - 132),
-            Size = new(108, 264), MouseFilter = MouseFilterEnum.Ignore };
+            Size = new(68, 264), MouseFilter = MouseFilterEnum.Ignore };
         _image.AddChild(counter); _diagrams.Add(counter);
-        foreach (string layer in new[] { "MPLayer0", "MPWrap" }) counter.AddChild(new TextureRect {
-            Texture = new AtlasTexture { Atlas = GD.Load<Texture2D>($"res://FrierenMod/images/ui/{layer}.png"), Region = new(88, 0, 80, 256) },
-            Size = new(68, 264), ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, MouseFilter = MouseFilterEnum.Ignore });
+        foreach (string layer in new[] { "MPLayer0", "MPWrap" }) counter.AddChild(ManaCounterVisual.Layer(layer));
         for (int i = 0; i < 3; i++) {
-            var number = new Label { Text = "3", Position = new(0, 20 + 88 * i), Size = new(68, 36), HorizontalAlignment = HorizontalAlignment.Center };
-            number.AddThemeFontSizeOverride("font_size", 27); number.AddThemeConstantOverride("outline_size", 7);
-            number.AddThemeColorOverride("font_outline_color", Colors.Black); counter.AddChild(number);
-            var label = new Label { Text = Text("SLOT_SHORT." + (ManaSlot)i), Position = new(70, 28 + 88 * i) };
-            label.AddThemeFontSizeOverride("font_size", 16); counter.AddChild(label);
+            var number = ManaCounterVisual.Count("3");
+            number.Position = new(0, ManaCounterVisual.CenterY(i) - 18);
+            counter.AddChild(number);
         }
     }
 

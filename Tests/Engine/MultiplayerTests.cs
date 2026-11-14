@@ -38,6 +38,50 @@ using MegaCrit.Sts2.Core.Unlocks;
 // 仅替代选牌屏的人工点击；CardSelectCmd、choiceId、传输与队列恢复均走原版。
 public static class MultiplayerTests
 {
+    public static async Task<int> RunUi(Node root)
+    {
+        int checks = 0;
+        void Check(bool ok, string message) { if (!ok) throw new Exception(message); checks++; GD.Print("PASS 联机界面：" + message); }
+        async Task Tick() { for (int i=0;i<8;i++) await root.ToSignal(root.GetTree(), SceneTree.SignalName.ProcessFrame); }
+        var me = Player.CreateForNewRun<Frieren>(UnlockState.all, 1);
+        var peer = Player.CreateForNewRun<Frieren>(UnlockState.all, 2);
+        RunManager.Instance.SetUpTest(RunState.CreateForTest([me,peer],seed:"PEER-BOOK"),new NetSingleplayerGameService());
+        LocalContext.NetId = 1;
+        var deck = MagicDeckState.CreatePrototypeLoadout(); deck.AddProp("UnbelievableTool");
+        MagicDeckStore.Data.Set(peer,deck.ToJson());
+        var myDeck = MagicDeckStore.Read(me).ToJson();
+        Check(CommissionCmd.Spell("Recall") is FrierenMod.Scripts.Cards.Recall,"同名 Recall 始终取芙莉莲卡牌");
+        foreach (var card in ModelDb.CardPool<FrierenCardPool>().AllCards.Where(c=>c.Rarity==CardRarity.Rare))
+            Check(CommissionCmd.Spell(card.GetType().Name).Id == card.Id,"委托稀有卡归属："+card.Id);
+        foreach (var lang in new[]{"zhs","eng"}) {
+            MegaCrit.Sts2.Core.Localization.LocManager.Instance.SetLanguage(lang);
+            foreach (var state in new[]{"alive","dead"}) {
+                var text = new MegaCrit.Sts2.Core.Localization.LocString("characters",peer.Character.Id.Entry+".banter."+state+".endTurnPing").GetFormattedText();
+                Check(!text.Contains("endTurnPing") && !string.IsNullOrWhiteSpace(text),lang+" 原生催促台词："+state);
+            }
+        }
+        MegaCrit.Sts2.Core.Localization.LocManager.Instance.SetLanguage("zhs");
+        await Tick();
+        var ui = new Control { Size=new(1920,1080) }; root.GetTree().Root.AddChild(ui);
+        ui.AddChild(new ColorRect {Size=ui.Size,Color=new("17202c"),MouseFilter=Control.MouseFilterEnum.Ignore});
+        var book = FrierenMod.Scripts.UI.TeammateMagicDeck.Attach(ui,peer)!;
+        var button = ui.FindChild("FrierenMagicBookButton",true,false)!;
+        button.EmitSignal(MegaCrit.Sts2.Core.Nodes.GodotExtensions.NButton.SignalName.Released,button);
+        await Tick();
+        Check(book.View.Visible,"从队友详情入口打开魔法牌组");
+        Check((string)AccessTools.Field(typeof(FrierenMod.Scripts.UI.MagicBookScreen),"_displayed").GetValue(book) == deck.ToJson(),"显示队友的因子和魔具");
+        AccessTools.Method(typeof(FrierenMod.Scripts.UI.MagicBookScreen),"Arm").Invoke(book,[deck.Props.Single().InstanceId]);
+        Check(AccessTools.Field(typeof(FrierenMod.Scripts.UI.MagicBookScreen),"_armed").GetValue(book)==null,"只读界面不能使用队友魔具");
+        deck.AddProp("UnbelievableTool"); MagicDeckStore.Data.Set(peer,deck.ToJson()); book.Refresh();
+        await Tick();
+        Check((string)AccessTools.Field(typeof(FrierenMod.Scripts.UI.MagicBookScreen),"_displayed").GetValue(book)==deck.ToJson(),"打开期间刷新队友牌组");
+        Check(MagicDeckStore.Read(me).ToJson()==myDeck,"不修改本地玩家牌组");
+        if(OS.GetCmdlineUserArgs().Contains("--ui-snapshot")) root.GetViewport().GetTexture().GetImage().SavePng(ProjectSettings.GlobalizePath("res://../../artifacts/teammate-magic-deck.png"));
+        book.Close(); Check(!book.View.Visible,"关闭后返回队友详情");
+        ui.QueueFree(); await Tick();
+        return checks;
+    }
+
     private sealed class LoadListener : ILoadRunLobbyListener
     {
         public void PlayerConnected(ulong id) { }

@@ -60,7 +60,8 @@ public static class CommissionCmd
         if(state.EnsureAct(act,rng.NextInt,rares,MagicPropRules.All.Select(x=>x.Id).ToArray(),Potions.Select(t=>t.Name).ToArray(),common,rares,BossRelics.Select(t=>t.Name).ToArray(),affix,s=>OwnsSpell(p,s),id=>p.Relics.Any(r=>r.GetType().Name==id))||counted)Write(p,state);
         return state;
     }
-    public static CardModel Spell(string id)=>ModelDb.AllCards.First(c=>c.GetType().Name==id);
+    // 原版与模组可能存在同名类（如 Recall）；旧合同仍按类名保存，但只能解析为本角色的牌。
+    public static CardModel Spell(string id)=>ModelDb.CardPool<FrierenCardPool>().AllCards.Single(c=>c is FrierenCard && c.GetType().Name==id);
     public static RelicModel Relic(string id)=>ModelDb.AllRelics.First(r=>r.GetType().Name==id);
     public static PotionModel Potion(string id)=>ModelDb.GetById<PotionModel>(ModelDb.GetId(Potions.Single(t=>t.Name==id)));
     public static bool IsManaMaker(CardModel c)=>ManaMakers.Contains(c.GetType().Name)||c is CustomLegendarySpell spell&&spell.Effects.Any(e=>e.Kind.StartsWith("Mana",StringComparison.Ordinal));

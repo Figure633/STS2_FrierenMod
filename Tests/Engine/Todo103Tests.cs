@@ -24,7 +24,7 @@ using MegaCrit.Sts2.Core.Unlocks;
 
 public static class Todo103Tests
 {
-    public static async Task<int> RunFlowPreview()
+    public static async Task<int> RunFlowPreview(Node root)
     {
         int checks = 0;
         var player = Player.CreateForNewRun<Frieren>(UnlockState.all, 1);
@@ -41,15 +41,33 @@ public static class Todo103Tests
             card.UpdateDynamicVarPreview(CardPreviewMode.Normal, null, card.DynamicVars);
             foreach (var lang in new[] { "zhs", "eng" }) {
                 LocManager.Instance.SetLanguage(lang);
-                string text = card.GetDescriptionForPile(PileType.Hand);
+                foreach (var pile in new[] { PileType.Hand, PileType.None }) {
+                string text = card.GetDescriptionForPile(pile);
                 string plain = System.Text.RegularExpressions.Regex.Replace(text, @"\[[^\]]*\]", "");
                 if (decimal.Floor(card.DynamicVars.CalculatedDamage.PreviewValue) != expected ||
                     !plain.Contains(lang == "zhs" ? $"（造成{expected}点伤害）" : $"(Deal {expected} damage)"))
                     throw new Exception("生生流转预览不符：" + text);
                 checks++;
+                }
             }
         }
         Preview(10);
+        if (OS.GetCmdlineUserArgs().Contains("--ui-snapshot")) {
+            for(int i=0;i<8;i++) await root.ToSignal(root.GetTree(), SceneTree.SignalName.ProcessFrame);
+            var ui = new Control { Size=new(1920,1080) }; root.GetTree().Root.AddChild(ui);
+            ui.AddChild(new ColorRect { Size=ui.Size, Color=new("17202c") });
+            int index=0;
+            foreach(var lang in new[]{"zhs","eng"}) {
+                LocManager.Instance.SetLanguage(lang);
+                var visual=(MegaCrit.Sts2.Core.Nodes.Cards.NCard)AccessTools.Method(typeof(FrierenMod.Scripts.UI.MagicBookScreen),"CreateCard").Invoke(null,[card]);
+                ui.AddChild(visual); visual.Position=new(620+680*index++,540); visual.Scale=Vector2.One*1.5f;
+                visual.UpdateVisuals(PileType.None,CardPreviewMode.Normal);
+            }
+            for(int i=0;i<8;i++) await root.ToSignal(root.GetTree(), SceneTree.SignalName.ProcessFrame);
+            root.GetViewport().GetTexture().GetImage().SavePng(ProjectSettings.GlobalizePath("res://../../artifacts/endless-flow-preview.png"));
+            ui.QueueFree();
+            for(int i=0;i<8;i++) await root.ToSignal(root.GetTree(), SceneTree.SignalName.ProcessFrame);
+        }
         var strength = await PowerCmd.Apply<StrengthPower>(context, player.Creature, 2, player.Creature, null); Preview(12);
         await PowerCmd.Remove(strength!);
         var weak = await PowerCmd.Apply<WeakPower>(context, player.Creature, 1, enemy, null); Preview(7);

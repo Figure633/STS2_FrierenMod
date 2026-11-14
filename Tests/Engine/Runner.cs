@@ -212,8 +212,12 @@ public partial class Runner : Node
                 GD.Print("AUTHOR0120_OK: " + await Author0120Tests.Run(this));
                 await Finish(); return;
             }
+            if (OS.GetCmdlineUserArgs().Contains("--multiplayer-ui-only")) {
+                GD.Print("MULTIPLAYER_UI_OK: " + await MultiplayerTests.RunUi(this));
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--flow-preview-only")) {
-                GD.Print("FLOW_PREVIEW_OK: " + await Todo103Tests.RunFlowPreview());
+                GD.Print("FLOW_PREVIEW_OK: " + await Todo103Tests.RunFlowPreview(this));
                 await Finish(); return;
             }
             if (OS.GetCmdlineUserArgs().Contains("--todo103-only")) {

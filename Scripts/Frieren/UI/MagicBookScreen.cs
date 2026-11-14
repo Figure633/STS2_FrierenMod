@@ -25,6 +25,7 @@ public sealed class MagicBookScreen
     public Control View { get; }
     private readonly Player _player;
     private readonly bool _readOnly;
+    private readonly string _readOnlyHint;
     private readonly Control _canvas;
     private readonly Func<IOverlayScreen?> _currentOverlay;
     private readonly NCapstoneContainer? _capstone;
@@ -63,10 +64,12 @@ public sealed class MagicBookScreen
         return label;
     }
 
-    public MagicBookScreen(Control root, Player player, Func<IOverlayScreen?>? currentOverlay = null, bool readOnly = false)
+    public MagicBookScreen(Control root, Player player, Func<IOverlayScreen?>? currentOverlay = null, bool readOnly = false,
+        string readOnlyHint = "HISTORY_BOOK_HINT")
     {
         _player = player;
         _readOnly = readOnly;
+        _readOnlyHint = readOnlyHint;
         _currentOverlay = currentOverlay ?? (() => NOverlayStack.Instance?.Peek());
         _capstone = (root as NGlobalUi)?.CapstoneContainer;
         // 实机由原生 Capstone 管理层级，避免越过其上的教程和确认窗口。
@@ -187,7 +190,7 @@ public sealed class MagicBookScreen
         _coveredOverlay = _currentOverlay();
         // 只暂时隐藏原生选牌屏，不移除它，也不完成或取消它的选择任务。
         if (_capstone == null) _coveredOverlay?.AfterOverlayHidden();
-        if (_readOnly) _status.Text = Text("HISTORY_BOOK_HINT");
+        if (_readOnly) _status.Text = Text(_readOnlyHint);
         else if (!MagicPropCmd.AllowsUseOver(_coveredOverlay)) _status.Text = Text("BOOK_VIEW_ONLY");
         if (_capstone != null) _capstone.Open((MagicBookView)View); else View.Show();
     }
@@ -252,7 +255,10 @@ public sealed class MagicBookScreen
         if (_coveredOverlay != _currentOverlay()) { Close(); return; }
         if (_presentingChange) return;
         var deck = MagicDeckStore.Read(_player);
-        if (_displayed != deck.ToJson()) { Cancel(); Populate(); }
+        if (_displayed != deck.ToJson()) {
+            Cancel(); Populate();
+            if (_readOnly) _status.Text = Text(_readOnlyHint);
+        }
         if (_armed.HasValue && !_applying && !MagicPropCmd.CanUse(_player, _armed.Value)) Cancel();
     }
 
