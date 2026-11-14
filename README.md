@@ -1,8 +1,10 @@
 # FrierenMod STS2
 
-《杀戮尖塔2》的芙莉莲模组，移植自[一代模组](https://steamcommunity.com/sharedfiles/filedetails/?id=3164722329)。当前为游戏 **beta v0.113.0** 的适配分支，模组版本 **0.13.5**。正式版请使用 main 分支。
+《杀戮尖塔2》的芙莉莲模组，移植自[一代模组](https://steamcommunity.com/sharedfiles/filedetails/?id=3164722329)。当前为游戏 **beta v0.113.0** 的适配分支，模组版本 **0.13.6**。正式版请使用 main 分支。
 
 芙莉莲使用抽牌堆、手牌与弃牌堆中的魔力进行咏唱，可装配因子、使用魔具，包含专属卡牌、遗物、事件、委托与Boss。多人游戏双方需使用相同版本的模组和BaseLib；混合角色队伍保留原版事件和Boss池。
+
+0.13.6 修复英文委托入口宽度，加入原生模组列表封面；新增本地打包工具，使用各分支缓存依赖构建并整理工坊 content，无需切换 Steam 分支，不执行上传。
 
 0.13.5 将联机催促台词改为「过了几年了？」，倒下时显示「ZZZ」，同步英文。
 
@@ -59,6 +61,8 @@
 ./tools/build.ps1 -Pack -GodotPath "D:/Tools/Godot/Godot_v4.5.1-stable_win64_console.exe"
 ./tools/install.ps1
 ```
+
+双击仓库根目录的 `本地打包.cmd`，或运行 `./tools/package-workshop.ps1`，会构建、校验并更新对应工坊工作区的 `content/`。只在本地操作，不修改工坊标题、description、封面或预览图，不启动上传器。成功打包会在 `artifacts/build-references/` 保存一套对应分支的依赖及指纹，后续使用缓存，无需切换 Steam 分支；新环境首次需使用匹配的游戏依赖，升级游戏 API 时重新核查。可用 `-WorkshopDirectory` 指定现有上传工作区。安装仍核对当前游戏，避免装错分支。
 
 构建结果位于 `artifacts/FrierenMod/`；安装前需退出游戏。基础构建包含规则、集成、接口及资源检查。引擎检查另加 `-EngineTests -GodotMonoPath <Godot .NET路径>`，会使用内存测试存档。自动检查不能代替实际游戏验收。
 

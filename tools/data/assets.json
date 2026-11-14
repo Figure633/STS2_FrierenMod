@@ -6003,5 +6003,12 @@
     "modified": true,
     "processing": "tools/prepare_aura_voice.py; trim only leading/trailing silence, mono, two-pass loudness normalization and peak-limited short-clip correction; measurements in tools/data/aura_voice.json",
     "sha256": "418aecd2e8f1247e86091d33d530e303ba56162968bd12832e36a7c966e59022"
+  },
+  {
+    "file": "FrierenMod/mod_image.png",
+    "source": "Author-approved Steam Workshop cover: ModUploader-win-x64/Frieren-stable/image.png",
+    "source_kind": "author_provided",
+    "modified": false,
+    "sha256": "27ec57a53efc358ce59a31035658994bd059c5015ad2661226ef68198b47ac45"
   }
 ]

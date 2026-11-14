@@ -302,6 +302,7 @@
   "FrierenMod.Scripts.Events.EventArtTrail": "EVENT.EVENT_ART_TRAIL",
   "FrierenMod.Scripts.Events.EventArtZelda": "EVENT.EVENT_ART_ZELDA",
   "FrierenMod.Scripts.Events.HollowKnightAdventure": "EVENT.HOLLOW_KNIGHT_ADVENTURE",
+  "FrierenMod.Scripts.Events.LookUp": "EVENT.LOOK_UP",
   "FrierenMod.Scripts.Events.JojoAdventure": "EVENT.JOJO_ADVENTURE",
   "FrierenMod.Scripts.Events.SnowCrystalLand": "EVENT.SNOW_CRYSTAL_LAND",
   "FrierenMod.Scripts.Events.SummonDragon": "EVENT.SUMMON_DRAGON",

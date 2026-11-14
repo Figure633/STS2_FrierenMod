@@ -159,6 +159,22 @@ public static class UiTodoTests
         countDeck.Remove(extraProp); MagicDeckStore.Write(player, countDeck); timer.EmitSignal(Godot.Timer.SignalName.Timeout);
         Check(countLabel.Text == (countDeck.Items.Count + countDeck.Props.Count).ToString(), "消耗魔具后牌组数量恢复");
         if (topBarOnly) {
+            var commission = (Control)ui.FindChild("FrierenCommissionButton", true, false);
+            foreach (string language in new[] { "eng", "zhs" }) {
+                LocManager.Instance.SetLanguage(language);
+                await root.ToSignal(root.GetTree().CreateTimer(.3), SceneTreeTimer.SignalName.Timeout);
+                var entryLabel = commission.GetNode<Label>("Label");
+                float textWidth = entryLabel.GetThemeFont("font").GetStringSize(entryLabel.Text,
+                    fontSize: entryLabel.GetThemeFontSize("font_size")).X;
+                Check(entryLabel.Text.StartsWith(new LocString("frieren", "COMMISSION.ENTRY").GetFormattedText()) &&
+                    textWidth + 32 <= commission.Size.X, language + "委托入口及提醒标记留有可读边距");
+                Check(commission.GetGlobalRect().End.X <= button.GetGlobalRect().Position.X,
+                    language + "委托入口不与魔法牌组按钮重叠");
+                if (OS.GetCmdlineUserArgs().Contains("--ui-snapshot"))
+                    root.GetViewport().GetTexture().GetImage().SavePng(ProjectSettings.GlobalizePath($"res://../../artifacts/commission-entry-{language}.png"));
+            }
+            var cover = GD.Load<Texture2D>("res://FrierenMod/mod_image.png");
+            Check(cover != null && cover.GetWidth() > 0, "模组封面沿用原生固定资源路径");
             await root.ToSignal(root.GetTree().CreateTimer(.5), SceneTreeTimer.SignalName.Timeout);
             if (OS.GetCmdlineUserArgs().Contains("--ui-snapshot"))
                 root.GetViewport().GetTexture().GetImage().SavePng(ProjectSettings.GlobalizePath("res://../../artifacts/magic-deck-count.png"));
