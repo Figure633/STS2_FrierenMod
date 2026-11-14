@@ -9,7 +9,7 @@
   "FRIERENMOD-FRIEREN.cardsModifierTitle": "Frieren Cards",
   "FRIERENMOD-FRIEREN.cardsModifierDescription": "Add Frieren cards.",
   "FRIERENMOD-FRIEREN.eventDeathPrevention": "The journey is not over yet.",
-  "FRIERENMOD-FRIEREN.banter.alive.endTurnPing": "Let's get going.",
-  "FRIERENMOD-FRIEREN.banter.dead.endTurnPing": "...",
+  "FRIERENMOD-FRIEREN.banter.alive.endTurnPing": "How many years has it been?",
+  "FRIERENMOD-FRIEREN.banter.dead.endTurnPing": "ZZZ",
   "FRIERENMOD-FRIEREN.unlockText": "Begin a new journey."
 }
