@@ -25,13 +25,17 @@ $packageSource = Join-Path $packageRoot 'artifacts/FrierenMod'
 $packageContent = Join-Path $WorkshopDirectory 'content'
 # 只整理本地 content，不调用上传器，不写 workshop.json、封面或预览图。
 New-Item -ItemType Directory -Force -Path $packageContent | Out-Null
-foreach ($packageFile in @('FrierenMod.dll', 'FrierenMod.pck', 'FrierenMod.json', 'README.md', 'LICENSE.STS1', 'LICENSE.WATCHER')) {
+foreach ($packageFile in @('FrierenMod.dll', 'FrierenMod.pck', 'FrierenMod.json')) {
     $packageFrom = Join-Path $packageSource $packageFile
     $packageTo = Join-Path $packageContent $packageFile
     Copy-Item -LiteralPath $packageFrom -Destination $packageTo -Force
     if ((Get-FileHash -LiteralPath $packageFrom).Hash -ne (Get-FileHash -LiteralPath $packageTo).Hash) {
         throw "本地打包校验失败：$packageFile"
     }
+}
+foreach ($excludedFile in @('README.md', 'LICENSE.STS1', 'LICENSE.WATCHER')) {
+    $excludedPath = Join-Path $packageContent $excludedFile
+    if (Test-Path -LiteralPath $excludedPath -PathType Leaf) { Remove-Item -LiteralPath $excludedPath }
 }
 Write-Output "LOCAL_PACKAGE_OK: $packageContent"
 Write-Output '仅完成本地打包，未上传创意工坊。'
