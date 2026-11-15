@@ -8,10 +8,16 @@
 
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
     <EnableDefaultEmbeddedResourceItems>false</EnableDefaultEmbeddedResourceItems>
-    <Version>0.13.7</Version>
+    <Version>0.13.8</Version>
     <NoWarn>$(NoWarn);MSB3270</NoWarn>
   </PropertyGroup>
   <Import Project="GameReferences.props" />
+
+  <!-- 许可正文随DLL分发；工坊content只保留三个运行文件。 -->
+  <ItemGroup>
+    <EmbeddedResource Include="LICENSE.STS1" LogicalName="FrierenMod.Notices.LICENSE.STS1" />
+    <EmbeddedResource Include="LICENSE.WATCHER" LogicalName="FrierenMod.Notices.LICENSE.WATCHER" />
+  </ItemGroup>
 
   <ItemGroup>
     <Compile Include="Scripts/**/*.cs" />

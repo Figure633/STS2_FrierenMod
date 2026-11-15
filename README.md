@@ -1,8 +1,10 @@
 # FrierenMod STS2
 
-《杀戮尖塔2》的芙莉莲模组，移植自[一代模组](https://steamcommunity.com/sharedfiles/filedetails/?id=3164722329)。当前为游戏 **beta v0.113.0 / v0.113.1** 的适配分支，模组版本 **0.13.7**。正式版请使用 main 分支。
+《杀戮尖塔2》的芙莉莲模组，移植自[一代模组](https://steamcommunity.com/sharedfiles/filedetails/?id=3164722329)。当前为游戏 **beta v0.113.0 / v0.113.1** 的适配分支，模组版本 **0.13.8**。正式版请使用 main 分支。
 
 芙莉莲使用抽牌堆、手牌与弃牌堆中的魔力进行咏唱，可装配因子、使用魔具，包含专属卡牌、遗物、事件、委托与Boss。多人游戏双方需使用相同版本的模组和BaseLib；混合角色队伍保留原版事件和Boss池。
+
+0.13.8 将工坊content精简为DLL、PCK和JSON三个运行文件；许可正文内嵌DLL，README和独立LICENSE文件保留在仓库与本地构建包中。
 
 0.13.7 按原版中文排版移除卡牌、因子、魔具、自定义魔法及相关悬停中数字两侧的多余空格，保留数值、公式、关键词和英文文本；验证 beta v0.113.1 接口兼容。
 
@@ -64,7 +66,7 @@
 ./tools/install.ps1
 ```
 
-双击仓库根目录的 `本地打包.cmd`，或运行 `./tools/package-workshop.ps1`，会构建、校验并更新对应工坊工作区的 `content/`。只在本地操作，不修改工坊标题、description、封面或预览图，不启动上传器。成功打包会在 `artifacts/build-references/` 保存一套对应分支的依赖及指纹，后续使用缓存，无需切换 Steam 分支；新环境首次需使用匹配的游戏依赖，升级游戏 API 时重新核查。可用 `-WorkshopDirectory` 指定现有上传工作区。安装仍核对当前游戏，避免装错分支。
+双击仓库根目录的 `本地打包.cmd`，或运行 `./tools/package-workshop.ps1`，会构建、校验并更新对应工坊工作区的 `content/`，其中只放 `FrierenMod.dll`、`FrierenMod.pck`、`FrierenMod.json`。打包会清除该目录旧的 `README.md`、`LICENSE.STS1`、`LICENSE.WATCHER`；许可正文内嵌DLL，原文件仍保留在仓库和本地构建包。只在本地操作，不修改工坊标题、description、封面或预览图，不启动上传器。成功打包会在 `artifacts/build-references/` 保存一套对应分支的依赖及指纹，后续使用缓存，无需切换 Steam 分支；新环境首次需使用匹配的游戏依赖，升级游戏 API 时重新核查。可用 `-WorkshopDirectory` 指定现有上传工作区。安装仍核对当前游戏，避免装错分支。
 
 构建结果位于 `artifacts/FrierenMod/`；安装前需退出游戏。基础构建包含规则、集成、接口及资源检查。引擎检查另加 `-EngineTests -GodotMonoPath <Godot .NET路径>`，会使用内存测试存档。自动检查不能代替实际游戏验收。
 
