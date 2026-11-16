@@ -23,7 +23,7 @@ public sealed class MimicFight : FrierenStoryEvent
     }
     private Task Fight()
     {
-        EnterStoryCombat(ModelDb.Encounter<MimicEncounter>().ToMutable(),[],resume:false);
+        EnterStoryCombat(ModelDb.Encounter<MimicEncounter>(),[],resume:false);
         return Task.CompletedTask;
     }
     private async Task Explode()

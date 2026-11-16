@@ -32,6 +32,50 @@ public static class DemonArmyAttackTests
     public static bool CaptureEnterRoom(AbstractRoom room, ref Task __result)
     { CapturedRoom=(CombatRoom)room;__result=Task.CompletedTask;return false; }
 
+    public static async Task<int> RunCombatEntry()
+    {
+        int count=0;
+        void Check(bool ok,string message){if(!ok)throw new Exception(message);count++;GD.Print("PASS 事件战斗入口："+message);}
+        SaveManager.Instance.InitPrefsDataForTest();LocalContext.NetId=1;
+        var manager=RunManager.Instance;
+        var harmony=new Harmony("frieren.tests.event-combat-entry");
+        harmony.Patch(AccessTools.Method(typeof(RunManager),nameof(RunManager.EnterRoomWithoutExitingCurrentRoom)),
+            prefix:new HarmonyMethod(typeof(DemonArmyAttackTests),nameof(CaptureEnterRoom)));
+        try {
+            var cases=DemonArmyAttack.BossPool.Select(b=>(story:(EventModel)ModelDb.Event<DemonArmyAttack>(),boss:(EncounterModel?)b,branch:0,expected:b,resume:false))
+                .Concat(new[]{
+                    (story:(EventModel)ModelDb.Event<DemonArmyAttack>(),boss:(EncounterModel?)null,branch:1,expected:(EncounterModel)ModelDb.Encounter<InfestedPrismsElite>(),resume:false),
+                    (story:(EventModel)ModelDb.Event<DemonArmyAttack>(),boss:(EncounterModel?)null,branch:2,expected:(EncounterModel)ModelDb.Encounter<HunterKillerNormal>(),resume:false),
+                    (story:(EventModel)ModelDb.Event<MimicFight>(),boss:(EncounterModel?)null,branch:0,expected:(EncounterModel)ModelDb.Encounter<FrierenMod.Scripts.Encounters.MimicEncounter>(),resume:false),
+                    (story:(EventModel)ModelDb.Event<DragonBallAdventure>(),boss:(EncounterModel?)null,branch:0,expected:(EncounterModel)ModelDb.Encounter<BattlewornDummyEventV1Encounter>(),resume:true)
+                }).ToArray();
+            foreach(int size in new[]{1,2,4})foreach(var test in cases){
+                var players=Enumerable.Range(1,size).Select(id=>Player.CreateForNewRun<Frieren>(UnlockState.all,(ulong)id)).ToArray();
+                var run=RunState.CreateForTest(players,seed:"EVENT-COMBAT-ENTRY");run.CurrentActIndex=2;
+                manager.SetUpTest(run,new NetSingleplayerGameService());manager.CombatReplayWriter.IsEnabled=false;
+                run.AppendToMapPointHistory(MegaCrit.Sts2.Core.Map.MapPointType.Unknown,RoomType.Event,test.story.Id);
+                run.PushRoom(new EventRoom(test.story));
+                manager.EventSynchronizer.BeginEvent(test.story,debugOnStart:model=>{
+                    if(test.boss!=null)AccessTools.Field(typeof(DemonArmyAttack),"_boss").SetValue(model,test.boss);
+                });
+                manager.EventSynchronizer.GenerateInternalCombatStateIfNecessary(manager.EventSynchronizer.GetLocalEvent());
+                var instances=manager.EventSynchronizer.Events.ToArray();
+                if(test.story is MimicFight)foreach(var model in instances)await model.CurrentOptions[0].Chosen();
+                CapturedRoom=null;
+                for(int i=0;i<instances.Length;i++){
+                    await instances[i].CurrentOptions[test.branch].Chosen();
+                    if(i<instances.Length-1)Check(CapturedRoom==null,"等待全部玩家准备："+test.story.Id+"/"+size+"/"+i);
+                }
+                Check(CapturedRoom is {} room&&room.Encounter.IsMutable&&room.Encounter.Id==test.expected.Id&&
+                    room.ParentEventId==test.story.Id&&room.ShouldResumeParentEventAfterCombat==test.resume,
+                    $"{size}人原生同步器进入{test.story.Id}/{test.expected.Id}，保留父事件和返回规则");
+                manager.CleanUp();
+            }
+        }
+        finally {harmony.UnpatchAll(harmony.Id);if(manager.DebugOnlyGetState()!=null)manager.CleanUp();}
+        return count;
+    }
+
     public static async Task<int> Run(Node root)
     {
         int count=0;void Check(bool ok,string message){if(!ok)throw new Exception(message);count++;GD.Print("PASS 魔王军事件："+message);}

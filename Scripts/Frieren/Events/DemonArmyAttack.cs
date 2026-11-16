@@ -33,7 +33,7 @@ public sealed class DemonArmyAttack : FrierenStoryEvent
 
     private Task Fight(EncounterModel encounter)
     {
-        EnterStoryCombat(encounter.ToMutable(), [], resume: false);
+        EnterStoryCombat(encounter, [], resume: false);
         return Task.CompletedTask;
     }
 }

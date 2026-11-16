@@ -51,13 +51,14 @@ public abstract class FrierenStoryEvent : CustomEventModel
         var result = await CardPileCmd.Add(card, PileType.Deck);
         CardCmd.PreviewCardPileAdd(result, 1.2f, CardPreviewStyle.EventLayout);
     }
-    protected void EnterStoryCombat(EncounterModel encounter,IReadOnlyList<Reward> rewards,bool resume)
+    protected void EnterStoryCombat(EncounterModel canonicalEncounter,IReadOnlyList<Reward> rewards,bool resume)
     {
         var manager=RunManager.Instance;
         // 原生 event 控制台指令直接跳房，可能尚未建立本场战斗的回放起点。
         // 缺少起点会使结束回合及结束战斗抛错，超时假人也无法返回事件。
         if(LocalContext.IsMe(Owner!) && manager.CombatReplayWriter.IsEnabled && !manager.CombatReplayWriter.IsRecordingReplay)
             manager.CombatReplayWriter.RecordInitialState(manager.ToSave(Owner!.RunState.CurrentRoom));
-        EnterCombatWithoutExitingEvent(encounter,rewards,shouldResumeAfterCombat:resume);
+        // beta 由原生同步器等待所有玩家后统一创建可变副本，调用方必须传入原始模型。
+        EnterCombatWithoutExitingEvent(canonicalEncounter,rewards,shouldResumeAfterCombat:resume);
     }
 }
