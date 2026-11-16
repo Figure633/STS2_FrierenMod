@@ -216,6 +216,10 @@ public partial class Runner : Node
                 GD.Print("EVENT_COMBAT_ENTRY_OK: " + await DemonArmyAttackTests.RunCombatEntry());
                 await Finish(); return;
             }
+            if (OS.GetCmdlineUserArgs().Contains("--smith-grid-only")) {
+                GD.Print("SMITH_GRID_OK: " + await SmithGridTests.Run(this));
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--author-0120-only")) {
                 GD.Print("AUTHOR0120_OK: " + await Author0120Tests.Run(this));
                 await Finish(); return;
