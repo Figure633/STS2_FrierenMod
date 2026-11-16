@@ -96,6 +96,10 @@ public partial class Runner : Node
             SaveManager.Instance.InitSettingsData();
             SaveManager.Instance.SettingsSave.Language = "eng";
             LocManager.Initialize();
+            if (OS.GetCmdlineUserArgs().Contains("--hextech-opening-only")) {
+                GD.Print("HEXTECH_OPENING_OK: " + await HextechOpeningTests.Run(this));
+                await Finish(); return;
+            }
             if (reviewedOnly) GD.Print("REVIEWED: 本地化已加载");
             if (OS.GetCmdlineUserArgs().Any(a => a.StartsWith("--save-cache-"))) {
                 GD.Print("SAVE_METADATA_OK: " + await SaveMetadataTests.Run(!OS.GetCmdlineUserArgs().Contains("--save-cache-normal-only")));
