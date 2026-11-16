@@ -1,8 +1,10 @@
 # FrierenMod STS2
 
-《杀戮尖塔2》的芙莉莲模组，移植自[一代模组](https://steamcommunity.com/sharedfiles/filedetails/?id=3164722329)。当前版本 **0.13.8**，开发中。
+《杀戮尖塔2》的芙莉莲模组，移植自[一代模组](https://steamcommunity.com/sharedfiles/filedetails/?id=3164722329)。当前版本 **0.13.10**，开发中。
 
 芙莉莲使用抽牌堆、手牌与弃牌堆中的魔力进行咏唱，可装配因子、使用魔具，包含专属卡牌、遗物、事件、委托与Boss。多人游戏双方需使用相同版本的模组和BaseLib；混合角色队伍保留原版事件和Boss池。
+
+0.13.10 修复与结城理等提前缓存原生 JSON 存档结构的模组同时启用时，SL 丢失因子并重新选取的问题；同时保留魔具、委托、龙珠和事件进度，沿用 BaseLib 存档格式及其他模组的 JSON 扩展。
 
 0.13.8 将工坊content精简为DLL、PCK和JSON三个运行文件；许可正文内嵌DLL，README和独立LICENSE文件保留在仓库与本地构建包中。
 
