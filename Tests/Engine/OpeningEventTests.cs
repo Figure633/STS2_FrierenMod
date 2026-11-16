@@ -63,7 +63,7 @@ public static class OpeningEventTests
         return checks;
     }
 
-    public static async Task<int> Run(Node root)
+    public static async Task<int> Run(Node root, Action<RunState>? beforeDepart = null)
     {
         int count = 0;
         void Check(bool ok, string name) { if (!ok) throw new Exception(name); GD.Print("PASS 开局事件：" + name); count++; }
@@ -219,6 +219,7 @@ public static class OpeningEventTests
             }
             if (language == "eng" && progress == 4) {
                 MagicDeckStore.Write(restored, complete);
+                beforeDepart?.Invoke(state);
                 var point = button.GetGlobalRect().GetCenter();
                 root.GetViewport().PushInput(new InputEventMouseMotion { Position = point, GlobalPosition = point }, true); await Tick();
                 root.GetViewport().PushInput(new InputEventMouseButton { Position = point, GlobalPosition = point, ButtonIndex = MouseButton.Left, Pressed = true }, true); await Tick();
