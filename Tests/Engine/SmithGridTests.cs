@@ -25,7 +25,7 @@ using MegaCrit.Sts2.Core.Unlocks;
 public static class SmithGridTests
 {
     private static bool SkipStartup()=>false;
-    public static async Task<int> Run(Node root)
+    public static async Task<int> Run(Node root, bool regentCacheRepro=false)
     {
         int count=0;
         void Check(bool ok,string message){if(!ok)throw new Exception(message);count++;GD.Print("PASS 锻造网格："+message);}
@@ -49,6 +49,12 @@ public static class SmithGridTests
         grid.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);root.AddChild(grid);await Tick();
         var rowsField=AccessTools.Field(typeof(NCardGrid),"_cardRows");
         try {
+            if(regentCacheRepro){
+                var sample=ModelDb.CardPool<FrierenCardPool>().AllCards.First(c=>c.IsUpgradable&&c is not FactorCard and not MagicPropCard);
+                grid.SetCards([run.CreateCard(sample,player)],PileType.None,[SortingOrders.Ascending]);await Tick();
+                var holder=((List<List<NGridCardHolder>>)rowsField.GetValue(grid)!).SelectMany(r=>r).Single();
+                return await RegentPortraitCacheTests.Run(root,holder.CardNode!);
+            }
             var bookHost=new Control{Size=new(1920,1080)};root.AddChild(bookHost);
             MagicDeckStore.Write(player,MagicDeckState.CreatePrototypeLoadout());
             var book=new MagicBookScreen(bookHost,player,()=>null);

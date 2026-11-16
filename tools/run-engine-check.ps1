@@ -1,11 +1,13 @@
 param([Parameter(Mandatory)][ValidatePattern('^[a-z0-9-]+$')][string]$Mode, [switch]$Snapshot,
-    [string]$RuntimeDataDir = '', [string]$ReleaseInfoPath = '', [string]$GodotMonoPath = '')
+    [string]$RuntimeDataDir = '', [string]$ReleaseInfoPath = '', [string]$GodotMonoPath = '',
+    [string]$RegentAnimeDll = '')
 $ErrorActionPreference = 'Stop'
 $checkRoot = Split-Path -Parent $PSScriptRoot
 [xml]$checkConfig = Get-Content -LiteralPath (Join-Path $checkRoot 'local.props') -Raw
 $checkProps = $checkConfig.Project.PropertyGroup
 $env:FRIEREN_STS2_DIR = [string]$checkProps.Sts2Dir
 $env:FRIEREN_BASELIB_DIR = [string]$checkProps.BaseLibDir
+if($RegentAnimeDll) { $env:FRIEREN_REGENT_ANIME_DLL = (Resolve-Path -LiteralPath $RegentAnimeDll).Path }
 $env:APPDATA = Join-Path $checkRoot 'artifacts/test-appdata'
 $env:LOCALAPPDATA = Join-Path $checkRoot 'artifacts/test-localappdata'
 $env:FRIEREN_RELEASE_INFO = if($ReleaseInfoPath) { (Resolve-Path -LiteralPath $ReleaseInfoPath).Path } else { Join-Path $env:FRIEREN_STS2_DIR 'release_info.json' }

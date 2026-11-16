@@ -227,6 +227,10 @@ public partial class Runner : Node
                 GD.Print("SMITH_GRID_OK: " + await SmithGridTests.Run(this));
                 await Finish(); return;
             }
+            if (OS.GetCmdlineUserArgs().Contains("--regent-cache-repro-only")) {
+                GD.Print("REGENT_CACHE_REPRO_OK: " + await SmithGridTests.Run(this,regentCacheRepro:true));
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--author-0120-only")) {
                 GD.Print("AUTHOR0120_OK: " + await Author0120Tests.Run(this));
                 await Finish(); return;
