@@ -83,7 +83,10 @@ public partial class Runner : Node
                 AccessTools.Method(typeof(MegaCrit.Sts2.Core.Debug.ReleaseInfoManager),"GetPossibleReleaseInfoPaths"),
                 prefix:new HarmonyMethod(typeof(Runner),nameof(ReleasePaths)));
             BaseLib.BaseLibMain.Initialize();
+            if (OS.GetCmdlineUserArgs().Any(a => a.StartsWith("--save-cache-"))) SaveMetadataTests.CaptureOriginalOptions();
+            if (OS.GetCmdlineUserArgs().Contains("--save-cache-before-frieren-only")) SaveMetadataTests.CacheBeforeRegistration();
             FrierenMod.Scripts.Entry.Init();
+            if (OS.GetCmdlineUserArgs().Contains("--save-cache-after-frieren-only")) SaveMetadataTests.CacheBeforeRegistration();
             var initModels=AccessTools.Method(typeof(ModelDb),"Init");
             initModels.Invoke(null,initModels.GetParameters().Length==0?null:[null]);
             ModelIdSerializationCache.Init();
@@ -94,6 +97,10 @@ public partial class Runner : Node
             SaveManager.Instance.SettingsSave.Language = "eng";
             LocManager.Initialize();
             if (reviewedOnly) GD.Print("REVIEWED: 本地化已加载");
+            if (OS.GetCmdlineUserArgs().Any(a => a.StartsWith("--save-cache-"))) {
+                GD.Print("SAVE_METADATA_OK: " + await SaveMetadataTests.Run(!OS.GetCmdlineUserArgs().Contains("--save-cache-normal-only")));
+                await Finish(); return;
+            }
             MegaCrit.Sts2.Core.Nodes.Pooling.NodePool.Init<MegaCrit.Sts2.Core.Nodes.Cards.NCard>("res://scenes/cards/card.tscn", 0);
             MegaCrit.Sts2.Core.Nodes.Pooling.NodePool.Init<MegaCrit.Sts2.Core.Nodes.Cards.Holders.NGridCardHolder>("res://scenes/cards/holders/grid_card_holder.tscn", 0);
             new Harmony("frieren.tests.hotkeys").Patch(
