@@ -93,9 +93,9 @@ public static class Todo110Tests
         Check(hair.Counter==2,"发饰不计其他玩家与非魔力卡");
         await hair.AfterCardPlayed(context,Play(New<Mana>()));await hair.AfterCardPlayed(context,Play(New<Mana>()));
         Check(hair.Counter==0&&player.PlayerCombatState!.Hand.Cards.Count==1,"跨回合累计4次后抽1张并归零");
-        Check(!SpellCatalog.Available.Any(f=>f.Id==nameof(TransferToAlchemist))&&SpellCatalog.Get(nameof(TransferToAlchemist))!=null,"弃用因子排除获取但仍能解析旧档");
-        Check(!ModelDb.Card<TransferToAlchemist>().ShouldShowInCardLibrary&&!ModelDb.Card<BreaksBarriersSpell>().ShouldShowInCardLibrary,"弃用因子与解析结界从百科隐藏");
-        Check(Enumerable.Range(0,30).All(i=>!MagicRewardRules.Offer(5,n=>(i*7)%n).Choices.Contains(nameof(TransferToAlchemist))),"新战利品不同随机路径不掉落弃用因子");
+        Check(SpellCatalog.Available.Any(f=>f.Id==nameof(TransferToAlchemist))&&SpellCatalog.Get(nameof(TransferToAlchemist))!=null,"转职药剂师恢复获取并兼容旧档");
+        Check(ModelDb.Card<TransferToAlchemist>().ShouldShowInCardLibrary&&!ModelDb.Card<BreaksBarriersSpell>().ShouldShowInCardLibrary,"转职药剂师显示且解析结界保持隐藏");
+        Check(Enumerable.Range(0,30).Any(i=>MagicRewardRules.Offer(5,n=>(i*7)%n).Choices.Contains(nameof(TransferToAlchemist))),"新战利品可获得转职药剂师");
         var option=ChantRules.Preview(ManaSlot.Draw,SpellCatalog.Get("GrossedOutLook").Rules,3);
         Check(option.Reward==3,"嫌弃脸只降低X力量，没有额外2点");
         await Reset();var source=New<RapidChant>();await FactorEffects.Apply(context,Play(source),option);

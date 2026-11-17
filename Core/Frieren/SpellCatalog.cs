@@ -43,8 +43,8 @@ public static class SpellCatalog
     public static FactorDefinition Get(string id) => All.FirstOrDefault(x => x.Id == id)
         ?? throw new ArgumentException($"未知魔法因子：{id}", nameof(id));
 
-    // 旧档仍可解析弃用因子，新的抽选与变换统一使用可获取目录。
-    public static IEnumerable<FactorDefinition> Available => All.Where(x => x.Id != "TransferToAlchemist");
+    // 新的抽选与变换统一使用可获取目录。
+    public static IEnumerable<FactorDefinition> Available => All;
 
     public static string[] Offer(FactorRarity rarity, Func<int, int> next, bool starting = false)
     {
