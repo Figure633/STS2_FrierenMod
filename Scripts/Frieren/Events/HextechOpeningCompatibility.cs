@@ -11,7 +11,7 @@ namespace FrierenMod.Scripts.Events;
 
 // 海克斯在 StartRun 完成后自动添加 Modifier；芙莉莲此时仍在选因子，
 // 稍后进入涅奥便被原生判断当作自定义规则局，失去普通祝福。
-// 仅在芙莉莲单人普通开局的涅奥判断中忽略该标记，不修改本局 Modifier。
+// 仅在芙莉莲单人普通或恐惧模式开局的涅奥判断中忽略该标记，不修改本局 Modifier。
 [HarmonyPatch]
 internal static class HextechOpeningCompatibility
 {
@@ -43,7 +43,7 @@ internal static class HextechOpeningCompatibility
     private static int CountOpeningModifiers(IReadOnlyCollection<ModifierModel> modifiers, Neow neow)
     {
         var owner = neow.Owner;
-        if (owner?.Character is not Frieren || owner.RunState.GameMode != GameMode.Standard ||
+        if (owner?.Character is not Frieren || owner.RunState.GameMode is not (GameMode.Standard or GameMode.Dread) ||
             owner.RunState.CurrentActIndex != 0 || owner.RunState.Players.Count != 1)
             return modifiers.Count;
         return modifiers.Count(m => m.GetType().FullName != "HextechRunes.HextechMayhemModifier" ||

@@ -30,6 +30,9 @@ public static class HextechOpeningTests
         var manager = RunManager.Instance;
         SaveManager.Instance.InitPrefsDataForTest();
         foreach (var test in new[] {
+            ("恐惧模式芙莉莲单开", true, false, false, GameMode.Dread, 1, true),
+            ("恐惧模式海克斯双开", true, true, false, GameMode.Dread, 1, true),
+            ("恐惧模式海克斯加自定义规则", true, true, true, GameMode.Dread, 1, false),
             ("芙莉莲单开", true, false, false, GameMode.Standard, 1, true),
             ("芙莉莲与海克斯双开", true, true, false, GameMode.Standard, 1, true),
             ("芙莉莲加原生自定义规则", true, false, true, GameMode.Standard, 1, false),
