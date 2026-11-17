@@ -80,8 +80,11 @@ public static class SlotBackUnlockTests
         Reset();NewSlotBackAchievements.Victory(room);Check(!Has("8007"),"首回合普通战胜利不算Boss");
         // 实际原生777投点与金币结算，避免仅验证一个手动解锁调用。
         Reset();var rng=run.Rng.Niche;
-        for(int counter=rng.Counter;counter<100000;counter++){
-            var probe=new Rng(rng.Seed,counter);if(Enumerable.Range(0,3).All(_=>probe.NextInt(4,8)==7)){rng.FastForwardCounter(counter);break;}
+        int start=CombatTestState.RngCounter(rng);
+        for(int counter=start;counter<Math.Max(100000,start);counter++){
+            var probe=new Rng(rng.ToSerializable());
+            for(int advance=start;advance<counter;advance++)probe.NextInt(8);
+            if(Enumerable.Range(0,3).All(_=>probe.NextInt(4,8)==7)){while(CombatTestState.RngCounter(rng)<counter)rng.NextInt(8);break;}
         }
         var money=combat.CreateCard<HonestLiving>(p);await CardPileCmd.Add(money,PileType.Hand);
         await money.OnPlayWrapper(new ThrowingPlayerChoiceContext(),null,false,new ResourceInfo{EnergySpent=1,EnergyValue=1,StarsSpent=0,StarValue=0},true);

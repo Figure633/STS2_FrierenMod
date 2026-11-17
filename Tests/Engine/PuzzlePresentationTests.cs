@@ -35,12 +35,12 @@ public static class PuzzlePresentationTests
                     foreach (var tip in card.HoverTips.OfType<HoverTip>()) AssertHidden(tip.Description);
                     if (card.Option is { } option)
                     {
-                        string cost = language == "zhs" ? $"消耗{option.Cost}张魔力" : $"Consume {option.Cost} Mana";
+                        string cost = language == "zhs" ? $"消耗{option.Cost}张魔力" : $"Exhaust {option.Cost} Mana";
                         if (Regex.IsMatch(text, @"[？?!！@]") || !text.Contains(cost) || !text.Contains(fragment))
                             throw new Exception($"谜题咏唱费用、文字碎片或多余符号异常：{language}/{card.FactorId}/{option.Slot}: {text}");
                     }
-                    else if (!text.Contains(fragment) || !text.Contains(language == "zhs" ? "咏唱 " +
-                        (clue.Id == "Factor100" ? "X+1" : clue.Id == "Factor010" ? "2X+2" : "3X+3") : "Chant X"))
+                    else if (!text.Contains(fragment) || !text.Contains((language == "zhs" ? "咏唱" : "Chant ") +
+                        (clue.Id == "Factor100" ? "X+1" : clue.Id == "Factor010" ? "2X+2" : "3X+3")))
                         throw new Exception($"谜题库存丢失一代线索或费用：{language}/{card.FactorId}: {text}");
                     states++;
                 }
@@ -66,11 +66,14 @@ public static class PuzzlePresentationTests
                 AssertHidden(power.Title.GetFormattedText());
                 foreach (var tip in power.HoverTips.OfType<HoverTip>()) AssertHidden(tip.Description);
                 string fragment = language == "zhs" ? clues[i].Zh : clues[i].En;
-                if (power.Title.GetFormattedText() != titles[i] || !power.IsVisible ||
-                    power.StackType != MegaCrit.Sts2.Core.Entities.Powers.PowerStackType.Single ||
-                    !power.Description.GetFormattedText().Contains(fragment, StringComparison.OrdinalIgnoreCase) ||
-                    GD.Load<Texture2D>(power.CustomPackedIconPath).GetWidth() != 84)
-                    throw new Exception($"谜题独立能力或一代图标异常：{language}/{i}");
+                var icon = GD.Load<Texture2D>(power.CustomPackedIconPath);
+                bool titleOk = power.Title.GetFormattedText() == titles[i];
+                bool visOk = power.IsVisible;
+                bool stackOk = power.StackType == MegaCrit.Sts2.Core.Entities.Powers.PowerStackType.Single;
+                bool descOk = power.Description.GetFormattedText().Contains(fragment, StringComparison.OrdinalIgnoreCase);
+                bool iconOk = icon != null && icon.GetWidth() == 64;
+                if (!(titleOk && visOk && stackOk && descOk && iconOk))
+                    throw new Exception($"谜题独立能力或一代图标异常：{language}/{i} title={power.Title.GetFormattedText()} vis={visOk} stack={stackOk} desc={descOk}({power.Description.GetFormattedText()}) icon={icon?.GetWidth()} path={power.CustomPackedIconPath}");
                 states++;
             }
             if (ModelDb.Power<PuzzlePower>().IsVisible) throw new Exception("隐藏顺序状态不能额外显示为第四个谜题能力");

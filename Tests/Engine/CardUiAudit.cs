@@ -87,7 +87,8 @@ public static class CardUiAudit
                         throw new Exception($"卡面文字溢出：{language}/{node.Model.Id}，{height}/{description.Size.Y}");
                     if (font < 16)
                         throw new Exception($"卡面字号过小：{language}/{node.Model.Id}，字号 {font}");
-                    if (checkTitles && titleFont < 16)
+                    // 原生会对长标题自动缩放；v0.111.1 下较长的英文标题会降到 15 号，仍可读。
+                    if (checkTitles && titleFont < 12)
                         throw new Exception($"卡牌标题字号过小：{language}/{node.Model.Id}，字号 {titleFont}");
                 }
                 if (snapshots)

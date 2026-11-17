@@ -64,7 +64,8 @@ public static class DragonSummoning
         ready.Add(manager.NetService.NetId);
         manager.NetService.SendMessage(new DragonCampReady{Floor=run.TotalFloor,Stage=stage,Collector=owner.NetId});
         // Reliable 消息按发出顺序送达：所有 ready 之前的选项及选牌结果均会先处理。
-        while (run.Players.Any(p=>(manager.RunLobby?.ConnectedPlayerIds.Contains(p.NetId) ?? true) && !ready.Contains(p.NetId)) || Busy()) {
+        // v0.111.1 起 RunLobby.ConnectedPlayerIds 更名为 PlayerIds（仅当前仍连接的玩家）。
+        while (run.Players.Any(p=>(manager.RunLobby?.PlayerIds.Contains(p.NetId) ?? true) && !ready.Contains(p.NetId)) || Busy()) {
             if(manager.IsCleaningUp || !ReferenceEquals(manager.DebugOnlyGetState(),run)) return;
             await Frame();
         }

@@ -40,10 +40,12 @@ public static class HonestLivingTests
         HonestLiving Card(bool upgrade=false){var c=combat.CreateCard<HonestLiving>(p);if(upgrade)CardCmd.Upgrade(c);return c;}
         async Task Use(CardModel c){await CardPileCmd.Add(c,PileType.Hand);await c.OnPlayWrapper(context,null,false,new ResourceInfo{EnergySpent=1,EnergyValue=1,StarsSpent=0,StarValue=0},true);}
         int[] Seek(int min,Func<int[],bool> predicate){
-            var rng=run.Rng.Niche;
-            for(int counter=rng.Counter;counter<rng.Counter+20000;counter++){
-                var probe=new Rng(rng.Seed,counter);int[] rolls=Enumerable.Range(0,3).Select(_=>probe.NextInt(min,8)).ToArray();
-                if(predicate(rolls)){rng.FastForwardCounter(counter);return rolls;}
+            var rng=run.Rng.Niche;int start=CombatTestState.RngCounter(rng);
+            for(int counter=start;counter<start+20000;counter++){
+                var probe=new Rng(rng.ToSerializable());
+                for(int advance=start;advance<counter;advance++)probe.NextInt(8);
+                int[] rolls=Enumerable.Range(0,3).Select(_=>probe.NextInt(min,8)).ToArray();
+                if(predicate(rolls)){while(CombatTestState.RngCounter(rng)<counter)rng.NextInt(8);return rolls;}
             }
             throw new Exception("未找到本测试需要的随机序列");
         }
@@ -54,10 +56,10 @@ public static class HonestLivingTests
         await PowerCmd.Apply<StrengthPower>(context,p.Creature,20,p.Creature,null);
         await PowerCmd.Apply<WeakPower>(context,p.Creature,2,p.Creature,null);
         foreach(var e in enemies)await PowerCmd.Apply<VulnerablePower>(context,e,2,p.Creature,null);
-        int[] rolls=Seek(4,r=>r.Contains(4)&&r.Any(n=>n!=7));int hp=Hp(),gold=p.Gold,counter=run.Rng.Niche.Counter;
+        int[] rolls=Seek(4,r=>r.Contains(4)&&r.Any(n=>n!=7));int hp=Hp(),gold=p.Gold,counter=CombatTestState.RngCounter(run.Rng.Niche);
         await Use(card);
         Check(hp-Hp()==rolls.Sum(),"普通4～7三段固定伤害，不受力量／虚弱／易伤影响");
-        Check(run.Rng.Niche.Counter==counter+3,"独立三次整数投点，使用可存档的原生随机数流");
+        Check(CombatTestState.RngCounter(run.Rng.Niche)==counter+3,"独立三次整数投点，使用可存档的原生随机数流");
         Check(p.Gold==gold&&DebtStore.Read(p)==7&&DebtStore.Read(other)==0,"失败只累积7负债，不扣金币且不影响队友");
         Check(card.Pile?.Type==PileType.Exhaust,"实际使用后进入消耗堆");
         card=Card(true);rolls=Seek(5,r=>r.Contains(5)&&r.Any(n=>n!=7));hp=Hp();await Use(card);

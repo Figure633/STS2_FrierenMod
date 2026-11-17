@@ -101,8 +101,9 @@ public sealed class SpiegelFrieren : CustomMonsterModel
             if (owner.Monster is not SpiegelFrieren monster || !ReferenceEquals(__instance, monster._apexAttackIntent)) return true;
             decimal damage = 999;
             var player = LocalContext.GetMe(owner.CombatState);
+            // v0.111.1 起 ModifyDamage 在 cardSource 后新增 cardPlay 参数；本招不是卡牌来源，两处都传 null。
             if (player != null) damage = Hook.ModifyDamage(player.RunState, owner.CombatState, player.Creature, owner, damage,
-                ValueProp.Move | ValueProp.Unpowered, null, ModifyDamageHookType.All, CardPreviewMode.None, out _);
+                ValueProp.Move | ValueProp.Unpowered, null, null, ModifyDamageHookType.All, CardPreviewMode.None, out _);
             __result = Math.Max(0, (int)damage);
             return false;
         }

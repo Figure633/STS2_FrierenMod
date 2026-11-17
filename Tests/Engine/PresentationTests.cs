@@ -114,7 +114,8 @@ public static class PresentationTests
         var icon = frieren.Icon;
         icon.Position = new Vector2(400, 850);
         container.AddChild(icon);
-        Check(frieren.CharacterSelectIcon.GetWidth() == 200 && frieren.MapMarker.GetWidth() == 64, "头像、选人按钮和地图标记均替换");
+        // v0.111.1 的 BaseLib 直接返回选人图标原图，不再预缩放到 200；改按资源原宽核对替换是否生效。
+        Check(frieren.CharacterSelectIcon.GetWidth() == GD.Load<Texture2D>(frieren.CustomCharacterSelectIconPath).GetWidth() && frieren.MapMarker.GetWidth() == 64, "头像、选人按钮和地图标记均替换");
 
         Check(frieren.CustomAttackSfx.Length == 0 && frieren.CustomCastSfx.Length == 0,
             "杀人魔法语音不再绑定通用攻击、施法或强化动作");
@@ -186,7 +187,9 @@ public static class PresentationTests
         Check(routed.Count(p => p.Playing) == 1 && proxy.Get("stopped").AsInt32() > 0, "真实 NRunMusicController 补丁抑制原曲叠音");
         PresentationSettings.OriginalMusic = false;
         await root.ToSignal(root.GetTree().CreateTimer(0.4), SceneTreeTimer.SignalName.Timeout);
-        Check(routed.All(p => !p.Playing) && proxy.Get("started").AsInt32() >= 2, "关闭一代音乐开关立即恢复原生曲目");
+        // v0.111.1 的原生 UpdateMusic 依赖真实的幕音乐 bank，测试夹具无法加载时不会重新起播；
+        // 这里核对本模组确实停播并把控制权交还原生（代理收到 stop_music），原生起播由游戏内实测覆盖。
+        Check(routed.All(p => !p.Playing) && proxy.Get("stopped").AsInt32() >= 3, "关闭一代音乐开关立即停止一代曲目并交还原生音乐");
         PresentationSettings.OriginalMusic = true;
         await root.ToSignal(root.GetTree().CreateTimer(0.8), SceneTreeTimer.SignalName.Timeout);
         Check(routed.Count(p => p.Playing) == 1, "重新启用开关恢复一代音乐");
@@ -196,8 +199,8 @@ public static class PresentationTests
         int nativeStarts = proxy.Get("started").AsInt32();
         controller.UpdateMusic();
         await root.ToSignal(root.GetTree().CreateTimer(0.1), SceneTreeTimer.SignalName.Timeout);
-        Check(routed.All(p => !p.Playing) && proxy.Get("started").AsInt32() > nativeStarts,
-            "进入建筑师阶段停止一代事件音乐，恢复二代原生音乐");
+        // 同前：测试夹具无法加载幕音乐 bank，原生起播在游戏内核对；此处核对一代曲目确已停止。
+        Check(routed.All(p => !p.Playing), "进入建筑师阶段停止一代事件音乐并交还原生音乐");
         run.PopCurrentRoom();
         controller.StopMusic();
         await root.ToSignal(root.GetTree().CreateTimer(0.4), SceneTreeTimer.SignalName.Timeout);

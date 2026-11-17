@@ -96,7 +96,7 @@ public static class ChantSelectionTests
         await PowerCmd.Apply<MegaCrit.Sts2.Core.Models.Powers.DexterityPower>(context,player.Creature,-3,player.Creature,null);
         Check(blockFactor.GetDescriptionForPile(PileType.None).Contains("[red]0[/red]"),"负敏捷预览降至零并变红");
         await PowerCmd.Remove(player.Creature.GetPower<MegaCrit.Sts2.Core.Models.Powers.DexterityPower>()!);
-        Check(blockFactor.GetDescriptionForPile(PileType.None).Contains("2 点格挡两次") && blockFactor.Option==blockOption,
+        Check(blockFactor.GetDescriptionForPile(PileType.None).Contains("2点格挡两次") && blockFactor.Option==blockOption,
             "预览不改写因子基础奖励或支付费用");
         LocManager.Instance.SetLanguage("eng");
         T Card<T>() where T : CardModel { var c = ModelDb.Card<T>().ToMutable(); c.Owner = player; return (T)c; }

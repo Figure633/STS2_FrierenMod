@@ -570,8 +570,9 @@ public partial class Runner : Node
             ui.GetNode<Godot.Timer>("FrierenManaRefresh").EmitSignal(Godot.Timer.SignalName.Timeout);
             var hud = ui.GetNode<Control>("FrierenManaCounter");
             if (!hud.Visible) throw new Exception("战斗魔力面板未显示。");
-            if (hud.Size.X > 120 || hud.Size.Y > 280 || hud.FindChildren("*", "Label", true, false).Count != 6)
-                throw new Exception("魔力计数器出现常驻长说明或占用过多画面。");
+            // 槽位标记已换成作者的三张牌堆插图，计数器内只剩 3 个魔力数字 Label。
+            if (hud.Size.X > 120 || hud.Size.Y > 280 || hud.FindChildren("*", "Label", true, false).Count != 3)
+                throw new Exception($"魔力计数器出现常驻长说明或占用过多画面: {hud.Size.X}x{hud.Size.Y} labels={hud.FindChildren("*", "Label", true, false).Count}");
             foreach (var slot in Enum.GetValues<FrierenMod.Core.ManaSlot>()) {
                 var area = hud.GetNode<Control>("Slot" + slot);
                 int actual = FrierenMod.Scripts.Mechanics.ManaCmd.InPile(player, FrierenMod.Scripts.Mechanics.ManaCmd.Pile(slot)).Count();

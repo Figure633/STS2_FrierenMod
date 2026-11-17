@@ -33,7 +33,8 @@ public sealed class DemonArmyAttack : FrierenStoryEvent
 
     private Task Fight(EncounterModel encounter)
     {
-        EnterStoryCombat(encounter.ToMutable(), [], resume: false);
+        // v0.111.1 的事件战斗入口接收 canonical encounter，由 EventCombatSynchronizer 自己 ToMutable。
+        EnterStoryCombat(encounter, [], resume: false);
         return Task.CompletedTask;
     }
 }

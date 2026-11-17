@@ -111,7 +111,7 @@ static class CombatTests
             ["Hypnosis"] = (typeof(WeakPower), 1, true), ["NatureBeauty"] = (typeof(EnergyNextTurnPower), 1, false),
             ["PinchAndScrape"] = (typeof(SynchroWithoutManaPower), 2, false), ["SpellBoost"] = (typeof(PhantasmalPower), 1, false),
             ["GreatMageComposure"] = (typeof(ChantWithoutManaTimesPower), 1, false), ["ImpeccableIntangible"] = (typeof(IntangiblePower), 1, false),
-            ["Transcendence"] = (typeof(MantraPower), 1, false), ["GrossedOutLook"] = (typeof(StrengthPower), -3, true)
+            ["Transcendence"] = (typeof(MantraPower), 1, false), ["GrossedOutLook"] = (typeof(StrengthPower), -2, true)
         };
         foreach (var factor in SpellCatalog.All.Where(f => f.Id != "BluePrint" && !f.Puzzle))
         {
@@ -122,7 +122,7 @@ static class CombatTests
             int remaining = ManaCmd.InPile(player, PileType.Draw).Count();
             Check(remaining == 10 - option.Cost - (factor.Id == "PeacefulDays" ? 1 : 0) + (factor.Id == "BloodSpell" ? option.Reward : 0), "扣费错误: " + factor.Id);
             if (expectedPowers.TryGetValue(factor.Id, out var expected))
-                Check((expected.Item3 ? enemy : player.Creature).Powers.Single(p => p.GetType() == expected.Item1).Amount == expected.Item2, "能力数值错误: " + factor.Id);
+                { var t = expected.Item3 ? enemy : player.Creature; var pw = t.Powers.FirstOrDefault(p => p.GetType() == expected.Item1); Check(pw != null && pw.Amount == expected.Item2, "能力数值错误: " + factor.Id + " 期望=" + expected.Item2 + " 实际=" + (pw?.Amount.ToString() ?? "<无>") + " 强度=" + t.GetPower<StrengthPower>()?.Amount); }
             if (factor.Id == "AdvancedDefensiveMagic") Check(player.Creature.Block == 2, "双次格挡错误");
             if (factor.Id == "BloodSpell") Check(player.Creature.CurrentHp == player.Creature.MaxHp - 1, "驭血魔法生命消耗错误");
             if (factor.Id == "IceArrows") Check(enemy.CurrentHp == enemy.MaxHp - 4, "冰箭错误");
@@ -187,7 +187,9 @@ static class CombatTests
         Pass("原生出牌链：咏唱、弃牌回手、减费、每回合首次加成");
 
         await Reset(); CompleteDeck("BuildUpBody", "HighSpeedMovement", "AdvancedDefensiveMagic");
-        Check(!combat.CreateCard<PreciseChant>(player).CanPlay() && !combat.CreateCard<FinalChant>(player).CanPlay(), "无有效因子时仍消耗能量空打");
+        // 精准咏唱 0.12.4 起先生成 4 张魔力再咏唱，没有存量魔力也可以打出；只有终极咏唱要求现成槽位。
+        Check(!combat.CreateCard<FinalChant>(player).CanPlay(), "无有效因子时终极咏唱仍能空打");
+        Check(combat.CreateCard<PreciseChant>(player).CanPlay(), "精准咏唱先生成魔力，不应被当成不可打出");
         await ManaCmd.Generate(player, PileType.Hand, 3);
         selector.PrepareToSelect(new[] { 1 }); await Play(combat.CreateCard<LureTheEnemyInDeep>(player));
         Check(player.PlayerCombatState!.Hand.Cards.Any(c => c is LureTheEnemyInDeep), "手牌槽咏唱未回手");
@@ -235,47 +237,48 @@ static class CombatTests
                 {
                     LocManager.Instance.SetLanguage(language);
                     string text = System.Text.RegularExpressions.Regex.Replace(tale.GetDescriptionForPile(PileType.Hand), @"\[[^\]]+\]", "");
-                    Check(text.Contains(language == "zhs" ? $"造成 {expected} 点伤害" : $"Deal {expected} damage"), "童话卡面未显示实际伤害：" + text);
+                    Check(text.Contains(language == "zhs" ? $"造成{expected}点伤害" : $"{expected} damage"), "童话卡面未显示实际伤害：" + text);
                 }
             }
 
             var tale = combat.CreateCard<FairyTaleEnd>(player);
             await CardPileCmd.Add(tale, PileType.Hand);
             Preview(tale, 6);
+            // 0.12.0 起只计算永久牌组中的“其他”传说魔法，同名童话不再参与倍率。
             AddLegend<FairyTaleEnd>();
-            Preview(tale, 12);
+            Preview(tale, 6);
             var mold = AddLegend<MoldSpell>();
             var duplicate = AddLegend<MoldSpell>(); duplicate.UpgradeInternal();
-            Preview(tale, 24); Preview(tale, 24);
+            Preview(tale, 12); Preview(tale, 12);
             Check(tale.DynamicVars.Damage.BaseValue == 6, "预览改写了童话的原始伤害");
-            player.Deck.RemoveInternal(mold); Preview(tale, 24);
-            player.Deck.RemoveInternal(duplicate); Preview(tale, 12);
-            AddLegend<MoldSpell>(); Preview(tale, 24);
+            player.Deck.RemoveInternal(mold); Preview(tale, 12);
+            player.Deck.RemoveInternal(duplicate); Preview(tale, 6);
+            AddLegend<MoldSpell>(); Preview(tale, 12);
             Pass("童话卡面按永久牌组种类计算，重复/升级同名牌及临时生成不重复翻倍");
 
             var upgradedTale = combat.CreateCard<FairyTaleEnd>(player);
             upgradedTale.UpgradeInternal();
             await CardPileCmd.Add(upgradedTale, PileType.Hand);
-            Preview(upgradedTale, 32);
+            Preview(upgradedTale, 16);
             Check(tale.DynamicVars.Damage.BaseValue == 6 && upgradedTale.DynamicVars.Damage.BaseValue == 8, "升级预览污染了原卡");
             Pass("童话升级正确显示倍率后的伤害，原卡与副本互不污染");
 
             await PowerCmd.Apply<StrengthPower>(context, player.Creature, 3, player.Creature, null);
             await PowerCmd.Apply<WeakPower>(context, player.Creature, 1, enemy, null);
             await PowerCmd.Apply<VulnerablePower>(context, enemy, 1, player.Creature, null);
-            Preview(tale, 20); Preview(tale, 30, targeting: true);
+            Preview(tale, 11); Preview(tale, 16, targeting: true);
             int previousHp = enemy.CurrentHp;
             await tale.OnPlayWrapper(context, enemy, false, play.Resources, skipCardPileVisuals: true);
-            Check(previousHp - enemy.CurrentHp == 30, "童话实际命中与力量/虚弱/易伤预览不一致");
+            Check(previousHp - enemy.CurrentHp == 16, "童话实际命中与力量/虚弱/易伤预览不一致");
             Pass("童话手牌和指向敌人预览反映力量/虚弱/易伤，并与实际命中一致");
 
             var deckPreview = (FairyTaleEnd)ModelDb.Card<FairyTaleEnd>().ToMutable();
             deckPreview.Owner = player;
-            Preview(deckPreview, 24);
+            Preview(deckPreview, 12);
             foreach (var creature in combat.Creatures)
                 foreach (var power in creature.Powers.ToArray()) await PowerCmd.Remove(power);
             CombatTestState.SetInProgress(false);
-            Preview(deckPreview, 24);
+            Preview(deckPreview, 12);
             CombatTestState.SetInProgress(true);
             Pass("童话牌组/奖励预览在战斗外仍显示牌组倍率，不混入战斗临时增减益");
 

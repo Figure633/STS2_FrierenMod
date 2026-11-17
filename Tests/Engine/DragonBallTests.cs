@@ -90,7 +90,7 @@ public static class DragonBallTests
             foreach(var(m,s)in room.Encounter.MonstersWithSlots)combat.AddCreature(combat.CreateCreature(m,CombatSide.Enemy,s));
             CombatManager.Instance.SetUpCombat(combat);CombatTestState.SetInProgress(true);await Hook.BeforeCombatStart(run,combat);
             var dummy=combat.Enemies.Single();await dummy.Monster!.AfterAddedToRoom();
-            for(int turn=0;turn<3;turn++)await Hook.AfterTurnEnd(combat,CombatSide.Enemy,[dummy]);
+            for(int turn=0;turn<3;turn++)await Hook.AfterSideTurnEnd(combat,CombatSide.Enemy,[dummy]);
             Check(((BattlewornDummyEventEncounter)room.Encounter).RanOutOfTime&&CombatManager.Instance.IsEnding,"三回合未击杀后由原生计时能力标记失败、假人逃离并结束战斗");
             await CombatManager.Instance.CheckWinCondition();Check(room.IsPreFinished&&!CombatManager.Instance.IsInProgress,"实际走完原生战斗结束结算，不因回放缺失抛错");
             await manager.ProceedFromTerminalRewardsScreen();await manager.EventSynchronizer.AwaitPendingOptionTasks();
@@ -162,11 +162,12 @@ public static class DragonBallTests
             double expected=upgraded?10000*(1d/3+.15):4000;Check(Math.Abs(count-expected)<220,"灌铅使最大值概率提高15个百分点，升级="+upgraded);
         }
         foreach(int act in new[]{0,1,2}) {
-            run.CurrentActIndex=act;var enc=(BattlewornDummyEventEncounter)ModelDb.Encounter<BattlewornDummyEventEncounter>().ToMutable();enc.Setting=BattlewornDummyEventEncounter.DummySetting.Setting1;
+            run.CurrentActIndex=act;var enc=(BattlewornDummyEventEncounter)ModelDb.Encounter<BattlewornDummyEventV1Encounter>().ToMutable();
             var room=new CombatRoom(enc,run){ParentEventId=ModelDb.Event<DragonBallAdventure>().Id};run.PushRoom(room);var combat=room.CombatState;
             combat.AddPlayer(p);combat.AddPlayer(ally);enc.GenerateMonstersWithSlots(run);foreach(var(m,s)in enc.MonstersWithSlots)combat.AddCreature(combat.CreateCreature(m,CombatSide.Enemy,s));
             CombatManager.Instance.SetUpCombat(combat);CombatTestState.SetInProgress(true);await Hook.BeforeCombatStart(run,combat);
-            Check(combat.Enemies.Single().MaxHp==100*(act+1),"猫仙人复用原生三回合假人，幕数="+(act+1));
+            // 多人时按原生规则缩放，期望值与事件内显示共用同一计算。
+            Check(combat.Enemies.Single().MaxHp==DragonBallAdventure.TrialHpForRun(run),$"猫仙人复用原生三回合假人，幕数={act+1} hp={combat.Enemies.Single().MaxHp}");
             if(act==2){
                 p.Creature.SetCurrentHpInternal(1);ally.Creature.SetCurrentHpInternal(1);
                 await PowerCmd.Apply<WeakPower>(context,ally.Creature,2,p.Creature,null);await PowerCmd.Apply<StrengthPower>(context,ally.Creature,3,p.Creature,null);await PowerCmd.Apply<DexterityPower>(context,ally.Creature,-2,p.Creature,null);

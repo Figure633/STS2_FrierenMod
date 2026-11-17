@@ -108,10 +108,13 @@ public static class MagicShopTests
         CombatManager.Instance.SetUpCombat(combat);
         CombatTestState.SetInProgress(true);
         Check(!MagicPropCmd.CanUse(player, prop), "战斗开场阶段禁止插入魔具操作");
-        AccessTools.Property(typeof(CombatManager), nameof(CombatManager.IsStarting)).SetValue(CombatManager.Instance, false);
-        AccessTools.Property(typeof(CombatManager), nameof(CombatManager.PlayerActionsDisabled)).SetValue(CombatManager.Instance, true);
+        // v0.111.1 的 IsStarting 由 CombatTurnState 提供，PlayerActionsDisabled 只有私有 setter，改为写底层状态。
+        var turnState = AccessTools.Field(typeof(CombatManager), "_turnState").GetValue(CombatManager.Instance)!;
+        AccessTools.Property(turnState.GetType(), "IsStarting").SetValue(turnState, false);
+        var actionsDisabled = AccessTools.Field(typeof(CombatManager), "_playerActionsDisabled");
+        actionsDisabled.SetValue(CombatManager.Instance, true);
         Check(!MagicPropCmd.CanUse(player, prop), "结束回合后禁用魔具操作");
-        AccessTools.Property(typeof(CombatManager), nameof(CombatManager.PlayerActionsDisabled)).SetValue(CombatManager.Instance, false);
+        actionsDisabled.SetValue(CombatManager.Instance, false);
         player.PlayerCombatState!.Energy = 3;
         Check(await Use(prop, 0, 1) && player.PlayerCombatState.Energy == 5 && Read().Items.Count == 3,
             "龙角在战斗中消耗两件材料并实际增加能量");

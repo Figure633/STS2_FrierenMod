@@ -62,7 +62,7 @@ public static class FactorBlockPreviewTests
                     var factor = FactorCard.Create(player, id, ManaSlot.Hand, option, chantSource: source);
                     string text = factor.GetDescriptionForPile(PileType.None);
                     string number = scenario.Expected > 4 ? $"[green]{scenario.Expected}[/green]" : scenario.Expected < 4 ? $"[red]{scenario.Expected}[/red]" : "4";
-                    Check(text.Contains(language == "zhs" ? $"获得 {number} 点格挡" : $"Gain {number} Block"), $"{language} {id} 敏捷{scenario.Dex} 脆弱{scenario.Frail} 的数值与颜色");
+                    Check(text.Contains(language == "zhs" ? $"获得{number}点格挡" : $"Gain {number} Block"), $"{language} {id} 敏捷{scenario.Dex} 脆弱{scenario.Frail} 的数值与颜色");
                     Check(factor.GetDescriptionForPile(PileType.None) == text && factor.Option == option && factor.DynamicVars["Reward"].BaseValue == 4 &&
                         player.Creature.Block == 0 && player.Creature.GetPowerAmount<BlurPower>() == 0,
                         "重复预览不改写奖励、费用或提前给格挡和残影");

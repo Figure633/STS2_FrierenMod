@@ -76,7 +76,7 @@ public static class RelicsPotionsTests
             var scale = await RelicCmd.Obtain<ScaleOfObedience>(player);
             int before = player.PlayerCombatState!.Energy;
             await scale.AfterPlayerTurnStart(context, player);
-            await Hook.BeforeTurnEnd(combat, CombatSide.Player, [player.Creature]);
+            await Hook.BeforeSideTurnEnd(combat, CombatSide.Player, [player.Creature]);
             Check(player.Creature.GetPowerAmount<EnergyNextTurnPower>() == 0 && player.PlayerCombatState.Energy == before &&
                 player.PlayerCombatState.Hand.Cards.Count == 0, "天平无魔力不触发，移除旧版开局能量与抽牌");
             foreach (var pile in new[] { PileType.Draw, PileType.Hand, PileType.Discard })
@@ -84,7 +84,7 @@ public static class RelicsPotionsTests
                 await Reset(); await RelicCmd.Obtain<ScaleOfObedience>(player);
                 var mana = Card<Mana>(); await CardPileCmd.Add(mana, pile);
                 before = player.PlayerCombatState.Energy;
-                await Hook.BeforeTurnEnd(combat, CombatSide.Player, [player.Creature]);
+                await Hook.BeforeSideTurnEnd(combat, CombatSide.Player, [player.Creature]);
                 Check(player.Creature.GetPowerAmount<EnergyNextTurnPower>() == 1 && player.PlayerCombatState.Energy == before,
                     "天平回合末预存次回合能量，魔力位于" + pile);
                 mana.RemoveFromCurrentPile();
@@ -94,14 +94,14 @@ public static class RelicsPotionsTests
             }
             await Reset(); await RelicCmd.Obtain<ScaleOfObedience>(player);
             foreach (var pile in new[] { PileType.Draw, PileType.Hand, PileType.Discard }) await CardPileCmd.Add(Card<Mana>(), pile);
-            await Hook.BeforeTurnEnd(combat, CombatSide.Enemy, [enemy]);
-            await Hook.BeforeTurnEnd(combat, CombatSide.Player, [other.Creature]);
+            await Hook.BeforeSideTurnEnd(combat, CombatSide.Enemy, [enemy]);
+            await Hook.BeforeSideTurnEnd(combat, CombatSide.Player, [other.Creature]);
             Check(player.Creature.GetPowerAmount<EnergyNextTurnPower>() == 0, "敌方及队友单独的额外回合不触发持有者天平");
-            await Hook.BeforeTurnEnd(combat, CombatSide.Player, [player.Creature]);
+            await Hook.BeforeSideTurnEnd(combat, CombatSide.Player, [player.Creature]);
             Check(player.Creature.GetPowerAmount<EnergyNextTurnPower>() == 1 && other.Creature.GetPowerAmount<EnergyNextTurnPower>() == 0,
                 "三个牌堆都有魔力仍只奖励1能量，不影响队友");
             await Reset(); await RelicCmd.Obtain<ScaleOfObedience>(player); await CardPileCmd.Add(Card<Mana>(), PileType.Exhaust);
-            await Hook.BeforeTurnEnd(combat, CombatSide.Player, [player.Creature]);
+            await Hook.BeforeSideTurnEnd(combat, CombatSide.Player, [player.Creature]);
             Check(player.Creature.GetPowerAmount<EnergyNextTurnPower>() == 0, "已消耗的魔力不再满足天平条件");
         }
         if (scaleOnly) { await CheckScale(); CombatTestState.SetInProgress(false); RunManager.Instance.CleanUp(); return count; }

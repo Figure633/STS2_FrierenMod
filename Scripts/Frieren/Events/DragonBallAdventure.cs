@@ -38,12 +38,12 @@ public sealed class DragonBallAdventure : FrierenStoryEvent
     }
     private Task Trial()
     {
-        var encounter = (BattlewornDummyEventEncounter)ModelDb.Encounter<BattlewornDummyEventEncounter>().ToMutable();
-        encounter.Setting = BattlewornDummyEventEncounter.DummySetting.Setting1;
-        EnterStoryCombat(encounter,[],resume:true); return Task.CompletedTask;
+        // v0.111.1 把原 DummySetting 拆成 V1/V2/V3 三个遭遇；试炼原本就是 Setting1，对应 V1。
+        // EnterCombatWithoutExitingEvent 接收 canonical encounter，由原生负责创建战斗副本。
+        EnterStoryCombat(ModelDb.Encounter<BattlewornDummyEventV1Encounter>(),[],resume:true); return Task.CompletedTask;
     }
     public static int TrialHpForRun(IRunState run) => (int)Creature.ScaleHpForMultiplayer(
-        100 * (run.CurrentActIndex + 1), ModelDb.Encounter<BattlewornDummyEventEncounter>(), run.Players.Count, run.CurrentActIndex);
+        100 * (run.CurrentActIndex + 1), ModelDb.Encounter<BattlewornDummyEventV1Encounter>(), run.Players.Count, run.CurrentActIndex);
     public override async Task Resume(AbstractRoom room)
     {
         bool failed = ((BattlewornDummyEventEncounter)((CombatRoom)room).Encounter).RanOutOfTime;
