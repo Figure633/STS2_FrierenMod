@@ -143,10 +143,10 @@ const sample = index => manifest.images[Math.min(index, manifest.images.length -
 await contact([
   { input: path.join(referenceDir, '图图', '9001.png'), label: '旧图参考 · 彩色浅浮雕' },
   { input: path.join(output, '基础圆角', manifest.images[0].file), label: '最终版 · 人像' },
-  { input: path.join(output, '基础圆角', manifest.images[3].file), label: '最终版 · 花冠' },
+  { input: path.join(output, '基础圆角', sample(3)), label: '最终版 · 构图参考' },
   { input: path.join(output, '基础圆角', sample(13)), label: '最终版 · 构图参考' },
   { input: path.join(referenceDir, '图图', '0001.png'), label: '旧图参考 · 金色花纹' },
-  { input: path.join(output, '金色花纹', manifest.images[3].file), label: '最终版 · 花冠' },
+  { input: path.join(output, '金色花纹', sample(3)), label: '最终版 · 构图参考' },
   { input: path.join(output, '金色花纹', sample(12)), label: '最终版 · 构图参考' },
   { input: path.join(output, '金色花纹', sample(15)), label: '最终版 · 构图参考' }
 ], path.join(output, '旧图参考对照.png'), 4, '每行第一张为旧图参考，其余为本次最终成品');
