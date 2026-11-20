@@ -133,7 +133,7 @@ func _initialize():
 		var scene = packed.instantiate()
 		scene.free()
 		scenes += 1
-	if textures < 119 or slot_backs != 128 or audio_count != 34 or bgm_count != 20 or aura_voice_count != 8 or scenes != 15 or imported_textures < textures or imported_audio != 34:
+	if textures < 119 or slot_backs != 128 or audio_count != 37 or bgm_count != 20 or aura_voice_count != 8 or scenes != 15 or imported_textures < textures or imported_audio != 37:
 		push_error("Resource count mismatch: textures=%d slot_backs=%d audio=%d scenes=%d" % [textures, slot_backs, audio_count, scenes])
 		quit(1)
 		return

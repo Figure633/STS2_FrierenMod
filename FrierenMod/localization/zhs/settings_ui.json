@@ -6,5 +6,7 @@
   "FRIERENMOD-BACK_LIBRARY.title": "成就与卡背收藏",
   "FRIERENMOD-BACK_LIBRARY_OPEN.title": "查看与选择",
   "FRIERENMOD-ALLOW_OTHER_ACT_TWO_BOSSES.title": "允许遇到非芙莉莲模组Boss",
-  "FRIERENMOD-ALLOW_OTHER_ACT_TWO_BOSSES.hover.desc": "关闭时，芙莉莲新跑局的二层Boss固定为阿乌拉，三层固定为复制体。进阶10双Boss中复制体的位置随机。开启后恢复混合Boss池。仅限全员芙莉莲队伍，已生成的跑局不变。"
+  "FRIERENMOD-ALLOW_OTHER_ACT_TWO_BOSSES.hover.desc": "关闭时，芙莉莲新跑局的二层Boss固定为阿乌拉，三层固定为复制体。进阶10双Boss中复制体的位置随机。开启后恢复混合Boss池。仅限全员芙莉莲队伍，已生成的跑局不变。",
+  "FRIERENMOD-CARD_RELIC_SOUNDS.title": "卡牌与遗物音效",
+  "FRIERENMOD-CARD_RELIC_SOUNDS.hover.desc": "播放赖床、飞吻、普通攻击魔法及镜莲花戒指的一代音效。默认关闭，不影响BGM和成就提示音。"
 }

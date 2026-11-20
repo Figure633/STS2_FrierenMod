@@ -6,5 +6,7 @@
   "FRIERENMOD-BACK_LIBRARY.title": "Achievements and slot backgrounds",
   "FRIERENMOD-BACK_LIBRARY_OPEN.title": "Browse and select",
   "FRIERENMOD-ALLOW_OTHER_ACT_TWO_BOSSES.title": "Allow non-Frieren bosses",
-  "FRIERENMOD-ALLOW_OTHER_ACT_TWO_BOSSES.hover.desc": "When disabled, Frieren faces Aura in Act 2 and Spiegel in Act 3. In double-boss runs, Spiegel may appear first or second. Enable to restore mixed boss pools. Applies to new all-Frieren runs."
+  "FRIERENMOD-ALLOW_OTHER_ACT_TWO_BOSSES.hover.desc": "When disabled, Frieren faces Aura in Act 2 and Spiegel in Act 3. In double-boss runs, Spiegel may appear first or second. Enable to restore mixed boss pools. Applies to new all-Frieren runs.",
+  "FRIERENMOD-CARD_RELIC_SOUNDS.title": "Card and Relic Sounds",
+  "FRIERENMOD-CARD_RELIC_SOUNDS.hover.desc": "Play the original sounds for Sleeping In, Blown Kiss, Ordinary Offensive Magic, and Mirrored Lotus Ring. Off by default. Does not affect music or achievement sounds."
 }

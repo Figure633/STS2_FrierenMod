@@ -167,6 +167,10 @@ public partial class Runner : Node
                 GD.Print("AUTHOR01214_OK: " + await Author01214Tests.Run(this));
                 await Finish(); return;
             }
+            if (OS.GetCmdlineUserArgs().Contains("--card-relic-sounds-only")) {
+                GD.Print("CARD_RELIC_SOUNDS_OK: " + await CardRelicSoundTests.Run());
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--slot-back-unlocks-only")) {
                 GD.Print("SLOT_BACK_UNLOCKS_OK: " + await SlotBackUnlockTests.Run());
                 await Finish(); return;

@@ -6019,5 +6019,29 @@
     "modified": false,
     "processing": "作者2026年11月20日提供的完整卡背，原字节复制，不裁切不改图",
     "redistribution_review": "pending; author-provided local prototype"
+  },
+  {
+    "file": "FrierenMod/audio/BabySleeping.mp3",
+    "source": "src/main/resources/FrierenModResources/audio/sound/BabySleeping.mp3",
+    "source_commit": "",
+    "sha256": "1d6598061007ffedc65d8a6e47f6063cbcf6ac2255151d345b21d563afbafd48",
+    "modified": false,
+    "redistribution_review": "pending; author-provided STS1 source"
+  },
+  {
+    "file": "FrierenMod/audio/kiss.mp3",
+    "source": "src/main/resources/FrierenModResources/audio/sound/kiss.mp3",
+    "source_commit": "",
+    "sha256": "eb259e198dcf1cdf0d34832301588117d2b459a102e27b9c00dccc0a4ad4d136",
+    "modified": false,
+    "redistribution_review": "pending; author-provided STS1 source"
+  },
+  {
+    "file": "FrierenMod/audio/Himmel.mp3",
+    "source": "src/main/resources/FrierenModResources/audio/sound/Himmel.mp3",
+    "source_commit": "",
+    "sha256": "3fb66205f5157b1ef82e3868d4bf1ae77a4512d93278e303838c703086a592ea",
+    "modified": false,
+    "redistribution_review": "pending; author-provided STS1 source"
   }
 ]

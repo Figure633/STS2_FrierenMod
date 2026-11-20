@@ -27,6 +27,7 @@ public sealed class MirroredLotusRing : CountingFrierenRelic
         Counter++;
         if (Counter != 4) return;
         Presentation.FrierenAchievements.Unlock(Owner, "4012");
+        Presentation.CardRelicSound.Play("Himmel.mp3");
         Flash(); await CardFlowCmd.Generate<Himmel>(Owner, PileType.Hand); Status = RelicStatus.Disabled;
     }
     public override Task AfterCombatEnd(CombatRoom room) { Counter = 0; Status = RelicStatus.Normal; return Task.CompletedTask; }

@@ -17,6 +17,7 @@ public sealed class SleepIn() : FrierenCard(3, CardType.Power, CardRarity.Rare, 
     protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(99, ValueProp.Move)];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
+        Presentation.CardRelicSound.Play("BabySleeping.mp3");
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, play);
         await PowerCmd.Apply<BarricadePower>(context, Owner.Creature, 1, Owner.Creature, this);
         await CardFlowCmd.Generate<WakeUp>(Owner, PileType.Draw);
