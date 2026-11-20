@@ -165,7 +165,7 @@ if ($Pack) {
         throw '构建期间游戏或依赖发生更新，请重新构建。'
     }
     $packageFiles = @{}
-    foreach ($packageFile in @('FrierenMod.dll', 'FrierenMod.pck', 'FrierenMod.json', 'README.md', 'LICENSE.STS1', 'LICENSE.WATCHER')) {
+    foreach ($packageFile in @('FrierenMod.dll', 'FrierenMod.pck', 'FrierenMod.json')) {
         $packageFiles[$packageFile] = (Get-FileHash -LiteralPath (Join-Path $projectRoot "artifacts/FrierenMod/$packageFile")).Hash
     }
     $targetRecord = [ordered]@{
