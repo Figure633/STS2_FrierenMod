@@ -96,6 +96,10 @@ public partial class Runner : Node
             SaveManager.Instance.InitSettingsData();
             SaveManager.Instance.SettingsSave.Language = "eng";
             LocManager.Initialize();
+            if (OS.GetCmdlineUserArgs().Contains("--hextech-card-pool-only")) {
+                GD.Print("HEXTECH_CARD_POOL_OK: " + HextechCardPoolTests.Run());
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--hextech-opening-only")) {
                 GD.Print("HEXTECH_OPENING_OK: " + await HextechOpeningTests.Run(this));
                 await Finish(); return;
@@ -523,6 +527,10 @@ public partial class Runner : Node
             }
             if (OS.GetCmdlineUserArgs().Contains("--card-ids-only")) {
                 GD.Print("CARD_IDS_OK: " + await CardIdTests.Run());
+                await Finish(); return;
+            }
+            if (OS.GetCmdlineUserArgs().Contains("--regent-cache-repro-only")) {
+                GD.Print("REGENT_CACHE_REPRO_OK: " + await RegentPortraitCacheTests.RunDetached(this));
                 await Finish(); return;
             }
             if (OS.GetCmdlineUserArgs().Contains("--library-only")) {
