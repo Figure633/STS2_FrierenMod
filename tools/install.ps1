@@ -10,7 +10,7 @@ $installVersion = [string]$installProject.Project.PropertyGroup.Version
 $installAssembly = [Reflection.AssemblyName]::GetAssemblyName((Join-Path $installSource 'FrierenMod.dll')).Version.ToString(3)
 $installManifest = (Get-Content -LiteralPath (Join-Path $installSource 'FrierenMod.json') -Raw | ConvertFrom-Json).version
 if ($installVersion -ne $installAssembly -or $installVersion -ne $installManifest) { throw '工程、DLL 和清单版本不一致，请重新构建。' }
-$installFiles = @('FrierenMod.dll', 'FrierenMod.pck', 'FrierenMod.json', 'README.md', 'LICENSE.STS1', 'LICENSE.WATCHER')
+$installFiles = @('FrierenMod.dll', 'FrierenMod.pck', 'FrierenMod.json')
 $installRecordPath = Join-Path $installRoot 'artifacts/build-target.json'
 if (!(Test-Path -LiteralPath $installRecordPath)) { throw '缺少构建目标记录，请先运行 tools/build.ps1 -Pack 重新构建。' }
 $installRecord = Get-Content -LiteralPath $installRecordPath -Raw | ConvertFrom-Json
