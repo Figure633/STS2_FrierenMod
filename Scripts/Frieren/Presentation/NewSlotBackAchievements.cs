@@ -47,6 +47,13 @@ public static class NewSlotBackAchievements
             if(progress.EnemyStats.TryGetValue(monster,out var enemy) && enemy.FightStats.Any(s=>s.Character==character && s.Wins>0))SlotBackStore.Unlock(id);
     }
 
+    public static void DragonWishCompleted(Player player)
+    {
+        var state = DragonBallStore.Read(player);
+        if (state.WishResolved && state.Wish is "LIFE" or "ENERGY" or "JOY")
+            FrierenAchievements.Unlock(player, "8024");
+    }
+
     public static void Equipped(Player player,MagicDeckState deck)
     {
         if(!FrierenAchievements.Applies(player))return;

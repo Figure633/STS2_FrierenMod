@@ -36,6 +36,14 @@ public static class SlotBackUnlockTests
         SlotBackStore.Read();
         void Reset(){AccessTools.Field(typeof(SlotBackStore),"_progress").SetValue(null,new SlotBackProgress());SaveManager.Instance.Progress=ProgressState.CreateDefault();}
         bool Has(string id)=>SlotBackStore.Read().Unlocked.Contains(id);
+        Reset();DragonBallStore.Write(p,new DragonBallState{WishUsed=true,Wish="ENERGY"});NewSlotBackAchievements.DragonWishCompleted(p);
+        Check(!Has("8024"),"仅消耗龙珠、尚未完成愿望不解锁神龙卡背");
+        foreach(var wish in new[]{"LIFE","ENERGY","JOY"}) {
+            Reset();DragonBallStore.Write(p,new DragonBallState{WishUsed=true,Wish=wish,WishResolved=true});NewSlotBackAchievements.DragonWishCompleted(p);
+            Check(Has("8024"),"完成愿望解锁神龙卡背："+wish);
+            int owned=SlotBackStore.Read().Unlocked.Count;NewSlotBackAchievements.DragonWishCompleted(p);Check(SlotBackStore.Read().Unlocked.Count==owned,"重复结算不重复解锁");
+        }
+        Reset();DragonBallStore.Write(other,new DragonBallState{WishUsed=true,Wish="JOY",WishResolved=true});NewSlotBackAchievements.DragonWishCompleted(other);Check(!Has("8024"),"他人许愿不解锁本机卡背");
         Reset();SlotBackStore.CollectLibraryRewards();Check(Has("8015")&&!Has("8011"),"打开收藏赠送8015，未集齐20张不提前解锁8011");
         foreach(string id in SlotBackCatalog.LegacyIds.Take(20))SlotBackStore.Unlock(id);
         Check(Has("8011"),"获得第20张时立即解锁收藏成就");

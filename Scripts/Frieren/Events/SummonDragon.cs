@@ -39,7 +39,7 @@ public sealed class SummonDragon : FrierenStoryEvent
     {
         var owner=Owner!;
         var state=DragonBallStore.Read(owner);
-        if(state.WishResolved){DragonSummoning.ReturnToCamp(owner);return;}
+        if(state.WishResolved){Presentation.NewSlotBackAchievements.DragonWishCompleted(owner);DragonSummoning.ReturnToCamp(owner);return;}
         switch(state.Wish) {
             case "LIFE": await CreatureCmd.SetMaxHp(owner.Creature,9999); await CreatureCmd.SetCurrentHp(owner.Creature,9999); break;
             case "ENERGY": owner.MaxEnergy=999; break;
@@ -51,6 +51,7 @@ public sealed class SummonDragon : FrierenStoryEvent
             default: throw new InvalidOperationException("未知神龙愿望："+state.Wish);
         }
         state=DragonBallStore.Read(owner);state.WishResolved=true;DragonBallStore.Write(owner,state);
+        Presentation.NewSlotBackAchievements.DragonWishCompleted(owner);
         DragonSummoning.ReturnToCamp(owner);
     }
     [HarmonyPatch(typeof(Hook),nameof(Hook.ModifyMaxEnergy))]
