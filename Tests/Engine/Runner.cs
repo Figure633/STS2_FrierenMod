@@ -85,6 +85,8 @@ public partial class Runner : Node
             BaseLib.BaseLibMain.Initialize();
             if (OS.GetCmdlineUserArgs().Any(a => a.StartsWith("--save-cache-"))) SaveMetadataTests.CaptureOriginalOptions();
             if (OS.GetCmdlineUserArgs().Contains("--save-cache-before-frieren-only")) SaveMetadataTests.CacheBeforeRegistration();
+            bool androidSaveTest = OS.GetCmdlineUserArgs().Contains("--save-cache-android-only");
+            if (androidSaveTest) SaveMetadataTests.SimulateAndroidMetadataFailure();
             FrierenMod.Scripts.Entry.Init();
             if (OS.GetCmdlineUserArgs().Contains("--save-cache-after-frieren-only")) SaveMetadataTests.CacheBeforeRegistration();
             var initModels=AccessTools.Method(typeof(ModelDb),"Init");
@@ -106,7 +108,7 @@ public partial class Runner : Node
             }
             if (reviewedOnly) GD.Print("REVIEWED: 本地化已加载");
             if (OS.GetCmdlineUserArgs().Any(a => a.StartsWith("--save-cache-"))) {
-                GD.Print("SAVE_METADATA_OK: " + await SaveMetadataTests.Run(!OS.GetCmdlineUserArgs().Contains("--save-cache-normal-only")));
+                GD.Print("SAVE_METADATA_OK: " + await SaveMetadataTests.Run(!OS.GetCmdlineUserArgs().Contains("--save-cache-normal-only"), androidSaveTest));
                 await Finish(); return;
             }
             MegaCrit.Sts2.Core.Nodes.Pooling.NodePool.Init<MegaCrit.Sts2.Core.Nodes.Cards.NCard>("res://scenes/cards/card.tscn", 0);

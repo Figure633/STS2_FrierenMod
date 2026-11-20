@@ -1,10 +1,14 @@
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.Json.Serialization.Metadata;
 using BaseLib.Patches.Saves;
+using FrierenMod.Scripts.UI;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Rewards;
+using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.Saves;
 using MegaCrit.Sts2.Core.Saves.Runs;
 
@@ -21,6 +25,28 @@ internal static class SaveMetadataCompatibility
     private static bool _checked;
     private static JsonSerializerOptions? _recoveredOptions;
 
+    // Android 的 Harmony 无法复制部分源生成 JSON 方法。保留原生 resolver，
+    // 在运行时元数据中补齐芙莉莲依赖的 BaseLib 玩家和奖励字段。
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    internal static bool IsAndroid() => Godot.OS.HasFeature("android");
+
+    private static void AddAndroidSaveProperties(JsonTypeInfo info)
+    {
+        if (info.Type == typeof(SerializablePlayer))
+            AddMissingProperties(info, ExtendedSaveHandlers<Player, SerializablePlayer>.CreateExtendedProperties(info.Options));
+        else if (info.Type == typeof(SerializableReward))
+            AddMissingProperties(info, ExtendedSaveHandlers<Reward, SerializableReward>.CreateExtendedProperties(info.Options));
+        else if (info.Type == typeof(RunHistoryPlayer))
+            MagicDeckHistory.AddJsonProperty(info);
+    }
+
+    private static void AddMissingProperties(JsonTypeInfo info, IEnumerable<JsonPropertyInfo> properties)
+    {
+        foreach (var property in properties)
+            if (!info.Properties.Any(existing => existing.Name == property.Name))
+                info.Properties.Add(property);
+    }
+
     [HarmonyPatch(typeof(ModelDb), nameof(ModelDb.InitIds))]
     private static class RegistrationFinished
     {
@@ -36,6 +62,16 @@ internal static class SaveMetadataCompatibility
         {
             if (!_registrationCompleted) return;
             lock (Gate) {
+                if (IsAndroid())
+                {
+                    _recoveredOptions ??= new JsonSerializerOptions(__result)
+                    {
+                        TypeInfoResolver = __result.TypeInfoResolver!.WithAddedModifier(AddAndroidSaveProperties)
+                    };
+                    __result = _recoveredOptions;
+                    return;
+                }
+
                 if (!_checked) {
                     // 比较 BaseLib 实际注册的属性，不依赖特定版本的字段列表。
                     var cached = __result.GetTypeInfo(typeof(SerializablePlayer));

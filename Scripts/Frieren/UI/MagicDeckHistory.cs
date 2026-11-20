@@ -3,6 +3,7 @@ using BaseLib.Utils;
 using FrierenMod.Core;
 using FrierenMod.Scripts.Characters;
 using FrierenMod.Scripts.Mechanics;
+using FrierenMod.Scripts.Shared.Compatibility;
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Entities.Players;
@@ -44,14 +45,19 @@ public static class MagicDeckHistory
     [HarmonyPatch("MegaCrit.Sts2.Core.Saves.MegaCritSerializerContext", "Create_RunHistoryPlayer")]
     private static class HistoryJson
     {
-        private static void Postfix(JsonTypeInfo<RunHistoryPlayer> __result)
-        {
-            var property = __result.CreateJsonPropertyInfo(typeof(string), "frieren_magic_deck");
-            property.Get = obj => Data.Get((RunHistoryPlayer)obj);
-            property.Set = (obj, value) => Data.Set((RunHistoryPlayer)obj, value as string ?? "");
-            property.ShouldSerialize = (_, value) => value is string { Length: > 0 };
-            __result.Properties.Add(property);
-        }
+        [HarmonyPrepare]
+        private static bool Prepare() => !SaveMetadataCompatibility.IsAndroid();
+
+        private static void Postfix(JsonTypeInfo<RunHistoryPlayer> __result) => AddJsonProperty(__result);
+    }
+
+    internal static void AddJsonProperty(JsonTypeInfo info)
+    {
+        var property = info.CreateJsonPropertyInfo(typeof(string), "frieren_magic_deck");
+        property.Get = obj => Data.Get((RunHistoryPlayer)obj);
+        property.Set = (obj, value) => Data.Set((RunHistoryPlayer)obj, value as string ?? "");
+        property.ShouldSerialize = (_, value) => value is string { Length: > 0 };
+        info.Properties.Add(property);
     }
 
     [HarmonyPatch(typeof(RunHistoryUtilities), nameof(RunHistoryUtilities.CreateRunHistoryEntry))]
