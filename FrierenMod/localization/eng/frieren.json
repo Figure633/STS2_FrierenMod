@@ -631,5 +631,7 @@
   "FACTOR.CopyMagic": "[gold]Chant[/gold] 2X: Add X Upgraded Colorless cards to this slot’s pile.",
   "EFFECT.CopyMagic": "Add {Reward} Upgraded Colorless cards to this slot’s pile.",
   "PROP.MagicBread": "Combat only. Draw 2 cards. Gain {energyPrefix:energyIcons(2)}.",
-  "DRAGON_BALL_REWARD": "[gold]Dragon Ball[/gold]"
+  "DRAGON_BALL_REWARD": "[gold]Dragon Ball[/gold]",
+  "BACK.8024.title": "Appear, Shenron!",
+  "BACK.8024.description": "Make a wish to Shenron."
 }

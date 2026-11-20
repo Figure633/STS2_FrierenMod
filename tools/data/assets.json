@@ -6010,5 +6010,14 @@
     "source_kind": "author_provided",
     "modified": false,
     "sha256": "27ec57a53efc358ce59a31035658994bd059c5015ad2661226ef68198b47ac45"
+  },
+  {
+    "file": "FrierenMod/images/slot_backs/8024.png",
+    "source": "../开发资料/assets/slot_backs/8024.png",
+    "source_commit": "",
+    "sha256": "77bdf14254d7ff86f12db635a1367b7795b8bf6ffad2c6ceccfda3212825d9c8",
+    "modified": false,
+    "processing": "作者2026年11月20日提供的完整卡背，原字节复制，不裁切不改图",
+    "redistribution_review": "pending; author-provided local prototype"
   }
 ]

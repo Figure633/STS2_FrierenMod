@@ -631,5 +631,7 @@
   "FACTOR.CopyMagic": "[gold]咏唱[/gold]2X：将X张升级过的无色牌加入此槽位牌堆。",
   "EFFECT.CopyMagic": "将{Reward}张升级过的无色牌加入此槽位牌堆。",
   "PROP.MagicBread": "仅战斗中使用。抽2张牌，回复{energyPrefix:energyIcons(2)}。",
-  "DRAGON_BALL_REWARD": "[gold]龙珠[/gold]"
+  "DRAGON_BALL_REWARD": "[gold]龙珠[/gold]",
+  "BACK.8024.title": "出现吧，神龙！",
+  "BACK.8024.description": "完成一次神龙许愿。"
 }
