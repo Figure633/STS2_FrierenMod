@@ -22,10 +22,11 @@ public static class LibraryTests
         void Check(bool valid, string name) { if (!valid) throw new Exception(name); count++; GD.Print("PASS 百科分类：" + name); }
         var pool = ModelDb.CardPool<FrierenCardPool>();
         var items = pool.AllCards.Where(c => FrierenLibraryFilter.IsMagicItem(c) && c.ShouldShowInCardLibrary).ToArray();
-        Check(items.OfType<FactorCard>().Count() == SpellCatalog.Available.Count() && items.OfType<MagicPropCard>().Count() == 8,
-            "完整登记全部因子和八种魔具");
+        Check(items.OfType<FactorCard>().Count() == SpellCatalog.Available.Count() && items.OfType<MagicPropCard>().Count() == pool.AllCards.OfType<MagicPropCard>().Count(c => c is not ElvenHourglass and not PhoenixQuill),
+            "百科登记全部因子，魔具仅排除时砂漏与羽笔");
         Check(items.All(c => c.ShouldShowInCardLibrary), "全部因子和魔具进入原生百科候选列表");
 
+        Check(!ModelDb.Card<ElvenHourglass>().ShouldShowInCardLibrary && !ModelDb.Card<PhoenixQuill>().ShouldShowInCardLibrary, "时砂漏和羽笔仅隐藏百科，模型仍注册");
         var character = new NCardPoolFilter(); var misc = new NCardPoolFilter(); var other = new NCardPoolFilter();
         Func<CardModel, bool> originalOther = card => card.Pool is not FrierenCardPool;
         var filters = new Dictionary<NCardPoolFilter, Func<CardModel, bool>> {

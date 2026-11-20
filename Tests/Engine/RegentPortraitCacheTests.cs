@@ -58,6 +58,19 @@ public static class RegentPortraitCacheTests
             Check(GodotObject.IsInstanceValid(portrait.Texture), "清理第三方旧缓存后恢复 " + trial);
         }
         normal.Clear(); ancient.Clear();
+        FrierenMod.Scripts.Presentation.RegentPortraitCompatibility.Install(assembly);
+        for (int trial = 1; trial <= 3; trial++) {
+            var cache = new AssetCache();
+            fresh = cache.GetTexture2D(path); portrait.Texture = fresh;
+            refresh.Invoke(null, [card]);
+            cache.UnloadMissedCacheAssets();
+            for (int frame = 0; frame < 3; frame++) await root.ToSignal(root.GetTree(), SceneTree.SignalName.ProcessFrame);
+            Check(!GodotObject.IsInstanceValid(fresh), "兼容检查确实释放旧纹理 " + trial);
+            fresh = cache.GetTexture2D(path); portrait.Texture = fresh;
+            refresh.Invoke(null, [card]);
+            Check(GodotObject.IsInstanceValid(portrait.Texture), "兼容处理后切场景刷新不再回填失效纹理 " + trial);
+        }
+        normal.Clear(); ancient.Clear();
         return checks;
     }
 }
