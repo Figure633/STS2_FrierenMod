@@ -19,6 +19,7 @@ public sealed class Kiss() : FrierenCard(3, CardType.Skill, CardRarity.Uncommon,
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Ethereal, CardKeyword.Exhaust];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
+        Presentation.CardRelicSound.Play("kiss.mp3");
         await PowerCmd.Apply<VulnerablePower>(context, play.Target!, 99, Owner.Creature, this);
         await PowerCmd.Apply<WeakPower>(context, play.Target!, 99, Owner.Creature, this);
     }

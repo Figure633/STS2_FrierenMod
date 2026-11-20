@@ -7,6 +7,7 @@ namespace FrierenMod.Scripts.Presentation;
 public sealed class PresentationSettings : SimpleModConfig
 {
     public static bool OriginalMusic { get; set; } = true;
+    public static bool CardRelicSounds { get; set; } = false;
     public static bool Achievements { get; set; } = true;
     public static bool AllowOtherActTwoBosses { get; set; } = false;
 
