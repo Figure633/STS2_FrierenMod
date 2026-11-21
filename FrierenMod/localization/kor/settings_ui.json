@@ -1,0 +1,12 @@
+{
+  "FRIERENMOD-ORIGINAL_MUSIC.title": "장송의 프리렌 애니메이션 BGM",
+  "FRIERENMOD-ORIGINAL_MUSIC.hover.desc": "이벤트, 일반 전투, 보스·엘리트 전투, 상점과 패배 화면에 애니메이션 BGM을 사용합니다. 끄면 기본 BGM으로 돌아갑니다.",
+  "FRIERENMOD-ACHIEVEMENTS.title": "업적 해금",
+  "FRIERENMOD-ACHIEVEMENTS.hover.desc": "프리렌 업적과 카드 슬롯 배경을 해금할 수 있습니다. 꺼도 이미 모은 배경은 사용할 수 있습니다.",
+  "FRIERENMOD-BACK_LIBRARY.title": "업적 및 카드 뒷면 수집품",
+  "FRIERENMOD-BACK_LIBRARY_OPEN.title": "보고 선택하기",
+  "FRIERENMOD-ALLOW_OTHER_ACT_TWO_BOSSES.title": "다른 모드나 기본 게임의 보스 허용",
+  "FRIERENMOD-ALLOW_OTHER_ACT_TWO_BOSSES.hover.desc": "끄면 프리렌으로 새로 시작한 게임에서 2막 보스는 아우라, 3막 보스는 복제체로 고정됩니다. 승천 10의 연속 보스전에서 복제체의 순서는 무작위입니다. 켜면 원래의 혼합 보스 후보를 사용합니다. 팀원 전원이 프리렌일 때만 적용되며 이미 시작한 게임에는 영향이 없습니다.",
+  "FRIERENMOD-CARD_RELIC_SOUNDS.title": "카드 및 유물 효과음",
+  "FRIERENMOD-CARD_RELIC_SOUNDS.hover.desc": "늦잠, 날리는 키스, 기본 공격 마법, 경련화 반지에 1편 모드의 효과음을 사용합니다. 기본값은 꺼짐이며 BGM과 업적 알림음에는 영향이 없습니다."
+}

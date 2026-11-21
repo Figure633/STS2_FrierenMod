@@ -1,0 +1,7 @@
+{
+  "OPTION_FRIEREN_MAGIC_SHOP.name": "마도구 상점 방문",
+  "OPTION_FRIEREN_MAGIC_SHOP.description": "마도구 2개를 골라 마법 덱에 추가합니다. 마도서에서 사용할 수 있습니다. 휴식 장소 행동을 1회 소모합니다.",
+  "OPTION_FRIEREN_MAGIC_SHOP.descriptionDisabled": "먼저 초기 인자를 선택해야 합니다.",
+  "OPTION_FRIEREN_SUMMON_DRAGON.name": "신룡 소환!",
+  "OPTION_FRIEREN_SUMMON_DRAGON.description": "[gold]드래곤볼 7개[/gold]를 소모하여 [green]신룡[/green]에게 [gold]소원[/gold] 하나를 빕니다. 휴식 장소 행동을 소모하지 않습니다."
+}

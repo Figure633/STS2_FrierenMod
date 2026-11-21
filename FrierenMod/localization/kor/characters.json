@@ -1,0 +1,15 @@
+{
+  "FRIERENMOD-FRIEREN.title": "프리렌",
+  "FRIERENMOD-FRIEREN.titleObject": "프리렌",
+  "FRIERENMOD-FRIEREN.description": "마법을 수집하는 여행 중 첨탑을 발견한 엘프 마법사입니다.\n마나를 활용해 강력한 마법으로 마족을 물리칩니다.",
+  "FRIERENMOD-FRIEREN.pronounObject": "그녀",
+  "FRIERENMOD-FRIEREN.pronounSubject": "그녀",
+  "FRIERENMOD-FRIEREN.pronounPossessive": "그녀의 것",
+  "FRIERENMOD-FRIEREN.possessiveAdjective": "그녀의",
+  "FRIERENMOD-FRIEREN.cardsModifierTitle": "프리렌 카드",
+  "FRIERENMOD-FRIEREN.cardsModifierDescription": "프리렌의 카드를 추가합니다.",
+  "FRIERENMOD-FRIEREN.eventDeathPrevention": "여행은 아직 끝나지 않았어.",
+  "FRIERENMOD-FRIEREN.banter.alive.endTurnPing": "몇 년이나 지났지?",
+  "FRIERENMOD-FRIEREN.banter.dead.endTurnPing": "ZZZ",
+  "FRIERENMOD-FRIEREN.unlockText": "새로운 여행을 떠납니다."
+}
