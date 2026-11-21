@@ -1,0 +1,14 @@
+{
+  "FRIERENMOD-MARK_OF_PRIDE.title": "驕傲印記",
+  "FRIERENMOD-MARK_OF_PRIDE.description": "只能附於單體攻擊牌。打出後，對另一名隨機敵人再打出一次。",
+  "FRIERENMOD-MARK_OF_PRIDE.extraCardText": "對另一名隨機敵人再打出一次。",
+  "FRIERENMOD-HAMON_OVERDRIVE.title": "波紋疾走",
+  "FRIERENMOD-HAMON_OVERDRIVE.description": "從[gold]手牌[/gold]中央打出時，返還這次花費的能量。",
+  "FRIERENMOD-HAMON_OVERDRIVE.extraCardText": "從[gold]手牌[/gold]中央打出時，返還這次花費的能量。",
+  "FRIERENMOD-LOADED_DICE.title": "灌鉛",
+  "FRIERENMOD-LOADED_DICE.description": "每次投出7點的概率提高15%。",
+  "FRIERENMOD-LOADED_DICE.extraCardText": "每次投出7點的概率提高15%。",
+  "FRIERENMOD-MANA_SOURCE.title": "魔力源",
+  "FRIERENMOD-MANA_SOURCE.description": "每場戰鬥第一次打出此牌時，在[gold]手牌[/gold]中生成{Amount}張[gold]魔力[/gold]。",
+  "FRIERENMOD-MANA_SOURCE.extraCardText": "首次打出時，在[gold]手牌[/gold]中生成{Amount}張[gold]魔力[/gold]。"
+}

@@ -1,0 +1,10 @@
+{
+  "FRIERENMOD-BOTTLED_MANA.title": "瓶裝魔力",
+  "FRIERENMOD-BOTTLED_MANA.description": "將{Cards}張[gold]魔力[/gold]加入一名玩家的[gold]手牌[/gold]。",
+  "FRIERENMOD-DISSOLVE_CLOTH_POTION.title": "只溶解衣服的藥水",
+  "FRIERENMOD-DISSOLVE_CLOTH_POTION.description": "移除目標的所有格擋，施加{VulnerablePower}層[gold]易傷[/gold]和{WeakPower}層[gold]虛弱[/gold]。",
+  "FRIERENMOD-EMPEROR_WINE.title": "皇帝酒",
+  "FRIERENMOD-EMPEROR_WINE.description": "從3張隨機稀有牌中選擇1張加入手牌，本回合耗能為0。",
+  "FRIERENMOD-SENZU_BEAN.title": "仙豆",
+  "FRIERENMOD-SENZU_BEAN.description": "移除一名玩家的所有[gold]負面效果[/gold]，恢復全部生命。持有時無法使用其他藥水。"
+}

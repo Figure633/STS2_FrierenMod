@@ -25,7 +25,7 @@ RUSSIAN_PLURAL = re.compile(r"\{([A-Za-z_]\w*):plural\(ru\):[^{}|]+\|[^{}|]+\|[^
 for table in ["cards", "characters", "relics", "potions", "frieren", "powers", "settings_ui", "rest_site_ui", "ancients", "events", "monsters", "encounters", "enchantments"]:
     eng = load(ROOT / f"FrierenMod/localization/eng/{table}.json")
     zhs = load(ROOT / f"FrierenMod/localization/zhs/{table}.json")
-    translations = {lang: load(ROOT / f"FrierenMod/localization/{lang}/{table}.json") for lang in ("jpn", "kor", "rus")}
+    translations = {lang: load(ROOT / f"FrierenMod/localization/{lang}/{table}.json") for lang in ("jpn", "kor", "rus", "zht")}
     assert eng.keys() == zhs.keys(), f"localization key mismatch: eng/{table}"
     for lang, texts in translations.items():
         assert texts.keys() == zhs.keys(), f"localization key mismatch: {lang}/{table}"
@@ -47,16 +47,17 @@ for table in ["cards", "characters", "relics", "potions", "frieren", "powers", "
     assert all(text for texts in (eng, zhs, *translations.values()) for key, text in texts.items()
                if not key.endswith('.flavor')), f"empty localization: {table}"
     if table in ('cards', 'frieren'):
-        for key, text in zhs.items():
-            if not (table == 'cards' and key.endswith('.description') or
-                    table == 'frieren' and key.startswith(('CRAFT.', 'FACTOR.', 'EFFECT.'))):
-                continue
-            gold_depth = 0
-            for part in re.split(r'(\[[^\]]+\])', text):
-                if part == '[gold]': gold_depth += 1
-                elif part == '[/gold]': gold_depth -= 1
-                elif re.search('抽牌堆|手牌|弃牌堆', part):
-                    assert gold_depth > 0, f"pile name must be gold: {key}: {part}"
+        for language, texts in (("zhs", zhs), ("zht", translations["zht"])):
+            for key, text in texts.items():
+                if not (table == 'cards' and key.endswith('.description') or
+                        table == 'frieren' and key.startswith(('CRAFT.', 'FACTOR.', 'EFFECT.'))):
+                    continue
+                gold_depth = 0
+                for part in re.split(r'(\[[^\]]+\])', text):
+                    if part == '[gold]': gold_depth += 1
+                    elif part == '[/gold]': gold_depth -= 1
+                    elif re.search('抽牌堆|手牌|[弃棄]牌堆', part):
+                        assert gold_depth > 0, f"pile name must be gold: {language}/{key}: {part}"
     for language, texts in [("eng", eng), ("zhs", zhs), *translations.items()]:
         for key, text in texts.items():
             if table == "cards" and key == "FRIERENMOD-MULTIPLE_OFFENSIVE_MAGIC.description":
