@@ -1,0 +1,14 @@
+{
+  "FRIERENMOD-MARK_OF_PRIDE.title": "誇りの印",
+  "FRIERENMOD-MARK_OF_PRIDE.description": "敵1体を対象とするアタックにのみ付与できる。プレイすると、別のランダムな敵に対してもう1回プレイする。",
+  "FRIERENMOD-MARK_OF_PRIDE.extraCardText": "別のランダムな敵に対してもう1回プレイする。",
+  "FRIERENMOD-HAMON_OVERDRIVE.title": "波紋疾走（オーバードライブ）",
+  "FRIERENMOD-HAMON_OVERDRIVE.description": "[gold]手札[/gold]の中央からプレイすると、消費したエナジーを取り戻す。",
+  "FRIERENMOD-HAMON_OVERDRIVE.extraCardText": "[gold]手札[/gold]の中央からプレイすると、消費したエナジーを取り戻す。",
+  "FRIERENMOD-LOADED_DICE.title": "イカサマダイス",
+  "FRIERENMOD-LOADED_DICE.description": "ダイスを振るたびに、7が出る確率が15%上昇する。",
+  "FRIERENMOD-LOADED_DICE.extraCardText": "ダイスを振るたびに、7が出る確率が15%上昇する。",
+  "FRIERENMOD-MANA_SOURCE.title": "魔力源",
+  "FRIERENMOD-MANA_SOURCE.description": "各戦闘で初めてこのカードをプレイした時、[gold]魔力[/gold]を{Amount}枚[gold]手札[/gold]に加える。",
+  "FRIERENMOD-MANA_SOURCE.extraCardText": "初めてプレイした時、[gold]魔力[/gold]を{Amount}枚[gold]手札[/gold]に加える。"
+}

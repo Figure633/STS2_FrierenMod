@@ -1,0 +1,15 @@
+{
+  "FRIERENMOD-FRIEREN.title": "フリーレン",
+  "FRIERENMOD-FRIEREN.titleObject": "フリーレン",
+  "FRIERENMOD-FRIEREN.description": "魔法を集める旅の途中で塔に迷い込んだ、エルフの魔法使い。\n魔力を駆使し、強力な魔法で魔族を倒す。",
+  "FRIERENMOD-FRIEREN.pronounObject": "彼女",
+  "FRIERENMOD-FRIEREN.pronounSubject": "彼女",
+  "FRIERENMOD-FRIEREN.pronounPossessive": "彼女のもの",
+  "FRIERENMOD-FRIEREN.possessiveAdjective": "彼女の",
+  "FRIERENMOD-FRIEREN.cardsModifierTitle": "フリーレンのカード",
+  "FRIERENMOD-FRIEREN.cardsModifierDescription": "フリーレンのカードを追加する。",
+  "FRIERENMOD-FRIEREN.eventDeathPrevention": "旅はまだ終わっていない。",
+  "FRIERENMOD-FRIEREN.banter.alive.endTurnPing": "何年経った？",
+  "FRIERENMOD-FRIEREN.banter.dead.endTurnPing": "ZZZ",
+  "FRIERENMOD-FRIEREN.unlockText": "新たな旅に出る。"
+}

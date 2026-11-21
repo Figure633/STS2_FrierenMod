@@ -16,6 +16,7 @@ public static class CardUiAudit
     public static async Task<int> Run(Node root, Player player, string[]? languages = null, bool checkTitles = true)
     {
         var records = new List<object>();
+        var layoutErrors = new List<string>();
         var scene = GD.Load<PackedScene>("res://scenes/cards/card.tscn");
         bool snapshots = OS.GetCmdlineUserArgs().Contains("--ui-snapshot");
         foreach (string language in languages ?? new[] { "eng", "zhs" })
@@ -60,7 +61,7 @@ public static class CardUiAudit
                     foreach (var tip in model.HoverTips.OfType<MegaCrit.Sts2.Core.HoverTips.HoverTip>())
                         if (string.IsNullOrWhiteSpace(tip.Description) || tip.Description.Contains("TIP."))
                             throw new Exception($"悬停规则说明缺失：{language}/{model.Id}");
-                    string auditedText = model is FactorCard ? Regex.Replace(text, @"\b\d*X(?:[+-]\d+)?\b", "X") :
+                    string auditedText = model is FactorCard ? Regex.Replace(text, @"(?<![A-Za-z0-9_])\d*X(?:[+-]\d+)?(?![A-Za-z0-9_])", "X") :
                         model is MultipleOffensiveMagic ? Regex.Replace(text, @"X\+(?:4|1)(?!\d)", "X") :
                         model is TreasureVaultSpell ? Regex.Replace(text, @"X\+1(?!\d)", "X") : text;
                     if (Regex.IsMatch(auditedText, @"\{[^}]+\}|\b(?:max|min)\s*\(|\b\d+X\b|\bX[+-]\d|FRIERENMOD-"))
@@ -84,19 +85,20 @@ public static class CardUiAudit
                         context = node.Model is FactorCard factor ? factor.Option.HasValue ? "chant" : factor.Slot.HasValue ? "initial" : "inventory" : "card",
                         font, titleFont, height, availableHeight = description.Size.Y, text = node.Model.GetDescriptionForPile(PileType.None) });
                     if (height > description.Size.Y + 2)
-                        throw new Exception($"卡面文字溢出：{language}/{node.Model.Id}，{height}/{description.Size.Y}");
+                        layoutErrors.Add($"卡面文字溢出：{language}/{node.Model.Id}，{height}/{description.Size.Y}");
                     if (font < 16)
-                        throw new Exception($"卡面字号过小：{language}/{node.Model.Id}，字号 {font}");
+                        layoutErrors.Add($"卡面字号过小：{language}/{node.Model.Id}，字号 {font}");
                     if (checkTitles && titleFont < 16)
-                        throw new Exception($"卡牌标题字号过小：{language}/{node.Model.Id}，字号 {titleFont}");
+                        layoutErrors.Add($"卡牌标题字号过小：{language}/{node.Model.Id}，字号 {titleFont}");
                 }
                 if (snapshots)
                     root.GetViewport().GetTexture().GetImage().SavePng(ProjectSettings.GlobalizePath($"res://../../artifacts/cards-{language}-{++page:00}.png"));
                 canvas.QueueFree();
                 await root.ToSignal(root.GetTree(), SceneTree.SignalName.ProcessFrame);
             }
-            GD.Print($"PASS {language} 原生卡面排版：{models.Count} 个普通/升级/因子预览，无溢出与程序公式");
+            if (layoutErrors.Count == 0) GD.Print($"PASS {language} 原生卡面排版：{models.Count} 个普通/升级/因子预览，无溢出与程序公式");
         }
+        if (layoutErrors.Count > 0) throw new Exception(string.Join(System.Environment.NewLine, layoutErrors));
         System.IO.File.WriteAllText(ProjectSettings.GlobalizePath("res://../../artifacts/card-ui-audit.json"),
             JsonSerializer.Serialize(records, new JsonSerializerOptions { WriteIndented = true }));
         return languages?.Length ?? 2;
