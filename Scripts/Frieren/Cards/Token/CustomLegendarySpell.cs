@@ -50,11 +50,11 @@ public sealed class CustomLegendarySpell() : LegendaryCard(0, CardType.Skill, Ca
             var text = new LocString("frieren", "CRAFT." + e.Kind);
             // 与原版 diff() 使用同一格式化入口：显示实际整数，并保留增减益颜色。
             if (e.Kind == "Energy") text.Add(new EnergyVar("Amount", e.Amount) { ColorPrefix = EnergyIconHelper.GetPrefix(this) });
-            else text.Add("Amount", e.Kind switch {
-                "Damage" or "DamageAll" or "DamageTriple" or "DamageQuad" or "DamageFive" or "DamageSeven" => DynamicVars.Damage.ToHighlightedString(inverse: false),
-                "Block" => DynamicVars.Block.ToHighlightedString(inverse: false),
-                _ => e.Amount.ToString(System.Globalization.CultureInfo.InvariantCulture)
-            });
+            else if (e.Kind is "Damage" or "DamageAll" or "DamageTriple" or "DamageQuad" or "DamageFive" or "DamageSeven")
+                text.Add("Amount", DynamicVars.Damage.ToHighlightedString(inverse: false));
+            else if (e.Kind == "Block")
+                text.Add("Amount", DynamicVars.Block.ToHighlightedString(inverse: false));
+            else text.Add("Amount", e.Amount);
             return text.GetFormattedText();
         })));
     }

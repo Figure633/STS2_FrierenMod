@@ -1,0 +1,15 @@
+{
+  "FRIERENMOD-FRIEREN.title": "Фрирен",
+  "FRIERENMOD-FRIEREN.titleObject": "Фрирен",
+  "FRIERENMOD-FRIEREN.description": "Эльфийская волшебница, которая нашла Шпиль в путешествии за новыми заклинаниями.\nИспользует ману, чтобы сокрушать демонов могущественной магией.",
+  "FRIERENMOD-FRIEREN.pronounObject": "её",
+  "FRIERENMOD-FRIEREN.pronounSubject": "она",
+  "FRIERENMOD-FRIEREN.pronounPossessive": "её",
+  "FRIERENMOD-FRIEREN.possessiveAdjective": "её",
+  "FRIERENMOD-FRIEREN.cardsModifierTitle": "Карты Фрирен",
+  "FRIERENMOD-FRIEREN.cardsModifierDescription": "Добавляет карты Фрирен.",
+  "FRIERENMOD-FRIEREN.eventDeathPrevention": "Путешествие ещё не окончено.",
+  "FRIERENMOD-FRIEREN.banter.alive.endTurnPing": "Сколько лет прошло?",
+  "FRIERENMOD-FRIEREN.banter.dead.endTurnPing": "Хр-р-р",
+  "FRIERENMOD-FRIEREN.unlockText": "Начните новое путешествие."
+}
