@@ -1,0 +1,10 @@
+{
+  "FRIERENMOD-BOTTLED_MANA.title": "병에 담긴 마나",
+  "FRIERENMOD-BOTTLED_MANA.description": "플레이어 한 명의 [gold]손[/gold]에 [gold]마나[/gold]를 {Cards}장 추가합니다.",
+  "FRIERENMOD-DISSOLVE_CLOTH_POTION.title": "옷만 녹이는 약",
+  "FRIERENMOD-DISSOLVE_CLOTH_POTION.description": "대상의 방어도를 모두 제거합니다. [gold]취약[/gold]을 {VulnerablePower}, [gold]약화[/gold]를 {WeakPower} 부여합니다.",
+  "FRIERENMOD-EMPEROR_WINE.title": "황제주",
+  "FRIERENMOD-EMPEROR_WINE.description": "무작위 희귀 카드 3장 중 1장을 선택해 [gold]손[/gold]에 추가합니다. 이번 턴에 비용이 0이 됩니다.",
+  "FRIERENMOD-SENZU_BEAN.title": "선두",
+  "FRIERENMOD-SENZU_BEAN.description": "플레이어 한 명의 모든 [gold]해로운 효과[/gold]를 제거하고 체력을 모두 회복합니다. 이 포션을 가지고 있는 동안 다른 포션을 사용할 수 없습니다."
+}

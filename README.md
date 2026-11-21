@@ -1,6 +1,8 @@
 # FrierenMod STS2
 
-《杀戮尖塔2》的芙莉莲模组，移植自[一代模组](https://steamcommunity.com/sharedfiles/filedetails/?id=3164722329)。当前版本 **0.13.18**，开发中。
+《杀戮尖塔2》的芙莉莲模组，移植自[一代模组](https://steamcommunity.com/sharedfiles/filedetails/?id=3164722329)。当前版本 **0.13.19**，开发中。
+
+0.13.19 新增韩语本地化，覆盖卡牌、遗物、事件、委托和魔法书等游戏内文本。
 
 0.13.18 新增日语本地化，覆盖卡牌、遗物、事件、委托和魔法书等游戏内文本。
 

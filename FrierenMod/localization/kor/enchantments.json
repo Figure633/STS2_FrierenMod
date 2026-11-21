@@ -1,0 +1,14 @@
+{
+  "FRIERENMOD-MARK_OF_PRIDE.title": "긍지의 표식",
+  "FRIERENMOD-MARK_OF_PRIDE.description": "적 하나를 대상으로 하는 공격 카드에만 부여할 수 있습니다. 사용 시 다른 무작위 적에게 한 번 더 사용합니다.",
+  "FRIERENMOD-MARK_OF_PRIDE.extraCardText": "다른 무작위 적에게 한 번 더 사용합니다.",
+  "FRIERENMOD-HAMON_OVERDRIVE.title": "파문질주",
+  "FRIERENMOD-HAMON_OVERDRIVE.description": "[gold]손[/gold] 가운데에서 사용하면 소모한 에너지를 돌려받습니다.",
+  "FRIERENMOD-HAMON_OVERDRIVE.extraCardText": "[gold]손[/gold] 가운데에서 사용하면 소모한 에너지를 돌려받습니다.",
+  "FRIERENMOD-LOADED_DICE.title": "납 주사위",
+  "FRIERENMOD-LOADED_DICE.description": "주사위를 굴릴 때마다 7이 나올 확률이 15%p 증가합니다.",
+  "FRIERENMOD-LOADED_DICE.extraCardText": "주사위를 굴릴 때마다 7이 나올 확률이 15%p 증가합니다.",
+  "FRIERENMOD-MANA_SOURCE.title": "마나 원천",
+  "FRIERENMOD-MANA_SOURCE.description": "매 전투에서 처음 사용 시 [gold]마나[/gold]를 {Amount}장 [gold]손[/gold]에 추가합니다.",
+  "FRIERENMOD-MANA_SOURCE.extraCardText": "처음 사용 시 [gold]마나[/gold]를 {Amount}장 [gold]손[/gold]에 추가합니다."
+}
