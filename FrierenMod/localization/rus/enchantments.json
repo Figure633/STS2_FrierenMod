@@ -1,0 +1,14 @@
+{
+  "FRIERENMOD-MARK_OF_PRIDE.title": "Метка гордости",
+  "FRIERENMOD-MARK_OF_PRIDE.description": "Зачаровывает только Атаку с одной целью. При розыгрыше карта разыгрывается ещё раз на другого случайного врага.",
+  "FRIERENMOD-MARK_OF_PRIDE.extraCardText": "Разыгрывается ещё раз на другого случайного врага.",
+  "FRIERENMOD-HAMON_OVERDRIVE.title": "Пульсация Хамона",
+  "FRIERENMOD-HAMON_OVERDRIVE.description": "При розыгрыше из середины [gold]руки[/gold] возвращает потраченную энергию.",
+  "FRIERENMOD-HAMON_OVERDRIVE.extraCardText": "При розыгрыше из середины [gold]руки[/gold] возвращает потраченную энергию.",
+  "FRIERENMOD-LOADED_DICE.title": "Утяжелённая кость",
+  "FRIERENMOD-LOADED_DICE.description": "При каждом броске повышает шанс выбросить 7 на 15 процентных пунктов.",
+  "FRIERENMOD-LOADED_DICE.extraCardText": "При каждом броске повышает шанс выбросить 7 на 15 процентных пунктов.",
+  "FRIERENMOD-MANA_SOURCE.title": "Источник маны",
+  "FRIERENMOD-MANA_SOURCE.description": "При первом розыгрыше в каждом бою добавляет в [gold]руку[/gold] {Amount} [gold]маны[/gold].",
+  "FRIERENMOD-MANA_SOURCE.extraCardText": "При первом розыгрыше добавляет в [gold]руку[/gold] {Amount} [gold]маны[/gold]."
+}

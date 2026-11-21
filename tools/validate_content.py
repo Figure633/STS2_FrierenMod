@@ -20,15 +20,24 @@ def load(path):
 PLACEHOLDER = re.compile(r"\{\}|\{[A-Za-z_]\w*(?:\.\w+)*(?=[:}]|$)")
 FORMATTER = re.compile(r":([A-Za-z_]\w*\([^{}]*?\)|cond|show|plural)(?=[}:])")
 
+RUSSIAN_PLURAL = re.compile(r"\{([A-Za-z_]\w*):plural\(ru\):[^{}|]+\|[^{}|]+\|[^{}|]+\}")
+
 for table in ["cards", "characters", "relics", "potions", "frieren", "powers", "settings_ui", "rest_site_ui", "ancients", "events", "monsters", "encounters", "enchantments"]:
     eng = load(ROOT / f"FrierenMod/localization/eng/{table}.json")
     zhs = load(ROOT / f"FrierenMod/localization/zhs/{table}.json")
-    translations = {lang: load(ROOT / f"FrierenMod/localization/{lang}/{table}.json") for lang in ("jpn", "kor")}
+    translations = {lang: load(ROOT / f"FrierenMod/localization/{lang}/{table}.json") for lang in ("jpn", "kor", "rus")}
     assert eng.keys() == zhs.keys(), f"localization key mismatch: eng/{table}"
     for lang, texts in translations.items():
         assert texts.keys() == zhs.keys(), f"localization key mismatch: {lang}/{table}"
         for key, text in texts.items():
             source = zhs[key]
+            if lang == "rus":
+                # 原版俄语按数值选择三种词形，只允许复用已有参数。
+                source_fields = {field.removeprefix("{") for field in PLACEHOLDER.findall(source)}
+                assert all(field in source_fields for field in RUSSIAN_PLURAL.findall(text)), (
+                    f"unknown plural parameter: {lang}/{table}/{key}"
+                )
+                text = RUSSIAN_PLURAL.sub("", text)
             assert all(Counter(pattern.findall(text)) == Counter(pattern.findall(source))
                        for pattern in (PLACEHOLDER, FORMATTER)), f"format parameter mismatch: {lang}/{table}/{key}"
             assert all(text.count(token) == source.count(token) for token in "{}|"), f"format branches mismatch: {lang}/{table}/{key}"

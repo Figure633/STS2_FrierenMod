@@ -486,6 +486,7 @@ public partial class Runner : Node
                 await Finish(); return;
             }
             (string Language, string NativeStrike, string DrawPile, string Result)? cardTextMode =
+                OS.GetCmdlineUserArgs().Contains("--russian-card-text-only") ? ("rus", "Удар", "Стопка добора", "RUSSIAN") :
                 OS.GetCmdlineUserArgs().Contains("--korean-card-text-only") ? ("kor", "타격", "뽑을 카드 더미", "KOREAN") :
                 OS.GetCmdlineUserArgs().Contains("--japanese-card-text-only") ? ("jpn", "ストライク", "山札", "JAPANESE") :
                 OS.GetCmdlineUserArgs().Contains("--english-card-text-only") ? ("eng", "Strike", "Draw Pile", "ENGLISH") : null;
@@ -498,6 +499,14 @@ public partial class Runner : Node
                     if (LocManager.Instance.GetTable("cards").GetRawText("FRIERENMOD-STRIKE_FRIEREN.title") != mode.NativeStrike ||
                         LocManager.Instance.GetTable("frieren").GetRawText("SLOT.Draw") != mode.DrawPile)
                         throw new Exception($"未加载打包后的卡牌或魔法书文本：{mode.Language}");
+                }
+                if (mode.Language == "rus") {
+                    foreach (var (amount, expected) in new[] { (1, "карту"), (2, "карты"), (5, "карт"), (11, "карт"), (21, "карту") }) {
+                        var draw = new LocString("frieren", "CRAFT.Draw");
+                        draw.Add("Amount", amount);
+                        if (draw.GetFormattedText() != $"Вы добираете {amount} {expected}.")
+                            throw new Exception($"俄语抽牌数量词形不符：{amount}");
+                    }
                 }
                 GD.Print($"{mode.Result}_CARD_TEXT_OK: " +
                     await CardUiAudit.Run(this, textPlayer, [mode.Language], checkTitles: mode.Language != "eng"));

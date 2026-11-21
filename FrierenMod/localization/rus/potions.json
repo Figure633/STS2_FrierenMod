@@ -1,0 +1,10 @@
+{
+  "FRIERENMOD-BOTTLED_MANA.title": "Бутылка с маной",
+  "FRIERENMOD-BOTTLED_MANA.description": "Добавляет {Cards} [gold]маны[/gold] в [gold]руку[/gold] выбранного игрока.",
+  "FRIERENMOD-DISSOLVE_CLOTH_POTION.title": "Зелье растворения одежды",
+  "FRIERENMOD-DISSOLVE_CLOTH_POTION.description": "Снимает с цели всю [gold]защиту[/gold] и накладывает {VulnerablePower} [gold]уязвимости[/gold] и {WeakPower} [gold]слабости[/gold].",
+  "FRIERENMOD-EMPEROR_WINE.title": "Императорское вино",
+  "FRIERENMOD-EMPEROR_WINE.description": "Добавляет в [gold]руку[/gold] 1 из 3 случайных редких карт на выбор. В этом ходу она бесплатная.",
+  "FRIERENMOD-SENZU_BEAN.title": "Боб сэнзу",
+  "FRIERENMOD-SENZU_BEAN.description": "Снимает все [gold]отрицательные эффекты[/gold] с выбранного игрока и полностью восстанавливает его здоровье. Пока боб у вас, другие зелья использовать нельзя."
+}

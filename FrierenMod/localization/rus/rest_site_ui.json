@@ -1,0 +1,7 @@
+{
+  "OPTION_FRIEREN_MAGIC_SHOP.name": "Зайти в лавку магии",
+  "OPTION_FRIEREN_MAGIC_SHOP.description": "Выберите два магических предмета и добавьте их в магическую колоду. Используйте их в гримуаре. Занимает одно действие у костра.",
+  "OPTION_FRIEREN_MAGIC_SHOP.descriptionDisabled": "Сначала выберите начальные факторы.",
+  "OPTION_FRIEREN_SUMMON_DRAGON.name": "Призвать Шенрона!",
+  "OPTION_FRIEREN_SUMMON_DRAGON.description": "Потратьте [gold]семь драконьих жемчужин[/gold] и загадайте [gold]желание[/gold] [green]Шенрону[/green]. Не занимает действие у костра."
+}

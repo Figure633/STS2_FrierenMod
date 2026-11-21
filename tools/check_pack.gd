@@ -83,7 +83,7 @@ func _initialize():
 			if folder == "slot_backs":
 				slot_backs += 1
 	var localization_count = 0
-	for lang in ["eng", "zhs", "jpn", "kor"]:
+	for lang in ["eng", "zhs", "jpn", "kor", "rus"]:
 		for table in ["cards", "characters", "relics", "potions", "frieren", "powers", "settings_ui", "rest_site_ui", "ancients", "events", "monsters", "encounters", "enchantments"]:
 			var text = FileAccess.get_file_as_string("res://FrierenMod/localization/" + lang + "/" + table + ".json")
 			if not JSON.parse_string(text) is Dictionary:
