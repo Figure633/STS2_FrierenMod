@@ -1,0 +1,12 @@
+{
+  "FRIERENMOD-ORIGINAL_MUSIC.title": "芙莉蓮動漫精選bgm",
+  "FRIERENMOD-ORIGINAL_MUSIC.hover.desc": "使用《葬送的芙莉蓮》動畫精選背景音樂，涵蓋事件、一般戰鬥、頭目與菁英戰、商店及戰敗畫面。關閉後恢復《殺戮尖塔2》原版音樂。",
+  "FRIERENMOD-ACHIEVEMENTS.title": "成就解鎖",
+  "FRIERENMOD-ACHIEVEMENTS.hover.desc": "啟用芙莉蓮成就及卡槽背景解鎖。關閉不影響已收藏背景的使用。",
+  "FRIERENMOD-BACK_LIBRARY.title": "成就與卡背收藏",
+  "FRIERENMOD-BACK_LIBRARY_OPEN.title": "查看與選擇",
+  "FRIERENMOD-ALLOW_OTHER_ACT_TWO_BOSSES.title": "允許遇到非芙莉蓮模組頭目",
+  "FRIERENMOD-ALLOW_OTHER_ACT_TWO_BOSSES.hover.desc": "關閉時，芙莉蓮新開的對局中，第二幕頭目固定為阿烏拉，第三幕固定為複製體。晉階10的雙頭目戰中，複製體的順序隨機。開啟後恢復混合頭目池。僅適用於全隊皆為芙莉蓮的新對局。",
+  "FRIERENMOD-CARD_RELIC_SOUNDS.title": "卡牌與遺物音效",
+  "FRIERENMOD-CARD_RELIC_SOUNDS.hover.desc": "播放賴床、飛吻、普通攻擊魔法及鏡蓮花戒指的一代音效。預設關閉，不影響背景音樂和成就提示音。"
+}

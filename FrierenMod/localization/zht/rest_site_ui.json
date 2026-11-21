@@ -1,0 +1,7 @@
+{
+  "OPTION_FRIEREN_MAGIC_SHOP.name": "逛魔具店",
+  "OPTION_FRIEREN_MAGIC_SHOP.description": "選擇兩件魔具加入魔法牌組，然後在魔法書中使用。佔用一次休息處行動。",
+  "OPTION_FRIEREN_MAGIC_SHOP.descriptionDisabled": "需要先完成初始因子選擇。",
+  "OPTION_FRIEREN_SUMMON_DRAGON.name": "召喚神龍！",
+  "OPTION_FRIEREN_SUMMON_DRAGON.description": "消耗[gold]七顆龍珠[/gold]，向[green]神龍[/green]許下一個[gold]願望[/gold]。不消耗休息處行動。"
+}

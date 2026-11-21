@@ -1,0 +1,15 @@
+{
+  "FRIERENMOD-FRIEREN.title": "芙莉蓮",
+  "FRIERENMOD-FRIEREN.titleObject": "芙莉蓮",
+  "FRIERENMOD-FRIEREN.description": "精靈族的魔法使，在收集魔法的旅途中偶遇尖塔。\n以魔力為核心，施展強大的魔法擊敗魔族。",
+  "FRIERENMOD-FRIEREN.pronounObject": "她",
+  "FRIERENMOD-FRIEREN.pronounSubject": "她",
+  "FRIERENMOD-FRIEREN.pronounPossessive": "她的",
+  "FRIERENMOD-FRIEREN.possessiveAdjective": "她的",
+  "FRIERENMOD-FRIEREN.cardsModifierTitle": "芙莉蓮卡牌",
+  "FRIERENMOD-FRIEREN.cardsModifierDescription": "加入芙莉蓮的卡牌。",
+  "FRIERENMOD-FRIEREN.eventDeathPrevention": "旅途還沒有結束。",
+  "FRIERENMOD-FRIEREN.banter.alive.endTurnPing": "過了幾年了？",
+  "FRIERENMOD-FRIEREN.banter.dead.endTurnPing": "ZZZ",
+  "FRIERENMOD-FRIEREN.unlockText": "踏上新的旅途。"
+}

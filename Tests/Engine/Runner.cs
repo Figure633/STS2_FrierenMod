@@ -506,6 +506,7 @@ public partial class Runner : Node
                 await Finish(); return;
             }
             (string Language, string NativeStrike, string DrawPile, string Result)? cardTextMode =
+                OS.GetCmdlineUserArgs().Contains("--traditional-chinese-card-text-only") ? ("zht", "打擊", "抽牌堆", "TRADITIONAL_CHINESE") :
                 OS.GetCmdlineUserArgs().Contains("--russian-card-text-only") ? ("rus", "Удар", "Стопка добора", "RUSSIAN") :
                 OS.GetCmdlineUserArgs().Contains("--korean-card-text-only") ? ("kor", "타격", "뽑을 카드 더미", "KOREAN") :
                 OS.GetCmdlineUserArgs().Contains("--japanese-card-text-only") ? ("jpn", "ストライク", "山札", "JAPANESE") :
