@@ -1,0 +1,7 @@
+{
+  "OPTION_FRIEREN_MAGIC_SHOP.name": "魔道具店に寄る",
+  "OPTION_FRIEREN_MAGIC_SHOP.description": "魔道具を2つ選んで魔法デッキに加え、魔導書で使用する。休憩所での行動を1回消費する。",
+  "OPTION_FRIEREN_MAGIC_SHOP.descriptionDisabled": "先に初期因子を選ぶ必要がある。",
+  "OPTION_FRIEREN_SUMMON_DRAGON.name": "神龍を呼び出す！",
+  "OPTION_FRIEREN_SUMMON_DRAGON.description": "[gold]7つのドラゴンボール[/gold]を使い、[green]神龍[/green]に[gold]願い[/gold]を1つ叶えてもらう。休憩所での行動を消費しない。"
+}

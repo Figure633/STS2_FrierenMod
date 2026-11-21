@@ -1,0 +1,12 @@
+{
+  "FRIERENMOD-ORIGINAL_MUSIC.title": "アニメ『葬送のフリーレン』のBGM",
+  "FRIERENMOD-ORIGINAL_MUSIC.hover.desc": "イベント、通常戦闘、ボス戦、エリート戦、ショップ、敗北時にアニメのBGMを使用する。オフにするとゲーム本編のBGMに戻る。",
+  "FRIERENMOD-ACHIEVEMENTS.title": "実績の解除",
+  "FRIERENMOD-ACHIEVEMENTS.hover.desc": "フリーレンの実績とカードスロット背景を解除できるようにする。オフにしても収集済みの背景は使用できる。",
+  "FRIERENMOD-BACK_LIBRARY.title": "実績とカード裏面コレクション",
+  "FRIERENMOD-BACK_LIBRARY_OPEN.title": "表示・選択",
+  "FRIERENMOD-ALLOW_OTHER_ACT_TWO_BOSSES.title": "他のボスとの遭遇を許可",
+  "FRIERENMOD-ALLOW_OTHER_ACT_TWO_BOSSES.hover.desc": "オフにすると、フリーレンで新しく始めたランでは第2章のボスがアウラ、第3章のボスが複製体になる。アセンション10の連続ボス戦では複製体の順番はランダム。オンにすると通常の混合ボスプールに戻る。全員がフリーレンの場合のみ有効。生成済みのランには影響しない。",
+  "FRIERENMOD-CARD_RELIC_SOUNDS.title": "カードとレリックの効果音",
+  "FRIERENMOD-CARD_RELIC_SOUNDS.hover.desc": "寝坊、投げキッス、通常攻撃魔法、鏡蓮華の指輪に前作MODの効果音を使用する。初期設定ではオフ。BGMと実績の通知音には影響しない。"
+}

@@ -1,0 +1,10 @@
+{
+  "FRIERENMOD-BOTTLED_MANA.title": "瓶詰めの魔力",
+  "FRIERENMOD-BOTTLED_MANA.description": "プレイヤー1人の[gold]手札[/gold]に[gold]魔力[/gold]を{Cards}枚加える。",
+  "FRIERENMOD-DISSOLVE_CLOTH_POTION.title": "服だけ溶けるポーション",
+  "FRIERENMOD-DISSOLVE_CLOTH_POTION.description": "対象のブロックをすべて取り除き、[gold]弱体[/gold]{VulnerablePower}と[gold]脱力[/gold]{WeakPower}を付与する。",
+  "FRIERENMOD-EMPEROR_WINE.title": "皇帝のワイン",
+  "FRIERENMOD-EMPEROR_WINE.description": "ランダムなレアカード3枚から1枚選んで[gold]手札[/gold]に加える。このターン、そのカードのコストは0。",
+  "FRIERENMOD-SENZU_BEAN.title": "仙豆",
+  "FRIERENMOD-SENZU_BEAN.description": "プレイヤー1人の[gold]デバフ[/gold]をすべて取り除き、HPを全回復する。所持している間は他のポーションを使用できない。"
+}

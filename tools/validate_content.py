@@ -3,6 +3,7 @@ import hashlib
 import json
 import re
 import xml.etree.ElementTree as ET
+from collections import Counter
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -15,14 +16,25 @@ def load(path):
         return result
     return json.loads(path.read_text(encoding="utf-8-sig"), object_pairs_hook=unique)
 
+# 保留参数名、格式方法和配置及匿名分支参数。条件分支中的正文由各语言独立翻译。
+PLACEHOLDER = re.compile(r"\{\}|\{[A-Za-z_]\w*(?:\.\w+)*(?=[:}]|$)")
+FORMATTER = re.compile(r":([A-Za-z_]\w*\([^{}]*?\)|cond|show|plural)(?=[}:])")
+
 for table in ["cards", "characters", "relics", "potions", "frieren", "powers", "settings_ui", "rest_site_ui", "ancients", "events", "monsters", "encounters", "enchantments"]:
     eng = load(ROOT / f"FrierenMod/localization/eng/{table}.json")
     zhs = load(ROOT / f"FrierenMod/localization/zhs/{table}.json")
-    assert eng.keys() == zhs.keys(), f"localization key mismatch: {table}"
+    jpn = load(ROOT / f"FrierenMod/localization/jpn/{table}.json")
+    assert eng.keys() == zhs.keys() == jpn.keys(), f"localization key mismatch: {table}"
+    for key, text in jpn.items():
+        source = zhs[key]
+        assert all(Counter(pattern.findall(text)) == Counter(pattern.findall(source))
+                   for pattern in (PLACEHOLDER, FORMATTER)), f"format parameter mismatch: jpn/{table}/{key}"
+        assert all(text.count(token) == source.count(token) for token in "{}|"), f"format branches mismatch: jpn/{table}/{key}"
     if table == 'frieren':
         assert not any(key.startswith('FRIERENMOD-READING_GRIMOIRE_EVENT.') for key in eng), '开局事件文案应只在实际读取的events表维护'
     # 风味文字可留空；作者未提供时不自行编造。
-    assert all(v for k,v in eng.items() if not k.endswith('.flavor')) and all(v for k,v in zhs.items() if not k.endswith('.flavor')), f"empty localization: {table}"
+    assert all(text for texts in (eng, zhs, jpn) for key, text in texts.items()
+               if not key.endswith('.flavor')), f"empty localization: {table}"
     if table in ('cards', 'frieren'):
         for key, text in zhs.items():
             if not (table == 'cards' and key.endswith('.description') or
@@ -34,7 +46,7 @@ for table in ["cards", "characters", "relics", "potions", "frieren", "powers", "
                 elif part == '[/gold]': gold_depth -= 1
                 elif re.search('抽牌堆|手牌|弃牌堆', part):
                     assert gold_depth > 0, f"pile name must be gold: {key}: {part}"
-    for language, texts in [("eng", eng), ("zhs", zhs)]:
+    for language, texts in [("eng", eng), ("zhs", zhs), ("jpn", jpn)]:
         for key, text in texts.items():
             if table == "cards" and key == "FRIERENMOD-MULTIPLE_OFFENSIVE_MAGIC.description":
                 # 作者指定 X 费正文保留 X+4 和升级后的 X+1，其他程序公式仍禁止。
@@ -45,7 +57,7 @@ for table in ["cards", "characters", "relics", "potions", "frieren", "powers", "
                 # 因子保留 X+1、2X 等咏唱费用或效果规则，仍禁止泄漏程序函数。
                 text = re.sub(r"\d*X(?:[+-]\d+)?", "X", text)
             assert not re.search(r"\b(?:max|min|Math\.\w+)\s*\(|\b\d+X\b|\bX[+-]\d", text), f"formula exposed in {language}/{table}/{key}"
-    print(f"PASS {table}: {len(eng)} bilingual keys")
+    print(f"PASS {table}: {len(eng)} keys in 3 languages")
 for item in load(ROOT / "tools/data/assets.json"):
     path = ROOT / item["file"]
     assert path.is_file(), str(path)
