@@ -285,6 +285,10 @@ public partial class Runner : Node
                 GD.Print("CARD_FIXES_OK: " + await CardPresentationFixTests.Run(this));
                 await Finish(); return;
             }
+            if (OS.GetCmdlineUserArgs().Contains("--crying-save-only")) {
+                GD.Print("CRYING_SAVE_OK: " + Cards105Tests.RunCryingSave());
+                await Finish(); return;
+            }
             if (OS.GetCmdlineUserArgs().Contains("--cards105-only")) {
                 GD.Print("CARDS105_OK: " + await Cards105Tests.Run(this));
                 await Finish(); return;

@@ -23,9 +23,11 @@ using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.Models.Relics;
 using MegaCrit.Sts2.Core.Multiplayer;
+using MegaCrit.Sts2.Core.Multiplayer.Serialization;
 using MegaCrit.Sts2.Core.Nodes.Cards;
 using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.Runs;
+using MegaCrit.Sts2.Core.Saves.Runs;
 using MegaCrit.Sts2.Core.TestSupport;
 using MegaCrit.Sts2.Core.Unlocks;
 using MegaCrit.Sts2.Core.ValueProps;
@@ -33,6 +35,46 @@ using System.Text.Json;
 
 public static class Cards105Tests
 {
+    public static int RunCryingSave()
+    {
+        int count = 0;
+        void Check(bool passed, string message)
+        {
+            if (!passed) throw new Exception(message);
+            count++;
+            GD.Print("PASS: " + message);
+        }
+
+        var normal = (Crying)ModelDb.Card<Crying>().ToMutable();
+        var restored = (Crying)CardModel.FromSerializable(normal.ToSerializable());
+        Check(!restored.IsUpgraded && restored.CurrentBlock == 6 && restored.CurrentWeak == 1,
+            "嗷嗷哭读档保持6格挡1虚弱");
+        CardCmd.Upgrade(restored);
+        var saved = restored.ToSerializable();
+        var upgraded = (Crying)CardModel.FromSerializable(saved);
+        Check(upgraded.IsUpgraded && upgraded.CurrentBlock == 9 && upgraded.CurrentWeak == 1,
+            "嗷嗷哭在读档后正常升级，升级版再次读档保持9格挡1虚弱");
+        saved.Props = null;
+        Check(((Crying)CardModel.FromSerializable(saved)).CurrentBlock == 9, "缺少保存属性的旧档仍正常计算升级格挡");
+
+        // 用实际打出后可能保存的交换值验证三次网络包恢复。
+        upgraded.CurrentBlock = 1;
+        upgraded.CurrentWeak = 6;
+        for (int reload = 0; reload < 3; reload++)
+        {
+            var writer = new PacketWriter();
+            upgraded.ToSerializable().Serialize(writer);
+            var reader = new PacketReader();
+            reader.Reset(writer.Buffer);
+            var synced = new SerializableCard();
+            synced.Deserialize(reader);
+            upgraded = (Crying)CardModel.FromSerializable(synced);
+        }
+        Check(upgraded.IsUpgraded && upgraded.CurrentBlock == 1 && upgraded.CurrentWeak == 6,
+            "嗷嗷哭升级卡经过三次网络包往返保持交换值");
+        return count;
+    }
+
     public static async Task<int> Run(Node root)
     {
         int count=0;void Check(bool ok,string text){if(!ok)throw new Exception(text);count++;GD.Print("PASS 105: "+text);}

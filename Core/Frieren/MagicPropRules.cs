@@ -100,12 +100,25 @@ public static class MagicPropRules
                 }
                 break;
             case "TransmutationCircle":
-                foreach (var item in chosen) {
+            {
+                var sourceIds = chosen.Select(item => item.SpellId).ToHashSet();
+                var pool = SpellCatalog.Available.Where(factor => !factor.Puzzle && !sourceIds.Contains(factor.Id)).ToList();
+                var sources = chosen.Select(item => (Item: item, Rarity: SpellCatalog.Get(item.SpellId).Rarity)).ToArray();
+                if (sources.GroupBy(source => source.Rarity)
+                    .Any(group => pool.Count(factor => factor.Rarity == group.Key) < group.Count()))
+                    return null;
+
+                foreach (var (item, rarity) in sources)
+                {
+                    var candidates = pool.Where(factor => factor.Rarity == rarity).ToArray();
+                    var factor = candidates[next(candidates.Length)];
+                    pool.Remove(factor);
                     deck.Remove(item.InstanceId);
-                    var replacement = deck.Add(RandomFactor(SpellCatalog.Get(item.SpellId).Rarity));
+                    var replacement = deck.Add(factor.Id);
                     if (item.Slot >= 0) deck.Equip(replacement.InstanceId, (ManaSlot)item.Slot);
                 }
                 break;
+            }
             default:
                 foreach (int id in targets) deck.Remove(id);
                 if (prop.PropId == "SeinNote") heal = 10;

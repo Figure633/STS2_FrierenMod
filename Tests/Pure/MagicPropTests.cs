@@ -49,6 +49,23 @@ static class MagicPropTests
             Check(result.Deck.Items.All(i => i.InstanceId != 1 && i.InstanceId != 3));
             Check(SpellCatalog.Get(result.Deck.InSlot(ManaSlot.Draw)!.Id).Rarity == FactorRarity.Common && SpellCatalog.Get(result.Deck.InSlot(ManaSlot.Discard)!.Id).Rarity == FactorRarity.Uncommon);
         });
+        Test("炼成阵的两个产物互异并排除两张原材料", () => {
+            foreach (var secondId in new[] { "AdvancedDefensiveMagic", "BePrepared", "BluePrint" })
+            {
+                var deck = Deck();
+                var first = deck.Add("AdvancedDefensiveMagic");
+                var second = deck.Add(secondId);
+                deck.Equip(first.InstanceId, ManaSlot.Draw);
+                deck.Equip(second.InstanceId, ManaSlot.Hand);
+                var result = Use(deck, "TransmutationCircle", [second.InstanceId, first.InstanceId]);
+                var draw = SpellCatalog.Get(result.Deck.InSlot(ManaSlot.Draw)!.Id);
+                var hand = SpellCatalog.Get(result.Deck.InSlot(ManaSlot.Hand)!.Id);
+                Check(draw.Id != hand.Id && draw.Id != first.SpellId && hand.Id != first.SpellId &&
+                    draw.Id != second.SpellId && hand.Id != second.SpellId);
+                Check(draw.Rarity == FactorRarity.Common && hand.Rarity == SpellCatalog.Get(second.SpellId).Rarity &&
+                    !draw.Puzzle && !hand.Puzzle && result.Deck.Props.Count == 0);
+            }
+        });
         Test("赞因笔记可消耗库存因子和其他魔具以治疗", () => {
             var deck = Deck(); int material = deck.AddProp("MysteryBox").InstanceId;
             var result = Use(deck, "SeinNote", [4, material]);

@@ -1,7 +1,9 @@
+using HarmonyLib;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.Saves.Runs;
 using MegaCrit.Sts2.Core.ValueProps;
@@ -26,4 +28,19 @@ public sealed class Crying() : FrierenCard(1, CardType.Skill, CardRarity.Common,
         CurrentWeak = (int)block;
     }
     protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(3);
+
+    [HarmonyPatch(typeof(CardModel), nameof(CardModel.FromSerializable))]
+    private static class RestoreSavedBlock
+    {
+        private static void Postfix(SerializableCard save, CardModel __result)
+        {
+            if (__result is not Crying { IsUpgraded: true } crying || save.Props?.ints is not { } values)
+                return;
+
+            // 原生恢复先写入保存属性，再重放升级；已保存的格挡包含升级和打出后的交换。
+            foreach (var value in values)
+                if (value.name == nameof(CurrentBlock))
+                    crying.CurrentBlock = value.value;
+        }
+    }
 }
