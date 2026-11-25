@@ -52,7 +52,7 @@ public sealed class DragonBallAdventure : FrierenStoryEvent
     internal static CardModel TurtleReplacement(CardModel original)
     {
         var replacement = original.Owner.RunState.CreateCard<Kamehameha>(original.Owner);
-        if (original.IsUpgraded) { replacement.UpgradeInternal(); replacement.FinalizeUpgradeInternal(); }
+        if (original.IsUpgraded) { GameApi.UpgradeInternal(replacement); replacement.FinalizeUpgradeInternal(); }
         if (original.Enchantment is {} enchantment) {
             var save = enchantment.ToSerializable();
             replacement.EnchantInternal(EnchantmentModel.FromSerializable(save),save.Amount);

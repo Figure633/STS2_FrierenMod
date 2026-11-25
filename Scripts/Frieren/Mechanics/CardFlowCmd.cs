@@ -1,3 +1,4 @@
+using FrierenMod.Scripts.Shared.Compatibility;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -30,7 +31,7 @@ public static class CardFlowCmd
     public static async Task Generate<T>(Player player, PileType pile, bool upgraded = false) where T : CardModel
     {
         var card = player.Creature.CombatState!.CreateCard<T>(player);
-        if (upgraded) card.UpgradeInternal();
+        if (upgraded) GameApi.UpgradeInternal(card);
         await AddGenerated(card, pile, player);
     }
 

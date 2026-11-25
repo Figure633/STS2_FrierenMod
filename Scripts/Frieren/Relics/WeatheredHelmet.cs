@@ -1,3 +1,4 @@
+using FrierenMod.Scripts.Shared.Compatibility;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -17,7 +18,7 @@ public sealed class WeatheredHelmet : FrierenRelic
         // 只看百科中此升级等级的费用，排除免费打出、附魔及局内降费。
         var printed = card.CanonicalInstance.ToMutable();
         for (int i = 0; i < card.CurrentUpgradeLevel; i++) {
-            printed.UpgradeInternal(); printed.FinalizeUpgradeInternal();
+            GameApi.UpgradeInternal(printed); printed.FinalizeUpgradeInternal();
         }
         return printed.EnergyCost.GetWithModifiers(CostModifiers.None);
     }

@@ -1,4 +1,5 @@
 using FrierenMod.Scripts.Cards;
+using FrierenMod.Scripts.Shared.Compatibility;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
@@ -48,7 +49,7 @@ public static class DerivedCardPreviews
                 MegaCrit.Sts2.Core.Commands.CardCmd.Enchant<FrierenMod.Scripts.Enchantments.ManaSource>(preview,readable.DynamicVars["ManaSource"].IntValue);
             if (readable.Owner is { } owner) preview.Owner = owner;
             bool upgraded = readable.IsUpgraded && explicitTypes.Contains(type) && source is not FiveMinutesMore and not KindlingSpark and not DomainExpansion;
-            if (upgraded && preview.MaxUpgradeLevel > 0) { preview.UpgradeInternal(); preview.FinalizeUpgradeInternal(); }
+            if (upgraded && preview.MaxUpgradeLevel > 0) { GameApi.UpgradeInternal(preview); preview.FinalizeUpgradeInternal(); }
             previews.Add(preview);
         }
         if (previews.Count > 1) yield return new CyclingCardHoverTip(previews);

@@ -1,5 +1,6 @@
 using BaseLib.Abstracts;
 using FrierenMod.Scripts.Characters;
+using FrierenMod.Scripts.Shared.Compatibility;
 using Godot;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Context;
@@ -28,7 +29,7 @@ public abstract class FrierenStoryEvent : CustomEventModel
         Action<CardModel>? configure=null) where T:CardModel
     {
         var preview=ModelDb.Card<T>().ToMutable();preview.Owner=Owner!;
-        if(upgraded){preview.UpgradeInternal();preview.FinalizeUpgradeInternal();}
+        if(upgraded){GameApi.UpgradeInternal(preview);preview.FinalizeUpgradeInternal();}
         configure?.Invoke(preview);
         return new EventOption(this,available?action:null,$"{Id.Entry}.pages.INITIAL.options.{key}",
             new MegaCrit.Sts2.Core.HoverTips.CardHoverTip(preview));
@@ -46,7 +47,7 @@ public abstract class FrierenStoryEvent : CustomEventModel
     protected async Task AddCard<T>(bool upgraded=false,Action<CardModel>? configure=null) where T : CardModel
     {
         var card=Owner!.RunState.CreateCard<T>(Owner!);
-        if(upgraded){card.UpgradeInternal();card.FinalizeUpgradeInternal();}
+        if(upgraded){GameApi.UpgradeInternal(card);card.FinalizeUpgradeInternal();}
         configure?.Invoke(card);
         var result = await CardPileCmd.Add(card, PileType.Deck);
         CardCmd.PreviewCardPileAdd(result, 1.2f, CardPreviewStyle.EventLayout);

@@ -1,4 +1,5 @@
 using FrierenMod.Scripts.Mechanics;
+using FrierenMod.Scripts.Shared.Compatibility;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -18,7 +19,7 @@ public sealed class DefensiveMagic() : FrierenCard(1, CardType.Skill, CardRarity
         await ChantCmd.Choose(context, play, 1);
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, play);
         var card = Owner.Creature.CombatState!.CreateCard<SecondDefensiveMagic>(Owner);
-        if (IsUpgraded) card.UpgradeInternal();
+        if (IsUpgraded) GameApi.UpgradeInternal(card);
         await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, Owner);
     }
     protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(2);

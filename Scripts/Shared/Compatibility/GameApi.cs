@@ -43,6 +43,12 @@ public static class GameApi
     public static Task Exhaust(PlayerChoiceContext context, CardModel card, bool causedByEthereal=false, bool skipVisuals=false) =>
         ExhaustMethod.Invoke<Task>(null,context,card,causedByEthereal,skipVisuals)!;
 
+    private static readonly VariableMethod UpgradeInternalMethod = new(
+        (typeof(CardModel), nameof(CardModel.UpgradeInternal), [typeof(bool)], [0]),
+        (typeof(CardModel), nameof(CardModel.UpgradeInternal), [], []));
+
+    public static void UpgradeInternal(CardModel card) => UpgradeInternalMethod.Invoke(card, false);
+
     public static ulong Seed(object rng) => Convert.ToUInt64(AccessTools.Property(rng.GetType(), "Seed").GetValue(rng));
     private static readonly ConstructorInfo? NewRng = typeof(MegaCrit.Sts2.Core.Random.Rng).GetConstructor([typeof(ulong)]);
     private static readonly ConstructorInfo? OldRng = typeof(MegaCrit.Sts2.Core.Random.Rng).GetConstructor([typeof(uint),typeof(int)]);

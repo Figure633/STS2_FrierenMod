@@ -1,6 +1,7 @@
 using FrierenMod.Core;
 using FrierenMod.Scripts.Cards;
 using FrierenMod.Scripts.Relics;
+using FrierenMod.Scripts.Shared.Compatibility;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Multiplayer.Serialization;
 using MegaCrit.Sts2.Core.Saves.Runs;
@@ -40,7 +41,11 @@ Test("起始牌组与一代一致", () => {
 });
 Test("打击与防御升级数值", () => {
     var strike = ModelDb.Card<StrikeFrieren>().ToMutable(); Equal(6m, strike.DynamicVars.Damage.BaseValue);
-    strike.UpgradeInternal(); Equal(9m, strike.DynamicVars.Damage.BaseValue);
+    int upgradeNotifications = 0;
+    strike.Upgraded += () => upgradeNotifications++;
+    GameApi.UpgradeInternal(strike);
+    Equal(9m, strike.DynamicVars.Damage.BaseValue);
+    Equal(1, upgradeNotifications);
     var defend = ModelDb.Card<DefendFrieren>().ToMutable(); defend.UpgradeInternal(); Equal(8m, defend.DynamicVars.Block.BaseValue);
 });
 Test("快速咏唱保留与精准咏唱消耗升级", () => {

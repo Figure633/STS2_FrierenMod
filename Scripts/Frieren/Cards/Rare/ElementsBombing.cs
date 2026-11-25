@@ -27,7 +27,7 @@ public sealed class ElementsBombing() : FrierenCard(2, CardType.Skill, CardRarit
             int roll = Owner.RunState.Rng.CombatCardGeneration.NextInt(101);
             Type type = roll < 25 ? typeof(Ice) : roll < 50 ? typeof(Fire) : roll < 75 ? typeof(Thunder) : roll < 90 ? typeof(Dark) : typeof(Light);
             var element = CombatState!.CreateCard(ModelDb.GetById<CardModel>(ModelDb.GetId(type)), Owner);
-            if (IsUpgraded) element.UpgradeInternal();
+            if (IsUpgraded) GameApi.UpgradeInternal(element);
             await CardPileCmd.AddGeneratedCardToCombat(element, PileType.Hand, Owner);
         }
     }

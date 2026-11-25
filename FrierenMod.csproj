@@ -8,7 +8,7 @@
 
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
     <EnableDefaultEmbeddedResourceItems>false</EnableDefaultEmbeddedResourceItems>
-    <Version>0.13.22</Version>
+    <Version>0.13.23</Version>
     <NoWarn>$(NoWarn);MSB3270</NoWarn>
   </PropertyGroup>
   <Import Project="GameReferences.props" />

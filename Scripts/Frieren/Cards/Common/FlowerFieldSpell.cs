@@ -1,6 +1,7 @@
 using FrierenMod.Core;
 using FrierenMod.Scripts.Mechanics;
 using FrierenMod.Scripts.Powers;
+using FrierenMod.Scripts.Shared.Compatibility;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -18,7 +19,7 @@ public sealed class FlowerFieldSpell() : NormalChantCard(1, CardRarity.Common, 2
     {
         if (await ChantCmd.Choose(context, play, Intensity) == null) return;
         var card = CombatState!.CreateCard<BlueMoonWeed>(Owner);
-        if (IsUpgraded) card.UpgradeInternal();
+        if (IsUpgraded) GameApi.UpgradeInternal(card);
         await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, Owner);
     }
 }
